@@ -17,7 +17,9 @@
 
    <splash
       location="OpKeyStudio"
-      handlerType="extensible" />
+      startupProgressRect="5,275,445,15"
+      startupMessageRect="7,252,445,20"
+      startupForegroundColor="000000" />
    <launcher name="OpKeyStudio">
       <win useIco="false">
          <bmp/>
@@ -25,6 +27,7 @@
    </launcher>
 
    <vm>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
 
 
