@@ -13,14 +13,21 @@
                value="bundleclass://OpKeyStudio/opkeystudio.E4LifeCycle">
          </property>
          <property
-               name="applicationCSS"
-               value="platform:/plugin/OpKeyStudio/css/default.css">
-         </property>
-         <property
                name="appName"
                value="OpKeyStudio">
          </property>
       </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.splashHandlers">
+      <splashHandler
+            class="opkeystudio.splashHandlers.InteractiveSplashHandler"
+            id="opkeystudio.splashHandlers.interactive">
+      </splashHandler>
+      <splashHandlerProductBinding
+            productId="OpKeyStudio.product"
+            splashId="opkeystudio.splashHandlers.interactive">
+      </splashHandlerProductBinding>
    </extension>
 
 </plugin>
