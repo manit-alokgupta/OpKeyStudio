@@ -1,0 +1,3 @@
+
+svn proplist * --recursive
+svn propdel svn:global-ignores --recursive
