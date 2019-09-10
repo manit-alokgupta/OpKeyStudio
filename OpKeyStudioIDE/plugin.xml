@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="splashExtension" name="Splash Extensions" schema="schema/splashExtension.exsd"/>
 
    <extension
          id="product"
@@ -21,13 +22,45 @@
    <extension
          point="org.eclipse.ui.splashHandlers">
       <splashHandler
-            class="opkeystudio.splashHandlers.InteractiveSplashHandler"
-            id="opkeystudio.splashHandlers.interactive">
+            class="opkeystudio.splashHandlers.ExtensibleSplashHandler"
+            id="opkeystudio.splashHandlers.extensible">
       </splashHandler>
       <splashHandlerProductBinding
             productId="OpKeyStudio.product"
-            splashId="opkeystudio.splashHandlers.interactive">
+            splashId="opkeystudio.splashHandlers.extensible">
       </splashHandlerProductBinding>
+      <splashHandler
+            class="opkeystudio.splashHandlers.InteractiveSplashHandler"
+            id="opkeystudio.splashHandlers.interactive">
+      </splashHandler>
+   </extension>
+   <extension
+         point="OpKeyStudio.splashExtension">
+      <splashExtension
+            icon="icons/af.png"
+            id="af"
+            tooltip="Application Framework">
+      </splashExtension>
+      <splashExtension
+            icon="icons/embedded.png"
+            id="embedded"
+            tooltip="Embedded">
+      </splashExtension>
+      <splashExtension
+            icon="icons/enterprise.png"
+            id="enterprise"
+            tooltip="Enterprise">
+      </splashExtension>
+      <splashExtension
+            icon="icons/languages.png"
+            id="languages"
+            tooltip="Languages">
+      </splashExtension>
+      <splashExtension
+            icon="icons/rcp.png"
+            id="rcp"
+            tooltip="RCP">
+      </splashExtension>
    </extension>
 
 </plugin>
