@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.window.main" selectedElement="_6wlLksgZEeSyMNYR5xypkQ" label="OpKey Studio " x="0" y="0" width="1024" height="600">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.window.main" selectedElement="_6wlLksgZEeSyMNYR5xypkQ" label="OpKey Studio " bindingContexts="_6wlLesgZEeSyMNYR5xypkQ" x="0" y="0" width="1024" height="600">
     <children xsi:type="basic:PartSashContainer" xmi:id="_6wlLksgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.partsashcontainer.sample" selectedElement="_6wlLk8gZEeSyMNYR5xypkQ" horizontal="true">
       <children xsi:type="basic:PartStack" xmi:id="_6wlLk8gZEeSyMNYR5xypkQ" elementId="OpKeyStudio.partstack.sample">
         <children xsi:type="basic:Part" xmi:id="_Ae9WoNOzEemkIPY_K4e8cQ" elementId="opkeystudio.part.projectexplorer" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.ProjectExplorerPart" label="Project Explorer">
@@ -8,7 +8,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_zDpoENOyEemkIPY_K4e8cQ" elementId="opkeystudio.partstack.0">
-        <children xsi:type="basic:Part" xmi:id="_A7VwoNOzEemkIPY_K4e8cQ" elementId="opkeystudio.part.workbench" label="WorkBench">
+        <children xsi:type="basic:Part" xmi:id="_A7VwoNOzEemkIPY_K4e8cQ" elementId="opkeystudio.part.workbench" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.WorkBenchPart" label="WorkBench">
           <toolbar xmi:id="_oNddoNPeEem0i58OW8TGoA" elementId="opkeystudio.toolbar.1"/>
         </children>
       </children>
