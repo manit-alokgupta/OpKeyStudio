@@ -34,7 +34,11 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_6wlLl8gZEeSyMNYR5xypkQ" elementId="OpKeyStudio.handleditem.trimbar.top.open" iconURI="platform:/plugin/OpKeyStudio/icons/open_in_app.png" command="_6wlLgMgZEeSyMNYR5xypkQ"/>
       </children>
     </trimBars>
-    <trimBars xmi:id="_eKS-INOzEemkIPY_K4e8cQ" elementId="opkeystudio.trimbar.0" side="Bottom"/>
+    <trimBars xmi:id="_eKS-INOzEemkIPY_K4e8cQ" elementId="opkeystudio.trimbar.0" side="Bottom">
+      <children xsi:type="menu:ToolBar" xmi:id="_j3SmANSLEemqfKq95Yd_6Q" elementId="opkeystudio.toolbar.3">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_A4ymUNSMEemqfKq95Yd_6Q" elementId="opkeystudio.handledtoolitem.status" label="Status" enabled="false"/>
+      </children>
+    </trimBars>
   </children>
   <handlers xmi:id="_6wlLfcgZEeSyMNYR5xypkQ" elementId="opkeystudio.handler.quitCommand" contributionURI="bundleclass://OpKeyStudio/opkeystudio.handlers.QuitHandler" command="_6wlLfMgZEeSyMNYR5xypkQ"/>
   <handlers xmi:id="_6wlLgcgZEeSyMNYR5xypkQ" elementId="opkeystudio.handler.openCommand" contributionURI="bundleclass://OpKeyStudio/opkeystudio.handlers.OpenHandler" command="_6wlLgMgZEeSyMNYR5xypkQ"/>
