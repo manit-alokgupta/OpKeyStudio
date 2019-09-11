@@ -13,9 +13,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_gwc2UNPaEemfVqv5nLggsw" elementId="opkeystudio.partstack.1">
-        <children xsi:type="basic:Part" xmi:id="_h_zlYNPaEemfVqv5nLggsw" elementId="opkeystudio.part.tools" label="Tools">
-          <toolbar xmi:id="_onrUcNPeEem0i58OW8TGoA" elementId="opkeystudio.toolbar.2"/>
-        </children>
+        <children xsi:type="basic:Part" xmi:id="_h_zlYNPaEemfVqv5nLggsw" elementId="opkeystudio.part.tools" label="Tools"/>
       </children>
     </children>
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.main.menu">
