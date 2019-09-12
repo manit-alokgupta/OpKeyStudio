@@ -16,6 +16,6 @@ public class ProjectExplorerPart {
 	@PostConstruct
 	public void createComposite(Composite parent) {
 		System.out.println(mpart.getLabel());
-		TreeView projectTreeView = new TreeView(parent, SWT.BORDER);
+		TreeView projectTreeView = new TreeView(parent, SWT.None);
 	}
 }
