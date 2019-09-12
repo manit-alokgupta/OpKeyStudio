@@ -13,6 +13,7 @@ public class Activator implements BundleActivator {
 
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
+		System.out.println("OpKey Studio Started");
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {

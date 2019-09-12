@@ -74,5 +74,16 @@
             tooltip="RCP">
       </splashExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="opkeystudio.editors.MultiPageEditor"
+            contributorClass="opkeystudio.editors.MultiPageEditorContributor"
+            extensions=".java"
+            icon="icons/sample.png"
+            id="opkeystudio.editors.MultiPageEditor"
+            name="Sample Multi-page Editor">
+      </editor>
+   </extension>
 
 </plugin>
