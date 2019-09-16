@@ -2,17 +2,17 @@
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.window.main" label="OpKey Studio " bindingContexts="_6wlLesgZEeSyMNYR5xypkQ" x="0" y="0" width="1024" height="600">
     <children xsi:type="basic:PartSashContainer" xmi:id="_9ST-ENVrEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.0" containerData="" horizontal="true">
-      <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.0" containerData="100">
-        <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.projectexplorer" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.ProjectExplorerPart" label="Project Explorer"/>
+      <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack..pro" containerData="200">
+        <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.projectexplorer" containerData="" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.ProjectExplorerPart" label="Project Explorer"/>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600">
         <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.1" containerData="600">
-          <children xsi:type="basic:Part" xmi:id="_JGORANVsEemLeZBMchgvxw" elementId="opkeystudio.part.123" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.MainWorkBench" label="123" closeable="true"/>
+          <children xsi:type="basic:Part" xmi:id="_JGORANVsEemLeZBMchgvxw" elementId="opkeystudio.part.123" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.MainWorkBench" label="123" iconURI="" closeable="true"/>
           <children xsi:type="basic:Part" xmi:id="_1D5uANVyEemmqvhoD5Cttg" elementId="opkeystudio.part.345" label="345" closeable="true"/>
           <children xsi:type="basic:Part" xmi:id="_1e5n8NVyEemmqvhoD5Cttg" elementId="opkeystudio.part.567" label="567" closeable="true"/>
         </children>
         <children xsi:type="basic:PartStack" xmi:id="_FfA5wNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.2" containerData="300">
-          <children xsi:type="basic:Part" xmi:id="_Jk6_MNVsEemLeZBMchgvxw" elementId="opkeystudio.part.2"/>
+          <children xsi:type="basic:Part" xmi:id="_Jk6_MNVsEemLeZBMchgvxw" elementId="opkeystudio.part.2" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.MainWorkBench"/>
         </children>
       </children>
     </children>

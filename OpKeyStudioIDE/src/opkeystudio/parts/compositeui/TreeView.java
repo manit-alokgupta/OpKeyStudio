@@ -19,7 +19,6 @@ public class TreeView extends Composite {
 		
 		TreeViewer treeViewer = new TreeViewer(this, SWT.BORDER);
 		Tree tree = treeViewer.getTree();
-		
 	}
 
 	@Override
