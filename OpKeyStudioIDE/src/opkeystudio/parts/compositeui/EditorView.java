@@ -8,9 +8,11 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.TextViewer;
 
 public class EditorView extends Composite {
-	private Table table;
 
 	/**
 	 * Create the composite.
@@ -25,9 +27,8 @@ public class EditorView extends Composite {
 		composite.setBounds(152, 81, 64, 64);
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
+		TextViewer textViewer = new TextViewer(composite, SWT.BORDER);
+		StyledText styledText = textViewer.getTextWidget();
 
 	}
 

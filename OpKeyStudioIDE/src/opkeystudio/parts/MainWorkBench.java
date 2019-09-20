@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
+import opkeystudio.parts.compositeui.EditorView;
 import opkeystudio.parts.compositeui.WorkBenchTabHolder;
 
 public class MainWorkBench {
@@ -17,7 +18,7 @@ public class MainWorkBench {
 	
 	@PostConstruct
 	public void postConstruct(Composite parent) {
-		new WorkBenchTabHolder(parent, SWT.NONE);
+		new EditorView(parent, SWT.NONE);
 	}
 	
 	
