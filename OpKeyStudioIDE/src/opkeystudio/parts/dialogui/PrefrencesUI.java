@@ -8,6 +8,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 
+import opkeystudio.opkeystudiocore.plugindev.controls.ControlsRepository;
+
 public class PrefrencesUI extends Dialog {
 
 	protected Object result;
@@ -15,6 +17,7 @@ public class PrefrencesUI extends Dialog {
 
 	/**
 	 * Create the dialog.
+	 * 
 	 * @param parent
 	 * @param style
 	 */
@@ -25,6 +28,7 @@ public class PrefrencesUI extends Dialog {
 
 	/**
 	 * Open the dialog.
+	 * 
 	 * @return the result
 	 */
 	public Object open() {
@@ -48,24 +52,25 @@ public class PrefrencesUI extends Dialog {
 		shlPreferences.setSize(450, 482);
 		shlPreferences.setText("Preferences");
 		shlPreferences.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		TabFolder tabFolder = new TabFolder(shlPreferences, SWT.NONE);
-		
+
+
 		TabItem tbtmNewItem = new TabItem(tabFolder, SWT.NONE);
 		tbtmNewItem.setText("New Item");
-		
+
 		TabItem tbtmNewItem_1 = new TabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setText("New Item");
-		
+
 		TabItem tbtmNewItem_4 = new TabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_4.setText("New Item");
-		
+
 		TabItem tbtmNewItem_2 = new TabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_2.setText("New Item");
-		
+
 		TabItem tbtmNewItem_3 = new TabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_3.setText("New Item");
-		
+
 		TabItem tbtmNewItem_5 = new TabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_5.setText("New Item");
 
