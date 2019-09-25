@@ -9,6 +9,7 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 
+import opkeystudio.opkeystudiocore.plugindev.controls.ControlsRepository;
 import opkeystudio.parts.compositeui.TreeViewCompositeUI;
 
 public class ProjectExplorerPart {
@@ -18,6 +19,7 @@ public class ProjectExplorerPart {
 	@PostConstruct
 	public void postConstruct(Composite parent) {
 		new TreeViewCompositeUI(parent, 0);
+		ControlsRepository.getInstance().addControlInControlRepository("opkeystudio.projectexplorer.part", projectExplorerPart);
 	}
 
 	@PreDestroy
