@@ -13,7 +13,7 @@ import opkeystudio.parts.compositeui.TreeViewCompositeUI;
 
 public class ProjectExplorerPart {
 	@Inject
-	MPart mpart;
+	MPart projectExplorerPart;
 
 	@PostConstruct
 	public void postConstruct(Composite parent) {
