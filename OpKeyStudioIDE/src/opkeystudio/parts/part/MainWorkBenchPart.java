@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import opkeystudio.parts.compositeui.EditorView;
+import opkeystudio.parts.compositeui.EditorViewCompositeUI;
 
 public class MainWorkBenchPart {
 	@Inject
@@ -17,7 +17,7 @@ public class MainWorkBenchPart {
 
 	@PostConstruct
 	public void postConstruct(Composite parent) {
-		new EditorView(parent, SWT.NONE);
+		new EditorViewCompositeUI(parent, SWT.NONE);
 	}
 
 }

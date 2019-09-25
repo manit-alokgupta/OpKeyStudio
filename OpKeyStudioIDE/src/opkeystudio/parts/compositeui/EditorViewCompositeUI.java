@@ -6,14 +6,14 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-public class EditorView extends Composite {
+public class EditorViewCompositeUI extends Composite {
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public EditorView(Composite parent, int style) {
+	public EditorViewCompositeUI(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
