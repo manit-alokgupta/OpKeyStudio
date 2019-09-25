@@ -1,9 +1,11 @@
 package opkeystudio.opkeystudiocore.plugindev.controls;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ControlsRepository {
 	private static ControlsRepository controlRepository = null;
-	
-	private Object prefernceTabHolder;
+	private Map<String, Object> globalControlRepository = new HashMap<>();
 
 	public static ControlsRepository getInstance() {
 		if (controlRepository == null) {
@@ -12,11 +14,11 @@ public class ControlsRepository {
 		return controlRepository;
 	}
 
-	public Object getPreferenceTabHolder() {
-		return prefernceTabHolder;
+	public void addControlInControlRepository(String controlId, Object control) {
+		globalControlRepository.put(controlId, control);
 	}
 
-	public void setPreferenceTabHolder(Object tabHolder) {
-		prefernceTabHolder = tabHolder;
+	public Object getControlFromControlRepository(String controlId) {
+		return globalControlRepository.get(controlId);
 	}
 }
