@@ -51,7 +51,7 @@ public class AuthenticateUI extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlLoginToYour = new Shell(getParent(), getStyle());
+		shlLoginToYour = new Shell(getParent(), SWT.CLOSE | SWT.APPLICATION_MODAL);
 		shlLoginToYour.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shlLoginToYour.setImage(null);
 		shlLoginToYour.setSize(403, 260);
