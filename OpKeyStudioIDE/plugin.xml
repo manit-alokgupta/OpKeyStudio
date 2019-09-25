@@ -76,14 +76,18 @@
    </extension>
    <extension
          point="org.eclipse.ui.editors">
-      <editor
-            class="opkeystudio.editors.MultiPageEditor"
-            contributorClass="opkeystudio.editors.MultiPageEditorContributor"
-            extensions=".java"
-            icon="icons/sample.png"
-            id="opkeystudio.editors.MultiPageEditor"
-            name="Sample Multi-page Editor">
-      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.annotationTypes">
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.documentProviders">
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+   </extension>
+   <extension
+         point="org.eclipse.ui.genericeditor.autoEditStrategies">
    </extension>
 
 </plugin>

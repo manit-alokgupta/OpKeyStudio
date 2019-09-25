@@ -11,7 +11,14 @@
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600">
         <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.1" containerData="600">
-          <children xsi:type="basic:Part" xmi:id="_JGORANVsEemLeZBMchgvxw" elementId="opkeystudio.part.123" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.MainWorkBench" label="123" iconURI="" closeable="true"/>
+          <children xsi:type="basic:Part" xmi:id="_JGORANVsEemLeZBMchgvxw" elementId="opkeystudio.part.123" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.MainWorkBench" label="123" iconURI="" closeable="true">
+            <toolbar xmi:id="_5CY30N9tEemHX6HFx8Fukg" elementId="opkeystudio.toolbar.3">
+              <children xsi:type="menu:DirectToolItem" xmi:id="_6Gmt4N9tEemHX6HFx8Fukg" elementId="opkeystudio.directtoolitem.2"/>
+              <children xsi:type="menu:DirectToolItem" xmi:id="_6rGiEN9tEemHX6HFx8Fukg" elementId="opkeystudio.directtoolitem.3"/>
+              <children xsi:type="menu:DirectToolItem" xmi:id="_7LHe4N9tEemHX6HFx8Fukg" elementId="opkeystudio.directtoolitem.4"/>
+              <children xsi:type="menu:DirectToolItem" xmi:id="_7wHpYN9tEemHX6HFx8Fukg" elementId="opkeystudio.directtoolitem.5"/>
+            </toolbar>
+          </children>
           <children xsi:type="basic:Part" xmi:id="_1D5uANVyEemmqvhoD5Cttg" elementId="opkeystudio.part.345" label="345" closeable="true"/>
           <children xsi:type="basic:Part" xmi:id="_1e5n8NVyEemmqvhoD5Cttg" elementId="opkeystudio.part.567" label="567" closeable="true"/>
         </children>
@@ -24,7 +31,7 @@
       <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_lC_IwNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.import" label="Import" contributionURI="bundleclass://OpKeyStudio/opkeystudio.command.Import"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_m3kEwNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.export" label="Export"/>
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" contributionURI="bundleclass://OpKeyStudio/opkeystudio.command.ApplicationExit"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_s3lGcNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.help" label="Help">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_uVJ3sNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.about" label="About" contributionURI="bundleclass://OpKeyStudio/opkeystudio.command.AboutCommand"/>
