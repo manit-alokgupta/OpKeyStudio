@@ -2,7 +2,7 @@
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.window.main" label="OpKey Studio " bindingContexts="_6wlLesgZEeSyMNYR5xypkQ" x="0" y="0" width="1024" height="600">
     <children xsi:type="basic:PartSashContainer" xmi:id="_9ST-ENVrEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.0" containerData="" horizontal="true">
-      <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack..pro" containerData="200">
+      <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.explorertreepartstack" containerData="200">
         <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.explorertreepart" containerData="" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ProjectExplorerPart" label="CodedFl Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/class_obj.gif">
           <toolbar xmi:id="_BJErQNqxEem51cXlp-aEQw" elementId="opkeystudio.toolbar.2">
             <children xsi:type="menu:DirectToolItem" xmi:id="_DMhJsNqxEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.1" iconURI="platform:/plugin/OpKeyStudio/icons/refresh.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.Import"/>
@@ -10,7 +10,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600">
-        <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.1" containerData="600">
+        <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.workbenchpartstack" containerData="600">
           <children xsi:type="basic:Part" xmi:id="_JGORANVsEemLeZBMchgvxw" elementId="opkeystudio.part.workbenchpart" contributionURI="" label="123" iconURI="platform:/plugin/OpKeyStudio/icons/java_app.gif" closeable="true">
             <toolbar xmi:id="_5CY30N9tEemHX6HFx8Fukg" elementId="opkeystudio.toolbar.3">
               <children xsi:type="menu:DirectToolItem" xmi:id="_6Gmt4N9tEemHX6HFx8Fukg" elementId="opkeystudio.directtoolitem.2"/>
@@ -20,14 +20,14 @@
             </toolbar>
           </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_FfA5wNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.2" containerData="300">
+        <children xsi:type="basic:PartStack" xmi:id="_FfA5wNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.consolewindowpartstack" containerData="300">
           <children xsi:type="basic:Part" xmi:id="_Jk6_MNVsEemLeZBMchgvxw" elementId="opkeystudio.part.consolewindowpart" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ConsoleWindowPart" label="Coded FL" iconURI="platform:/plugin/OpKeyStudio/icons/layout.gif">
             <toolbar xmi:id="_wXBP4N99Eem4S9D8hNuZrQ" elementId="opkeystudio.toolbar.4"/>
           </children>
         </children>
       </children>
     </children>
-    <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.main.menu">
+    <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="opkeystudio.menu.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_lC_IwNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.import" label="Import" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.Import"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_m3kEwNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.export" label="Export"/>
