@@ -27,7 +27,6 @@
         </children>
       </children>
     </children>
-    <handlers xmi:id="_hIGnEOBsEemVOfg8p8U-qw" elementId="opkeystudio.handler.0" contributionURI="bundleclass://OpKeyStudio/opkeystudio.Handler1"/>
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="opkeystudio.menu.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_lC_IwNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.import" label="Create Project" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.Import"/>

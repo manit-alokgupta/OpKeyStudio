@@ -20,7 +20,7 @@ Require-Bundle: org.eclipse.ui.workbench,
  org.eclipse.ui,
  org.eclipse.ui.editors,
  org.eclipse.ui.ide,
- OpKeyStudioOSGIDependenciesFlugin;bundle-version="1.0.0"
+ OpKeyStudioPlatformPlugin;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: OpKeyStudio
 Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
