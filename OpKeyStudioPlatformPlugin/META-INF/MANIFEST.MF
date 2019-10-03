@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: OpKeyStudioPlatformPlugin
-Bundle-SymbolicName: OpKeyStudioPlatformPlugin
-Bundle-Version: 1.0.0
-Bundle-Vendor: OpKey
-Automatic-Module-Name: OpKeyStudioPlatformPlugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
