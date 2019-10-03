@@ -2,10 +2,13 @@ package opkeystudio.opkeystudiocore.core.project.generic;
 
 import java.util.UUID;
 
+import opkeystudio.opkeystudiocore.core.project.projects.Project;
+
 public class WorkSpace {
 	private String workSpaceId;
 	private String workSpaceName;
 	private String workSpacePath;
+	private Project project;
 
 	public WorkSpace(String workspaceName, String workspacePath) {
 		setWorkSpaceId(UUID.randomUUID().toString());
@@ -33,5 +36,13 @@ public class WorkSpace {
 
 	public void setWorkSpacePath(String workSpacePath) {
 		this.workSpacePath = workSpacePath;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 }

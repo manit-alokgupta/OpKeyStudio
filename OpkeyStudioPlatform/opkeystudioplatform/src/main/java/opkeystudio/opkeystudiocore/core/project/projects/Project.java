@@ -2,12 +2,14 @@ package opkeystudio.opkeystudiocore.core.project.projects;
 
 import java.util.UUID;
 
+import opkeystudio.opkeystudiocore.core.project.artificates.RootFolder;
 import opkeystudio.opkeystudiocore.core.project.generic.WorkSpace;
 
 public abstract class Project {
 	private String projectId;
 	private String projectName;
 	private WorkSpace workSpace;
+	private RootFolder rootFolder;
 
 	public Project(String projectName) {
 		setProjectId(UUID.randomUUID().toString());
@@ -36,5 +38,13 @@ public abstract class Project {
 
 	public void setWorkSpace(WorkSpace workSpace) {
 		this.workSpace = workSpace;
+	}
+
+	public RootFolder getRootFolder() {
+		return rootFolder;
+	}
+
+	public void setRootFolder(RootFolder rootFolder) {
+		this.rootFolder = rootFolder;
 	}
 }

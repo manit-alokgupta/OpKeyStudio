@@ -9,7 +9,7 @@ public class RootFolder extends Artificate {
 
 	public RootFolder(String arg0, String arg1) {
 		super(arg0, arg1, ArtificateType.ROOTFOLDER);
-		setContainChilderen(true);
+		setContainChildren(true);
 	}
 
 }

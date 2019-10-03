@@ -9,7 +9,7 @@ public class ArtificateFolder extends Artificate {
 
 	public ArtificateFolder(String arg0, String arg1) {
 		super(arg0, arg1, ArtificateType.FOLDER);
-		setContainChilderen(true);
+		setContainChildren(true);
 	}
 
 }

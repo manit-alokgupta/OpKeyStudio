@@ -1,6 +1,8 @@
 package opkeystudio.opkeystudiocore.core.project.artificates;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 class Artificate extends File {
@@ -11,7 +13,8 @@ class Artificate extends File {
 	private String artificateId;
 	private ArtificateType artificateType;
 	private String artificateTypeString;
-	private boolean canContainChilderen = false;
+	private boolean canContainChildren = false;
+	private List<Artificate> artificates = null;
 
 	public enum ArtificateType {
 		ROOTFOLDER, FOLDER, TESTCASE, OBJECTREPOSITORY, TESTSUITES
@@ -20,7 +23,7 @@ class Artificate extends File {
 	public Artificate(String arg0, String arg1, ArtificateType type) {
 		super(arg0, arg1);
 		setArtificateId(UUID.randomUUID().toString());
-		setContainChilderen(false);
+		setContainChildren(false);
 		setArtificateType(type);
 	}
 
@@ -32,12 +35,12 @@ class Artificate extends File {
 		this.artificateId = artificateId;
 	}
 
-	public boolean isContainChilderen() {
-		return canContainChilderen;
+	public boolean isContainChildren() {
+		return canContainChildren;
 	}
 
-	public void setContainChilderen(boolean canContainChilderen) {
-		this.canContainChilderen = canContainChilderen;
+	public void setContainChildren(boolean canContainChilderen) {
+		this.canContainChildren = canContainChilderen;
 	}
 
 	public ArtificateType getArtificateType() {
@@ -55,6 +58,17 @@ class Artificate extends File {
 
 	private void setArtificateTypeString(String artificateTypeString) {
 		this.artificateTypeString = artificateTypeString;
+	}
+
+	public List<Artificate> getArtificates() {
+		if (!isContainChildren()) {
+			return new ArrayList<>();
+		}
+		return artificates;
+	}
+
+	public void addArtificate(Artificate artificate) {
+		this.artificates.add(artificate);
 	}
 
 }
