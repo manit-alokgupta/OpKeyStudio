@@ -1,6 +1,7 @@
 package opkeystudio.opkeystudiocore.core.project.artificates;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +16,7 @@ class Artificate extends File {
 	private String artificateTypeString;
 	private boolean canContainChildren = false;
 	private List<Artificate> artificates = null;
+	private String artificatePath;
 
 	public enum ArtificateType {
 		ROOTFOLDER, FOLDER, TESTCASE, OBJECTREPOSITORY, TESTSUITES
@@ -69,6 +71,24 @@ class Artificate extends File {
 
 	public void addArtificate(Artificate artificate) {
 		this.artificates.add(artificate);
+	}
+
+	public String getArtificatePath() {
+		return artificatePath;
+	}
+
+	public void createArtificate() throws IOException {
+		if (getArtificateType() == ArtificateType.FOLDER || getArtificateType() == ArtificateType.ROOTFOLDER) {
+			this.mkdir();
+			setArtificatePath(this.getAbsolutePath());
+			return;
+		}
+		this.createNewFile();
+		setArtificatePath(this.getAbsolutePath());
+	}
+
+	private void setArtificatePath(String artificatePath) {
+		this.artificatePath = artificatePath;
 	}
 
 }
