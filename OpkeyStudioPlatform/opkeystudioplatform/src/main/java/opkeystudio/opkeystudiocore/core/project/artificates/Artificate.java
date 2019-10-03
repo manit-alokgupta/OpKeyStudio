@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-class Artificate extends File {
+public class Artificate extends File {
 	/**
 	 * 
 	 */
@@ -15,7 +15,7 @@ class Artificate extends File {
 	private ArtificateType artificateType;
 	private String artificateTypeString;
 	private boolean canContainChildren = false;
-	private List<Artificate> artificates = null;
+	private List<Artificate> artificates = new ArrayList<>();
 	private String artificatePath;
 
 	public enum ArtificateType {

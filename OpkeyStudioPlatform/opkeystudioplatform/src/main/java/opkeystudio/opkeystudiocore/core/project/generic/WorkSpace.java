@@ -12,6 +12,7 @@ public class WorkSpace {
 
 	public WorkSpace(String workspaceName, String workspacePath) {
 		setWorkSpaceId(UUID.randomUUID().toString());
+		setWorkSpacePath(workspacePath);
 	}
 
 	public String getWorkSpaceId() {
