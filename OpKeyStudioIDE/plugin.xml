@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="splashExtension" name="Splash Extensions" schema="schema/splashExtension.exsd"/>
 
    <extension
          id="product"
@@ -69,21 +68,6 @@
             id="rcp"
             tooltip="RCP">
       </splashExtension>
-   </extension>
-   <extension
-         point="org.eclipse.ui.editors">
-   </extension>
-   <extension
-         point="org.eclipse.ui.editors.annotationTypes">
-   </extension>
-   <extension
-         point="org.eclipse.ui.editors.documentProviders">
-   </extension>
-   <extension
-         point="org.eclipse.ui.editors.markerAnnotationSpecification">
-   </extension>
-   <extension
-         point="org.eclipse.ui.genericeditor.autoEditStrategies">
    </extension>
 
 </plugin>
