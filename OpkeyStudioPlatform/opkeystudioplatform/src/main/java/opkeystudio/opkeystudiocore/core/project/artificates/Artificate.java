@@ -17,6 +17,7 @@ public class Artificate extends File {
 	private boolean canContainChildren = false;
 	private List<Artificate> artificates = new ArrayList<>();
 	private String artificatePath;
+	private boolean isRootFolder = false;
 
 	public enum ArtificateType {
 		ROOTFOLDER, FOLDER, TESTCASE, OBJECTREPOSITORY, TESTSUITES
@@ -74,6 +75,10 @@ public class Artificate extends File {
 		this.artificates.add(artificate);
 	}
 
+	public void addArtificates(List<Artificate> artificates) {
+		this.artificates.addAll(artificates);
+	}
+
 	public String getArtificatePath() {
 		return artificatePath;
 	}
@@ -88,6 +93,14 @@ public class Artificate extends File {
 
 	private void setArtificatePath(String artificatePath) {
 		this.artificatePath = artificatePath;
+	}
+
+	public boolean isRootFolder() {
+		return isRootFolder;
+	}
+
+	public void setRootFolder(boolean isRootFolder) {
+		this.isRootFolder = isRootFolder;
 	}
 
 }
