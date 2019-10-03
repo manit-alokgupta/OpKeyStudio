@@ -2,18 +2,27 @@ package opkeystudio.opkeystudiocore.core.project.projects;
 
 import java.io.IOException;
 
+import javax.xml.bind.ValidationException;
+
+import opkeystudio.opkeystudiocore.core.exceptions.ValidationExceptions;
 import opkeystudio.opkeystudiocore.core.project.artificates.RootFolder;
 import opkeystudio.opkeystudiocore.core.project.generic.WorkSpace;
 
 public class GenericWebProject extends Project {
 
-	public GenericWebProject(String workspacePath, String projectName) {
+	public GenericWebProject(String workspacePath, String projectName) throws ValidationExceptions {
 		super(projectName, ProjectType.WEB);
+		if (workspacePath.trim().isEmpty()) {
+			throw new ValidationExceptions("WorkSpacePath Should Not Be Blank");
+		}
+		if (projectName.trim().isEmpty()) {
+			throw new ValidationExceptions("ProjectName Should Not Be Blank");
+		}
 		WorkSpace wspace = new WorkSpace("", workspacePath);
 		setWorkSpace(wspace);
 	}
 
-	public void populateProject() throws IOException {
+	public void populateProject() throws IOException, ValidationExceptions {
 		Project project = new GenericWebProject(getWorkSpace().getWorkSpacePath(), getProjectName());
 		RootFolder rootFolder1 = new RootFolder(project.getProjectPath(), "TestCase");
 		RootFolder rootFolder2 = new RootFolder(project.getProjectPath(), "ObjectRepository");

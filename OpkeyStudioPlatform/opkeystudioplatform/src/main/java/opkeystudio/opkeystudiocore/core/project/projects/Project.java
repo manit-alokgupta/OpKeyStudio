@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.xml.bind.ValidationException;
+
+import opkeystudio.opkeystudiocore.core.exceptions.ValidationExceptions;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 import opkeystudio.opkeystudiocore.core.project.artificates.RootFolder;
 import opkeystudio.opkeystudiocore.core.project.generic.WorkSpace;
@@ -22,7 +25,10 @@ public abstract class Project {
 		WEB, SALESFORCE, ORACLEFUSION, WORKDAY
 	};
 
-	public Project(String projectName, ProjectType projectType) {
+	public Project(String projectName, ProjectType projectType) throws ValidationExceptions {
+		if (projectName.trim().isEmpty()) {
+			throw new ValidationExceptions("ProjectName Should Not Be Blank");
+		}
 		setProjectId(UUID.randomUUID().toString());
 		setProjectName(projectName);
 		setProjectType(projectType);

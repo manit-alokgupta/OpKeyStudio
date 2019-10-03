@@ -5,9 +5,11 @@ Bundle-SymbolicName: opkeystudioplatform
 Bundle-Version: 1.0.0.qualifier
 Export-Package: opkeystudio.opkeystudiocore,
  opkeystudio.opkeystudiocore.communicator,
+ opkeystudio.opkeystudiocore.core.exceptions,
  opkeystudio.opkeystudiocore.core.project.artificates,
  opkeystudio.opkeystudiocore.core.project.generic,
  opkeystudio.opkeystudiocore.core.project.projects,
+ opkeystudio.opkeystudiocore.core.utils,
  opkeystudio.opkeystudiocore.dao,
  opkeystudio.opkeystudiocore.dtos,
  opkeystudio.opkeystudiocore.plugindev.controls,
