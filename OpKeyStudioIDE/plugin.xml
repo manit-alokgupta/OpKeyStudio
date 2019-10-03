@@ -28,6 +28,10 @@
                   name="startupForegroundColor"
                   value="000000">
             </property>
+            <property
+                  name="preferenceCustomization"
+                  value="plugin_customization.ini">
+            </property>
       </product>
    </extension>
    <extension
@@ -40,34 +44,6 @@
             class="opkeystudio.splashHandlers.InteractiveSplashHandler"
             id="opkeystudio.splashHandlers.interactive">
       </splashHandler>
-   </extension>
-   <extension
-         point="OpKeyStudio.splashExtension">
-      <splashExtension
-            icon="icons/af.png"
-            id="af"
-            tooltip="Application Framework">
-      </splashExtension>
-      <splashExtension
-            icon="icons/embedded.png"
-            id="embedded"
-            tooltip="Embedded">
-      </splashExtension>
-      <splashExtension
-            icon="icons/enterprise.png"
-            id="enterprise"
-            tooltip="Enterprise">
-      </splashExtension>
-      <splashExtension
-            icon="icons/languages.png"
-            id="languages"
-            tooltip="Languages">
-      </splashExtension>
-      <splashExtension
-            icon="icons/rcp.png"
-            id="rcp"
-            tooltip="RCP">
-      </splashExtension>
    </extension>
 
 </plugin>
