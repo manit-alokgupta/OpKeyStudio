@@ -22,11 +22,12 @@ public class Artificate extends File {
 		ROOTFOLDER, FOLDER, TESTCASE, OBJECTREPOSITORY, TESTSUITES
 	};
 
-	public Artificate(String arg0, String arg1, ArtificateType type) {
-		super(arg0, arg1);
+	public Artificate(String path, String filename, ArtificateType type) {
+		super(path, filename);
 		setArtificateId(UUID.randomUUID().toString());
 		setContainChildren(false);
 		setArtificateType(type);
+		setArtificatePath(path + File.separator + filename);
 	}
 
 	public String getArtificateId() {
@@ -80,11 +81,9 @@ public class Artificate extends File {
 	public void createArtificate() throws IOException {
 		if (getArtificateType() == ArtificateType.FOLDER || getArtificateType() == ArtificateType.ROOTFOLDER) {
 			this.mkdir();
-			setArtificatePath(this.getAbsolutePath());
 			return;
 		}
 		this.createNewFile();
-		setArtificatePath(this.getAbsolutePath());
 	}
 
 	private void setArtificatePath(String artificatePath) {

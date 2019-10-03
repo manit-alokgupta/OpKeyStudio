@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
-import opkeystudio.opkeystudiocore.core.project.artificates.Artificate.ArtificateType;
 import opkeystudio.opkeystudiocore.core.project.artificates.RootFolder;
 import opkeystudio.opkeystudiocore.core.project.generic.WorkSpace;
 

@@ -7,8 +7,8 @@ public class ArtificateFolder extends Artificate {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ArtificateFolder(String arg0, String arg1) {
-		super(arg0, arg1, ArtificateType.FOLDER);
+	public ArtificateFolder(String path, String filename) {
+		super(path, filename, ArtificateType.FOLDER);
 		setContainChildren(true);
 	}
 
