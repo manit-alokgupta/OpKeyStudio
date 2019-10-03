@@ -11,7 +11,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import opkeystudio.parts.compositeui.EditorViewCompositeUI;
+import opkeystudio.featurecore.ide.ui.ui.EditorViewCompositeUI;
 
 public class MainWorkBenchPart {
 	@Inject

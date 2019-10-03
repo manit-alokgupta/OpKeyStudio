@@ -9,7 +9,7 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 
-import opkeystudio.parts.compositeui.TreeViewCompositeUI;
+import opkeystudio.featurecore.ide.ui.ui.TreeViewCompositeUI;
 
 public class ProjectExplorerPart {
 	@Inject

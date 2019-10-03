@@ -11,7 +11,7 @@
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600">
         <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.workbenchpartstack" containerData="600">
-          <children xsi:type="basic:Part" xmi:id="_JGORANVsEemLeZBMchgvxw" elementId="opkeystudio.part.workbenchpart" contributionURI="" label="123" iconURI="platform:/plugin/OpKeyStudio/icons/java_app.gif" closeable="true">
+          <children xsi:type="basic:Part" xmi:id="_JGORANVsEemLeZBMchgvxw" elementId="opkeystudio.part.workbenchpart" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.MainWorkBenchPart" label="123" iconURI="" closeable="true">
             <toolbar xmi:id="_5CY30N9tEemHX6HFx8Fukg" elementId="opkeystudio.toolbar.3">
               <children xsi:type="menu:DirectToolItem" xmi:id="_6Gmt4N9tEemHX6HFx8Fukg" elementId="opkeystudio.directtoolitem.2"/>
               <children xsi:type="menu:DirectToolItem" xmi:id="_6rGiEN9tEemHX6HFx8Fukg" elementId="opkeystudio.directtoolitem.3"/>
@@ -20,8 +20,8 @@
             </toolbar>
           </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_FfA5wNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.consolewindowpartstack" containerData="300">
-          <children xsi:type="basic:Part" xmi:id="_Jk6_MNVsEemLeZBMchgvxw" elementId="opkeystudio.part.consolewindowpart" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ConsoleWindowPart" label="Coded FL" iconURI="platform:/plugin/OpKeyStudio/icons/layout.gif">
+        <children xsi:type="basic:PartStack" xmi:id="_FfA5wNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.consolewindowpartstack" toBeRendered="false" visible="false" containerData="300">
+          <children xsi:type="basic:Part" xmi:id="_Jk6_MNVsEemLeZBMchgvxw" elementId="opkeystudio.part.consolewindowpart" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ConsoleWindowPart" label="Coded FL" iconURI="">
             <toolbar xmi:id="_wXBP4N99Eem4S9D8hNuZrQ" elementId="opkeystudio.toolbar.4"/>
           </children>
         </children>
