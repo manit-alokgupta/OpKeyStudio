@@ -10,7 +10,7 @@ class Artificate extends File {
 	private static final long serialVersionUID = 1L;
 	private String artificateId;
 
-	public Artificate(File arg0, String arg1) {
+	public Artificate(String arg0, String arg1) {
 		super(arg0, arg1);
 		setArtificateId(UUID.randomUUID().toString());
 	}
