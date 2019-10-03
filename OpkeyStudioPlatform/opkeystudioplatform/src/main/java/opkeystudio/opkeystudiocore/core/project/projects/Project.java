@@ -10,10 +10,16 @@ public abstract class Project {
 	private String projectName;
 	private WorkSpace workSpace;
 	private RootFolder rootFolder;
+	private ProjectType projectType;
 
-	public Project(String projectName) {
+	public enum ProjectType {
+		WEB, SALESFORCE, ORACLEFUSION, WORKDAY
+	};
+
+	public Project(String projectName, ProjectType projectType) {
 		setProjectId(UUID.randomUUID().toString());
 		setProjectName(projectName);
+		setProjectType(projectType);
 	}
 
 	public String getProjectId() {
@@ -32,6 +38,14 @@ public abstract class Project {
 		this.projectName = projectName;
 	}
 
+	public ProjectType getProjectType() {
+		return this.projectType;
+	}
+
+	private void setProjectType(ProjectType projectType) {
+		this.projectType = projectType;
+	}
+
 	public WorkSpace getWorkSpace() {
 		return workSpace;
 	}
@@ -47,4 +61,5 @@ public abstract class Project {
 	public void setRootFolder(RootFolder rootFolder) {
 		this.rootFolder = rootFolder;
 	}
+
 }
