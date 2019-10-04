@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.xml.bind.ValidationException;
-
 import opkeystudio.opkeystudiocore.core.exceptions.ValidationExceptions;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 import opkeystudio.opkeystudiocore.core.project.artificates.RootFolder;

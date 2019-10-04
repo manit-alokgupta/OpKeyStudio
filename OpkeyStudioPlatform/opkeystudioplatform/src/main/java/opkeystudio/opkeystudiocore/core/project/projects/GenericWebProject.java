@@ -2,8 +2,6 @@ package opkeystudio.opkeystudiocore.core.project.projects;
 
 import java.io.IOException;
 
-import javax.xml.bind.ValidationException;
-
 import opkeystudio.opkeystudiocore.core.exceptions.ValidationExceptions;
 import opkeystudio.opkeystudiocore.core.project.artificates.RootFolder;
 import opkeystudio.opkeystudiocore.core.project.generic.WorkSpace;
