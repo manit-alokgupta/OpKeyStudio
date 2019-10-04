@@ -12,26 +12,14 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 public class TestCaseViewer extends Table {
+	String[] tableHeaders = { "Keyword", "Object", "Input Value", "Output Value" };
 
 	public TestCaseViewer(Composite parent) {
 		super(parent, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
-		init((SashForm)parent);
+		init((SashForm) parent);
+		addRow();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	private void init(SashForm sashform) {
 		setLinesVisible(true);
 		setHeaderVisible(true);
@@ -45,31 +33,36 @@ public class TestCaseViewer extends Table {
 				}
 			}
 		});
-		
-		String[] tableHeaders = { "Keyword", "Object", "Input Value", "Output Value" };
+
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
 			column.setText(header);
-			TableItem tableItem = new TableItem(this, 0);
-			tableItem.setText("Hello");
 		}
+
 		pack();
 		for (int i = 0; i < tableHeaders.length; i++) {
 			getColumn(i).pack();
 		}
-		sashform.setWeights(new int[] {1, 10});
+		sashform.setWeights(new int[] { 1, 10 });
 		setSize(computeSize(SWT.DEFAULT, 200));
-		
+
 		Menu menu = new Menu(this);
 		setMenu(menu);
-		
+
 		MenuItem mntmEdit = new MenuItem(menu, SWT.NONE);
 		mntmEdit.setText("Edit");
-		
+
 		MenuItem mntmDelete = new MenuItem(menu, SWT.NONE);
 		mntmDelete.setText("Delete");
 	}
-	
+
+	public void addRow() {
+		for (int i = 0; i <100; i++) {
+			TableItem ti = new TableItem(this, 0);
+			ti.setText(new String[] {String.valueOf(i),"deded","deded","dededed"});
+		}
+	}
+
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
