@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
+
 public class Artificate extends File {
 	/**
 	 * 
@@ -86,6 +88,8 @@ public class Artificate extends File {
 	public void createArtificate() throws IOException {
 		if (getArtificateType() == ArtificateType.FOLDER || getArtificateType() == ArtificateType.ROOTFOLDER) {
 			this.mkdir();
+			String serializedData = Utilities.getInstance().getXMLSerializedData(this);
+			Utilities.getInstance().writeToFile(new File(getArtificatePath() + ".descriptor"), serializedData);
 			return;
 		}
 		this.createNewFile();
