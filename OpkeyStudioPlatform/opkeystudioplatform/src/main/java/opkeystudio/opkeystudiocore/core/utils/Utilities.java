@@ -31,6 +31,10 @@ public class Utilities {
 	}
 
 	public void writeToFile(File file, String data) throws IOException {
+		System.out.println(file.getAbsolutePath());
+		if (!file.exists()) {
+			file.createNewFile();
+		}
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 		bw.write(data);
 		bw.flush();

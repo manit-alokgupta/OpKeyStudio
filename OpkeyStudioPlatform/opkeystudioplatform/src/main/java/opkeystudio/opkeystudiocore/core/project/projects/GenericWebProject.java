@@ -3,7 +3,9 @@ package opkeystudio.opkeystudiocore.core.project.projects;
 import java.io.IOException;
 
 import opkeystudio.opkeystudiocore.core.exceptions.ValidationExceptions;
+import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 import opkeystudio.opkeystudiocore.core.project.artificates.RootFolder;
+import opkeystudio.opkeystudiocore.core.project.artificates.Artificate.ArtificateType;
 import opkeystudio.opkeystudiocore.core.project.generic.WorkSpace;
 
 public class GenericWebProject extends Project {
@@ -30,6 +32,8 @@ public class GenericWebProject extends Project {
 		project.addRootFolder(rootFolder2);
 		project.addRootFolder(rootFolder3);
 		project.addRootFolder(rootFolder4);
+		Artificate art=new Artificate(rootFolder1.getArtificatePath(), "SampleTestCase", ArtificateType.TESTCASE);
+		rootFolder1.addArtificate(art);
 		project.createPoject();
 	}
 }

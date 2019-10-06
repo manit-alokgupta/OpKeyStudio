@@ -93,6 +93,8 @@ public class Artificate extends File {
 			return;
 		}
 		this.createNewFile();
+		String serializedData = Utilities.getInstance().getXMLSerializedData(this);
+		Utilities.getInstance().writeToFile(this, serializedData);
 	}
 
 	private void setArtificatePath(String artificatePath) {
