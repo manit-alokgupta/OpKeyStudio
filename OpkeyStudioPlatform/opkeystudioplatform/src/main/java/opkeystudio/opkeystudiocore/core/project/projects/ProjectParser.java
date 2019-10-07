@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
+import opkeystudio.opkeystudiocore.core.project.artificates.Artificate.ArtificateType;
 import opkeystudio.opkeystudiocore.core.project.artificates.ArtificateFolder;
 import opkeystudio.opkeystudiocore.core.project.artificates.RootFolder;
 
 public class ProjectParser {
-	public List<Artificate> parseProjects(String projectPath) {
+	public List<RootFolder> parseProjects(String projectPath) {
 		File projectFolder = new File(projectPath);
 		List<RootFolder> rootFolders = new ArrayList<RootFolder>();
 		File[] rootfiles = projectFolder.listFiles();
@@ -22,7 +23,7 @@ public class ProjectParser {
 			}
 		}
 
-		return null;
+		return rootFolders;
 	}
 
 	private List<Artificate> scanAllArtificates(Artificate artificate) {
@@ -32,8 +33,21 @@ public class ProjectParser {
 		for (File file : files) {
 			if (file.isDirectory()) {
 				ArtificateFolder arfolder = new ArtificateFolder(file.getParent(), file.getName());
+				List<Artificate> childArtificates = scanAllArtificates(arfolder);
+				arfolder.addArtificates(childArtificates);
+				allartificates.add(arfolder);
+			} else {
+				Artificate artif = new Artificate(file.getParent(), file.getName(), ArtificateType.TESTCASE);
+				allartificates.add(artif);
 			}
 		}
-		return null;
+		return allartificates;
+	}
+
+	public static void main(String[] args) {
+		List<RootFolder> folders = new ProjectParser().parseProjects("E:\\Test\\Neon123");
+		for (RootFolder folder : folders) {
+			System.out.println(folder.getArtificates());
+		}
 	}
 }
