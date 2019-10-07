@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Artificate {
@@ -17,6 +19,7 @@ public class Artificate {
 	private boolean canContainChildren = false;
 	private List<Artificate> artificates = new ArrayList<>();
 	private String artificatePath;
+	private String parentPath;
 	private boolean isRootFolder = false;
 
 	public enum ArtificateType {
@@ -32,6 +35,7 @@ public class Artificate {
 		setContainChildren(false);
 		setArtificateType(type);
 		setArtificateName(filename);
+		setParentPath(path);
 		setArtificatePath(path + File.separator + filename);
 	}
 
@@ -118,6 +122,19 @@ public class Artificate {
 
 	private void setArtificateName(String artificateName) {
 		this.artificateName = artificateName;
+	}
+
+	public String getParentPath() {
+		return parentPath;
+	}
+
+	private void setParentPath(String parentPath) {
+		this.parentPath = parentPath;
+	}
+
+	@JsonIgnore
+	public File getFile() {
+		return new File(getArtificatePath());
 	}
 
 }

@@ -13,6 +13,10 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 public class RefreshProject {
 	@Execute
 	public void execute(Shell shell) throws IOException {
+		refreshProjectTree();
+	}
+
+	public void refreshProjectTree() throws IOException {
 		Tree projectTree = (Tree) ServiceRepository.getInstance().getProjectTreeObject();
 		projectTree.removeAll();
 		new ProjectLoader().loadProjectInTree(projectTree, ServiceRepository.getInstance().getDefaultProjectPath());
