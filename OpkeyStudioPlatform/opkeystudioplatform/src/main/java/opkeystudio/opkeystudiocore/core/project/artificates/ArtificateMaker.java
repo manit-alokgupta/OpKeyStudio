@@ -18,4 +18,8 @@ public class ArtificateMaker {
 	public void createObjectRepository(String parentPath, String artificateName) throws IOException {
 		createArtificate(parentPath, artificateName, ArtificateType.OBJECTREPOSITORY);
 	}
+	
+	public void createFolder(String parentPath, String artificateName) throws IOException {
+		createArtificate(parentPath, artificateName, ArtificateType.FOLDER);
+	}
 }

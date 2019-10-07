@@ -95,8 +95,6 @@ public class Artificate {
 		File file = new File(getArtificatePath());
 		if (getArtificateType() == ArtificateType.FOLDER || getArtificateType() == ArtificateType.ROOTFOLDER) {
 			file.mkdir();
-			String serializedData = Utilities.getInstance().getXMLSerializedData(this);
-			Utilities.getInstance().writeToFile(new File(getArtificatePath() + ".descriptor"), serializedData);
 			return;
 		}
 		file.createNewFile();

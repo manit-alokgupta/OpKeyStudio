@@ -22,6 +22,7 @@ import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate.ArtificateType;
 import opkeystudio.opkeystudiocore.core.project.artificates.ArtificateMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class TreeViewCompositeUI extends Composite {
 
@@ -52,6 +53,9 @@ public class TreeViewCompositeUI extends Composite {
 		Menu menu_1 = new Menu(mntmNew);
 		mntmNew.setMenu(menu_1);
 
+		MenuItem folderMenuItem = new MenuItem(menu_1, SWT.NONE);
+		folderMenuItem.setText("Folder");
+		
 		MenuItem testcaseMenuItem = new MenuItem(menu_1, SWT.NONE);
 		testcaseMenuItem.setText("TestCase");
 
@@ -90,7 +94,31 @@ public class TreeViewCompositeUI extends Composite {
 
 			}
 		});
+		
+		folderMenuItem.addSelectionListener(new SelectionListener() {
 
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artificate selectArtificate = ServiceRepository.getInstance().getDefaultArtificate();
+				if (selectArtificate.getArtificateType() == ArtificateType.ROOTFOLDER
+						|| selectArtificate.getArtificateType() == ArtificateType.FOLDER) {
+					try {
+						new ArtificateMaker().createFolder(selectArtificate.getArtificatePath(), "TestCase");
+						new RefreshProject().refreshProjectTree();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
 		deleteMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
