@@ -20,6 +20,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.ArtificateTreeItem;
 import opkeystudio.featurecore.project.ProjectLoader;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate.ArtificateType;
+import opkeystudio.opkeystudiocore.core.project.artificates.ArtificateMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class TreeViewCompositeUI extends Composite {
@@ -66,6 +67,30 @@ public class TreeViewCompositeUI extends Composite {
 		MenuItem deleteMenuItem = new MenuItem(menu, SWT.NONE);
 		deleteMenuItem.setText("Delete");
 
+		testcaseMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artificate selectArtificate = ServiceRepository.getInstance().getDefaultArtificate();
+				if (selectArtificate.getArtificateType() == ArtificateType.ROOTFOLDER
+						|| selectArtificate.getArtificateType() == ArtificateType.FOLDER) {
+					try {
+						new ArtificateMaker().createTestCase(selectArtificate.getArtificatePath(), "TestCase");
+						new RefreshProject().refreshProjectTree();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		deleteMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -75,12 +100,7 @@ public class TreeViewCompositeUI extends Composite {
 						"Do you really want to delete " + selectArtificate.getArtificateName() + " ?");
 				if (option) {
 					selectArtificate.getFile().delete();
-					try {
-						new RefreshProject().refreshProjectTree();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					new RefreshProject().refreshProjectTree();
 				}
 			}
 
@@ -100,18 +120,13 @@ public class TreeViewCompositeUI extends Composite {
 						"Rename " + selectArtificate.getArtificateName(), selectArtificate.getArtificateName(), null);
 				renameDialog.open();
 				String inputValue = renameDialog.getValue();
-				System.out.println("Input Value is "+inputValue);
+				System.out.println("Input Value is " + inputValue);
 				if (inputValue.trim().isEmpty()) {
 					return;
 				}
 				selectArtificate.getFile()
 						.renameTo(new File(selectArtificate.getParentPath() + File.separator + inputValue));
-				try {
-					new RefreshProject().refreshProjectTree();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				new RefreshProject().refreshProjectTree();
 			}
 
 			@Override
@@ -132,8 +147,7 @@ public class TreeViewCompositeUI extends Composite {
 				ServiceRepository.getInstance().setDefaultArtificate(selectedArtificate);
 				if (selectedArtificate.getArtificateType() == ArtificateType.FOLDER
 						|| selectedArtificate.getArtificateType() == ArtificateType.ROOTFOLDER) {
-					System.out.println("Clicked");
-					menu_1.dispose();
+	
 				} else {
 
 				}

@@ -12,14 +12,19 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 
 public class RefreshProject {
 	@Execute
-	public void execute(Shell shell) throws IOException {
+	public void execute(Shell shell) {
 		refreshProjectTree();
 	}
 
-	public void refreshProjectTree() throws IOException {
+	public void refreshProjectTree() {
 		Tree projectTree = (Tree) ServiceRepository.getInstance().getProjectTreeObject();
 		projectTree.removeAll();
-		new ProjectLoader().loadProjectInTree(projectTree, ServiceRepository.getInstance().getDefaultProjectPath());
+		try {
+			new ProjectLoader().loadProjectInTree(projectTree, ServiceRepository.getInstance().getDefaultProjectPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
