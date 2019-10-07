@@ -8,12 +8,10 @@ import java.util.UUID;
 
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class Artificate extends File {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Artificate {
+
 	private String artificateId;
+	private String artificateName;
 	private ArtificateType artificateType;
 	private String artificateTypeString;
 	private boolean canContainChildren = false;
@@ -25,11 +23,15 @@ public class Artificate extends File {
 		ROOTFOLDER, FOLDER, TESTCASE, OBJECTREPOSITORY, TESTSUITES
 	};
 
+	public Artificate() {
+
+	}
+
 	public Artificate(String path, String filename, ArtificateType type) {
-		super(path, filename);
 		setArtificateId(UUID.randomUUID().toString());
 		setContainChildren(false);
 		setArtificateType(type);
+		setArtificateName(filename);
 		setArtificatePath(path + File.separator + filename);
 	}
 
@@ -86,15 +88,16 @@ public class Artificate extends File {
 	}
 
 	public void createArtificate() throws IOException {
+		File file = new File(getArtificatePath());
 		if (getArtificateType() == ArtificateType.FOLDER || getArtificateType() == ArtificateType.ROOTFOLDER) {
-			this.mkdir();
+			file.mkdir();
 			String serializedData = Utilities.getInstance().getXMLSerializedData(this);
 			Utilities.getInstance().writeToFile(new File(getArtificatePath() + ".descriptor"), serializedData);
 			return;
 		}
-		this.createNewFile();
+		file.createNewFile();
 		String serializedData = Utilities.getInstance().getXMLSerializedData(this);
-		Utilities.getInstance().writeToFile(this, serializedData);
+		Utilities.getInstance().writeToFile(file, serializedData);
 	}
 
 	private void setArtificatePath(String artificatePath) {
@@ -107,6 +110,14 @@ public class Artificate extends File {
 
 	public void setRootFolder(boolean isRootFolder) {
 		this.isRootFolder = isRootFolder;
+	}
+
+	public String getArtificateName() {
+		return artificateName;
+	}
+
+	private void setArtificateName(String artificateName) {
+		this.artificateName = artificateName;
 	}
 
 }

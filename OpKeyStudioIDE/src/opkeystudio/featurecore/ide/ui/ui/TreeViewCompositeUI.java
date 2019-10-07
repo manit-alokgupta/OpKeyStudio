@@ -1,5 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.IOException;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -20,8 +22,9 @@ public class TreeViewCompositeUI extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
+	 * @throws IOException 
 	 */
-	public TreeViewCompositeUI(Composite parent, int style) {
+	public TreeViewCompositeUI(Composite parent, int style) throws IOException {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -46,7 +49,7 @@ public class TreeViewCompositeUI extends Composite {
 			}
 		});
 
-		new ProjectLoader().loadProjectInTree(tree, "E:\\Test\\123456");
+		new ProjectLoader().loadProjectInTree(tree, "E:\\Test\\TestProject");
 
 		Menu menu = new Menu(tree);
 		tree.setMenu(menu);

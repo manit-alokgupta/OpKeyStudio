@@ -1,5 +1,7 @@
 package opkeystudio.parts.part;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
@@ -16,7 +18,7 @@ public class ProjectExplorerPart {
 	MPart projectExplorerPart;
 	
 	@PostConstruct
-	public void postConstruct(Composite parent) {
+	public void postConstruct(Composite parent) throws IOException {
 		new TreeViewCompositeUI(parent, 0);
 	}
 

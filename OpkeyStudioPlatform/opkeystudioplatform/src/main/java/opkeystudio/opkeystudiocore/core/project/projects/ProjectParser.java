@@ -1,16 +1,17 @@
 package opkeystudio.opkeystudiocore.core.project.projects;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
-import opkeystudio.opkeystudiocore.core.project.artificates.Artificate.ArtificateType;
 import opkeystudio.opkeystudiocore.core.project.artificates.ArtificateFolder;
 import opkeystudio.opkeystudiocore.core.project.artificates.RootFolder;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ProjectParser {
-	public List<RootFolder> parseProjects(String projectPath) {
+	public List<RootFolder> parseProjects(String projectPath) throws IOException {
 		File projectFolder = new File(projectPath);
 		List<RootFolder> rootFolders = new ArrayList<RootFolder>();
 		File[] rootfiles = projectFolder.listFiles();
@@ -26,7 +27,7 @@ public class ProjectParser {
 		return rootFolders;
 	}
 
-	private List<Artificate> scanAllArtificates(Artificate artificate) {
+	private List<Artificate> scanAllArtificates(Artificate artificate) throws IOException {
 		List<Artificate> allartificates = new ArrayList<Artificate>();
 		File artificateFile = new File(artificate.getArtificatePath());
 		File[] files = artificateFile.listFiles();
@@ -37,17 +38,10 @@ public class ProjectParser {
 				arfolder.addArtificates(childArtificates);
 				allartificates.add(arfolder);
 			} else {
-				Artificate artif = new Artificate(file.getParent(), file.getName(), ArtificateType.TESTCASE);
+				Artificate artif = (Artificate) Utilities.getInstance().getXMLDeSerializedData(file, Artificate.class);
 				allartificates.add(artif);
 			}
 		}
 		return allartificates;
-	}
-
-	public static void main(String[] args) {
-		List<RootFolder> folders = new ProjectParser().parseProjects("E:\\Test\\Neon123");
-		for (RootFolder folder : folders) {
-			System.out.println(folder.getArtificates());
-		}
 	}
 }

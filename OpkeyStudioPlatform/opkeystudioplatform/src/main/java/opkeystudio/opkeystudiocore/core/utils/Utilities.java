@@ -2,7 +2,6 @@ package opkeystudio.opkeystudiocore.core.utils;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -28,6 +27,11 @@ public class Utilities {
 	public String getXMLSerializedData(Object object) throws JsonProcessingException {
 		XmlMapper mapper = new XmlMapper();
 		return mapper.writeValueAsString(object);
+	}
+
+	public Object getXMLDeSerializedData(File filepath, Class<?> _class) throws IOException {
+		XmlMapper mapper = new XmlMapper();
+		return mapper.readValue(filepath, _class);
 	}
 
 	public void writeToFile(File file, String data) throws IOException {
