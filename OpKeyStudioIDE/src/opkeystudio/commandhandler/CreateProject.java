@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.featurecore.project.ui.ProjectCreationWizard;
 
-public class Import {
+public class CreateProject {
 	@Execute
 	public void execute(Shell shell) {
 		ProjectCreationWizard pwizard = new ProjectCreationWizard(shell, 0);

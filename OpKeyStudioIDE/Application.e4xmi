@@ -5,7 +5,7 @@
       <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.explorertreepartstack" containerData="200">
         <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.explorertreepart" containerData="" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ProjectExplorerPart" label="Project Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/class_obj.gif">
           <toolbar xmi:id="_BJErQNqxEem51cXlp-aEQw" elementId="opkeystudio.toolbar.2">
-            <children xsi:type="menu:DirectToolItem" xmi:id="_DMhJsNqxEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.1" iconURI="platform:/plugin/OpKeyStudio/icons/refresh.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.Import"/>
+            <children xsi:type="menu:DirectToolItem" xmi:id="_DMhJsNqxEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.1" iconURI="platform:/plugin/OpKeyStudio/icons/refresh.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.CreateProject"/>
           </toolbar>
         </children>
       </children>
@@ -29,7 +29,8 @@
     </children>
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="opkeystudio.menu.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_lC_IwNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.import" label="Create Project" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.Import"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_lC_IwNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.import" label="Create Project" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.CreateProject"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_0Egh0OjfEemr16RYiDU_mQ" elementId="opkeystudio.directmenuitem.importproject" label="Import Project" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportProject"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_s3lGcNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.help" label="Help">
@@ -38,7 +39,7 @@
     </mainMenu>
     <trimBars xmi:id="_vz6icNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.0">
       <children xsi:type="menu:ToolBar" xmi:id="_wiuJMNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.maintoolbarholder">
-        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.0" iconURI="platform:/plugin/OpKeyStudio/icons/new_con@2x.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.Import">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.0" iconURI="platform:/plugin/OpKeyStudio/icons/new_con@2x.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.CreateProject">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
         </children>
       </children>
