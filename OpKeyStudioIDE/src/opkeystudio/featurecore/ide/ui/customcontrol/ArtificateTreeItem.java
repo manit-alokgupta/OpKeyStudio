@@ -6,16 +6,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
+
 public class ArtificateTreeItem extends TreeItem {
-	private String artificateId;
-	public ArtificateTreeItem(Tree parent) {
+	private Artificate artificate;
+
+	public ArtificateTreeItem(Tree parent, Artificate artificate) {
 		super(parent, SWT.NONE);
-		setArtificateId(UUID.randomUUID().toString());
+		setArtificate(artificate);
 	}
 
-	public ArtificateTreeItem(TreeItem parent) {
+	public ArtificateTreeItem(TreeItem parent, Artificate artificate) {
 		super(parent, SWT.NONE);
-		setArtificateId(UUID.randomUUID().toString());
+		setArtificate(artificate);
 	}
 
 	@Override
@@ -23,11 +26,11 @@ public class ArtificateTreeItem extends TreeItem {
 		// Disable the check that prevents subclassing of SWT components
 	}
 
-	public String getArtificateId() {
-		return artificateId;
+	public Artificate getArtificate() {
+		return artificate;
 	}
 
-	public void setArtificateId(String artificateId) {
-		this.artificateId = artificateId;
+	public void setArtificate(Artificate artificate) {
+		this.artificate = artificate;
 	}
 }
