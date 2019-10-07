@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import opkeystudio.opkeystudiocore.core.models.model.ModelGroup;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Artificate {
@@ -20,6 +21,7 @@ public class Artificate {
 	private List<Artificate> artificates = new ArrayList<>();
 	private String artificatePath;
 	private String parentPath;
+	private ModelGroup modelGroup;
 	private boolean isRootFolder = false;
 
 	public enum ArtificateType {
@@ -133,6 +135,14 @@ public class Artificate {
 	@JsonIgnore
 	public File getFile() {
 		return new File(getArtificatePath());
+	}
+
+	public ModelGroup getModelGroup() {
+		return modelGroup;
+	}
+
+	public void setModelGroup(ModelGroup modelGroup) {
+		this.modelGroup = modelGroup;
 	}
 
 }
