@@ -37,8 +37,6 @@ public class TreeViewCompositeUI extends Composite {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		Tree tree = new Tree(this, SWT.BORDER);
-		tree.setHeaderVisible(true);
-		tree.setLinesVisible(true);
 		ServiceRepository.getInstance().setProjectTreeObject(tree);
 		ServiceRepository.getInstance().setDefaultProjectPath("E:\\Test\\TestProject");
 		new ProjectLoader().loadProjectInTree(tree, ServiceRepository.getInstance().getDefaultProjectPath());

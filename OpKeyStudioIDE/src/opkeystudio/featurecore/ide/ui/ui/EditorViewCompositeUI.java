@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.TestCaseViewer;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class EditorViewCompositeUI extends Composite {
 
@@ -35,6 +36,7 @@ public class EditorViewCompositeUI extends Composite {
 				Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 
 		CTabItem tbtmNewItem = new CTabItem(tabFolder, SWT.NONE);
+		tbtmNewItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase.gif"));
 		tbtmNewItem.setText("TestCase");
 
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
