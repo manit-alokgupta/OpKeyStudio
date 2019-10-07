@@ -22,7 +22,6 @@ import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate.ArtificateType;
 import opkeystudio.opkeystudiocore.core.project.artificates.ArtificateMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
-import org.eclipse.wb.swt.ResourceManager;
 
 public class TreeViewCompositeUI extends Composite {
 

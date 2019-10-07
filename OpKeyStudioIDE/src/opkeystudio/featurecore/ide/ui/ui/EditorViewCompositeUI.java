@@ -9,13 +9,11 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.TestCaseViewer;
 
 public class EditorViewCompositeUI extends Composite {
-	private Table table;
 
 	/**
 	 * Create the composite.

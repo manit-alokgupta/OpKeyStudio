@@ -39,7 +39,7 @@
     </mainMenu>
     <trimBars xmi:id="_vz6icNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.0">
       <children xsi:type="menu:ToolBar" xmi:id="_wiuJMNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.maintoolbarholder">
-        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.0" iconURI="platform:/plugin/OpKeyStudio/icons/new_con@2x.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.CreateProject">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.0" iconURI="platform:/plugin/OpKeyStudio/icons/new-file-icon.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.CreateProject">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
         </children>
       </children>
