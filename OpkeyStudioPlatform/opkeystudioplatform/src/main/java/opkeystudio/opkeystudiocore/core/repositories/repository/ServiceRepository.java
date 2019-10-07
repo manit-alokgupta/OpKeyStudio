@@ -35,4 +35,24 @@ public class ServiceRepository {
 		}
 		return (Artificate) artificateObject;
 	}
+
+	public void setDefaultProjectPath(String path) {
+		setServiceRepositoryVariable("opkeystudio.defaultProjectPath", path);
+	}
+
+	public String getDefaultProjectPath() {
+		Object projectPath = getServiceRepositoryVariable("opkeystudio.defaultProjectPath");
+		if (projectPath == null) {
+			return null;
+		}
+		return (String) projectPath;
+	}
+
+	public void setProjectTreeObject(Object treeobject) {
+		setServiceRepositoryVariable("opkeystudio.projecttree", treeobject);
+	}
+
+	public Object getProjectTreeObject() {
+		return getServiceRepositoryVariable("opkeystudio.projecttree");
+	}
 }

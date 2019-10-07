@@ -5,7 +5,7 @@
       <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.explorertreepartstack" containerData="200">
         <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.explorertreepart" containerData="" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ProjectExplorerPart" label="Project Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/class_obj.gif">
           <toolbar xmi:id="_BJErQNqxEem51cXlp-aEQw" elementId="opkeystudio.toolbar.2">
-            <children xsi:type="menu:DirectToolItem" xmi:id="_DMhJsNqxEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.1" iconURI="platform:/plugin/OpKeyStudio/icons/refresh.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.CreateProject"/>
+            <children xsi:type="menu:DirectToolItem" xmi:id="_DMhJsNqxEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.1" iconURI="platform:/plugin/OpKeyStudio/icons/refresh.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.RefreshProject"/>
           </toolbar>
         </children>
       </children>

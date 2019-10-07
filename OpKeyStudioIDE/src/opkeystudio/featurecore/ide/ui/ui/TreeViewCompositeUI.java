@@ -14,6 +14,9 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtificateTreeItem;
 import opkeystudio.featurecore.project.ProjectLoader;
+import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
+import opkeystudio.opkeystudiocore.core.project.artificates.Artificate.ArtificateType;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class TreeViewCompositeUI extends Composite {
 
@@ -22,7 +25,7 @@ public class TreeViewCompositeUI extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public TreeViewCompositeUI(Composite parent, int style) throws IOException {
 		super(parent, style);
@@ -31,25 +34,9 @@ public class TreeViewCompositeUI extends Composite {
 		Tree tree = new Tree(this, SWT.BORDER);
 		tree.setHeaderVisible(true);
 		tree.setLinesVisible(true);
-
-		tree.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				Tree tree = (Tree) arg0.getSource();
-				TreeItem[] items = tree.getSelection();
-				System.out.println(items.length);
-				System.out.println(((ArtificateTreeItem) items[0]).getArtificate().getArtificatePath());
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-			}
-		});
-
-		new ProjectLoader().loadProjectInTree(tree, "E:\\Test\\TestProject");
+		ServiceRepository.getInstance().setProjectTreeObject(tree);
+		ServiceRepository.getInstance().setDefaultProjectPath("E:\\Test\\TestProject");
+		new ProjectLoader().loadProjectInTree(tree, ServiceRepository.getInstance().getDefaultProjectPath());
 
 		Menu menu = new Menu(tree);
 		tree.setMenu(menu);
@@ -60,14 +47,59 @@ public class TreeViewCompositeUI extends Composite {
 		Menu menu_1 = new Menu(mntmNew);
 		mntmNew.setMenu(menu_1);
 
-		MenuItem mntmTestcase = new MenuItem(menu_1, SWT.NONE);
-		mntmTestcase.setText("TestCase");
+		MenuItem testcaseMenuItem = new MenuItem(menu_1, SWT.NONE);
+		testcaseMenuItem.setText("TestCase");
 
-		MenuItem mntmObjectr = new MenuItem(menu_1, SWT.NONE);
-		mntmObjectr.setText("ObjectRepository");
+		MenuItem objectRepositoryMenuItem = new MenuItem(menu_1, SWT.NONE);
+		objectRepositoryMenuItem.setText("ObjectRepository");
 
-		MenuItem mntmNewItem_2 = new MenuItem(menu, SWT.NONE);
-		mntmNewItem_2.setText("Rename");
+		MenuItem functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
+		functionLibraryMenuItem.setText("Function Library");
+
+		MenuItem renameMenuItem = new MenuItem(menu, SWT.NONE);
+		renameMenuItem.setText("Rename");
+
+		MenuItem deleteMenuItem = new MenuItem(menu, SWT.NONE);
+		deleteMenuItem.setText("Delete");
+
+		deleteMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		tree.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				Tree tree = (Tree) arg0.getSource();
+				TreeItem[] items = tree.getSelection();
+				Artificate selectedArtificate = ((ArtificateTreeItem) items[0]).getArtificate();
+				ServiceRepository.getInstance().setDefaultArtificate(selectedArtificate);
+				if (selectedArtificate.getArtificateType() == ArtificateType.FOLDER
+						|| selectedArtificate.getArtificateType() == ArtificateType.ROOTFOLDER) {
+					System.out.println("Clicked");
+					menu_1.dispose();
+				} else {
+
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 
 	@Override
