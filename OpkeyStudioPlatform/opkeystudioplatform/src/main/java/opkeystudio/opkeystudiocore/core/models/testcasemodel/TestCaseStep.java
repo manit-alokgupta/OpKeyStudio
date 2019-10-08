@@ -1,10 +1,16 @@
 package opkeystudio.opkeystudiocore.core.models.testcasemodel;
 
+import opkeystudio.opkeystudiocore.core.models.objectrepositorymodel.ORObject;
+
 public class TestCaseStep {
 	private KeyWord keyword;
 	private ORObject orObject;
 	private InputValue inputValue;
 	private OutputValue outputValue;
+
+	public TestCaseStep() {
+
+	}
 
 	public TestCaseStep(KeyWord keyword, ORObject orobject, InputValue inputValue, OutputValue outputValue) {
 		setKeyword(keyword);

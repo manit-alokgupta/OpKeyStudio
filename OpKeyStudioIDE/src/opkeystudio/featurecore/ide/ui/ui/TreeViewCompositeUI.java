@@ -52,7 +52,7 @@ public class TreeViewCompositeUI extends Composite {
 
 		MenuItem folderMenuItem = new MenuItem(menu_1, SWT.NONE);
 		folderMenuItem.setText("Folder");
-		
+
 		MenuItem testcaseMenuItem = new MenuItem(menu_1, SWT.NONE);
 		testcaseMenuItem.setText("TestCase");
 
@@ -91,7 +91,7 @@ public class TreeViewCompositeUI extends Composite {
 
 			}
 		});
-		
+
 		folderMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -115,7 +115,7 @@ public class TreeViewCompositeUI extends Composite {
 
 			}
 		});
-		
+
 		deleteMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -172,7 +172,7 @@ public class TreeViewCompositeUI extends Composite {
 				ServiceRepository.getInstance().setDefaultArtificate(selectedArtificate);
 				if (selectedArtificate.getArtificateType() == ArtificateType.FOLDER
 						|| selectedArtificate.getArtificateType() == ArtificateType.ROOTFOLDER) {
-	
+
 				} else {
 
 				}

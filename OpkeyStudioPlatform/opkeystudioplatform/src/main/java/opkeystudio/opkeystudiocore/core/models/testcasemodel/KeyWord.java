@@ -4,6 +4,10 @@ public class KeyWord {
 	private String keywordName;
 	private String keywordMethod;
 
+	public KeyWord() {
+
+	}
+
 	public KeyWord(String keywordName, String keyMethod) {
 		setKeywordName(keywordName);
 		setKeywordMethod(keyMethod);

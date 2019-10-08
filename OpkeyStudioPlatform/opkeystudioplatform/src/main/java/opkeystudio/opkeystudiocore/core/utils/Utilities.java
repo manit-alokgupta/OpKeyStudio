@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public class Utilities {
@@ -26,6 +27,7 @@ public class Utilities {
 
 	public String getXMLSerializedData(Object object) throws JsonProcessingException {
 		XmlMapper mapper = new XmlMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		return mapper.writeValueAsString(object);
 	}
 

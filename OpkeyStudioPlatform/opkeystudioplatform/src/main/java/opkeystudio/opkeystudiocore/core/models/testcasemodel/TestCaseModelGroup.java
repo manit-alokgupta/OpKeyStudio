@@ -5,15 +5,17 @@ import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.models.model.ModelGroup;
 
-public class TestCaseGroup extends ModelGroup {
+public class TestCaseModelGroup extends ModelGroup {
 	private List<TestCaseStep> steps = new ArrayList<>();
 
-	@Override
+	public TestCaseModelGroup() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void addTestCaseStep(TestCaseStep testcasestep) {
 		this.steps.add(testcasestep);
 	}
 
-	@Override
 	public List<TestCaseStep> getAllTestCaseSteps() {
 		return this.steps;
 	}

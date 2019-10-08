@@ -9,6 +9,12 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import opkeystudio.opkeystudiocore.core.models.model.ModelGroup;
+import opkeystudio.opkeystudiocore.core.models.objectrepositorymodel.ORObject;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.InputValue;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.KeyWord;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.OutputValue;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseModelGroup;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseStep;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Artificate {
@@ -39,6 +45,9 @@ public class Artificate {
 		setArtificateName(filename);
 		setParentPath(path);
 		setArtificatePath(path + File.separator + filename);
+		if (type == ArtificateType.TESTCASE) {
+			setModelGroup(new TestCaseModelGroup());
+		}
 	}
 
 	public String getArtificateId() {

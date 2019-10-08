@@ -14,11 +14,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 import opkeystudio.opkeystudiocore.core.models.model.ModelGroup;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.InputValue;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.KeyWord;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.ORObject;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.OutputValue;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseGroup;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseModelGroup;
 import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseStep;
 
 public class TestCaseViewer extends Table {
@@ -28,18 +24,6 @@ public class TestCaseViewer extends Table {
 	public TestCaseViewer(Composite parent) {
 		super(parent, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
 		init((SashForm) parent);
-		TestCaseGroup tcGroup = new TestCaseGroup();
-		KeyWord keyword = new KeyWord("Click", "Method_Click");
-		ORObject object = new ORObject();
-		InputValue inv = new InputValue();
-		OutputValue outp = new OutputValue();
-
-		TestCaseStep tcstep = new TestCaseStep(keyword, object, inv, outp);
-		tcGroup.addTestCaseStep(tcstep);
-		TestCaseStep tcstep_1 = new TestCaseStep(keyword, object, inv, outp);
-		tcGroup.addTestCaseStep(tcstep_1);
-		setModelGroup(tcGroup);
-		renderModel();
 	}
 
 	private void init(SashForm sashform) {
@@ -61,7 +45,7 @@ public class TestCaseViewer extends Table {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Table table = (Table) e.getSource();
-				table.getSelectionIndex();
+				System.out.println("Selected Table Index "+table.getSelectionIndex());
 			}
 
 			@Override
@@ -94,10 +78,11 @@ public class TestCaseViewer extends Table {
 	}
 
 	public void renderModel() {
-		TestCaseGroup tcgroup = (TestCaseGroup) getModelGroup();
+		TestCaseModelGroup tcgroup = (TestCaseModelGroup) getModelGroup();
 		for (TestCaseStep tcstep : tcgroup.getAllTestCaseSteps()) {
 			TableItem ti = new TableItem(this, 0);
-			ti.setText(new String[] { tcstep.getKeyword().getKeywordName(), "deded", "deded", "dededed" });
+			ti.setData(tcstep);
+			ti.setText(new String[] { tcstep.getKeyword().getKeywordName(), "", "", "" });
 		}
 	}
 
