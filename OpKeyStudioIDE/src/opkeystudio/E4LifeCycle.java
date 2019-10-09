@@ -17,6 +17,7 @@ public class E4LifeCycle {
 
 	@PostContextCreate
 	void postContextCreate(IEclipseContext workbenchContext) {
+		
 	}
 
 	@PreSave

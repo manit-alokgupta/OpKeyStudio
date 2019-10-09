@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import opkeystudio.opkeystudiocore.core.models.model.ModelGroup;
 import opkeystudio.opkeystudiocore.core.models.objectrepositorymodel.ORObject;
+import opkeystudio.opkeystudiocore.core.models.objectrepositorymodel.ObjectRepositoryModelGroup;
 import opkeystudio.opkeystudiocore.core.models.testcasemodel.InputValue;
 import opkeystudio.opkeystudiocore.core.models.testcasemodel.KeyWord;
 import opkeystudio.opkeystudiocore.core.models.testcasemodel.OutputValue;
@@ -47,6 +48,9 @@ public class Artificate {
 		setArtificatePath(path + File.separator + filename);
 		if (type == ArtificateType.TESTCASE) {
 			setModelGroup(new TestCaseModelGroup());
+		}
+		if (type == ArtificateType.OBJECTREPOSITORY) {
+			setModelGroup(new ObjectRepositoryModelGroup());
 		}
 	}
 
