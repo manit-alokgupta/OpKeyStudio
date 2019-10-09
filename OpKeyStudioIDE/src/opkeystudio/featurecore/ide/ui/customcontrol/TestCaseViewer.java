@@ -11,15 +11,9 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-
-import opkeystudio.opkeystudiocore.core.models.model.ModelGroup;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseModelGroup;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseStep;
 
 public class TestCaseViewer extends Table {
 	String[] tableHeaders = { "Keyword", "Object", "Input Value", "Output Value" };
-	private ModelGroup modelGroup;
 
 	public TestCaseViewer(Composite parent) {
 		super(parent, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
@@ -45,7 +39,7 @@ public class TestCaseViewer extends Table {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Table table = (Table) e.getSource();
-				System.out.println("Selected Table Index "+table.getSelectionIndex());
+				System.out.println("Selected Table Index " + table.getSelectionIndex());
 			}
 
 			@Override
@@ -75,15 +69,17 @@ public class TestCaseViewer extends Table {
 
 		MenuItem mntmDelete = new MenuItem(menu, SWT.NONE);
 		mntmDelete.setText("Delete");
+		
+		renderModel();
 	}
 
 	public void renderModel() {
-		TestCaseModelGroup tcgroup = (TestCaseModelGroup) getModelGroup();
-		for (TestCaseStep tcstep : tcgroup.getAllTestCaseSteps()) {
-			TableItem ti = new TableItem(this, 0);
-			ti.setData(tcstep);
-			ti.setText(new String[] { tcstep.getKeyword().getKeywordName(), "", "", "" });
-		}
+		/*
+		 * TestCaseModelGroup tcgroup = (TestCaseModelGroup) getModelGroup(); for
+		 * (TestCaseStep tcstep : tcgroup.getAllTestCaseSteps()) { TableItem ti = new
+		 * TableItem(this, 0); ti.setData(tcstep); ti.setText(new String[] {
+		 * tcstep.getKeyword().getKeywordName(), "", "", "" }); }
+		 */
 	}
 
 	@Override
@@ -91,11 +87,4 @@ public class TestCaseViewer extends Table {
 		// Disable the check that prevents subclassing of SWT components
 	}
 
-	public ModelGroup getModelGroup() {
-		return modelGroup;
-	}
-
-	public void setModelGroup(ModelGroup modelGroup) {
-		this.modelGroup = modelGroup;
-	}
 }

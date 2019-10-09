@@ -2,6 +2,7 @@ package opkeystudio.core.utils;
 
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
