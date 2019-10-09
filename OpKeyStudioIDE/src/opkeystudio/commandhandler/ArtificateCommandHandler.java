@@ -16,6 +16,7 @@ public class ArtificateCommandHandler {
 	public void openTestCaseHandler(Artificate testCaseArtificate) {
 		EPartService partService = Utilities.getInstance().getEpartService();
 		MPart part = getWorkBenchPart();
+		part.setObject(testCaseArtificate);
 		part.setLabel(testCaseArtificate.getArtificateTypeString() + "-" + testCaseArtificate.getArtificateName());
 		partService.showPart(part, PartState.ACTIVATE);
 	}
