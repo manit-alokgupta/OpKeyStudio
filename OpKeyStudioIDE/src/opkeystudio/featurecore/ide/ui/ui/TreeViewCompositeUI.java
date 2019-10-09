@@ -6,6 +6,8 @@ import java.io.IOException;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -15,6 +17,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import opkeystudio.commandhandler.ArtificateCommandHandler;
 import opkeystudio.commandhandler.RefreshProject;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtificateTreeItem;
 import opkeystudio.featurecore.project.ProjectLoader;
@@ -165,7 +168,6 @@ public class TreeViewCompositeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
 				Tree tree = (Tree) arg0.getSource();
 				TreeItem[] items = tree.getSelection();
 				Artificate selectedArtificate = ((ArtificateTreeItem) items[0]).getArtificate();
@@ -174,13 +176,41 @@ public class TreeViewCompositeUI extends Composite {
 						|| selectedArtificate.getArtificateType() == ArtificateType.ROOTFOLDER) {
 
 				} else {
-
 				}
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub
+			}
+		});
+		
+		tree.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				Tree tree = (Tree) e.getSource();
+				TreeItem[] items = tree.getSelection();
+				Artificate selectedArtificate = ((ArtificateTreeItem) items[0]).getArtificate();
+				ServiceRepository.getInstance().setDefaultArtificate(selectedArtificate);
+				if (selectedArtificate.getArtificateType() == ArtificateType.FOLDER
+						|| selectedArtificate.getArtificateType() == ArtificateType.ROOTFOLDER) {
+
+				} else {
+					new ArtificateCommandHandler().openTestCaseHandler(selectedArtificate);
+				}
 			}
 		});
 	}

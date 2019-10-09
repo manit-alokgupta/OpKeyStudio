@@ -6,9 +6,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class ImportProject {
 
-
 	@Execute
 	public void execute(Shell shell) {
-		new ArtificateCommandHandler().openTestCaseHandler(null);
 	}
 }
