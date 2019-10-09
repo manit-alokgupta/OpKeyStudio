@@ -11,6 +11,13 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
+
+import opkeystudio.core.utils.Utilities;
+import opkeystudio.opkeystudiocore.core.models.partObject.WorkBenchPartObject;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.KeyWord;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseModelGroup;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseStep;
 
 public class TestCaseViewer extends Table {
 	String[] tableHeaders = { "Keyword", "Object", "Input Value", "Output Value" };
@@ -69,17 +76,19 @@ public class TestCaseViewer extends Table {
 
 		MenuItem mntmDelete = new MenuItem(menu, SWT.NONE);
 		mntmDelete.setText("Delete");
-		
+
 		renderModel();
 	}
 
 	public void renderModel() {
-		/*
-		 * TestCaseModelGroup tcgroup = (TestCaseModelGroup) getModelGroup(); for
-		 * (TestCaseStep tcstep : tcgroup.getAllTestCaseSteps()) { TableItem ti = new
-		 * TableItem(this, 0); ti.setData(tcstep); ti.setText(new String[] {
-		 * tcstep.getKeyword().getKeywordName(), "", "", "" }); }
-		 */
+		WorkBenchPartObject wbpo = Utilities.getInstance().getActivePartWorkBenchObject();
+		TestCaseModelGroup tcgroup = (TestCaseModelGroup) wbpo.getArtificate().getModelGroup();
+		for (TestCaseStep tcstep : tcgroup.getAllTestCaseSteps()) {
+			TableItem ti = new TableItem(this, 0);
+			ti.setData(tcstep);
+			ti.setText(new String[] { tcstep.getKeyword().getKeywordName(), "", "", "" });
+		}
+
 	}
 
 	@Override

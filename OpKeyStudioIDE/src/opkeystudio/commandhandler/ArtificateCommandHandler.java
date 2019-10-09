@@ -6,6 +6,9 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.opkeystudiocore.core.models.partObject.WorkBenchPartObject;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.KeyWord;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseModelGroup;
+import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseStep;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 
 public class ArtificateCommandHandler {

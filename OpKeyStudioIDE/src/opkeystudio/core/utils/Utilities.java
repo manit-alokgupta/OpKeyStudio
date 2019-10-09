@@ -8,6 +8,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import opkeystudio.opkeystudiocore.core.models.partObject.WorkBenchPartObject;
+
 public class Utilities {
 	private static Utilities utils = null;
 
@@ -24,5 +26,17 @@ public class Utilities {
 		IEclipseContext eclipseCtx = EclipseContextFactory.getServiceContext(bundleContext);
 		EPartService partService = (EPartService) eclipseCtx.get(EPartService.class.getName());
 		return partService;
+	}
+
+	public MPart getActivePart() {
+		return getEpartService().getActivePart();
+	}
+
+	public WorkBenchPartObject getActivePartWorkBenchObject() {
+		MPart activePart = getActivePart();
+		if (activePart == null) {
+			return null;
+		}
+		return (WorkBenchPartObject) activePart.getObject();
 	}
 }
