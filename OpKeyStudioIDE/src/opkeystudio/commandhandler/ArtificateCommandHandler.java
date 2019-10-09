@@ -8,10 +8,14 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 
 public class ArtificateCommandHandler {
+	private MPart getWorkBenchPart() {
+		EPartService partService = Utilities.getInstance().getEpartService();
+		return partService.createPart("opkeystudio.partdescriptor.mainworkbench");
+	}
 
 	public void openTestCaseHandler(Artificate testCaseArtificate) {
 		EPartService partService = Utilities.getInstance().getEpartService();
-		MPart part = partService.createPart("opkeystudio.partdescriptor.mainworkbench");
+		MPart part = getWorkBenchPart();
 		part.setLabel(testCaseArtificate.getArtificateTypeString() + "-" + testCaseArtificate.getArtificateName());
 		partService.showPart(part, PartState.ACTIVATE);
 	}
