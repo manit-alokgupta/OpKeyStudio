@@ -1,0 +1,151 @@
+# 10/6/19 9:50:28 PM IST
+# Eclipse Compiler for Java(TM) v20190522-0428, 3.18.0, Copyright IBM Corp 2000, 2015. All rights reserved.
+----------
+1. WARNING in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\exceptions\ValidationExceptions.java (at line 3)
+	public class ValidationExceptions extends Exception {
+	             ^^^^^^^^^^^^^^^^^^^^
+The serializable class ValidationExceptions does not declare a static final serialVersionUID field of type long
+----------
+----------
+2. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\project\artificates\Artificate.java (at line 91)
+	String serializedData = Utilities.getInstance().getXMLSerializedData(this);
+	                                                ^^^^^^^^^^^^^^^^^^^^
+The method getXMLSerializedData(Object) from the type Utilities refers to the missing type JsonProcessingException
+----------
+----------
+3. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\project\artificates\Main.java (at line 3)
+	import com.fasterxml.jackson.core.JsonProcessingException;
+	       ^^^^^^^^^^^^^
+The import com.fasterxml cannot be resolved
+----------
+4. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\project\artificates\Main.java (at line 4)
+	import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+	       ^^^^^^^^^^^^^
+The import com.fasterxml cannot be resolved
+----------
+5. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\project\artificates\Main.java (at line 10)
+	public static void main(String[] args) throws JsonProcessingException {
+	                                              ^^^^^^^^^^^^^^^^^^^^^^^
+JsonProcessingException cannot be resolved to a type
+----------
+6. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\project\artificates\Main.java (at line 15)
+	XmlMapper mapper=new XmlMapper();
+	^^^^^^^^^
+XmlMapper cannot be resolved to a type
+----------
+7. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\project\artificates\Main.java (at line 15)
+	XmlMapper mapper=new XmlMapper();
+	                     ^^^^^^^^^
+XmlMapper cannot be resolved to a type
+----------
+----------
+8. WARNING in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\project\projects\ProjectParser.java (at line 29)
+	List<Artificate> allartificates = new ArrayList<Artificate>();
+	                 ^^^^^^^^^^^^^^
+The value of the local variable allartificates is not used
+----------
+9. WARNING in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\project\projects\ProjectParser.java (at line 34)
+	ArtificateFolder arfolder = new ArtificateFolder(file.getParent(), file.getName());
+	                 ^^^^^^^^
+The value of the local variable arfolder is not used
+----------
+----------
+10. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\utils\ObjectSerializer.java (at line 3)
+	import com.fasterxml.jackson.core.JsonProcessingException;
+	       ^^^^^^^^^^^^^
+The import com.fasterxml cannot be resolved
+----------
+11. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\utils\ObjectSerializer.java (at line 4)
+	import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+	       ^^^^^^^^^^^^^
+The import com.fasterxml cannot be resolved
+----------
+----------
+12. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\utils\Utilities.java (at line 9)
+	import com.fasterxml.jackson.core.JsonProcessingException;
+	       ^^^^^^^^^^^^^
+The import com.fasterxml cannot be resolved
+----------
+13. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\utils\Utilities.java (at line 10)
+	import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+	       ^^^^^^^^^^^^^
+The import com.fasterxml cannot be resolved
+----------
+14. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\utils\Utilities.java (at line 28)
+	public String getXMLSerializedData(Object object) throws JsonProcessingException {
+	                                                         ^^^^^^^^^^^^^^^^^^^^^^^
+JsonProcessingException cannot be resolved to a type
+----------
+15. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\utils\Utilities.java (at line 29)
+	XmlMapper mapper = new XmlMapper();
+	^^^^^^^^^
+XmlMapper cannot be resolved to a type
+----------
+16. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudiocore\core\utils\Utilities.java (at line 29)
+	XmlMapper mapper = new XmlMapper();
+	                       ^^^^^^^^^
+XmlMapper cannot be resolved to a type
+----------
+----------
+17. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplication.java (at line 3)
+	import org.springframework.boot.SpringApplication;
+	       ^^^^^^^^^^^^^^^^^^^
+The import org.springframework cannot be resolved
+----------
+18. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplication.java (at line 4)
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	       ^^^^^^^^^^^^^^^^^^^
+The import org.springframework cannot be resolved
+----------
+19. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplication.java (at line 6)
+	@SpringBootApplication
+	 ^^^^^^^^^^^^^^^^^^^^^
+SpringBootApplication cannot be resolved to a type
+----------
+20. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\main\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplication.java (at line 10)
+	SpringApplication.run(OpkeystudioplatformApplication.class, args);
+	^^^^^^^^^^^^^^^^^
+SpringApplication cannot be resolved
+----------
+----------
+21. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\test\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplicationTests.java (at line 3)
+	import org.junit.Test;
+	       ^^^^^^^^^
+The import org.junit cannot be resolved
+----------
+22. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\test\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplicationTests.java (at line 4)
+	import org.junit.runner.RunWith;
+	       ^^^^^^^^^
+The import org.junit cannot be resolved
+----------
+23. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\test\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplicationTests.java (at line 5)
+	import org.springframework.boot.test.context.SpringBootTest;
+	       ^^^^^^^^^^^^^^^^^^^
+The import org.springframework cannot be resolved
+----------
+24. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\test\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplicationTests.java (at line 6)
+	import org.springframework.test.context.junit4.SpringRunner;
+	       ^^^^^^^^^^^^^^^^^^^
+The import org.springframework cannot be resolved
+----------
+25. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\test\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplicationTests.java (at line 8)
+	@RunWith(SpringRunner.class)
+	 ^^^^^^^
+RunWith cannot be resolved to a type
+----------
+26. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\test\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplicationTests.java (at line 8)
+	@RunWith(SpringRunner.class)
+	         ^^^^^^^^^^^^
+SpringRunner cannot be resolved to a type
+----------
+27. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\test\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplicationTests.java (at line 9)
+	@SpringBootTest
+	 ^^^^^^^^^^^^^^
+SpringBootTest cannot be resolved to a type
+----------
+28. ERROR in C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpkeyStudioPlatform\opkeystudioplatform\src\test\java\opkeystudio\opkeystudioplatform\OpkeystudioplatformApplicationTests.java (at line 12)
+	@Test
+	 ^^^^
+Test cannot be resolved to a type
+----------
+28 problems (25 errors, 3 warnings)
