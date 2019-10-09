@@ -38,7 +38,9 @@ public class EditorViewCompositeUI extends Composite {
 		CTabItem tbtmNewItem = new CTabItem(tabFolder, SWT.NONE);
 		tbtmNewItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase.gif"));
 		tbtmNewItem.setText("TestCase");
-
+		
+		tabFolder.setSelection(tbtmNewItem);
+		
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_1);
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
