@@ -9,6 +9,6 @@ public class ImportProject {
 
 	@Execute
 	public void execute(Shell shell) {
-		new TestCaseCommandHandler().openTestCaseHandler(null);
+		new ArtificateCommandHandler().openTestCaseHandler(null);
 	}
 }

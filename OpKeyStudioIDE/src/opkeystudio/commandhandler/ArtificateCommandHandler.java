@@ -7,12 +7,12 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 
-public class TestCaseCommandHandler {
+public class ArtificateCommandHandler {
 
 	public void openTestCaseHandler(Artificate testCaseArtificate) {
 		EPartService partService = Utilities.getInstance().getEpartService();
 		MPart part = partService.createPart("opkeystudio.partdescriptor.mainworkbench");
-		part.setLabel("Hello " + String.valueOf(Math.random()));
+		part.setLabel(testCaseArtificate.getArtificateTypeString() + "-" + testCaseArtificate.getArtificateName());
 		partService.showPart(part, PartState.ACTIVATE);
 	}
 }
