@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
@@ -55,5 +57,10 @@ public class Utilities {
 	public Object cloneObject(Object object, Class<?> _class) throws IOException {
 		String serializedData = getXMLSerializedData(object);
 		return getXMLDeSerializedData(serializedData, _class);
+	}
+
+	public ObjectMapper getObjectMapperInstance() {
+		return new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
 	}
 }

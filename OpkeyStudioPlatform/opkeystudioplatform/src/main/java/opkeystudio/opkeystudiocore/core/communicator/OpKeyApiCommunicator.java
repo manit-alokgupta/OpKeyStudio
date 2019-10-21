@@ -58,6 +58,11 @@ public class OpKeyApiCommunicator {
 			con.setRequestProperty("Authorization",
 					"Bearer " + ServiceRepository.getInstance().getOpKeyHostAuthToken());
 		}
+		
+		if(ServiceRepository.getInstance().getOpKeyHostSessionId()!=null) {
+			con.setRequestProperty("cookie", "ASP.NET_SessionId="+ServiceRepository.getInstance().getOpKeyHostSessionId());
+		}
+		
 		StringBuilder postData = new StringBuilder();
 		for (Map.Entry<String, Object> param : params.entrySet()) {
 			if (postData.length() != 0)
