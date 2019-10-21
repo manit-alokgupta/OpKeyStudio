@@ -12,20 +12,15 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class AuthenticateApi {
-	public AuthentcationData loginToOpKey(String username, String password) {
-		try {
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("loginsource", "OPKEYECLIPSE");
-			String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/OpKeyAuth/Login", "POST", params,
-					username, password);
-			ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-			AuthentcationData adata = (AuthentcationData) mapper.readValue(retdata, AuthentcationData.class);
-			ServiceRepository.getInstance().setOpKeyHostAuthToken(adata.getAuthenticationToken());
-			ServiceRepository.getInstance().setOpKeyHostSessionId(adata.getSessionId());
-			return adata;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public AuthentcationData loginToOpKey(String username, String password) throws IOException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("loginsource", "OPKEYECLIPSE");
+		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/OpKeyAuth/Login", "POST", params,
+				username, password);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		AuthentcationData adata = (AuthentcationData) mapper.readValue(retdata, AuthentcationData.class);
+		ServiceRepository.getInstance().setOpKeyHostAuthToken(adata.getAuthenticationToken());
+		ServiceRepository.getInstance().setOpKeyHostSessionId(adata.getSessionId());
+		return adata;
 	}
 }
