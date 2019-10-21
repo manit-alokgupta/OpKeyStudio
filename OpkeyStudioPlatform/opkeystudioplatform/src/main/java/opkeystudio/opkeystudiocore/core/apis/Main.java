@@ -11,6 +11,8 @@ public class Main {
 		new AuthenticateApi().loginToOpKey("admin", "admin");
 		List<Project> projects = new ProjectApi().getAssignedProjects();
 		System.out.println(projects.get(0).getP_ID());
+		new ProjectApi().selectProject(projects.get(0).getP_ID());
+		new AuthenticateApi().logout();
 	}
 
 }

@@ -21,4 +21,14 @@ public class ProjectApi {
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, Project.class);
 		return mapper.readValue(retdata, type);
 	}
+
+	public String selectProject(String projectPID) throws IOException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("projectId", projectPID);
+		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/OpKeyAuth/SelectProject", "POST",
+				params, null, null);
+
+		System.out.println(retdata);
+		return retdata;
+	}
 }

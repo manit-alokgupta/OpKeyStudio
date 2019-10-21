@@ -23,4 +23,12 @@ public class AuthenticateApi {
 		ServiceRepository.getInstance().setOpKeyHostSessionId(adata.getSessionId());
 		return adata;
 	}
+
+	public String logout() throws IOException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/OpKeyAuth/Logout", "POST", params, null,
+				null);
+		System.out.println(retdata);
+		return retdata;
+	}
 }
