@@ -71,4 +71,20 @@ public class ServiceRepository {
 	public String getOpKeyHostUrl() {
 		return (String) getServiceRepositoryVariable("opkeystudio.opkeyapihost");
 	}
+
+	public void setOpKeyHostAuthToken(String token) {
+		setServiceRepositoryVariable("opkeystudio.opkeyapitoken", token);
+	}
+
+	public String getOpKeyHostAuthToken() {
+		return (String) getServiceRepositoryVariable("opkeystudio.opkeyapitoken");
+	}
+
+	public void setOpKeyHostSessionId(String sessionId) {
+		setServiceRepositoryVariable("opkeystudio.opkeyapisessionid", sessionId);
+	}
+
+	public String getOpKeyHostSessionId() {
+		return (String) getServiceRepositoryVariable("opkeystudio.opkeyapisessionid");
+	}
 }
