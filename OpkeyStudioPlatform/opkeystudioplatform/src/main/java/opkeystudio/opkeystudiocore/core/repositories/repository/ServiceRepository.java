@@ -55,4 +55,20 @@ public class ServiceRepository {
 	public Object getProjectTreeObject() {
 		return getServiceRepositoryVariable("opkeystudio.projecttree");
 	}
+
+	public void setTestCaseSelectedSteps(int index) {
+		setServiceRepositoryVariable("opkeystudio.mainworkbench.selectedtcstep", index);
+	}
+
+	public int getTestCaseSelectedSteps() {
+		return (int) getServiceRepositoryVariable("opkeystudio.mainworkbench.selectedtcstep");
+	}
+
+	public void setOpKeyHostUrl(String hostUrl) {
+		setServiceRepositoryVariable("opkeystudio.opkeyapihost", hostUrl);
+	}
+
+	public String getOpKeyHostUrl() {
+		return (String) getServiceRepositoryVariable("opkeystudio.opkeyapihost");
+	}
 }

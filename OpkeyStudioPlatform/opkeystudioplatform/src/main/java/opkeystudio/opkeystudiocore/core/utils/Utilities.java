@@ -36,6 +36,11 @@ public class Utilities {
 		return mapper.readValue(filepath, _class);
 	}
 
+	public Object getXMLDeSerializedData(String data, Class<?> _class) throws IOException {
+		XmlMapper mapper = new XmlMapper();
+		return mapper.readValue(data, _class);
+	}
+
 	public void writeToFile(File file, String data) throws IOException {
 		System.out.println(file.getAbsolutePath());
 		if (!file.exists()) {
@@ -45,5 +50,10 @@ public class Utilities {
 		bw.write(data);
 		bw.flush();
 		bw.close();
+	}
+
+	public Object cloneObject(Object object, Class<?> _class) throws IOException {
+		String serializedData = getXMLSerializedData(object);
+		return getXMLDeSerializedData(serializedData, _class);
 	}
 }
