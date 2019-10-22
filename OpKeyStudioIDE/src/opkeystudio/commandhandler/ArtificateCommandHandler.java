@@ -6,9 +6,6 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.opkeystudiocore.core.models.partObject.WorkBenchPartObject;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.KeyWord;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseModelGroup;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseStep;
 import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
 
 public class ArtificateCommandHandler {
@@ -22,7 +19,7 @@ public class ArtificateCommandHandler {
 		MPart part = getWorkBenchPart();
 		WorkBenchPartObject wpobj = new WorkBenchPartObject(testCaseArtificate.getArtificateId());
 		wpobj.setArtificate(testCaseArtificate);
-		part.setObject(wpobj);
+		part.getTransientData().put("WorkBenchPartObject", wpobj);
 		part.setLabel(testCaseArtificate.getArtificateTypeString() + "-" + testCaseArtificate.getArtificateName());
 		partService.showPart(part, PartState.ACTIVATE);
 	}

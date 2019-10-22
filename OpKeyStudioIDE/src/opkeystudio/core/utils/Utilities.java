@@ -37,6 +37,6 @@ public class Utilities {
 		if (activePart == null) {
 			return null;
 		}
-		return (WorkBenchPartObject) activePart.getObject();
+		return (WorkBenchPartObject) activePart.getTransientData().get("WorkBenchPartObject");
 	}
 }
