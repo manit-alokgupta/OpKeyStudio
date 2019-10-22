@@ -23,4 +23,8 @@ public class ArtificateTreeApi {
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ArtificateTreeNode.class);
 		return mapper.readValue(retdata, type);
 	}
+
+	public List<ArtificateTreeNode> getRootArtificateFolder() throws IOException {
+		return getArtificateNodes("00000000-0000-0000-0000-000000000000");
+	}
 }
