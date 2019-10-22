@@ -40,6 +40,10 @@ public class OpKeyApiCommunicator {
 		if (requestMethod.toUpperCase().equals("POST")) {
 			apiurl = apiurl + "?" + convertMapToQueryParams(params);
 		}
+
+		if (requestMethod.toUpperCase().equals("GET")) {
+			apiurl = apiurl + "?" + convertMapToQueryParams(params);
+		}
 		URL obj = new URL(this.hostUrl + apiurl);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -52,17 +56,18 @@ public class OpKeyApiCommunicator {
 			String encodedAuthorization = Base64.getEncoder().encodeToString(userpassword.getBytes());
 			con.setRequestProperty("Authorization", "Basic " + encodedAuthorization);
 		}
-		
+
 		if (ServiceRepository.getInstance().getOpKeyHostAuthToken() != null) {
 			System.out.println(ServiceRepository.getInstance().getOpKeyHostAuthToken());
 			con.setRequestProperty("Authorization",
 					"Bearer " + ServiceRepository.getInstance().getOpKeyHostAuthToken());
 		}
-		
-		if(ServiceRepository.getInstance().getOpKeyHostSessionId()!=null) {
-			con.setRequestProperty("cookie", "ASP.NET_SessionId="+ServiceRepository.getInstance().getOpKeyHostSessionId());
+
+		if (ServiceRepository.getInstance().getOpKeyHostSessionId() != null) {
+			con.setRequestProperty("cookie",
+					"ASP.NET_SessionId=" + ServiceRepository.getInstance().getOpKeyHostSessionId());
 		}
-		
+
 		StringBuilder postData = new StringBuilder();
 		for (Map.Entry<String, Object> param : params.entrySet()) {
 			if (postData.length() != 0)
@@ -71,9 +76,9 @@ public class OpKeyApiCommunicator {
 			postData.append('=');
 			postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
 		}
-		
-		//String value=con.getHeaderField("Authorization");
-		//System.out.println(value);
+
+		// String value=con.getHeaderField("Authorization");
+		// System.out.println(value);
 		byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 		if (requestMethod.toUpperCase().equals("POST")) {
 			con.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
