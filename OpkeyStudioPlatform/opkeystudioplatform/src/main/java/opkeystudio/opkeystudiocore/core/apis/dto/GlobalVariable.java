@@ -1,6 +1,6 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
-public class GlobalVariable {
+public class GlobalVariable extends Modified {
 	private int isdeleted;
 	private int position;
 	private String value;

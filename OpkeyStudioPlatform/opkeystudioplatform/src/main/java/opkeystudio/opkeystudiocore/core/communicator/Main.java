@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException, JsonParseException, JsonMappingException, IOException {
 		List<GlobalVariable> vs= new GlobalVariableApi().getAllGlobalVariables();
-		System.out.println(vs.get(0).getName());
+		System.out.println(vs.get(0).getValue());
 	}
 
 }
