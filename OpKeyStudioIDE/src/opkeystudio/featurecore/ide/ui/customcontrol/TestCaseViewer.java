@@ -1,7 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol;
 
-import java.io.IOException;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.PaintEvent;
@@ -13,12 +11,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 
-import opkeystudio.core.utils.Utilities;
-import opkeystudio.opkeystudiocore.core.models.partObject.WorkBenchPartObject;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseModelGroup;
-import opkeystudio.opkeystudiocore.core.models.testcasemodel.TestCaseStep;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class TestCaseViewer extends Table {
@@ -82,32 +75,12 @@ public class TestCaseViewer extends Table {
 		//renderModel();
 	}
 
-	public void renderModel() {
-		WorkBenchPartObject wbpo = Utilities.getInstance().getActivePartWorkBenchObject();
-		TestCaseModelGroup tcgroup = (TestCaseModelGroup) wbpo.getArtificate().getModelGroup();
-		for (TestCaseStep tcstep : tcgroup.getAllTestCaseSteps()) {
-				TableItem ti = new TableItem(this, 0);
-				ti.setData(tcstep);
-				ti.setText(new String[] { tcstep.getKeyword().getKeywordName(), "", "", "" });
-		}
-		this.select(0);
-	}
+
 
 	public void clearData() {
 		this.removeAll();
 	}
 
-	public void deleteSelectedStep() throws CloneNotSupportedException, IOException {
-		int selectedIndex = ServiceRepository.getInstance().getTestCaseSelectedSteps();
-		if (selectedIndex > -1) {
-			WorkBenchPartObject wbpo = Utilities.getInstance().getActivePartWorkBenchObject();
-			TestCaseModelGroup tcgroup = (TestCaseModelGroup) wbpo.getArtificate().getModelGroup();
-			TestCaseModelGroup clonedtcgroup=(TestCaseModelGroup) opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().cloneObject(tcgroup, TestCaseModelGroup.class);
-			clonedtcgroup.getAllTestCaseSteps().remove(selectedIndex);
-			clearData();
-			renderModel();
-		}
-	}
 
 	@Override
 	protected void checkSubclass() {

@@ -1,10 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
@@ -15,15 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
 
-import opkeystudio.commandhandler.ArtificateCommandHandler;
-import opkeystudio.commandhandler.RefreshProject;
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtificateTreeItem;
-import opkeystudio.featurecore.project.ProjectLoader;
-import opkeystudio.opkeystudiocore.core.project.artificates.Artificate;
-import opkeystudio.opkeystudiocore.core.project.artificates.Artificate.ArtificateType;
-import opkeystudio.opkeystudiocore.core.project.artificates.ArtificateMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class TreeViewCompositeUI extends Composite {
@@ -42,8 +31,6 @@ public class TreeViewCompositeUI extends Composite {
 		Tree tree = new Tree(this, SWT.BORDER);
 		ServiceRepository.getInstance().setProjectTreeObject(tree);
 		ServiceRepository.getInstance().setDefaultProjectPath("E:\\Test\\TestProject");
-		new ProjectLoader().loadProjectInTree(tree, ServiceRepository.getInstance().getDefaultProjectPath());
-
 		Menu menu = new Menu(tree);
 		tree.setMenu(menu);
 
@@ -75,17 +62,7 @@ public class TreeViewCompositeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artificate selectArtificate = ServiceRepository.getInstance().getDefaultArtificate();
-				if (selectArtificate.getArtificateType() == ArtificateType.ROOTFOLDER
-						|| selectArtificate.getArtificateType() == ArtificateType.FOLDER) {
-					try {
-						new ArtificateMaker().createTestCase(selectArtificate.getArtificatePath(), "TestCase");
-						new RefreshProject().refreshProjectTree();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
+
 			}
 
 			@Override
@@ -99,17 +76,6 @@ public class TreeViewCompositeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artificate selectArtificate = ServiceRepository.getInstance().getDefaultArtificate();
-				if (selectArtificate.getArtificateType() == ArtificateType.ROOTFOLDER
-						|| selectArtificate.getArtificateType() == ArtificateType.FOLDER) {
-					try {
-						new ArtificateMaker().createFolder(selectArtificate.getArtificatePath(), "TestCase");
-						new RefreshProject().refreshProjectTree();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
 			}
 
 			@Override
@@ -123,13 +89,6 @@ public class TreeViewCompositeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artificate selectArtificate = ServiceRepository.getInstance().getDefaultArtificate();
-				boolean option = MessageDialog.openQuestion(parent.getShell(), "Delete Confirmation",
-						"Do you really want to delete " + selectArtificate.getArtificateName() + " ?");
-				if (option) {
-					selectArtificate.getFile().delete();
-					new RefreshProject().refreshProjectTree();
-				}
 			}
 
 			@Override
@@ -143,18 +102,6 @@ public class TreeViewCompositeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artificate selectArtificate = ServiceRepository.getInstance().getDefaultArtificate();
-				InputDialog renameDialog = new InputDialog(parent.getShell(), "Rename",
-						"Rename " + selectArtificate.getArtificateName(), selectArtificate.getArtificateName(), null);
-				renameDialog.open();
-				String inputValue = renameDialog.getValue();
-				System.out.println("Input Value is " + inputValue);
-				if (inputValue.trim().isEmpty()) {
-					return;
-				}
-				selectArtificate.getFile()
-						.renameTo(new File(selectArtificate.getParentPath() + File.separator + inputValue));
-				new RefreshProject().refreshProjectTree();
 			}
 
 			@Override
@@ -168,15 +115,6 @@ public class TreeViewCompositeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				Tree tree = (Tree) arg0.getSource();
-				TreeItem[] items = tree.getSelection();
-				Artificate selectedArtificate = ((ArtificateTreeItem) items[0]).getArtificate();
-				ServiceRepository.getInstance().setDefaultArtificate(selectedArtificate);
-				if (selectedArtificate.getArtificateType() == ArtificateType.FOLDER
-						|| selectedArtificate.getArtificateType() == ArtificateType.ROOTFOLDER) {
-
-				} else {
-				}
 			}
 
 			@Override
@@ -201,16 +139,6 @@ public class TreeViewCompositeUI extends Composite {
 			
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				Tree tree = (Tree) e.getSource();
-				TreeItem[] items = tree.getSelection();
-				Artificate selectedArtificate = ((ArtificateTreeItem) items[0]).getArtificate();
-				ServiceRepository.getInstance().setDefaultArtificate(selectedArtificate);
-				if (selectedArtificate.getArtificateType() == ArtificateType.FOLDER
-						|| selectedArtificate.getArtificateType() == ArtificateType.ROOTFOLDER) {
-
-				} else {
-					new ArtificateCommandHandler().openTestCaseHandler(selectedArtificate);
-				}
 			}
 		});
 	}
