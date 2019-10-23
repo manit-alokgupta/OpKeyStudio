@@ -18,6 +18,9 @@ public class Main {
 		new AuthenticateApi().logout();*/
 		
 		List<Artifact> artifacts= new ArtifactApi().getAllAartificates();
+		for(Artifact artifact:artifacts) {
+			System.out.println(artifact.getFile_type_enum());
+		}
 	}
 
 }

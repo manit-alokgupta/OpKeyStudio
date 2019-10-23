@@ -7,11 +7,7 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-
-import opkeystudio.featurecore.ide.ui.ui.EditorViewCompositeUI;
 
 public class MainWorkBenchPart {
 	@Inject
@@ -19,12 +15,9 @@ public class MainWorkBenchPart {
 
 	}
 
-	@Inject
-	MPart mainWorkBenchPart;
-
 	@PostConstruct
 	public void postConstruct(Composite parent) {
-		new EditorViewCompositeUI(parent, SWT.NONE);
+		
 	}
 
 	@PreDestroy

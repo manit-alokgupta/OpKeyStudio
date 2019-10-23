@@ -1,6 +1,11 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 public class Artifact {
+	enum MODULETYPE {
+		AllUnified, Component, ServiceRepository, Flow, Suite, ObjectRepository, BDD_Gherkin_Stories, Execution,
+		DataRepository, EventHandler, Folder, CodedFunction, BP_Group, MBT, Sparkin
+	};
+
 	private String modified_on;
 	private int isshared;
 	private String created_on_tz;
@@ -8,7 +13,7 @@ public class Artifact {
 	private int clustering_key;
 	private String created_by;
 	private int isdeleted;
-	private String file_type_enum;
+	private MODULETYPE file_type_enum;
 	private String created_on;
 	private String name;
 	private String modified_by;
@@ -75,11 +80,11 @@ public class Artifact {
 		this.isdeleted = isdeleted;
 	}
 
-	public String getFile_type_enum() {
+	public MODULETYPE getFile_type_enum() {
 		return file_type_enum;
 	}
 
-	public void setFile_type_enum(String file_type_enum) {
+	public void setFile_type_enum(MODULETYPE file_type_enum) {
 		this.file_type_enum = file_type_enum;
 	}
 

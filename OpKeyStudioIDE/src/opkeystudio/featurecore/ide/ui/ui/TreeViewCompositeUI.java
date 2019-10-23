@@ -1,6 +1,8 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -13,6 +15,12 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
+import opkeystudio.opkeystudiocore.core.apis.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class TreeViewCompositeUI extends Composite {
@@ -24,11 +32,26 @@ public class TreeViewCompositeUI extends Composite {
 	 * @param style
 	 * @throws IOException
 	 */
+	Tree tree;
+
+	private void renderArtifacts() throws JsonParseException, JsonMappingException, SQLException, IOException {
+		ArtifactTreeItem rootNode = new ArtifactTreeItem(tree, 0);
+		rootNode.setText("Project WorkSpace");
+		List<Artifact> artifacts = new ArtifactApi().getAllAartificates();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getParentid() == null) {
+				ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
+				artitreeitem.setText(artifact.getName());
+				artitreeitem.setArtifact(artifact);
+			}
+		}
+	}
+
 	public TreeViewCompositeUI(Composite parent, int style) throws IOException {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		Tree tree = new Tree(this, SWT.BORDER);
+		tree = new Tree(this, SWT.BORDER);
 		ServiceRepository.getInstance().setProjectTreeObject(tree);
 		ServiceRepository.getInstance().setDefaultProjectPath("E:\\Test\\TestProject");
 		Menu menu = new Menu(tree);
@@ -122,25 +145,32 @@ public class TreeViewCompositeUI extends Composite {
 				// TODO Auto-generated method stub
 			}
 		});
-		
+
 		tree.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseDown(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 			}
 		});
+
+		try {
+			renderArtifacts();
+		} catch (SQLException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	@Override
