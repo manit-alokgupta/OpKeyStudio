@@ -43,7 +43,7 @@ public class SQLiteCommunicator {
 			JSONObject obj = new JSONObject();
 			for (int i = 0; i < total_rows; i++) {
 				try {
-					obj.put(resultSet.getMetaData().getColumnLabel(i + 1), resultSet.getObject(i + 1));
+					obj.put(resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase(), resultSet.getObject(i + 1));
 				} catch (JSONException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -51,6 +51,7 @@ public class SQLiteCommunicator {
 			}
 			jsonArray.put(obj);
 		}
+		System.out.println(jsonArray.toString());
 		return jsonArray.toString();
 	}
 }
