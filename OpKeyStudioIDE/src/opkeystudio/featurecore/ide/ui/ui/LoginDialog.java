@@ -60,10 +60,9 @@ public class LoginDialog extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlLoginToOpkey = new Shell(getParent(), getStyle());
+		shlLoginToOpkey = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		shlLoginToOpkey.setSize(450, 300);
 		shlLoginToOpkey.setText("Login to OpKey");
-
 		Composite composite = new Composite(shlLoginToOpkey, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		composite.setBounds(0, 0, 444, 64);

@@ -5,9 +5,14 @@ import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
 import org.eclipse.e4.ui.workbench.lifecycle.ProcessAdditions;
 import org.eclipse.e4.ui.workbench.lifecycle.ProcessRemovals;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Shell;
+
+import opkeystudio.featurecore.ide.ui.ui.LoginDialog;
 
 /**
- * This is a stub implementation containing e4 LifeCycle annotated methods.<br />
+ * This is a stub implementation containing e4 LifeCycle annotated
+ * methods.<br />
  * There is a corresponding entry in <em>plugin.xml</em> (under the
  * <em>org.eclipse.core.runtime.products' extension point</em>) that references
  * this class.
@@ -17,7 +22,9 @@ public class E4LifeCycle {
 
 	@PostContextCreate
 	void postContextCreate(IEclipseContext workbenchContext) {
-		
+		final Shell shell = new Shell(SWT.TOOL | SWT.APPLICATION_MODAL);
+		LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER);
+		ldialog.open();
 	}
 
 	@PreSave
