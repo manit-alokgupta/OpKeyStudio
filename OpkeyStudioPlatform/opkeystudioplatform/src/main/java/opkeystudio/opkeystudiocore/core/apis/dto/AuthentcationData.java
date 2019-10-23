@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.apis.dao;
+package opkeystudio.opkeystudiocore.core.apis.dto;
 
 public class AuthentcationData {
 	private boolean status;

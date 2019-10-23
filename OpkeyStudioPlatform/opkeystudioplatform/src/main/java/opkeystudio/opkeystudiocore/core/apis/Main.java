@@ -3,8 +3,8 @@ package opkeystudio.opkeystudiocore.core.apis;
 import java.io.IOException;
 import java.util.List;
 
-import opkeystudio.opkeystudiocore.core.apis.dao.ArtificateTreeNode;
-import opkeystudio.opkeystudiocore.core.apis.dao.Project;
+import opkeystudio.opkeystudiocore.core.apis.dto.ArtificateTreeNode;
+import opkeystudio.opkeystudiocore.core.apis.dto.Project;
 
 public class Main {
 

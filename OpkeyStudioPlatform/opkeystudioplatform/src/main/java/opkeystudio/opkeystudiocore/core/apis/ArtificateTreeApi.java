@@ -8,7 +8,7 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
-import opkeystudio.opkeystudiocore.core.apis.dao.ArtificateTreeNode;
+import opkeystudio.opkeystudiocore.core.apis.dto.ArtificateTreeNode;
 import opkeystudio.opkeystudiocore.core.communicator.OpKeyApiCommunicator;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 

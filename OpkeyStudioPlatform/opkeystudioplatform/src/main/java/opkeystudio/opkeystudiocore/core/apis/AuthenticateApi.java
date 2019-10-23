@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import opkeystudio.opkeystudiocore.core.apis.dao.AuthentcationData;
+import opkeystudio.opkeystudiocore.core.apis.dto.AuthentcationData;
 import opkeystudio.opkeystudiocore.core.communicator.OpKeyApiCommunicator;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
