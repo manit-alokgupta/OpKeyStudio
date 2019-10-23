@@ -32,7 +32,7 @@ class State {
 	}
 }
 
-public class ArtificateTreeNode {
+public class ArtifactTreeNode {
 	private String text;
 	private String icon;
 	private String type;

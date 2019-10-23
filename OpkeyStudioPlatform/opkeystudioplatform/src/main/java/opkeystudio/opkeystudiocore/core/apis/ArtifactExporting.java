@@ -6,7 +6,7 @@ import java.util.Map;
 
 import opkeystudio.opkeystudiocore.core.communicator.OpKeyApiCommunicator;
 
-public class ArtificateExporting {
+public class ArtifactExporting {
 	public void getFolderDetails(String folderId) throws IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("nodeID", folderId);
