@@ -26,6 +26,9 @@
         <children xsi:type="menu:DirectMenuItem" xmi:id="_0Egh0OjfEemr16RYiDU_mQ" elementId="opkeystudio.directmenuitem.importproject" label="Import Project" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportProject"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit"/>
       </children>
+      <children xsi:type="menu:Menu" xmi:id="_oQOH4PV2EemEv-Dsdd6Nxw" elementId="opkeystudio.menu.tools" label="Tools">
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_qu-CQPV2EemEv-Dsdd6Nxw" elementId="opkeystudio.directmenuitem.globalvariable" label="Global Variable" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.GlobalVariableHandler"/>
+      </children>
       <children xsi:type="menu:Menu" xmi:id="_s3lGcNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.help" label="Help">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_uVJ3sNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.about" label="About" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.AboutCommand"/>
       </children>
