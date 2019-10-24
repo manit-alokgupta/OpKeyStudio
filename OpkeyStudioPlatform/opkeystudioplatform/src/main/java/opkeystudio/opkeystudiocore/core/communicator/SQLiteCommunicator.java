@@ -17,7 +17,9 @@ public class SQLiteCommunicator {
 	private String sqliteDbUrl;
 
 	public SQLiteCommunicator() {
-		this.sqliteDbUrl = ServiceRepository.getInstance().getExportedDBFilePath();
+		ServiceRepository.getInstance().setExortedDBFilePath("E:\\ExportedArtifactsNeon\\ExportedArtifact.db");
+		this.sqliteDbUrl = "jdbc:sqlite:"+ServiceRepository.getInstance().getExportedDBFilePath();
+		System.out.println(this.sqliteDbUrl);
 	}
 
 	public SQLiteCommunicator(String dbFileUrl) {
