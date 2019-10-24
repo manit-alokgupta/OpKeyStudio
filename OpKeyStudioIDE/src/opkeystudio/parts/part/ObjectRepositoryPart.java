@@ -11,7 +11,6 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 
-import opkeystudio.featurecore.ide.ui.ui.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 
 public class ObjectRepositoryPart {
