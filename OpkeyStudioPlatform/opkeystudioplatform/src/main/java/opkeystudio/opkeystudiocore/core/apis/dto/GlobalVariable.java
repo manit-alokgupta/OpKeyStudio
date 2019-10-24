@@ -7,7 +7,7 @@ public class GlobalVariable extends Modified {
 	private int clustering_key;
 	private String datatype;
 	private String gv_id;
-	private int externallyupdatable;
+	private boolean externallyupdatable;
 	private String p_id;
 	private String name;
 
@@ -59,14 +59,6 @@ public class GlobalVariable extends Modified {
 		this.gv_id = gv_id;
 	}
 
-	public int getExternallyupdatable() {
-		return externallyupdatable;
-	}
-
-	public void setExternallyupdatable(int externallyupdatable) {
-		this.externallyupdatable = externallyupdatable;
-	}
-
 	public String getP_id() {
 		return p_id;
 	}
@@ -81,6 +73,14 @@ public class GlobalVariable extends Modified {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isExternallyupdatable() {
+		return externallyupdatable;
+	}
+
+	public void setExternallyupdatable(boolean externallyupdatable) {
+		this.externallyupdatable = externallyupdatable;
 	}
 
 }
