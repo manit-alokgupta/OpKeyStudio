@@ -149,13 +149,9 @@ public class GlovalVariableDialog extends Dialog {
 		});
 
 		final TableEditor editor = new TableEditor(table);
-		// The editor must have the same size as the cell and must
-		// not be any smaller than 50 pixels.
 		editor.horizontalAlignment = SWT.LEFT;
 		editor.grabHorizontal = true;
 		editor.minimumWidth = 50;
-		// editing the second column
-
 		table.addMouseListener(new MouseListener() {
 
 			@Override
