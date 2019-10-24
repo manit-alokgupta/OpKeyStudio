@@ -3,7 +3,6 @@ package opkeystudio.opkeystudiocore.core.repositories.repository;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ServiceRepository {
 	private Map<String, Object> serviceRepositoriesVariables = new HashMap<>();
 	private static ServiceRepository serviceRepository;
@@ -73,5 +72,13 @@ public class ServiceRepository {
 
 	public String getOpKeyHostSessionId() {
 		return (String) getServiceRepositoryVariable("opkeystudio.opkeyapisessionid");
+	}
+
+	public void setExortedDBFilePath(String path) {
+		setServiceRepositoryVariable("opkeystudio.exporteddbfilepath", path);
+	}
+
+	public String getExportedDBFilePath() {
+		return (String) getServiceRepositoryVariable("opkeystudio.exporteddbfilepath");
 	}
 }

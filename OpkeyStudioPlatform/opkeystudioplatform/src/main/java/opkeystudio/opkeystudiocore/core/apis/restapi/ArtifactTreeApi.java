@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.apis;
+package opkeystudio.opkeystudiocore.core.apis.restapi;
 
 import java.io.IOException;
 import java.util.HashMap;

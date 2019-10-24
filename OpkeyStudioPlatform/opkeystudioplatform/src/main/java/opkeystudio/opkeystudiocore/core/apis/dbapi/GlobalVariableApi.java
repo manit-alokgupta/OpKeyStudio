@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.apis;
+package opkeystudio.opkeystudiocore.core.apis.dbapi;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,7 +15,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariableApi {
 	public List<GlobalVariable> getAllGlobalVariables() throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm=new SQLiteCommunicator("E:\\ExportedArtifactsNeon\\ExportedArtifact.db");
+		SQLiteCommunicator sqlComm=new SQLiteCommunicator();
 		sqlComm.connect();
 		String result=sqlComm.executeQueryString("select * from global_variables");
 		ObjectMapper mapper=Utilities.getInstance().getObjectMapperInstance();

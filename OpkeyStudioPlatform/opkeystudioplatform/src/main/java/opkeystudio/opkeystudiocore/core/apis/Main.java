@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactApi;
 
 public class Main {
 

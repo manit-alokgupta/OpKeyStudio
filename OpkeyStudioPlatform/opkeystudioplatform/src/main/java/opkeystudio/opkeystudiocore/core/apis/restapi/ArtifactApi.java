@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.apis;
+package opkeystudio.opkeystudiocore.core.apis.restapi;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class ArtifactApi {
 	public List<Artifact> getAllAartificates()
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator("E:\\ExportedArtifactsNeon\\ExportedArtifact.db");
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
 		String result = sqlComm.executeQueryString("select * from main_artifact_filesystem order by position");
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();

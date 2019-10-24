@@ -10,9 +10,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+
 public class SQLiteCommunicator {
 	private Connection connection;
 	private String sqliteDbUrl;
+
+	public SQLiteCommunicator() {
+		this.sqliteDbUrl = ServiceRepository.getInstance().getExportedDBFilePath();
+	}
 
 	public SQLiteCommunicator(String dbFileUrl) {
 		this.sqliteDbUrl = "jdbc:sqlite:" + dbFileUrl;

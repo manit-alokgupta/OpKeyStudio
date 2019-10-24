@@ -7,7 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import opkeystudio.opkeystudiocore.core.apis.GlobalVariableApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 
 public class Main {
