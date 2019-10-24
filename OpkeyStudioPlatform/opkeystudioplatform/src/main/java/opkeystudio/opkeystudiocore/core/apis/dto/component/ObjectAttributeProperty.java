@@ -1,6 +1,8 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
-public class ObjectAttributeProperty {
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+
+public class ObjectAttributeProperty extends Modified {
 	private int isencrypted;
 	private String datatype;
 	private String or_id;

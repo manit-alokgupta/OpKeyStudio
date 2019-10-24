@@ -1,7 +1,9 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
-public class ObjectRepository {
-	private int usesmartidentification;
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+
+public class ObjectRepository extends Modified {
+	private boolean usesmartidentification;
 	private String or_id;
 	private int clustering_key;
 	private String object_id;
@@ -9,21 +11,13 @@ public class ObjectRepository {
 	private String modifiedon;
 	private String modifiedon_tz;
 	private String createdby;
-	private int isupdatable;
+	private boolean isupdatable;
 	private String name;
 	private String modifiedby;
 	private String createdon_tz;
 	private String opkeytype;
 	private int position;
 	private String parent_object_id;
-
-	public int getUsesmartidentification() {
-		return usesmartidentification;
-	}
-
-	public void setUsesmartidentification(int usesmartidentification) {
-		this.usesmartidentification = usesmartidentification;
-	}
 
 	public String getOr_id() {
 		return or_id;
@@ -81,14 +75,6 @@ public class ObjectRepository {
 		this.createdby = createdby;
 	}
 
-	public int getIsupdatable() {
-		return isupdatable;
-	}
-
-	public void setIsupdatable(int isupdatable) {
-		this.isupdatable = isupdatable;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -135,6 +121,22 @@ public class ObjectRepository {
 
 	public void setParent_object_id(String parent_object_id) {
 		this.parent_object_id = parent_object_id;
+	}
+
+	public boolean isUsesmartidentification() {
+		return usesmartidentification;
+	}
+
+	public void setUsesmartidentification(boolean usesmartidentification) {
+		this.usesmartidentification = usesmartidentification;
+	}
+
+	public boolean isIsupdatable() {
+		return isupdatable;
+	}
+
+	public void setIsupdatable(boolean isupdatable) {
+		this.isupdatable = isupdatable;
 	}
 
 }

@@ -10,7 +10,7 @@ public class AuthentcationData {
 		return authenticationToken;
 	}
 
-	private void setAuthenticationToken(String authenticationToken) {
+	public void setAuthenticationToken(String authenticationToken) {
 		this.authenticationToken = authenticationToken;
 	}
 
@@ -18,7 +18,7 @@ public class AuthentcationData {
 		return sessionId;
 	}
 
-	private void setSessionId(String sessionId) {
+	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
 
@@ -26,7 +26,7 @@ public class AuthentcationData {
 		return message;
 	}
 
-	private void setMessage(String message) {
+	public void setMessage(String message) {
 		this.message = message;
 	}
 
@@ -34,7 +34,7 @@ public class AuthentcationData {
 		return status;
 	}
 
-	private void setStatus(boolean status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 }
