@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.apis.dbapi;
+package opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable;
 
 import java.io.IOException;
 import java.sql.SQLException;
