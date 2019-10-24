@@ -4,6 +4,8 @@ import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -28,5 +30,9 @@ public class Utilities {
 
 	public MPart getActivePart() {
 		return getEpartService().getActivePart();
+	}
+	
+	public void showErrorDialog(Shell shell,String title,String message) {
+		MessageDialog.openError(shell, title, message);
 	}
 }

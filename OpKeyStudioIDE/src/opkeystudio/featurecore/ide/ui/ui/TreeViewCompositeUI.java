@@ -22,6 +22,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class TreeViewCompositeUI extends Composite {
 
@@ -34,15 +35,25 @@ public class TreeViewCompositeUI extends Composite {
 	 */
 	Tree tree;
 
+	private void addIcon(ArtifactTreeItem artTreeItem) {
+		if (artTreeItem.getArtifact() == null) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/folder.gif"));
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Folder) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/folder.gif"));
+		}
+	}
+
 	private void renderArtifacts() throws JsonParseException, JsonMappingException, SQLException, IOException {
 		ArtifactTreeItem rootNode = new ArtifactTreeItem(tree, 0);
 		rootNode.setText("Project WorkSpace");
+		addIcon(rootNode);
 		List<Artifact> artifacts = new ArtifactApi().getAllAartificates();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getParentid() == null) {
 				ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
 				artitreeitem.setText(artifact.getName());
 				artitreeitem.setArtifact(artifact);
+				addIcon(artitreeitem);
 			}
 		}
 	}

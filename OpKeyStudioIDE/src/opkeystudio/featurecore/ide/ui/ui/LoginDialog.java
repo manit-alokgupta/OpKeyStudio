@@ -10,7 +10,9 @@ import java.io.IOException;
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.opkeystudiocore.core.apis.AuthenticateApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.AuthentcationData;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 import org.eclipse.swt.widgets.Label;
@@ -87,7 +89,14 @@ public class LoginDialog extends Dialog {
 				String passw = passWord.getText();
 				ServiceRepository.getInstance().setOpKeyHostUrl(url);
 				try {
-					new AuthenticateApi().loginToOpKey(user, passw);
+					AuthentcationData authdata = new AuthenticateApi().loginToOpKey(user, passw);
+					if (authdata.isStatus()) {
+						shlLoginToOpkey.close();
+						new ProjectDialog(shlLoginToOpkey).open();
+					} else {
+						Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
+								"Please check your credential");
+					}
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
