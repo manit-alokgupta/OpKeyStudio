@@ -11,7 +11,7 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 
-import opkeystudio.featurecore.ide.ui.ui.TreeViewCompositeUI;
+import opkeystudio.featurecore.ide.ui.ui.ArtifactTree;
 
 public class ProjectExplorerPart {
 	@Inject
@@ -19,7 +19,7 @@ public class ProjectExplorerPart {
 	
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
-		new TreeViewCompositeUI(parent, 0);
+		new ArtifactTree(parent, 0);
 	}
 
 	@PreDestroy

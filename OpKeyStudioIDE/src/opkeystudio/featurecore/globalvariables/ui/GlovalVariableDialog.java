@@ -22,7 +22,7 @@ import java.util.List;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.ToolItem;
 
-import opkeystudio.opkeystudiocore.core.apis.GlobalVariableApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 
 public class GlovalVariableDialog extends Dialog {

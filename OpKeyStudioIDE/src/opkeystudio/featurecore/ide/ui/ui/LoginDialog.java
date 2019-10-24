@@ -11,8 +11,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.Utilities;
-import opkeystudio.opkeystudiocore.core.apis.AuthenticateApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.AuthentcationData;
+import opkeystudio.opkeystudiocore.core.apis.restapi.AuthenticateApi;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 import org.eclipse.swt.widgets.Label;

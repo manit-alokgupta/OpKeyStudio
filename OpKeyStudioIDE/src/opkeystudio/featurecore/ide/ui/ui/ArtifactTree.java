@@ -19,12 +19,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
-import opkeystudio.opkeystudiocore.core.apis.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import org.eclipse.wb.swt.ResourceManager;
 
-public class TreeViewCompositeUI extends Composite {
+public class ArtifactTree extends Composite {
 
 	/**
 	 * Create the composite.
@@ -58,7 +58,7 @@ public class TreeViewCompositeUI extends Composite {
 		}
 	}
 
-	public TreeViewCompositeUI(Composite parent, int style) throws IOException {
+	public ArtifactTree(Composite parent, int style) throws IOException {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 

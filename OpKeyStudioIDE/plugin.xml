@@ -53,5 +53,13 @@
             name="New EditorPart">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="opkeystudio.featurecore.ide.ui.ui.dede"
+            id="opkeystudio.featurecore.ide.ui.ui.dede"
+            name="New ViewPart">
+      </view>
+   </extension>
 
 </plugin>
