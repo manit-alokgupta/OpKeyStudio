@@ -2,8 +2,6 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component.generic;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.testcase.ImportedArtifacts;
-
 public class MetaInformation {
 	
 	@JsonProperty("DescriptionRTF")

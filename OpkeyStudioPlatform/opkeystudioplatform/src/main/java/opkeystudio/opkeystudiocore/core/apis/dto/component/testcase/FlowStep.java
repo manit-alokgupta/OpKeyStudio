@@ -1,5 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component.testcase;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FlowStep {
@@ -22,10 +24,10 @@ public class FlowStep {
 	private String keyword_RelativePath;
 	
 	@JsonProperty("StepInputArgs")
-	private StepInputArgs stepInputArgs;
+	private List<FlowStepInputArgument> stepInputArgs;
 	
 	@JsonProperty("StepOutputArgs")
-	private StepOutputArgs stepOutputArgs;
+	private List<FlowStepOutputArgument> stepOutputArgs;
 
 	public boolean isContinueOnError() {
 		return continueOnError;
@@ -75,19 +77,19 @@ public class FlowStep {
 		this.keyword_RelativePath = keyword_RelativePath;
 	}
 
-	public StepInputArgs getStepInputArgs() {
+	public List<FlowStepInputArgument> getStepInputArgs() {
 		return stepInputArgs;
 	}
 
-	public void setStepInputArgs(StepInputArgs stepInputArgs) {
+	public void setStepInputArgs(List<FlowStepInputArgument> stepInputArgs) {
 		this.stepInputArgs = stepInputArgs;
 	}
 
-	public StepOutputArgs getStepOutputArgs() {
+	public List<FlowStepOutputArgument> getStepOutputArgs() {
 		return stepOutputArgs;
 	}
 
-	public void setStepOutputArgs(StepOutputArgs stepOutputArgs) {
+	public void setStepOutputArgs(List<FlowStepOutputArgument> stepOutputArgs) {
 		this.stepOutputArgs = stepOutputArgs;
 	}
 }

@@ -10,5 +10,6 @@ public class Main {
 		FlowSchema fs = (FlowSchema) Utilities.getInstance().getXMLDeSerializedData(
 				new File("C:\\Users\\neon.nishant\\Desktop\\OpKeyProjects\\TestProject\\Project Workspace\\TestCase1.oktc"),
 				FlowSchema.class);
+		System.out.println(fs.getFlowSteps().get(0).getKeyword_RelativePath());
 	}
 }
