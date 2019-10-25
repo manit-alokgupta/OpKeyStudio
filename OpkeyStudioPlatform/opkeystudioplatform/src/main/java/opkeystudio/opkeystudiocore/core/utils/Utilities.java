@@ -35,12 +35,12 @@ public class Utilities {
 	}
 
 	public Object getXMLDeSerializedData(File filepath, Class<?> _class) throws IOException {
-		XmlMapper mapper = (XmlMapper) new XmlMapper().disable(MapperFeature.USE_STD_BEAN_NAMING);
+		XmlMapper mapper = new XmlMapper();
 		return mapper.readValue(filepath, _class);
 	}
 
 	public Object getXMLDeSerializedData(String data, Class<?> _class) throws IOException {
-		XmlMapper mapper = (XmlMapper) new XmlMapper().disable(MapperFeature.USE_STD_BEAN_NAMING);
+		XmlMapper mapper = new XmlMapper();
 		return mapper.readValue(data, _class);
 	}
 
@@ -64,6 +64,5 @@ public class Utilities {
 		return new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
 
 	}
-	
-	
+
 }
