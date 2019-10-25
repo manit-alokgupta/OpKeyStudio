@@ -22,9 +22,9 @@ public class E4LifeCycle {
 
 	@PostContextCreate
 	void postContextCreate(IEclipseContext workbenchContext) {
-		final Shell shell = new Shell(SWT.TOOL | SWT.APPLICATION_MODAL);
-		LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER);
-		ldialog.open();
+		// final Shell shell = new Shell(SWT.TOOL | SWT.APPLICATION_MODAL);
+		// LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER);
+		// ldialog.open();
 	}
 
 	@PreSave
