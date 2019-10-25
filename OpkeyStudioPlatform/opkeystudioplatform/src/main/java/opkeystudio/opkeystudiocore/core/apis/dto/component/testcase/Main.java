@@ -1,13 +1,14 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component.testcase;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.File;
+import java.io.IOException;
 
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Main {
-	public static void main(String[] args) throws JsonProcessingException {
-		FlowSchema fs=new FlowSchema();
-		String xmlData=Utilities.getInstance().getXMLSerializedData(fs);
-		System.out.println(xmlData);
+	public static void main(String[] args) throws IOException {
+		FlowSchema fs = (FlowSchema) Utilities.getInstance().getXMLDeSerializedData(
+				new File("C:\\Users\\neon.nishant\\Desktop\\OpKeyProjects\\TestProject\\Project Workspace\\TestCase1.oktc"),
+				FlowSchema.class);
 	}
 }

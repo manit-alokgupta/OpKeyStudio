@@ -1,13 +1,30 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component.testcase;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FlowStep {
+	@JsonProperty("ContinueOnError")
 	private boolean continueOnError;
+	
+	@JsonProperty("")
 	private boolean isNegative;
+	
+	@JsonProperty("")
 	private boolean shouldRun;
+	
+	@JsonProperty("")
 	private boolean wantSnapshot;
+	
+	@JsonProperty("")
 	private String comment;
+	
+	@JsonProperty("")
 	private String keyword_RelativePath;
+	
+	@JsonProperty("")
 	private StepInputArgs stepInputArgs;
+	
+	@JsonProperty("")
 	private StepOutputArgs stepOutputArgs;
 
 	public boolean isContinueOnError() {

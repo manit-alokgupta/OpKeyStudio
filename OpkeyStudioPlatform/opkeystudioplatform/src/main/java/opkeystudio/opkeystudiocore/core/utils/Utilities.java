@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -34,12 +35,12 @@ public class Utilities {
 	}
 
 	public Object getXMLDeSerializedData(File filepath, Class<?> _class) throws IOException {
-		XmlMapper mapper = new XmlMapper();
+		XmlMapper mapper = (XmlMapper) new XmlMapper().disable(MapperFeature.USE_STD_BEAN_NAMING);
 		return mapper.readValue(filepath, _class);
 	}
 
 	public Object getXMLDeSerializedData(String data, Class<?> _class) throws IOException {
-		XmlMapper mapper = new XmlMapper();
+		XmlMapper mapper = (XmlMapper) new XmlMapper().disable(MapperFeature.USE_STD_BEAN_NAMING);
 		return mapper.readValue(data, _class);
 	}
 
