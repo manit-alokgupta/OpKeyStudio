@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.generic.MetaInformation;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.generic.SuperSchema;
 
-public class ObjectRepositorySchema {
+public class ObjectRepositorySchema extends SuperSchema {
 	private MetaInformation metaInformation;
 	private List<ORObject> orObjects = new ArrayList<>();
 

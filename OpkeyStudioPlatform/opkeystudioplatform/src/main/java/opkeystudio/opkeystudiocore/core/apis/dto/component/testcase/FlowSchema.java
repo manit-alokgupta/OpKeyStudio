@@ -5,8 +5,9 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.generic.MetaInformation;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.generic.SuperSchema;
 
-public class FlowSchema {
+public class FlowSchema extends SuperSchema {
 	@JsonProperty("ImportedArtifacts")
 	private List<ImportSectionDTO> importedArtifacts;
 
