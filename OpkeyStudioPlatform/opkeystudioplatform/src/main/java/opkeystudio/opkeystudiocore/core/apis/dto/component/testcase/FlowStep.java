@@ -6,25 +6,25 @@ public class FlowStep {
 	@JsonProperty("ContinueOnError")
 	private boolean continueOnError;
 	
-	@JsonProperty("")
+	@JsonProperty("IsNegative")
 	private boolean isNegative;
 	
-	@JsonProperty("")
+	@JsonProperty("ShouldRun")
 	private boolean shouldRun;
 	
-	@JsonProperty("")
+	@JsonProperty("WantSnapshot")
 	private boolean wantSnapshot;
 	
-	@JsonProperty("")
+	@JsonProperty("Comment")
 	private String comment;
 	
-	@JsonProperty("")
+	@JsonProperty("Keyword_RelativePath")
 	private String keyword_RelativePath;
 	
-	@JsonProperty("")
+	@JsonProperty("StepInputArgs")
 	private StepInputArgs stepInputArgs;
 	
-	@JsonProperty("")
+	@JsonProperty("StepOutputArgs")
 	private StepOutputArgs stepOutputArgs;
 
 	public boolean isContinueOnError() {

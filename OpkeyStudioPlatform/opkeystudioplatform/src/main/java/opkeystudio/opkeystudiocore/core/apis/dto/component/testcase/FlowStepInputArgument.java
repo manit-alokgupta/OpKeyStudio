@@ -1,8 +1,16 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component.testcase;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FlowStepInputArgument {
+	
+	@JsonProperty("Name")
 	private String name;
+	
+	@JsonProperty("DataSource")
 	private String dataSource;
+	
+	@JsonProperty("Obj_RelativePath")
 	private String obj_RelativePath;
 
 	public String getName() {

@@ -3,14 +3,18 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component.testcase;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class StepInputArgs {
-	private List<FlowStepInputArgument> FlowStepInputArgument = new ArrayList<>();
+	
+	@JsonProperty("FlowStepInputArgument")
+	private List<FlowStepInputArgument> flowStepInputArgument = new ArrayList<>();
 
 	public List<FlowStepInputArgument> getFlowStepInputArgument() {
-		return FlowStepInputArgument;
+		return flowStepInputArgument;
 	}
 
 	public void setFlowStepInputArgument(List<FlowStepInputArgument> flowStepInputArgument) {
-		FlowStepInputArgument = flowStepInputArgument;
+		this.flowStepInputArgument = flowStepInputArgument;
 	}
 }

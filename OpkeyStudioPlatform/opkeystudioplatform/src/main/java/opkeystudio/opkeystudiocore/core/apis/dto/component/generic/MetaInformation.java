@@ -1,9 +1,21 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component.generic;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import opkeystudio.opkeystudiocore.core.apis.dto.component.testcase.ImportedArtifacts;
+
 public class MetaInformation {
+	
+	@JsonProperty("DescriptionRTF")
 	private String descriptionRTF;
+	
+	@JsonProperty("ExpectedResult")
 	private String expectedResult;
+	
+	@JsonProperty("IsShared")
 	private boolean isShared;
+	
+	@JsonProperty("IsAutoCreated")
 	private boolean isAutoCreated;
 
 	public String getDescriptionRTF() {
