@@ -1,14 +1,33 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component.objectrepository;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ObjectProperty {
+	@JsonProperty("DataType")
 	private String dataType;
+
+	@JsonProperty("IsUsed")
 	private boolean isUsed;
+
+	@JsonProperty("IsEncrypted")
 	private boolean isEncrypted;
+
+	@JsonProperty("Position")
 	private int position;
+
+	@JsonProperty("Value")
 	private String value;
+
+	@JsonProperty("IsEditable")
 	private boolean isEditable;
+
+	@JsonProperty("IsRegex")
 	private boolean isRegex;
+
+	@JsonProperty("PluginSpecificity")
 	private String pluginSpecificity;
+
+	@JsonProperty("PropertyName")
 	private String propertyName;
 
 	public String getDataType() {
