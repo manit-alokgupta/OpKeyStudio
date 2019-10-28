@@ -1,9 +1,6 @@
 package opkeystudio.featurecore.globalvariables.ui;
 
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -14,7 +11,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -24,7 +20,19 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.layout.FillLayout;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.ToolItem;
+
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 
 public class GlovalVariableDialog extends Dialog {
 	String[] tableHeaders = { "Name", "Data Type", "Value", "Externally Updatable" };
@@ -69,6 +77,19 @@ public class GlovalVariableDialog extends Dialog {
 		table.pack();
 		for (int i = 0; i < tableHeaders.length; i++) {
 			table.getColumn(i).pack();
+		}
+
+		try {
+			List<GlobalVariable> globalvariables = new GlobalVariableApi().getAllGlobalVariables();
+			for (GlobalVariable globalvariable : globalvariables) {
+				TableItem ti = new TableItem(table, 0);
+				ti.setData(globalvariable);
+				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+						globalvariable.getValue(), String.valueOf(globalvariable.isExternallyupdatable()) });
+			}
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
