@@ -1,16 +1,24 @@
 package opkeystudio.featurecore.globalvariables.ui;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -20,26 +28,17 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.layout.FillLayout;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.ToolItem;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.CustomTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
-import org.eclipse.swt.events.SelectionAdapter;
 
 public class GlovalVariableDialog extends Dialog {
 	String[] tableHeaders = { "Name", "Data Type", "Value", "Externally Updatable" };
 	protected Object result;
 	protected Shell shlGlobalVaraible;
-	private Table table;
+	private CustomTable table;
 
 	/**
 	 * Create the dialog.
@@ -88,6 +87,7 @@ public class GlovalVariableDialog extends Dialog {
 				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
 						globalvariable.getValue(), String.valueOf(globalvariable.isExternallyupdatable()) });
 			}
+			table.setControlData(globalvariables);
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -149,8 +149,7 @@ public class GlovalVariableDialog extends Dialog {
 
 			}
 		});
-		TableViewer tableViewer = new TableViewer(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
-		table = tableViewer.getTable();
+		table = new CustomTable(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 		table.addPaintListener(new PaintListener() {
