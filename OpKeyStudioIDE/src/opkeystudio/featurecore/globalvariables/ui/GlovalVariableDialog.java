@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.CustomTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 
@@ -38,7 +39,7 @@ public class GlovalVariableDialog extends Dialog {
 	String[] tableHeaders = { "Name", "Data Type", "Value", "Externally Updatable" };
 	protected Object result;
 	protected Shell shlGlobalVaraible;
-	private CustomTable table;
+	private GlobalVariableTable table;
 
 	/**
 	 * Create the dialog.
@@ -149,7 +150,7 @@ public class GlovalVariableDialog extends Dialog {
 
 			}
 		});
-		table = new CustomTable(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
+		table = new GlobalVariableTable(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 		table.addPaintListener(new PaintListener() {
@@ -185,8 +186,6 @@ public class GlovalVariableDialog extends Dialog {
 						Rectangle rect = item.getBounds(col);
 						if ((pt.x > rect.x && pt.x < rect.x + rect.width)
 								&& (pt.y > rect.y && pt.y < rect.y + rect.height)) {
-							System.out.println("item clicked.");
-							System.out.println("column is " + col);
 							EDITABLECOLUMN = col;
 						}
 					}
