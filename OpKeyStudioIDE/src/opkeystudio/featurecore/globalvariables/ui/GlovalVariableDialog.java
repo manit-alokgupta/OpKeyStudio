@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import org.eclipse.swt.events.SelectionAdapter;
 
 public class GlovalVariableDialog extends Dialog {
 	String[] tableHeaders = { "Name", "Data Type", "Value", "Externally Updatable" };
@@ -109,12 +110,27 @@ public class GlovalVariableDialog extends Dialog {
 		ToolBar toolBar = new ToolBar(sashForm, SWT.FLAT | SWT.RIGHT);
 
 		ToolItem addtoolitem = new ToolItem(toolBar, SWT.NONE);
+		addtoolitem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
 		addtoolitem.setText("Add");
 
 		ToolItem deletetoolitem = new ToolItem(toolBar, SWT.NONE);
+		deletetoolitem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
 		deletetoolitem.setText("Delete");
 
 		ToolItem savetoolitem = new ToolItem(toolBar, SWT.NONE);
+		savetoolitem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
 		savetoolitem.setText("Save");
 
 		ToolItem refreshtoolitem = new ToolItem(toolBar, SWT.NONE);
@@ -186,8 +202,13 @@ public class GlovalVariableDialog extends Dialog {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
+						String selectedColumn = tableHeaders[EDITABLECOLUMN];
+						System.out.println(selectedColumn);
+						GlobalVariable gVar = (GlobalVariable) item.getData();
 						Text text = (Text) editor.getEditor();
 						editor.getItem().setText(EDITABLECOLUMN, text.getText());
+						gVar.setName(text.getText());
+						System.out.println(gVar.getName());
 					}
 				});
 				newEditor.selectAll();
