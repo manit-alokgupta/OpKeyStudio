@@ -15,11 +15,13 @@ import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ObjectRepositoryApi {
-	public List<ObjectRepository> getAllObjects()
+	public List<ObjectRepository> getAllObjects(String objectId)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
-		String result = sqlComm.executeQueryString("select * from or_objects");
+		String query = String.format("select * from or_objects where or_id='%s'", objectId);
+		System.out.println(query);
+		String result = sqlComm.executeQueryString(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ObjectRepository.class);
 		sqlComm.disconnect();
