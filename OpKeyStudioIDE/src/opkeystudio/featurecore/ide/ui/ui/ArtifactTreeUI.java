@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.MenuItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class ArtifactTreeUI extends Composite {
 
@@ -42,12 +43,15 @@ public class ArtifactTreeUI extends Composite {
 		mntmNew.setMenu(menu_1);
 
 		MenuItem folderMenuItem = new MenuItem(menu_1, SWT.NONE);
+		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
 		folderMenuItem.setText("Folder");
 
 		MenuItem testcaseMenuItem = new MenuItem(menu_1, SWT.NONE);
+		testcaseMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testcase.png"));
 		testcaseMenuItem.setText("TestCase");
 
 		MenuItem objectRepositoryMenuItem = new MenuItem(menu_1, SWT.NONE);
+		objectRepositoryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
 		objectRepositoryMenuItem.setText("ObjectRepository");
 
 		MenuItem functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
@@ -57,6 +61,7 @@ public class ArtifactTreeUI extends Composite {
 		renameMenuItem.setText("Rename");
 
 		MenuItem deleteMenuItem = new MenuItem(menu, SWT.NONE);
+		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/delete.png"));
 		deleteMenuItem.setText("Delete");
 
 		testcaseMenuItem.addSelectionListener(new SelectionListener() {
