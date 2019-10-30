@@ -201,12 +201,25 @@ public class GlovalVariableDialog extends Dialog {
 					@Override
 					public void modifyText(ModifyEvent e) {
 						String selectedColumn = tableHeaders[EDITABLECOLUMN];
-						System.out.println(selectedColumn);
 						GlobalVariable gVar = (GlobalVariable) item.getData();
 						Text text = (Text) editor.getEditor();
 						editor.getItem().setText(EDITABLECOLUMN, text.getText());
-						gVar.setName(text.getText());
-						System.out.println(gVar.getName());
+						if (selectedColumn.equals("Name")) {
+							gVar.setName(text.getText());
+						}
+						if (selectedColumn.equals("Data Type")) {
+							gVar.setDatatype(text.getText());
+						}
+						if (selectedColumn.equals("Value")) {
+							gVar.setValue(text.getText());
+						}
+						if (selectedColumn.equals("Externally Updatable")) {
+							if (text.getText().equals("true")) {
+								gVar.setExternallyupdatable(true);
+							} else {
+								gVar.setExternallyupdatable(false);
+							}
+						}
 					}
 				});
 				newEditor.selectAll();
