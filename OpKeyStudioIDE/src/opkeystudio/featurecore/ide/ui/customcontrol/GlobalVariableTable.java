@@ -1,10 +1,13 @@
 package opkeystudio.featurecore.ide.ui.customcontrol;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableItem;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -33,6 +36,36 @@ public class GlobalVariableTable extends CustomTable {
 		getGlobalVariablesData().add(gv);
 	}
 
+	public void renderGlobalVaribles() {
+		this.removeAll();
+		try {
+			List<GlobalVariable> globalvariables = new GlobalVariableApi().getAllGlobalVariables();
+			for (GlobalVariable globalvariable : globalvariables) {
+				TableItem ti = new TableItem(this, 0);
+				ti.setData(globalvariable);
+				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+						globalvariable.getValue(), String.valueOf(globalvariable.isExternallyupdatable()) });
+			}
+			this.setControlData(globalvariables);
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void refreshGlobalVariables() {
+		this.removeAll();
+		List<GlobalVariable> globalvariables = this.getGlobalVariablesData();
+		for (GlobalVariable globalvariable : globalvariables) {
+			if (globalvariable.isDeleted() == false) {
+				TableItem ti = new TableItem(this, 0);
+				ti.setData(globalvariable);
+				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+						globalvariable.getValue(), String.valueOf(globalvariable.isExternallyupdatable()) });
+			}
+		}
+	}
+
 	public void addBlankGlobalVariableStep() {
 		int lastPosition = getGlobalVariablesData().get(getGlobalVariablesData().size() - 1).getPosition();
 		GlobalVariable gv = new GlobalVariable();
@@ -41,11 +74,13 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setP_id("");
 		gv.setName("Neon");
 		addGlobalVariable(gv);
+		refreshGlobalVariables();
 	}
 
 	public void deleteGlobalVariableStep() {
 		int selectedIndex = this.getSelectionIndex();
 		getGlobalVariablesData().get(selectedIndex).setDeleted(true);
-		;
+		refreshGlobalVariables();
 	}
+
 }

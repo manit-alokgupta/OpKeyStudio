@@ -70,36 +70,6 @@ public class GlovalVariableDialog extends Dialog {
 		return result;
 	}
 
-	private void renderGlobalVaribles() {
-		table.removeAll();
-		try {
-			List<GlobalVariable> globalvariables = new GlobalVariableApi().getAllGlobalVariables();
-			for (GlobalVariable globalvariable : globalvariables) {
-				TableItem ti = new TableItem(table, 0);
-				ti.setData(globalvariable);
-				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-						globalvariable.getValue(), String.valueOf(globalvariable.isExternallyupdatable()) });
-			}
-			table.setControlData(globalvariables);
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void refreshGlobalVariables() {
-		table.removeAll();
-		List<GlobalVariable> globalvariables = table.getGlobalVariablesData();
-		for (GlobalVariable globalvariable : globalvariables) {
-			if (globalvariable.isDeleted() == false) {
-				TableItem ti = new TableItem(table, 0);
-				ti.setData(globalvariable);
-				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-						globalvariable.getValue(), String.valueOf(globalvariable.isExternallyupdatable()) });
-			}
-		}
-	}
-
 	/**
 	 * Create contents of the dialog.
 	 */
@@ -120,7 +90,6 @@ public class GlovalVariableDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				table.addBlankGlobalVariableStep();
-				refreshGlobalVariables();
 			}
 		});
 		addtoolitem.setText("Add");
@@ -130,7 +99,6 @@ public class GlovalVariableDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				table.deleteGlobalVariableStep();
-				refreshGlobalVariables();
 			}
 		});
 		deletetoolitem.setText("Delete");
@@ -150,7 +118,7 @@ public class GlovalVariableDialog extends Dialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				renderGlobalVaribles();
+				table.renderGlobalVaribles();
 			}
 
 			@Override
@@ -211,6 +179,7 @@ public class GlovalVariableDialog extends Dialog {
 					public void modifyText(ModifyEvent e) {
 						String selectedColumn = tableHeaders[EDITABLECOLUMN];
 						GlobalVariable gVar = (GlobalVariable) item.getData();
+						gVar.setModified(true);
 						Text text = (Text) editor.getEditor();
 						editor.getItem().setText(EDITABLECOLUMN, text.getText());
 						if (selectedColumn.equals("Name")) {
@@ -271,6 +240,8 @@ public class GlovalVariableDialog extends Dialog {
 		for (int i = 0; i < tableHeaders.length; i++) {
 			table.getColumn(i).pack();
 		}
-		renderGlobalVaribles();
+		
+		
+		table.renderGlobalVaribles();
 	}
 }
