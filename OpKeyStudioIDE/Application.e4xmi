@@ -56,10 +56,12 @@
     <children xmi:id="_6wlLesgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_6wlLe8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
-  <descriptors xmi:id="_KeW8wOphEemLasQpyDBSag" elementId="opkeystudio.partdescriptor.mainworkbench" iconURI="platform:/plugin/OpKeyStudio/icons/testcase.gif" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.MainWorkBenchPart">
+  <descriptors xmi:id="_KeW8wOphEemLasQpyDBSag" elementId="opkeystudio.partdescriptor.mainworkbench" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/testcase.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.MainWorkBenchPart">
     <toolbar xmi:id="_bsrp8OphEemLasQpyDBSag" elementId="opkeystudio.toolbar.0"/>
   </descriptors>
-  <descriptors xmi:id="_OBre4PZcEemTN-XqgekRNg" elementId="opkeystudio.partdescriptor.objectRepository" category="objectRepositoryCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ObjectRepositoryPart"/>
+  <descriptors xmi:id="_OBre4PZcEemTN-XqgekRNg" elementId="opkeystudio.partdescriptor.objectRepository" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/object repo.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ObjectRepositoryPart">
+    <toolbar xmi:id="_mWBUsPsLEem7V4aKm4Or8w" elementId="opkeystudio.toolbar.3"/>
+  </descriptors>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
