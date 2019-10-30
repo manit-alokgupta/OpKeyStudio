@@ -7,6 +7,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Tree;
+
+import opkeystudio.featurecore.ide.ui.customcontrol.ObjectRepositoryTree;
+
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
 
@@ -29,7 +32,7 @@ public class ObjectRepositoryView extends Composite {
 
 		ToolBar toolBar = new ToolBar(sashForm_2, SWT.FLAT | SWT.RIGHT);
 
-		Tree objecttree = new Tree(sashForm_2, SWT.BORDER);
+		ObjectRepositoryTree objecttree = new ObjectRepositoryTree(sashForm_2, SWT.BORDER);
 		sashForm_2.setWeights(new int[] { 1, 9 });
 
 		SashForm sashForm_1 = new SashForm(sashForm, SWT.VERTICAL);
