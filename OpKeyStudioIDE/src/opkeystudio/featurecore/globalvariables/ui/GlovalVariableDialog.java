@@ -71,15 +71,7 @@ public class GlovalVariableDialog extends Dialog {
 	}
 
 	private void renderGlobalVaribles() {
-		for (String header : tableHeaders) {
-			TableColumn column = new TableColumn(table, 0);
-			column.setText(header);
-		}
-		table.pack();
-		for (int i = 0; i < tableHeaders.length; i++) {
-			table.getColumn(i).pack();
-		}
-
+		table.removeAll();
 		try {
 			List<GlobalVariable> globalvariables = new GlobalVariableApi().getAllGlobalVariables();
 			for (GlobalVariable globalvariable : globalvariables) {
@@ -92,6 +84,17 @@ public class GlovalVariableDialog extends Dialog {
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	private void refreshGlobalVariables() {
+		table.removeAll();
+		List<GlobalVariable> globalvariables = table.getGlobalVariablesData();
+		for (GlobalVariable globalvariable : globalvariables) {
+			TableItem ti = new TableItem(table, 0);
+			ti.setData(globalvariable);
+			ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(), globalvariable.getValue(),
+					String.valueOf(globalvariable.isExternallyupdatable()) });
 		}
 	}
 
@@ -114,6 +117,8 @@ public class GlovalVariableDialog extends Dialog {
 		addtoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				table.addBlankGlobalVariableStep();
+				refreshGlobalVariables();
 			}
 		});
 		addtoolitem.setText("Add");
@@ -254,6 +259,14 @@ public class GlovalVariableDialog extends Dialog {
 			}
 		});
 		sashForm.setWeights(new int[] { 1, 10 });
+		for (String header : tableHeaders) {
+			TableColumn column = new TableColumn(table, 0);
+			column.setText(header);
+		}
+		table.pack();
+		for (int i = 0; i < tableHeaders.length; i++) {
+			table.getColumn(i).pack();
+		}
 		renderGlobalVaribles();
 	}
 }
