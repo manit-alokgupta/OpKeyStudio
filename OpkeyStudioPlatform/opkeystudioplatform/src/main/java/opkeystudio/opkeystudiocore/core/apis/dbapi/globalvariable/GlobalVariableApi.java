@@ -56,8 +56,9 @@ public class GlobalVariableApi {
 		try {
 			sqlComm.connect();
 			String query = String.format(
-					"update global_variables Set Name='%s',Value='%s',datatype='%s',ExternallyUpdatable='%s' where GV_ID='%s'",
-					gvar.getName(), gvar.getValue(), gvar.getDatatype(), gvar.isExternallyupdatable());
+					"insert into global_variables(p_id,gv_id,Name,value,datatype,ExternallyUpdatable,position) VALUES('%s','%s','%s','%s','%s','%s','%s')",
+					gvar.getP_id(), gvar.getGv_id(), gvar.getName(), gvar.getValue(), gvar.getDatatype(),
+					gvar.isExternallyupdatable(), gvar.getPosition());
 			int result = sqlComm.executeUpdate(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
