@@ -26,6 +26,15 @@ public class ArtifactTree extends CustomTree {
 		// Disable the check that prevents subclassing of SWT components
 	}
 
+	public void setArtifactsData(List<Artifact> artifacts) {
+		super.setControlData(artifacts);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Artifact> getArtifactsData() {
+		return (List<Artifact>) super.getControlData();
+	}
+
 	private void addIcon(ArtifactTreeItem artTreeItem) {
 		if (artTreeItem.getArtifact() == null) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.gif"));
@@ -56,6 +65,7 @@ public class ArtifactTree extends CustomTree {
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<Artifact> artifacts = new ArtifactApi().getAllAartificates();
+		setArtifactsData(artifacts);
 		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getParentid() == null) {
