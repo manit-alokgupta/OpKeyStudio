@@ -18,7 +18,7 @@ public class SQLiteCommunicator {
 
 	public SQLiteCommunicator() {
 		ServiceRepository.getInstance().setExortedDBFilePath("E:\\ExportedArtifactsNeon\\ExportedArtifact.db");
-		this.sqliteDbUrl = "jdbc:sqlite:"+ServiceRepository.getInstance().getExportedDBFilePath();
+		this.sqliteDbUrl = "jdbc:sqlite:" + ServiceRepository.getInstance().getExportedDBFilePath();
 		System.out.println(this.sqliteDbUrl);
 	}
 
@@ -37,6 +37,11 @@ public class SQLiteCommunicator {
 	public ResultSet executeQuery(String query) throws SQLException {
 		Statement stmt = connection.createStatement();
 		return stmt.executeQuery(query);
+	}
+
+	public int executeUpdate(String query) throws SQLException {
+		Statement stmt = connection.createStatement();
+		return stmt.executeUpdate(query);
 	}
 
 	public String executeQueryString(String query) throws SQLException {

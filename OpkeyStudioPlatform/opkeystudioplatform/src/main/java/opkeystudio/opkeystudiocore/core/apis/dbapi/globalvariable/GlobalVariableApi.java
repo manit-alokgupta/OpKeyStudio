@@ -14,13 +14,26 @@ import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariableApi {
-	public List<GlobalVariable> getAllGlobalVariables() throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm=new SQLiteCommunicator();
+	public List<GlobalVariable> getAllGlobalVariables()
+			throws SQLException, JsonParseException, JsonMappingException, IOException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
-		String result=sqlComm.executeQueryString("select * from global_variables");
-		ObjectMapper mapper=Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type=mapper.getTypeFactory().constructCollectionType(List.class, GlobalVariable.class);
+		String result = sqlComm.executeQueryString("select * from global_variables");
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, GlobalVariable.class);
 		sqlComm.disconnect();
 		return mapper.readValue(result, type);
+	}
+
+	public void deleteGlobalVariable(GlobalVariable gvar) {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		try {
+			sqlComm.connect();
+			int result = sqlComm
+					.executeUpdate(String.format("delete from global_variables where gv_id='%s'", gvar.getGv_id()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
