@@ -95,6 +95,7 @@ public class GlovalVariableDialog extends Dialog {
 		addtoolitem.setText("Add");
 
 		ToolItem deletetoolitem = new ToolItem(toolBar, SWT.NONE);
+		deletetoolitem.setEnabled(false);
 		deletetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -104,10 +105,12 @@ public class GlovalVariableDialog extends Dialog {
 		deletetoolitem.setText("Delete");
 
 		ToolItem savetoolitem = new ToolItem(toolBar, SWT.NONE);
+		savetoolitem.setEnabled(false);
 		savetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				table.saveAll();
+				savetoolitem.setEnabled(false);
 			}
 		});
 		savetoolitem.setText("Save");
@@ -115,17 +118,11 @@ public class GlovalVariableDialog extends Dialog {
 		ToolItem refreshtoolitem = new ToolItem(toolBar, SWT.NONE);
 		refreshtoolitem.setText("Refresh");
 
-		refreshtoolitem.addSelectionListener(new SelectionListener() {
+		refreshtoolitem.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				table.refreshGlobalVariables();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		table = new GlobalVariableTable(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
@@ -150,6 +147,13 @@ public class GlovalVariableDialog extends Dialog {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
+				int selectedIndex = table.getSelectionIndex();
+				if (selectedIndex == -1) {
+					deletetoolitem.setEnabled(false);
+					return;
+				} else {
+					deletetoolitem.setEnabled(true);
+				}
 				Control oldEditor = editor.getEditor();
 				if (oldEditor != null) {
 					oldEditor.dispose();
@@ -178,6 +182,7 @@ public class GlovalVariableDialog extends Dialog {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
+						savetoolitem.setEnabled(true);
 						String selectedColumn = tableHeaders[EDITABLECOLUMN];
 						GlobalVariable gVar = (GlobalVariable) item.getData();
 						gVar.setModified(true);
@@ -219,19 +224,6 @@ public class GlovalVariableDialog extends Dialog {
 			}
 		});
 
-		table.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		sashForm.setWeights(new int[] { 1, 10 });
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(table, 0);
