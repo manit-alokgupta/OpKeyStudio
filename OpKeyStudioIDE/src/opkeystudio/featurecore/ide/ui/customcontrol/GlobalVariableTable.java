@@ -73,7 +73,7 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setPosition(lastPosition + 1);
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
 		gv.setP_id("b0176085-f7fc-4f21-aa79-14bbf4a0e040");
-		gv.setName("Neon");
+		gv.setName("");
 		gv.setAdded(true);
 		addGlobalVariable(gv);
 		renderGlobalVariables();
