@@ -11,6 +11,7 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -101,6 +102,14 @@ public class ArtifactTree extends CustomTree {
 		}
 	}
 
+	public void expandAll() {
+		TreeItem items[] = this.getItems();
+		for (TreeItem item : items) {
+			item.setExpanded(true);
+		}
+		this.setRedraw(true);
+	}
+
 	public void renderArtifacts() throws JsonParseException, JsonMappingException, SQLException, IOException {
 		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
 		rootNode.setText("Project WorkSpace");
@@ -122,6 +131,7 @@ public class ArtifactTree extends CustomTree {
 		for (ArtifactTreeItem topMostNode : topMostNodes) {
 			renderAllArtifactTree(topMostNode, artifacts);
 		}
+		expandAll();
 	}
 
 	@Override

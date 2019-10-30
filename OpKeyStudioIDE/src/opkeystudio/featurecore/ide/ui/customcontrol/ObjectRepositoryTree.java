@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -56,12 +57,19 @@ public class ObjectRepositoryTree extends CustomTree {
 					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
 					orTreeItem.setText(artifact.getName());
 					orTreeItem.setArtifact(artifact);
-					orTreeItem.setExpanded(true);
 					// addIcon(artitreeitem);
 					renderAllArtifactTree(orTreeItem, allArtifacts);
 				}
 			}
 		}
+	}
+
+	public void expandAll() {
+		TreeItem items[] = this.getItems();
+		for (TreeItem item : items) {
+			item.setExpanded(true);
+		}
+		this.setRedraw(true);
 	}
 
 	public void renderObjectRepositories() {
@@ -83,7 +91,6 @@ public class ObjectRepositoryTree extends CustomTree {
 					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
 					orTreeItem.setText(objectRepository.getName());
 					orTreeItem.setArtifact(objectRepository);
-					orTreeItem.setExpanded(true);
 					topMostNodes.add(orTreeItem);
 					// addIcon(artitreeitem);
 				}
@@ -92,6 +99,7 @@ public class ObjectRepositoryTree extends CustomTree {
 			for (ObjectRepositoryTreeItem topMostNode : topMostNodes) {
 				renderAllArtifactTree(topMostNode, objectRepositories);
 			}
+			expandAll();
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
