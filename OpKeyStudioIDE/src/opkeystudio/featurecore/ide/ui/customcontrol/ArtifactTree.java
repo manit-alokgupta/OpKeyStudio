@@ -20,6 +20,7 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 
 public class ArtifactTree extends CustomTree {
 
@@ -47,18 +48,20 @@ public class ArtifactTree extends CustomTree {
 			public void mouseDoubleClick(MouseEvent e) {
 				ArtifactTree tree = (ArtifactTree) e.getSource();
 				ArtifactTreeItem selectedTreeItem = (ArtifactTreeItem) tree.getSelection()[0];
-				System.out.println(selectedTreeItem.getArtifact().getId());
-				EPartService partService = Utilities.getInstance().getEpartService();
-				MPart part= partService.createPart("opkeystudio.partdescriptor.objectRepository");
-				part.setLabel(selectedTreeItem.getArtifact().getName());
-				partService.showPart(part, PartState.ACTIVATE);
+				populateArtifact(selectedTreeItem);
 			}
 		});
 	}
 
-	@Override
-	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
+	private void populateArtifact(ArtifactTreeItem artifactTreeItem) {
+		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
+			EPartService partService = Utilities.getInstance().getEpartService();
+			MPart part = partService.createPart("opkeystudio.partdescriptor.objectRepository");
+			part.setLabel(artifactTreeItem.getArtifact().getName().substring(0, 5) + "...");
+			part.setTooltip(artifactTreeItem.getArtifact().getName());
+			part.getTransientData().put("opkeystudio.objectrepositoryArtifact", artifactTreeItem.getArtifact());
+			partService.showPart(part, PartState.ACTIVATE);
+		}
 	}
 
 	public void setArtifactsData(List<Artifact> artifacts) {
@@ -119,5 +122,10 @@ public class ArtifactTree extends CustomTree {
 		for (ArtifactTreeItem topMostNode : topMostNodes) {
 			renderAllArtifactTree(topMostNode, artifacts);
 		}
+	}
+
+	@Override
+	protected void checkSubclass() {
+		// Disable the check that prevents subclassing of SWT components
 	}
 }
