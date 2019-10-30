@@ -1,0 +1,26 @@
+package opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectRepository;
+import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
+
+public class ObjectRepositoryApi {
+	public List<ObjectRepository> getAllObjects() throws SQLException, JsonParseException, JsonMappingException, IOException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String result = sqlComm.executeQueryString("select * from or_objects");
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ObjectRepository.class);
+		sqlComm.disconnect();
+		return mapper.readValue(result, type);
+	}
+}
