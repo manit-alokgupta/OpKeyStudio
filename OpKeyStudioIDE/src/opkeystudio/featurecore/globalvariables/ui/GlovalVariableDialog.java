@@ -91,10 +91,12 @@ public class GlovalVariableDialog extends Dialog {
 		table.removeAll();
 		List<GlobalVariable> globalvariables = table.getGlobalVariablesData();
 		for (GlobalVariable globalvariable : globalvariables) {
-			TableItem ti = new TableItem(table, 0);
-			ti.setData(globalvariable);
-			ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(), globalvariable.getValue(),
-					String.valueOf(globalvariable.isExternallyupdatable()) });
+			if (globalvariable.isDeleted() == false) {
+				TableItem ti = new TableItem(table, 0);
+				ti.setData(globalvariable);
+				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+						globalvariable.getValue(), String.valueOf(globalvariable.isExternallyupdatable()) });
+			}
 		}
 	}
 
@@ -127,6 +129,8 @@ public class GlovalVariableDialog extends Dialog {
 		deletetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				table.deleteGlobalVariableStep();
+				refreshGlobalVariables();
 			}
 		});
 		deletetoolitem.setText("Delete");

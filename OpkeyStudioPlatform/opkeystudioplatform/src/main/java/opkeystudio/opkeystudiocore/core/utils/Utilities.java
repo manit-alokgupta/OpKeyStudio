@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -63,6 +64,9 @@ public class Utilities {
 		return new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
 
 	}
-	
-	
+
+	public String getUniqueUUID(String prefix) {
+		return prefix + "_" + UUID.randomUUID().toString();
+	}
+
 }

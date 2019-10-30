@@ -3,6 +3,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol;
 import java.util.List;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TableItem;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -40,5 +41,11 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setP_id("");
 		gv.setName("Neon");
 		addGlobalVariable(gv);
+	}
+
+	public void deleteGlobalVariableStep() {
+		int selectedIndex = this.getSelectionIndex();
+		getGlobalVariablesData().get(selectedIndex).setDeleted(true);
+		;
 	}
 }
