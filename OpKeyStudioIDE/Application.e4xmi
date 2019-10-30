@@ -23,6 +23,7 @@
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="opkeystudio.menu.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_Cjv-sPV6EemEv-Dsdd6Nxw" elementId="opkeystudio.directmenuitem.login" label="Login" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.LoginHandler"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_X8-2wPsEEemvU7QvzW07xw" elementId="opkeystudio.directmenuitem.importdb" label="Import DB" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_oQOH4PV2EemEv-Dsdd6Nxw" elementId="opkeystudio.menu.tools" label="Tools">
