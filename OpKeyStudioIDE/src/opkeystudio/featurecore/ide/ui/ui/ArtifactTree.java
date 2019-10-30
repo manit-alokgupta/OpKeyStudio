@@ -38,9 +38,9 @@ public class ArtifactTree extends Composite {
 
 	private void addIcon(ArtifactTreeItem artTreeItem) {
 		if (artTreeItem.getArtifact() == null) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/folder.gif"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.gif"));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Folder) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/folder.gif"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.gif"));
 		}
 	}
 
