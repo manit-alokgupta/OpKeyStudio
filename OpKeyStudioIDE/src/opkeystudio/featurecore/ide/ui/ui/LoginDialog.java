@@ -163,7 +163,7 @@ public class LoginDialog extends Dialog {
 		lblNewLabel_3.setBounds(163, 71, 23, 21);
 		
 		CLabel lblNewLabel_4 = new CLabel(composite_1, SWT.NONE);
-		lblNewLabel_4.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/lock.png"));
+		lblNewLabel_4.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/password.png"));
 		lblNewLabel_4.setBounds(163, 110, 23, 21);
 
 	}
