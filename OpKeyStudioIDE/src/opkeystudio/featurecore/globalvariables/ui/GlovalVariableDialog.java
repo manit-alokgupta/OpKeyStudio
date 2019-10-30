@@ -30,8 +30,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 
