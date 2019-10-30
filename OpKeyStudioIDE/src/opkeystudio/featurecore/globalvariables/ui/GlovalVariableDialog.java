@@ -34,6 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class GlovalVariableDialog extends Dialog {
 	String[] tableHeaders = { "Name", "Data Type", "Value", "Externally Updatable" };
@@ -86,15 +87,16 @@ public class GlovalVariableDialog extends Dialog {
 		ToolBar toolBar = new ToolBar(sashForm, SWT.FLAT | SWT.RIGHT);
 
 		ToolItem addtoolitem = new ToolItem(toolBar, SWT.NONE);
+		addtoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/create.png"));
 		addtoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				table.addBlankGlobalVariableStep();
 			}
 		});
-		addtoolitem.setText("Add");
 
 		ToolItem deletetoolitem = new ToolItem(toolBar, SWT.NONE);
+		deletetoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/delete.png"));
 		deletetoolitem.setEnabled(false);
 		deletetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -102,9 +104,9 @@ public class GlovalVariableDialog extends Dialog {
 				table.deleteGlobalVariableStep();
 			}
 		});
-		deletetoolitem.setText("Delete");
 
 		ToolItem savetoolitem = new ToolItem(toolBar, SWT.NONE);
+		savetoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/save.png"));
 		savetoolitem.setEnabled(false);
 		savetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -113,7 +115,6 @@ public class GlovalVariableDialog extends Dialog {
 				savetoolitem.setEnabled(false);
 			}
 		});
-		savetoolitem.setText("Save");
 
 		ToolItem refreshtoolitem = new ToolItem(toolBar, SWT.NONE);
 		refreshtoolitem.setText("Refresh");
