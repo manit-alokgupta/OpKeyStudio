@@ -36,4 +36,32 @@ public class GlobalVariableApi {
 			e.printStackTrace();
 		}
 	}
+
+	public void updateGlobalVariable(GlobalVariable gvar) {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		try {
+			sqlComm.connect();
+			String query = String.format(
+					"update global_variables Set Name='%s',Value='%s',datatype='%s',ExternallyUpdatable='%s' where GV_ID='%s'",
+					gvar.getName(), gvar.getValue(), gvar.getDatatype(), gvar.isExternallyupdatable(), gvar.getGv_id());
+			int result = sqlComm.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void insertGlobalVaribale(GlobalVariable gvar) {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		try {
+			sqlComm.connect();
+			String query = String.format(
+					"update global_variables Set Name='%s',Value='%s',datatype='%s',ExternallyUpdatable='%s' where GV_ID='%s'",
+					gvar.getName(), gvar.getValue(), gvar.getDatatype(), gvar.isExternallyupdatable());
+			int result = sqlComm.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

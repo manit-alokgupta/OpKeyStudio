@@ -107,6 +107,7 @@ public class GlovalVariableDialog extends Dialog {
 		savetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				table.saveAll();
 			}
 		});
 		savetoolitem.setText("Save");
@@ -240,8 +241,7 @@ public class GlovalVariableDialog extends Dialog {
 		for (int i = 0; i < tableHeaders.length; i++) {
 			table.getColumn(i).pack();
 		}
-		
-		
+
 		table.renderGlobalVaribles();
 	}
 }

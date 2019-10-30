@@ -73,6 +73,7 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
 		gv.setP_id("");
 		gv.setName("Neon");
+		gv.setAdded(true);
 		addGlobalVariable(gv);
 		refreshGlobalVariables();
 	}
@@ -81,6 +82,26 @@ public class GlobalVariableTable extends CustomTable {
 		int selectedIndex = this.getSelectionIndex();
 		getGlobalVariablesData().get(selectedIndex).setDeleted(true);
 		refreshGlobalVariables();
+	}
+
+	public void saveAll() {
+		List<GlobalVariable> allGlobalVariables = getGlobalVariablesData();
+		for (GlobalVariable gv : allGlobalVariables) {
+			if (gv.isDeleted()) {
+				new GlobalVariableApi().deleteGlobalVariable(gv);
+			}
+		}
+		for (GlobalVariable gv : allGlobalVariables) {
+			if (gv.isModified()) {
+				new GlobalVariableApi().updateGlobalVariable(gv);
+			}
+		}
+		for (GlobalVariable gv : allGlobalVariables) {
+			if (gv.isAdded()) {
+
+			}
+		}
+		renderGlobalVaribles();
 	}
 
 }
