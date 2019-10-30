@@ -9,17 +9,32 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectRepository;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ObjectRepositoryApi {
-	public List<ObjectRepository> getAllObjects() throws SQLException, JsonParseException, JsonMappingException, IOException {
+	public List<ObjectRepository> getAllObjects()
+			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
 		String result = sqlComm.executeQueryString("select * from or_objects");
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ObjectRepository.class);
+		sqlComm.disconnect();
+		return mapper.readValue(result, type);
+	}
+
+	public List<ObjectAttributeProperty> getObjectAttributeProperty(String objectId)
+			throws SQLException, JsonParseException, JsonMappingException, IOException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String result = sqlComm
+				.executeQueryString(String.format("select * from or_object_properties where object_id='%s'", objectId));
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
+				ObjectAttributeProperty.class);
 		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
