@@ -119,7 +119,7 @@ public class GlovalVariableDialog extends Dialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				table.renderGlobalVaribles();
+				table.refreshGlobalVariables();
 			}
 
 			@Override
@@ -242,6 +242,6 @@ public class GlovalVariableDialog extends Dialog {
 			table.getColumn(i).pack();
 		}
 
-		table.renderGlobalVaribles();
+		table.refreshGlobalVariables();
 	}
 }
