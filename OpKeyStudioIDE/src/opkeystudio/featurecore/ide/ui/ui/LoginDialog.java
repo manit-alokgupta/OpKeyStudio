@@ -20,6 +20,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class LoginDialog extends Dialog {
 
@@ -63,24 +65,32 @@ public class LoginDialog extends Dialog {
 	 */
 	private void createContents() {
 		shlLoginToOpkey = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-		shlLoginToOpkey.setSize(450, 300);
+		shlLoginToOpkey.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		shlLoginToOpkey.setSize(466, 333);
 		shlLoginToOpkey.setText("Login to OpKey");
 		Composite composite = new Composite(shlLoginToOpkey, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		composite.setBounds(0, 0, 444, 64);
+		composite.setBounds(10, 0, 434, 64);
 
 		Label lblNewLabel = new Label(composite, SWT.NONE);
+		lblNewLabel.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
 		lblNewLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblNewLabel.setBounds(10, 10, 239, 15);
+		lblNewLabel.setBounds(10, 10, 164, 23);
 		lblNewLabel.setText("Login to OpKey");
 
 		Label lblNewLabel_1 = new Label(composite, SWT.NONE);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblNewLabel_1.setFont(SWTResourceManager.getFont("Segoe UI", 7, SWT.NORMAL));
-		lblNewLabel_1.setBounds(10, 39, 306, 15);
+		lblNewLabel_1.setBounds(10, 39, 164, 15);
 		lblNewLabel_1.setText("Provide your OpKey credential to login");
-
+		
+		CLabel lblNewLabel_5 = new CLabel(composite, SWT.NONE);
+		lblNewLabel_5.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		lblNewLabel_5.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/logo.png"));
+		lblNewLabel_5.setBounds(321, 10, 113, 44);
+		
 		Button loginButton = new Button(shlLoginToOpkey, SWT.NONE);
+		loginButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		loginButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -103,42 +113,58 @@ public class LoginDialog extends Dialog {
 				}
 			}
 		});
-		loginButton.setBounds(253, 236, 75, 25);
+		loginButton.setBounds(254, 258, 75, 25);
 		loginButton.setText("Login");
 
 		Button closebutton = new Button(shlLoginToOpkey, SWT.NONE);
+		closebutton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		closebutton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				shlLoginToOpkey.close();
 			}
 		});
-		closebutton.setBounds(348, 236, 75, 25);
+		closebutton.setBounds(359, 258, 75, 25);
 		closebutton.setText("Close");
 
 		Composite composite_1 = new Composite(shlLoginToOpkey, SWT.BORDER);
-		composite_1.setBounds(10, 70, 424, 147);
+		composite_1.setBounds(10, 70, 434, 167);
 
 		Label label = new Label(composite_1, SWT.NONE);
 		label.setText("UserName");
-		label.setBounds(41, 61, 84, 15);
+		label.setBounds(42, 71, 84, 21);
 
 		domainUrl = new Text(composite_1, SWT.BORDER);
-		domainUrl.setBounds(192, 10, 178, 21);
+		domainUrl.setToolTipText("OpKey Domain");
+		domainUrl.setBounds(192, 24, 178, 24);
 
 		userName = new Text(composite_1, SWT.BORDER);
-		userName.setBounds(192, 55, 178, 21);
+		userName.setToolTipText("UserName");
+		userName.setBounds(192, 68, 178, 24);
 
 		passWord = new Text(composite_1, SWT.BORDER);
-		passWord.setBounds(192, 101, 178, 21);
+		passWord.setToolTipText("Password");
+		passWord.setBounds(192, 110, 178, 24);
 
 		Label label_1 = new Label(composite_1, SWT.NONE);
 		label_1.setText("OpKey Domain");
-		label_1.setBounds(41, 16, 129, 15);
+		label_1.setBounds(41, 27, 119, 21);
 
 		Label label_2 = new Label(composite_1, SWT.NONE);
 		label_2.setText("Password");
-		label_2.setBounds(41, 107, 105, 15);
+		label_2.setBounds(43, 113, 105, 18);
+		
+		CLabel lblNewLabel_2 = new CLabel(composite_1, SWT.NONE);
+		lblNewLabel_2.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/domain.png"));
+		lblNewLabel_2.setBounds(163, 27, 23, 21);
+		
+		CLabel lblNewLabel_3 = new CLabel(composite_1, SWT.NONE);
+		lblNewLabel_3.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/user.png"));
+		lblNewLabel_3.setBounds(163, 71, 23, 21);
+		
+		CLabel lblNewLabel_4 = new CLabel(composite_1, SWT.NONE);
+		lblNewLabel_4.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/lock.png"));
+		lblNewLabel_4.setBounds(163, 110, 23, 21);
 
 	}
 }
