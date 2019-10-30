@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.apis.restapi;
+package opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi;
 
 import java.io.IOException;
 import java.sql.SQLException;
