@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -36,7 +37,7 @@ public class GlobalVariableTable extends CustomTable {
 		getGlobalVariablesData().add(gv);
 	}
 
-	public void renderGlobalVaribles() {
+	public void refreshGlobalVariables() {
 		this.removeAll();
 		try {
 			List<GlobalVariable> globalvariables = new GlobalVariableApi().getAllGlobalVariables();
@@ -53,7 +54,7 @@ public class GlobalVariableTable extends CustomTable {
 		}
 	}
 
-	private void refreshGlobalVariables() {
+	private void renderGlobalVariables() {
 		this.removeAll();
 		List<GlobalVariable> globalvariables = this.getGlobalVariablesData();
 		for (GlobalVariable globalvariable : globalvariables) {
@@ -72,19 +73,25 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setPosition(lastPosition + 1);
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
 		gv.setP_id("b0176085-f7fc-4f21-aa79-14bbf4a0e040");
-		gv.setName("Neon");
+		gv.setName("");
 		gv.setAdded(true);
 		addGlobalVariable(gv);
-		refreshGlobalVariables();
+		renderGlobalVariables();
 	}
 
 	public void deleteGlobalVariableStep() {
 		int selectedIndex = this.getSelectionIndex();
 		getGlobalVariablesData().get(selectedIndex).setDeleted(true);
-		refreshGlobalVariables();
+		renderGlobalVariables();
 	}
 
 	public void saveAll() {
+		boolean status = MessageDialog.openConfirm(this.getShell(), "Global Variable Save",
+				"Do you want to save global varaible?");
+		if (!status) {
+			refreshGlobalVariables();
+			return;
+		}
 		List<GlobalVariable> allGlobalVariables = getGlobalVariablesData();
 		for (GlobalVariable gv : allGlobalVariables) {
 			if (gv.isDeleted()) {
@@ -101,7 +108,7 @@ public class GlobalVariableTable extends CustomTable {
 				new GlobalVariableApi().insertGlobalVaribale(gv);
 			}
 		}
-		renderGlobalVaribles();
+		refreshGlobalVariables();
 	}
 
 }
