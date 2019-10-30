@@ -98,7 +98,7 @@ public class GlobalVariableTable extends CustomTable {
 		}
 		for (GlobalVariable gv : allGlobalVariables) {
 			if (gv.isAdded()) {
-
+				new GlobalVariableApi().insertGlobalVaribale(gv);
 			}
 		}
 		renderGlobalVaribles();
