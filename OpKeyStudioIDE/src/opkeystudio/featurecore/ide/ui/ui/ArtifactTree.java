@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -14,15 +15,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.wb.swt.ResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
-import org.eclipse.wb.swt.ResourceManager;
 
 public class ArtifactTree extends Composite {
 
@@ -43,18 +44,41 @@ public class ArtifactTree extends Composite {
 		}
 	}
 
+	private void renderAllArtifactTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {
+		String artifactId = rootNode.getArtifact().getId();
+		for (Artifact artifact : allArtifacts) {
+			System.out.println(artifact.getName());
+			if (artifact.getParentid() != null) {
+				if (artifact.getParentid().equals(artifactId)) {
+					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
+					artitreeitem.setText(artifact.getName());
+					artitreeitem.setArtifact(artifact);
+					addIcon(artitreeitem);
+					renderAllArtifactTree(artitreeitem, allArtifacts);
+				}
+			}
+		}
+	}
+
 	private void renderArtifacts() throws JsonParseException, JsonMappingException, SQLException, IOException {
 		ArtifactTreeItem rootNode = new ArtifactTreeItem(tree, 0);
 		rootNode.setText("Project WorkSpace");
+		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<Artifact> artifacts = new ArtifactApi().getAllAartificates();
+		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getParentid() == null) {
 				ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
 				artitreeitem.setText(artifact.getName());
 				artitreeitem.setArtifact(artifact);
+				topMostNodes.add(artitreeitem);
 				addIcon(artitreeitem);
 			}
+		}
+
+		for (ArtifactTreeItem topMostNode : topMostNodes) {
+			renderAllArtifactTree(topMostNode, artifacts);
 		}
 	}
 
