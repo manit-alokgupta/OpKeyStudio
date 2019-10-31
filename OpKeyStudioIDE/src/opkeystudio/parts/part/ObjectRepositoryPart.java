@@ -12,6 +12,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
+import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView2;
 
 public class ObjectRepositoryPart {
 	@Inject
@@ -19,7 +20,7 @@ public class ObjectRepositoryPart {
 
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
-		new ObjectRepositoryView(parent, 0);
+		new ObjectRepositoryView2(parent, 0);
 	}
 
 	@PreDestroy
