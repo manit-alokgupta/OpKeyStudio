@@ -37,6 +37,7 @@ public class ArtifactTreeUI extends Composite {
 		artifactTree.setMenu(menu);
 
 		MenuItem mntmNew = new MenuItem(menu, SWT.CASCADE);
+		mntmNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/create.png"));
 		mntmNew.setText("New");
 
 		Menu menu_1 = new Menu(mntmNew);
@@ -58,6 +59,7 @@ public class ArtifactTreeUI extends Composite {
 		functionLibraryMenuItem.setText("Function Library");
 
 		MenuItem renameMenuItem = new MenuItem(menu, SWT.NONE);
+		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
 		renameMenuItem.setText("Rename");
 
 		MenuItem deleteMenuItem = new MenuItem(menu, SWT.NONE);
