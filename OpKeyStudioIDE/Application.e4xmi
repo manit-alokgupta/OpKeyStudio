@@ -22,15 +22,15 @@
     </children>
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="opkeystudio.menu.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_Cjv-sPV6EemEv-Dsdd6Nxw" elementId="opkeystudio.directmenuitem.login" label="Login" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.LoginHandler"/>
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_X8-2wPsEEemvU7QvzW07xw" elementId="opkeystudio.directmenuitem.importdb" label="Import DB" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand"/>
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_Cjv-sPV6EemEv-Dsdd6Nxw" elementId="opkeystudio.directmenuitem.login" label="Login" iconURI="platform:/plugin/OpKeyStudio/icons/log-in.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.LoginHandler"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_X8-2wPsEEemvU7QvzW07xw" elementId="opkeystudio.directmenuitem.importdb" label="Import DB" iconURI="platform:/plugin/OpKeyStudio/icons/import.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" iconURI="platform:/plugin/OpKeyStudio/icons/exit.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_oQOH4PV2EemEv-Dsdd6Nxw" elementId="opkeystudio.menu.tools" label="Tools">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_qu-CQPV2EemEv-Dsdd6Nxw" elementId="opkeystudio.directmenuitem.globalvariable" label="Global Variable" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.GlobalVariableHandler"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_s3lGcNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.help" label="Help">
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_uVJ3sNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.about" label="About" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.AboutCommand"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_uVJ3sNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.about" label="About" iconURI="platform:/plugin/OpKeyStudio/icons/about.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.AboutCommand"/>
       </children>
     </mainMenu>
     <trimBars xmi:id="_vz6icNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.0">
