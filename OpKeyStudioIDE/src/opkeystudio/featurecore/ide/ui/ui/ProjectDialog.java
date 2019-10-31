@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ProjectDialog extends TitleAreaDialog {
 	private Text text;
@@ -42,6 +43,7 @@ public class ProjectDialog extends TitleAreaDialog {
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		text = new Text(container, SWT.BORDER);
+		text.setToolTipText("Enter Project Name");
 		text.setBounds(10, 10, 424, 17);
 
 		table = new Table(container, SWT.BORDER | SWT.FULL_SELECTION);
@@ -62,8 +64,10 @@ public class ProjectDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		Button button = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+		button.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		button.setText("Go");
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		Button button_1 = createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		button_1.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 	}
 
 	/**
