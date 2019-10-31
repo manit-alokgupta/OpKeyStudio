@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.splash.AbstractSplashHandler;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * @since 3.3
@@ -176,6 +177,7 @@ public class InteractiveSplashHandler extends AbstractSplashHandler {
 	private void createUIButtonCancel() {
 		// Create the button
 		fButtonCancel = new Button(fCompositeLogin, SWT.PUSH);
+		fButtonCancel.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		fButtonCancel.setText("Cancel"); //$NON-NLS-1$
 		// Configure layout data
 		GridData data = new GridData(SWT.NONE, SWT.NONE, false, false);
@@ -190,6 +192,7 @@ public class InteractiveSplashHandler extends AbstractSplashHandler {
 	private void createUIButtonOK() {
 		// Create the button
 		fButtonOK = new Button(fCompositeLogin, SWT.PUSH);
+		fButtonOK.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		fButtonOK.setText("OK"); //$NON-NLS-1$
 		// Configure layout data
 		GridData data = new GridData(SWT.NONE, SWT.NONE, false, false);
@@ -213,6 +216,7 @@ public class InteractiveSplashHandler extends AbstractSplashHandler {
 		// Create the text widget
 		int style = SWT.PASSWORD | SWT.BORDER;
 		fTextPassword = new Text(fCompositeLogin, style);
+		fTextPassword.setToolTipText("Password");
 		// Configure layout data
 		GridData data = new GridData(SWT.NONE, SWT.NONE, false, false);
 		data.widthHint = F_TEXT_WIDTH_HINT;
@@ -239,6 +243,7 @@ public class InteractiveSplashHandler extends AbstractSplashHandler {
 	private void createUITextUserName() {
 		// Create the text widget
 		fTextUsername = new Text(fCompositeLogin, SWT.BORDER);
+		fTextUsername.setToolTipText("User Name");
 		// Configure layout data
 		GridData data = new GridData(SWT.NONE, SWT.NONE, false, false);
 		data.widthHint = F_TEXT_WIDTH_HINT;
