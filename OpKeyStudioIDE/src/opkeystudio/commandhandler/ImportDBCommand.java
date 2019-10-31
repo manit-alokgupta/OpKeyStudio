@@ -5,6 +5,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+
 public class ImportDBCommand {
 
 	String[] filterExt = { "*.db;*.sql"};
@@ -15,8 +17,11 @@ public class ImportDBCommand {
 
 		dialog.setFilterExtensions(filterExt);
 		dialog.open();
+		String filePath=dialog.getFilterPath()+"\\"+dialog.getFileName();
 		
-		System.out.println(dialog.getFilterPath()+"\\"+dialog.getFileName());
+		ServiceRepository.getInstance().setExortedDBFilePath(filePath);
+		
+		System.out.println(filePath);
 
 
 	}
