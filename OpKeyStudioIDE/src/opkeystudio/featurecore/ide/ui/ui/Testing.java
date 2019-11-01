@@ -52,7 +52,7 @@ public class Testing extends Composite {
 		composite_4.setLayoutData(gd_composite_4);
 		
 		ToolBar toolBar_1 = new ToolBar(composite_4, SWT.RIGHT);
-		toolBar_1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		toolBar_1.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1));
 		
 		Composite composite_7 = new Composite(composite_4, SWT.NONE);
 		composite_7.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
