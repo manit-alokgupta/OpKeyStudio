@@ -51,7 +51,7 @@ public class Testing extends Composite {
 		gd_composite_4.heightHint = 139;
 		composite_4.setLayoutData(gd_composite_4);
 		
-		ToolBar toolBar_1 = new ToolBar(composite_4, SWT.FLAT | SWT.RIGHT);
+		ToolBar toolBar_1 = new ToolBar(composite_4, SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		
 		Composite composite_7 = new Composite(composite_4, SWT.NONE);
@@ -90,7 +90,11 @@ public class Testing extends Composite {
 		tree.setHeaderVisible(true);
 		tree.setLinesVisible(true);
 		
-		table_1 = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
+		Composite composite_2 = new Composite(this, SWT.NONE);
+		composite_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		composite_2.setLayout(new GridLayout(1, false));
+		
+		table_1 = new Table(composite_2, SWT.BORDER | SWT.FULL_SELECTION);
 		table_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table_1.setBounds(0, 0, 85, 45);
 		table_1.setHeaderVisible(true);
