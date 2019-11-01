@@ -30,7 +30,10 @@ public class ArtifactTreeUI extends Composite {
 	ArtifactTree artifactTree;
 
 	public ArtifactTreeUI(Composite parent, int style) throws IOException {
+		
+		
 		super(parent, style);
+		String file="file";
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
@@ -90,9 +93,14 @@ public class ArtifactTreeUI extends Composite {
 				
 				System.out.println("CLicked");
 				
-				String file="file";
 //				String path=System.getProperty("user.dir")+File.separator+"OpKeyStudio"+File.separator+"workspace";
-				new File("D:\\"+file).mkdir();
+				if(new File("D:\\"+file).mkdir())
+				{
+					System.out.println("Created successfully");
+				}
+				else {
+					System.out.println("Already exists");
+				}
 				
 			}
 
@@ -109,6 +117,15 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Delete clicked");
+				if(new File("D:\\"+file).delete())
+				{
+					System.out.println("file deleted");
+				}
+				else
+				{
+					System.out.println("File dosen't exists");
+				}
 			}
 
 			@Override
