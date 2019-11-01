@@ -53,8 +53,8 @@ public class ObjectRepositoryView extends Composite {
 
 		Composite composite_3 = new Composite(sashForm_1, SWT.NONE);
 		composite_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		composite_3.setLayout(new FillLayout(SWT.HORIZONTAL));
-
+		FillLayout fillLayout_1 = new FillLayout(SWT.HORIZONTAL);
+		composite_3.setLayout(fillLayout_1);
 		ToolBar toolBar = new ToolBar(composite_3, SWT.FLAT | SWT.RIGHT);
 		ToolItem saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setText("Save");
@@ -95,6 +95,7 @@ public class ObjectRepositoryView extends Composite {
 
 		ToolItem deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
 		deleteObjectAttribute.setText("Delete");
+		deleteObjectAttribute.setEnabled(false);
 
 		Composite composite_6 = new Composite(sashForm_2, SWT.BORDER);
 		composite_6.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -127,19 +128,20 @@ public class ObjectRepositoryView extends Composite {
 
 			}
 		});
-		
+
 		table.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ObjectAttributeTableItem oati=(ObjectAttributeTableItem) table.getSelection()[0];
+				ObjectAttributeTableItem oati = (ObjectAttributeTableItem) table.getSelection()[0];
 				System.out.println(oati.getObjectAttributeData().getProperty());
+				deleteObjectAttribute.setEnabled(true);
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		saveObject.addSelectionListener(new SelectionListener() {

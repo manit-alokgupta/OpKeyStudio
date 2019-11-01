@@ -22,7 +22,6 @@
     </children>
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="opkeystudio.menu.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_Cjv-sPV6EemEv-Dsdd6Nxw" elementId="opkeystudio.directmenuitem.login" label="Login" iconURI="platform:/plugin/OpKeyStudio/icons/log-in.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.LoginHandler"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_X8-2wPsEEemvU7QvzW07xw" elementId="opkeystudio.directmenuitem.importdb" label="Import DB" iconURI="platform:/plugin/OpKeyStudio/icons/import.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" iconURI="platform:/plugin/OpKeyStudio/icons/exit.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit"/>
       </children>
@@ -35,7 +34,7 @@
     </mainMenu>
     <trimBars xmi:id="_vz6icNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.0">
       <children xsi:type="menu:ToolBar" xmi:id="_wiuJMNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.maintoolbarholder">
-        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.0" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/datafile.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.CreateProject">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.0" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/datafile.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
         </children>
       </children>

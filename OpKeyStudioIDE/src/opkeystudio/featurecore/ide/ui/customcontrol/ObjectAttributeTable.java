@@ -59,10 +59,12 @@ public class ObjectAttributeTable extends CustomTable {
 		this.removeAll();
 		List<ObjectAttributeProperty> objectProperties = getObjectPropertiesData();
 		for (ObjectAttributeProperty attributeProperty : objectProperties) {
-			ObjectAttributeTableItem oati = new ObjectAttributeTableItem(this, 0);
-			oati.setText(new String[] { attributeProperty.getProperty(), attributeProperty.getValue(),
-					String.valueOf(attributeProperty.isIsused()), String.valueOf(attributeProperty.isIsregex()) });
-			oati.setObjectAttributeData(attributeProperty);
+			if (attributeProperty.isDeleted() == false) {
+				ObjectAttributeTableItem oati = new ObjectAttributeTableItem(this, 0);
+				oati.setText(new String[] { attributeProperty.getProperty(), attributeProperty.getValue(),
+						String.valueOf(attributeProperty.isIsused()), String.valueOf(attributeProperty.isIsregex()) });
+				oati.setObjectAttributeData(attributeProperty);
+			}
 		}
 	}
 }
