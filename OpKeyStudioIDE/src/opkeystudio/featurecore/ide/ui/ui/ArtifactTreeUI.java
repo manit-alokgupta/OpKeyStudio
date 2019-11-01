@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -8,8 +9,10 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -84,10 +87,19 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				
+				System.out.println("CLicked");
+				
+				String file="file";
+//				String path=System.getProperty("user.dir")+File.separator+"OpKeyStudio"+File.separator+"workspace";
+				new File("D:\\"+file).mkdir();
+				
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+				System.out.println("Clicking");
+				
 				// TODO Auto-generated method stub
 
 			}
