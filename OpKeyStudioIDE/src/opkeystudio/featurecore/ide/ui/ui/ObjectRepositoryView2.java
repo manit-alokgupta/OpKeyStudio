@@ -19,7 +19,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Label;
 
-public class Testing extends Composite {
+public class ObjectRepositoryView2 extends Composite {
 	private Table table;
 	private Table table_1;
 
@@ -28,12 +28,13 @@ public class Testing extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public Testing(Composite parent, int style) {
+	public ObjectRepositoryView2(Composite parent, int style) {
 		super(parent, SWT.NONE);
 		setLayout(new GridLayout(1, false));
 		
 		CBanner banner = new CBanner(this, SWT.NONE);
 		GridData gd_banner = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_banner.minimumWidth = 50;
 		gd_banner.heightHint = 552;
 		gd_banner.widthHint = 0;
 		gd_banner.verticalIndent = 1;
@@ -42,20 +43,30 @@ public class Testing extends Composite {
 		Composite composite_1 = new Composite(banner, SWT.EMBEDDED);
 		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		banner.setRight(composite_1);
-		composite_1.setLayout(new GridLayout(1, false));
+		GridLayout gl_composite_1 = new GridLayout(1, false);
+		gl_composite_1.horizontalSpacing = 50;
+		gl_composite_1.marginHeight = 0;
+		composite_1.setLayout(gl_composite_1);
 		
 		Composite composite_4 = new Composite(composite_1, SWT.NONE);
 		composite_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		composite_4.setLayout(new GridLayout(1, false));
+		GridLayout gl_composite_4 = new GridLayout(1, false);
+		gl_composite_4.marginHeight = 0;
+		gl_composite_4.marginBottom = 5;
+		composite_4.setLayout(gl_composite_4);
 		GridData gd_composite_4 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_composite_4.heightHint = 139;
+		gd_composite_4.minimumHeight = 100;
+		gd_composite_4.minimumWidth = 100;
+		gd_composite_4.heightHint = 542;
 		composite_4.setLayoutData(gd_composite_4);
 		
 		ToolBar toolBar_1 = new ToolBar(composite_4, SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1));
 		
 		Composite composite_7 = new Composite(composite_4, SWT.NONE);
-		composite_7.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridData gd_composite_7 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_composite_7.widthHint = 200;
+		composite_7.setLayoutData(gd_composite_7);
 		composite_7.setBounds(0, 0, 64, 64);
 		composite_7.setLayout(new TableColumnLayout());
 		
@@ -68,12 +79,20 @@ public class Testing extends Composite {
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		banner.setBottom(composite);
 		banner.setLeft(composite);
-		composite.setLayout(new GridLayout(1, false));
+		GridLayout gl_composite = new GridLayout(1, false);
+		gl_composite.horizontalSpacing = 50;
+		gl_composite.marginHeight = 0;
+		composite.setLayout(gl_composite);
 		
 		Composite composite_3 = new Composite(composite, SWT.NONE);
 		composite_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		composite_3.setLayout(new GridLayout(1, false));
+		GridLayout gl_composite_3 = new GridLayout(1, false);
+		gl_composite_3.marginBottom = 5;
+		gl_composite_3.marginHeight = 0;
+		composite_3.setLayout(gl_composite_3);
 		GridData gd_composite_3 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_composite_3.minimumHeight = 100;
+		gd_composite_3.minimumWidth = 100;
 		gd_composite_3.widthHint = 409;
 		gd_composite_3.heightHint = 542;
 		composite_3.setLayoutData(gd_composite_3);
