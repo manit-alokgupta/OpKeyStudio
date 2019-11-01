@@ -32,7 +32,6 @@ public class ObjectRepositoryView extends Composite {
 		sashForm_2.setWeights(new int[] { 1, 9 });
 
 		SashForm sashForm_1 = new SashForm(sashForm, SWT.VERTICAL);
-
 		ToolBar toolBar_1 = new ToolBar(sashForm_1, SWT.FLAT | SWT.RIGHT);
 
 		objectattributepropertytable = new Table(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);

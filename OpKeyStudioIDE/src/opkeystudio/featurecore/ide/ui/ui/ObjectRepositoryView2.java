@@ -1,19 +1,19 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.custom.CBanner;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.ObjectRepositoryTree;
+
 public class ObjectRepositoryView2 extends Composite {
+	private Table table;
 
 	/**
 	 * Create the composite.
@@ -23,39 +23,69 @@ public class ObjectRepositoryView2 extends Composite {
 	 */
 	public ObjectRepositoryView2(Composite parent, int style) {
 		super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
+		FillLayout fillLayout = new FillLayout(SWT.HORIZONTAL);
+		fillLayout.marginWidth = 5;
+		fillLayout.marginHeight = 5;
+		setLayout(fillLayout);
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		CBanner banner = new CBanner(composite, SWT.NONE);
-
-		Composite leftComponent = new Composite(banner, SWT.NONE);
-		banner.setLeft(leftComponent);
-
-		Composite leftComponentHolder = new Composite(leftComponent, SWT.NONE);
-		leftComponentHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		leftComponentHolder.setBounds(0, 0, 367, 295);
-
-		Composite rightComponent = new Composite(banner, SWT.NONE);
-		banner.setRight(rightComponent);
-
-		banner.setRightWidth(200);
-
-		Composite rightComponentHolder = new Composite(rightComponent, SWT.NONE);
-		rightComponentHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		rightComponentHolder.setBounds(0, 0, 200, 295);
-		banner.addPaintListener(new PaintListener() {
-
-			@Override
-			public void paintControl(PaintEvent e) {
-				Control leftComponent = (Control) e.getSource();
-				System.out.println(leftComponent.getBounds().width);
-				System.out.println(leftComponent.getBounds().height);
-				leftComponentHolder.setSize(leftComponent.getBounds().width, banner.getBounds().height);
-				banner.redraw();
-			}
-		});
+		
+		SashForm sashForm = new SashForm(composite, SWT.NONE);
+		
+		Composite composite_1 = new Composite(sashForm, SWT.NONE);
+		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		SashForm sashForm_1 = new SashForm(composite_1, SWT.VERTICAL);
+		
+		Composite composite_3 = new Composite(sashForm_1, SWT.NONE);
+		composite_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		composite_3.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		ToolBar toolBar = new ToolBar(composite_3, SWT.FLAT | SWT.RIGHT);
+		
+		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem.setText("New Item");
+		
+		ToolItem tltmNewItem_1 = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem_1.setText("New Item");
+		
+		ToolItem tltmNewItem_2 = new ToolItem(toolBar, SWT.NONE);
+		tltmNewItem_2.setText("New Item");
+		
+		Composite composite_4 = new Composite(sashForm_1, SWT.BORDER);
+		composite_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		ObjectRepositoryTree tree = new ObjectRepositoryTree(composite_4, SWT.BORDER);
+		tree.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		sashForm_1.setWeights(new int[] {1, 15});
+		
+		Composite composite_2 = new Composite(sashForm, SWT.NONE);
+		composite_2.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		SashForm sashForm_2 = new SashForm(composite_2, SWT.VERTICAL);
+		
+		Composite composite_5 = new Composite(sashForm_2, SWT.NONE);
+		composite_5.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		ToolBar toolBar_1 = new ToolBar(composite_5, SWT.FLAT | SWT.RIGHT);
+		
+		ToolItem tltmNewItem_3 = new ToolItem(toolBar_1, SWT.NONE);
+		tltmNewItem_3.setText("New Item");
+		
+		ToolItem tltmNewItem_4 = new ToolItem(toolBar_1, SWT.NONE);
+		tltmNewItem_4.setText("New Item");
+		
+		Composite composite_6 = new Composite(sashForm_2, SWT.BORDER);
+		composite_6.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		table = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+		sashForm_2.setWeights(new int[] {1, 15});
+		sashForm.setWeights(new int[] {2, 1});
 	}
 
 	@Override
