@@ -10,6 +10,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ObjectAttributeTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.ObjectRepositoryTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
@@ -54,15 +56,17 @@ public class ObjectRepositoryView extends Composite {
 		composite_3.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		ToolBar toolBar = new ToolBar(composite_3, SWT.FLAT | SWT.RIGHT);
-
 		ToolItem saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setText("Save");
+		saveObject.setEnabled(false);
 
 		ToolItem renameObject = new ToolItem(toolBar, SWT.NONE);
 		renameObject.setText("Rename");
+		renameObject.setEnabled(false);
 
 		ToolItem deleteObject = new ToolItem(toolBar, SWT.NONE);
 		deleteObject.setText("Delete");
+		deleteObject.setEnabled(false);
 
 		ToolItem refreshObject = new ToolItem(toolBar, SWT.NONE);
 		refreshObject.setText("Refresh");
@@ -108,6 +112,87 @@ public class ObjectRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) tree.getSelection()[0];
 				renderObjectAttributeProperty(item);
+				if (item.getObjectRepository() != null) {
+					deleteObject.setEnabled(true);
+					renameObject.setEnabled(true);
+				} else {
+					deleteObject.setEnabled(false);
+					renameObject.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
+		table.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ObjectAttributeTableItem oati=(ObjectAttributeTableItem) table.getSelection()[0];
+				System.out.println(oati.getObjectAttributeData().getProperty());
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		saveObject.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		renameObject.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteObject.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		refreshObject.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
 			}
 
 			@Override

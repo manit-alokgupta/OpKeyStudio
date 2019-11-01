@@ -62,6 +62,7 @@ public class ObjectAttributeTable extends CustomTable {
 			ObjectAttributeTableItem oati = new ObjectAttributeTableItem(this, 0);
 			oati.setText(new String[] { attributeProperty.getProperty(), attributeProperty.getValue(),
 					String.valueOf(attributeProperty.isIsused()), String.valueOf(attributeProperty.isIsregex()) });
+			oati.setObjectAttributeData(attributeProperty);
 		}
 	}
 }
