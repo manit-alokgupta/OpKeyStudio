@@ -15,6 +15,7 @@ public class ObjectAttributeProperty extends Modified {
 	private String property_id;
 	private boolean iseditable;
 	private boolean isused;
+	private String f_id;
 
 	public int getIsencrypted() {
 		return isencrypted;
@@ -110,5 +111,13 @@ public class ObjectAttributeProperty extends Modified {
 
 	public void setIsused(boolean isused) {
 		this.isused = isused;
+	}
+
+	public String getF_id() {
+		return f_id;
+	}
+
+	public void setF_id(String f_id) {
+		this.f_id = f_id;
 	}
 }

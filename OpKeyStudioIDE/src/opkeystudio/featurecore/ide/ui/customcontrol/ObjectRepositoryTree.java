@@ -10,12 +10,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectRepository;
