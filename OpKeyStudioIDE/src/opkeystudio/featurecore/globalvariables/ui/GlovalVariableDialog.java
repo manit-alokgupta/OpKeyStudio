@@ -71,11 +71,14 @@ public class GlovalVariableDialog extends Dialog {
 
 	private void createContents() {
 		shlGlobalVaraible = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-		shlGlobalVaraible.setSize(450, 300);
+		shlGlobalVaraible.setSize(529, 383);
 		shlGlobalVaraible.setText("Global Varaible");
-		shlGlobalVaraible.setLayout(new FillLayout(SWT.HORIZONTAL));
+		FillLayout fl_shlGlobalVaraible = new FillLayout(SWT.HORIZONTAL);
+		fl_shlGlobalVaraible.marginWidth = 5;
+		fl_shlGlobalVaraible.marginHeight = 5;
+		shlGlobalVaraible.setLayout(fl_shlGlobalVaraible);
 
-		SashForm sashForm = new SashForm(shlGlobalVaraible, SWT.VERTICAL);
+		SashForm sashForm = new SashForm(shlGlobalVaraible, SWT.BORDER | SWT.SMOOTH | SWT.VERTICAL);
 
 		ToolBar toolBar = new ToolBar(sashForm, SWT.FLAT | SWT.RIGHT);
 

@@ -70,7 +70,7 @@ public class ObjectRepositoryTree extends CustomTree {
 
 	public void renderObjectRepositories() {
 		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.objectrepositoryArtifact");
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		System.out.println("Neon " + artifact.getId());
 		try {
 
