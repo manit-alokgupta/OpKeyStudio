@@ -24,4 +24,12 @@ public class ArtifactApi {
 		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
+
+	public void deleteArtifact(Artifact artifact) {
+		System.out.println("Deleting "+artifact.getId());
+	}
+
+	public void renameArtifact(Artifact artifact, String newName) {
+
+	}
 }

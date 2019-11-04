@@ -17,7 +17,7 @@ public class FlowApi {
 	public List<FlowStep> getAllSteps(String flowId) throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
-		String query = String.format("select * from flow_design_steps where flow_id='%s' ORDER BY position asc",
+		String query = String.format("select * from flow_design_steps INNER JOIN flow_step_input_arguments USING(flow_stepID)",
 				flowId);
 		System.out.println(query);
 		String result = sqlComm.executeQueryString(query);

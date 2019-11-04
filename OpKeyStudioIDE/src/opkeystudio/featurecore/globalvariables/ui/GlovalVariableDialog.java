@@ -1,5 +1,7 @@
 package opkeystudio.featurecore.globalvariables.ui;
 
+import java.awt.Checkbox;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableEditor;
@@ -14,6 +16,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -173,6 +176,11 @@ public class GlovalVariableDialog extends Dialog {
 				if (item == null) {
 					return;
 				}
+				GlobalVariable gVar = (GlobalVariable) item.getData();
+				String selectedColumn = tableHeaders[EDITABLECOLUMN];
+				if (selectedColumn.equals("Externally Updatable")) {
+					
+				}
 				Text newEditor = new Text(table, SWT.NONE);
 				newEditor.setText(item.getText(EDITABLECOLUMN));
 				newEditor.addModifyListener(new ModifyListener() {
@@ -180,8 +188,6 @@ public class GlovalVariableDialog extends Dialog {
 					@Override
 					public void modifyText(ModifyEvent e) {
 						savetoolitem.setEnabled(true);
-						String selectedColumn = tableHeaders[EDITABLECOLUMN];
-						GlobalVariable gVar = (GlobalVariable) item.getData();
 						gVar.setModified(true);
 						Text text = (Text) editor.getEditor();
 						editor.getItem().setText(EDITABLECOLUMN, text.getText());

@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -14,6 +13,8 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class ArtifactTreeUI extends Composite {
@@ -28,10 +29,9 @@ public class ArtifactTreeUI extends Composite {
 	ArtifactTree artifactTree;
 
 	public ArtifactTreeUI(Composite parent, int style) throws IOException {
-		
-		
+
 		super(parent, style);
-		String file="file";
+		String file = "file";
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
@@ -56,7 +56,8 @@ public class ArtifactTreeUI extends Composite {
 		testcaseMenuItem.setText("TestCase");
 
 		MenuItem objectRepositoryMenuItem = new MenuItem(menu_1, SWT.NONE);
-		objectRepositoryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
+		objectRepositoryMenuItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
 		objectRepositoryMenuItem.setText("ObjectRepository");
 
 		MenuItem functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
@@ -88,25 +89,11 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
-				System.out.println("CLicked");
-				
-//				String path=System.getProperty("user.dir")+File.separator+"OpKeyStudio"+File.separator+"workspace";
-				if(new File("D:\\"+file).mkdir())
-				{
-					System.out.println("Created successfully");
-				}
-				else {
-					System.out.println("Already exists");
-				}
-				
+
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				System.out.println("Clicking");
-				
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -115,15 +102,8 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				System.out.println("Delete clicked");
-				if(new File("D:\\"+file).delete())
-				{
-					System.out.println("file deleted");
-				}
-				else
-				{
-					System.out.println("File dosen't exists");
-				}
+				ArtifactTreeItem treeItem = artifactTree.getSelectedArtifactTreeItem();
+				new ArtifactApi().deleteArtifact(treeItem.getArtifact());
 			}
 
 			@Override

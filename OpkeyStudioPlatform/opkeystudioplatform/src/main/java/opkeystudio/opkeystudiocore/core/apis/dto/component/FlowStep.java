@@ -1,6 +1,8 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
-public class FlowStep {
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+
+public class FlowStep extends Modified {
 	private String keywordid;
 	private boolean wantsnapshot;
 	private boolean continueonerror;
