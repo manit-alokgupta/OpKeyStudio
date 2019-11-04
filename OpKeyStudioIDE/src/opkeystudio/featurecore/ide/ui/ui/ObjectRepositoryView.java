@@ -44,12 +44,12 @@ public class ObjectRepositoryView extends Composite {
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		SashForm sashForm = new SashForm(composite, SWT.NONE);
-
+		sashForm.setSashWidth(5);
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		SashForm sashForm_1 = new SashForm(composite_1, SWT.VERTICAL);
-
+		sashForm_1.setSashWidth(0);
 		Composite composite_3 = new Composite(sashForm_1, SWT.NONE);
 		composite_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		FillLayout fillLayout_1 = new FillLayout(SWT.HORIZONTAL);
