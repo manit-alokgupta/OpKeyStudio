@@ -79,6 +79,7 @@ public class DemoTestCaseView extends Composite {
 		
 		
 		TabItem tabItem_1 = new TabItem(tabFolder_1, SWT.NONE);
+		
 		tabItem_1.setText("New Item");
 		
 		table = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
