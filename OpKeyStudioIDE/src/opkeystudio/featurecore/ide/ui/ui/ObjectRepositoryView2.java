@@ -16,9 +16,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.custom.StackLayout;
-import swing2swt.layout.FlowLayout;
-import swing2swt.layout.BoxLayout;
-import swing2swt.layout.BorderLayout;
+import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.DateTime;
 
 public class ObjectRepositoryView2 extends Composite {
 	private Table table;
@@ -81,7 +81,9 @@ public class ObjectRepositoryView2 extends Composite {
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		sashForm_1.setWeights(new int[] {2, 1});
+		
+		TableCursor tableCursor = new TableCursor(table, SWT.NONE);
+		sashForm_1.setWeights(new int[] {446, 244});
 		
 		Composite composite = new Composite(sashForm, SWT.BORDER);
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));

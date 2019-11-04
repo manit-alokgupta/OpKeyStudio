@@ -26,9 +26,14 @@ public class Demo extends Composite {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		SashForm sashForm = new SashForm(this, SWT.NONE);
+		sashForm.setSashWidth(2);
 		
 		Composite composite = new Composite(sashForm, SWT.BORDER);
-		composite.setLayout(new GridLayout(1, false));
+		GridLayout gl_composite = new GridLayout(1, false);
+		gl_composite.marginHeight = 1;
+		gl_composite.verticalSpacing = 1;
+		gl_composite.marginWidth = 1;
+		composite.setLayout(gl_composite);
 		
 		ToolBar toolBar = new ToolBar(composite, SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -46,7 +51,11 @@ public class Demo extends Composite {
 		table.setLinesVisible(true);
 		
 		Composite composite_1 = new Composite(sashForm, SWT.BORDER);
-		composite_1.setLayout(new GridLayout(1, false));
+		GridLayout gl_composite_1 = new GridLayout(1, false);
+		gl_composite_1.marginHeight = 1;
+		gl_composite_1.verticalSpacing = 1;
+		gl_composite_1.marginWidth = 1;
+		composite_1.setLayout(gl_composite_1);
 		
 		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
