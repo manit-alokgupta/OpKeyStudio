@@ -11,9 +11,11 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.layout.TreeColumnLayout;
 
-public class Demo extends Composite {
-	private Table table;
+public class DemoObjectRepositoryView extends Composite {
 	private Table table_1;
 
 	/**
@@ -21,7 +23,7 @@ public class Demo extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public Demo(Composite parent, int style) {
+	public DemoObjectRepositoryView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -38,17 +40,14 @@ public class Demo extends Composite {
 		ToolBar toolBar = new ToolBar(composite, SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		Composite composite_2 = new Composite(composite, SWT.NONE);
-		GridData gd_composite_2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_composite_2.widthHint = 256;
-		composite_2.setLayoutData(gd_composite_2);
-		composite_2.setBounds(0, 0, 64, 64);
-		composite_2.setLayout(new TableColumnLayout());
+		Composite composite_4 = new Composite(composite, SWT.NONE);
+		composite_4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		composite_4.setLayout(new TreeColumnLayout());
 		
-		TableViewer tableViewer = new TableViewer(composite_2, SWT.BORDER | SWT.FULL_SELECTION);
-		table = tableViewer.getTable();
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
+		TreeViewer treeViewer_1 = new TreeViewer(composite_4, SWT.BORDER);
+		Tree tree_1 = treeViewer_1.getTree();
+		tree_1.setHeaderVisible(true);
+		tree_1.setLinesVisible(true);
 		
 		Composite composite_1 = new Composite(sashForm, SWT.BORDER);
 		GridLayout gl_composite_1 = new GridLayout(1, false);
