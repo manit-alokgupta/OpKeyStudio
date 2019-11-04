@@ -40,4 +40,66 @@ public class ObjectRepositoryApi {
 		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
+
+	private void deleteOrObject(String objectId) throws SQLException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format("delete from or_objects where or_id='%s'", objectId);
+		System.out.println(query);
+		sqlComm.executeUpdate(query);
+		sqlComm.disconnect();
+	}
+
+	private void deleteObjectProperty(String propertyId) throws SQLException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format("delete from or_object_properties where property_id='%s'", propertyId);
+		System.out.println(query);
+		sqlComm.executeUpdate(query);
+		sqlComm.disconnect();
+	}
+
+	private void addORObject(ObjectRepository orObject) {
+
+	}
+
+	private void addObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) {
+
+	}
+
+	private void updateORObject(ObjectRepository orObject) {
+
+	}
+
+	private void updateObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) {
+
+	}
+
+	public void saveORObjects(List<ObjectRepository> objectRepositories) throws SQLException {
+		for (ObjectRepository objectRepository : objectRepositories) {
+			if (objectRepository.isDeleted()) {
+				deleteOrObject(objectRepository.getObject_id());
+			}
+			if (objectRepository.isAdded()) {
+				addORObject(objectRepository);
+			}
+			if (objectRepository.isModified()) {
+				updateORObject(objectRepository);
+			}
+		}
+	}
+
+	public void saveObjectProperties(List<ObjectAttributeProperty> objectAttributesProperties) throws SQLException {
+		for (ObjectAttributeProperty objectAttributeProperty : objectAttributesProperties) {
+			if (objectAttributeProperty.isDeleted()) {
+				deleteObjectProperty(objectAttributeProperty.getProperty_id());
+			}
+			if (objectAttributeProperty.isAdded()) {
+				addObjectAttributeProperty(objectAttributeProperty);
+			}
+			if (objectAttributeProperty.isModified()) {
+				updateObjectAttributeProperty(objectAttributeProperty);
+			}
+		}
+	}
 }
