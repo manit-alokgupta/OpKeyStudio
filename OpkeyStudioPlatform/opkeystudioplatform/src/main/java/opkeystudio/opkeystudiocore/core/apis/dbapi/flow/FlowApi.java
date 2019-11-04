@@ -30,7 +30,7 @@ public class FlowApi {
 	public static void main(String[] args) throws SQLException, JsonParseException, JsonMappingException, IOException {
 		List<FlowStep> flowSteps= new FlowApi().getAllSteps("38f96dfe-9561-47f5-b4a7-8ebf2421148a");
 		for(FlowStep flowStep:flowSteps) {
-			System.out.println(flowStep.getKeywordid());
+			System.out.println(flowStep.getPosition());
 		}
 	}
 }
