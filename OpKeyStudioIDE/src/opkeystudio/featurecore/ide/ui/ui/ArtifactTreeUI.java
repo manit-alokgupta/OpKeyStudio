@@ -9,14 +9,12 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
-import org.eclipse.wb.swt.ResourceManager;
 
 public class ArtifactTreeUI extends Composite {
 
