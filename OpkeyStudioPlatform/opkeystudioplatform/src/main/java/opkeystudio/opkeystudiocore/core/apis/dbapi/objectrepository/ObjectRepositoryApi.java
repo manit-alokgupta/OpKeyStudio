@@ -59,20 +59,40 @@ public class ObjectRepositoryApi {
 		sqlComm.disconnect();
 	}
 
-	private void addORObject(ObjectRepository orObject) {
-
+	private void addORObject(ObjectRepository orObject) throws SQLException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format("delete from or_object_properties where property_id='%s'", "");
+		System.out.println(query);
+		sqlComm.executeUpdate(query);
+		sqlComm.disconnect();
 	}
 
-	private void addObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) {
-
+	private void addObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) throws SQLException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format("delete from or_object_properties where property_id='%s'", "");
+		System.out.println(query);
+		sqlComm.executeUpdate(query);
+		sqlComm.disconnect();
 	}
 
-	private void updateORObject(ObjectRepository orObject) {
-
+	private void updateORObject(ObjectRepository orObject) throws SQLException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format("delete from or_object_properties where property_id='%s'", "");
+		System.out.println(query);
+		sqlComm.executeUpdate(query);
+		sqlComm.disconnect();
 	}
 
-	private void updateObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) {
-
+	private void updateObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) throws SQLException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format("delete from or_object_properties where property_id='%s'", "");
+		System.out.println(query);
+		sqlComm.executeUpdate(query);
+		sqlComm.disconnect();
 	}
 
 	public void saveORObjects(List<ObjectRepository> objectRepositories) throws SQLException {
