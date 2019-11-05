@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 
 public class ObjectAttributeTable extends CustomTable {
@@ -29,6 +30,7 @@ public class ObjectAttributeTable extends CustomTable {
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
 			column.setText(header);
+			column.setWidth(100);
 		}
 		this.pack();
 		for (int i = 0; i < tableHeaders.length; i++) {
@@ -40,7 +42,7 @@ public class ObjectAttributeTable extends CustomTable {
 			@Override
 			public void paintControl(PaintEvent arg0) {
 				if (paintCalled) {
-					return;
+					// return;
 				}
 				Table table_0 = (Table) arg0.getSource();
 				for (TableColumn column : table_0.getColumns()) {
@@ -66,15 +68,21 @@ public class ObjectAttributeTable extends CustomTable {
 		return (List<ObjectAttributeProperty>) super.getControlData();
 	}
 
-	private void addTableEditor(ObjectAttributeTableItem item) {
-		ObjectAttributeProperty attrProperty = item.getObjectAttributeData();
+	private TableEditor getTableEditor() {
 		TableEditor editor = new TableEditor(this);
-		editor.horizontalAlignment = SWT.CENTER;
+		editor.horizontalAlignment = SWT.LEFT;
 		editor.grabHorizontal = true;
 		editor.minimumWidth = 50;
+		return editor;
+	}
 
+	private void addTableEditor(ObjectAttributeTableItem item) {
+		ObjectAttributeProperty attrProperty = item.getObjectAttributeData();
+		TableEditor editor = getTableEditor();
 		CustomButton isUsedButton = new CustomButton(this, SWT.CHECK);
 		CustomButton isRegexButton = new CustomButton(this, SWT.CHECK);
+		CustomText valueText = new CustomText(this, 0);
+		valueText.setText(attrProperty.getValue());
 		isUsedButton.setSelection(attrProperty.isIsused());
 		isUsedButton.setControlData(attrProperty);
 
@@ -114,6 +122,7 @@ public class ObjectAttributeTable extends CustomTable {
 
 			}
 		});
+
 		editor.setEditor(isUsedButton, item, 2);
 		editor.setEditor(isRegexButton, item, 3);
 	}

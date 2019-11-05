@@ -10,8 +10,11 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -56,19 +59,23 @@ public class ObjectRepositoryView extends Composite {
 		composite_3.setLayout(fillLayout_1);
 		ToolBar toolBar = new ToolBar(composite_3, SWT.FLAT | SWT.RIGHT);
 		ToolItem saveObject = new ToolItem(toolBar, SWT.NONE);
-		saveObject.setText("Save");
+		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/save.png"));
+		saveObject.setToolTipText("Save");
 		saveObject.setEnabled(false);
 
 		ToolItem renameObject = new ToolItem(toolBar, SWT.NONE);
-		renameObject.setText("Rename");
+		renameObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+		renameObject.setToolTipText("Rename");
 		renameObject.setEnabled(false);
 
 		ToolItem deleteObject = new ToolItem(toolBar, SWT.NONE);
-		deleteObject.setText("Delete");
+		deleteObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/delete.png"));
+		deleteObject.setToolTipText("Delete");
 		deleteObject.setEnabled(false);
 
 		ToolItem refreshObject = new ToolItem(toolBar, SWT.NONE);
-		refreshObject.setText("Refresh");
+		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/refresh.png"));
+		refreshObject.setToolTipText("Refresh");
 
 		Composite composite_4 = new Composite(sashForm_1, SWT.BORDER);
 		composite_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
@@ -90,10 +97,12 @@ public class ObjectRepositoryView extends Composite {
 		ToolBar toolBar_1 = new ToolBar(composite_5, SWT.FLAT | SWT.RIGHT);
 
 		ToolItem addObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
-		addObjectAttribute.setText("Add");
+		addObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/create.png"));
+		addObjectAttribute.setToolTipText("Add");
 
 		ToolItem deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
-		deleteObjectAttribute.setText("Delete");
+		deleteObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/delete.png"));
+		deleteObjectAttribute.setToolTipText("Delete");
 		deleteObjectAttribute.setEnabled(false);
 
 		Composite composite_6 = new Composite(sashForm_2, SWT.BORDER);

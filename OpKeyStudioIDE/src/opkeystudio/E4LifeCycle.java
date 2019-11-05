@@ -1,5 +1,8 @@
 package opkeystudio;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
@@ -9,6 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.featurecore.ide.ui.ui.LoginDialog;
+import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 
 /**
  * This is a stub implementation containing e4 LifeCycle annotated
@@ -22,9 +26,16 @@ public class E4LifeCycle {
 
 	@PostContextCreate
 	void postContextCreate(IEclipseContext workbenchContext) {
-		/*final Shell shell = new Shell(SWT.TOOL | SWT.APPLICATION_MODAL | SWT.CENTER);
-		LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER);
-		ldialog.open();*/
+		/*
+		 * final Shell shell = new Shell(SWT.TOOL | SWT.APPLICATION_MODAL | SWT.CENTER);
+		 * LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER); ldialog.open();
+		 */
+		try {
+			KeywordManager.getInstance().loadAllKeywords();
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@PreSave

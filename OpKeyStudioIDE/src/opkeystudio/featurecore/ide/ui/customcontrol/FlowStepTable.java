@@ -19,6 +19,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class FlowStepTable extends CustomTable {
 
@@ -63,9 +65,12 @@ public class FlowStepTable extends CustomTable {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
-		List<FlowStep> flowSteps= new FlowApi().getAllSteps(artifactId);
-		for(FlowStep flowStep:flowSteps) {
-			System.out.println(flowStep.getFlow_stepid());
+		List<FlowStep> flowSteps = new FlowApi().getAllSteps(artifactId);
+		for (FlowStep flowStep : flowSteps) {
+			Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
+			if (keyword != null) {
+				System.out.println(keyword.getKeywordname()+"   "+flowStep.getFlow_stepid());
+			}
 		}
 	}
 
