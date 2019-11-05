@@ -4,16 +4,19 @@ import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 
 public class FlowStep extends Modified {
 	private String keywordid;
-	private boolean wantsnapshot;
-	private boolean continueonerror;
-	private String flow_id;
+	private String flow_step_ia_id;
+	private String staticobjectid;
 	private int clustering_key;
 	private String flow_stepid;
+	private boolean shouldrun;
+	private String keyword_ip_id;
+	private boolean wantsnapshot;
+	private boolean continueonerror;
+	private String datasource;
 	private String comment;
 	private boolean isnegative;
-	private boolean shouldrun;
 	private int position;
-
+	private String staticvalue;
 	public String getKeywordid() {
 		return keywordid;
 	}
@@ -22,28 +25,20 @@ public class FlowStep extends Modified {
 		this.keywordid = keywordid;
 	}
 
-	public boolean isWantsnapshot() {
-		return wantsnapshot;
+	public String getFlow_step_ia_id() {
+		return flow_step_ia_id;
 	}
 
-	public void setWantsnapshot(boolean wantsnapshot) {
-		this.wantsnapshot = wantsnapshot;
+	public void setFlow_step_ia_id(String flow_step_ia_id) {
+		this.flow_step_ia_id = flow_step_ia_id;
 	}
 
-	public boolean isContinueonerror() {
-		return continueonerror;
+	public String getStaticobjectid() {
+		return staticobjectid;
 	}
 
-	public void setContinueonerror(boolean continueonerror) {
-		this.continueonerror = continueonerror;
-	}
-
-	public String getFlow_id() {
-		return flow_id;
-	}
-
-	public void setFlow_id(String flow_id) {
-		this.flow_id = flow_id;
+	public void setStaticobjectid(String staticobjectid) {
+		this.staticobjectid = staticobjectid;
 	}
 
 	public int getClustering_key() {
@@ -62,6 +57,46 @@ public class FlowStep extends Modified {
 		this.flow_stepid = flow_stepid;
 	}
 
+	public boolean isShouldrun() {
+		return shouldrun;
+	}
+
+	public void setShouldrun(boolean shouldrun) {
+		this.shouldrun = shouldrun;
+	}
+
+	public String getKeyword_ip_id() {
+		return keyword_ip_id;
+	}
+
+	public void setKeyword_ip_id(String keyword_ip_id) {
+		this.keyword_ip_id = keyword_ip_id;
+	}
+
+	public boolean isWantsnapshot() {
+		return wantsnapshot;
+	}
+
+	public void setWantsnapshot(boolean wantsnapshot) {
+		this.wantsnapshot = wantsnapshot;
+	}
+
+	public boolean isContinueonerror() {
+		return continueonerror;
+	}
+
+	public void setContinueonerror(boolean continueonerror) {
+		this.continueonerror = continueonerror;
+	}
+
+	public String getDatasource() {
+		return datasource;
+	}
+
+	public void setDatasource(String datasource) {
+		this.datasource = datasource;
+	}
+
 	public String getComment() {
 		return comment;
 	}
@@ -78,14 +113,6 @@ public class FlowStep extends Modified {
 		this.isnegative = isnegative;
 	}
 
-	public boolean isShouldrun() {
-		return shouldrun;
-	}
-
-	public void setShouldrun(boolean shouldrun) {
-		this.shouldrun = shouldrun;
-	}
-
 	public int getPosition() {
 		return position;
 	}
@@ -94,4 +121,11 @@ public class FlowStep extends Modified {
 		this.position = position;
 	}
 
+	public String getStaticvalue() {
+		return staticvalue;
+	}
+
+	public void setStaticvalue(String staticvalue) {
+		this.staticvalue = staticvalue;
+	}
 }
