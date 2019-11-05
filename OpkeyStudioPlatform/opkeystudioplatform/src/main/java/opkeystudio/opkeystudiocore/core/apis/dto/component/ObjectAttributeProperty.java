@@ -1,11 +1,16 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.queryMaker.DBField;
 
 public class ObjectAttributeProperty extends Modified {
 	private int isencrypted;
 	private String datatype;
+	
+	@DBField
 	private String or_id;
+	
+	@DBField
 	private String property;
 	private String clustering_key;
 	private int position;
@@ -32,7 +37,8 @@ public class ObjectAttributeProperty extends Modified {
 	public void setDatatype(String datatype) {
 		this.datatype = datatype;
 	}
-
+	
+	
 	public String getOr_id() {
 		return or_id;
 	}
