@@ -7,22 +7,53 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 
 public class QueryMaker {
 
-	public void createQuery() throws NoSuchFieldException, SecurityException {
+	public void createQuery()
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		ObjectAttributeProperty oap = new ObjectAttributeProperty();
+		oap.setOr_id("123");
 		Class _class = oap.getClass();
-		Field[] field = _class.getDeclaredFields();
+		Field[] fieldArray = _class.getDeclaredFields();
+	
+		for (Field field : fieldArray) {
 
-		for (Field f : field) {
-			Annotation annotation = f.getDeclaredAnnotation(DBField.class);
+			field.setAccessible(true);
+
+			Annotation annotation = field.getDeclaredAnnotation(DBField.class);
 			if (annotation instanceof DBField) {
-				System.out.println(f.getName());
+
+				String fieldName = field.getName();
+				System.out.println(fieldName);
 				System.out.println(annotation);
-				System.out.println(f.getType() + "\n");
+				Class fieldType = field.getType();
+//				System.out.println(oap.getOr_id());
+
+				try {
+					Object value = field.get(_class); 
+
+					if (fieldType.equals(String.class)) {
+
+						
+						System.out.println(value.toString());
+
+						System.out.println("String:  " + fieldType.getSimpleName());
+					}
+					if (fieldType.equals(int.class)) {
+
+						System.out.println("Integer:  " + fieldType.getSimpleName());
+					}
+					if (fieldType.equals(boolean.class)) {
+						System.out.println("Boolean:  " + fieldType.getSimpleName());
+					}
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+
 			}
 		}
 	}
 
-	public static void main(String[] ar) throws NoSuchFieldException, SecurityException {
+	public static void main(String[] ar)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		QueryMaker qm = new QueryMaker();
 		qm.createQuery();
 	}

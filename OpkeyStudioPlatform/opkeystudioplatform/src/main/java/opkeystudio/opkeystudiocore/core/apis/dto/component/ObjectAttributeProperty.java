@@ -10,14 +10,18 @@ public class ObjectAttributeProperty extends Modified {
 	@DBField
 	private String or_id;
 	
-	@DBField
+	
 	private String property;
 	private String clustering_key;
+	
+	@DBField
 	private int position;
 	private boolean isregex;
 	private String object_id;
 	private String value;
 	private String property_id;
+	
+	@DBField
 	private boolean iseditable;
 	private boolean isused;
 	private String f_id;
