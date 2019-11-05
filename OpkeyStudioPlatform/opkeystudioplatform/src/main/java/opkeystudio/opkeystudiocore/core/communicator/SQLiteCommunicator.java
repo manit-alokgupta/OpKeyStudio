@@ -45,6 +45,7 @@ public class SQLiteCommunicator {
 	}
 
 	public String executeQueryString(String query) throws SQLException {
+		System.out.println(query);
 		ResultSet rs = executeQuery(query);
 		return convertToJSON(rs);
 	}

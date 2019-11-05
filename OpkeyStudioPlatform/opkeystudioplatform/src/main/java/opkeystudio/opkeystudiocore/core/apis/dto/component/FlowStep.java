@@ -17,6 +17,7 @@ public class FlowStep extends Modified {
 	private boolean isnegative;
 	private int position;
 	private String staticvalue;
+	private String globalvariable_id;
 	public String getKeywordid() {
 		return keywordid;
 	}
@@ -127,5 +128,13 @@ public class FlowStep extends Modified {
 
 	public void setStaticvalue(String staticvalue) {
 		this.staticvalue = staticvalue;
+	}
+
+	public String getGlobalvariable_id() {
+		return globalvariable_id;
+	}
+
+	public void setGlobalvariable_id(String globalvariable_id) {
+		this.globalvariable_id = globalvariable_id;
 	}
 }

@@ -22,6 +22,8 @@ public class Keyword {
 	private String defaultvalue;
 	private String keywordname;
 	private String argumentname;
+	private String pluginid;
+	private String deprecation_reason;
 
 	public String getKeywordid() {
 		return keywordid;
@@ -165,5 +167,21 @@ public class Keyword {
 
 	public void setArgumentname(String argumentname) {
 		this.argumentname = argumentname;
+	}
+
+	public String getPluginid() {
+		return pluginid;
+	}
+
+	public void setPluginid(String pluginid) {
+		this.pluginid = pluginid;
+	}
+
+	public String getDeprecation_reason() {
+		return deprecation_reason;
+	}
+
+	public void setDeprecation_reason(String deprecation_reason) {
+		this.deprecation_reason = deprecation_reason;
 	}
 }
