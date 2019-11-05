@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArguments;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -18,13 +20,41 @@ public class FlowApi {
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
-		String query = String.format(
-				"SELECT t1.KeywordID,t1.component_id,t1.CodedFunction_ID,t1.soapmethod_id,t1.restmethod_id,t1.ContinueOnError,t1.WantSnapshot,t1.IsNegative,t1.ShouldRun,t1.Comment,t1.position, t2.* FROM flow_design_steps t1 INNER JOIN flow_step_input_arguments t2 USING(flow_stepID) WHERE t1.Flow_ID='%s' ORDER BY t1.position ASC",
+		String query = String.format("SELECT * FROM flow_design_steps where flow_id='%s' ORDER BY position asc",
 				flowId);
-		System.out.println(query);
 		String result = sqlComm.executeQueryString(query);
+		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowStep.class);
+		sqlComm.disconnect();
+		return mapper.readValue(result, type);
+	}
+
+	private List<FlowInputArguments> getFlowStepInputArguments(FlowStep flowStep)
+			throws SQLException, JsonParseException, JsonMappingException, IOException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format(
+				"SELECT * FROM flow_step_input_arguments where flow_stepid='%s'",
+				flowStep.getFlow_stepid());
+		String result = sqlComm.executeQueryString(query);
+		System.out.println(result);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowInputArguments.class);
+		sqlComm.disconnect();
+		return mapper.readValue(result, type);
+	}
+
+	private List<FlowOutputArgument> getFlowStepOutputArguments(FlowStep flowStep) throws SQLException, JsonParseException, JsonMappingException, IOException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format(
+				"SELECT * FROM flow_step_output_arguments where flow_stepid='%s'",
+				flowStep.getFlow_stepid());
+		String result = sqlComm.executeQueryString(query);
+		System.out.println(result);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
 		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
@@ -32,7 +62,8 @@ public class FlowApi {
 	public static void main(String[] args) throws SQLException, JsonParseException, JsonMappingException, IOException {
 		List<FlowStep> flowSteps = new FlowApi().getAllSteps("38f96dfe-9561-47f5-b4a7-8ebf2421148a");
 		for (FlowStep flowStep : flowSteps) {
-			System.out.println(flowStep.getKeywordid());
+			new FlowApi().getFlowStepInputArguments(flowStep);
+			new FlowApi().getFlowStepOutputArguments(flowStep);
 		}
 	}
 }

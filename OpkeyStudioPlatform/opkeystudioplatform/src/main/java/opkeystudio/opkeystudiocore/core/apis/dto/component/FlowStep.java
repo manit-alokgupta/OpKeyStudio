@@ -1,77 +1,30 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import java.util.List;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 
 public class FlowStep extends Modified {
 	private String keywordid;
-	private String flow_step_ia_id;
-	private String staticobjectid;
-	private int clustering_key;
-	private String flow_stepid;
-	private boolean shouldrun;
-	private String keyword_ip_id;
 	private boolean wantsnapshot;
 	private boolean continueonerror;
-	private String datasource;
+	private String flow_id;
+	private int clustering_key;
+	private String flow_stepid;
 	private String comment;
 	private boolean isnegative;
+	private boolean shouldrun;
 	private int position;
-	private String staticvalue;
-	private String globalvariable_id;
+
+	private List<FlowInputArguments> flowInputArgs;
+	private List<FlowOutputArgument> flowOutputArgs;
+
 	public String getKeywordid() {
 		return keywordid;
 	}
 
 	public void setKeywordid(String keywordid) {
 		this.keywordid = keywordid;
-	}
-
-	public String getFlow_step_ia_id() {
-		return flow_step_ia_id;
-	}
-
-	public void setFlow_step_ia_id(String flow_step_ia_id) {
-		this.flow_step_ia_id = flow_step_ia_id;
-	}
-
-	public String getStaticobjectid() {
-		return staticobjectid;
-	}
-
-	public void setStaticobjectid(String staticobjectid) {
-		this.staticobjectid = staticobjectid;
-	}
-
-	public int getClustering_key() {
-		return clustering_key;
-	}
-
-	public void setClustering_key(int clustering_key) {
-		this.clustering_key = clustering_key;
-	}
-
-	public String getFlow_stepid() {
-		return flow_stepid;
-	}
-
-	public void setFlow_stepid(String flow_stepid) {
-		this.flow_stepid = flow_stepid;
-	}
-
-	public boolean isShouldrun() {
-		return shouldrun;
-	}
-
-	public void setShouldrun(boolean shouldrun) {
-		this.shouldrun = shouldrun;
-	}
-
-	public String getKeyword_ip_id() {
-		return keyword_ip_id;
-	}
-
-	public void setKeyword_ip_id(String keyword_ip_id) {
-		this.keyword_ip_id = keyword_ip_id;
 	}
 
 	public boolean isWantsnapshot() {
@@ -90,12 +43,28 @@ public class FlowStep extends Modified {
 		this.continueonerror = continueonerror;
 	}
 
-	public String getDatasource() {
-		return datasource;
+	public String getFlow_id() {
+		return flow_id;
 	}
 
-	public void setDatasource(String datasource) {
-		this.datasource = datasource;
+	public void setFlow_id(String flow_id) {
+		this.flow_id = flow_id;
+	}
+
+	public int getClustering_key() {
+		return clustering_key;
+	}
+
+	public void setClustering_key(int clustering_key) {
+		this.clustering_key = clustering_key;
+	}
+
+	public String getFlow_stepid() {
+		return flow_stepid;
+	}
+
+	public void setFlow_stepid(String flow_stepid) {
+		this.flow_stepid = flow_stepid;
 	}
 
 	public String getComment() {
@@ -114,6 +83,14 @@ public class FlowStep extends Modified {
 		this.isnegative = isnegative;
 	}
 
+	public boolean isShouldrun() {
+		return shouldrun;
+	}
+
+	public void setShouldrun(boolean shouldrun) {
+		this.shouldrun = shouldrun;
+	}
+
 	public int getPosition() {
 		return position;
 	}
@@ -122,19 +99,19 @@ public class FlowStep extends Modified {
 		this.position = position;
 	}
 
-	public String getStaticvalue() {
-		return staticvalue;
+	public List<FlowInputArguments> getFlowInputArgs() {
+		return flowInputArgs;
 	}
 
-	public void setStaticvalue(String staticvalue) {
-		this.staticvalue = staticvalue;
+	public void setFlowInputArgs(List<FlowInputArguments> flowInputArgs) {
+		this.flowInputArgs = flowInputArgs;
 	}
 
-	public String getGlobalvariable_id() {
-		return globalvariable_id;
+	public List<FlowOutputArgument> getFlowOutputArgs() {
+		return flowOutputArgs;
 	}
 
-	public void setGlobalvariable_id(String globalvariable_id) {
-		this.globalvariable_id = globalvariable_id;
+	public void setFlowOutputArgs(List<FlowOutputArgument> flowOutputArgs) {
+		this.flowOutputArgs = flowOutputArgs;
 	}
 }
