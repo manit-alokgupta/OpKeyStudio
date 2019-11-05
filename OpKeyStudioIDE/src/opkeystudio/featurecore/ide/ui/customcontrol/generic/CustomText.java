@@ -1,0 +1,16 @@
+package opkeystudio.featurecore.ide.ui.customcontrol.generic;
+
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
+
+public class CustomText extends Text {
+
+	public CustomText(Composite parent, int style) {
+		super(parent, style);
+	}
+
+	@Override
+	protected void checkSubclass() {
+		// Disable the check that prevents subclassing of SWT components
+	}
+}
