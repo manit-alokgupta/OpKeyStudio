@@ -171,6 +171,7 @@ public class ObjectRepositoryView extends Composite {
 				try {
 					new ObjectRepositoryApi().saveORObjects(allors);
 					toggleSaveButton(false);
+					tree.renderObjectRepositories();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -204,6 +205,7 @@ public class ObjectRepositoryView extends Composite {
 				obRepo.setName(input.getValue());
 				obRepo.setModified(true);
 				toggleSaveButton(true);
+				tree.refreshObjectRepositories();
 
 			}
 
@@ -227,6 +229,7 @@ public class ObjectRepositoryView extends Composite {
 				}
 				obRepo.setDeleted(true);
 				toggleSaveButton(true);
+				tree.refreshObjectRepositories();
 			}
 
 			@Override
