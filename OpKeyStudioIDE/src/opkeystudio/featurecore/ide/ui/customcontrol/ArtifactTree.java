@@ -29,6 +29,7 @@ public class ArtifactTree extends CustomTree {
 	public ArtifactTree(Composite parent, int style) {
 		super(parent, style);
 		init();
+		SystemRepository.getInstance().setArtifactTreeControl(this);
 	}
 
 	private void init() {
@@ -142,8 +143,6 @@ public class ArtifactTree extends CustomTree {
 			renderAllArtifactTree(topMostNode, artifacts);
 		}
 		expandAll();
-		
-		SystemRepository.getInstance().setArtifactTreeControl(this);
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {
