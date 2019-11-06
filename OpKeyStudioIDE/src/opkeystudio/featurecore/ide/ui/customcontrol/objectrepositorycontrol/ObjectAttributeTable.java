@@ -2,10 +2,17 @@ package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 
 import java.util.List;
 
+import javax.swing.GroupLayout.Alignment;
+
+import org.eclipse.jface.viewers.deferred.SetModel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SegmentEvent;
+import org.eclipse.swt.events.SegmentListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
@@ -70,7 +77,7 @@ public class ObjectAttributeTable extends CustomTable {
 
 	private TableEditor getTableEditor() {
 		TableEditor editor = new TableEditor(this);
-		editor.horizontalAlignment = SWT.LEFT;
+		editor.horizontalAlignment = SWT.CENTER;
 		editor.grabHorizontal = true;
 		editor.minimumWidth = 50;
 		return editor;
@@ -81,16 +88,20 @@ public class ObjectAttributeTable extends CustomTable {
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
 		TableEditor editor3 = getTableEditor();
+		TableEditor editor4 = getTableEditor();
 		CustomButton isUsedButton = new CustomButton(this, SWT.CHECK);
 		CustomButton isRegexButton = new CustomButton(this, SWT.CHECK);
 		CustomText valueText = new CustomText(this, 0);
+		CustomText propertyText = new CustomText(this, 0);
+		propertyText.setText(attrProperty.getProperty());
 		valueText.setText(attrProperty.getValue());
 		isUsedButton.setSelection(attrProperty.isIsused());
-		isUsedButton.setControlData(attrProperty);
-
 		isRegexButton.setSelection(attrProperty.isIsregex());
-		isRegexButton.setControlData(attrProperty);
 
+		isUsedButton.setControlData(attrProperty);
+		isRegexButton.setControlData(attrProperty);
+		valueText.setControlData(attrProperty);
+		propertyText.setControlData(attrProperty);
 		isUsedButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -125,6 +136,30 @@ public class ObjectAttributeTable extends CustomTable {
 			}
 		});
 
+		valueText.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				CustomText text = (CustomText) e.getSource();
+				ObjectAttributeProperty attrPro = (ObjectAttributeProperty) text.getControlData();
+				attrPro.setValue(text.getText());
+				attrPro.setModified(true);
+			}
+		});
+
+		propertyText.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				CustomText text = (CustomText) e.getSource();
+
+				ObjectAttributeProperty attrPro = (ObjectAttributeProperty) text.getControlData();
+				attrPro.setValue(text.getText());
+				attrPro.setModified(true);
+			}
+		});
+
+		editor4.setEditor(propertyText, item, 0);
 		editor3.setEditor(valueText, item, 1);
 		editor2.setEditor(isUsedButton, item, 2);
 		editor1.setEditor(isRegexButton, item, 3);
@@ -136,7 +171,7 @@ public class ObjectAttributeTable extends CustomTable {
 		for (ObjectAttributeProperty attributeProperty : objectProperties) {
 			if (attributeProperty.isDeleted() == false) {
 				ObjectAttributeTableItem oati = new ObjectAttributeTableItem(this, 0);
-				oati.setText(new String[] { attributeProperty.getProperty(), "", "", "" });
+				oati.setText(new String[] { "", "", "", "" });
 				oati.setObjectAttributeData(attributeProperty);
 				addTableEditor(oati);
 			}
