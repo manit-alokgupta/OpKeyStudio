@@ -78,7 +78,9 @@ public class ObjectAttributeTable extends CustomTable {
 
 	private void addTableEditor(ObjectAttributeTableItem item) {
 		ObjectAttributeProperty attrProperty = item.getObjectAttributeData();
-		TableEditor editor = getTableEditor();
+		TableEditor editor1 = getTableEditor();
+		TableEditor editor2 = getTableEditor();
+		TableEditor editor3 = getTableEditor();
 		CustomButton isUsedButton = new CustomButton(this, SWT.CHECK);
 		CustomButton isRegexButton = new CustomButton(this, SWT.CHECK);
 		CustomText valueText = new CustomText(this, 0);
@@ -123,8 +125,9 @@ public class ObjectAttributeTable extends CustomTable {
 			}
 		});
 
-		editor.setEditor(isUsedButton, item, 2);
-		editor.setEditor(isRegexButton, item, 3);
+		editor3.setEditor(valueText, item, 1);
+		editor2.setEditor(isUsedButton, item, 2);
+		editor1.setEditor(isRegexButton, item, 3);
 	}
 
 	public void renderObjectAttributes() {
@@ -133,7 +136,7 @@ public class ObjectAttributeTable extends CustomTable {
 		for (ObjectAttributeProperty attributeProperty : objectProperties) {
 			if (attributeProperty.isDeleted() == false) {
 				ObjectAttributeTableItem oati = new ObjectAttributeTableItem(this, 0);
-				oati.setText(new String[] { attributeProperty.getProperty(), attributeProperty.getValue(), "", "" });
+				oati.setText(new String[] { attributeProperty.getProperty(), "", "", "" });
 				oati.setObjectAttributeData(attributeProperty);
 				addTableEditor(oati);
 			}
