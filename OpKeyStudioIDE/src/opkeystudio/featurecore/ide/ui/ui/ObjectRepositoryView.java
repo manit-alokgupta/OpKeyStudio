@@ -42,12 +42,14 @@ public class ObjectRepositoryView extends Composite {
 	 */
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
+		
 		FillLayout fillLayout = new FillLayout(SWT.HORIZONTAL);
 		fillLayout.marginWidth = 5;
 		fillLayout.marginHeight = 5;
 		setLayout(fillLayout);
 
 		Composite composite = new Composite(this, SWT.NONE);
+		
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 		SashForm sashForm = new SashForm(composite, SWT.NONE);
 		sashForm.setSashWidth(5);
