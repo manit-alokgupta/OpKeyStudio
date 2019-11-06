@@ -69,6 +69,10 @@ public class ObjectRepositoryTree extends CustomTree {
 		this.setRedraw(true);
 	}
 
+	public ObjectRepositoryTreeItem getSelectedTreeItem() {
+		return (ObjectRepositoryTreeItem) this.getSelection()[0];
+	}
+
 	public void renderObjectRepositories() {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");

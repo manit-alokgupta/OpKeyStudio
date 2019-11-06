@@ -26,6 +26,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectRepository;
 
 public class ObjectRepositoryView extends Composite {
 	private ObjectAttributeTable table;
@@ -156,7 +157,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				List<ObjectRepository> allors = tree.getObjectRepositoriesData();
 
 			}
 
@@ -171,7 +172,8 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
+				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
 
 			}
 
@@ -186,8 +188,8 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
+				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
 			}
 
 			@Override
