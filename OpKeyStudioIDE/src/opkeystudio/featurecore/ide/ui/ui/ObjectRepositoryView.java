@@ -251,6 +251,27 @@ public class ObjectRepositoryView extends Composite {
 
 			}
 		});
+
+		deleteObjectAttribute.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
+						"Please press OK to Delete");
+				if (!result) {
+					return;
+				}
+				ObjectAttributeProperty selectedProperty = table.getSelectedObjectAttributeProperty();
+				selectedProperty.setDeleted(true);
+				table.renderObjectAttributes();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	private void toggleSaveButton(boolean status) {

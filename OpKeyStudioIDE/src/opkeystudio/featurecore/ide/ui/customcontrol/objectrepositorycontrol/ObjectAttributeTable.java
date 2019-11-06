@@ -2,17 +2,12 @@ package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 
 import java.util.List;
 
-import javax.swing.GroupLayout.Alignment;
-
-import org.eclipse.jface.viewers.deferred.SetModel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.SegmentEvent;
-import org.eclipse.swt.events.SegmentListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
@@ -163,6 +158,15 @@ public class ObjectAttributeTable extends CustomTable {
 		editor3.setEditor(valueText, item, 1);
 		editor2.setEditor(isUsedButton, item, 2);
 		editor1.setEditor(isRegexButton, item, 3);
+	}
+
+	public ObjectAttributeTableItem getSelectedTableItem() {
+		return (ObjectAttributeTableItem) this.getSelection()[0];
+	}
+
+	public ObjectAttributeProperty getSelectedObjectAttributeProperty() {
+		ObjectAttributeTableItem selectedItem = getSelectedTableItem();
+		return selectedItem.getObjectAttributeData();
 	}
 
 	public void renderObjectAttributes() {
