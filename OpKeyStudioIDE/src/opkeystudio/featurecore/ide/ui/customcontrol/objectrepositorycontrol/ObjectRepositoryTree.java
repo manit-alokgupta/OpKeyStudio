@@ -103,7 +103,7 @@ public class ObjectRepositoryTree extends CustomTree {
 			// addIcon(rootNode);
 			List<ObjectRepository> objectRepositories = new ObjectRepositoryApi()
 					.getAllObjects(artifact.getId().trim());
-
+			setObjectRepositoriesData(objectRepositories);
 			List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
 			for (ObjectRepository objectRepository : objectRepositories) {
 				if (objectRepository.getParent_object_id() == null) {

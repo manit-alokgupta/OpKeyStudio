@@ -93,6 +93,7 @@ public class GlobalVariableTable extends CustomTable {
 			refreshGlobalVariables();
 			return;
 		}
+		
 		List<GlobalVariable> allGlobalVariables = getGlobalVariablesData();
 		for (GlobalVariable gv : allGlobalVariables) {
 			if (gv.isDeleted()) {
