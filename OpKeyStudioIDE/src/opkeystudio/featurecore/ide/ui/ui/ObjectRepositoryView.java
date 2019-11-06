@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionEvent;
@@ -16,13 +14,10 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.hibernate.validator.internal.constraintvalidators.hv.LengthValidator;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -37,6 +32,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectRepository;
 
 public class ObjectRepositoryView extends Composite {
 	private ObjectAttributeTable table;
+	private ToolItem saveObject;
 
 	/**
 	 * Create the composite.
@@ -68,7 +64,7 @@ public class ObjectRepositoryView extends Composite {
 		FillLayout fillLayout_1 = new FillLayout(SWT.HORIZONTAL);
 		composite_3.setLayout(fillLayout_1);
 		ToolBar toolBar = new ToolBar(composite_3, SWT.FLAT | SWT.RIGHT);
-		ToolItem saveObject = new ToolItem(toolBar, SWT.NONE);
+		saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/save.png"));
 		saveObject.setToolTipText("Save");
 		saveObject.setEnabled(false);
@@ -166,7 +162,18 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Save",
+						"Please confirm");
+				if (!result) {
+					return;
+				}
 				List<ObjectRepository> allors = tree.getObjectRepositoriesData();
+				try {
+					new ObjectRepositoryApi().saveORObjects(allors);
+					toggleSaveButton(false);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 
 			}
 
@@ -183,15 +190,20 @@ public class ObjectRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
 				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
-				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Enter name",
+				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename",
 						"Enter name to rename", obRepo.getName(), null);
 				input.open();
 
 				if (input.open() != InputDialog.OK) {
 					return;
 				}
+				if (input.getValue() == null) {
+					return;
+				}
 
 				obRepo.setName(input.getValue());
+				obRepo.setModified(true);
+				toggleSaveButton(true);
 
 			}
 
@@ -208,6 +220,13 @@ public class ObjectRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
 				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
+				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete!!",
+						"Please press OK to delete");
+				if (!result) {
+					return;
+				}
+				obRepo.setDeleted(true);
+				toggleSaveButton(true);
 			}
 
 			@Override
@@ -231,6 +250,10 @@ public class ObjectRepositoryView extends Composite {
 
 			}
 		});
+	}
+
+	private void toggleSaveButton(boolean status) {
+		saveObject.setEnabled(status);
 	}
 
 	private void renderObjectAttributeProperty(ObjectRepositoryTreeItem item) {
