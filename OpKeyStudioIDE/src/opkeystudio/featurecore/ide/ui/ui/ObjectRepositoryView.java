@@ -239,6 +239,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				toggleSaveButton(false);
 				tree.renderObjectRepositories();
 			}
 
