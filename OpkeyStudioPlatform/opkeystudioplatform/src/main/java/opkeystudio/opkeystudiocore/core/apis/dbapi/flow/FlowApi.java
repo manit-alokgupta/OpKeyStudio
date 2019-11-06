@@ -60,7 +60,7 @@ public class FlowApi {
 
 	public List<FlowStep> getAllFlowSteps(String flowId)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
-		List<FlowStep> flowSteps = getAllSteps("38f96dfe-9561-47f5-b4a7-8ebf2421148a");
+		List<FlowStep> flowSteps = getAllSteps(flowId);
 		for (FlowStep flowStep : flowSteps) {
 			List<FlowInputArguments> fis = getFlowStepInputArguments(flowStep);
 			List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
