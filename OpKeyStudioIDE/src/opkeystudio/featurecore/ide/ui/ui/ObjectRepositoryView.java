@@ -190,7 +190,6 @@ public class ObjectRepositoryView extends Composite {
 				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
 				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename",
 						"Enter name to rename", obRepo.getName(), null);
-				input.open();
 
 				if (input.open() != InputDialog.OK) {
 					return;
