@@ -44,7 +44,7 @@ public class ObjectRepositoryApi {
 	private void deleteOrObject(String objectId) throws SQLException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
-		String query = String.format("delete from or_objects where or_id='%s'", objectId);
+		String query = String.format("delete from or_objects where object_id='%s'", objectId);
 		System.out.println(query);
 		sqlComm.executeUpdate(query);
 		sqlComm.disconnect();
@@ -96,6 +96,7 @@ public class ObjectRepositoryApi {
 	}
 
 	public void saveORObjects(List<ObjectRepository> objectRepositories) throws SQLException {
+		System.out.println("Deleting ");
 		for (ObjectRepository objectRepository : objectRepositories) {
 			if (objectRepository.isDeleted()) {
 				deleteOrObject(objectRepository.getObject_id());
