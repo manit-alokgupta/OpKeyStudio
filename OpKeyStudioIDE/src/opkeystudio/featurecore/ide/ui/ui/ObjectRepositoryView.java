@@ -4,18 +4,25 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.hibernate.validator.internal.constraintvalidators.hv.LengthValidator;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -46,6 +53,8 @@ public class ObjectRepositoryView extends Composite {
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		final Label label = new Label(composite, SWT.NONE);
 
 		SashForm sashForm = new SashForm(composite, SWT.NONE);
 		sashForm.setSashWidth(5);
@@ -174,6 +183,15 @@ public class ObjectRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
 				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
+				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Enter name",
+						"Enter name to rename", obRepo.getName(), null);
+				input.open();
+
+				if (input.open() != InputDialog.OK) {
+					return;
+				}
+
+				obRepo.setName(input.getValue());
 
 			}
 
