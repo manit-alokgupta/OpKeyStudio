@@ -10,7 +10,7 @@ public class ObjectAttributeProperty extends Modified {
 	@DBField
 	private String or_id;
 	
-	
+	@DBField
 	private String property;
 	private String clustering_key;
 	
