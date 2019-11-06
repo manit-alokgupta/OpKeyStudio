@@ -160,7 +160,7 @@ public class ObjectRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Save",
-						"Please confirm");
+						"Please press OK to Svae");
 				if (!result) {
 					return;
 				}
@@ -194,7 +194,9 @@ public class ObjectRepositoryView extends Composite {
 				if (input.open() != InputDialog.OK) {
 					return;
 				}
-				if (input.getValue() == null) {
+				if (input.getValue().trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input",
+							"Please Enter Some Value");
 					return;
 				}
 
@@ -218,8 +220,8 @@ public class ObjectRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
 				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
-				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete!!",
-						"Please press OK to delete");
+				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
+						"Please press OK to Delete");
 				if (!result) {
 					return;
 				}
