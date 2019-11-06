@@ -1,4 +1,4 @@
-package opkeystudio.featurecore.ide.ui.customcontrol;
+package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 
 import java.util.List;
 

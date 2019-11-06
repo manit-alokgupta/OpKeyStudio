@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.FlowStepTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable table;

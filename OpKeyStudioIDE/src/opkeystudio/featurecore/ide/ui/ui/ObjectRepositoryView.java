@@ -20,10 +20,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.ObjectAttributeTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.ObjectAttributeTableItem;
-import opkeystudio.featurecore.ide.ui.customcontrol.ObjectRepositoryTree;
-import opkeystudio.featurecore.ide.ui.customcontrol.ObjectRepositoryTreeItem;
+import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
+import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 

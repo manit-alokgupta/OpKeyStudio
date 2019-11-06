@@ -1,4 +1,4 @@
-package opkeystudio.featurecore.ide.ui.customcontrol;
+package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
