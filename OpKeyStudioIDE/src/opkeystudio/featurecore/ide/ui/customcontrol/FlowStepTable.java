@@ -65,7 +65,7 @@ public class FlowStepTable extends CustomTable {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
-		List<FlowStep> flowSteps = new FlowApi().getAllSteps(artifactId);
+		List<FlowStep> flowSteps = new FlowApi().getAllFlowSteps(artifactId);
 		for (FlowStep flowStep : flowSteps) {
 			Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
 			if (keyword != null) {

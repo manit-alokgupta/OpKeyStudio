@@ -1,6 +1,8 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
-public class FlowInputArguments {
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+
+public class FlowInputArguments extends Modified {
 	private String flow_step_ia_id;
 	private String keyword_ip_id;
 	private String datasource;

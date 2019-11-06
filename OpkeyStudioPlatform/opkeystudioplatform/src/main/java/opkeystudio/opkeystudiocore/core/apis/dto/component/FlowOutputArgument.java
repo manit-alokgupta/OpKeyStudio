@@ -1,6 +1,8 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
-public class FlowOutputArgument {
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+
+public class FlowOutputArgument extends Modified {
 	private String flow_step_oa_id;
 	private String keyword_op_id;
 	private int clustering_key;
