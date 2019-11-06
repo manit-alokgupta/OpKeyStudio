@@ -21,10 +21,11 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 
 public class ObjectAttributeTable extends CustomTable {
 	private boolean paintCalled = false;
-
+	private ObjectAttributeTable thisTable;
 	public ObjectAttributeTable(Composite parent, int style) {
 		super(parent, style);
 		init();
+		thisTable=this;
 	}
 
 	private void init() {
@@ -101,6 +102,7 @@ public class ObjectAttributeTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				thisTable.setSelection(item);
 				CustomButton button = (CustomButton) e.getSource();
 				ObjectAttributeProperty oatr = (ObjectAttributeProperty) button.getControlData();
 				oatr.setModified(true);
@@ -118,6 +120,7 @@ public class ObjectAttributeTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				thisTable.select(0);
 				CustomButton button = (CustomButton) e.getSource();
 				ObjectAttributeProperty oatr = (ObjectAttributeProperty) button.getControlData();
 				oatr.setModified(true);
@@ -135,6 +138,7 @@ public class ObjectAttributeTable extends CustomTable {
 
 			@Override
 			public void modifyText(ModifyEvent e) {
+				thisTable.select(0);
 				CustomText text = (CustomText) e.getSource();
 				ObjectAttributeProperty attrPro = (ObjectAttributeProperty) text.getControlData();
 				attrPro.setValue(text.getText());
@@ -146,6 +150,7 @@ public class ObjectAttributeTable extends CustomTable {
 
 			@Override
 			public void modifyText(ModifyEvent e) {
+				thisTable.setSelection(item);
 				CustomText text = (CustomText) e.getSource();
 
 				ObjectAttributeProperty attrPro = (ObjectAttributeProperty) text.getControlData();

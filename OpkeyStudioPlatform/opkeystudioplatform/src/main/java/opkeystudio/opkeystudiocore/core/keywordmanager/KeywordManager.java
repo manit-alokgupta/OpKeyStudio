@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.keywordmanager;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,8 +23,17 @@ public class KeywordManager {
 	}
 
 	public void loadAllKeywords() throws JsonParseException, JsonMappingException, SQLException, IOException {
-		this.allKeywords = new KeywordLoader()
-				.loadKeywords("E:\\ExportedArtifactsNeon\\GenericDB\\OpKeyDesktop Keywords.db");
+		String keywordDirPath = "E:\\ExportedArtifactsNeon\\GenericDB";
+		File keywordDirFolder = new File(keywordDirPath);
+		File[] keywordsDBFiles = keywordDirFolder.listFiles();
+		for (File keywordsDBFile : keywordsDBFiles) {
+			List<Keyword> allKeywords = new KeywordLoader().loadKeywords(keywordsDBFile.getAbsolutePath());
+			addAllKeyWords(allKeywords);
+		}
+	}
+
+	private void addAllKeyWords(List<Keyword> keywords) {
+		this.allKeywords.addAll(keywords);
 	}
 
 	public List<Keyword> getAllKeywords() {

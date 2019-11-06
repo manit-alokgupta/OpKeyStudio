@@ -264,6 +264,7 @@ public class ObjectRepositoryView extends Composite {
 					return;
 				}
 				ObjectAttributeProperty selectedProperty = table.getSelectedObjectAttributeProperty();
+				System.out.println("Deleting "+selectedProperty.getObject_id());
 				selectedProperty.setDeleted(true);
 				table.renderObjectAttributes();
 			}
