@@ -49,9 +49,6 @@ public class ObjectRepositoryView extends Composite {
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		final Label label = new Label(composite, SWT.NONE);
-
 		SashForm sashForm = new SashForm(composite, SWT.NONE);
 		sashForm.setSashWidth(5);
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
