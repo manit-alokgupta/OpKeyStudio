@@ -28,6 +28,19 @@ public class ObjectRepositoryApi {
 		return mapper.readValue(result, type);
 	}
 
+	public List<ORObject> getORObject(String objectId)
+			throws SQLException, JsonParseException, JsonMappingException, IOException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format("select * from or_objects where object_id='%s'", objectId);
+		System.out.println(query);
+		String result = sqlComm.executeQueryString(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ORObject.class);
+		sqlComm.disconnect();
+		return mapper.readValue(result, type);
+	}
+
 	public List<ObjectAttributeProperty> getObjectAttributeProperty(String objectId)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
@@ -96,7 +109,7 @@ public class ObjectRepositoryApi {
 	}
 
 	public void saveORObjects(List<ORObject> objectRepositories) throws SQLException {
-		
+
 		for (ORObject objectRepository : objectRepositories) {
 			if (objectRepository.isDeleted()) {
 				System.out.println("Deleting..... ");
@@ -112,7 +125,7 @@ public class ObjectRepositoryApi {
 	}
 
 	public void saveObjectProperties(List<ObjectAttributeProperty> objectAttributesProperties) throws SQLException {
-		
+
 		for (ObjectAttributeProperty objectAttributeProperty : objectAttributesProperties) {
 			if (objectAttributeProperty.isDeleted()) {
 				System.out.println("Deleting......");

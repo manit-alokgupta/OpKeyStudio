@@ -16,8 +16,9 @@ public class FlowStep extends Modified {
 	private boolean isnegative;
 	private boolean shouldrun;
 	private int position;
-	
+
 	private Keyword keyword;
+	private List<ORObject> orObject;
 	private List<FlowInputArgument> flowInputArgs;
 	private List<FlowOutputArgument> flowOutputArgs;
 
@@ -123,5 +124,13 @@ public class FlowStep extends Modified {
 
 	public void setKeyword(Keyword keyword) {
 		this.keyword = keyword;
+	}
+
+	public List<ORObject> getOrObject() {
+		return orObject;
+	}
+
+	public void setOrObject(List<ORObject> orObject) {
+		this.orObject = orObject;
 	}
 }

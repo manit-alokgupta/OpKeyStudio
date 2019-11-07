@@ -70,8 +70,17 @@ public class FlowStepTable extends CustomTable {
 		FlowApi.getInstance().initAllFlowOutputArguments();
 		List<FlowStep> flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
 		for (FlowStep flowStep : flowSteps) {
-			if(flowStep.getKeyword()!=null) {
-				
+			if (flowStep.getKeyword() != null) {
+				String orname = "";
+				String keyWordName = "";
+				if (flowStep.getOrObject().size() > 0) {
+					orname = flowStep.getOrObject().get(0).getName();
+				}
+				if (flowStep.getKeyword() != null) {
+					keyWordName = flowStep.getKeyword().getKeywordname();
+				}
+				FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
+				flowTableItem.setText(new String[] { keyWordName, orname });
 			}
 		}
 	}

@@ -10,9 +10,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
@@ -95,6 +97,20 @@ public class FlowApi {
 		return flowInputArgs;
 	}
 
+	private List<ORObject> getORObjectsArguments(FlowStep flowStep)
+			throws JsonParseException, JsonMappingException, SQLException, IOException {
+		List<ORObject> allORObjects = new ArrayList<ORObject>();
+		List<FlowInputArgument> inputArguments = getFlowStepInputArguments(flowStep);
+		for (FlowInputArgument inputArgument : inputArguments) {
+			if (inputArgument.getStaticobjectid() != null) {
+				List<ORObject> orobjects = new ObjectRepositoryApi().getORObject(inputArgument.getStaticobjectid());
+				allORObjects.addAll(orobjects);
+			}
+		}
+		return allORObjects;
+
+	}
+
 	public List<FlowStep> getAllFlowSteps(String flowId)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
@@ -102,6 +118,8 @@ public class FlowApi {
 			Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
 			List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 			List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
+			List<ORObject> allORObject = getORObjectsArguments(flowStep);
+			flowStep.setOrObject(allORObject);
 			flowStep.setKeyword(keyword);
 			flowStep.setFlowInputArgs(fis);
 			flowStep.setFlowOutputArgs(fos);
