@@ -10,6 +10,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -65,11 +66,12 @@ public class FlowStepTable extends CustomTable {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
-		List<FlowStep> flowSteps = new FlowApi().getAllFlowSteps(artifactId);
+		FlowApi.getInstance().initAllFlowInputArguments();
+		FlowApi.getInstance().initAllFlowOutputArguments();
+		List<FlowStep> flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
 		for (FlowStep flowStep : flowSteps) {
-			Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
-			if (keyword != null) {
-				System.out.println(keyword.getKeywordname()+"   "+flowStep.getFlow_stepid());
+			if(flowStep.getKeyword()!=null) {
+				
 			}
 		}
 	}

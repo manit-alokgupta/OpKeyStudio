@@ -27,7 +27,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectRepository;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class ObjectRepositoryView extends Composite {
 	private ObjectAttributeTable table;
@@ -165,7 +165,7 @@ public class ObjectRepositoryView extends Composite {
 				if (!result) {
 					return;
 				}
-				List<ObjectRepository> allors = tree.getObjectRepositoriesData();
+				List<ORObject> allors = tree.getObjectRepositoriesData();
 				try {
 					new ObjectRepositoryApi().saveORObjects(allors);
 					toggleSaveButton(false);
@@ -189,7 +189,7 @@ public class ObjectRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 
 				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
-				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
+				ORObject obRepo = selectedTreeItem.getObjectRepository();
 				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename",
 						"Enter name to rename", obRepo.getName(), null);
 
@@ -225,7 +225,7 @@ public class ObjectRepositoryView extends Composite {
 					return;
 				}
 				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
-				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
+				ORObject obRepo = selectedTreeItem.getObjectRepository();
 				System.out.println("Deleting.. "+obRepo.getObject_id());
 				obRepo.setDeleted(true);
 				toggleSaveButton(true);
