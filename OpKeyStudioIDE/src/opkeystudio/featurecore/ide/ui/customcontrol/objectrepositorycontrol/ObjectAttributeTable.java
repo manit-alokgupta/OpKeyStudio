@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -17,6 +18,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 
 public class ObjectAttributeTable extends CustomTable {
@@ -175,13 +177,20 @@ public class ObjectAttributeTable extends CustomTable {
 		return selectedItem.getObjectAttributeData();
 	}
 
-	public void renderObjectAttributes() {
+	public void renderObjectAttributes() throws SQLException {
 		this.removeAll();
 		List<ObjectAttributeProperty> objectProperties = getObjectPropertiesData();
 		for (ObjectAttributeProperty attributeProperty : objectProperties) {
 			if (attributeProperty.isDeleted() == false) {
 				ObjectAttributeTableItem oati = new ObjectAttributeTableItem(this, 0);
 				oati.setText(new String[] { "", "", "", "" });
+				oati.setObjectAttributeData(attributeProperty);
+				addTableEditor(oati);
+			}
+			if(attributeProperty.isDeleted()) {
+				new ObjectRepositoryApi().saveObjectProperties(objectProperties);
+				ObjectAttributeTableItem oati = new ObjectAttributeTableItem(this, 0);
+				oati.setText(new String[] { " ", " ", "", " " });
 				oati.setObjectAttributeData(attributeProperty);
 				addTableEditor(oati);
 			}

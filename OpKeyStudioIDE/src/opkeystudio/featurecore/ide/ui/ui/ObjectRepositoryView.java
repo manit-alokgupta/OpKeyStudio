@@ -13,7 +13,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -268,7 +267,12 @@ public class ObjectRepositoryView extends Composite {
 				System.out.println("Deleting " + selectedProperty.getOr_id());
 				selectedProperty.setDeleted(true);
 				
-				table.renderObjectAttributes();
+				try {
+					table.renderObjectAttributes();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 
