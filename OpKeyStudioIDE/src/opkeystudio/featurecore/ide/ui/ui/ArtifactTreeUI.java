@@ -26,6 +26,10 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Button;
 
 public class ArtifactTreeUI extends Composite {
 	MenuItem mntmNew;
@@ -45,25 +49,27 @@ public class ArtifactTreeUI extends Composite {
 		String file = "file";
 		setLayout(new GridLayout(1, false));
 
-		Composite composite = new Composite(this, SWT.NONE);
-		composite.setLayout(new GridLayout(1, false));
+		Composite composite = new Composite(this, SWT.BORDER);
+		composite.setLayout(new GridLayout(3, false));
 		GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_composite.heightHint = 33;
 		composite.setLayoutData(gd_composite);
 
 		txtSearch = new Text(composite, SWT.BORDER);
 		GridData gd_txtSearch = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_txtSearch.widthHint = 62;
+		gd_txtSearch.widthHint = 124;
 		txtSearch.setLayoutData(gd_txtSearch);
+		txtSearch.setToolTipText("Search");
 		txtSearch.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				String searchValue = txtSearch.getText();
+
 				if (searchValue.length() > 3 || searchValue.trim().isEmpty()) {
 					List<Artifact> artifacts = artifactTree.getArtifactsData();
 					for (Artifact artifact : artifacts) {
 						if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
-							if (artifact.getName().toLowerCase().contains(searchValue.toLowerCase())) {
+							if (artifact.getName().equalsIgnoreCase(searchValue)) {
 								artifact.setVisible(true);
 							} else {
 								artifact.setVisible(false);
@@ -72,8 +78,20 @@ public class ArtifactTreeUI extends Composite {
 					}
 					artifactTree.refereshArtifacts();
 				}
+
 			}
 		});
+
+		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
+
+		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.SEPARATOR);
+		tltmNewItem.setText("New Item");
+
+		Button btnNewButton = new Button(composite, SWT.NONE);
+		GridData gd_btnNewButton = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gd_btnNewButton.widthHint = 60;
+		btnNewButton.setLayoutData(gd_btnNewButton);
+		btnNewButton.setText("Search");
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
