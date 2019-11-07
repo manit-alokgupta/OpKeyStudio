@@ -5,17 +5,12 @@ import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -76,11 +71,11 @@ public class TestCaseView extends Composite {
 		testCaseArgumentsHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		testCaseArgumentsHolder.setLayout(new GridLayout(1, false));
 
-		TabFolder testCaseArgumentsTabFolder = new TabFolder(testCaseArgumentsHolder, SWT.BOTTOM);
+		TabFolder testCaseArgumentsTabFolder = new TabFolder(testCaseArgumentsHolder, SWT.NONE);
 		testCaseArgumentsTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		TabItem testCaseAargumentInputTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		testCaseAargumentInputTabItem.setText("New Item");
+		testCaseAargumentInputTabItem.setText("Step Details");
 
 		Composite composite = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
 		testCaseAargumentInputTabItem.setControl(composite);
@@ -96,10 +91,16 @@ public class TestCaseView extends Composite {
 		tltmNewItem_4.setText("New Item");
 
 		TabItem tbtmNewItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		tbtmNewItem.setText("New Item");
+		tbtmNewItem.setText("Add Step");
 
 		TabItem tbtmNewItem_1 = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		tbtmNewItem_1.setText("New Item");
+		tbtmNewItem_1.setText("Test Object");
+		
+		TabItem tbtmNewItem_2 = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
+		tbtmNewItem_2.setText("Input Data");
+		
+		TabItem tbtmNewItem_3 = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
+		tbtmNewItem_3.setText("Output Data");
 		testCaseSashForm.setWeights(new int[] { 2, 1 });
 		
 		try {
