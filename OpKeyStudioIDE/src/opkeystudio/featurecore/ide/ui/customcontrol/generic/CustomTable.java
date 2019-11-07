@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.generic;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
@@ -9,7 +8,7 @@ public class CustomTable extends Table {
 	private Object controlData;
 
 	public CustomTable(Composite parent, int style) {
-		super(parent, 0);
+		super(parent, style);
 	}
 
 	public Object getControlData() {
