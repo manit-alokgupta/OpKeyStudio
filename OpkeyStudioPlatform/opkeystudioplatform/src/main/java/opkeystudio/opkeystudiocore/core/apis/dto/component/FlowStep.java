@@ -3,6 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class FlowStep extends Modified {
 	private String keywordid;
@@ -15,8 +16,9 @@ public class FlowStep extends Modified {
 	private boolean isnegative;
 	private boolean shouldrun;
 	private int position;
-
-	private List<FlowInputArguments> flowInputArgs;
+	
+	private Keyword keyword;
+	private List<FlowInputArgument> flowInputArgs;
 	private List<FlowOutputArgument> flowOutputArgs;
 
 	public String getKeywordid() {
@@ -99,11 +101,11 @@ public class FlowStep extends Modified {
 		this.position = position;
 	}
 
-	public List<FlowInputArguments> getFlowInputArgs() {
+	public List<FlowInputArgument> getFlowInputArgs() {
 		return flowInputArgs;
 	}
 
-	public void setFlowInputArgs(List<FlowInputArguments> flowInputArgs) {
+	public void setFlowInputArgs(List<FlowInputArgument> flowInputArgs) {
 		this.flowInputArgs = flowInputArgs;
 	}
 
@@ -113,5 +115,13 @@ public class FlowStep extends Modified {
 
 	public void setFlowOutputArgs(List<FlowOutputArgument> flowOutputArgs) {
 		this.flowOutputArgs = flowOutputArgs;
+	}
+
+	public Keyword getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(Keyword keyword) {
+		this.keyword = keyword;
 	}
 }
