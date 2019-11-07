@@ -189,10 +189,7 @@ public class ObjectAttributeTable extends CustomTable {
 			}
 			if(attributeProperty.isDeleted()) {
 				new ObjectRepositoryApi().saveObjectProperties(objectProperties);
-				ObjectAttributeTableItem oati = new ObjectAttributeTableItem(this, 0);
-				oati.setText(new String[] { " ", " ", "", " " });
-				oati.setObjectAttributeData(attributeProperty);
-				addTableEditor(oati);
+				
 			}
 		}
 	}
