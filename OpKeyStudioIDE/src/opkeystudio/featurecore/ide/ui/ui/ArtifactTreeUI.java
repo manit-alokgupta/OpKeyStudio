@@ -29,7 +29,6 @@ import org.eclipse.swt.events.KeyEvent;
 
 public class ArtifactTreeUI extends Composite {
 	MenuItem mntmNew;
-	String searchValue;
 	/**
 	 * Create the composite.
 	 * 
@@ -59,16 +58,19 @@ public class ArtifactTreeUI extends Composite {
 		txtSearch.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.keyCode == 13) {
-					searchValue = txtSearch.getText();
-					List<Artifact> artifacts=artifactTree.getArtifactsData();
+				String searchValue = txtSearch.getText();
+				if (searchValue.length() > 3 || searchValue.trim().isEmpty()) {
+					List<Artifact> artifacts = artifactTree.getArtifactsData();
 					for (Artifact artifact : artifacts) {
-						if(artifact.getName().toLowerCase().contains(searchValue.toLowerCase())) {
-							artifact.setVisible(true);
-						}else {
-							artifact.setVisible(false);
+						if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
+							if (artifact.getName().toLowerCase().contains(searchValue.toLowerCase())) {
+								artifact.setVisible(true);
+							} else {
+								artifact.setVisible(false);
+							}
 						}
 					}
+					artifactTree.refereshArtifacts();
 				}
 			}
 		});

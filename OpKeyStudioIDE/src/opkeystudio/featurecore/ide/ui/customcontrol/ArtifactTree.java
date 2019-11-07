@@ -146,8 +146,31 @@ public class ArtifactTree extends CustomTree {
 
 	public void refereshArtifacts() {
 		this.removeAll();
-		
+		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
+		rootNode.setText("Project WorkSpace");
+		rootNode.setExpanded(true);
+		addIcon(rootNode);
+		List<Artifact> artifacts = getArtifactsData();
+		setArtifactsData(artifacts);
+		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
+		for (Artifact artifact : artifacts) {
+			if (artifact.isVisible()) {
+				if (artifact.getParentid() == null) {
+					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
+					artitreeitem.setText(artifact.getName());
+					artitreeitem.setArtifact(artifact);
+					topMostNodes.add(artitreeitem);
+					addIcon(artitreeitem);
+				}
+			}
+		}
+
+		for (ArtifactTreeItem topMostNode : topMostNodes) {
+			renderAllArtifactTree(topMostNode, artifacts);
+		}
+		expandAll();
 	}
+
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {
 		return (ArtifactTreeItem) this.getSelection()[0];
 	}
