@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -18,11 +19,17 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 
 public class ArtifactTreeUI extends Composite {
 	MenuItem mntmNew;
+	String searchValue;
 	/**
 	 * Create the composite.
 	 * 
@@ -31,12 +38,40 @@ public class ArtifactTreeUI extends Composite {
 	 * @throws IOException
 	 */
 	ArtifactTree artifactTree;
+	private Text txtSearch;
 
 	public ArtifactTreeUI(Composite parent, int style) throws IOException {
 
 		super(parent, style);
 		String file = "file";
 		setLayout(new GridLayout(1, false));
+
+		Composite composite = new Composite(this, SWT.NONE);
+		composite.setLayout(new GridLayout(1, false));
+		GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_composite.heightHint = 33;
+		composite.setLayoutData(gd_composite);
+
+		txtSearch = new Text(composite, SWT.BORDER);
+		GridData gd_txtSearch = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gd_txtSearch.widthHint = 62;
+		txtSearch.setLayoutData(gd_txtSearch);
+		txtSearch.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == 13) {
+					searchValue = txtSearch.getText();
+					List<Artifact> artifacts=artifactTree.getArtifactsData();
+					for (Artifact artifact : artifacts) {
+						if(artifact.getName().toLowerCase().contains(searchValue.toLowerCase())) {
+							artifact.setVisible(true);
+						}else {
+							artifact.setVisible(false);
+						}
+					}
+				}
+			}
+		});
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

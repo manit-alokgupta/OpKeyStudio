@@ -1,6 +1,8 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
-public class Artifact {
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+
+public class Artifact extends Modified {
 	public enum MODULETYPE {
 		AllUnified, Component, ServiceRepository, Flow, Suite, ObjectRepository, BDD_Gherkin_Stories, Execution,
 		DataRepository, EventHandler, Folder, CodedFunction, BP_Group, MBT, Sparkin

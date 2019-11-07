@@ -144,6 +144,10 @@ public class ArtifactTree extends CustomTree {
 		expandAll();
 	}
 
+	public void refereshArtifacts() {
+		this.removeAll();
+		
+	}
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {
 		return (ArtifactTreeItem) this.getSelection()[0];
 	}

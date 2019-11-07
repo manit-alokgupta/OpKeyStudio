@@ -4,6 +4,15 @@ public class Modified {
 	private boolean modified;
 	private boolean deleted;
 	private boolean added;
+	private boolean visible=true;
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
 
 	public boolean isModified() {
 		return modified;
