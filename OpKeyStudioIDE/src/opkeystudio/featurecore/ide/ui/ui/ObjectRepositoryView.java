@@ -26,8 +26,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 
 public class ObjectRepositoryView extends Composite {
 	private ObjectAttributeTable table;
@@ -214,31 +214,6 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
-		deleteObject.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
-						"Please press OK to Delete");
-				if (!result) {
-					return;
-				}
-				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
-				ORObject obRepo = selectedTreeItem.getObjectRepository();
-				System.out.println("Deleting.. "+obRepo.getObject_id());
-				obRepo.setDeleted(true);
-				toggleSaveButton(true);
-				tree.refreshObjectRepositories();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 		refreshObject.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -254,6 +229,30 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
+		deleteObject.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
+						"Please press OK to Delete");
+				if (!result) {
+					return;
+				}
+				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
+				ORObject obRepo = selectedTreeItem.getObjectRepository();
+				System.out.println("Deleting.. " + obRepo.getObject_id());
+				obRepo.setDeleted(true);
+				toggleSaveButton(true);
+				tree.refreshObjectRepositories();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		deleteObjectAttribute.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -266,14 +265,14 @@ public class ObjectRepositoryView extends Composite {
 				ObjectAttributeProperty selectedProperty = table.getSelectedObjectAttributeProperty();
 				System.out.println("Deleting " + selectedProperty.getOr_id());
 				selectedProperty.setDeleted(true);
-				
+
 				try {
 					table.renderObjectAttributes();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 			}
 
 			@Override

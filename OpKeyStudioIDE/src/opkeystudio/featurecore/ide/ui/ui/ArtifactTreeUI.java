@@ -57,7 +57,7 @@ public class ArtifactTreeUI extends Composite {
 
 		txtSearch = new Text(composite, SWT.BORDER);
 		GridData gd_txtSearch = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_txtSearch.widthHint = 124;
+		gd_txtSearch.widthHint = 154;
 		txtSearch.setLayoutData(gd_txtSearch);
 		txtSearch.setToolTipText("Search");
 		txtSearch.addKeyListener(new KeyAdapter() {
