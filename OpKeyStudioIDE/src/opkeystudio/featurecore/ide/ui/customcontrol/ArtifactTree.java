@@ -98,7 +98,6 @@ public class ArtifactTree extends CustomTree {
 	private void renderAllArtifactTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {
 		String artifactId = rootNode.getArtifact().getId();
 		for (Artifact artifact : allArtifacts) {
-			System.out.println(artifact.getName());
 			if (artifact.getParentid() != null) {
 				if (artifact.getParentid().equals(artifactId)) {
 					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
