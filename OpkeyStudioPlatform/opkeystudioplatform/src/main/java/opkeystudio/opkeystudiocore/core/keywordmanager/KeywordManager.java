@@ -26,10 +26,10 @@ public class KeywordManager {
 		String keywordDirPath = "E:\\ExportedArtifactsNeon\\GenericDB";
 		File keywordDirFolder = new File(keywordDirPath);
 		File[] keywordsDBFiles = keywordDirFolder.listFiles();
-//		for (File keywordsDBFile : keywordsDBFiles) {
-//			List<Keyword> allKeywords = new KeywordLoader().loadKeywords(keywordsDBFile.getAbsolutePath());
-//			addAllKeyWords(allKeywords);
-//		}
+		for (File keywordsDBFile : keywordsDBFiles) {
+			List<Keyword> allKeywords = new KeywordLoader().loadKeywords(keywordsDBFile.getAbsolutePath());
+			addAllKeyWords(allKeywords);
+		}
 	}
 
 	private void addAllKeyWords(List<Keyword> keywords) {

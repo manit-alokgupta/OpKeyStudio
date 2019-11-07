@@ -4,7 +4,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectRepository;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class ObjectRepositoryTreeItem extends CustomTreeItem {
 
@@ -16,11 +16,11 @@ public class ObjectRepositoryTreeItem extends CustomTreeItem {
 		super(parent, style);
 	}
 	
-	public ObjectRepository getObjectRepository() {
-		return (ObjectRepository) super.getOpKeyData();
+	public ORObject getObjectRepository() {
+		return (ORObject) super.getOpKeyData();
 	}
 
-	public void setArtifact(ObjectRepository objectRepository) {
+	public void setArtifact(ORObject objectRepository) {
 		super.setOpKeyData(objectRepository);
 	}
 

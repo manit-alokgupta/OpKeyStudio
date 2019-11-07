@@ -10,12 +10,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectRepository;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ObjectRepositoryApi {
-	public List<ObjectRepository> getAllObjects(String objectId)
+	public List<ORObject> getAllObjects(String objectId)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
@@ -23,7 +23,7 @@ public class ObjectRepositoryApi {
 		System.out.println(query);
 		String result = sqlComm.executeQueryString(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ObjectRepository.class);
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ORObject.class);
 		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
@@ -59,7 +59,7 @@ public class ObjectRepositoryApi {
 		sqlComm.disconnect();
 	}
 
-	private void addORObject(ObjectRepository orObject) throws SQLException {
+	private void addORObject(ORObject orObject) throws SQLException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
 		String query = String.format("delete from or_object_properties where property_id='%s'", "");
@@ -77,7 +77,7 @@ public class ObjectRepositoryApi {
 		sqlComm.disconnect();
 	}
 
-	private void updateORObject(ObjectRepository orObject) throws SQLException {
+	private void updateORObject(ORObject orObject) throws SQLException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
 		String query = String.format("delete from or_object_properties where property_id='%s'", "");
@@ -95,9 +95,9 @@ public class ObjectRepositoryApi {
 		sqlComm.disconnect();
 	}
 
-	public void saveORObjects(List<ObjectRepository> objectRepositories) throws SQLException {
+	public void saveORObjects(List<ORObject> objectRepositories) throws SQLException {
 		
-		for (ObjectRepository objectRepository : objectRepositories) {
+		for (ORObject objectRepository : objectRepositories) {
 			if (objectRepository.isDeleted()) {
 				System.out.println("Deleting..... ");
 				deleteOrObject(objectRepository.getObject_id());

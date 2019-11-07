@@ -15,7 +15,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectRepository;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class ObjectRepositoryTree extends CustomTree {
 
@@ -24,13 +24,13 @@ public class ObjectRepositoryTree extends CustomTree {
 		renderObjectRepositories();
 	}
 
-	public void setObjectRepositoriesData(List<ObjectRepository> objectRepository) {
+	public void setObjectRepositoriesData(List<ORObject> objectRepository) {
 		super.setControlData(objectRepository);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ObjectRepository> getObjectRepositoriesData() {
-		return (List<ObjectRepository>) super.getControlData();
+	public List<ORObject> getObjectRepositoriesData() {
+		return (List<ORObject>) super.getControlData();
 	}
 
 	private void addIcon(ArtifactTreeItem artTreeItem) {
@@ -45,9 +45,9 @@ public class ObjectRepositoryTree extends CustomTree {
 		}
 	}
 
-	private void renderAllArtifactTree(ObjectRepositoryTreeItem rootNode, List<ObjectRepository> allArtifacts) {
+	private void renderAllArtifactTree(ObjectRepositoryTreeItem rootNode, List<ORObject> allArtifacts) {
 		String artifactId = rootNode.getObjectRepository().getObject_id();
-		for (ObjectRepository artifact : allArtifacts) {
+		for (ORObject artifact : allArtifacts) {
 			System.out.println(artifact.getName());
 			if (artifact.getParent_object_id() != null) {
 				if (artifact.getParent_object_id().equals(artifactId)) {
@@ -61,9 +61,9 @@ public class ObjectRepositoryTree extends CustomTree {
 		}
 	}
 
-	private void refereshAllArtifactTree(ObjectRepositoryTreeItem rootNode, List<ObjectRepository> allArtifacts) {
+	private void refereshAllArtifactTree(ObjectRepositoryTreeItem rootNode, List<ORObject> allArtifacts) {
 		String artifactId = rootNode.getObjectRepository().getObject_id();
-		for (ObjectRepository artifact : allArtifacts) {
+		for (ORObject artifact : allArtifacts) {
 			if (!artifact.isDeleted()) {
 				System.out.println(artifact.getName());
 				if (artifact.getParent_object_id() != null) {
@@ -102,11 +102,11 @@ public class ObjectRepositoryTree extends CustomTree {
 			rootNode.setText(artifact.getName());
 			rootNode.setExpanded(true);
 			// addIcon(rootNode);
-			List<ObjectRepository> objectRepositories = new ObjectRepositoryApi()
+			List<ORObject> objectRepositories = new ObjectRepositoryApi()
 					.getAllObjects(artifact.getId().trim());
 			setObjectRepositoriesData(objectRepositories);
 			List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
-			for (ObjectRepository objectRepository : objectRepositories) {
+			for (ORObject objectRepository : objectRepositories) {
 				if (objectRepository.getParent_object_id() == null) {
 					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
 					orTreeItem.setText(objectRepository.getName());
@@ -135,10 +135,10 @@ public class ObjectRepositoryTree extends CustomTree {
 		rootNode.setText(artifact.getName());
 		rootNode.setExpanded(true);
 		// addIcon(rootNode);
-		List<ObjectRepository> objectRepositories = getObjectRepositoriesData();
+		List<ORObject> objectRepositories = getObjectRepositoriesData();
 
 		List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
-		for (ObjectRepository objectRepository : objectRepositories) {
+		for (ORObject objectRepository : objectRepositories) {
 			if (!objectRepository.isDeleted()) {
 				if (objectRepository.getParent_object_id() == null) {
 					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
