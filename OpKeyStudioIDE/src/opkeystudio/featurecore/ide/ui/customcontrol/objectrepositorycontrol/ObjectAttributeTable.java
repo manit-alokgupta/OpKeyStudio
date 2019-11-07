@@ -22,10 +22,11 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 public class ObjectAttributeTable extends CustomTable {
 	private boolean paintCalled = false;
 	private ObjectAttributeTable thisTable;
+
 	public ObjectAttributeTable(Composite parent, int style) {
 		super(parent, style);
 		init();
-		thisTable=this;
+		thisTable = this;
 	}
 
 	private void init() {

@@ -42,14 +42,14 @@ public class ObjectRepositoryView extends Composite {
 	 */
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
-		
+
 		FillLayout fillLayout = new FillLayout(SWT.HORIZONTAL);
 		fillLayout.marginWidth = 5;
 		fillLayout.marginHeight = 5;
 		setLayout(fillLayout);
 
 		Composite composite = new Composite(this, SWT.NONE);
-		
+
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 		SashForm sashForm = new SashForm(composite, SWT.NONE);
 		sashForm.setSashWidth(5);
@@ -188,6 +188,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+
 				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
 				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
 				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename",
@@ -201,12 +202,10 @@ public class ObjectRepositoryView extends Composite {
 							"Please Enter Some Value");
 					return;
 				}
-
 				obRepo.setName(input.getValue());
 				obRepo.setModified(true);
 				toggleSaveButton(true);
 				tree.refreshObjectRepositories();
-
 			}
 
 			@Override
@@ -220,13 +219,15 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
-				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
+
 				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
 						"Please press OK to Delete");
 				if (!result) {
 					return;
 				}
+				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
+				ObjectRepository obRepo = selectedTreeItem.getObjectRepository();
+				System.out.println("Deleting.. "+obRepo.getObject_id());
 				obRepo.setDeleted(true);
 				toggleSaveButton(true);
 				tree.refreshObjectRepositories();
@@ -264,9 +265,11 @@ public class ObjectRepositoryView extends Composite {
 					return;
 				}
 				ObjectAttributeProperty selectedProperty = table.getSelectedObjectAttributeProperty();
-				System.out.println("Deleting "+selectedProperty.getObject_id());
+				System.out.println("Deleting " + selectedProperty.getOr_id());
 				selectedProperty.setDeleted(true);
+				
 				table.renderObjectAttributes();
+				
 			}
 
 			@Override

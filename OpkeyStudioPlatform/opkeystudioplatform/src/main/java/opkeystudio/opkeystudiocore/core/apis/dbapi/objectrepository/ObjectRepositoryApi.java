@@ -96,9 +96,10 @@ public class ObjectRepositoryApi {
 	}
 
 	public void saveORObjects(List<ObjectRepository> objectRepositories) throws SQLException {
-		System.out.println("Deleting ");
+		
 		for (ObjectRepository objectRepository : objectRepositories) {
 			if (objectRepository.isDeleted()) {
+				System.out.println("Deleting..... ");
 				deleteOrObject(objectRepository.getObject_id());
 			}
 			if (objectRepository.isAdded()) {
@@ -111,8 +112,10 @@ public class ObjectRepositoryApi {
 	}
 
 	public void saveObjectProperties(List<ObjectAttributeProperty> objectAttributesProperties) throws SQLException {
+		
 		for (ObjectAttributeProperty objectAttributeProperty : objectAttributesProperties) {
 			if (objectAttributeProperty.isDeleted()) {
+				System.out.println("Deleting......");
 				deleteObjectProperty(objectAttributeProperty.getProperty_id());
 			}
 			if (objectAttributeProperty.isAdded()) {

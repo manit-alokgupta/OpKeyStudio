@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
+import opkeystudio.featurecore.ide.ui.ui.ArtifactTreeUI;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -37,14 +38,11 @@ public class ArtifactTree extends CustomTree {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -53,6 +51,7 @@ public class ArtifactTree extends CustomTree {
 				ArtifactTreeItem selectedTreeItem = (ArtifactTreeItem) tree.getSelection()[0];
 				populateArtifact(selectedTreeItem);
 			}
+
 		});
 	}
 

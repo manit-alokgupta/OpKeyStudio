@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -16,7 +17,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class GlobalVariableTable extends CustomTable {
 
 	public GlobalVariableTable(Composite parent, int style) {
-		super(parent, style);
+		super(parent, SWT.NONE);
 		// TODO Auto-generated constructor stub
 	}
 
