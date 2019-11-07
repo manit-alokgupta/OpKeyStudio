@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ControlEditor;
-import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
@@ -80,21 +78,6 @@ public class FlowStepTable extends CustomTable {
 
 			}
 		});
-
-		TableCursor cursor = new TableCursor(this, 0);
-		cursor.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				thisTable.setSelection(new TableItem[] { cursor.getRow() });
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	public void setFlowStepsData(List<FlowStep> flowSteps) {
@@ -121,6 +104,7 @@ public class FlowStepTable extends CustomTable {
 		TableEditor editor3 = getTableEditor();
 		TableEditor editor4 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
+		button.setSelection(attrProperty.isShouldrun());
 		button.addMouseListener(new MouseListener() {
 
 			@Override
@@ -163,7 +147,7 @@ public class FlowStepTable extends CustomTable {
 					keyWordName = flowStep.getKeyword().getKeywordname();
 				}
 				FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-				flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", "" });
+				flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", flowStep.getKeyword().getKeyworddescription() });
 				flowTableItem.setFlowStepData(flowStep);
 				addTableEditor(flowTableItem);
 			}
