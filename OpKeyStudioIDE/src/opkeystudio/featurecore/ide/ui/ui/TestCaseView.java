@@ -3,20 +3,33 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -25,20 +38,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTab
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.ExpandItem;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.PaintEvent;
-
 public class TestCaseView extends Composite {
+	private DataBindingContext m_bindingContext;
 	private FlowStepTable table;
 	private OutputDataTable outputDataTable;
 	private TestObjectTable testObjectTable;
@@ -50,6 +51,7 @@ public class TestCaseView extends Composite {
 	private Table table_3;
 	private Table table_4;
 	private Text searchBox;
+	private ToolItem toolItem;
 
 	/**
 	 * Create the composite.
@@ -89,9 +91,8 @@ public class TestCaseView extends Composite {
 		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		itemAdd.setText("Add");
 		
-		ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
-		toolItem.setSelection(true);
-
+		toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		
 		ToolItem itemRecord = new ToolItem(toolBar_1, SWT.NONE);
 		itemRecord.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/record_icon.png"));
 		itemRecord.setText("Record");
@@ -148,11 +149,12 @@ public class TestCaseView extends Composite {
 		testCaseArgumentsHolder.setLayout(new GridLayout(1, false));
 
 		TabFolder testCaseArgumentsTabFolder = new TabFolder(testCaseArgumentsHolder, SWT.NONE);
+		testCaseArgumentsTabFolder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
 		testCaseArgumentsTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		TabItem stepDetailsTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		stepDetailsTabItem.setImage(null);
 		stepDetailsTabItem.setText("Step Details");
+		stepDetailsTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/stepdetails.png"));
 
 		Composite composite = new Composite(testCaseArgumentsTabFolder, SWT.BORDER);
 		stepDetailsTabItem.setControl(composite);
@@ -225,6 +227,7 @@ public class TestCaseView extends Composite {
 		InputDataTable.setLinesVisible(true);
 
 		TabItem addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
+		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/addstep.png"));
 		addStepTabItem.setText("Add Step");
 		
 		SashForm sashForm_3 = new SashForm(testCaseArgumentsTabFolder, SWT.NONE);
@@ -277,6 +280,7 @@ public class TestCaseView extends Composite {
 
 
 		TabItem testObjectTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
+		testObjectTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/object.png"));
 		testObjectTabItem.setText("Test Object");
 
 		Composite composite_2 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
@@ -298,6 +302,7 @@ public class TestCaseView extends Composite {
 		sashForm_1.setWeights(new int[] { 1, 1 });
 
 		TabItem inputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
+		inputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/inputdata.png"));
 		inputDataTabItem.setText("Input Data");
 
 		Composite composite_3 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
@@ -345,6 +350,7 @@ public class TestCaseView extends Composite {
 		sashForm_2.setWeights(new int[] { 1, 1 });
 
 		TabItem outputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
+		outputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/outputdata.png"));
 		outputDataTabItem.setText("Output Data");
 
 		Composite composite_4 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
@@ -391,10 +397,18 @@ public class TestCaseView extends Composite {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		m_bindingContext = initDataBindings();
 	}
 
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+	protected DataBindingContext initDataBindings() {
+		DataBindingContext bindingContext = new DataBindingContext();
+		//
+		
+		//
+		return bindingContext;
 	}
 }
