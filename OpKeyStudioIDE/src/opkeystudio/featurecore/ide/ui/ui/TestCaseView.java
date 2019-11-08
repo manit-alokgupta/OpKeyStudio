@@ -46,6 +46,7 @@ public class TestCaseView extends Composite {
 	private Table table_2;
 	private Table table_3;
 	private Table table_4;
+	private Text text;
 
 	/**
 	 * Create the composite.
@@ -169,42 +170,15 @@ public class TestCaseView extends Composite {
 
 		TabItem addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		addStepTabItem.setText("Add Step");
-
-		TabFolder tabFolder = new TabFolder(testCaseArgumentsTabFolder, SWT.NONE);
-		addStepTabItem.setControl(tabFolder);
-
-		TabItem tbtmNewItem = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem.setText("Keywords");
-
-		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
-		tbtmNewItem.setControl(composite_1);
+		
+		SashForm sashForm_3 = new SashForm(testCaseArgumentsTabFolder, SWT.NONE);
+		sashForm_3.setOrientation(SWT.VERTICAL);
+		addStepTabItem.setControl(sashForm_3);
+		
+		Composite composite_1 = new Composite(sashForm_3, SWT.NONE);
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		Tree tree = new Tree(composite_1, SWT.BORDER);
 
-		TreeItem trtmNewTreeitem = new TreeItem(tree, SWT.NONE);
-		trtmNewTreeitem.setText("New TreeItem");
-
-		TreeItem trtmNewTreeitem_1 = new TreeItem(tree, SWT.NONE);
-		trtmNewTreeitem_1.setText("New TreeItem");
-
-		TabItem tbtmNewItem_1 = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem_1.setText("Function Library");
-
-		Composite composite_10 = new Composite(tabFolder, SWT.NONE);
-		tbtmNewItem_1.setControl(composite_10);
-
-		TabItem tbtmNewItem_2 = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem_2.setText("Service Repository");
-
-		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
-		tbtmNewItem_2.setControl(composite_11);
-
-		TabItem tbtmNewItem_3 = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem_3.setText("Coded Function Library");
-
-		Composite composite_12 = new Composite(tabFolder, SWT.NONE);
-		tbtmNewItem_3.setControl(composite_12);
 
 		TabItem testObjectTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		testObjectTabItem.setText("Test Object");
@@ -221,7 +195,6 @@ public class TestCaseView extends Composite {
 		testObjectTable.setHeaderVisible(true);
 		testObjectTable.setLinesVisible(true);
 		testObjectTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
 
 		Tree testObbjectTree = new Tree(sashForm_1, SWT.BORDER);
 		testObbjectTree.setLinesVisible(true);
@@ -247,28 +220,28 @@ public class TestCaseView extends Composite {
 
 		Composite composite_14 = new Composite(sashForm_2, SWT.NONE);
 		composite_14.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		TabFolder tabFolder_1 = new TabFolder(composite_14, SWT.NONE);
-		
+
 		TabItem tbtmNewItem_4 = new TabItem(tabFolder_1, SWT.NONE);
 		tbtmNewItem_4.setText("Data Output");
-		
+
 		table_2 = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
 		tbtmNewItem_4.setControl(table_2);
 		table_2.setHeaderVisible(true);
 		table_2.setLinesVisible(true);
-		
+
 		TabItem tbtmGlobalVariables = new TabItem(tabFolder_1, SWT.NONE);
 		tbtmGlobalVariables.setText("Global Variable");
-		
+
 		table_3 = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
 		tbtmGlobalVariables.setControl(table_3);
 		table_3.setHeaderVisible(true);
 		table_3.setLinesVisible(true);
-		
+
 		TabItem tbtmNewItem_5 = new TabItem(tabFolder_1, SWT.NONE);
 		tbtmNewItem_5.setText("Auto Data Generation");
-		
+
 		table_4 = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
 		tbtmNewItem_5.setControl(table_4);
 		table_4.setHeaderVisible(true);
@@ -287,7 +260,7 @@ public class TestCaseView extends Composite {
 		outputDataTable.setLinesVisible(true);
 
 		TableCursor cursor = new TableCursor(table, 0);
-		testCaseSashForm.setWeights(new int[] {452, 184});
+		testCaseSashForm.setWeights(new int[] {416, 208});
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
