@@ -87,11 +87,12 @@ public class TestCaseView extends Composite {
 		stepDetailsTabItem.setImage(null);
 		stepDetailsTabItem.setText("Step Details");
 
-		Composite composite = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
+		Composite composite = new Composite(testCaseArgumentsTabFolder, SWT.BORDER);
 		stepDetailsTabItem.setControl(composite);
-		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		composite.setLayout(new GridLayout(1, false));
 		
-		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
+		ExpandBar expandBar = new ExpandBar(composite, SWT.BORDER);
+		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		ExpandItem xpndtmNewExpanditem = new ExpandItem(expandBar, SWT.NONE);
 		xpndtmNewExpanditem.setExpanded(true);
@@ -144,7 +145,7 @@ public class TestCaseView extends Composite {
 		Composite composite_4 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
 		outputDataTabItem.setControl(composite_4);
 		composite_4.setLayout(new GridLayout(1, false));
-		testCaseSashForm.setWeights(new int[] { 2, 1 });
+		testCaseSashForm.setWeights(new int[] {3, 1});
 
 		TableCursor cursor = new TableCursor(table, 0);
 		cursor.addSelectionListener(new SelectionListener() {
