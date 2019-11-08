@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.PojoProperties;
@@ -37,6 +38,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTabl
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 
 public class TestCaseView extends Composite {
 	private DataBindingContext m_bindingContext;
@@ -90,51 +93,51 @@ public class TestCaseView extends Composite {
 		ToolItem itemAdd = new ToolItem(toolBar_1, SWT.NONE);
 		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		itemAdd.setText("Add");
-		
+
 		toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
-		
+
 		ToolItem itemRecord = new ToolItem(toolBar_1, SWT.NONE);
 		itemRecord.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/record_icon.png"));
 		itemRecord.setText("Record");
-		
+
 		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem itemRunnow = new ToolItem(toolBar_1, SWT.NONE);
 		itemRunnow.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
 		itemRunnow.setText("Run Now");
-		
+
 		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-		
+
 		ToolItem itemMoveup = new ToolItem(toolBar_1, SWT.NONE);
 		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		itemMoveup.setText("Move up");
-		
+
 		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-		
+
 		ToolItem itemMovedown = new ToolItem(toolBar_1, SWT.NONE);
 		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		itemMovedown.setText("Move Down");
-		
+
 		ToolItem toolItem_4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-		
+
 		ToolItem itemRefresh = new ToolItem(toolBar_1, SWT.NONE);
 		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		itemRefresh.setText("Refresh");
-		
+
 		ToolItem toolItem_5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-		
+
 		ToolItem itemSave = new ToolItem(toolBar_1, SWT.NONE);
 		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 		itemSave.setText("Save");
-		
+
 		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-		
+
 		ToolItem itemDelete = new ToolItem(toolBar_1, SWT.NONE);
 		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		itemDelete.setText("Delete");
-		
+
 		ToolItem toolItem_7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-		
+
 		ToolItem itemSetting = new ToolItem(toolBar_1, SWT.NONE);
 		itemSetting.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/setting_icon.png"));
 		itemSetting.setText("Setting");
@@ -154,7 +157,8 @@ public class TestCaseView extends Composite {
 
 		TabItem stepDetailsTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		stepDetailsTabItem.setText("Step Details");
-		stepDetailsTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/stepdetails.png"));
+		stepDetailsTabItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/stepdetails.png"));
 
 		Composite composite = new Composite(testCaseArgumentsTabFolder, SWT.BORDER);
 		stepDetailsTabItem.setControl(composite);
@@ -172,7 +176,7 @@ public class TestCaseView extends Composite {
 		Composite composite_5 = new Composite(expandBar, SWT.NONE);
 		xpndtmNewExpanditem.setControl(composite_5);
 		xpndtmNewExpanditem.setHeight(xpndtmNewExpanditem.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-		
+
 		Canvas canvas = new Canvas(composite_5, SWT.NONE);
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
@@ -229,55 +233,53 @@ public class TestCaseView extends Composite {
 		TabItem addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/addstep.png"));
 		addStepTabItem.setText("Add Step");
-		
+
 		SashForm sashForm_3 = new SashForm(testCaseArgumentsTabFolder, SWT.NONE);
 		sashForm_3.setOrientation(SWT.VERTICAL);
 		addStepTabItem.setControl(sashForm_3);
-		
+
 		Composite composite_1 = new Composite(sashForm_3, SWT.NONE);
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		Composite composite_10 = new Composite(sashForm_3, SWT.BORDER | SWT.H_SCROLL);
 		composite_10.setLayout(new GridLayout(1, false));
-		
+
 		Composite composite_15 = new Composite(composite_10, SWT.NONE);
 		composite_15.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		composite_15.setBounds(0, 0, 64, 64);
 		composite_15.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		Button keywordButton = new Button(composite_15, SWT.NONE);
 		keywordButton.setBounds(0, 0, 75, 25);
 		keywordButton.setText("Keyword");
-		
+
 		Button functionLibraryButton = new Button(composite_15, SWT.NONE);
 		functionLibraryButton.setBounds(0, 0, 75, 25);
 		functionLibraryButton.setText("Function Library");
-		
+
 		Button serviceRepoButton = new Button(composite_15, SWT.NONE);
 		serviceRepoButton.setText("Service Repository");
-		
+
 		Button codedFunLibraryButton = new Button(composite_15, SWT.NONE);
 		codedFunLibraryButton.setText("Coded Function Library");
-		
+
 		Composite composite_12 = new Composite(composite_10, SWT.NONE);
 		composite_12.setLayout(new GridLayout(2, false));
 		composite_12.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
+
 		searchBox = new Text(composite_12, SWT.BORDER);
 		searchBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
+
 		Button searchButton = new Button(composite_12, SWT.NONE);
 		searchButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		searchButton.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		searchButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
 		searchButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		
+
 		Tree tree = new Tree(composite_10, SWT.BORDER);
 		tree.setLinesVisible(true);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		sashForm_3.setWeights(new int[] {0, 1});
-
-
+		sashForm_3.setWeights(new int[] { 0, 1 });
 
 		TabItem testObjectTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		testObjectTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/object.png"));
@@ -350,7 +352,8 @@ public class TestCaseView extends Composite {
 		sashForm_2.setWeights(new int[] { 1, 1 });
 
 		TabItem outputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		outputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/outputdata.png"));
+		outputDataTabItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/outputdata.png"));
 		outputDataTabItem.setText("Output Data");
 
 		Composite composite_4 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
@@ -362,7 +365,7 @@ public class TestCaseView extends Composite {
 		outputDataTable.setLinesVisible(true);
 
 		TableCursor cursor = new TableCursor(table, 0);
-		testCaseSashForm.setWeights(new int[] {411, 213});
+		testCaseSashForm.setWeights(new int[] { 411, 213 });
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -391,6 +394,23 @@ public class TestCaseView extends Composite {
 			}
 		});
 
+		table.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FlowStep flowStep = table.getSelectedFlowStep();
+				List<KeyWordInputArgument> keyArgs = flowStep.getKeyword().getKeywordInputArguments();
+				for(KeyWordInputArgument keyArg:keyArgs) {
+					System.out.println(keyArg.getName());
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		try {
 			table.renderFlowSteps();
 		} catch (SQLException | IOException e) {
@@ -404,10 +424,11 @@ public class TestCaseView extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
+
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
-		
+
 		//
 		return bindingContext;
 	}

@@ -33,12 +33,12 @@ public class KeywordManager {
 			List<Keyword> allKeywords = new KeywordLoader().loadKeywords(keywordsDBFile.getAbsolutePath());
 			for (Keyword keyword : allKeywords) {
 				List<KeyWordInputArgument> keywordInputArguments = new ArrayList<KeyWordInputArgument>();
-				for (KeyWordInputArgument keyWordInputArgument : keywordInputArguments) {
+				for (KeyWordInputArgument keyWordInputArgument : allKeywordInputArguments) {
 					if (keyword.getKeywordid().equals(keyWordInputArgument.getKeywordid())) {
 						keywordInputArguments.add(keyWordInputArgument);
 					}
 				}
-				keyword.setKeywordInputArguments(allKeywordInputArguments);
+				keyword.setKeywordInputArguments(keywordInputArguments);
 			}
 			addAllKeyWords(allKeywords);
 		}
