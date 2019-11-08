@@ -9,6 +9,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class KeywordManager {
@@ -27,7 +28,18 @@ public class KeywordManager {
 		File keywordDirFolder = new File(keywordDirPath);
 		File[] keywordsDBFiles = keywordDirFolder.listFiles();
 		for (File keywordsDBFile : keywordsDBFiles) {
+			List<KeyWordInputArgument> allKeywordInputArguments = new KeywordLoader()
+					.loadAllKeywordArguments(keywordsDBFile.getAbsolutePath());
 			List<Keyword> allKeywords = new KeywordLoader().loadKeywords(keywordsDBFile.getAbsolutePath());
+			for (Keyword keyword : allKeywords) {
+				List<KeyWordInputArgument> keywordInputArguments = new ArrayList<KeyWordInputArgument>();
+				for (KeyWordInputArgument keyWordInputArgument : keywordInputArguments) {
+					if (keyword.getKeywordid().equals(keyWordInputArgument.getKeywordid())) {
+						keywordInputArguments.add(keyWordInputArgument);
+					}
+				}
+				keyword.setKeywordInputArguments(allKeywordInputArguments);
+			}
 			addAllKeyWords(allKeywords);
 		}
 	}
@@ -59,4 +71,7 @@ public class KeywordManager {
 		return keywords;
 	}
 
+	public static void main(String[] args) throws JsonParseException, JsonMappingException, SQLException, IOException {
+		new KeywordManager().loadAllKeywords();
+	}
 }

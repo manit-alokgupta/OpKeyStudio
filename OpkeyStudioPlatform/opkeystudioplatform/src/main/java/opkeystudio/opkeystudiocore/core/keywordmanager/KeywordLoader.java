@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -42,9 +43,30 @@ public class KeywordLoader {
 		return new ArrayList<Keyword>();
 	}
 
-	public static void main(String[] args) throws SQLException, JsonParseException, JsonMappingException, IOException {
-		List<Keyword> keys = new KeywordLoader()
-				.loadKeywords("E:\\ExportedArtifactsNeon\\GenericDB\\OpKey Generic Keywords.db");
-		System.out.println(keys.get(0).getKeywordname());
+	public List<KeyWordInputArgument> loadAllKeywordArguments(String dbPath) {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator(dbPath);
+		try {
+			sqlComm.connect();
+			String results = sqlComm
+					.executeQueryString("SELECT * FROM main_keywordarguments \r\n" + "ORDER BY Position asc");
+			ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+			CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
+					KeyWordInputArgument.class);
+			sqlComm.disconnect();
+			return mapper.readValue(results, type);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<KeyWordInputArgument>();
 	}
 }

@@ -1,5 +1,7 @@
 package opkeystudio.opkeystudiocore.core.keywordmanager.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Keyword {
@@ -24,6 +26,7 @@ public class Keyword {
 	private String argumentname;
 	private String pluginid;
 	private String deprecation_reason;
+	private List<KeyWordInputArgument> keywordInputArguments;
 
 	public String getKeywordid() {
 		return keywordid;
@@ -183,5 +186,13 @@ public class Keyword {
 
 	public void setDeprecation_reason(String deprecation_reason) {
 		this.deprecation_reason = deprecation_reason;
+	}
+
+	public List<KeyWordInputArgument> getKeywordInputArguments() {
+		return keywordInputArguments;
+	}
+
+	public void setKeywordInputArguments(List<KeyWordInputArgument> keywordInputArguments) {
+		this.keywordInputArguments = keywordInputArguments;
 	}
 }

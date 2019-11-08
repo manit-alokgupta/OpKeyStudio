@@ -63,22 +63,6 @@ public class FlowStepTable extends CustomTable {
 				}
 			}
 		});
-
-		this.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				FlowStepTable table = (FlowStepTable) e.getSource();
-				FlowStep flowStep = table.getSelectedFlowStep();
-				System.out.println(flowStep.getFlow_stepid());
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	public void setFlowStepsData(List<FlowStep> flowSteps) {
