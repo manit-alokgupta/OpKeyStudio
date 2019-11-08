@@ -177,6 +177,44 @@ public class TestCaseView extends Composite {
 		
 		Composite composite_1 = new Composite(sashForm_3, SWT.NONE);
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		Composite composite_10 = new Composite(sashForm_3, SWT.BORDER);
+		composite_10.setLayout(new GridLayout(1, false));
+		
+		Composite composite_15 = new Composite(composite_10, SWT.NONE);
+		composite_15.setBounds(0, 0, 64, 64);
+		composite_15.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		Button btnNewButton_5 = new Button(composite_15, SWT.NONE);
+		btnNewButton_5.setBounds(0, 0, 75, 25);
+		btnNewButton_5.setText("Keyword");
+		
+		Button btnNewButton_6 = new Button(composite_15, SWT.NONE);
+		btnNewButton_6.setBounds(0, 0, 75, 25);
+		btnNewButton_6.setText("Function Library");
+		
+		Button btnNewButton_7 = new Button(composite_15, SWT.NONE);
+		btnNewButton_7.setText("Service Repository");
+		
+		Button btnNewButton_8 = new Button(composite_15, SWT.NONE);
+		btnNewButton_8.setText("Coded Function Library");
+		
+		Composite composite_12 = new Composite(composite_10, SWT.NONE);
+		composite_12.setLayout(new GridLayout(2, false));
+		composite_12.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		text = new Text(composite_12, SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		Button btnNewButton_4 = new Button(composite_12, SWT.NONE);
+		btnNewButton_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		btnNewButton_4.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		btnNewButton_4.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
+		btnNewButton_4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		Tree tree = new Tree(composite_10, SWT.BORDER);
+		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		sashForm_3.setWeights(new int[] {0, 1});
 
 
 
