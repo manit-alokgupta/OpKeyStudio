@@ -21,6 +21,8 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 
 import org.eclipse.swt.widgets.Label;
@@ -35,13 +37,15 @@ import org.eclipse.swt.widgets.TreeItem;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable table;
+	private OutputDataTable outputDataTable;
 	private TestObjectTable testObjectTable;
+	private InputDataTable inputDataTable;
 	private Table InputDataTable;
 	private Table mappedTable;
 	private Table propertyTable;
-	private Table testObbjectTable;
-	private Table inputDataTable;
-	private Table table_1;
+	private Table table_2;
+	private Table table_3;
+	private Table table_4;
 
 	/**
 	 * Create the composite.
@@ -157,10 +161,9 @@ public class TestCaseView extends Composite {
 		Composite composite_7 = new Composite(expandBar, SWT.NONE);
 		xpndtmNewExpanditem_2.setControl(composite_7);
 		xpndtmNewExpanditem_2.setHeight(xpndtmNewExpanditem_2.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-		composite_7.setLayout(new GridLayout(1, false));
+		composite_7.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		InputDataTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
-		InputDataTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		InputDataTable.setHeaderVisible(true);
 		InputDataTable.setLinesVisible(true);
 
@@ -171,7 +174,7 @@ public class TestCaseView extends Composite {
 		addStepTabItem.setControl(tabFolder);
 
 		TabItem tbtmNewItem = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem.setText("New Item");
+		tbtmNewItem.setText("Keywords");
 
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_1);
@@ -186,19 +189,19 @@ public class TestCaseView extends Composite {
 		trtmNewTreeitem_1.setText("New TreeItem");
 
 		TabItem tbtmNewItem_1 = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem_1.setText("New Item");
+		tbtmNewItem_1.setText("Function Library");
 
 		Composite composite_10 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setControl(composite_10);
 
 		TabItem tbtmNewItem_2 = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem_2.setText("New Item");
+		tbtmNewItem_2.setText("Service Repository");
 
 		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem_2.setControl(composite_11);
 
 		TabItem tbtmNewItem_3 = new TabItem(tabFolder, SWT.NONE);
-		tbtmNewItem_3.setText("New Item");
+		tbtmNewItem_3.setText("Coded Function Library");
 
 		Composite composite_12 = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem_3.setControl(composite_12);
@@ -213,13 +216,16 @@ public class TestCaseView extends Composite {
 		SashForm sashForm_1 = new SashForm(composite_2, SWT.NONE);
 		sashForm_1.setOrientation(SWT.VERTICAL);
 
-		testObbjectTable = new TestObjectTable(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
-		testObbjectTable.setLinesVisible(true);
-		testObbjectTable.setHeaderVisible(true);
-		testObbjectTable.setLinesVisible(true);
-		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		testObjectTable = new TestObjectTable(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
+		testObjectTable.setLinesVisible(true);
+		testObjectTable.setHeaderVisible(true);
+		testObjectTable.setLinesVisible(true);
+		testObjectTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
 
 		Tree testObbjectTree = new Tree(sashForm_1, SWT.BORDER);
+		testObbjectTree.setLinesVisible(true);
+		testObbjectTree.setHeaderVisible(true);
 		sashForm_1.setWeights(new int[] { 1, 1 });
 
 		TabItem inputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
@@ -235,12 +241,38 @@ public class TestCaseView extends Composite {
 		Composite composite_13 = new Composite(sashForm_2, SWT.NONE);
 		composite_13.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		inputDataTable = new Table(composite_13, SWT.BORDER | SWT.FULL_SELECTION);
+		inputDataTable = new InputDataTable(composite_13, SWT.BORDER | SWT.FULL_SELECTION);
 		inputDataTable.setHeaderVisible(true);
 		inputDataTable.setLinesVisible(true);
 
 		Composite composite_14 = new Composite(sashForm_2, SWT.NONE);
 		composite_14.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		TabFolder tabFolder_1 = new TabFolder(composite_14, SWT.NONE);
+		
+		TabItem tbtmNewItem_4 = new TabItem(tabFolder_1, SWT.NONE);
+		tbtmNewItem_4.setText("Data Output");
+		
+		table_2 = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
+		tbtmNewItem_4.setControl(table_2);
+		table_2.setHeaderVisible(true);
+		table_2.setLinesVisible(true);
+		
+		TabItem tbtmGlobalVariables = new TabItem(tabFolder_1, SWT.NONE);
+		tbtmGlobalVariables.setText("Global Variable");
+		
+		table_3 = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
+		tbtmGlobalVariables.setControl(table_3);
+		table_3.setHeaderVisible(true);
+		table_3.setLinesVisible(true);
+		
+		TabItem tbtmNewItem_5 = new TabItem(tabFolder_1, SWT.NONE);
+		tbtmNewItem_5.setText("Auto Data Generation");
+		
+		table_4 = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
+		tbtmNewItem_5.setControl(table_4);
+		table_4.setHeaderVisible(true);
+		table_4.setLinesVisible(true);
 		sashForm_2.setWeights(new int[] { 1, 1 });
 
 		TabItem outputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
@@ -250,12 +282,12 @@ public class TestCaseView extends Composite {
 		outputDataTabItem.setControl(composite_4);
 		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		table_1 = new Table(composite_4, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1.setHeaderVisible(true);
-		table_1.setLinesVisible(true);
-		testCaseSashForm.setWeights(new int[] { 3, 1 });
+		outputDataTable = new OutputDataTable(composite_4, SWT.BORDER | SWT.FULL_SELECTION);
+		outputDataTable.setHeaderVisible(true);
+		outputDataTable.setLinesVisible(true);
 
 		TableCursor cursor = new TableCursor(table, 0);
+		testCaseSashForm.setWeights(new int[] {452, 184});
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override

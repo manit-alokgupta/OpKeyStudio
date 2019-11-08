@@ -57,6 +57,7 @@ public class FlowStepTable extends CustomTable {
 					if (i == 0) {
 						column.setWidth(50);
 					} else {
+
 						column.setWidth((table_0.getBounds().width - 50) / 5);
 					}
 				}
@@ -147,7 +148,8 @@ public class FlowStepTable extends CustomTable {
 					keyWordName = flowStep.getKeyword().getKeywordname();
 				}
 				FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-				flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", flowStep.getKeyword().getKeyworddescription() });
+				flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
+						flowStep.getKeyword().getKeyworddescription() });
 				flowTableItem.setFlowStepData(flowStep);
 				addTableEditor(flowTableItem);
 			}

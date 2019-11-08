@@ -12,16 +12,15 @@ import org.eclipse.swt.widgets.TableColumn;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
-public class TestObjectTable extends CustomTable {
-	private TestObjectTable  thisTable=this;
-	
-	public TestObjectTable(Composite parent, int style) {
+public class OutputDataTable extends CustomTable {
+
+	public OutputDataTable(Composite parent, int style) {
 		super(parent, style);
 		init();
 	}
 
 	private void init() {
-		String[] tableHeaders= {"Name","Provide Object","Object Type","Action"};
+		String[] tableHeaders= {"Type","Parameter Name","Output Variable"};
 		for (String header : tableHeaders) {
 			TableColumn column=new TableColumn(this,SWT.LEFT);
 			column.setText(header);
@@ -37,7 +36,7 @@ public class TestObjectTable extends CustomTable {
 				Table table_0 = (Table) arg0.getSource();
 				for (int i = 0; i < table_0.getColumnCount(); i++) {
 					TableColumn column = table_0.getColumn(i);
-					column.setWidth((table_0.getBounds().width ) / 4);
+					column.setWidth((table_0.getBounds().width ) / 3);
 				}
 			}
 		});
@@ -59,7 +58,5 @@ public class TestObjectTable extends CustomTable {
 		});
 		
 	}
-
-	
 
 }
