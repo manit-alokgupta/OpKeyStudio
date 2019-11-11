@@ -124,10 +124,29 @@ public class ArtifactTree extends CustomTree {
 		}
 	}
 
-	public void expandAll() {
-		TreeItem items[] = this.getItems();
+	private void refreshAllArtifactTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {
+		String artifactId = rootNode.getArtifact().getId();
+		for (Artifact artifact : allArtifacts) {
+			if (artifact.getParentid() != null) {
+				if (artifact.isVisible()) {
+					if (artifact.getParentid().equals(artifactId)) {
+						ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
+						artitreeitem.setText(artifact.getName());
+						artitreeitem.setArtifact(artifact);
+						addIcon(artitreeitem);
+						refreshAllArtifactTree(artitreeitem, allArtifacts);
+					}
+				}
+			}
+		}
+	}
+
+	public void expandAll(ArtifactTreeItem treeItem) {
+		treeItem.setExpanded(true);
+		TreeItem items[] = treeItem.getItems();
 		for (TreeItem item : items) {
 			item.setExpanded(true);
+			expandAll((ArtifactTreeItem) item);
 		}
 		this.setRedraw(true);
 	}
@@ -157,7 +176,7 @@ public class ArtifactTree extends CustomTree {
 		for (ArtifactTreeItem topMostNode : topMostNodes) {
 			renderAllArtifactTree(topMostNode, artifacts);
 		}
-		expandAll();
+		expandAll(rootNode);
 	}
 
 	public void refereshArtifacts() {
@@ -170,21 +189,19 @@ public class ArtifactTree extends CustomTree {
 		setArtifactsData(artifacts);
 		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
 		for (Artifact artifact : artifacts) {
-			if (artifact.isVisible()) {
-				if (artifact.getParentid() == null) {
-					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-					artitreeitem.setText(artifact.getName());
-					artitreeitem.setArtifact(artifact);
-					topMostNodes.add(artitreeitem);
-					addIcon(artitreeitem);
-				}
+			if (artifact.getParentid() == null) {
+				ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
+				artitreeitem.setText(artifact.getName());
+				artitreeitem.setArtifact(artifact);
+				topMostNodes.add(artitreeitem);
+				addIcon(artitreeitem);
 			}
 		}
 
 		for (ArtifactTreeItem topMostNode : topMostNodes) {
-			renderAllArtifactTree(topMostNode, artifacts);
+			refreshAllArtifactTree(topMostNode, artifacts);
 		}
-		expandAll();
+		expandAll(rootNode);
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {

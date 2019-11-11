@@ -26,6 +26,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ToolItem;
@@ -60,24 +61,21 @@ public class ArtifactTreeUI extends Composite {
 		gd_txtSearch.widthHint = 154;
 		txtSearch.setLayoutData(gd_txtSearch);
 		txtSearch.setToolTipText("Search");
-		txtSearch.addKeyListener(new KeyAdapter() {
+		txtSearch.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				Text text = (Text) e.getSource();
+				String searchValue = text.getText();
+				if (searchValue.length() > 2 || searchValue.trim().isEmpty()) {
+					filterArtifactTree(searchValue);
+				}
+
+			}
+
 			@Override
 			public void keyPressed(KeyEvent e) {
-				String searchValue = txtSearch.getText();
-
-				if (searchValue.length() > 3 || searchValue.trim().isEmpty()) {
-					List<Artifact> artifacts = artifactTree.getArtifactsData();
-					for (Artifact artifact : artifacts) {
-						if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
-							if (artifact.getName().equalsIgnoreCase(searchValue)) {
-								artifact.setVisible(true);
-							} else {
-								artifact.setVisible(false);
-							}
-						}
-					}
-					artifactTree.refereshArtifacts();
-				}
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -87,11 +85,11 @@ public class ArtifactTreeUI extends Composite {
 		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.SEPARATOR);
 		tltmNewItem.setText("New Item");
 
-		Button btnNewButton = new Button(composite, SWT.NONE);
+		Button searchArtifactTreeButton = new Button(composite, SWT.NONE);
 		GridData gd_btnNewButton = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_btnNewButton.widthHint = 60;
-		btnNewButton.setLayoutData(gd_btnNewButton);
-		btnNewButton.setText("Search");
+		searchArtifactTreeButton.setLayoutData(gd_btnNewButton);
+		searchArtifactTreeButton.setText("Search");
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -186,7 +184,21 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
-
+		
+		searchArtifactTreeButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String textToSearch=txtSearch.getText();
+				filterArtifactTree(textToSearch);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		try {
 
 			artifactTree.addMouseListener(new MouseListener() {
@@ -227,6 +239,20 @@ public class ArtifactTreeUI extends Composite {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+
+	private void filterArtifactTree(String searchValue) {
+		List<Artifact> artifacts = artifactTree.getArtifactsData();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
+				if (artifact.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
+					artifact.setVisible(true);
+				} else {
+					artifact.setVisible(false);
+				}
+			}
+		}
+		artifactTree.refereshArtifacts();
 	}
 
 	@Override
