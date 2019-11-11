@@ -589,13 +589,12 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+					table.moveStepUp(table.getSelectedFlowStep(), table.getPrevFlowStep());
 
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -604,8 +603,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				table.moveStepDown(table.getSelectedFlowStep(), table.getNextFlowStep());
 			}
 
 			@Override

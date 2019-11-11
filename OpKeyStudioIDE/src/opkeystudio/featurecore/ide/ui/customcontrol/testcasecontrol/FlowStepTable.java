@@ -157,9 +157,10 @@ public class FlowStepTable extends CustomTable {
 				}
 			}
 		}
+		this.setSelection(0);
 	}
 
-	public void refreshFlowSteps() throws JsonParseException, JsonMappingException, SQLException, IOException {
+	public void refreshFlowSteps() {
 		this.removeAll();
 		List<FlowStep> flowSteps = getFlowStepsData();
 		Collections.sort(flowSteps);
@@ -182,26 +183,29 @@ public class FlowStepTable extends CustomTable {
 				}
 			}
 		}
+		this.setSelection(0);
 	}
 
-	public void moveStepUp(FlowStep fstep1, FlowStep fstep2)
-			throws JsonParseException, JsonMappingException, SQLException, IOException {
+	public void moveStepUp(FlowStep fstep1, FlowStep fstep2) {
+		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = fstep1.getPosition();
 		int fpos2 = fstep2.getPosition();
 
 		fstep1.setPosition(fpos2);
 		fstep2.setPosition(fpos1);
 		refreshFlowSteps();
+		this.setSelection(selectedIndex - 1);
 	}
 
-	public void moveStepDown(FlowStep fstep1, FlowStep fstep2)
-			throws JsonParseException, JsonMappingException, SQLException, IOException {
-		int fpos1 = fstep2.getPosition();
-		int fpos2 = fstep1.getPosition();
+	public void moveStepDown(FlowStep fstep1, FlowStep fstep2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = fstep1.getPosition();
+		int fpos2 = fstep2.getPosition();
 
 		fstep1.setPosition(fpos2);
 		fstep2.setPosition(fpos1);
 		refreshFlowSteps();
+		this.setSelection(selectedIndex + 1);
 	}
 
 	public void deleteStep(FlowStep flowStep)
