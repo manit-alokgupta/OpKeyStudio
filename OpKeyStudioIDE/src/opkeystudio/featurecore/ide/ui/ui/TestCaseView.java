@@ -54,7 +54,6 @@ public class TestCaseView extends Composite {
 	private ToolItem seperator5;
 	private ToolItem seperator6;
 	private ToolItem seperator7;
-	private ToolItem seperator8;
 	private ToolItem itemRunnow;
 	private ToolItem itemMoveup;
 	private ToolItem itemAdd;
@@ -63,7 +62,6 @@ public class TestCaseView extends Composite {
 	private ToolItem itemRefresh;
 	private ToolItem itemSave;
 	private ToolItem itemDelete;
-	private ToolItem itemSetting;
 	private ToolItem keywordButton;
 	private ToolItem functionLibraryButton;
 	private ToolItem serviceRepoButton;
@@ -138,38 +136,36 @@ public class TestCaseView extends Composite {
 		seperator3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemMoveup = new ToolItem(toolBar_1, SWT.NONE);
+		itemMoveup.setEnabled(false);
 		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		itemMoveup.setText("Move up");
 
 		seperator4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemMovedown = new ToolItem(toolBar_1, SWT.NONE);
+		itemMovedown.setEnabled(false);
 		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		itemMovedown.setText("Move Down");
 
 		seperator5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		itemRefresh = new ToolItem(toolBar_1, SWT.NONE);
-		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-		itemRefresh.setText("Refresh");
+		itemDelete = new ToolItem(toolBar_1, SWT.NONE);
+		itemDelete.setEnabled(false);
+		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		itemDelete.setText("Delete");
 
 		seperator6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemSave = new ToolItem(toolBar_1, SWT.NONE);
+		itemSave.setEnabled(false);
 		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 		itemSave.setText("Save");
 
 		seperator7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		itemDelete = new ToolItem(toolBar_1, SWT.NONE);
-		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		itemDelete.setText("Delete");
-
-		seperator8 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		itemSetting = new ToolItem(toolBar_1, SWT.NONE);
-		itemSetting.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/setting_icon.png"));
-		itemSetting.setText("Setting");
+		itemRefresh = new ToolItem(toolBar_1, SWT.NONE);
+		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		itemRefresh.setText("Refresh");
 
 		table = new FlowStepTable(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
@@ -413,10 +409,10 @@ public class TestCaseView extends Composite {
 
 		TableCursor cursor = new TableCursor(table, 0);
 		testCaseSashForm.setWeights(new int[] { 402, 222 });
-		
+
 		TabItem tbtmNewItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setText("Source Code");
-		
+
 		Composite composite_121 = new Composite(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_121);
 		composite_121.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -477,6 +473,38 @@ public class TestCaseView extends Composite {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void toggleAddButton(boolean status) {
+		itemAdd.setEnabled(status);
+	}
+
+	private void toggleRecordButton(boolean status) {
+		itemRecord.setEnabled(status);
+	}
+
+	private void toggleRunnowButton(boolean status) {
+		itemRunnow.setEnabled(status);
+	}
+
+	private void toggleMoveupButton(boolean status) {
+		itemMoveup.setEnabled(status);
+	}
+
+	private void toggleMovedownButton(boolean status) {
+		itemMovedown.setEnabled(status);
+	}
+
+	private void toggleRefreshButton(boolean status) {
+		itemRefresh.setEnabled(status);
+	}
+
+	private void toggleSaveButton(boolean status) {
+		itemSave.setEnabled(status);
+	}
+
+	private void toggleDeleteButton(boolean status) {
+		itemDelete.setEnabled(status);
 	}
 
 	@Override
