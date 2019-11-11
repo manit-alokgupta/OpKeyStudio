@@ -35,7 +35,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTab
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.events.SelectionAdapter;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable table;
@@ -385,6 +385,13 @@ public class TestCaseView extends Composite {
 
 		TableCursor cursor = new TableCursor(table, 0);
 		testCaseSashForm.setWeights(new int[] { 402, 222 });
+		
+		TabItem tbtmNewItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
+		tbtmNewItem.setText("Source Code");
+		
+		Composite composite_11 = new Composite(mainTestCaseTabFolder, SWT.NONE);
+		tbtmNewItem.setControl(composite_11);
+		composite_11.setLayout(new FillLayout(SWT.HORIZONTAL));
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -436,6 +443,28 @@ public class TestCaseView extends Composite {
 			}
 		});
 
+		itemDelete.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FlowStep selectedflowStep = table.getSelectedFlowStep();
+				if (selectedflowStep != null) {
+					try {
+						table.deleteStep(selectedflowStep);
+					} catch (SQLException | IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		try {
 			table.renderFlowSteps();
 		} catch (SQLException | IOException e) {
@@ -447,13 +476,5 @@ public class TestCaseView extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
-	}
-
-	protected DataBindingContext initDataBindings() {
-		DataBindingContext bindingContext = new DataBindingContext();
-		//
-
-		//
-		return bindingContext;
 	}
 }
