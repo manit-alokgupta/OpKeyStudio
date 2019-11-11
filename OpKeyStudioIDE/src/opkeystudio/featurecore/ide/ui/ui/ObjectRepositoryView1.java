@@ -11,13 +11,10 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -32,8 +29,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectReposi
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 
-public class ObjectRepositoryView extends Composite {
-//	private Table table;
+public class ObjectRepositoryView1 extends Composite {
 	private ObjectAttributeTable table;
 	private ToolItem saveObject;
 
@@ -43,75 +39,85 @@ public class ObjectRepositoryView extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public ObjectRepositoryView(Composite parent, int style) {
+	public ObjectRepositoryView1(Composite parent, int style) {
 		super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		SashForm sashForm = new SashForm(this, SWT.NONE);
+		FillLayout fillLayout = new FillLayout(SWT.HORIZONTAL);
+		fillLayout.marginWidth = 5;
+		fillLayout.marginHeight = 5;
+		setLayout(fillLayout);
 
-		Composite composite_3 = new Composite(sashForm, SWT.NONE);
-		composite_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		composite_3.setLayout(new GridLayout(1, false));
+		Composite composite = new Composite(this, SWT.NONE);
 
+		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		SashForm sashForm = new SashForm(composite, SWT.NONE);
+		sashForm.setSashWidth(5);
+		Composite composite_1 = new Composite(sashForm, SWT.NONE);
+		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		SashForm sashForm_1 = new SashForm(composite_1, SWT.VERTICAL);
+		sashForm_1.setSashWidth(0);
+		Composite composite_3 = new Composite(sashForm_1, SWT.NONE);
+		composite_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		FillLayout fillLayout_1 = new FillLayout(SWT.HORIZONTAL);
+		composite_3.setLayout(fillLayout_1);
 		ToolBar toolBar = new ToolBar(composite_3, SWT.FLAT | SWT.RIGHT);
-		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		toolBar.setBounds(0, 0, 87, 23);
-
 		saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/save.png"));
-		saveObject.setText("Save");
 		saveObject.setToolTipText("Save");
-
-		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
+		saveObject.setEnabled(false);
 
 		ToolItem renameObject = new ToolItem(toolBar, SWT.NONE);
 		renameObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
-		renameObject.setText("Rename");
 		renameObject.setToolTipText("Rename");
-
-		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
+		renameObject.setEnabled(false);
 
 		ToolItem deleteObject = new ToolItem(toolBar, SWT.NONE);
 		deleteObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/delete.png"));
-		deleteObject.setText("Delete");
 		deleteObject.setToolTipText("Delete");
-
-		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
+		deleteObject.setEnabled(false);
 
 		ToolItem refreshObject = new ToolItem(toolBar, SWT.NONE);
 		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/refresh.png"));
-		refreshObject.setText("Refresh");
 		refreshObject.setToolTipText("Refresh");
 
-		ObjectRepositoryTree tree = new ObjectRepositoryTree(composite_3, SWT.BORDER);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		tree.setBounds(0, 0, 85, 85);
+		Composite composite_4 = new Composite(sashForm_1, SWT.BORDER);
+		composite_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		Composite composite_1 = new Composite(sashForm, SWT.NONE);
-		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		composite_1.setLayout(new GridLayout(1, false));
+		ObjectRepositoryTree tree = new ObjectRepositoryTree(composite_4, SWT.BORDER);
+		tree.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		sashForm_1.setWeights(new int[] { 1, 15 });
 
-		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT);
-		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		Composite composite_2 = new Composite(sashForm, SWT.NONE);
+		composite_2.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		SashForm sashForm_2 = new SashForm(composite_2, SWT.VERTICAL);
+
+		Composite composite_5 = new Composite(sashForm_2, SWT.NONE);
+		composite_5.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		ToolBar toolBar_1 = new ToolBar(composite_5, SWT.FLAT | SWT.RIGHT);
 
 		ToolItem addObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
 		addObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/create.png"));
-		addObjectAttribute.setText("Add");
 		addObjectAttribute.setToolTipText("Add");
-
-		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
 		deleteObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/delete.png"));
-		deleteObjectAttribute.setText("Delete");
 		deleteObjectAttribute.setToolTipText("Delete");
+		deleteObjectAttribute.setEnabled(false);
 
-		table = new ObjectAttributeTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Composite composite_6 = new Composite(sashForm_2, SWT.BORDER);
+		composite_6.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		table = new ObjectAttributeTable(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
+
+		sashForm_2.setWeights(new int[] { 1, 15 });
 		sashForm.setWeights(new int[] { 2, 1 });
 
 		tree.addSelectionListener(new SelectionListener() {
@@ -127,33 +133,11 @@ public class ObjectRepositoryView extends Composite {
 					deleteObject.setEnabled(false);
 					renameObject.setEnabled(false);
 				}
-
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-
-			}
-		});
-
-		tree.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) tree.getSelection()[0];
-				renderObjectAttributeProperty(item);
-				if (item.getObjectRepository() != null) {
-					deleteObject.setEnabled(true);
-					renameObject.setEnabled(true);
-				} else {
-					deleteObject.setEnabled(false);
-					renameObject.setEnabled(false);
-				}
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
 
 			}
 		});
@@ -169,6 +153,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -194,6 +179,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -224,6 +210,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -238,6 +225,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -262,6 +250,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -281,6 +270,7 @@ public class ObjectRepositoryView extends Composite {
 				try {
 					table.renderObjectAttributes();
 				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -288,10 +278,10 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
-
 	}
 
 	private void toggleSaveButton(boolean status) {
@@ -307,12 +297,16 @@ public class ObjectRepositoryView extends Composite {
 				table.setControlData(objectAttributes);
 				table.renderObjectAttributes();
 			} catch (JsonParseException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (JsonMappingException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IOException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
