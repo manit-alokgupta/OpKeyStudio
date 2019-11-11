@@ -73,15 +73,17 @@ public class TestCaseView extends Composite {
 		testCaseHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		SashForm testCaseSashForm = new SashForm(testCaseHolder, SWT.NONE);
-		testCaseSashForm.setBackground(SWTResourceManager.getColor(SWT.NONE));
+		testCaseSashForm.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		testCaseSashForm.setSashWidth(6);
 
 		Composite testCaseStepsHolder = new Composite(testCaseSashForm, SWT.NONE);
-		testCaseStepsHolder.setBackground(SWTResourceManager.getColor(SWT.NONE));
+		testCaseStepsHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+//		testCaseStepsHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		testCaseStepsHolder.setLayout(new GridLayout(1, false));
 
 		ToolBar toolBar_1 = new ToolBar(testCaseStepsHolder, SWT.RIGHT);
-		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.NONE));
+		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+//		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		toolBar_1.setForeground(SWTResourceManager.getColor(SWT.NONE));
 
 		ToolItem itemAdd = new ToolItem(toolBar_1, SWT.NONE);
