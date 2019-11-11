@@ -12,9 +12,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -67,8 +67,8 @@ public class InputDataTable extends CustomTable {
 		TableEditor editor2 = getTableEditor();
 		TableEditor editor3 = getTableEditor();
 		TableEditor editor4 = getTableEditor();
-		CustomButton button = new CustomButton(this, SWT.CHECK);
-		button.setSelection(attrProperty.isShouldrun());
+		CustomText button = new CustomText(this, SWT.CHECK);
+		
 		button.addMouseListener(new MouseListener() {
 
 			@Override

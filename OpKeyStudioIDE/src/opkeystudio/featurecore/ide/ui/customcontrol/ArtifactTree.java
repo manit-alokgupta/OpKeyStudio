@@ -56,6 +56,12 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	private void populateArtifact(ArtifactTreeItem artifactTreeItem) {
+		if (artifactTreeItem == null) {
+			return;
+		}
+		if (artifactTreeItem.getArtifact() == null) {
+			return;
+		}
 		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
 			EPartService partService = Utilities.getInstance().getEpartService();
 			MPart part = partService.createPart("opkeystudio.partdescriptor.objectRepository");
