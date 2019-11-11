@@ -405,6 +405,9 @@ public class TestCaseView extends Composite {
 
 				outputDataTable.setKeyword(flowStep.getKeyword());
 				outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
+
+				testObjectTable.setOrobject(flowStep.getOrObject());
+				testObjectTable.renderORObjectTable();
 			}
 
 			@Override
