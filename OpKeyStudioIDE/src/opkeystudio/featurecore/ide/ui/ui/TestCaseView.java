@@ -3,7 +3,6 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
@@ -415,6 +414,13 @@ public class TestCaseView extends Composite {
 
 		TableCursor cursor = new TableCursor(table, 0);
 		testCaseSashForm.setWeights(new int[] { 402, 222 });
+		
+		TabItem tbtmNewItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
+		tbtmNewItem.setText("Source Code");
+		
+		Composite composite_121 = new Composite(mainTestCaseTabFolder, SWT.NONE);
+		tbtmNewItem.setControl(composite_121);
+		composite_121.setLayout(new FillLayout(SWT.HORIZONTAL));
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override

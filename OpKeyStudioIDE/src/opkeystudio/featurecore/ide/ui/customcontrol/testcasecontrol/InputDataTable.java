@@ -3,15 +3,20 @@ package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 
 public class InputDataTable extends CustomTable {
@@ -44,6 +49,43 @@ public class InputDataTable extends CustomTable {
 				}
 			}
 		});
+	}
+
+	private TableEditor getTableEditor() {
+		TableEditor editor = new TableEditor(this);
+		// editor.horizontalAlignment = SWT.RIGHT;
+		editor.grabHorizontal = true;
+		editor.minimumWidth = 50;
+		return editor;
+	}
+
+	private void addTableEditor(FlowStepTableItem item) {
+		FlowStep attrProperty = item.getFlowStepeData();
+		TableEditor editor1 = getTableEditor();
+		TableEditor editor2 = getTableEditor();
+		TableEditor editor3 = getTableEditor();
+		TableEditor editor4 = getTableEditor();
+		CustomButton button = new CustomButton(this, SWT.CHECK);
+		button.setSelection(attrProperty.isShouldrun());
+		button.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		editor1.setEditor(button, item, 2);
 	}
 
 	public List<KeyWordInputArgument> getKeyWordInputArgs() {
