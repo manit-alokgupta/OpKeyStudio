@@ -2,12 +2,8 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
@@ -39,10 +35,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTab
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
-import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 
 public class TestCaseView extends Composite {
-	private DataBindingContext m_bindingContext;
 	private FlowStepTable table;
 	private OutputDataTable outputDataTable;
 	private TestObjectTable testObjectTable;
@@ -399,10 +393,15 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FlowStep flowStep = table.getSelectedFlowStep();
-				List<KeyWordInputArgument> keyArgs = flowStep.getKeyword().getKeywordInputArguments();
-				for(KeyWordInputArgument keyArg:keyArgs) {
-					System.out.println(keyArg.getName());
-				}
+				inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
+				inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
+				inputDataTable.renderInputTable();
+
+				outputDataTable.setKeyword(flowStep.getKeyword());
+				outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
+
+				testObjectTable.setOrobject(flowStep.getOrObject());
+				testObjectTable.renderORObjectTable();
 			}
 
 			@Override
@@ -417,7 +416,6 @@ public class TestCaseView extends Composite {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		m_bindingContext = initDataBindings();
 	}
 
 	@Override
