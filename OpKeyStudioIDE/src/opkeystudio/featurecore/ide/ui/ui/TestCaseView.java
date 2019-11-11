@@ -399,10 +399,12 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FlowStep flowStep = table.getSelectedFlowStep();
-				List<KeyWordInputArgument> keyArgs = flowStep.getKeyword().getKeywordInputArguments();
-				for(KeyWordInputArgument keyArg:keyArgs) {
-					System.out.println(keyArg.getName());
-				}
+				inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
+				inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
+				inputDataTable.renderInputTable();
+
+				outputDataTable.setKeyword(flowStep.getKeyword());
+				outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
 			}
 
 			@Override
