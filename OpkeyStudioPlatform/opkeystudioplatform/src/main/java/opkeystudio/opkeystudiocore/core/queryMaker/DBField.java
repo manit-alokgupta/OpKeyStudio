@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.queryMaker;
+package opkeystudio.opkeystudiocore.core.queryMaker;
 
 import java.lang.annotation.*;
 

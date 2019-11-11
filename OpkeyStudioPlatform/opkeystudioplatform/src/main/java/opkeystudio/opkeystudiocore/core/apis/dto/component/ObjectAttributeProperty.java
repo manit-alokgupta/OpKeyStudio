@@ -1,7 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
-import opkeystudio.opkeystudiocore.queryMaker.DBField;
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
 
 public class ObjectAttributeProperty extends Modified {
 	private int isencrypted;
