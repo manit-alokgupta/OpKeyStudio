@@ -39,6 +39,11 @@ public class ObjectRepositoryView extends Composite {
 //	private Table table;
 	private ObjectAttributeTable table;
 	private ToolItem saveObject;
+	private ToolItem renameObject;
+	private ToolItem deleteObject;
+	private ToolItem refreshObject;
+	private ToolItem addObjectAttribute;
+	private ToolItem deleteObjectAttribute;
 
 	/**
 	 * Create the composite.
@@ -78,21 +83,21 @@ public class ObjectRepositoryView extends Composite {
 
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem renameObject = new ToolItem(toolBar, SWT.NONE);
+		renameObject = new ToolItem(toolBar, SWT.NONE);
 		renameObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
 		renameObject.setText("Rename");
 		renameObject.setToolTipText("Rename");
 
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem deleteObject = new ToolItem(toolBar, SWT.NONE);
+		deleteObject = new ToolItem(toolBar, SWT.NONE);
 		deleteObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteObject.setText("Delete");
 		deleteObject.setToolTipText("Delete");
 
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem refreshObject = new ToolItem(toolBar, SWT.NONE);
+		refreshObject = new ToolItem(toolBar, SWT.NONE);
 		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		refreshObject.setText("Refresh");
 		refreshObject.setToolTipText("Refresh");
@@ -110,21 +115,20 @@ public class ObjectRepositoryView extends Composite {
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		ToolItem addObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
+		addObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
 		addObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		addObjectAttribute.setText("Add");
 		addObjectAttribute.setToolTipText("Add");
 
 		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
+		deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
 		deleteObjectAttribute
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteObjectAttribute.setText("Delete");
 		deleteObjectAttribute.setToolTipText("Delete");
 
 		table = new ObjectAttributeTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
-//		table = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
