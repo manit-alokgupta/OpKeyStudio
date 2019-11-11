@@ -122,7 +122,7 @@ public class FlowStepTable extends CustomTable {
 		FlowApi.getInstance().initAllFlowInputArguments();
 		FlowApi.getInstance().initAllFlowOutputArguments();
 		List<FlowStep> flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
-		Collections.sort(flowSteps);
+		setFlowStepsData(flowSteps);
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.isDeleted() == false) {
 				if (flowStep.getKeyword() != null) {
