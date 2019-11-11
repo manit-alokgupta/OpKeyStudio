@@ -2,6 +2,7 @@ package opkeystudio.commandhandler;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.SWT;
@@ -12,6 +13,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.project.ProjectDataApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
@@ -25,10 +28,14 @@ public class ImportDBCommand {
 		dialog.setFilterExtensions(filterExt);
 		dialog.open();
 		String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
-		ServiceRepository.getInstance().setExortedDBFilePath(filePath);
-		ArtifactTree tree=(ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
-		tree.renderArtifacts();
-		
+		if (filePath != null) {
+			ServiceRepository.getInstance().setExortedDBFilePath(filePath);
+			List<Project> projects = new ProjectDataApi().getProjectList();
+			ServiceRepository.getInstance().setDefaultProject(projects.get(0));
+			ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
+			tree.renderArtifacts();
+		}
+
 	}
 
 }

@@ -3,6 +3,8 @@ package opkeystudio.opkeystudiocore.core.repositories.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
+
 public class ServiceRepository {
 	private Map<String, Object> serviceRepositoriesVariables = new HashMap<>();
 	private static ServiceRepository serviceRepository;
@@ -20,18 +22,6 @@ public class ServiceRepository {
 
 	private Object getServiceRepositoryVariable(String key) {
 		return this.serviceRepositoriesVariables.get(key);
-	}
-
-	public void setDefaultProjectPath(String path) {
-		setServiceRepositoryVariable("opkeystudio.defaultProjectPath", path);
-	}
-
-	public String getDefaultProjectPath() {
-		Object projectPath = getServiceRepositoryVariable("opkeystudio.defaultProjectPath");
-		if (projectPath == null) {
-			return null;
-		}
-		return (String) projectPath;
 	}
 
 	public void setProjectTreeObject(Object treeobject) {
@@ -80,5 +70,13 @@ public class ServiceRepository {
 
 	public String getExportedDBFilePath() {
 		return (String) getServiceRepositoryVariable("opkeystudio.exporteddbfilepath");
+	}
+
+	public void setDefaultProject(Project project) {
+		setServiceRepositoryVariable("opkeystudio.defaultProject", project);
+	}
+
+	public Project getDefaultProject() {
+		return (Project) getServiceRepositoryVariable("opkeystudio.defaultProject");
 	}
 }

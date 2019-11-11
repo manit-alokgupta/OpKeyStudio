@@ -90,7 +90,6 @@ public class ArtifactTreeUI extends Composite {
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		ServiceRepository.getInstance().setProjectTreeObject(artifactTree);
-		ServiceRepository.getInstance().setDefaultProjectPath("E:\\Test\\TestProject");
 		Menu menu = new Menu(artifactTree);
 		artifactTree.setMenu(menu);
 
