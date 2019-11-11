@@ -47,7 +47,6 @@ public class ArtifactTreeUI extends Composite {
 	public ArtifactTreeUI(Composite parent, int style) throws IOException {
 
 		super(parent, style);
-		String file = "file";
 		setLayout(new GridLayout(1, false));
 
 		Composite composite = new Composite(this, SWT.BORDER);
@@ -184,19 +183,19 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
-		
+
 		searchArtifactTreeButton.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String textToSearch=txtSearch.getText();
+				String textToSearch = txtSearch.getText();
 				filterArtifactTree(textToSearch);
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		try {
@@ -209,6 +208,12 @@ public class ArtifactTreeUI extends Composite {
 						System.out.println("Right clicked event");
 						ArtifactTree tree = (ArtifactTree) e.getSource();
 						ArtifactTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
+						if (selectedTreeItem == null) {
+							return;
+						}
+						if (selectedTreeItem.getArtifact() == null) {
+							return;
+						}
 						if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
 							mntmNew.setEnabled(true);
 						}
