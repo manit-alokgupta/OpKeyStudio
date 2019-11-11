@@ -2,12 +2,8 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
@@ -39,7 +35,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTab
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
-import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 
 public class TestCaseView extends Composite {
 	private DataBindingContext m_bindingContext;
