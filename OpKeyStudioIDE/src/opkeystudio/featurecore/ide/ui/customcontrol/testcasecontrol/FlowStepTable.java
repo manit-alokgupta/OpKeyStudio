@@ -200,6 +200,32 @@ public class FlowStepTable extends CustomTable {
 		return flowTableItem.getFlowStepeData();
 	}
 
+	public FlowStep getPrevFlowStep() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == 0) {
+			return null;
+		}
+		selectedIndex = selectedIndex - 1;
+		FlowStepTableItem flowTableItem = (FlowStepTableItem) this.getItem(selectedIndex);
+		if (flowTableItem != null) {
+			return flowTableItem.getFlowStepeData();
+		}
+		return null;
+	}
+
+	public FlowStep getNextFlowStep() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == this.getItemCount() - 1) {
+			return null;
+		}
+		selectedIndex = selectedIndex + 1;
+		FlowStepTableItem flowTableItem = (FlowStepTableItem) this.getItem(selectedIndex);
+		if (flowTableItem != null) {
+			return flowTableItem.getFlowStepeData();
+		}
+		return null;
+	}
+
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components

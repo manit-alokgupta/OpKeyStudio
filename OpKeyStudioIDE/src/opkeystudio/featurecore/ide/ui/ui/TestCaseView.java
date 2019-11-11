@@ -461,8 +461,17 @@ public class TestCaseView extends Composite {
 					testObjectTable.renderORObjectTable();
 
 					toggleDeleteButton(true);
-					toggleMoveupButton(true);
-					toggleMovedownButton(true);
+					if (table.getPrevFlowStep() == null) {
+						toggleMoveupButton(false);
+					} else {
+						toggleMoveupButton(true);
+					}
+
+					if (table.getNextFlowStep() == null) {
+						toggleMovedownButton(false);
+					} else {
+						toggleMovedownButton(true);
+					}
 				} else {
 					toggleDeleteButton(false);
 					toggleMoveupButton(false);
