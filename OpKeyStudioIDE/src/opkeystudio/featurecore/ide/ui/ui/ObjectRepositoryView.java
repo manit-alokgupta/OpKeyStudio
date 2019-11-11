@@ -59,7 +59,7 @@ public class ObjectRepositoryView extends Composite {
 		toolBar.setBounds(0, 0, 87, 23);
 
 		saveObject = new ToolItem(toolBar, SWT.NONE);
-		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/save.png"));
+		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 		saveObject.setText("Save");
 		saveObject.setToolTipText("Save");
 
@@ -73,14 +73,14 @@ public class ObjectRepositoryView extends Composite {
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem deleteObject = new ToolItem(toolBar, SWT.NONE);
-		deleteObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/delete.png"));
+		deleteObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteObject.setText("Delete");
 		deleteObject.setToolTipText("Delete");
 
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem refreshObject = new ToolItem(toolBar, SWT.NONE);
-		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/refresh.png"));
+		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		refreshObject.setText("Refresh");
 		refreshObject.setToolTipText("Refresh");
 
@@ -97,14 +97,14 @@ public class ObjectRepositoryView extends Composite {
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		ToolItem addObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
-		addObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/create.png"));
+		addObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		addObjectAttribute.setText("Add");
 		addObjectAttribute.setToolTipText("Add");
 
 		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
-		deleteObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/delete.png"));
+		deleteObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteObjectAttribute.setText("Delete");
 		deleteObjectAttribute.setToolTipText("Delete");
 
