@@ -449,15 +449,25 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FlowStep flowStep = table.getSelectedFlowStep();
-				inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
-				inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
-				inputDataTable.renderInputTable();
+				if (flowStep != null) {
+					inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
+					inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
+					inputDataTable.renderInputTable();
 
-				outputDataTable.setKeyword(flowStep.getKeyword());
-				outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
+					outputDataTable.setKeyword(flowStep.getKeyword());
+					outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
 
-				testObjectTable.setOrobject(flowStep.getOrObject());
-				testObjectTable.renderORObjectTable();
+					testObjectTable.setOrobject(flowStep.getOrObject());
+					testObjectTable.renderORObjectTable();
+
+					toggleDeleteButton(true);
+					toggleMoveupButton(true);
+					toggleMovedownButton(true);
+				} else {
+					toggleDeleteButton(false);
+					toggleMoveupButton(false);
+					toggleMovedownButton(false);
+				}
 			}
 
 			@Override
@@ -473,6 +483,8 @@ public class TestCaseView extends Composite {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		addButtonListeners();
 	}
 
 	private void toggleAddButton(boolean status) {
@@ -505,6 +517,137 @@ public class TestCaseView extends Composite {
 
 	private void toggleDeleteButton(boolean status) {
 		itemDelete.setEnabled(status);
+	}
+
+	private void addButtonListeners() {
+		itemAdd.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		itemRecord.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		itemRunnow.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		itemMoveup.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		itemMovedown.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		itemDelete.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					table.deleteStep(table.getSelectedFlowStep());
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		itemSave.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		itemRefresh.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					table.renderFlowSteps();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	@Override
