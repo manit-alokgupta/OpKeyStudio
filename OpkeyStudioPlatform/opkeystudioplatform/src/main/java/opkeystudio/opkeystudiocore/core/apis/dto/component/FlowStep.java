@@ -5,7 +5,7 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
-public class FlowStep extends Modified {
+public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private String keywordid;
 	private boolean wantsnapshot;
 	private boolean continueonerror;
@@ -132,5 +132,10 @@ public class FlowStep extends Modified {
 
 	public void setOrObject(List<ORObject> orObject) {
 		this.orObject = orObject;
+	}
+
+	@Override
+	public int compareTo(FlowStep arg0) {
+		return this.getPosition() - arg0.getPosition();
 	}
 }

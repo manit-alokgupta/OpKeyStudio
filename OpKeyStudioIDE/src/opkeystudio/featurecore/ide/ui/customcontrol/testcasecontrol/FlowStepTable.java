@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -121,23 +122,77 @@ public class FlowStepTable extends CustomTable {
 		FlowApi.getInstance().initAllFlowInputArguments();
 		FlowApi.getInstance().initAllFlowOutputArguments();
 		List<FlowStep> flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
+		Collections.sort(flowSteps);
 		for (FlowStep flowStep : flowSteps) {
-			if (flowStep.getKeyword() != null) {
-				String orname = "";
-				String keyWordName = "";
-				if (flowStep.getOrObject().size() > 0) {
-					orname = flowStep.getOrObject().get(0).getName();
-				}
+			if (flowStep.isDeleted() == false) {
 				if (flowStep.getKeyword() != null) {
-					keyWordName = flowStep.getKeyword().getKeywordname();
+					String orname = "";
+					String keyWordName = "";
+					if (flowStep.getOrObject().size() > 0) {
+						orname = flowStep.getOrObject().get(0).getName();
+					}
+					if (flowStep.getKeyword() != null) {
+						keyWordName = flowStep.getKeyword().getKeywordname();
+					}
+					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
+							flowStep.getKeyword().getKeyworddescription() });
+					flowTableItem.setFlowStepData(flowStep);
+					addTableEditor(flowTableItem);
 				}
-				FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-				flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
-						flowStep.getKeyword().getKeyworddescription() });
-				flowTableItem.setFlowStepData(flowStep);
-				addTableEditor(flowTableItem);
 			}
 		}
+	}
+
+	public void refreshFlowSteps() throws JsonParseException, JsonMappingException, SQLException, IOException {
+		this.removeAll();
+		List<FlowStep> flowSteps = getFlowStepsData();
+		Collections.sort(flowSteps);
+		for (FlowStep flowStep : flowSteps) {
+			if (flowStep.isDeleted() == false) {
+				if (flowStep.getKeyword() != null) {
+					String orname = "";
+					String keyWordName = "";
+					if (flowStep.getOrObject().size() > 0) {
+						orname = flowStep.getOrObject().get(0).getName();
+					}
+					if (flowStep.getKeyword() != null) {
+						keyWordName = flowStep.getKeyword().getKeywordname();
+					}
+					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
+							flowStep.getKeyword().getKeyworddescription() });
+					flowTableItem.setFlowStepData(flowStep);
+					addTableEditor(flowTableItem);
+				}
+			}
+		}
+	}
+
+	public void moveStepUp(FlowStep fstep1, FlowStep fstep2)
+			throws JsonParseException, JsonMappingException, SQLException, IOException {
+		int fpos1 = fstep1.getPosition();
+		int fpos2 = fstep2.getPosition();
+
+		fstep1.setPosition(fpos2);
+		fstep2.setPosition(fpos1);
+		refreshFlowSteps();
+	}
+
+	public void moveStepDown(FlowStep fstep1, FlowStep fstep2)
+			throws JsonParseException, JsonMappingException, SQLException, IOException {
+		int fpos1 = fstep2.getPosition();
+		int fpos2 = fstep1.getPosition();
+
+		fstep1.setPosition(fpos2);
+		fstep2.setPosition(fpos1);
+		refreshFlowSteps();
+	}
+
+	public void deleteStep(FlowStep flowStep)
+			throws JsonParseException, JsonMappingException, SQLException, IOException {
+		flowStep.setDeleted(true);
+		refreshFlowSteps();
 	}
 
 	public FlowStep getSelectedFlowStep() {

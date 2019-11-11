@@ -425,6 +425,8 @@ public class TestCaseView extends Composite {
 
 			}
 		});
+		
+		
 		try {
 			table.renderFlowSteps();
 		} catch (SQLException | IOException e) {
