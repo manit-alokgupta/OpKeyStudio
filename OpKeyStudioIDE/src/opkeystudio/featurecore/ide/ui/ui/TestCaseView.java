@@ -37,7 +37,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTa
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class TestCaseView extends Composite {
-	private DataBindingContext m_bindingContext;
 	private FlowStepTable table;
 	private OutputDataTable outputDataTable;
 	private TestObjectTable testObjectTable;
@@ -417,7 +416,6 @@ public class TestCaseView extends Composite {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		m_bindingContext = initDataBindings();
 	}
 
 	@Override
