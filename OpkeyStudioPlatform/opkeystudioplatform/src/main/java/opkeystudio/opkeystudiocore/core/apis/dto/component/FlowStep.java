@@ -18,6 +18,7 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private int position;
 
 	private Keyword keyword;
+	private FunctionLibraryComponent functionLibraryComponent;
 	private List<ORObject> orObject;
 	private List<FlowInputArgument> flowInputArgs;
 	private List<FlowOutputArgument> flowOutputArgs;
@@ -164,5 +165,13 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 
 	public void setStepid(String stepid) {
 		this.stepid = stepid;
+	}
+
+	public FunctionLibraryComponent getFunctionLibraryComponent() {
+		return functionLibraryComponent;
+	}
+
+	public void setFunctionLibraryComponent(FunctionLibraryComponent functionLibraryComponent) {
+		this.functionLibraryComponent = functionLibraryComponent;
 	}
 }

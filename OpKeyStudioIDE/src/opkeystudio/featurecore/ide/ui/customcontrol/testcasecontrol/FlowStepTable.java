@@ -127,7 +127,7 @@ public class FlowStepTable extends CustomTable {
 			FlowApi.getInstance().initAllFlowOutputArguments();
 			flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
 		}
-		if(artifact.getFile_type_enum()==MODULETYPE.Component) {
+		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			FunctionLibraryApi.getInstance().initAllFlowInputArguments();
 			FunctionLibraryApi.getInstance().initAllFlowOutputArguments();
 			flowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(artifactId);
@@ -135,18 +135,23 @@ public class FlowStepTable extends CustomTable {
 		setFlowStepsData(flowSteps);
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.isDeleted() == false) {
+				String orname = "";
+				String keyWordName = "";
+				if (flowStep.getOrObject().size() > 0) {
+					orname = flowStep.getOrObject().get(0).getName();
+				}
 				if (flowStep.getKeyword() != null) {
-					String orname = "";
-					String keyWordName = "";
-					if (flowStep.getOrObject().size() > 0) {
-						orname = flowStep.getOrObject().get(0).getName();
-					}
-					if (flowStep.getKeyword() != null) {
-						keyWordName = flowStep.getKeyword().getKeywordname();
-					}
+					keyWordName = flowStep.getKeyword().getKeywordname();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
 					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
 							flowStep.getKeyword().getKeyworddescription() });
+					flowTableItem.setFlowStepData(flowStep);
+					addTableEditor(flowTableItem);
+				}
+				if (flowStep.getFunctionLibraryComponent() != null) {
+					keyWordName = flowStep.getFunctionLibraryComponent().getName();
+					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", "" });
 					flowTableItem.setFlowStepData(flowStep);
 					addTableEditor(flowTableItem);
 				}

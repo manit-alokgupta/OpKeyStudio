@@ -450,11 +450,22 @@ public class TestCaseView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				FlowStep flowStep = table.getSelectedFlowStep();
 				if (flowStep != null) {
-					inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
+					if (flowStep.getKeyword() != null) {
+						outputDataTable.setKeyword(flowStep.getKeyword());
+						inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
+					} else {
+						outputDataTable.setKeyword(null);
+						inputDataTable.setKeyWordInputArgs(null);
+					}
+					if (flowStep.getFunctionLibraryComponent() != null) {
+						inputDataTable.setComponentInputArgs(
+								flowStep.getFunctionLibraryComponent().getComponentInputArgument());
+					} else {
+						inputDataTable.setComponentInputArgs(null);
+					}
 					inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
 					inputDataTable.renderInputTable();
 
-					outputDataTable.setKeyword(flowStep.getKeyword());
 					outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
 
 					testObjectTable.setOrobject(flowStep.getOrObject());

@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.apis.dbapi.flow;
+package opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,26 +11,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class FlowApi {
+public class FunctionLibraryApi {
 	private List<FlowInputArgument> flowInputArguments;
 	private List<FlowOutputArgument> flowOutputArguments;
-	private static FlowApi flowApi;
+	private static FunctionLibraryApi flowApi;
 
-	public static FlowApi getInstance() {
+	public static FunctionLibraryApi getInstance() {
 		if (flowApi == null) {
-			flowApi = new FlowApi();
+			flowApi = new FunctionLibraryApi();
 		}
 		return flowApi;
 	}
@@ -39,9 +36,10 @@ public class FlowApi {
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
-		String query = String.format("SELECT * FROM flow_design_steps where flow_id='%s' ORDER BY position asc",
-				flowId);
+		String query = String
+				.format("SELECT * FROM component_design_steps where component_id='%s' ORDER BY position asc", flowId);
 		String result = sqlComm.executeQueryString(query);
+		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowStep.class);
 		sqlComm.disconnect();
@@ -51,8 +49,9 @@ public class FlowApi {
 	public void initAllFlowInputArguments() throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
-		String query = "SELECT * FROM flow_step_input_arguments";
+		String query = "SELECT * FROM component_step_input_args";
 		String result = sqlComm.executeQueryString(query);
+		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowInputArgument.class);
 		sqlComm.disconnect();
@@ -64,8 +63,9 @@ public class FlowApi {
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
-		String query = "SELECT * FROM flow_step_output_arguments";
+		String query = "SELECT * FROM component_step_output_arguments";
 		String result = sqlComm.executeQueryString(query);
+		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
 		sqlComm.disconnect();
@@ -78,7 +78,7 @@ public class FlowApi {
 		List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
 		List<FlowInputArgument> inputArguments = getFlowInputArguments();
 		for (FlowInputArgument flowInputArgument : inputArguments) {
-			if (flowInputArgument.getFlow_stepid().equals(flowStep.getFlow_stepid())) {
+			if (flowInputArgument.getStepid().equals(flowStep.getStepid())) {
 				flowInputArgs.add(flowInputArgument);
 			}
 		}
@@ -90,7 +90,7 @@ public class FlowApi {
 		List<FlowOutputArgument> flowInputArgs = new ArrayList<FlowOutputArgument>();
 		List<FlowOutputArgument> inputArguments = getFlowOutputArguments();
 		for (FlowOutputArgument flowInputArgument : inputArguments) {
-			if (flowInputArgument.getFlow_stepid().equals(flowStep.getFlow_stepid())) {
+			if (flowInputArgument.getComponentstep_id().equals(flowStep.getStepid())) {
 				flowInputArgs.add(flowInputArgument);
 			}
 		}
@@ -115,73 +115,16 @@ public class FlowApi {
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
 		for (FlowStep flowStep : flowSteps) {
-			System.out.println(flowStep.getComponent_id());
-			if (flowStep.getKeywordid() != null) {
-				Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
-				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
-				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-				List<ORObject> allORObject = getORObjectsArguments(flowStep);
-				flowStep.setOrObject(allORObject);
-				flowStep.setKeyword(keyword);
-				flowStep.setFlowInputArgs(fis);
-				flowStep.setFlowOutputArgs(fos);
-			}
-			else if (flowStep.getComponent_id() != null) {
-				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getComponent_id()).get(0);
-				List<ComponentInputArgument> inputArgs = getAllComponentInputArgument(flowStep.getComponent_id());
-				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(flowStep.getComponent_id());
-				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
-				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-				List<ORObject> allORObject = getORObjectsArguments(flowStep);
-				flComp.setComponentInputArgument(inputArgs);
-				flComp.setComponentOutputArgument(outputArgs);
-				flowStep.setOrObject(allORObject);
-				flowStep.setFunctionLibraryComponent(flComp);
-				flowStep.setFlowInputArgs(fis);
-				flowStep.setFlowOutputArgs(fos);
-			}
+			Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
+			List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
+			List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
+			List<ORObject> allORObject = getORObjectsArguments(flowStep);
+			flowStep.setOrObject(allORObject);
+			flowStep.setKeyword(keyword);
+			flowStep.setFlowInputArgs(fis);
+			flowStep.setFlowOutputArgs(fos);
 		}
 		return flowSteps;
-	}
-
-	public List<ComponentInputArgument> getAllComponentInputArgument(String componentId)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = String.format(
-				"select * from component_input_parameters where component_id='%s' ORDER BY position asc", componentId);
-		String result = sqlComm.executeQueryString(query);
-		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ComponentInputArgument.class);
-		sqlComm.disconnect();
-		return mapper.readValue(result, type);
-	}
-
-	public List<ComponentOutputArgument> getAllComponentOutputArgument(String componentId)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = String.format(
-				"select * from component_output_parameters where component_id='%s' ORDER BY position asc", componentId);
-		String result = sqlComm.executeQueryString(query);
-		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
-				ComponentOutputArgument.class);
-		sqlComm.disconnect();
-		return mapper.readValue(result, type);
-	}
-
-	public List<FunctionLibraryComponent> getFunctinLibraryComponent(String componentId)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = String.format("select * from main_artifact_filesystem where id='%s'", componentId);
-		String result = sqlComm.executeQueryString(query);
-		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
-				FunctionLibraryComponent.class);
-		sqlComm.disconnect();
-		return mapper.readValue(result, type);
 	}
 
 	public List<FlowInputArgument> getFlowInputArguments() {

@@ -16,6 +16,7 @@ public class FlowInputArgument extends Modified {
 	private String stepid;
 	private String key_arg_id;
 	private String componentstep_id;
+	private String component_ip_id;
 
 	public String getFlow_step_ia_id() {
 		return flow_step_ia_id;
@@ -119,5 +120,13 @@ public class FlowInputArgument extends Modified {
 
 	public void setComponentstep_id(String componentstep_id) {
 		this.componentstep_id = componentstep_id;
+	}
+
+	public String getComponent_ip_id() {
+		return component_ip_id;
+	}
+
+	public void setComponent_ip_id(String component_ip_id) {
+		this.component_ip_id = component_ip_id;
 	}
 }
