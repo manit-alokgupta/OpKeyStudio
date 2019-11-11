@@ -45,11 +45,11 @@ public class TestCaseView extends Composite {
 	private Table InputDataTable;
 	private Table mappedTable;
 	private Table propertyTable;
-	private Table table_2;
-	private Table table_3;
-	private Table table_4;
+	private Table dataOutputTable;
+	private Table globalVariableTable;
+	private Table autoDataGenTable;
 	private Text searchBox;
-	private ToolItem toolItem;
+	private ToolItem seperator1;
 
 	/**
 	 * Create the composite.
@@ -59,6 +59,11 @@ public class TestCaseView extends Composite {
 	 */
 	public TestCaseView(Composite parent, int style) {
 		super(parent, style);
+		TestCaseUI();
+
+	}
+
+	public void TestCaseUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		TabFolder mainTestCaseTabFolder = new TabFolder(this, SWT.BORDER | SWT.BOTTOM);
@@ -74,14 +79,14 @@ public class TestCaseView extends Composite {
 		testCaseHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		SashForm testCaseSashForm = new SashForm(testCaseHolder, SWT.NONE);
-		
+
 		testCaseSashForm.setSashWidth(6);
 
 		Composite testCaseStepsHolder = new Composite(testCaseSashForm, SWT.NONE);
-		
+
 		testCaseStepsHolder.setLayout(new GridLayout(1, false));
 
-		Composite composite_11 = new Composite(testCaseStepsHolder, SWT.NONE);		
+		Composite composite_11 = new Composite(testCaseStepsHolder, SWT.NONE);
 		composite_11.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite_11.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		composite_11.setLayout(new GridLayout(1, false));
@@ -89,55 +94,54 @@ public class TestCaseView extends Composite {
 		ToolBar toolBar_1 = new ToolBar(composite_11, SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		
 
 		ToolItem itemAdd = new ToolItem(toolBar_1, SWT.NONE);
 		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		itemAdd.setText("Add");
 
-		toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		seperator1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem itemRecord = new ToolItem(toolBar_1, SWT.NONE);
 		itemRecord.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/record_icon.png"));
 		itemRecord.setText("Record");
 
-		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		ToolItem seperator2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem itemRunnow = new ToolItem(toolBar_1, SWT.NONE);
 		itemRunnow.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
 		itemRunnow.setText("Run Now");
 
-		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		ToolItem seperator3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem itemMoveup = new ToolItem(toolBar_1, SWT.NONE);
 		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		itemMoveup.setText("Move up");
 
-		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		ToolItem seperator4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem itemMovedown = new ToolItem(toolBar_1, SWT.NONE);
 		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		itemMovedown.setText("Move Down");
 
-		ToolItem toolItem_4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		ToolItem seperator5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem itemRefresh = new ToolItem(toolBar_1, SWT.NONE);
 		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		itemRefresh.setText("Refresh");
 
-		ToolItem toolItem_5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		ToolItem seperator6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem itemSave = new ToolItem(toolBar_1, SWT.NONE);
 		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 		itemSave.setText("Save");
 
-		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		ToolItem seperator7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem itemDelete = new ToolItem(toolBar_1, SWT.NONE);
 		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		itemDelete.setText("Delete");
 
-		ToolItem toolItem_7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		ToolItem seperator8 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem itemSetting = new ToolItem(toolBar_1, SWT.NONE);
 		itemSetting.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/setting_icon.png"));
@@ -257,21 +261,21 @@ public class TestCaseView extends Composite {
 		keywordButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/keword.png"));
 		keywordButton.setText("Keyword");
 
-		ToolItem toolItem_8 = new ToolItem(toolBar, SWT.SEPARATOR);
+		ToolItem seperator9 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem functionLibraryButton = new ToolItem(toolBar, SWT.NONE);
 		functionLibraryButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/functionlibrary.png"));
 		functionLibraryButton.setText("Function Library");
 
-		ToolItem toolItem_9 = new ToolItem(toolBar, SWT.SEPARATOR);
+		ToolItem seperator10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem serviceRepoButton = new ToolItem(toolBar, SWT.NONE);
 		serviceRepoButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/servicerepo.png"));
 		serviceRepoButton.setText("Service Repositpry");
 
-		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
+		ToolItem seperator11 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem codedFunLibraryButton = new ToolItem(toolBar, SWT.NONE);
 		codedFunLibraryButton.setImage(
@@ -345,29 +349,29 @@ public class TestCaseView extends Composite {
 		dataOutputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
 		dataOutputTabItem.setText("Data Output");
 
-		table_2 = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
-		dataOutputTabItem.setControl(table_2);
-		table_2.setHeaderVisible(true);
-		table_2.setLinesVisible(true);
+		dataOutputTable = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
+		dataOutputTabItem.setControl(dataOutputTable);
+		dataOutputTable.setHeaderVisible(true);
+		dataOutputTable.setLinesVisible(true);
 
 		TabItem globalVariablesTabItem = new TabItem(tabFolder_1, SWT.NONE);
 		globalVariablesTabItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
 		globalVariablesTabItem.setText("Global Variable");
 
-		table_3 = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
-		globalVariablesTabItem.setControl(table_3);
-		table_3.setHeaderVisible(true);
-		table_3.setLinesVisible(true);
+		globalVariableTable = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
+		globalVariablesTabItem.setControl(globalVariableTable);
+		globalVariableTable.setHeaderVisible(true);
+		globalVariableTable.setLinesVisible(true);
 
 		TabItem autoDataGenTabItem = new TabItem(tabFolder_1, SWT.NONE);
 		autoDataGenTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/autodata.png"));
 		autoDataGenTabItem.setText("Auto Data Generation");
 
-		table_4 = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
-		autoDataGenTabItem.setControl(table_4);
-		table_4.setHeaderVisible(true);
-		table_4.setLinesVisible(true);
+		autoDataGenTable = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
+		autoDataGenTabItem.setControl(autoDataGenTable);
+		autoDataGenTable.setHeaderVisible(true);
+
 		sashForm_2.setWeights(new int[] { 1, 1 });
 
 		TabItem outputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);

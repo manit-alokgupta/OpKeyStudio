@@ -15,6 +15,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
@@ -31,6 +32,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 
 public class ObjectRepositoryView extends Composite {
 //	private Table table;
@@ -45,9 +48,19 @@ public class ObjectRepositoryView extends Composite {
 	 */
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
+		
+		ObjectRepositoryUI();
+	}
+	public void ObjectRepositoryUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		SashForm sashForm = new SashForm(this, SWT.NONE);
+		TabFolder tabFolder = new TabFolder(this, SWT.BOTTOM);
+
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Object Repository");
+
+		SashForm sashForm = new SashForm(tabFolder, SWT.NONE);
+		tabItem.setControl(sashForm);
 
 		Composite composite_3 = new Composite(sashForm, SWT.NONE);
 		composite_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -85,6 +98,7 @@ public class ObjectRepositoryView extends Composite {
 		refreshObject.setToolTipText("Refresh");
 
 		ObjectRepositoryTree tree = new ObjectRepositoryTree(composite_3, SWT.BORDER);
+//		Tree tree = new Tree(composite_3, SWT.BORDER);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tree.setBounds(0, 0, 85, 85);
 
@@ -104,11 +118,13 @@ public class ObjectRepositoryView extends Composite {
 		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
-		deleteObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteObjectAttribute
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteObjectAttribute.setText("Delete");
 		deleteObjectAttribute.setToolTipText("Delete");
 
 		table = new ObjectAttributeTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
+//		table = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
