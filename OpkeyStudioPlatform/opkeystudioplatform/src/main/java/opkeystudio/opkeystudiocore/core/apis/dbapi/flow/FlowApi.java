@@ -115,6 +115,7 @@ public class FlowApi {
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
 		for (FlowStep flowStep : flowSteps) {
+			System.out.println(flowStep.getComponent_id());
 			Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
 			List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 			List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);

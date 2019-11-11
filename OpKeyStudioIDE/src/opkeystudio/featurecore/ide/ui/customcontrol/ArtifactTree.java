@@ -23,6 +23,7 @@ import opkeystudio.featurecore.ide.ui.ui.ArtifactTreeUI;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class ArtifactTree extends CustomTree {
@@ -127,6 +128,9 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public void renderArtifacts() throws JsonParseException, JsonMappingException, SQLException, IOException {
+		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
+			return;
+		}
 		this.removeAll();
 		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
 		rootNode.setText("Project WorkSpace");
