@@ -7,6 +7,8 @@ public class FlowOutputArgument extends Modified {
 	private String keyword_op_id;
 	private int clustering_key;
 	private String flow_stepid;
+	private String componentstep_id;
+	private String componentstep_oa_id;
 
 	public String getFlow_step_oa_id() {
 		return flow_step_oa_id;
@@ -38,5 +40,21 @@ public class FlowOutputArgument extends Modified {
 
 	public void setFlow_stepid(String flow_stepid) {
 		this.flow_stepid = flow_stepid;
+	}
+
+	public String getComponentstep_id() {
+		return componentstep_id;
+	}
+
+	public void setComponentstep_id(String componentstep_id) {
+		this.componentstep_id = componentstep_id;
+	}
+
+	public String getComponentstep_oa_id() {
+		return componentstep_oa_id;
+	}
+
+	public void setComponentstep_oa_id(String componentstep_oa_id) {
+		this.componentstep_oa_id = componentstep_oa_id;
 	}
 }

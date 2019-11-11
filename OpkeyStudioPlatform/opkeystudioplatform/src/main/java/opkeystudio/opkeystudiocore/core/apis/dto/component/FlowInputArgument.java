@@ -10,6 +10,12 @@ public class FlowInputArgument extends Modified {
 	private int clustering_key;
 	private String flow_stepid;
 	private String staticobjectid;
+	private String arg_datasource;
+	private String step_arg_id;
+	private String globalvariable_id;
+	private String stepid;
+	private String key_arg_id;
+	private String componentstep_id;
 
 	public String getFlow_step_ia_id() {
 		return flow_step_ia_id;
@@ -65,5 +71,53 @@ public class FlowInputArgument extends Modified {
 
 	public void setStaticobjectid(String staticobjectid) {
 		this.staticobjectid = staticobjectid;
+	}
+
+	public String getArg_datasource() {
+		return arg_datasource;
+	}
+
+	public void setArg_datasource(String arg_datasource) {
+		this.arg_datasource = arg_datasource;
+	}
+
+	public String getStep_arg_id() {
+		return step_arg_id;
+	}
+
+	public void setStep_arg_id(String step_arg_id) {
+		this.step_arg_id = step_arg_id;
+	}
+
+	public String getGlobalvariable_id() {
+		return globalvariable_id;
+	}
+
+	public void setGlobalvariable_id(String globalvariable_id) {
+		this.globalvariable_id = globalvariable_id;
+	}
+
+	public String getStepid() {
+		return stepid;
+	}
+
+	public void setStepid(String stepid) {
+		this.stepid = stepid;
+	}
+
+	public String getKey_arg_id() {
+		return key_arg_id;
+	}
+
+	public void setKey_arg_id(String key_arg_id) {
+		this.key_arg_id = key_arg_id;
+	}
+
+	public String getComponentstep_id() {
+		return componentstep_id;
+	}
+
+	public void setComponentstep_id(String componentstep_id) {
+		this.componentstep_id = componentstep_id;
 	}
 }

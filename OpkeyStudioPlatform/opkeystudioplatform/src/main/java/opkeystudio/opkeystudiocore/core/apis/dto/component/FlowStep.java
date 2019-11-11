@@ -21,6 +21,9 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private List<ORObject> orObject;
 	private List<FlowInputArgument> flowInputArgs;
 	private List<FlowOutputArgument> flowOutputArgs;
+	private String component_id;
+	private String comments;
+	private String stepid;
 
 	public String getKeywordid() {
 		return keywordid;
@@ -137,5 +140,29 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	@Override
 	public int compareTo(FlowStep arg0) {
 		return this.getPosition() - arg0.getPosition();
+	}
+
+	public String getComponent_id() {
+		return component_id;
+	}
+
+	public void setComponent_id(String component_id) {
+		this.component_id = component_id;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getStepid() {
+		return stepid;
+	}
+
+	public void setStepid(String stepid) {
+		this.stepid = stepid;
 	}
 }

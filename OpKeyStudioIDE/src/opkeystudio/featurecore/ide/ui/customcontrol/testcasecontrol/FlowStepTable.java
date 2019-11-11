@@ -26,7 +26,9 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class FlowStepTable extends CustomTable {
@@ -119,9 +121,17 @@ public class FlowStepTable extends CustomTable {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
-		FlowApi.getInstance().initAllFlowInputArguments();
-		FlowApi.getInstance().initAllFlowOutputArguments();
-		List<FlowStep> flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
+		List<FlowStep> flowSteps = null;
+		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
+			FlowApi.getInstance().initAllFlowInputArguments();
+			FlowApi.getInstance().initAllFlowOutputArguments();
+			flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
+		}
+		if(artifact.getFile_type_enum()==MODULETYPE.Component) {
+			FunctionLibraryApi.getInstance().initAllFlowInputArguments();
+			FunctionLibraryApi.getInstance().initAllFlowOutputArguments();
+			flowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(artifactId);
+		}
 		setFlowStepsData(flowSteps);
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.isDeleted() == false) {

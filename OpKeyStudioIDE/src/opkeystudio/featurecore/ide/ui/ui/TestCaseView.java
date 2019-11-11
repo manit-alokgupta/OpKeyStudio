@@ -72,6 +72,7 @@ public class TestCaseView extends Composite {
 	private ExpandItem expenditemInputData;
 	private ExpandItem expanditemTestObject;
 	private TabItem addStepTabItem;
+	private Tree allDataTreeView;
 
 	/**
 	 * Create the composite.
@@ -213,7 +214,6 @@ public class TestCaseView extends Composite {
 		expanditemTestObject.setExpanded(true);
 		expanditemTestObject.setText("Test Object");
 		expanditemTestObject.setHeight(80);
-
 		Composite composite_6 = new Composite(expandBar, SWT.NONE);
 		expanditemTestObject.setControl(composite_6);
 		expanditemTestObject.setHeight(expanditemTestObject.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
@@ -315,9 +315,9 @@ public class TestCaseView extends Composite {
 		searchButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
 		searchButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
-		Tree tree = new Tree(composite_10, SWT.BORDER);
-		tree.setLinesVisible(true);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		allDataTreeView = new Tree(composite_10, SWT.BORDER);
+		allDataTreeView.setLinesVisible(true);
+		allDataTreeView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm_3.setWeights(new int[] { 0, 1 });
 
 		TabItem testObjectTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
