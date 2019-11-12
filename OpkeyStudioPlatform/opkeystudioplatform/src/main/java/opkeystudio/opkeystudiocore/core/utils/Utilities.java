@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -69,4 +70,7 @@ public class Utilities {
 		return prefix + "" + UUID.randomUUID().toString();
 	}
 
+	public String getCurrentDateTime() {
+		return new Date().toString();
+	}
 }

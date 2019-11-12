@@ -7,7 +7,7 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.collections.DuoList;
-import opkeystudio.opkeystudiocore.core.dtoMaker.AartifactMaker;
+import opkeystudio.opkeystudiocore.core.dtoMaker.ArtifactMaker;
 
 public class QueryMaker {
 	public enum QUERYTYPE {
@@ -92,7 +92,7 @@ public class QueryMaker {
 	}
 
 	public static void main(String[] args) {
-		Artifact arti = new AartifactMaker().getArtifactObject("1234", "hello_testcase", MODULETYPE.Flow);
+		Artifact arti = new ArtifactMaker().getArtifactObject("1234", "hello_testcase", MODULETYPE.Flow);
 		String query = new QueryMaker().createInsertQuery(arti, "main_artifact_filesystem","ewdwdw");
 		System.out.println(query);
 	}
