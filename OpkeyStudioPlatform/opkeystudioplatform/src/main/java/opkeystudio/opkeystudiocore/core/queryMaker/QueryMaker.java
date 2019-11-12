@@ -2,13 +2,19 @@ package opkeystudio.opkeystudiocore.core.queryMaker;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.sql.SQLException;
+import java.util.List;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.collections.DuoList;
+import opkeystudio.opkeystudiocore.core.dtoMaker.AartifactMaker;
 
 public class QueryMaker {
-	public DuoList<String, String> createQueryString(Object object)
+	public enum QUERYTYPE {
+		INSERT, UPDATE
+	};
+
+	private DuoList<String, String> getQueryString(Object object)
 			throws IllegalArgumentException, IllegalAccessException {
 		Class<? extends Object> _class = object.getClass();
 		Field[] fields = _class.getDeclaredFields();
@@ -21,20 +27,73 @@ public class QueryMaker {
 				Object fieldValue = field.get(object);
 				if (fieldValue != null) {
 					duoList.addFirstValue(fieldName);
-					duoList.addSecondValue(String.valueOf(fieldValue));
+					duoList.addSecondValue("'" + String.valueOf(fieldValue) + "'");
 				}
 			}
 		}
 		return duoList;
 	}
 
-	public static void main(String[] ar) throws NoSuchFieldException, SecurityException, IllegalArgumentException,
-			IllegalAccessException, SQLException {
-		ObjectAttributeProperty oap = new ObjectAttributeProperty();
-		oap.setOr_id("123");
-		DuoList<String, String> allValues = new QueryMaker().createQueryString(oap);
-		for(String v1:allValues.getAllFirstValues()) {
-			System.out.println(v1);
+	private String formatString(List<String> allStrings) {
+		String output = "";
+		for (String str : allStrings) {
+			if (!output.isEmpty()) {
+				output += ", ";
+			}
+			output += str;
 		}
+		return output;
+	}
+
+	private String createQuery(Object object, String tableName, String condition, QUERYTYPE queryType)
+			throws IllegalArgumentException, IllegalAccessException {
+		String conditionString = "";
+		if (condition != null) {
+			if (!condition.isEmpty()) {
+				conditionString = " " + condition.trim();
+			}
+		}
+
+		if (queryType == QUERYTYPE.INSERT) {
+			String queryFormat = "INSERT INTO %s(%s) VALUES(%s)" + conditionString;
+			DuoList<String, String> queryObject = getQueryString(object);
+			String finalQuery = String.format(queryFormat, tableName, formatString(queryObject.getAllFirstValues()),
+					formatString(queryObject.getAllSecondValues()));
+			return finalQuery;
+		}
+		if (queryType == QUERYTYPE.UPDATE) {
+			String queryFormat = "UPDATE INTO %s(%s) VALUES(%s)" + conditionString;
+			DuoList<String, String> queryObject = getQueryString(object);
+			String finalQuery = String.format(queryFormat, tableName, formatString(queryObject.getAllFirstValues()),
+					formatString(queryObject.getAllSecondValues()));
+			return finalQuery;
+		}
+		return null;
+	}
+
+	public String createInsertQuery(Object object, String tableName, String conditionString) {
+		try {
+			return createQuery(object, tableName,conditionString, QUERYTYPE.INSERT);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public String createUpdateQuery(Object object, String tableName, String conditionString) {
+		try {
+			return createQuery(object, tableName,conditionString, QUERYTYPE.UPDATE);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void main(String[] args) {
+		Artifact arti = new AartifactMaker().getArtifactObject("1234", "hello_testcase", MODULETYPE.Flow);
+		String query = new QueryMaker().createInsertQuery(arti, "main_artifact_filesystem","ewdwdw");
+		System.out.println(query);
 	}
 }

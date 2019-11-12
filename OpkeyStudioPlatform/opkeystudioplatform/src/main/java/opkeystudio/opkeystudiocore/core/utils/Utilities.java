@@ -66,7 +66,7 @@ public class Utilities {
 	}
 
 	public String getUniqueUUID(String prefix) {
-		return prefix + "_" + UUID.randomUUID().toString();
+		return prefix + "" + UUID.randomUUID().toString();
 	}
 
 }

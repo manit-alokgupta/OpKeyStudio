@@ -1,6 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
 
 public class Artifact extends Modified {
 	public enum MODULETYPE {
@@ -8,22 +9,40 @@ public class Artifact extends Modified {
 		DataRepository, EventHandler, Folder, CodedFunction, BP_Group, MBT, Sparkin
 	};
 
+	@DBField
 	private String modified_on;
-	private int isshared;
+	@DBField
+	private boolean isshared;
+	@DBField
 	private String created_on_tz;
+	@DBField
 	private String modified_on_tz;
+	
 	private int clustering_key;
+	
+	@DBField
 	private String created_by;
-	private int isdeleted;
+	@DBField
+	private boolean isdeleted;
+	@DBField
 	private MODULETYPE file_type_enum;
+	@DBField
 	private String created_on;
+	@DBField
 	private String name;
+	@DBField
 	private String modified_by;
-	private int isautocreated;
+	@DBField
+	private boolean isautocreated;
+	@DBField
 	private String id;
+	@DBField
 	private int position;
+	@DBField
 	private String p_id;
+	@DBField
 	private String parentid;
+	@DBField
 	private String state_id;
 
 	public String getModified_on() {
@@ -32,14 +51,6 @@ public class Artifact extends Modified {
 
 	public void setModified_on(String modified_on) {
 		this.modified_on = modified_on;
-	}
-
-	public int getIsshared() {
-		return isshared;
-	}
-
-	public void setIsshared(int isshared) {
-		this.isshared = isshared;
 	}
 
 	public String getCreated_on_tz() {
@@ -74,14 +85,6 @@ public class Artifact extends Modified {
 		this.created_by = created_by;
 	}
 
-	public int getIsdeleted() {
-		return isdeleted;
-	}
-
-	public void setIsdeleted(int isdeleted) {
-		this.isdeleted = isdeleted;
-	}
-
 	public MODULETYPE getFile_type_enum() {
 		return file_type_enum;
 	}
@@ -112,14 +115,6 @@ public class Artifact extends Modified {
 
 	public void setModified_by(String modified_by) {
 		this.modified_by = modified_by;
-	}
-
-	public int getIsautocreated() {
-		return isautocreated;
-	}
-
-	public void setIsautocreated(int isautocreated) {
-		this.isautocreated = isautocreated;
 	}
 
 	public String getId() {
@@ -160,5 +155,29 @@ public class Artifact extends Modified {
 
 	public void setState_id(String state_id) {
 		this.state_id = state_id;
+	}
+
+	public boolean isIsshared() {
+		return isshared;
+	}
+
+	public void setIsshared(boolean isshared) {
+		this.isshared = isshared;
+	}
+
+	public boolean isIsdeleted() {
+		return isdeleted;
+	}
+
+	public void setIsdeleted(boolean isdeleted) {
+		this.isdeleted = isdeleted;
+	}
+
+	public boolean isIsautocreated() {
+		return isautocreated;
+	}
+
+	public void setIsautocreated(boolean isautocreated) {
+		this.isautocreated = isautocreated;
 	}
 }
