@@ -4,35 +4,33 @@ import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
 
 public class ObjectAttributeProperty extends Modified {
-	private int isencrypted;
+	@DBField
+	private boolean isencrypted;
+	@DBField
 	private String datatype;
-	
 	@DBField
 	private String or_id;
-	
 	@DBField
 	private String property;
-	private String clustering_key;
 	
+	
+	private int clustering_key;
 	@DBField
 	private int position;
+	@DBField
 	private boolean isregex;
+	@DBField
 	private String object_id;
+	@DBField
 	private String value;
+	@DBField
 	private String property_id;
-	
 	@DBField
 	private boolean iseditable;
+	@DBField
 	private boolean isused;
+	@DBField
 	private String f_id;
-
-	public int getIsencrypted() {
-		return isencrypted;
-	}
-
-	public void setIsencrypted(int isencrypted) {
-		this.isencrypted = isencrypted;
-	}
 
 	public String getDatatype() {
 		return datatype;
@@ -41,8 +39,7 @@ public class ObjectAttributeProperty extends Modified {
 	public void setDatatype(String datatype) {
 		this.datatype = datatype;
 	}
-	
-	
+
 	public String getOr_id() {
 		return or_id;
 	}
@@ -57,14 +54,6 @@ public class ObjectAttributeProperty extends Modified {
 
 	public void setProperty(String property) {
 		this.property = property;
-	}
-
-	public String getClustering_key() {
-		return clustering_key;
-	}
-
-	public void setClustering_key(String clustering_key) {
-		this.clustering_key = clustering_key;
 	}
 
 	public int getPosition() {
@@ -129,5 +118,21 @@ public class ObjectAttributeProperty extends Modified {
 
 	public void setF_id(String f_id) {
 		this.f_id = f_id;
+	}
+
+	public int getClustering_key() {
+		return clustering_key;
+	}
+
+	public void setClustering_key(int clustering_key) {
+		this.clustering_key = clustering_key;
+	}
+
+	public boolean isIsencrypted() {
+		return isencrypted;
+	}
+
+	public void setIsencrypted(boolean isencrypted) {
+		this.isencrypted = isencrypted;
 	}
 }

@@ -6,7 +6,7 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class AartifactMaker {
-	public Artifact createArtifact(String parentId, String artifactName, MODULETYPE artifactType) {
+	public Artifact getArtifactObject(String parentId, String artifactName, MODULETYPE artifactType) {
 		Artifact artifact = new Artifact();
 		artifact.setFile_type_enum(artifactType);
 		artifact.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
