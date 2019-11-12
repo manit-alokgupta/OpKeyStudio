@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -12,6 +13,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -81,6 +83,8 @@ public class ObjectAttributeTable extends CustomTable {
 		editor.minimumWidth = 50;
 		return editor;
 	}
+
+	private List<Control> allTableEditors = new ArrayList<Control>();
 
 	private void addTableEditor(ObjectAttributeTableItem item) {
 		ObjectAttributeProperty attrProperty = item.getObjectAttributeData();
@@ -166,6 +170,17 @@ public class ObjectAttributeTable extends CustomTable {
 		editor3.setEditor(valueText, item, 1);
 		editor2.setEditor(isUsedButton, item, 2);
 		editor1.setEditor(isRegexButton, item, 3);
+
+		allTableEditors.add(editor1.getEditor());
+		allTableEditors.add(editor2.getEditor());
+		allTableEditors.add(editor3.getEditor());
+		allTableEditors.add(editor4.getEditor());
+	}
+
+	private void disposeAllTableEditors() {
+		for(Control editor:allTableEditors) {
+			editor.dispose();
+		}
 	}
 
 	public ObjectAttributeTableItem getSelectedTableItem() {
@@ -178,6 +193,7 @@ public class ObjectAttributeTable extends CustomTable {
 	}
 
 	public void renderObjectAttributes() throws SQLException {
+		disposeAllTableEditors();
 		this.removeAll();
 		List<ObjectAttributeProperty> objectProperties = getObjectPropertiesData();
 		for (ObjectAttributeProperty attributeProperty : objectProperties) {
@@ -187,9 +203,9 @@ public class ObjectAttributeTable extends CustomTable {
 				oati.setObjectAttributeData(attributeProperty);
 				addTableEditor(oati);
 			}
-			if(attributeProperty.isDeleted()) {
+			if (attributeProperty.isDeleted()) {
 				new ObjectRepositoryApi().saveObjectProperties(objectProperties);
-				
+
 			}
 		}
 	}

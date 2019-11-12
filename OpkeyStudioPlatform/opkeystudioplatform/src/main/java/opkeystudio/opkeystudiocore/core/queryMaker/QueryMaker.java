@@ -13,7 +13,15 @@ public class QueryMaker {
 	String column = "";
 	StringJoiner joinColumn = new StringJoiner(", ");
 	StringJoiner joinColumnValues = new StringJoiner(", ");
-	Object columnValues="";
+	Object columnValues = "";
+
+	public void createQueryString(Object object) {
+		Class _class = object.getClass();
+		Field[] fields = _class.getDeclaredFields();
+		for (Field field : fields) {
+			field.setAccessible(true);
+		}
+	}
 
 	public void createQuery() throws NoSuchFieldException, SecurityException, IllegalArgumentException,
 			IllegalAccessException, SQLException {
@@ -42,7 +50,7 @@ public class QueryMaker {
 					if (fieldType.equals(String.class)) {
 						System.out.println("Type:  " + fieldType.getSimpleName());
 						System.out.println("value are: " + value + "\n");
-						
+
 					}
 					if (fieldType.equals(int.class)) {
 						System.out.println("Type:  " + fieldType.getSimpleName());
