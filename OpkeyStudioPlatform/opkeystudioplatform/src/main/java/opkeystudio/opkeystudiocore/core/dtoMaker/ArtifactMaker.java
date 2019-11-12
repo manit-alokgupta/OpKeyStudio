@@ -11,7 +11,7 @@ public class ArtifactMaker {
 		// artifact.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
 		artifact.setP_id(Utilities.getInstance().getUniqueUUID(""));
 		artifact.setCreated_on(Utilities.getInstance().getCurrentDateTime());
-		artifact.setCreated_on_tz("ABC");
+		artifact.setCreated_on_tz(Utilities.getInstance().getCurrentDateTime());
 		artifact.setCreated_by("dededed");
 		artifact.setName(artifactName);
 		artifact.setId(Utilities.getInstance().getUniqueUUID(""));

@@ -73,4 +73,8 @@ public class Utilities {
 	public String getCurrentDateTime() {
 		return new Date().toString();
 	}
+
+	public String getCurrentTimeZone() {
+		return "Coordinated Universal Time";
+	}
 }
