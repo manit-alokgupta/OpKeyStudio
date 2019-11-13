@@ -132,7 +132,13 @@ public class ArtifactTreeUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
-				new ArtifactApi().createArtifact(artifact.getId(), "Test2", MODULETYPE.Flow);
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+						"TestCase Name", "");
+				if (inputValue == null) {
+					return;
+				}
+
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Flow);
 				try {
 					artifactTree.renderArtifacts();
 				} catch (SQLException | IOException e1) {
@@ -152,7 +158,72 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+						"TestCase Name", "");
+				if (inputValue == null) {
+					return;
+				}
 
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Folder);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
+		objectRepositoryMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+						"TestCase Name", "");
+				if (inputValue == null) {
+					return;
+				}
+
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.ObjectRepository);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
+		functionLibraryMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+						"TestCase Name", "");
+				if (inputValue == null) {
+					return;
+				}
+
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Component);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override
