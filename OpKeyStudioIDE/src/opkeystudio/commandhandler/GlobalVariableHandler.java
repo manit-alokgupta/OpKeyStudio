@@ -6,14 +6,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
 
-import opkeystudio.featurecore.ide.ui.ui.GlovalVariableDialog;
+import opkeystudio.featurecore.ide.ui.ui.GlobalVariableDialog;
 
 
 
 public class GlobalVariableHandler {
 	@Execute
 	public void execute(Shell shell) {
-		GlovalVariableDialog gdialog = new GlovalVariableDialog(shell, SWT.CENTER);
+		GlobalVariableDialog gdialog = new GlobalVariableDialog(shell, SWT.CENTER);
 		gdialog.open();
 	}
 

@@ -34,7 +34,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 
 import org.eclipse.wb.swt.ResourceManager;
 
-public class GlovalVariableDialog extends Dialog {
+public class GlobalVariableDialog extends Dialog {
 
 	String[] tableHeaders = { "Name", "Data Type", "Value", "Externally Updatable" };
 	protected Object result;
@@ -52,7 +52,7 @@ public class GlovalVariableDialog extends Dialog {
 	 * @param parent
 	 * @param style
 	 */
-	public GlovalVariableDialog(Shell parent, int style) {
+	public GlobalVariableDialog(Shell parent, int style) {
 		super(parent, style);
 		setText("SWT Dialog");
 	}

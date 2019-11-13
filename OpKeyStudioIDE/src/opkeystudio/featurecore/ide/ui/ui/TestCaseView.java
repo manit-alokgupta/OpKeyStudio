@@ -32,6 +32,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
@@ -40,7 +41,7 @@ public class TestCaseView extends Composite {
 	private OutputDataTable outputDataTable;
 	private TestObjectTable testObjectTable;
 	private InputDataTable inputDataTable;
-	private Table InputDataTable;
+	private StepDetailsInputData InputDataTable;
 	private Table mappedTable;
 	private Table propertyTable;
 	private Table dataOutputTable;
@@ -192,7 +193,9 @@ public class TestCaseView extends Composite {
 
 		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
 		expandBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
-		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridData gd_expandBar = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_expandBar.heightHint = 391;
+		expandBar.setLayoutData(gd_expandBar);
 
 		expanditemStepIno = new ExpandItem(expandBar, SWT.NONE);
 		expanditemStepIno.setExpanded(true);
@@ -244,14 +247,14 @@ public class TestCaseView extends Composite {
 		expenditemInputData = new ExpandItem(expandBar, SWT.NONE);
 		expenditemInputData.setExpanded(true);
 		expenditemInputData.setText("Input Data");
-		expenditemInputData.setHeight(80);
+		expenditemInputData.setHeight(150);
 
 		Composite composite_7 = new Composite(expandBar, SWT.NONE);
 		expenditemInputData.setControl(composite_7);
 		expenditemInputData.setHeight(expenditemInputData.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		composite_7.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		InputDataTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		InputDataTable = new StepDetailsInputData(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 		InputDataTable.setHeaderVisible(true);
 		InputDataTable.setLinesVisible(true);
 
