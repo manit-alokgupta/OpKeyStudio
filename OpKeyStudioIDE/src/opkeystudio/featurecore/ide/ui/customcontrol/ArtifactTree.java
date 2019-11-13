@@ -208,6 +208,11 @@ public class ArtifactTree extends CustomTree {
 		return (ArtifactTreeItem) this.getSelection()[0];
 	}
 
+	public Artifact getSelectedArtifact() {
+		ArtifactTreeItem treeItem = getSelectedArtifactTreeItem();
+		return treeItem.getArtifact();
+	}
+
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components

@@ -22,12 +22,14 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactTreeUI extends Composite {
 	MenuItem mntmNew;
@@ -171,6 +173,20 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
+						"Rename " + artifact.getName(), artifact.getName());
+				if (renamedText == null) {
+					return;
+				}
+				artifact.setName(renamedText);
+				new ArtifactApi().renameArtifact(artifact);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override

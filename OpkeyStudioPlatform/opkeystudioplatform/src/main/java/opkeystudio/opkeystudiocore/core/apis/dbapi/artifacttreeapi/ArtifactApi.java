@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
+import opkeystudio.opkeystudiocore.core.queryMaker.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactApi {
@@ -26,10 +27,22 @@ public class ArtifactApi {
 	}
 
 	public void deleteArtifact(Artifact artifact) {
-		System.out.println("Deleting "+artifact.getId());
+		System.out.println("Deleting " + artifact.getId());
 	}
 
-	public void renameArtifact(Artifact artifact, String newName) {
-
+	public void renameArtifact(Artifact artifact) {
+		System.out.println("Renaming " + artifact.getName());
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		try {
+			sqlComm.connect();
+			String updateQuery = new QueryMaker().createUpdateQuery(artifact, "main_artifact_filesystem",
+					String.format("WHERE id='%s'", artifact.getId()));
+			System.out.println(updateQuery);
+			sqlComm.executeUpdate(updateQuery);
+			sqlComm.disconnect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

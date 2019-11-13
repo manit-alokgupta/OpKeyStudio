@@ -62,10 +62,20 @@ public class QueryMaker {
 			return finalQuery;
 		}
 		if (queryType == QUERYTYPE.UPDATE) {
-			String queryFormat = "UPDATE INTO %s(%s) VALUES(%s)" + conditionString;
+			String queryFormat = "UPDATE %s SET %s" + conditionString;
 			DuoList<String, String> queryObject = getQueryString(object);
-			String finalQuery = String.format(queryFormat, tableName, formatString(queryObject.getAllFirstValues()),
-					formatString(queryObject.getAllSecondValues()));
+			List<String> allFirstValues = queryObject.getAllFirstValues();
+			List<String> allSecondValues = queryObject.getAllSecondValues();
+			String outData = "";
+			for (int i = 0; i < allFirstValues.size(); i++) {
+				String key = allFirstValues.get(i);
+				String value = allSecondValues.get(i);
+				if (!outData.isEmpty()) {
+					outData += ", ";
+				}
+				outData += key + "=" + value;
+			}
+			String finalQuery = String.format(queryFormat, tableName, outData);
 			return finalQuery;
 		}
 		return null;
@@ -73,7 +83,7 @@ public class QueryMaker {
 
 	public String createInsertQuery(Object object, String tableName, String conditionString) {
 		try {
-			return createQuery(object, tableName,conditionString, QUERYTYPE.INSERT);
+			return createQuery(object, tableName, conditionString, QUERYTYPE.INSERT);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,7 +93,7 @@ public class QueryMaker {
 
 	public String createUpdateQuery(Object object, String tableName, String conditionString) {
 		try {
-			return createQuery(object, tableName,conditionString, QUERYTYPE.UPDATE);
+			return createQuery(object, tableName, conditionString, QUERYTYPE.UPDATE);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,7 +103,7 @@ public class QueryMaker {
 
 	public static void main(String[] args) {
 		Artifact arti = new ArtifactMaker().getArtifactObject("1234", "hello_testcase", MODULETYPE.Flow);
-		String query = new QueryMaker().createInsertQuery(arti, "main_artifact_filesystem","ewdwdw");
+		String query = new QueryMaker().createInsertQuery(arti, "main_artifact_filesystem", "ewdwdw");
 		System.out.println(query);
 	}
 }
