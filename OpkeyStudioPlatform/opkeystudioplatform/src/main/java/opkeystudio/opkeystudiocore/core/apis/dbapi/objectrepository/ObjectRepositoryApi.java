@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
+import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ObjectRepositoryApi {
@@ -55,12 +56,9 @@ public class ObjectRepositoryApi {
 	}
 
 	private void deleteOrObject(String objectId) throws SQLException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
 		String query = String.format("delete from or_objects where object_id='%s'", objectId);
 		System.out.println(query);
-		sqlComm.executeUpdate(query);
-		sqlComm.disconnect();
+		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	private void deleteObjectProperty(String propertyId) throws SQLException {
