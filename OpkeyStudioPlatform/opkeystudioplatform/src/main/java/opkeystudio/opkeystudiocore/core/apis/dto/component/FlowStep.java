@@ -4,26 +4,45 @@ import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
 
 public class FlowStep extends Modified implements Comparable<FlowStep> {
+	@DBField
 	private String keywordid;
+	@DBField
 	private boolean wantsnapshot;
+	@DBField
 	private boolean continueonerror;
+	@DBField
 	private String flow_id;
+	
 	private int clustering_key;
+	
+	@DBField
 	private String flow_stepid;
+	@DBField
 	private String comment;
+	@DBField
 	private boolean isnegative;
+	@DBField
 	private boolean shouldrun;
+	@DBField
 	private int position;
-
+	@DBField
 	private Keyword keyword;
+	@DBField
 	private FunctionLibraryComponent functionLibraryComponent;
+	@DBField
 	private List<ORObject> orObject;
+	@DBField
 	private List<FlowInputArgument> flowInputArgs;
+	@DBField
 	private List<FlowOutputArgument> flowOutputArgs;
+	@DBField
 	private String component_id;
+	@DBField
 	private String comments;
+	@DBField
 	private String stepid;
 
 	public String getKeywordid() {

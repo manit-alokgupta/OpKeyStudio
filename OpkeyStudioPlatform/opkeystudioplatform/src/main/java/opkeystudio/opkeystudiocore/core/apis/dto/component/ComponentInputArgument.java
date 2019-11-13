@@ -1,12 +1,22 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+
 public class ComponentInputArgument {
+	@DBField
 	private boolean ismandatory;
+	@DBField
 	private String component_id;
+	@DBField
 	private String ip_id;
+	@DBField
 	private String name;
+
 	private int clustering_key;
+
+	@DBField
 	private int position;
+	@DBField
 	private String type;
 
 	public boolean isIsmandatory() {

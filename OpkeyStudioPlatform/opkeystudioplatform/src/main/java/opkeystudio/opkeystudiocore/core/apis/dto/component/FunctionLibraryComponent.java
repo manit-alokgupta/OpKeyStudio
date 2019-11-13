@@ -2,8 +2,12 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+
 public class FunctionLibraryComponent extends Artifact {
+	@DBField
 	private List<ComponentInputArgument> componentInputArgument;
+	@DBField
 	private List<ComponentOutputArgument> componentOutputArgument;
 
 	public List<ComponentInputArgument> getComponentInputArgument() {

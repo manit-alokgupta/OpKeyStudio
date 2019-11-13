@@ -1,22 +1,38 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
 
 public class ORObject extends Modified {
+	@DBField
 	private boolean usesmartidentification;
+	@DBField
 	private String or_id;
+	
 	private int clustering_key;
+	@DBField
 	private String object_id;
+	@DBField
 	private String createdon;
+	@DBField
 	private String modifiedon;
+	@DBField
 	private String modifiedon_tz;
+	@DBField
 	private String createdby;
+	@DBField
 	private boolean isupdatable;
+	@DBField
 	private String name;
+	@DBField
 	private String modifiedby;
+	@DBField
 	private String createdon_tz;
+	@DBField
 	private String opkeytype;
+	@DBField
 	private int position;
+	@DBField
 	private String parent_object_id;
 
 	public String getOr_id() {

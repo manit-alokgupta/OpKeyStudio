@@ -1,9 +1,15 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+
 public class AuthentcationData {
+	@DBField
 	private boolean status;
+	@DBField
 	private String message;
+	@DBField
 	private String sessionId;
+	@DBField
 	private String authenticationToken;
 
 	public String getAuthenticationToken() {

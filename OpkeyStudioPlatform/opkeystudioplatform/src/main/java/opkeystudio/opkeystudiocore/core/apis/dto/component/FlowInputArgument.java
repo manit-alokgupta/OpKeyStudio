@@ -1,21 +1,37 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
 
 public class FlowInputArgument extends Modified {
+	@DBField
 	private String flow_step_ia_id;
+	@DBField
 	private String keyword_ip_id;
+	@DBField
 	private String datasource;
+	@DBField
 	private String staticvalue;
+	
 	private int clustering_key;
+	
+	@DBField
 	private String flow_stepid;
+	@DBField
 	private String staticobjectid;
+	@DBField
 	private String arg_datasource;
+	@DBField
 	private String step_arg_id;
+	@DBField
 	private String globalvariable_id;
+	@DBField
 	private String stepid;
+	@DBField
 	private String key_arg_id;
+	@DBField
 	private String componentstep_id;
+	@DBField
 	private String component_ip_id;
 
 	public String getFlow_step_ia_id() {

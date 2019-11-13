@@ -1,20 +1,37 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.project;
 
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+
 public class Project {
+	@DBField
 	private String audittraillevel;
+	@DBField
 	private String salt;
+	@DBField
 	private int maxparallelrunallowed;
+	
 	private int clustering_key;
+	@DBField
 	private String createdon;
+	@DBField
 	private int maxparallelrunonsaucelabs;
+	@DBField
 	private String sessionlimit;
+	@DBField
 	private String mode;
+	@DBField
 	private String createdby;
+	@DBField
 	private String name;
+	@DBField
 	private String encryptionpassword;
+	@DBField
 	private String createdon_tz;
+	@DBField
 	private String p_id;
+	@DBField
 	private int maxparallelrunonbrowserstack;
+	@DBField
 	private boolean isencryptionmodeon;
 
 	public String getAudittraillevel() {

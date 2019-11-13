@@ -2,9 +2,14 @@ package opkeystudio.opkeystudiocore.core.apis.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+
 class State {
+	@DBField
 	private boolean opened;
+	@DBField
 	private boolean disabled;
+	@DBField
 	private boolean selected;
 
 	public boolean isOpened() {

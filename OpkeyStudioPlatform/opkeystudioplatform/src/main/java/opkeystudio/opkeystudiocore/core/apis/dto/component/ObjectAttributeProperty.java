@@ -13,7 +13,6 @@ public class ObjectAttributeProperty extends Modified {
 	@DBField
 	private String property;
 	
-	
 	private int clustering_key;
 	@DBField
 	private int position;

@@ -1,9 +1,15 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+
 public class Modified {
+	@DBField
 	private boolean modified;
+	@DBField
 	private boolean deleted;
+	@DBField
 	private boolean added;
+	@DBField
 	private boolean visible=true;
 
 	public boolean isVisible() {

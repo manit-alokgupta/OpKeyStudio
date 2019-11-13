@@ -1,18 +1,33 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+
 public class Project {
+	@DBField
 	private String name;
+	@DBField
 	private String projectPath;
+	@DBField
 	private String p_ID;
+	@DBField
 	private String auditTrailLevel_ENUM;
+	@DBField
 	private String createdBy_ID;
+	@DBField
 	private String createdOn;
+	@DBField
 	private String projectMode_ENUM;
+	@DBField
 	private boolean isEncryptionModeOn;
+	@DBField
 	private int maxParallelRunAllowed;
+	@DBField
 	private int maxParallelRunOnBrowserStack;
+	@DBField
 	private int maxParallelRunOnSauceLabs;
+	@DBField
 	private String sessionLimit;
+	@DBField
 	private String tracking_ID;
 
 	public String getName() {

@@ -1,13 +1,21 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
 
 public class FlowOutputArgument extends Modified {
+	@DBField
 	private String flow_step_oa_id;
+	@DBField
 	private String keyword_op_id;
+	
 	private int clustering_key;
+	
+	@DBField
 	private String flow_stepid;
+	@DBField
 	private String componentstep_id;
+	@DBField
 	private String componentstep_oa_id;
 
 	public String getFlow_step_oa_id() {

@@ -1,14 +1,25 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
+import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+
 public class GlobalVariable extends Modified {
+	@DBField
 	private int isdeleted;
+	@DBField
 	private int position;
+	@DBField
 	private String value;
+	
 	private int clustering_key;
+	@DBField
 	private String datatype;
+	@DBField
 	private String gv_id;
+	@DBField
 	private boolean externallyupdatable;
+	@DBField
 	private String p_id;
+	@DBField
 	private String name;
 
 	public int getIsdeleted() {
