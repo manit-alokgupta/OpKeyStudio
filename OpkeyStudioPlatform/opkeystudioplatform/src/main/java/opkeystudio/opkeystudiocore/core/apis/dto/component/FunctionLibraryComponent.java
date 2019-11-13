@@ -2,7 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import java.util.List;
 
-import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+import opkeystudio.opkeystudiocore.core.query.DBField;
 
 public class FunctionLibraryComponent extends Artifact {
 	@DBField

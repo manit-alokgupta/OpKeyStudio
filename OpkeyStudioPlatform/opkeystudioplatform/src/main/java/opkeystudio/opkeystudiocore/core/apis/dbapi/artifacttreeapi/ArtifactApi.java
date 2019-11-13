@@ -13,8 +13,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ArtifactMaker;
-import opkeystudio.opkeystudiocore.core.queryMaker.QueryExecutor;
-import opkeystudio.opkeystudiocore.core.queryMaker.QueryMaker;
+import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
+import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactApi {

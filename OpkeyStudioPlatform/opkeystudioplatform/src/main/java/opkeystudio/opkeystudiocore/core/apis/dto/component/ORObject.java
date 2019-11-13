@@ -1,7 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
-import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+import opkeystudio.opkeystudiocore.core.query.DBField;
 
 public class ORObject extends Modified {
 	@DBField

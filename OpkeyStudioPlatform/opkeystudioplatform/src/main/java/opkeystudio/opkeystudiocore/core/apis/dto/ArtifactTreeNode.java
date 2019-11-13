@@ -2,7 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+import opkeystudio.opkeystudiocore.core.query.DBField;
 
 class State {
 	@DBField

@@ -1,6 +1,6 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
-import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+import opkeystudio.opkeystudiocore.core.query.DBField;
 
 public class ComponentInputArgument {
 	@DBField

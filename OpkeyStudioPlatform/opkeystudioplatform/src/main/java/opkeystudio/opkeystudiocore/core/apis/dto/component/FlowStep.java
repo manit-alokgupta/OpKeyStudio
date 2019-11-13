@@ -4,7 +4,7 @@ import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
-import opkeystudio.opkeystudiocore.core.queryMaker.DBField;
+import opkeystudio.opkeystudiocore.core.query.DBField;
 
 public class FlowStep extends Modified implements Comparable<FlowStep> {
 	@DBField
