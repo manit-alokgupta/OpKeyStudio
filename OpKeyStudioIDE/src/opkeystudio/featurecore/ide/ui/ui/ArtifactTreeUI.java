@@ -160,6 +160,12 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ArtifactTreeItem treeItem = artifactTree.getSelectedArtifactTreeItem();
 				new ArtifactApi().deleteArtifact(treeItem.getArtifact());
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override

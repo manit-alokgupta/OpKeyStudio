@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
+import opkeystudio.opkeystudiocore.core.queryMaker.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.queryMaker.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -28,6 +29,8 @@ public class ArtifactApi {
 
 	public void deleteArtifact(Artifact artifact) {
 		System.out.println("Deleting " + artifact.getId());
+		String query=String.format("delete from main_artifact_filesystem where id='%s'", artifact.getId());
+		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	public void renameArtifact(Artifact artifact) {
