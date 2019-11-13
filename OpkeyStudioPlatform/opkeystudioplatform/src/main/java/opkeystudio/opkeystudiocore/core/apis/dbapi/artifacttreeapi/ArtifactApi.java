@@ -10,7 +10,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
+import opkeystudio.opkeystudiocore.core.dtoMaker.ArtifactMaker;
 import opkeystudio.opkeystudiocore.core.queryMaker.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.queryMaker.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -47,5 +49,11 @@ public class ArtifactApi {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void createArtifact(String parentId,String artifactName,MODULETYPE artifactType) {
+		Artifact artifact=new ArtifactMaker().getArtifactObject(parentId, artifactName, artifactType);
+		String query=new QueryMaker().createInsertQuery(artifact, "main_artifact_filesystem", "");
+		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 }

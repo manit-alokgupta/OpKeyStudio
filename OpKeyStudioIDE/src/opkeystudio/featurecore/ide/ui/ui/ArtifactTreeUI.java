@@ -131,7 +131,14 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				new ArtifactApi().createArtifact(artifact.getId(), "Test2", MODULETYPE.Flow);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override
