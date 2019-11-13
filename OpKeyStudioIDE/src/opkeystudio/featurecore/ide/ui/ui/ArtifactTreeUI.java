@@ -158,8 +158,13 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ArtifactTreeItem treeItem = artifactTree.getSelectedArtifactTreeItem();
-				new ArtifactApi().deleteArtifact(treeItem.getArtifact());
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				boolean status = new MessageDialogs().openConfirmDialog("Delete",
+						"Do you want to delete " + artifact.getName() + "?");
+				if (!status) {
+					return;
+				}
+				new ArtifactApi().deleteArtifact(artifact);
 				try {
 					artifactTree.renderArtifacts();
 				} catch (SQLException | IOException e1) {
