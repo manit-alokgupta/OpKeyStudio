@@ -35,8 +35,11 @@
     </mainMenu>
     <trimBars xmi:id="_vz6icNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.0">
       <children xsi:type="menu:ToolBar" xmi:id="_wiuJMNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.maintoolbarholder">
-        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.0" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/datafile.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.open" label="Open" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/datafile.png" tooltip="Open File" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
+        </children>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" label="Item 2" iconURI="platform:/plugin/OpKeyStudio/icons/testcase_icons/save_icon.png" tooltip="Item 2">
+          <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UFWaAAXdEeqm4_Ox7Tro1w"/>
         </children>
       </children>
     </trimBars>

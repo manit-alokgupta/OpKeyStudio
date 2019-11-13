@@ -114,7 +114,7 @@ public class TestCaseView extends Composite {
 		composite_11.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		composite_11.setLayout(new GridLayout(1, false));
 
-		ToolBar toolBar_1 = new ToolBar(composite_11, SWT.RIGHT);
+		ToolBar toolBar_1 = new ToolBar(composite_11,  SWT.FLAT |SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
