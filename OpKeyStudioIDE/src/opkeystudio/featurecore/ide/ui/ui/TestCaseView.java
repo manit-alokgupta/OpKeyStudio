@@ -35,6 +35,10 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.jface.text.TextViewer;
+import org.eclipse.swt.custom.CLabel;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable table;
@@ -74,6 +78,8 @@ public class TestCaseView extends Composite {
 	private ExpandItem expanditemTestObject;
 	private TabItem addStepTabItem;
 	private Tree allDataTreeView;
+	private Label stepInfoImage;
+	private CLabel stepInfoLabel;
 
 	/**
 	 * Create the composite.
@@ -115,7 +121,7 @@ public class TestCaseView extends Composite {
 		composite_11.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		composite_11.setLayout(new GridLayout(1, false));
 
-		ToolBar toolBar_1 = new ToolBar(composite_11,  SWT.FLAT |SWT.RIGHT);
+		ToolBar toolBar_1 = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
@@ -189,34 +195,35 @@ public class TestCaseView extends Composite {
 
 		Composite composite = new Composite(testCaseArgumentsTabFolder, SWT.BORDER);
 		stepDetailsTabItem.setControl(composite);
-		composite.setLayout(new GridLayout(1, false));
+		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
 		expandBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
-		GridData gd_expandBar = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_expandBar.heightHint = 391;
-		expandBar.setLayoutData(gd_expandBar);
 
 		expanditemStepIno = new ExpandItem(expandBar, SWT.NONE);
 		expanditemStepIno.setExpanded(true);
 		expanditemStepIno.setText("Step Information");
-		expanditemStepIno.setHeight(80);
+		expanditemStepIno.setHeight(150);
 
 		Composite composite_5 = new Composite(expandBar, SWT.NONE);
 		expanditemStepIno.setControl(composite_5);
 		expanditemStepIno.setHeight(expanditemStepIno.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-
-		Canvas canvas = new Canvas(composite_5, SWT.NONE);
-		canvas.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-			}
-		});
-		canvas.setBounds(116, 0, 64, 64);
+		composite_5.setLayout(new GridLayout(2, false));
+		
+		stepInfoLabel = new CLabel(composite_5, SWT.NONE);
+		stepInfoLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		stepInfoLabel.setText("New Label");
+		
+		stepInfoImage = new Label(composite_5, SWT.NONE);
+		stepInfoImage.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/sample.png"));
+		GridData gd_stepInfoImage = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
+		gd_stepInfoImage.widthHint = 94;
+		stepInfoImage.setLayoutData(gd_stepInfoImage);
 
 		expanditemTestObject = new ExpandItem(expandBar, SWT.NONE);
 		expanditemTestObject.setExpanded(true);
 		expanditemTestObject.setText("Test Object");
-		expanditemTestObject.setHeight(80);
+		expanditemTestObject.setHeight(150);
 		Composite composite_6 = new Composite(expandBar, SWT.NONE);
 		expanditemTestObject.setControl(composite_6);
 		expanditemTestObject.setHeight(expanditemTestObject.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
@@ -269,7 +276,7 @@ public class TestCaseView extends Composite {
 		Composite composite_1 = new Composite(sashForm_3, SWT.NONE);
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		Composite composite_10 = new Composite(sashForm_3, SWT.BORDER | SWT.H_SCROLL);
+		Composite composite_10 = new Composite(sashForm_3, SWT.BORDER);
 		composite_10.setLayout(new GridLayout(1, false));
 
 		Composite composite_15 = new Composite(composite_10, SWT.NONE);
@@ -592,7 +599,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-					table.moveStepUp(table.getSelectedFlowStep(), table.getPrevFlowStep());
+				table.moveStepUp(table.getSelectedFlowStep(), table.getPrevFlowStep());
 
 			}
 
