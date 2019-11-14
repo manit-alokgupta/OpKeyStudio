@@ -80,6 +80,7 @@ public class TestCaseView extends Composite {
 	private Tree allDataTreeView;
 	private Label stepInfoImage;
 	private CLabel stepInfoLabel;
+	String exception;
 
 	/**
 	 * Create the composite.
@@ -515,6 +516,7 @@ public class TestCaseView extends Composite {
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			exception=e.getStackTrace().toString();
 		}
 
 		addButtonListeners();
