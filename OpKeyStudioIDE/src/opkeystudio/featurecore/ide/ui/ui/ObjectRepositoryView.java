@@ -15,6 +15,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolBar;
@@ -25,6 +27,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
@@ -33,6 +36,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectReposi
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class ObjectRepositoryView extends Composite {
 	private ObjectAttributeTable objectAttributeTable;
@@ -43,6 +47,8 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem refreshObject;
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
+	ArtifactTree artifactTree;
+	MenuItem mntmNew;
 
 	/**
 	 * Create the composite.
@@ -114,6 +120,22 @@ public class ObjectRepositoryView extends Composite {
 //		Tree tree = new Tree(composite_3, SWT.BORDER);
 		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectRepositoryTree.setBounds(0, 0, 85, 85);
+
+		ServiceRepository.getInstance().setProjectTreeObject(objectRepositoryTree);
+		Menu menu = new Menu(objectRepositoryTree);
+		objectRepositoryTree.setMenu(menu);
+
+		mntmNew = new MenuItem(menu, SWT.CASCADE);
+		mntmNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/cut.png"));
+		mntmNew.setText("Cut");
+
+		MenuItem renameMenuItem = new MenuItem(menu, SWT.NONE);
+		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
+		renameMenuItem.setText("Copy");
+
+		MenuItem deleteMenuItem = new MenuItem(menu, SWT.NONE);
+		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
+		deleteMenuItem.setText("Paste");
 
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
 		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
