@@ -169,6 +169,7 @@ public class ObjectAttributeTable extends CustomTable {
 				ObjectAttributeProperty oatr = (ObjectAttributeProperty) button.getControlData();
 				oatr.setModified(true);
 				oatr.setIsused(button.getSelection());
+				getParentObjectRepositoryView().toggleSaveButton(true);
 			}
 
 			@Override
@@ -187,6 +188,7 @@ public class ObjectAttributeTable extends CustomTable {
 				ObjectAttributeProperty oatr = (ObjectAttributeProperty) button.getControlData();
 				oatr.setModified(true);
 				oatr.setIsregex(button.getSelection());
+				getParentObjectRepositoryView().toggleSaveButton(true);
 			}
 
 			@Override
