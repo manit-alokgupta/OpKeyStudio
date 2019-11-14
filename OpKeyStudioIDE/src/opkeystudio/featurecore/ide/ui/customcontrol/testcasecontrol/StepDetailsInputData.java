@@ -27,7 +27,13 @@ public class StepDetailsInputData extends CustomTable {
 	private List<FlowInputArgument> flowInputArgs;
 	private List<ComponentInputArgument> componentInputArgs;
 	private TestCaseView parentTestCaseView;
-	public StepDetailsInputData(Composite parent, int style,TestCaseView parentView) {
+
+	public StepDetailsInputData(Composite parent, int style) {
+		super(parent, style);
+		init();
+	}
+
+	public StepDetailsInputData(Composite parent, int style, TestCaseView parentView) {
 		super(parent, style);
 		init();
 		this.setParentTestCaseView(parentView);

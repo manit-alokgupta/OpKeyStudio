@@ -14,7 +14,13 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 public class TestObjectTable extends CustomTable {
 	private List<ORObject> orobject;
 	private TestCaseView parentTestCaseView;
-	public TestObjectTable(Composite parent, int style,TestCaseView parentView) {
+
+	public TestObjectTable(Composite parent, int style) {
+		super(parent, style);
+		init();
+	}
+
+	public TestObjectTable(Composite parent, int style, TestCaseView parentView) {
 		super(parent, style);
 		init();
 		this.setParentTestCaseView(parentView);

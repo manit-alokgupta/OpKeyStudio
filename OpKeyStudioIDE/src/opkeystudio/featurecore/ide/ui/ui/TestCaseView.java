@@ -34,6 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTab
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTree;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class TestCaseView extends Composite {
@@ -42,6 +43,7 @@ public class TestCaseView extends Composite {
 	private TestObjectTable testObjectTable;
 	private InputDataTable inputDataTable;
 	private StepDetailsInputData InputDataTable;
+	private TestObjectTree testObjectTree;
 	private Table mappedTable;
 	private Table propertyTable;
 	private Table dataOutputTable;
@@ -344,9 +346,9 @@ public class TestCaseView extends Composite {
 		testObjectTable.setLinesVisible(true);
 		testObjectTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		Tree testObbjectTree = new Tree(sashForm_1, SWT.BORDER);
-		testObbjectTree.setLinesVisible(true);
-		testObbjectTree.setHeaderVisible(true);
+		testObjectTree = new TestObjectTree(sashForm_1, SWT.BORDER, this);
+		testObjectTree.setLinesVisible(true);
+		testObjectTree.setHeaderVisible(true);
 		sashForm_1.setWeights(new int[] { 1, 1 });
 
 		TabItem inputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);

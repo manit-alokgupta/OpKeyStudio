@@ -36,6 +36,11 @@ public class FlowStepTable extends CustomTable {
 	private FlowStepTable thisTable = this;
 	private TestCaseView parentTestCaseView;
 
+	public FlowStepTable(Composite parent, int style) {
+		super(parent, style);
+		init();
+	}
+
 	public FlowStepTable(Composite parent, int style, TestCaseView parentView) {
 		super(parent, style);
 		init();

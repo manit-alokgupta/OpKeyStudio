@@ -3,14 +3,23 @@ package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
@@ -26,10 +35,21 @@ public class InputDataTable extends CustomTable {
 	private List<FlowInputArgument> flowInputArgs;
 	private List<ComponentInputArgument> componentInputArgs;
 	private TestCaseView parentTestCaseView;
-	public InputDataTable(Composite parent, int style,TestCaseView parentView) {
+
+	public InputDataTable(Composite parent, int style) {
 		super(parent, style);
 		init();
+	}
+
+	public InputDataTable(Composite parent, int style, TestCaseView parentView) {
+		super(parent, style);
+		init();
+		addControlEditor();
 		this.setParentTestCaseView(parentView);
+	}
+
+	public InputDataTable getCurrentInstance() {
+		return this;
 	}
 
 	private void init() {
@@ -55,41 +75,67 @@ public class InputDataTable extends CustomTable {
 		});
 	}
 
+	public void addControlEditor() {
+		TableCursor cursor = new TableCursor(this, 0);
+		ControlEditor editor = new ControlEditor(cursor);
+		editor.grabHorizontal = true;
+		editor.grabVertical = true;
+		cursor.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				CustomTableItem row = (CustomTableItem) cursor.getRow();
+				FlowInputArgument flowInputArgument = (FlowInputArgument) row.getOpKeyData();
+				int selectedColumn = cursor.getColumn();
+				Text text = new Text(cursor, 0);
+				text.setText(flowInputArgument.getStaticvalue());
+				text.addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						text.dispose();
+					}
+
+					@Override
+					public void focusGained(FocusEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+				text.addModifyListener(new ModifyListener() {
+
+					@Override
+					public void modifyText(ModifyEvent e) {
+						flowInputArgument.setStaticvalue(text.getText());
+						flowInputArgument.setModified(true);
+						getParentTestCaseView().toggleSaveButton(true);
+						row.setText(selectedColumn, text.getText());
+					}
+				});
+
+				if (selectedColumn == 2) {
+					editor.setEditor(text);
+					text.setFocus();
+				} else {
+					editor.getEditor().dispose();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
 	private TableEditor getTableEditor() {
 		TableEditor editor = new TableEditor(this);
 		// editor.horizontalAlignment = SWT.RIGHT;
 		editor.grabHorizontal = true;
 		editor.minimumWidth = 50;
 		return editor;
-	}
-
-	private void addTableEditor(FlowStepTableItem item) {
-		FlowStep attrProperty = item.getFlowStepeData();
-		TableEditor editor1 = getTableEditor();
-		TableEditor editor2 = getTableEditor();
-		TableEditor editor3 = getTableEditor();
-		TableEditor editor4 = getTableEditor();
-		CustomText button = new CustomText(this, SWT.CHECK);
-		
-		button.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-		editor1.setEditor(button, item, 2);
 	}
 
 	public List<KeyWordInputArgument> getKeyWordInputArgs() {
@@ -119,6 +165,7 @@ public class InputDataTable extends CustomTable {
 					CustomTableItem cti = new CustomTableItem(this, 0);
 					cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
 							flowInputArg.getStaticvalue() });
+					cti.setOpKeyData(flowInputArg);
 				}
 			}
 		}
@@ -130,6 +177,7 @@ public class InputDataTable extends CustomTable {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
 						flowInputArg.getStaticvalue() });
+				cti.setOpKeyData(flowInputArg);
 			}
 		}
 	}

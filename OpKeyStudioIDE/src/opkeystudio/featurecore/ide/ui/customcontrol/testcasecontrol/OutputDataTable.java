@@ -26,6 +26,11 @@ public class OutputDataTable extends CustomTable {
 		this.setParentTestCaseView(parentView);
 	}
 
+	public OutputDataTable(Composite parent, int style) {
+		super(parent, style);
+		init();
+	}
+
 	private void init() {
 		String[] tableHeaders = { "Type", "Parameter Name", "Output Variable" };
 		for (String header : tableHeaders) {
