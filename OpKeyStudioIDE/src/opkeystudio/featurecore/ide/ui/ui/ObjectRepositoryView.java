@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.InputDialog;
@@ -193,7 +194,7 @@ public class ObjectRepositoryView extends Composite {
 
 			}
 		});
-		
+
 		saveObject.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -324,10 +325,12 @@ public class ObjectRepositoryView extends Composite {
 		if (item.getObjectRepository() != null) {
 			String objectId = item.getObjectRepository().getObject_id();
 			try {
-				List<ObjectAttributeProperty> objectAttributes = new ObjectRepositoryApi()
-						.getObjectAttributeProperty(objectId);
-				item.getObjectRepository().setObjectAttributesProperty(objectAttributes);
-				table.setControlData(objectAttributes);
+				if (item.getObjectRepository().getObjectAttributesProperty().size() == 0) {
+					System.out.println("Executing Object Property Fetch");
+					item.getObjectRepository().setObjectAttributesProperty(
+							new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+				}
+				table.setControlData(item.getObjectRepository().getObjectAttributesProperty());
 				table.renderObjectAttributes();
 			} catch (JsonParseException e1) {
 				e1.printStackTrace();
