@@ -13,6 +13,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
+import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ObjectRepositoryApi {
@@ -62,67 +63,49 @@ public class ObjectRepositoryApi {
 	}
 
 	private void deleteObjectProperty(String propertyId) throws SQLException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
 		String query = String.format("delete from or_object_properties where property_id='%s'", propertyId);
 		System.out.println(query);
-		sqlComm.executeUpdate(query);
-		sqlComm.disconnect();
+		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	private void addORObject(ORObject orObject) throws SQLException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = String.format("delete from or_object_properties where property_id='%s'", "");
-		System.out.println(query);
-		sqlComm.executeUpdate(query);
-		sqlComm.disconnect();
+
 	}
 
 	private void addObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) throws SQLException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = String.format("delete from or_object_properties where property_id='%s'", "");
-		System.out.println(query);
-		sqlComm.executeUpdate(query);
-		sqlComm.disconnect();
+
 	}
 
 	private void updateORObject(ORObject orObject) throws SQLException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = String.format("delete from or_object_properties where property_id='%s'", "");
-		System.out.println(query);
-		sqlComm.executeUpdate(query);
-		sqlComm.disconnect();
+		String query = new QueryMaker().createUpdateQuery(orObject, "or_objects",
+				String.format("WHERE object_id='%s'", orObject.getObject_id()));
+		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	private void updateObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) throws SQLException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = String.format("delete from or_object_properties where property_id='%s'", "");
-		System.out.println(query);
-		sqlComm.executeUpdate(query);
-		sqlComm.disconnect();
+		String query = new QueryMaker().createUpdateQuery(objectAttributeProperty, "or_object_properties",
+				String.format("WHERE property_id='%s'", objectAttributeProperty.getProperty_id()));
+		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	public void saveORObjects(List<ORObject> objectRepositories) throws SQLException {
 
-		for (ORObject objectRepository : objectRepositories) {
-			if (objectRepository.isDeleted()) {
+		for (ORObject orObject : objectRepositories) {
+			saveObjectProperties(orObject.getObjectAttributesProperty());
+			if (orObject.isDeleted()) {
 				System.out.println("Deleting..... ");
-				deleteOrObject(objectRepository.getObject_id());
+				deleteOrObject(orObject.getObject_id());
 			}
-			if (objectRepository.isAdded()) {
-				addORObject(objectRepository);
+			if (orObject.isAdded()) {
+				addORObject(orObject);
 			}
-			if (objectRepository.isModified()) {
-				updateORObject(objectRepository);
+			if (orObject.isModified()) {
+				updateORObject(orObject);
 			}
 		}
 	}
 
-	public void saveObjectProperties(List<ObjectAttributeProperty> objectAttributesProperties) throws SQLException {
+	private void saveObjectProperties(List<ObjectAttributeProperty> objectAttributesProperties) throws SQLException {
 
 		for (ObjectAttributeProperty objectAttributeProperty : objectAttributesProperties) {
 			if (objectAttributeProperty.isDeleted()) {

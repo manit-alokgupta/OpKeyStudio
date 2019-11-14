@@ -1,5 +1,8 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
@@ -8,8 +11,9 @@ public class ORObject extends Modified {
 	private boolean usesmartidentification;
 	@DBField
 	private String or_id;
-	
+
 	private int clustering_key;
+	
 	@DBField
 	private String object_id;
 	@DBField
@@ -34,6 +38,8 @@ public class ORObject extends Modified {
 	private int position;
 	@DBField
 	private String parent_object_id;
+
+	private List<ObjectAttributeProperty> objectAttributesProperty = new ArrayList<>();
 
 	public String getOr_id() {
 		return or_id;
@@ -153,6 +159,14 @@ public class ORObject extends Modified {
 
 	public void setIsupdatable(boolean isupdatable) {
 		this.isupdatable = isupdatable;
+	}
+
+	public List<ObjectAttributeProperty> getObjectAttributesProperty() {
+		return objectAttributesProperty;
+	}
+
+	public void setObjectAttributesProperty(List<ObjectAttributeProperty> objectAttributesProperty) {
+		this.objectAttributesProperty = objectAttributesProperty;
 	}
 
 }

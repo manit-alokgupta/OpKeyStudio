@@ -53,9 +53,10 @@ public class ObjectRepositoryView extends Composite {
 	 */
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
-		
+
 		ObjectRepositoryUI();
 	}
+
 	public void ObjectRepositoryUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -324,6 +325,7 @@ public class ObjectRepositoryView extends Composite {
 			try {
 				List<ObjectAttributeProperty> objectAttributes = new ObjectRepositoryApi()
 						.getObjectAttributeProperty(objectId);
+				item.getObjectRepository().setObjectAttributesProperty(objectAttributes);
 				table.setControlData(objectAttributes);
 				table.renderObjectAttributes();
 			} catch (JsonParseException e1) {
