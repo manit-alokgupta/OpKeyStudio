@@ -78,7 +78,7 @@ public class TestCaseView extends Composite {
 	private Tree allDataTreeView;
 	private Label stepInfoImage;
 	private CLabel stepInfoLabel;
-	String exception;
+	private FlowStep selectedFlowStep;
 
 	/**
 	 * Create the composite.
@@ -461,6 +461,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FlowStep flowStep = table.getSelectedFlowStep();
+				setSelectedFlowStep(flowStep);
 				if (flowStep != null) {
 					if (flowStep.getKeyword() != null) {
 						outputDataTable.setKeyword(flowStep.getKeyword());
@@ -514,7 +515,6 @@ public class TestCaseView extends Composite {
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			exception = e.getStackTrace().toString();
 		}
 
 		addButtonListeners();
@@ -684,5 +684,13 @@ public class TestCaseView extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public FlowStep getSelectedFlowStep() {
+		return selectedFlowStep;
+	}
+
+	public void setSelectedFlowStep(FlowStep selectedFlowStep) {
+		this.selectedFlowStep = selectedFlowStep;
 	}
 }

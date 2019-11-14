@@ -4,6 +4,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class TestObjectTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
@@ -23,6 +24,10 @@ public class TestObjectTree extends CustomTree {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public void renderTestObjectTree() {
+		FlowStep selectedStep = getParentTestCaseView().getSelectedFlowStep();
 	}
 
 }
