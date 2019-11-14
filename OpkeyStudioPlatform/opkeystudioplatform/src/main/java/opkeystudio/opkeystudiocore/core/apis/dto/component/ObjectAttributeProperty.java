@@ -14,6 +14,7 @@ public class ObjectAttributeProperty extends Modified {
 	private String property;
 	
 	private int clustering_key;
+	
 	@DBField
 	private int position;
 	@DBField
@@ -123,7 +124,7 @@ public class ObjectAttributeProperty extends Modified {
 		return clustering_key;
 	}
 
-	public void setClustering_key(int clustering_key) {
+	private void setClustering_key(int clustering_key) {
 		this.clustering_key = clustering_key;
 	}
 
