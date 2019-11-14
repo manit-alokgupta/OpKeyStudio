@@ -6,7 +6,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ORObjectMaker {
 
-	public ObjectAttributeProperty getObjectAttributeProperty(ORObject orObject) {
+	public ObjectAttributeProperty getNewObjectAttributeProperty(ORObject orObject) {
 		ObjectAttributeProperty objectAttributeProperty = new ObjectAttributeProperty();
 		objectAttributeProperty.init(Utilities.getInstance().getUniqueUUID(""), orObject.getObject_id(),
 				orObject.getOr_id(), null, "", "", "String", true);
