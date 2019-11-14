@@ -114,6 +114,7 @@ public class ObjectAttributeTable extends CustomTable {
 					}
 				});
 				controlEditor.setEditor(text);
+				getParentObjectRepositoryView().toggleDeleteAttributeButton(true);
 			}
 
 			@Override
@@ -152,21 +153,13 @@ public class ObjectAttributeTable extends CustomTable {
 		ObjectAttributeProperty attrProperty = item.getObjectAttributeData();
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
-		TableEditor editor3 = getTableEditor();
-		TableEditor editor4 = getTableEditor();
 		CustomButton isUsedButton = new CustomButton(this, SWT.CHECK);
 		CustomButton isRegexButton = new CustomButton(this, SWT.CHECK);
-		CustomText valueText = new CustomText(this, 0);
-		CustomText propertyText = new CustomText(this, 0);
-		propertyText.setText(attrProperty.getProperty());
-		valueText.setText(attrProperty.getValue());
 		isUsedButton.setSelection(attrProperty.isIsused());
 		isRegexButton.setSelection(attrProperty.isIsregex());
 
 		isUsedButton.setControlData(attrProperty);
 		isRegexButton.setControlData(attrProperty);
-		valueText.setControlData(attrProperty);
-		propertyText.setControlData(attrProperty);
 		isUsedButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -203,40 +196,11 @@ public class ObjectAttributeTable extends CustomTable {
 			}
 		});
 
-		valueText.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-				thisTable.select(0);
-				CustomText text = (CustomText) e.getSource();
-				ObjectAttributeProperty attrPro = (ObjectAttributeProperty) text.getControlData();
-				attrPro.setValue(text.getText());
-				attrPro.setModified(true);
-			}
-		});
-
-		propertyText.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-				thisTable.setSelection(item);
-				CustomText text = (CustomText) e.getSource();
-
-				ObjectAttributeProperty attrPro = (ObjectAttributeProperty) text.getControlData();
-				attrPro.setValue(text.getText());
-				attrPro.setModified(true);
-			}
-		});
-
-		// editor4.setEditor(propertyText, item, 0);
-		// editor3.setEditor(valueText, item, 1);
 		editor2.setEditor(isUsedButton, item, 2);
 		editor1.setEditor(isRegexButton, item, 3);
 
 		allTableEditors.add(editor1.getEditor());
 		allTableEditors.add(editor2.getEditor());
-		// allTableEditors.add(editor3.getEditor());
-		// allTableEditors.add(editor4.getEditor());
 	}
 
 	private void disposeAllTableEditors() {
@@ -266,6 +230,8 @@ public class ObjectAttributeTable extends CustomTable {
 				addTableEditor(oati);
 			}
 		}
+		getParentObjectRepositoryView().toggleAddAttributeButton(true);
+		getParentObjectRepositoryView().toggleDeleteAttributeButton(false);
 	}
 
 	public ObjectRepositoryView getParentObjectRepositoryView() {
