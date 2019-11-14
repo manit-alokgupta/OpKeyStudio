@@ -73,7 +73,8 @@ public class ObjectRepositoryApi {
 	}
 
 	private void addObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) throws SQLException {
-
+		String query = new QueryMaker().createInsertQuery(objectAttributeProperty, "or_object_properties", null);
+		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	private void updateORObject(ORObject orObject) throws SQLException {
