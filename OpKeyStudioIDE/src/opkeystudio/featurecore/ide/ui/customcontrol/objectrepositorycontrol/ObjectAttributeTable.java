@@ -136,6 +136,9 @@ public class ObjectAttributeTable extends CustomTable {
 
 	@SuppressWarnings("unchecked")
 	public List<ObjectAttributeProperty> getObjectPropertiesData() {
+		if (super.getControlData() == null) {
+			return new ArrayList<ObjectAttributeProperty>();
+		}
 		return (List<ObjectAttributeProperty>) super.getControlData();
 	}
 
@@ -220,7 +223,7 @@ public class ObjectAttributeTable extends CustomTable {
 		return selectedItem.getObjectAttributeData();
 	}
 
-	public void renderObjectAttributes() throws SQLException {
+	public void renderObjectAttributes() {
 		disposeAllTableEditors();
 		this.removeAll();
 		List<ObjectAttributeProperty> objectProperties = getObjectPropertiesData();

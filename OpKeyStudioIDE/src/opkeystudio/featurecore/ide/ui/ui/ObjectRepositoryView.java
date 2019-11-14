@@ -2,7 +2,6 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.InputDialog;
@@ -16,10 +15,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -33,12 +32,11 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
+import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 
 public class ObjectRepositoryView extends Composite {
-//	private Table table;
-	private ObjectAttributeTable table;
+	private ObjectAttributeTable objectAttributeTable;
+	private ObjectRepositoryTree objectRepositoryTree;
 	private ToolItem saveObject;
 	private ToolItem renameObject;
 	private ToolItem deleteObject;
@@ -60,6 +58,10 @@ public class ObjectRepositoryView extends Composite {
 		toggleDeleteButton(false);
 		toggleAddAttributeButton(false);
 		toggleDeleteAttributeButton(false);
+	}
+
+	public ObjectRepositoryTree getObjectRepositoryTree() {
+		return this.objectRepositoryTree;
 	}
 
 	public void ObjectRepositoryUI() {
@@ -108,10 +110,10 @@ public class ObjectRepositoryView extends Composite {
 		refreshObject.setText("Refresh");
 		refreshObject.setToolTipText("Refresh");
 
-		ObjectRepositoryTree tree = new ObjectRepositoryTree(composite_3, SWT.BORDER);
+		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER);
 //		Tree tree = new Tree(composite_3, SWT.BORDER);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		tree.setBounds(0, 0, 85, 85);
+		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		objectRepositoryTree.setBounds(0, 0, 85, 85);
 
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
 		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -134,17 +136,17 @@ public class ObjectRepositoryView extends Composite {
 		deleteObjectAttribute.setText("Delete");
 		deleteObjectAttribute.setToolTipText("Delete");
 
-		table = new ObjectAttributeTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION, this);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
+		objectAttributeTable = new ObjectAttributeTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION, this);
+		objectAttributeTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		objectAttributeTable.setHeaderVisible(true);
+		objectAttributeTable.setLinesVisible(true);
 		sashForm.setWeights(new int[] { 2, 1 });
 
-		tree.addSelectionListener(new SelectionListener() {
+		objectRepositoryTree.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) tree.getSelection()[0];
+				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) objectRepositoryTree.getSelection()[0];
 				renderObjectAttributeProperty(item);
 				if (item.getObjectRepository() != null) {
 					toggleDeleteButton(true);
@@ -165,11 +167,11 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
-		table.addSelectionListener(new SelectionListener() {
+		objectAttributeTable.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ObjectAttributeTableItem oati = (ObjectAttributeTableItem) table.getSelection()[0];
+				ObjectAttributeTableItem oati = (ObjectAttributeTableItem) objectAttributeTable.getSelection()[0];
 				System.out.println(oati.getObjectAttributeData().getProperty());
 				deleteObjectAttribute.setEnabled(true);
 			}
@@ -189,11 +191,11 @@ public class ObjectRepositoryView extends Composite {
 				if (!result) {
 					return;
 				}
-				List<ORObject> allors = tree.getObjectRepositoriesData();
+				List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 				try {
 					new ObjectRepositoryApi().saveORObjects(allors);
 					toggleSaveButton(false);
-					tree.renderObjectRepositories();
+					objectRepositoryTree.renderObjectRepositories();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -211,7 +213,7 @@ public class ObjectRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
+				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 				ORObject obRepo = selectedTreeItem.getObjectRepository();
 				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename",
 						"Enter name to rename", obRepo.getName(), null);
@@ -227,7 +229,7 @@ public class ObjectRepositoryView extends Composite {
 				obRepo.setName(input.getValue());
 				obRepo.setModified(true);
 				toggleSaveButton(true);
-				tree.refreshObjectRepositories();
+				objectRepositoryTree.refreshObjectRepositories();
 			}
 
 			@Override
@@ -241,7 +243,7 @@ public class ObjectRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				toggleSaveButton(false);
-				tree.renderObjectRepositories();
+				objectRepositoryTree.renderObjectRepositories();
 			}
 
 			@Override
@@ -260,12 +262,12 @@ public class ObjectRepositoryView extends Composite {
 				if (!result) {
 					return;
 				}
-				ObjectRepositoryTreeItem selectedTreeItem = tree.getSelectedTreeItem();
+				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 				ORObject obRepo = selectedTreeItem.getObjectRepository();
 				System.out.println("Deleting.. " + obRepo.getObject_id());
 				obRepo.setDeleted(true);
 				toggleSaveButton(true);
-				tree.refreshObjectRepositories();
+				objectRepositoryTree.refreshObjectRepositories();
 			}
 
 			@Override
@@ -282,20 +284,34 @@ public class ObjectRepositoryView extends Composite {
 				if (!result) {
 					return;
 				}
-				ObjectAttributeProperty selectedProperty = table.getSelectedObjectAttributeProperty();
+				ObjectAttributeProperty selectedProperty = objectAttributeTable.getSelectedObjectAttributeProperty();
 				System.out.println("Deleting " + selectedProperty.getOr_id());
 				selectedProperty.setDeleted(true);
-
-				try {
-					table.renderObjectAttributes();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				objectAttributeTable.renderObjectAttributes();
 				toggleSaveButton(true);
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
+		addObjectAttribute.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ORObject orobject = getObjectRepositoryTree().getSelectedORObject();
+				if (orobject != null) {
+					ObjectAttributeProperty attrProp = new ORObjectMaker().getNewObjectAttributeProperty(orobject);
+					objectAttributeTable.getObjectPropertiesData().add(attrProp);
+					objectAttributeTable.renderObjectAttributes();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -331,8 +347,8 @@ public class ObjectRepositoryView extends Composite {
 					item.getObjectRepository().setObjectAttributesProperty(
 							new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 				}
-				table.setControlData(item.getObjectRepository().getObjectAttributesProperty());
-				table.renderObjectAttributes();
+				objectAttributeTable.setControlData(item.getObjectRepository().getObjectAttributesProperty());
+				objectAttributeTable.renderObjectAttributes();
 			} catch (JsonParseException e1) {
 				e1.printStackTrace();
 			} catch (JsonMappingException e1) {

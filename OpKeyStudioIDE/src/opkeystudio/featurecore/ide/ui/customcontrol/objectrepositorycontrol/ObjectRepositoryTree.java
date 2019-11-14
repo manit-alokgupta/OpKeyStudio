@@ -91,6 +91,11 @@ public class ObjectRepositoryTree extends CustomTree {
 		return (ObjectRepositoryTreeItem) this.getSelection()[0];
 	}
 
+	public ORObject getSelectedORObject() {
+		ObjectRepositoryTreeItem treeItem = getSelectedTreeItem();
+		return treeItem.getObjectRepository();
+	}
+
 	public void renderObjectRepositories() {
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
@@ -102,8 +107,7 @@ public class ObjectRepositoryTree extends CustomTree {
 			rootNode.setText(artifact.getName());
 			rootNode.setExpanded(true);
 			// addIcon(rootNode);
-			List<ORObject> objectRepositories = new ObjectRepositoryApi()
-					.getAllObjects(artifact.getId().trim());
+			List<ORObject> objectRepositories = new ObjectRepositoryApi().getAllObjects(artifact.getId().trim());
 			setObjectRepositoriesData(objectRepositories);
 			List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
 			for (ORObject objectRepository : objectRepositories) {
