@@ -24,17 +24,19 @@ import org.eclipse.swt.widgets.TableColumn;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
+import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 
 public class ObjectAttributeTable extends CustomTable {
 	private boolean paintCalled = false;
 	private ObjectAttributeTable thisTable;
+	private ObjectRepositoryView parentObjectRepositoryView;
 
-	public ObjectAttributeTable(Composite parent, int style) {
+	public ObjectAttributeTable(Composite parent, int style, ObjectRepositoryView parentView) {
 		super(parent, style);
 		init();
 		thisTable = this;
+		this.setParentObjectRepositoryView(parentView);
 	}
 
 	private void init() {
@@ -101,6 +103,8 @@ public class ObjectAttributeTable extends CustomTable {
 					@Override
 					public void modifyText(ModifyEvent e) {
 						selectedTableItem.setText(selectedColumn, text.getText());
+						objectAttributeProperty.setModified(true);
+						getParentObjectRepositoryView().toggleSaveButton(true);
 						if (selectedColumn == 0) {
 							objectAttributeProperty.setProperty(text.getText());
 						}
@@ -262,5 +266,13 @@ public class ObjectAttributeTable extends CustomTable {
 				addTableEditor(oati);
 			}
 		}
+	}
+
+	public ObjectRepositoryView getParentObjectRepositoryView() {
+		return parentObjectRepositoryView;
+	}
+
+	public void setParentObjectRepositoryView(ObjectRepositoryView parentObjectRepositoryView) {
+		this.parentObjectRepositoryView = parentObjectRepositoryView;
 	}
 }
