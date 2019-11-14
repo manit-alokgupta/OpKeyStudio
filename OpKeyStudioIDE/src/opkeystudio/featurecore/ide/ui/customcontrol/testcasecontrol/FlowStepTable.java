@@ -15,6 +15,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -112,6 +113,7 @@ public class FlowStepTable extends CustomTable {
 			public void mouseDown(MouseEvent e) {
 				thisTable.deselectAll();
 				thisTable.setSelection(new TableItem[] { item });
+				thisTable.notifyListeners(SWT.Selection, null);
 			}
 
 			@Override
@@ -172,7 +174,7 @@ public class FlowStepTable extends CustomTable {
 				}
 			}
 		}
-		this.setSelection(0);
+		selectRow(0);
 	}
 
 	public void refreshFlowSteps() {
@@ -199,7 +201,12 @@ public class FlowStepTable extends CustomTable {
 				}
 			}
 		}
-		this.setSelection(0);
+		selectRow(0);
+	}
+
+	private void selectRow(int index) {
+		this.setSelection(index);
+		this.notifyListeners(SWT.Selection, null);
 	}
 
 	public void moveStepUp(FlowStep fstep1, FlowStep fstep2) {
@@ -210,7 +217,7 @@ public class FlowStepTable extends CustomTable {
 		fstep1.setPosition(fpos2);
 		fstep2.setPosition(fpos1);
 		refreshFlowSteps();
-		this.setSelection(selectedIndex - 1);
+		selectRow(selectedIndex - 1);
 	}
 
 	public void moveStepDown(FlowStep fstep1, FlowStep fstep2) {
@@ -221,7 +228,7 @@ public class FlowStepTable extends CustomTable {
 		fstep1.setPosition(fpos2);
 		fstep2.setPosition(fpos1);
 		refreshFlowSteps();
-		this.setSelection(selectedIndex + 1);
+		selectRow(selectedIndex + 1);
 	}
 
 	public void deleteStep(FlowStep flowStep)

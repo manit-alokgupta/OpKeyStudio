@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
