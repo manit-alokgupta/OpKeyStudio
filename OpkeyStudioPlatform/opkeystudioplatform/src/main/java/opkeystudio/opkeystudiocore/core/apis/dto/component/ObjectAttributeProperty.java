@@ -12,9 +12,9 @@ public class ObjectAttributeProperty extends Modified {
 	private String or_id;
 	@DBField
 	private String property;
-	
+
 	private int clustering_key;
-	
+
 	@DBField
 	private int position;
 	@DBField
@@ -31,6 +31,19 @@ public class ObjectAttributeProperty extends Modified {
 	private boolean isused;
 	@DBField
 	private String f_id;
+
+	public void init(String propertyId, String objectId, String or_id, String fId, String property, String value,
+			String dataType, boolean iseditable) {
+		this.setProperty_id(propertyId);
+		this.setObject_id(objectId);
+		this.setOr_id(or_id);
+		this.setF_id(fId);
+		this.setProperty(property);
+		this.setValue(value);
+		this.setDatatype(dataType);
+		this.setIseditable(iseditable);
+
+	}
 
 	public String getDatatype() {
 		return datatype;
