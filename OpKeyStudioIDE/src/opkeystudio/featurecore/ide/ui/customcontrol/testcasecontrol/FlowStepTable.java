@@ -12,8 +12,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -25,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
+import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -33,10 +32,11 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class FlowStepTable extends CustomTable {
 	private FlowStepTable thisTable = this;
-
-	public FlowStepTable(Composite parent, int style) {
+	private TestCaseView parentTestCaseView;
+	public FlowStepTable(Composite parent, int style,TestCaseView parentView) {
 		super(parent, style);
 		init();
+		this.setParentTestCaseView(parentView);
 	}
 
 	private void init() {
@@ -248,5 +248,13 @@ public class FlowStepTable extends CustomTable {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public TestCaseView getParentTestCaseView() {
+		return parentTestCaseView;
+	}
+
+	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
+		this.parentTestCaseView = parentTestCaseView;
 	}
 }

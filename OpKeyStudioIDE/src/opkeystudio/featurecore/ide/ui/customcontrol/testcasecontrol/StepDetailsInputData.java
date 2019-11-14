@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
+import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -25,10 +26,11 @@ public class StepDetailsInputData extends CustomTable {
 	private List<KeyWordInputArgument> keyWordInputArgs;
 	private List<FlowInputArgument> flowInputArgs;
 	private List<ComponentInputArgument> componentInputArgs;
-
-	public StepDetailsInputData(Composite parent, int style) {
+	private TestCaseView parentTestCaseView;
+	public StepDetailsInputData(Composite parent, int style,TestCaseView parentView) {
 		super(parent, style);
 		init();
+		this.setParentTestCaseView(parentView);
 	}
 
 	private void init() {
@@ -138,6 +140,14 @@ public class StepDetailsInputData extends CustomTable {
 						flowInputArg.getStaticvalue() });
 			}
 		}
+	}
+
+	public TestCaseView getParentTestCaseView() {
+		return parentTestCaseView;
+	}
+
+	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
+		this.parentTestCaseView = parentTestCaseView;
 	}
 
 }

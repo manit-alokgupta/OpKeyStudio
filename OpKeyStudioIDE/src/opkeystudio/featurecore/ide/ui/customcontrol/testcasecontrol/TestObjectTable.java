@@ -8,14 +8,16 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class TestObjectTable extends CustomTable {
 	private List<ORObject> orobject;
-
-	public TestObjectTable(Composite parent, int style) {
+	private TestCaseView parentTestCaseView;
+	public TestObjectTable(Composite parent, int style,TestCaseView parentView) {
 		super(parent, style);
 		init();
+		this.setParentTestCaseView(parentView);
 	}
 
 	private void init() {
@@ -44,5 +46,13 @@ public class TestObjectTable extends CustomTable {
 			CustomTableItem cti = new CustomTableItem(this, 0);
 			cti.setText(new String[] { "Object", orobject.getName(), "", "" });
 		}
+	}
+
+	public TestCaseView getParentTestCaseView() {
+		return parentTestCaseView;
+	}
+
+	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
+		this.parentTestCaseView = parentTestCaseView;
 	}
 }

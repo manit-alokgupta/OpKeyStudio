@@ -4,20 +4,20 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
@@ -35,10 +35,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.jface.text.TextViewer;
-import org.eclipse.swt.custom.CLabel;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable table;
@@ -176,7 +172,7 @@ public class TestCaseView extends Composite {
 		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		itemRefresh.setText("Refresh");
 
-		table = new FlowStepTable(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION);
+		table = new FlowStepTable(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -210,11 +206,11 @@ public class TestCaseView extends Composite {
 		expanditemStepIno.setControl(composite_5);
 		expanditemStepIno.setHeight(expanditemStepIno.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		composite_5.setLayout(new GridLayout(2, false));
-		
+
 		stepInfoLabel = new CLabel(composite_5, SWT.NONE);
 		stepInfoLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		stepInfoLabel.setText("New Label");
-		
+
 		stepInfoImage = new Label(composite_5, SWT.NONE);
 		stepInfoImage.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/sample.png"));
 		GridData gd_stepInfoImage = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
@@ -262,7 +258,7 @@ public class TestCaseView extends Composite {
 		expenditemInputData.setHeight(expenditemInputData.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		composite_7.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		InputDataTable = new StepDetailsInputData(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		InputDataTable = new StepDetailsInputData(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
 		InputDataTable.setHeaderVisible(true);
 		InputDataTable.setLinesVisible(true);
 
@@ -342,7 +338,7 @@ public class TestCaseView extends Composite {
 		SashForm sashForm_1 = new SashForm(composite_2, SWT.NONE);
 		sashForm_1.setOrientation(SWT.VERTICAL);
 
-		testObjectTable = new TestObjectTable(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
+		testObjectTable = new TestObjectTable(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION, this);
 		testObjectTable.setLinesVisible(true);
 		testObjectTable.setHeaderVisible(true);
 		testObjectTable.setLinesVisible(true);
@@ -367,7 +363,7 @@ public class TestCaseView extends Composite {
 		Composite composite_13 = new Composite(sashForm_2, SWT.NONE);
 		composite_13.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		inputDataTable = new InputDataTable(composite_13, SWT.BORDER | SWT.FULL_SELECTION);
+		inputDataTable = new InputDataTable(composite_13, SWT.BORDER | SWT.FULL_SELECTION, this);
 		inputDataTable.setHeaderVisible(true);
 		inputDataTable.setLinesVisible(true);
 
@@ -414,7 +410,7 @@ public class TestCaseView extends Composite {
 		outputDataTabItem.setControl(composite_4);
 		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		outputDataTable = new OutputDataTable(composite_4, SWT.BORDER | SWT.FULL_SELECTION);
+		outputDataTable = new OutputDataTable(composite_4, SWT.BORDER | SWT.FULL_SELECTION, this);
 		outputDataTable.setHeaderVisible(true);
 		outputDataTable.setLinesVisible(true);
 
@@ -427,7 +423,7 @@ public class TestCaseView extends Composite {
 		Composite composite_121 = new Composite(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_121);
 		composite_121.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		StyledText styledText = new StyledText(composite_121, SWT.BORDER);
 		styledText.setMouseNavigatorEnabled(true);
 		cursor.addSelectionListener(new SelectionListener() {
@@ -516,41 +512,41 @@ public class TestCaseView extends Composite {
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			exception=e.getStackTrace().toString();
+			exception = e.getStackTrace().toString();
 		}
 
 		addButtonListeners();
 	}
 
-	private void toggleAddButton(boolean status) {
+	public void toggleAddButton(boolean status) {
 		itemAdd.setEnabled(status);
 	}
 
-	private void toggleRecordButton(boolean status) {
+	public void toggleRecordButton(boolean status) {
 		itemRecord.setEnabled(status);
 	}
 
-	private void toggleRunnowButton(boolean status) {
+	public void toggleRunnowButton(boolean status) {
 		itemRunnow.setEnabled(status);
 	}
 
-	private void toggleMoveupButton(boolean status) {
+	public void toggleMoveupButton(boolean status) {
 		itemMoveup.setEnabled(status);
 	}
 
-	private void toggleMovedownButton(boolean status) {
+	public void toggleMovedownButton(boolean status) {
 		itemMovedown.setEnabled(status);
 	}
 
-	private void toggleRefreshButton(boolean status) {
+	public void toggleRefreshButton(boolean status) {
 		itemRefresh.setEnabled(status);
 	}
 
-	private void toggleSaveButton(boolean status) {
+	public void toggleSaveButton(boolean status) {
 		itemSave.setEnabled(status);
 	}
 
-	private void toggleDeleteButton(boolean status) {
+	public void toggleDeleteButton(boolean status) {
 		itemDelete.setEnabled(status);
 	}
 
