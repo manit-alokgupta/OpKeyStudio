@@ -258,23 +258,7 @@ public class ObjectRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-				obRepo = selectedTreeItem.getObjectRepository();
-				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename",
-						"Enter name to rename", obRepo.getName(), null);
-
-				if (input.open() != InputDialog.OK) {
-					return;
-				}
-				if (input.getValue().trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input",
-							"Please Enter Some Value");
-					return;
-				}
-				obRepo.setName(input.getValue());
-				obRepo.setModified(true);
-				toggleSaveButton(true);
-				objectRepositoryTree.refreshObjectRepositories();
+				renameFunction();
 			}
 
 			@Override
@@ -301,18 +285,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
-						"Please press OK to Delete");
-				if (!result) {
-					return;
-				}
-				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-				obRepo = selectedTreeItem.getObjectRepository();
-				System.out.println("Deleting.. " + obRepo.getObject_id());
-				obRepo.setDeleted(true);
-				toggleSaveButton(true);
-				objectRepositoryTree.refreshObjectRepositories();
+				deleteFunction();
 			}
 
 			@Override
@@ -412,18 +385,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
-						"Please press OK to Delete");
-				if (!result) {
-					return;
-				}
-				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-				ORObject obRepo = selectedTreeItem.getObjectRepository();
-				System.out.println("Deleting.. " + obRepo.getObject_id());
-				obRepo.setDeleted(true);
-				toggleSaveButton(true);
-				objectRepositoryTree.refreshObjectRepositories();
-
+				deleteFunction();
 			}
 
 			@Override
@@ -437,24 +399,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-				ORObject obRepo = selectedTreeItem.getObjectRepository();
-				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename",
-						"Enter name to rename", obRepo.getName(), null);
-
-				if (input.open() != InputDialog.OK) {
-					return;
-				}
-				if (input.getValue().trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input",
-							"Please Enter Some Value");
-					return;
-				}
-				obRepo.setName(input.getValue());
-				obRepo.setModified(true);
-				toggleSaveButton(true);
-				objectRepositoryTree.refreshObjectRepositories();
-
+				renameFunction();
 			}
 
 			@Override
@@ -505,6 +450,39 @@ public class ObjectRepositoryView extends Composite {
 
 	public void toggleDeleteMenuItem(boolean status) {
 		deleteMenuItem.setEnabled(status);
+	}
+
+	public void renameFunction() {
+		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
+		ORObject obRepo = selectedTreeItem.getObjectRepository();
+		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename", "Enter name to rename",
+				obRepo.getName(), null);
+
+		if (input.open() != InputDialog.OK) {
+			return;
+		}
+		if (input.getValue().trim().isEmpty()) {
+			MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input", "Please Enter Some Value");
+			return;
+		}
+		obRepo.setName(input.getValue());
+		obRepo.setModified(true);
+		toggleSaveButton(true);
+		objectRepositoryTree.refreshObjectRepositories();
+	}
+
+	public void deleteFunction() {
+		boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
+				"Please press OK to Delete");
+		if (!result) {
+			return;
+		}
+		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
+		obRepo = selectedTreeItem.getObjectRepository();
+		System.out.println("Deleting.. " + obRepo.getObject_id());
+		obRepo.setDeleted(true);
+		toggleSaveButton(true);
+		objectRepositoryTree.refreshObjectRepositories();
 	}
 
 	private void renderObjectAttributeProperty(ObjectRepositoryTreeItem item) {

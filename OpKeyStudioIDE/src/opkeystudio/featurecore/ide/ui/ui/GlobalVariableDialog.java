@@ -47,7 +47,7 @@ public class GlobalVariableDialog extends Dialog {
 	private ToolItem refreshtoolitem;
 
 	/**
-	 * Create the dialog.
+	 * Create the dialog. 
 	 * 
 	 * @param parent
 	 * @param style
