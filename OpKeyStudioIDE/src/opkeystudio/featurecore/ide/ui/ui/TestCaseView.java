@@ -118,7 +118,7 @@ public class TestCaseView extends Composite {
 
 		Composite composite_11 = new Composite(testCaseStepsHolder, SWT.NONE);
 		composite_11.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		composite_11.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		composite_11.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		composite_11.setLayout(new GridLayout(1, false));
 
 		ToolBar toolBar_1 = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
@@ -217,7 +217,7 @@ public class TestCaseView extends Composite {
 		stepInfoImage = new Label(composite_5, SWT.NONE);
 		stepInfoImage.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/sample.png"));
 		GridData gd_stepInfoImage = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_stepInfoImage.widthHint = 94;
+		gd_stepInfoImage.widthHint = 88;
 		stepInfoImage.setLayoutData(gd_stepInfoImage);
 
 		expanditemTestObject = new ExpandItem(expandBar, SWT.NONE);
@@ -426,6 +426,9 @@ public class TestCaseView extends Composite {
 		Composite composite_121 = new Composite(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_121);
 		composite_121.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		StyledText styledText = new StyledText(composite_121, SWT.BORDER);
+		styledText.setMouseNavigatorEnabled(true);
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
