@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -33,7 +35,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 public class FlowStepTable extends CustomTable {
 	private FlowStepTable thisTable = this;
 	private TestCaseView parentTestCaseView;
-	public FlowStepTable(Composite parent, int style,TestCaseView parentView) {
+
+	public FlowStepTable(Composite parent, int style, TestCaseView parentView) {
 		super(parent, style);
 		init();
 		this.setParentTestCaseView(parentView);
@@ -85,12 +88,11 @@ public class FlowStepTable extends CustomTable {
 		return editor;
 	}
 
+	private List<Control> allTableEditors = new ArrayList<Control>();
+
 	private void addTableEditor(FlowStepTableItem item) {
 		FlowStep attrProperty = item.getFlowStepeData();
 		TableEditor editor1 = getTableEditor();
-		TableEditor editor2 = getTableEditor();
-		TableEditor editor3 = getTableEditor();
-		TableEditor editor4 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
 		button.setSelection(attrProperty.isShouldrun());
 		button.addMouseListener(new MouseListener() {
@@ -114,9 +116,17 @@ public class FlowStepTable extends CustomTable {
 			}
 		});
 		editor1.setEditor(button, item, 0);
+		this.allTableEditors.add(editor1.getEditor());
+	}
+
+	private void disposeAllTableEditors() {
+		for (Control controlEditor : this.allTableEditors) {
+			controlEditor.dispose();
+		}
 	}
 
 	public void renderFlowSteps() throws JsonParseException, JsonMappingException, SQLException, IOException {
+		disposeAllTableEditors();
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
@@ -161,6 +171,7 @@ public class FlowStepTable extends CustomTable {
 	}
 
 	public void refreshFlowSteps() {
+		disposeAllTableEditors();
 		this.removeAll();
 		List<FlowStep> flowSteps = getFlowStepsData();
 		Collections.sort(flowSteps);
