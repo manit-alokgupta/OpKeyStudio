@@ -48,7 +48,12 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
 	ArtifactTree artifactTree;
-	MenuItem mntmNew;
+	private MenuItem cutMenuItem;
+	private MenuItem copyMenuItem;
+	private MenuItem pasteMenuItem;
+	private MenuItem renameMenuItem;
+	private MenuItem deleteMenuItem;
+	private ORObject obRepo;
 
 	/**
 	 * Create the composite.
@@ -125,17 +130,25 @@ public class ObjectRepositoryView extends Composite {
 		Menu menu = new Menu(objectRepositoryTree);
 		objectRepositoryTree.setMenu(menu);
 
-		mntmNew = new MenuItem(menu, SWT.CASCADE);
-		mntmNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/cut.png"));
-		mntmNew.setText("Cut");
+		cutMenuItem = new MenuItem(menu, SWT.CASCADE);
+		cutMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/cut.png"));
+		cutMenuItem.setText("Cut");
 
-		MenuItem renameMenuItem = new MenuItem(menu, SWT.NONE);
-		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
-		renameMenuItem.setText("Copy");
+		copyMenuItem = new MenuItem(menu, SWT.NONE);
+		copyMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
+		copyMenuItem.setText("Copy");
 
-		MenuItem deleteMenuItem = new MenuItem(menu, SWT.NONE);
-		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
-		deleteMenuItem.setText("Paste");
+		pasteMenuItem = new MenuItem(menu, SWT.NONE);
+		pasteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
+		pasteMenuItem.setText("Paste");
+
+		renameMenuItem = new MenuItem(menu, SWT.NONE);
+		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+		renameMenuItem.setText("Rename");
+
+		deleteMenuItem = new MenuItem(menu, SWT.NONE);
+		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteMenuItem.setText("Delete");
 
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
 		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -174,10 +187,20 @@ public class ObjectRepositoryView extends Composite {
 					toggleDeleteButton(true);
 					toggleRenameButton(true);
 					toggleAddAttributeButton(true);
+					toggleRenameMenuItem(true);
+					toggleCopyMenuItem(true);
+					togglePasteMenuItem(true);
+					toggleCutMenuItem(true);
+					toggleDeleteMenuItem(true);
 				} else {
 					toggleDeleteButton(false);
 					toggleRenameButton(false);
 					toggleAddAttributeButton(false);
+					toggleRenameMenuItem(false);
+					toggleCopyMenuItem(false);
+					togglePasteMenuItem(false);
+					toggleCutMenuItem(false);
+					toggleDeleteMenuItem(false);
 				}
 
 			}
@@ -236,7 +259,7 @@ public class ObjectRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 
 				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-				ORObject obRepo = selectedTreeItem.getObjectRepository();
+				obRepo = selectedTreeItem.getObjectRepository();
 				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename",
 						"Enter name to rename", obRepo.getName(), null);
 
@@ -285,7 +308,7 @@ public class ObjectRepositoryView extends Composite {
 					return;
 				}
 				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-				ORObject obRepo = selectedTreeItem.getObjectRepository();
+				obRepo = selectedTreeItem.getObjectRepository();
 				System.out.println("Deleting.. " + obRepo.getObject_id());
 				obRepo.setDeleted(true);
 				toggleSaveButton(true);
@@ -338,6 +361,108 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
+		copyMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
+				obRepo = selectedTreeItem.getObjectRepository();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		cutMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
+				obRepo = selectedTreeItem.getObjectRepository();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		pasteMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
+						"Please press OK to Delete");
+				if (!result) {
+					return;
+				}
+				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
+				ORObject obRepo = selectedTreeItem.getObjectRepository();
+				System.out.println("Deleting.. " + obRepo.getObject_id());
+				obRepo.setDeleted(true);
+				toggleSaveButton(true);
+				objectRepositoryTree.refreshObjectRepositories();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		renameMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
+				ORObject obRepo = selectedTreeItem.getObjectRepository();
+				InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename",
+						"Enter name to rename", obRepo.getName(), null);
+
+				if (input.open() != InputDialog.OK) {
+					return;
+				}
+				if (input.getValue().trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input",
+							"Please Enter Some Value");
+					return;
+				}
+				obRepo.setName(input.getValue());
+				obRepo.setModified(true);
+				toggleSaveButton(true);
+				objectRepositoryTree.refreshObjectRepositories();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	public void toggleSaveButton(boolean status) {
@@ -346,10 +471,12 @@ public class ObjectRepositoryView extends Composite {
 
 	public void toggleRenameButton(boolean status) {
 		renameObject.setEnabled(status);
+
 	}
 
 	public void toggleDeleteButton(boolean status) {
 		deleteObject.setEnabled(status);
+
 	}
 
 	public void toggleAddAttributeButton(boolean status) {
@@ -358,6 +485,26 @@ public class ObjectRepositoryView extends Composite {
 
 	public void toggleDeleteAttributeButton(boolean status) {
 		deleteObjectAttribute.setEnabled(status);
+	}
+
+	public void toggleCopyMenuItem(boolean status) {
+		copyMenuItem.setEnabled(status);
+	}
+
+	public void toggleCutMenuItem(boolean status) {
+		cutMenuItem.setEnabled(status);
+	}
+
+	public void toggleRenameMenuItem(boolean status) {
+		renameMenuItem.setEnabled(status);
+	}
+
+	public void togglePasteMenuItem(boolean status) {
+		pasteMenuItem.setEnabled(status);
+	}
+
+	public void toggleDeleteMenuItem(boolean status) {
+		deleteMenuItem.setEnabled(status);
 	}
 
 	private void renderObjectAttributeProperty(ObjectRepositoryTreeItem item) {
