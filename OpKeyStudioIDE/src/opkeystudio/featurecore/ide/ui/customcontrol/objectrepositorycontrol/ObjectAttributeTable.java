@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -60,6 +64,60 @@ public class ObjectAttributeTable extends CustomTable {
 			}
 		});
 
+		TableCursor cursor = new TableCursor(this, 0);
+		ControlEditor controlEditor = new ControlEditor(cursor);
+		controlEditor.grabHorizontal = true;
+		controlEditor.grabVertical = true;
+		cursor.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// thisTable.deselectAll();
+				ObjectAttributeTableItem selectedTableItem = (ObjectAttributeTableItem) cursor.getRow();
+				ObjectAttributeProperty objectAttributeProperty = selectedTableItem.getObjectAttributeData();
+				int selectedColumn = cursor.getColumn();
+				CustomText text = new CustomText(cursor, 0);
+				if (selectedColumn == 0) {
+					text.setText(objectAttributeProperty.getProperty());
+				}
+				if (selectedColumn == 1) {
+					text.setText(objectAttributeProperty.getValue());
+				}
+				text.addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						text.dispose();
+					}
+
+					@Override
+					public void focusGained(FocusEvent e) {
+
+					}
+				});
+
+				text.addModifyListener(new ModifyListener() {
+
+					@Override
+					public void modifyText(ModifyEvent e) {
+						selectedTableItem.setText(selectedColumn, text.getText());
+						if (selectedColumn == 0) {
+							objectAttributeProperty.setProperty(text.getText());
+						}
+						if (selectedColumn == 1) {
+							objectAttributeProperty.setValue(text.getText());
+						}
+					}
+				});
+				controlEditor.setEditor(text);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	@Override
@@ -166,19 +224,19 @@ public class ObjectAttributeTable extends CustomTable {
 			}
 		});
 
-		editor4.setEditor(propertyText, item, 0);
-		editor3.setEditor(valueText, item, 1);
+		// editor4.setEditor(propertyText, item, 0);
+		// editor3.setEditor(valueText, item, 1);
 		editor2.setEditor(isUsedButton, item, 2);
 		editor1.setEditor(isRegexButton, item, 3);
 
 		allTableEditors.add(editor1.getEditor());
 		allTableEditors.add(editor2.getEditor());
-		allTableEditors.add(editor3.getEditor());
-		allTableEditors.add(editor4.getEditor());
+		// allTableEditors.add(editor3.getEditor());
+		// allTableEditors.add(editor4.getEditor());
 	}
 
 	private void disposeAllTableEditors() {
-		for(Control editor:allTableEditors) {
+		for (Control editor : allTableEditors) {
 			editor.dispose();
 		}
 	}
@@ -199,7 +257,7 @@ public class ObjectAttributeTable extends CustomTable {
 		for (ObjectAttributeProperty attributeProperty : objectProperties) {
 			if (attributeProperty.isDeleted() == false) {
 				ObjectAttributeTableItem oati = new ObjectAttributeTableItem(this, 0);
-				oati.setText(new String[] { "", "", "", "" });
+				oati.setText(new String[] { attributeProperty.getProperty(), attributeProperty.getValue(), "", "" });
 				oati.setObjectAttributeData(attributeProperty);
 				addTableEditor(oati);
 			}

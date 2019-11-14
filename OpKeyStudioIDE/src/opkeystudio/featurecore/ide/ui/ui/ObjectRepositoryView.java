@@ -193,6 +193,7 @@ public class ObjectRepositoryView extends Composite {
 
 			}
 		});
+		
 		saveObject.addSelectionListener(new SelectionListener() {
 
 			@Override
