@@ -86,6 +86,12 @@ public class GlobalVariableDialog extends Dialog {
 		shlGlobalVariable.setSize(546, 443);
 		shlGlobalVariable.setText("Global Variable");
 		shlGlobalVariable.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		Rectangle parentSize = getParent().getBounds();
+		Rectangle shellSize = shlGlobalVariable.getBounds();
+		int locationX = (parentSize.width - shellSize.width)/2+parentSize.x;
+		int locationY = (parentSize.height - shellSize.height)/2+parentSize.y;
+		shlGlobalVariable.setLocation(new Point(locationX, locationY));
 
 		Composite composite = new Composite(shlGlobalVariable, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));

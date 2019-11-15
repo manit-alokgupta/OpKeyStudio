@@ -19,7 +19,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.wb.swt.ResourceManager;
 
@@ -48,6 +51,7 @@ public class LoginDialog extends Dialog {
 	 * @return the result
 	 */
 	public Object open() {
+		
 		createContents();
 		shlLoginToOpkey.open();
 		shlLoginToOpkey.layout();
@@ -59,7 +63,17 @@ public class LoginDialog extends Dialog {
 		}
 		return result;
 	}
-
+	
+	
+	public static Shell getScreenCentredShell() {
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		Shell centreShell = new Shell(display);
+		Point size = centreShell.computeSize(-1, -1);
+		Rectangle screen = display.getMonitors()[0].getBounds();
+		centreShell.setBounds((screen.width - size.x) / 2, (screen.height - size.y) / 2, size.x, size.y);
+		return centreShell;
+	}
+	
 	/**
 	 * Create contents of the dialog.
 	 */
@@ -68,6 +82,13 @@ public class LoginDialog extends Dialog {
 		shlLoginToOpkey.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlLoginToOpkey.setSize(466, 333);
 		shlLoginToOpkey.setText("Login to OpKey");
+		
+		Rectangle parentSize = getParent().getBounds();
+		Rectangle shellSize = shlLoginToOpkey.getBounds();
+		int locationX = (parentSize.width - shellSize.width)/2+parentSize.x;
+		int locationY = (parentSize.height - shellSize.height)/2+parentSize.y;
+		shlLoginToOpkey.setLocation(new Point(locationX, locationY));
+		
 		Composite composite = new Composite(shlLoginToOpkey, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		composite.setBounds(10, 0, 434, 64);
