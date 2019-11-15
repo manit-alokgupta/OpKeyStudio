@@ -35,10 +35,11 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTree;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class TestCaseView extends Composite {
-	private FlowStepTable table;
+	private FlowStepTable flowStepTable;
 	private OutputDataTable outputDataTable;
 	private TestObjectTable testObjectTable;
 	private InputDataTable inputDataTable;
@@ -174,10 +175,10 @@ public class TestCaseView extends Composite {
 		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		itemRefresh.setText("Refresh");
 
-		table = new FlowStepTable(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
-		table.setLinesVisible(true);
-		table.setHeaderVisible(true);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		flowStepTable = new FlowStepTable(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
+		flowStepTable.setLinesVisible(true);
+		flowStepTable.setHeaderVisible(true);
+		flowStepTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Composite testCaseArgumentsHolder = new Composite(testCaseSashForm, SWT.NONE);
 		testCaseArgumentsHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
@@ -416,7 +417,7 @@ public class TestCaseView extends Composite {
 		outputDataTable.setHeaderVisible(true);
 		outputDataTable.setLinesVisible(true);
 
-		TableCursor cursor = new TableCursor(table, 0);
+		TableCursor cursor = new TableCursor(flowStepTable, 0);
 		testCaseSashForm.setWeights(new int[] { 402, 222 });
 
 		TabItem tbtmNewItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
@@ -432,8 +433,8 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				table.deselectAll();
-				table.setSelection(new TableItem[] { cursor.getRow() });
+				flowStepTable.deselectAll();
+				flowStepTable.setSelection(new TableItem[] { cursor.getRow() });
 				int selectedColumn = cursor.getColumn();
 				System.out.println("Column " + selectedColumn);
 				if (selectedColumn == 1) {
@@ -456,11 +457,11 @@ public class TestCaseView extends Composite {
 			}
 		});
 
-		table.addSelectionListener(new SelectionListener() {
+		flowStepTable.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				FlowStep flowStep = table.getSelectedFlowStep();
+				FlowStep flowStep = flowStepTable.getSelectedFlowStep();
 				setSelectedFlowStep(flowStep);
 				if (flowStep != null) {
 					if (flowStep.getKeyword() != null) {
@@ -485,13 +486,13 @@ public class TestCaseView extends Composite {
 					testObjectTable.renderORObjectTable();
 
 					toggleDeleteButton(true);
-					if (table.getPrevFlowStep() == null) {
+					if (flowStepTable.getPrevFlowStep() == null) {
 						toggleMoveupButton(false);
 					} else {
 						toggleMoveupButton(true);
 					}
 
-					if (table.getNextFlowStep() == null) {
+					if (flowStepTable.getNextFlowStep() == null) {
 						toggleMovedownButton(false);
 					} else {
 						toggleMovedownButton(true);
@@ -511,7 +512,7 @@ public class TestCaseView extends Composite {
 		});
 
 		try {
-			table.renderFlowSteps();
+			flowStepTable.renderFlowSteps();
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -557,7 +558,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -602,7 +602,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				table.moveStepUp(table.getSelectedFlowStep(), table.getPrevFlowStep());
+				flowStepTable.moveStepUp(flowStepTable.getSelectedFlowStep(), flowStepTable.getPrevFlowStep());
 
 			}
 
@@ -616,7 +616,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				table.moveStepDown(table.getSelectedFlowStep(), table.getNextFlowStep());
+				flowStepTable.moveStepDown(flowStepTable.getSelectedFlowStep(), flowStepTable.getNextFlowStep());
 			}
 
 			@Override
@@ -631,7 +631,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					table.deleteStep(table.getSelectedFlowStep());
+					flowStepTable.deleteStep(flowStepTable.getSelectedFlowStep());
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -650,8 +650,14 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
+				try {
+					flowStepTable.renderFlowSteps();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				toggleSaveButton(false);
 			}
 
 			@Override
@@ -666,7 +672,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					table.renderFlowSteps();
+					flowStepTable.renderFlowSteps();
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
