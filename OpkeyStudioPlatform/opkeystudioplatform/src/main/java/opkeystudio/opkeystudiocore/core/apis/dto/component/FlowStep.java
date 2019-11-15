@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
@@ -15,9 +16,9 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private boolean continueonerror;
 	@DBField
 	private String flow_id;
-	
+
 	private int clustering_key;
-	
+
 	@DBField
 	private String flow_stepid;
 	@DBField
@@ -33,11 +34,11 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	@DBField
 	private FunctionLibraryComponent functionLibraryComponent;
 	@DBField
-	private List<ORObject> orObject;
+	private List<ORObject> orObject = new ArrayList<ORObject>();
 	@DBField
-	private List<FlowInputArgument> flowInputArgs;
+	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
 	@DBField
-	private List<FlowOutputArgument> flowOutputArgs;
+	private List<FlowOutputArgument> flowOutputArgs = new ArrayList<FlowOutputArgument>();
 	@DBField
 	private String component_id;
 	@DBField
