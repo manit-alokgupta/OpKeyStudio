@@ -205,6 +205,9 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
 		return (ArtifactTreeItem) this.getSelection()[0];
 	}
 

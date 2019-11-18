@@ -205,6 +205,9 @@ public class FlowStepTable extends CustomTable {
 	}
 
 	private void selectRow(int index) {
+		if (this.getItemCount() == 0) {
+			return;
+		}
 		this.setSelection(index);
 		this.notifyListeners(SWT.Selection, null);
 	}
