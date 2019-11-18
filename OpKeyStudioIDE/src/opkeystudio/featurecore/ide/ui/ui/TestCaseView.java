@@ -2,6 +2,8 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -40,6 +42,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsI
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
@@ -591,6 +594,36 @@ public class TestCaseView extends Composite {
 			}
 		});
 
+		testObjectTree.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FlowStep flowStep = flowStepTable.getSelectedFlowStep();
+				if (flowStep != null) {
+					ORObject orobject = testObjectTree.getSelectedORObject();
+					if (flowStep.getOrObject().size() > 0) {
+						List<ORObject> orobjects = new ArrayList<>();
+						orobjects.add(orobject);
+						flowStep.setOrObject(orobjects);
+						flowStep.isModified();
+						List<FlowInputArgument> finpargs = flowStep.getFlowInputArgs();
+						for (FlowInputArgument finparg : finpargs) {
+							finparg.setModified(true);
+							finparg.setStaticobjectid(orobject.getObject_id());
+							break;
+						}
+						renderTestObjectTable(flowStep, false);
+						toggleSaveButton(true);
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		try {
 			flowStepTable.renderFlowSteps();
 		} catch (SQLException | IOException e) {
@@ -622,11 +655,8 @@ public class TestCaseView extends Composite {
 
 			outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
 
-			testObjectTable.setOrobject(flowStep.getOrObject());
-			testObjectTable.renderORObjectTable();
-			if (flowStep.getOrObject().size() > 0) {
-				testObjectTree.fetchAndRenderORTree();
-			}
+			renderTestObjectTable(flowStep, true);
+
 			toggleDeleteButton(true);
 			if (flowStepTable.getPrevFlowStep() == null) {
 				toggleMoveupButton(false);
@@ -643,6 +673,16 @@ public class TestCaseView extends Composite {
 			toggleDeleteButton(false);
 			toggleMoveupButton(false);
 			toggleMovedownButton(false);
+		}
+	}
+
+	private void renderTestObjectTable(FlowStep flowStep, boolean renderTreeAlso) {
+		testObjectTable.setOrobject(flowStep.getOrObject());
+		testObjectTable.renderORObjectTable();
+		if (renderTreeAlso) {
+			if (flowStep.getOrObject().size() > 0) {
+				testObjectTree.fetchAndRenderORTree();
+			}
 		}
 	}
 
