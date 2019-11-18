@@ -218,6 +218,7 @@ public class FlowStepTable extends CustomTable {
 		fstep2.setPosition(fpos1);
 		refreshFlowSteps();
 		selectRow(selectedIndex - 1);
+		getParentTestCaseView().toggleSaveButton(true);
 	}
 
 	public void moveStepDown(FlowStep fstep1, FlowStep fstep2) {
@@ -229,12 +230,14 @@ public class FlowStepTable extends CustomTable {
 		fstep2.setPosition(fpos1);
 		refreshFlowSteps();
 		selectRow(selectedIndex + 1);
+		getParentTestCaseView().toggleSaveButton(true);
 	}
 
 	public void deleteStep(FlowStep flowStep)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		flowStep.setDeleted(true);
 		refreshFlowSteps();
+		getParentTestCaseView().toggleSaveButton(true);
 	}
 
 	public FlowStep getSelectedFlowStep() {
