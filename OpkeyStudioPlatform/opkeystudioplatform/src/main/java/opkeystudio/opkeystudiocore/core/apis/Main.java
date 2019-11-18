@@ -18,7 +18,7 @@ public class Main {
 		System.out.println(nodes.get(0).getText());
 		new AuthenticateApi().logout();*/
 		
-		List<Artifact> artifacts= new ArtifactApi().getAllAartificates();
+		List<Artifact> artifacts= new ArtifactApi().getAllArtificates();
 		for(Artifact artifact:artifacts) {
 			System.out.println(artifact.getFile_type_enum());
 		}

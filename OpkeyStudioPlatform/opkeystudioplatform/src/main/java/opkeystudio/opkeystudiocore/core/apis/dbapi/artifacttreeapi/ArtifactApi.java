@@ -18,7 +18,7 @@ import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactApi {
-	public List<Artifact> getAllAartificates()
+	public List<Artifact> getAllArtificates()
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
@@ -29,9 +29,17 @@ public class ArtifactApi {
 		return mapper.readValue(result, type);
 	}
 
+	public List<Artifact> getAllArtificatesByType(String artifactType) throws JsonParseException, JsonMappingException, IOException {
+		String result = QueryExecutor.getInstance().executeQuery(String.format(
+				"select * from main_artifact_filesystem where file_type_enum='%s' order by position", artifactType));
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, Artifact.class);
+		return mapper.readValue(result, type);
+	}
+
 	public void deleteArtifact(Artifact artifact) {
 		System.out.println("Deleting " + artifact.getId());
-		String query=String.format("delete from main_artifact_filesystem where id='%s'", artifact.getId());
+		String query = String.format("delete from main_artifact_filesystem where id='%s'", artifact.getId());
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
@@ -50,10 +58,10 @@ public class ArtifactApi {
 			e.printStackTrace();
 		}
 	}
-	
-	public void createArtifact(String parentId,String artifactName,MODULETYPE artifactType) {
-		Artifact artifact=new ArtifactMaker().getArtifactObject(parentId, artifactName, artifactType);
-		String query=new QueryMaker().createInsertQuery(artifact, "main_artifact_filesystem", "");
+
+	public void createArtifact(String parentId, String artifactName, MODULETYPE artifactType) {
+		Artifact artifact = new ArtifactMaker().getArtifactObject(parentId, artifactName, artifactType);
+		String query = new QueryMaker().createInsertQuery(artifact, "main_artifact_filesystem", "");
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 }
