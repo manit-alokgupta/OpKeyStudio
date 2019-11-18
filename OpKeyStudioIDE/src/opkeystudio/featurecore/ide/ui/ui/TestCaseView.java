@@ -469,9 +469,10 @@ public class TestCaseView extends Composite {
 
 		Tree sourceCodeTree = new Tree(composite_16, SWT.BORDER);
 		sourceCodeTree.setHeaderVisible(true);
-		sourceCodeTree.setLinesVisible(true);
+		sourceCodeTree.setLinesVisible(false);
+		
 		GridData gd_sourceCodeTree = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_sourceCodeTree.widthHint = 115;
+		gd_sourceCodeTree.widthHint = 275;
 		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
 
 		TreeItem sourceCodeTreeitem = new TreeItem(sourceCodeTree, SWT.NONE);
