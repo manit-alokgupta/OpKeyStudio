@@ -13,4 +13,22 @@ public class ORObjectMaker {
 		objectAttributeProperty.setAdded(true);
 		return objectAttributeProperty;
 	}
+
+	public ORObject getORObjectDTO(String parentId, String orname, String ortype) {
+		ORObject orobject = new ORObject();
+		orobject.setObject_id(Utilities.getInstance().getUniqueUUID(""));
+		orobject.setCreatedon(Utilities.getInstance().getCurrentDateTime());
+		orobject.setCreatedon_tz(Utilities.getInstance().getCurrentTimeZone());
+		orobject.setCreatedby("ABC");
+		orobject.setModifiedby("ABC");
+		orobject.setModifiedon(Utilities.getInstance().getCurrentDateTime());
+		orobject.setModifiedon_tz(Utilities.getInstance().getCurrentTimeZone());
+
+		orobject.setParent_object_id(parentId);
+		orobject.setName(orname);
+		orobject.setOpkeytype(ortype);
+
+		orobject.setAdded(true);
+		return orobject;
+	}
 }
