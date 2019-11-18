@@ -632,6 +632,7 @@ public class TestCaseView extends Composite {
 		}
 
 		addButtonListeners();
+		populateInputTabData();
 	}
 
 	private void populateFlowStepsData(FlowStep flowStep) {
@@ -674,6 +675,25 @@ public class TestCaseView extends Composite {
 			toggleMoveupButton(false);
 			toggleMovedownButton(false);
 		}
+	}
+
+	private void populateInputTabData() {
+		inputDataTable.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FlowInputArgument fia = inputDataTable.getSelectedFlowInputArgument();
+				if (fia == null) {
+					return;
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	private void renderTestObjectTable(FlowStep flowStep, boolean renderTreeAlso) {

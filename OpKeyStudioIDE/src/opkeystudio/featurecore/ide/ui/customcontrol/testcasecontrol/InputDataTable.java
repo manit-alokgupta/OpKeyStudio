@@ -176,6 +176,14 @@ public class InputDataTable extends CustomTable {
 		}
 	}
 
+	public FlowInputArgument getSelectedFlowInputArgument() {
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
+		CustomTableItem selectedTableItem = (CustomTableItem) this.getSelection()[0];
+		return (FlowInputArgument) selectedTableItem.getOpKeyData();
+	}
+
 	public List<ComponentInputArgument> getComponentInputArgs() {
 		return componentInputArgs;
 	}
