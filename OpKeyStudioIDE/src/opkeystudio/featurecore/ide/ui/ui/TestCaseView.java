@@ -624,8 +624,7 @@ public class TestCaseView extends Composite {
 			testObjectTable.setOrobject(flowStep.getOrObject());
 			testObjectTable.renderORObjectTable();
 			if (flowStep.getOrObject().size() > 0) {
-				ORObject orobject = flowStep.getOrObject().get(0);
-				testObjectTree.renderObjectRepositories(orobject.getOr_id());
+				testObjectTree.fetchAndRenderORTree();
 			}
 			toggleDeleteButton(true);
 			if (flowStepTable.getPrevFlowStep() == null) {
