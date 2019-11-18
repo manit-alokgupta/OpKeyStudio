@@ -3,7 +3,7 @@
   <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.window.main" label="OpKey Studio " bindingContexts="_6wlLesgZEeSyMNYR5xypkQ" x="0" y="0" width="1024" height="600">
     <tags>shellMaximized</tags>
     <children xsi:type="basic:PartSashContainer" xmi:id="_9ST-ENVrEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.0" containerData="" horizontal="true">
-      <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.explorertreepartstack" containerData="125">
+      <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.explorertreepartstack" containerData="150">
         <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.explorertreepart" containerData="" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ProjectExplorerPart" label="Project Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/class_obj.gif">
           <toolbar xmi:id="_BJErQNqxEem51cXlp-aEQw" elementId="opkeystudio.toolbar.2">
             <children xsi:type="menu:DirectToolItem" xmi:id="_DMhJsNqxEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.1" iconURI="platform:/plugin/OpKeyStudio/icons/refresh.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.RefreshArtifactTree"/>
