@@ -32,7 +32,6 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import opkeystudio.editor.Editor;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
@@ -86,7 +85,6 @@ public class TestCaseView extends Composite {
 	private FlowStep selectedFlowStep;
 	private StyledText styledText;
 	String code;
-	private Editor editor;
 	private MenuItem testObjectMenu1;
 	private MenuItem testObjectMenu2;
 	private MenuItem testObjectMenu3;
