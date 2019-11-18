@@ -172,7 +172,7 @@ public class ObjectRepositoryTree extends CustomTree {
 		try {
 
 			ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
-			rootNode.setText("");
+			rootNode.setText("Object Repository");
 			rootNode.setExpanded(true);
 			// addIcon(rootNode);
 			List<ORObject> objectRepositories = new ObjectRepositoryApi().getAllObjects(or_id.trim());
@@ -193,7 +193,6 @@ public class ObjectRepositoryTree extends CustomTree {
 			}
 			expandAll();
 		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

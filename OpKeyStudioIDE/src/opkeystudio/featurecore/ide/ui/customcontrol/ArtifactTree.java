@@ -160,7 +160,7 @@ public class ArtifactTree extends CustomTree {
 		rootNode.setText("Project WorkSpace");
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
-		List<Artifact> artifacts = new ArtifactApi().getAllAartificates();
+		List<Artifact> artifacts = new ArtifactApi().getAllArtificates();
 		setArtifactsData(artifacts);
 		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
 		for (Artifact artifact : artifacts) {
