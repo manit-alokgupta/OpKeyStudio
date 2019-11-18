@@ -4,15 +4,5 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/OpKeyStudioPlatform"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Desktop/jar files/org.eclipse.jface.text.jar/org.eclipse.jface.text_3.5.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Desktop/jar files/org.eclipse.text_3.5.0.jar/org.eclipse.text_3.5.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Desktop/jar files/org.eclipse.ui.editors-3.3.2.jar/org.eclipse.ui.editors-3.3.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Desktop/jar files/org.eclipse.ui.ide-3.3.2.jar/org.eclipse.ui.ide-3.3.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Desktop/jar files/org.eclipse.ui.workbench.texteditor-3.3.2.jar/org.eclipse.ui.workbench.texteditor-3.3.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Desktop/jar files/org.eclipse.ui.workbench-3.3.2.jar/org.eclipse.ui.workbench-3.3.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Desktop/jar files/testdata.jar/testdata.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Desktop/jar files/org.eclipse.core.runtime-3.7.0.jar/org.eclipse.core.runtime-3.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Desktop/jar files/org.eclipse.ui-3.3.1.jar/org.eclipse.ui-3.3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Downloads/org.eclipse.jdt.ui-3.12.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

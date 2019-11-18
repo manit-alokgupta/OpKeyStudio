@@ -3,15 +3,6 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.eclipse.jdt.internal.ui.JavaPlugin;
-import org.eclipse.jdt.internal.ui.text.FastJavaPartitionScanner;
-import org.eclipse.jdt.ui.text.IJavaPartitions;
-import org.eclipse.jdt.ui.text.JavaSourceViewerConfiguration;
-import org.eclipse.jdt.ui.text.JavaTextTools;
-import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.IDocumentPartitioner;
-import org.eclipse.jface.text.rules.FastPartitioner;
-import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
@@ -480,7 +471,7 @@ public class TestCaseView extends Composite {
 		styledText.setMouseNavigatorEnabled(true);
 		code = styledText.getText();
 
-		SourceViewer sv = new SourceViewer(styledText, null, SWT.NONE);
+	/*	SourceViewer sv = new SourceViewer(styledText, null, SWT.NONE);
 
 		JavaTextTools tools = JavaPlugin.getDefault().getJavaTextTools();
 
@@ -497,7 +488,7 @@ public class TestCaseView extends Composite {
 		d.setDocumentPartitioner(partitioner);
 		partitioner.connect(d);
 //		sv.configure(config);
-		sv.setDocument(d);
+		sv.setDocument(d);*/
 
 		cursor.addSelectionListener(new SelectionListener() {
 
