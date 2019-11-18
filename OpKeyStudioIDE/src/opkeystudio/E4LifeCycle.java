@@ -31,9 +31,9 @@ public class E4LifeCycle {
 	@PostContextCreate
 	void postContextCreate(IEclipseContext workbenchContext) {
 
-		final Shell shell = new Shell(Display.getCurrent().getActiveShell(), SWT.CENTER|SWT.DIALOG_TRIM|SWT.APPLICATION_MODAL);
-		LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER);
-		ldialog.open();
+//		final Shell shell = new Shell(Display.getCurrent().getActiveShell(), SWT.CENTER|SWT.DIALOG_TRIM|SWT.APPLICATION_MODAL);
+//		LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER);
+//		ldialog.open();
 
 		try {
 			KeywordManager.getInstance().loadAllKeywords();
@@ -43,14 +43,6 @@ public class E4LifeCycle {
 		}
 	}
 
-//	public static Shell getScreenCentredShell() {
-//		Display display = PlatformUI.getWorkbench().getDisplay();
-//		Shell centreShell = new Shell(display);
-//		Point size = centreShell.computeSize(-1, -1);
-//		Rectangle screen = display.getMonitors()[0].getBounds();
-//		centreShell.setBounds((screen.width - size.x) / 2, (screen.height - size.y) / 2, size.x, size.y);
-//		return centreShell;
-//	}
 
 	@PreSave
 	void preSave(IEclipseContext workbenchContext) {

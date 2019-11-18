@@ -52,7 +52,12 @@ public class ArtifactTreeUI extends Composite {
 	private MenuItem toolbarTestCase;
 	private MenuItem toolbarObjectRepository;
 	private MenuItem toolbarFunctionLibrary;
-
+	private MenuItem folderMenuItem;
+	private MenuItem testcaseMenuItem;
+	private MenuItem objectRepositoryMenuItem;
+	private MenuItem functionLibraryMenuItem;
+	private MenuItem renameMenuItem;
+	private MenuItem deleteMenuItem;
 	/**
 	 * Create the composite.
 	 * 
@@ -170,29 +175,31 @@ public class ArtifactTreeUI extends Composite {
 		toolbarObjectRepository
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
 
-		MenuItem folderMenuItem = new MenuItem(menu_1, SWT.NONE);
+		folderMenuItem = new MenuItem(menu_1, SWT.NONE);
 		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
 		folderMenuItem.setText("Folder");
 
-		MenuItem testcaseMenuItem = new MenuItem(menu_1, SWT.NONE);
+		testcaseMenuItem = new MenuItem(menu_1, SWT.NONE);
 		testcaseMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testcase.png"));
 		testcaseMenuItem.setText("TestCase");
 
-		MenuItem objectRepositoryMenuItem = new MenuItem(menu_1, SWT.NONE);
+		objectRepositoryMenuItem = new MenuItem(menu_1, SWT.NONE);
 		objectRepositoryMenuItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
 		objectRepositoryMenuItem.setText("ObjectRepository");
 
-		MenuItem functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
+		functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
 		functionLibraryMenuItem.setText("Function Library");
 
-		MenuItem renameMenuItem = new MenuItem(menu, SWT.NONE);
+		renameMenuItem = new MenuItem(menu, SWT.NONE);
 		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
 		renameMenuItem.setText("Rename");
+		renameMenuItem.setEnabled(false);
 
-		MenuItem deleteMenuItem = new MenuItem(menu, SWT.NONE);
+		deleteMenuItem = new MenuItem(menu, SWT.NONE);
 		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteMenuItem.setText("Delete");
+		deleteMenuItem.setEnabled(false);
 
 		testcaseMenuItem.addSelectionListener(new SelectionListener() {
 
@@ -304,6 +311,7 @@ public class ArtifactTreeUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
+
 				boolean status = new MessageDialogs().openConfirmDialog("Delete",
 						"Do you want to delete " + artifact.getName() + "?");
 				if (!status) {
@@ -538,27 +546,27 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
-		
+
 		toolBar_1.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseUp(MouseEvent e) {
-				if(e.button==3) {
+				if (e.button == 3) {
 					newMenu.setVisible(false);
 				}
-				
+
 			}
-			
+
 			@Override
 			public void mouseDown(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
@@ -582,6 +590,8 @@ public class ArtifactTreeUI extends Composite {
 					toolbarNew.setEnabled(true);
 					toolbarRename.setEnabled(true);
 					toolbarDelete.setEnabled(true);
+					deleteMenuItem.setEnabled(true);
+					renameMenuItem.setEnabled(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
@@ -589,6 +599,8 @@ public class ArtifactTreeUI extends Composite {
 					toolbarNew.setEnabled(false);
 					toolbarRename.setEnabled(true);
 					toolbarDelete.setEnabled(true);
+					deleteMenuItem.setEnabled(true);
+					renameMenuItem.setEnabled(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
@@ -596,6 +608,8 @@ public class ArtifactTreeUI extends Composite {
 					toolbarNew.setEnabled(false);
 					toolbarRename.setEnabled(true);
 					toolbarDelete.setEnabled(true);
+					deleteMenuItem.setEnabled(true);
+					renameMenuItem.setEnabled(true);
 
 //					}
 				}
