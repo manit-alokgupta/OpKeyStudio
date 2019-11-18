@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.eclipse.jdt.internal.ui.JavaPlugin;
+import org.eclipse.jdt.internal.ui.javaeditor.JavaSourceViewer;
 import org.eclipse.jdt.internal.ui.text.FastJavaPartitionScanner;
 import org.eclipse.jdt.ui.text.IJavaPartitions;
 import org.eclipse.jdt.ui.text.JavaSourceViewerConfiguration;
@@ -24,6 +25,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.editor.Editor;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
@@ -47,6 +50,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTr
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable flowStepTable;
@@ -92,6 +97,11 @@ public class TestCaseView extends Composite {
 	private FlowStep selectedFlowStep;
 	private StyledText styledText;
 	String code;
+	private Editor editor;
+	private MenuItem testObjectMenu1;
+	private MenuItem testObjectMenu2;
+	private MenuItem testObjectMenu3;
+	private MenuItem testObjectMenu4;
 
 	/**
 	 * Create the composite.
@@ -359,6 +369,21 @@ public class TestCaseView extends Composite {
 		testObjectTable.setLinesVisible(true);
 		testObjectTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+		Menu menu = new Menu(testObjectTable);
+		testObjectTable.setMenu(menu);
+
+		testObjectMenu1 = new MenuItem(menu, SWT.NONE);
+		testObjectMenu1.setText("Menu New Item1");
+
+		testObjectMenu2 = new MenuItem(menu, SWT.NONE);
+		testObjectMenu2.setText("Menu New Item2");
+
+		testObjectMenu3 = new MenuItem(menu, SWT.NONE);
+		testObjectMenu3.setText("Menu New Item3");
+
+		testObjectMenu4 = new MenuItem(menu, SWT.NONE);
+		testObjectMenu4.setText("Menu New Item4");
+
 		testObjectTree = new TestObjectTree(sashForm_1, SWT.BORDER, this);
 		testObjectTree.setLinesVisible(true);
 		testObjectTree.setHeaderVisible(true);
@@ -438,19 +463,16 @@ public class TestCaseView extends Composite {
 		Composite composite_121 = new Composite(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_121);
 		composite_121.setLayout(new GridLayout(1, false));
-//		code = "int a=5;" + "//not-working comment\n" + "/* not working single line comment */ \n"
-//				+ "not-working multi-line comment\n";
-
 		ToolBar sourceCodeToolBar = new ToolBar(composite_121, SWT.FLAT | SWT.RIGHT);
 		sourceCodeToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		ToolItem tltmNewItem = new ToolItem(sourceCodeToolBar, SWT.NONE);
-		tltmNewItem.setText("New Item");
-		
-		ToolItem seperator=new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
+		ToolItem sourceCodeToolBarItem = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		sourceCodeToolBarItem.setText("New Item");
 
-		ToolItem tltmNewItem_1 = new ToolItem(sourceCodeToolBar, SWT.NONE);
-		tltmNewItem_1.setText("New Item");
+		ToolItem seperator = new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
+
+		ToolItem sourceCodeToolBarItem_1 = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		sourceCodeToolBarItem_1.setText("New Item");
 
 		Composite composite_16 = new Composite(composite_121, SWT.NONE);
 		composite_16.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -462,12 +484,12 @@ public class TestCaseView extends Composite {
 		GridData gd_sourceCodeTree = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_sourceCodeTree.widthHint = 115;
 		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
-		
-		TreeItem trtmNewTreeitem = new TreeItem(sourceCodeTree, SWT.NONE);
-		trtmNewTreeitem.setText("New TreeItem");
-		
-		TreeItem trtmNewTreeitem_1 = new TreeItem(sourceCodeTree, SWT.NONE);
-		trtmNewTreeitem_1.setText("New TreeItem");
+
+		TreeItem sourceCodeTreeitem = new TreeItem(sourceCodeTree, SWT.NONE);
+		sourceCodeTreeitem.setText("New TreeItem");
+
+		TreeItem sourceCodeTreeitem_1 = new TreeItem(sourceCodeTree, SWT.NONE);
+		sourceCodeTreeitem_1.setText("New TreeItem");
 
 		TabFolder tabFolder = new TabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -478,26 +500,33 @@ public class TestCaseView extends Composite {
 		styledText = new StyledText(tabFolder, SWT.BORDER);
 		sourceCodeTab.setControl(styledText);
 		styledText.setMouseNavigatorEnabled(true);
+		styledText.setText("int a=5;");
 		code = styledText.getText();
 
-		SourceViewer sv = new SourceViewer(styledText, null, SWT.NONE);
+//		code = "int a=5;";
+		JavaSourceViewer sv = new JavaSourceViewer(tabFolder, null, null, false, SWT.NONE, null);
+		StyledText styledText_1 = sv.getTextWidget();
+		styledText_1.setToolTipText("tip");
 
 		JavaTextTools tools = JavaPlugin.getDefault().getJavaTextTools();
 
 		JavaSourceViewerConfiguration config = new JavaSourceViewerConfiguration(tools.getColorManager(),
-				JavaPlugin.getDefault().getCombinedPreferenceStore(), null, null);
+				JavaPlugin.getDefault().getCombinedPreferenceStore(), editor, null);
 
 		IDocumentPartitioner partitioner = new FastPartitioner(new FastJavaPartitionScanner(),
 				new String[] { IJavaPartitions.JAVA_DOC, IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
 						IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
 						IJavaPartitions.JAVA_CHARACTER });
-		
+
+//		sv.configure(config);
 		Document d = new Document();
 		d.set(code);
 		d.setDocumentPartitioner(partitioner);
 		partitioner.connect(d);
-//		sv.configure(config);
+
 		sv.setDocument(d);
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("New Item");
 
 		cursor.addSelectionListener(new SelectionListener() {
 
