@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
@@ -473,7 +474,7 @@ public class TestCaseView extends Composite {
 		Tree sourceCodeTree = new Tree(composite_16, SWT.BORDER);
 		sourceCodeTree.setHeaderVisible(true);
 		sourceCodeTree.setLinesVisible(false);
-		
+
 		GridData gd_sourceCodeTree = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_sourceCodeTree.widthHint = 275;
 		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
@@ -795,6 +796,12 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				boolean status = new MessageDialogs().openConfirmDialog("Delete",
+						"Do you want to delete selected step?");
+				if (!status) {
+					return;
+				}
+				
 				try {
 					flowStepTable.deleteStep(flowStepTable.getSelectedFlowStep());
 				} catch (SQLException | IOException e1) {
@@ -815,6 +822,11 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				boolean status = new MessageDialogs().openConfirmDialog("Save",
+						"Do you want to save?");
+				if (!status) {
+					return;
+				}
 				new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 				try {
 					flowStepTable.renderFlowSteps();
