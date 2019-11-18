@@ -127,12 +127,14 @@ public class ArtifactTreeUI extends Composite {
 		toolbarRename = new ToolItem(toolBar_1, SWT.NONE);
 		toolbarRename.setText("Rename");
 		toolbarRename.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+		toolbarRename.setEnabled(false);
 
 		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		toolbarDelete = new ToolItem(toolBar_1, SWT.NONE);
 		toolbarDelete.setText("Delete");
 		toolbarDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		toolbarDelete.setEnabled(false);
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -578,16 +580,22 @@ public class ArtifactTreeUI extends Composite {
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
 					mntmNew.setEnabled(true);
 					toolbarNew.setEnabled(true);
+					toolbarRename.setEnabled(true);
+					toolbarDelete.setEnabled(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
 					mntmNew.setEnabled(false);
 					toolbarNew.setEnabled(false);
+					toolbarRename.setEnabled(true);
+					toolbarDelete.setEnabled(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
 					mntmNew.setEnabled(false);
 					toolbarNew.setEnabled(false);
+					toolbarRename.setEnabled(true);
+					toolbarDelete.setEnabled(true);
 
 //					}
 				}
