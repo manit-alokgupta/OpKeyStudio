@@ -73,7 +73,7 @@ public class ArtifactTree extends CustomTree {
 		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
 			EPartService partService = Utilities.getInstance().getEpartService();
 			MPart part = partService.createPart("opkeystudio.partdescriptor.testCaseViewer");
-			part.setLabel(artifactTreeItem.getArtifact().getName().substring(0, 5) + "...");
+			part.setLabel(artifactTreeItem.getArtifact().getName());
 			part.setTooltip(artifactTreeItem.getArtifact().getName());
 			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
 			partService.showPart(part, PartState.ACTIVATE);
@@ -81,7 +81,7 @@ public class ArtifactTree extends CustomTree {
 		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			EPartService partService = Utilities.getInstance().getEpartService();
 			MPart part = partService.createPart("opkeystudio.partdescriptor.testCaseViewer");
-			part.setLabel(artifactTreeItem.getArtifact().getName().substring(0, 5) + "...");
+			part.setLabel(artifactTreeItem.getArtifact().getName());
 			part.setTooltip(artifactTreeItem.getArtifact().getName());
 			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
 			partService.showPart(part, PartState.ACTIVATE);
