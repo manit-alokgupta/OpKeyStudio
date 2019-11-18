@@ -47,7 +47,6 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem refreshObject;
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
-	ArtifactTree artifactTree;
 	private MenuItem cutMenuItem;
 	private MenuItem copyMenuItem;
 	private MenuItem pasteMenuItem;

@@ -13,15 +13,22 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
+import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class ObjectRepositoryTree extends CustomTree {
+	private TestCaseView parentTestCaseView;
 
 	public ObjectRepositoryTree(Composite parent, int style) {
 		super(parent, style);
 		renderObjectRepositories();
+	}
+
+	public ObjectRepositoryTree(Composite parent, int style, TestCaseView testCaseView) {
+		super(parent, style);
+		this.setParentTestCaseView(testCaseView);
 	}
 
 	public void setObjectRepositoriesData(List<ORObject> objectRepository) {
@@ -158,5 +165,44 @@ public class ObjectRepositoryTree extends CustomTree {
 			refereshAllArtifactTree(topMostNode, objectRepositories);
 		}
 		expandAll();
+	}
+	
+	public void renderObjectRepositories(String or_id) {
+		this.removeAll();
+		try {
+
+			ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
+			rootNode.setText("");
+			rootNode.setExpanded(true);
+			// addIcon(rootNode);
+			List<ORObject> objectRepositories = new ObjectRepositoryApi().getAllObjects(or_id.trim());
+			setObjectRepositoriesData(objectRepositories);
+			List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
+			for (ORObject objectRepository : objectRepositories) {
+				if (objectRepository.getParent_object_id() == null) {
+					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
+					orTreeItem.setText(objectRepository.getName());
+					orTreeItem.setArtifact(objectRepository);
+					topMostNodes.add(orTreeItem);
+					// addIcon(artitreeitem);
+				}
+			}
+
+			for (ObjectRepositoryTreeItem topMostNode : topMostNodes) {
+				renderAllArtifactTree(topMostNode, objectRepositories);
+			}
+			expandAll();
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public TestCaseView getParentTestCaseView() {
+		return parentTestCaseView;
+	}
+
+	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
+		this.parentTestCaseView = parentTestCaseView;
 	}
 }

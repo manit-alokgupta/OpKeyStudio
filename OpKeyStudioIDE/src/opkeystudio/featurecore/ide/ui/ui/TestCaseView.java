@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
@@ -40,6 +41,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable flowStepTable;
@@ -47,7 +49,7 @@ public class TestCaseView extends Composite {
 	private TestObjectTable testObjectTable;
 	private InputDataTable inputDataTable;
 	private StepDetailsInputData InputDataTable;
-	private TestObjectTree testObjectTree;
+	private ObjectRepositoryTree testObjectTree;
 	private Table mappedTable;
 	private Table propertyTable;
 	private Table dataOutputTable;
@@ -371,7 +373,7 @@ public class TestCaseView extends Composite {
 		testObjectMenu4 = new MenuItem(menu, SWT.NONE);
 		testObjectMenu4.setText("Menu New Item4");
 
-		testObjectTree = new TestObjectTree(sashForm_1, SWT.BORDER, this);
+		testObjectTree = new ObjectRepositoryTree(sashForm_1, SWT.BORDER, this);
 		testObjectTree.setLinesVisible(true);
 		testObjectTree.setHeaderVisible(true);
 		sashForm_1.setWeights(new int[] { 1, 1 });
@@ -490,29 +492,28 @@ public class TestCaseView extends Composite {
 		styledText.setText("int a=5;");
 		code = styledText.getText();
 
-/*
-		SourceViewer sv = new SourceViewer(tabFolder, null, null, false, SWT.NONE, null);
-		StyledText styledText_1 = sv.getTextWidget();
-		styledText_1.setToolTipText("tip");
-
-		JavaTextTools tools = JavaPlugin.getDefault().getJavaTextTools();
-
-		JavaSourceViewerConfiguration config = new JavaSourceViewerConfiguration(tools.getColorManager(),
-				JavaPlugin.getDefault().getCombinedPreferenceStore(), editor, null);
-
-		IDocumentPartitioner partitioner = new FastPartitioner(new FastJavaPartitionScanner(),
-				new String[] { IJavaPartitions.JAVA_DOC, IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
-						IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
-						IJavaPartitions.JAVA_CHARACTER });
-
-//		sv.configure(config);
-		Document d = new Document();
-		d.set(code);
-		d.setDocumentPartitioner(partitioner);
-		partitioner.connect(d);
-
-		sv.setDocument(d);
-		*/
+		/*
+		 * SourceViewer sv = new SourceViewer(tabFolder, null, null, false, SWT.NONE,
+		 * null); StyledText styledText_1 = sv.getTextWidget();
+		 * styledText_1.setToolTipText("tip");
+		 * 
+		 * JavaTextTools tools = JavaPlugin.getDefault().getJavaTextTools();
+		 * 
+		 * JavaSourceViewerConfiguration config = new
+		 * JavaSourceViewerConfiguration(tools.getColorManager(),
+		 * JavaPlugin.getDefault().getCombinedPreferenceStore(), editor, null);
+		 * 
+		 * IDocumentPartitioner partitioner = new FastPartitioner(new
+		 * FastJavaPartitionScanner(), new String[] { IJavaPartitions.JAVA_DOC,
+		 * IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
+		 * IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
+		 * IJavaPartitions.JAVA_CHARACTER });
+		 * 
+		 * // sv.configure(config); Document d = new Document(); d.set(code);
+		 * d.setDocumentPartitioner(partitioner); partitioner.connect(d);
+		 * 
+		 * sv.setDocument(d);
+		 */
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("New Item");
 
@@ -549,46 +550,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FlowStep flowStep = flowStepTable.getSelectedFlowStep();
-				setSelectedFlowStep(flowStep);
-				if (flowStep != null) {
-					if (flowStep.getKeyword() != null) {
-						outputDataTable.setKeyword(flowStep.getKeyword());
-						inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
-					} else {
-						outputDataTable.setKeyword(null);
-						inputDataTable.setKeyWordInputArgs(null);
-					}
-					if (flowStep.getFunctionLibraryComponent() != null) {
-						inputDataTable.setComponentInputArgs(
-								flowStep.getFunctionLibraryComponent().getComponentInputArgument());
-					} else {
-						inputDataTable.setComponentInputArgs(null);
-					}
-					inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
-					inputDataTable.renderInputTable();
-
-					outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
-
-					testObjectTable.setOrobject(flowStep.getOrObject());
-					testObjectTable.renderORObjectTable();
-
-					toggleDeleteButton(true);
-					if (flowStepTable.getPrevFlowStep() == null) {
-						toggleMoveupButton(false);
-					} else {
-						toggleMoveupButton(true);
-					}
-
-					if (flowStepTable.getNextFlowStep() == null) {
-						toggleMovedownButton(false);
-					} else {
-						toggleMovedownButton(true);
-					}
-				} else {
-					toggleDeleteButton(false);
-					toggleMoveupButton(false);
-					toggleMovedownButton(false);
-				}
+				populateFlowStepsData(flowStep);
 			}
 
 			@Override
@@ -597,34 +559,34 @@ public class TestCaseView extends Composite {
 
 			}
 		});
-		
+
 		testObjectMenu1.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		testObjectMenu2.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
@@ -636,6 +598,52 @@ public class TestCaseView extends Composite {
 		}
 
 		addButtonListeners();
+	}
+
+	private void populateFlowStepsData(FlowStep flowStep) {
+		if (flowStep != null) {
+			setSelectedFlowStep(flowStep);
+			if (flowStep.getKeyword() != null) {
+				outputDataTable.setKeyword(flowStep.getKeyword());
+				inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
+			} else {
+				outputDataTable.setKeyword(null);
+				inputDataTable.setKeyWordInputArgs(null);
+			}
+			if (flowStep.getFunctionLibraryComponent() != null) {
+				inputDataTable
+						.setComponentInputArgs(flowStep.getFunctionLibraryComponent().getComponentInputArgument());
+			} else {
+				inputDataTable.setComponentInputArgs(null);
+			}
+			inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
+			inputDataTable.renderInputTable();
+
+			outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
+
+			testObjectTable.setOrobject(flowStep.getOrObject());
+			testObjectTable.renderORObjectTable();
+			if (flowStep.getOrObject().size() > 0) {
+				ORObject orobject = flowStep.getOrObject().get(0);
+				testObjectTree.renderObjectRepositories(orobject.getOr_id());
+			}
+			toggleDeleteButton(true);
+			if (flowStepTable.getPrevFlowStep() == null) {
+				toggleMoveupButton(false);
+			} else {
+				toggleMoveupButton(true);
+			}
+
+			if (flowStepTable.getNextFlowStep() == null) {
+				toggleMovedownButton(false);
+			} else {
+				toggleMovedownButton(true);
+			}
+		} else {
+			toggleDeleteButton(false);
+			toggleMoveupButton(false);
+			toggleMovedownButton(false);
+		}
 	}
 
 	public void toggleAddButton(boolean status) {
