@@ -439,19 +439,6 @@ public class TestCaseView extends Composite {
 		composite_121.setLayout(new GridLayout(1, false));
 //		code = "int a=5;" + "//not-working comment\n" + "/* not working single line comment */ \n"
 //				+ "not-working multi-line comment\n";
-		JavaTextTools tools = JavaPlugin.getDefault().getJavaTextTools();
-
-		JavaSourceViewerConfiguration config = new JavaSourceViewerConfiguration(tools.getColorManager(),
-				JavaPlugin.getDefault().getCombinedPreferenceStore(), null, null);
-
-		IDocumentPartitioner partitioner = new FastPartitioner(new FastJavaPartitionScanner(),
-				new String[] { IJavaPartitions.JAVA_DOC, IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
-						IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
-						IJavaPartitions.JAVA_CHARACTER });
-		Document d = new Document();
-		d.set(code);
-		d.setDocumentPartitioner(partitioner);
-		partitioner.connect(d);
 
 		ToolBar sourceCodeToolBar = new ToolBar(composite_121, SWT.FLAT | SWT.RIGHT);
 		sourceCodeToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -484,8 +471,21 @@ public class TestCaseView extends Composite {
 
 		SourceViewer sv = new SourceViewer(styledText, null, SWT.NONE);
 
-		sv.configure(config);
+		JavaTextTools tools = JavaPlugin.getDefault().getJavaTextTools();
 
+		JavaSourceViewerConfiguration config = new JavaSourceViewerConfiguration(tools.getColorManager(),
+				JavaPlugin.getDefault().getCombinedPreferenceStore(), null, null);
+
+		IDocumentPartitioner partitioner = new FastPartitioner(new FastJavaPartitionScanner(),
+				new String[] { IJavaPartitions.JAVA_DOC, IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
+						IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
+						IJavaPartitions.JAVA_CHARACTER });
+		
+		Document d = new Document();
+		d.set(code);
+		d.setDocumentPartitioner(partitioner);
+		partitioner.connect(d);
+		sv.configure(config);
 		sv.setDocument(d);
 
 		cursor.addSelectionListener(new SelectionListener() {
