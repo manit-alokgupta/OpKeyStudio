@@ -3,6 +3,15 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.eclipse.jdt.internal.ui.JavaPlugin;
+import org.eclipse.jdt.internal.ui.text.FastJavaPartitionScanner;
+import org.eclipse.jdt.ui.text.IJavaPartitions;
+import org.eclipse.jdt.ui.text.JavaSourceViewerConfiguration;
+import org.eclipse.jdt.ui.text.JavaTextTools;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.rules.FastPartitioner;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
@@ -80,6 +89,8 @@ public class TestCaseView extends Composite {
 	private Label stepInfoImage;
 	private CLabel stepInfoLabel;
 	private FlowStep selectedFlowStep;
+	private StyledText styledText;
+	String code;
 
 	/**
 	 * Create the composite.
@@ -425,10 +436,58 @@ public class TestCaseView extends Composite {
 
 		Composite composite_121 = new Composite(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_121);
-		composite_121.setLayout(new FillLayout(SWT.HORIZONTAL));
+		composite_121.setLayout(new GridLayout(1, false));
+//		code = "int a=5;" + "//not-working comment\n" + "/* not working single line comment */ \n"
+//				+ "not-working multi-line comment\n";
+		JavaTextTools tools = JavaPlugin.getDefault().getJavaTextTools();
 
-		StyledText styledText = new StyledText(composite_121, SWT.BORDER);
+		JavaSourceViewerConfiguration config = new JavaSourceViewerConfiguration(tools.getColorManager(),
+				JavaPlugin.getDefault().getCombinedPreferenceStore(), null, null);
+
+		IDocumentPartitioner partitioner = new FastPartitioner(new FastJavaPartitionScanner(),
+				new String[] { IJavaPartitions.JAVA_DOC, IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
+						IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
+						IJavaPartitions.JAVA_CHARACTER });
+		Document d = new Document();
+		d.set(code);
+		d.setDocumentPartitioner(partitioner);
+		partitioner.connect(d);
+
+		ToolBar sourceCodeToolBar = new ToolBar(composite_121, SWT.FLAT | SWT.RIGHT);
+		sourceCodeToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		ToolItem tltmNewItem = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		tltmNewItem.setText("New Item");
+
+		ToolItem tltmNewItem_1 = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		tltmNewItem_1.setText("New Item");
+
+		Composite composite_16 = new Composite(composite_121, SWT.NONE);
+		composite_16.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		composite_16.setLayout(new GridLayout(2, false));
+
+		Tree sourceCodeTree = new Tree(composite_16, SWT.BORDER);
+		GridData gd_sourceCodeTree = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
+		gd_sourceCodeTree.widthHint = 115;
+		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
+
+		TabFolder tabFolder = new TabFolder(composite_16, SWT.NONE);
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		TabItem sourceCodeTab = new TabItem(tabFolder, SWT.NONE);
+		sourceCodeTab.setText("New Item");
+
+		styledText = new StyledText(tabFolder, SWT.BORDER);
+		sourceCodeTab.setControl(styledText);
 		styledText.setMouseNavigatorEnabled(true);
+		code = styledText.getText();
+
+		SourceViewer sv = new SourceViewer(styledText, null, SWT.NONE);
+
+		sv.configure(config);
+
+		sv.setDocument(d);
+
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override

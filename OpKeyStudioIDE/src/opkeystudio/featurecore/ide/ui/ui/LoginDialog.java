@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import java.io.IOException;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -118,6 +119,13 @@ public class LoginDialog extends Dialog {
 				String url = domainUrl.getText();
 				String user = userName.getText();
 				String passw = passWord.getText();
+				if(url.trim().equalsIgnoreCase("")) {
+					MessageDialog.openInformation(shlLoginToOpkey,"Invalid URL","Please enter Domain URL");
+				}
+				if(user.trim().equalsIgnoreCase("")) {
+					MessageDialog.openInformation(shlLoginToOpkey,"Invalid Username","Please enter Username");
+				}
+				
 				ServiceRepository.getInstance().setOpKeyHostUrl(url);
 				try {
 					AuthentcationData authdata = new AuthenticateApi().loginToOpKey(user, passw);
