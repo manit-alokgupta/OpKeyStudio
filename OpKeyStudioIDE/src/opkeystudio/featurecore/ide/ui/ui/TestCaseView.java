@@ -3,16 +3,6 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.eclipse.jdt.internal.ui.JavaPlugin;
-import org.eclipse.jdt.internal.ui.javaeditor.JavaSourceViewer;
-import org.eclipse.jdt.internal.ui.text.FastJavaPartitionScanner;
-import org.eclipse.jdt.ui.text.IJavaPartitions;
-import org.eclipse.jdt.ui.text.JavaSourceViewerConfiguration;
-import org.eclipse.jdt.ui.text.JavaTextTools;
-import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.IDocumentPartitioner;
-import org.eclipse.jface.text.rules.FastPartitioner;
-import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
@@ -25,10 +15,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
@@ -37,6 +28,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -49,9 +41,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
-import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable flowStepTable;
@@ -503,8 +492,8 @@ public class TestCaseView extends Composite {
 		styledText.setText("int a=5;");
 		code = styledText.getText();
 
-//		code = "int a=5;";
-		JavaSourceViewer sv = new JavaSourceViewer(tabFolder, null, null, false, SWT.NONE, null);
+/*
+		SourceViewer sv = new SourceViewer(tabFolder, null, null, false, SWT.NONE, null);
 		StyledText styledText_1 = sv.getTextWidget();
 		styledText_1.setToolTipText("tip");
 
@@ -525,6 +514,7 @@ public class TestCaseView extends Composite {
 		partitioner.connect(d);
 
 		sv.setDocument(d);
+		*/
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("New Item");
 
