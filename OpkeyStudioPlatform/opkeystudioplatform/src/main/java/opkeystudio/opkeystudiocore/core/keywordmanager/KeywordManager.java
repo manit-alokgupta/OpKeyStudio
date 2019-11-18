@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -15,6 +18,7 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 public class KeywordManager {
 	private static KeywordManager manager;
 	private List<Keyword> allKeywords = new ArrayList<>();
+	private Map<String, List<Keyword>> allGroupedKeywords = new HashMap<>();
 
 	public static KeywordManager getInstance() {
 		if (manager == null) {
@@ -41,6 +45,7 @@ public class KeywordManager {
 				keyword.setKeywordInputArguments(keywordInputArguments);
 			}
 			addAllKeyWords(allKeywords);
+			addAllKeywordsInGroup(allKeywords);
 		}
 	}
 
@@ -71,7 +76,38 @@ public class KeywordManager {
 		return keywords;
 	}
 
-	public static void main(String[] args) throws JsonParseException, JsonMappingException, SQLException, IOException {
-		new KeywordManager().loadAllKeywords();
+	public Set<String> getAllGroupNames() {
+		return getAllGroupedKeywords().keySet();
 	}
+
+	public List<Keyword> getKeywordGroup(String groupName) {
+		return getAllGroupedKeywords().get(groupName);
+	}
+
+	private void addAllKeywordsInGroup(List<Keyword> allKeyowrds) {
+		for (Keyword keyword : allKeyowrds) {
+			addKeywordInGroup(keyword.getKeywordtype(), keyword);
+		}
+	}
+
+	private Map<String, List<Keyword>> getAllGroupedKeywords() {
+		return allGroupedKeywords;
+	}
+
+	private void setAllGroupedKeywords(Map<String, List<Keyword>> allGroupedKeywords) {
+		this.allGroupedKeywords = allGroupedKeywords;
+	}
+
+	private void addKeywordInGroup(String groupName, Keyword keyword) {
+		if (getAllGroupedKeywords().containsKey(groupName)) {
+			List<Keyword> groupedKeywords = getAllGroupedKeywords().get(groupName);
+			groupedKeywords.add(keyword);
+			return;
+		}
+
+		List<Keyword> groupedKeywords = new ArrayList<Keyword>();
+		groupedKeywords.add(keyword);
+		getAllGroupedKeywords().put(groupName, groupedKeywords);
+	}
+
 }
