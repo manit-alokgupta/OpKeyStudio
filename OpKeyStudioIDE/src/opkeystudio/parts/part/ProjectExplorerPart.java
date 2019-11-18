@@ -1,6 +1,7 @@
 package opkeystudio.parts.part;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -18,7 +19,7 @@ public class ProjectExplorerPart {
 	MPart projectExplorerPart;
 	
 	@PostConstruct
-	public void postConstruct(Composite parent) throws IOException {
+	public void postConstruct(Composite parent)  {
 		new ArtifactTreeUI(parent, 0);
 	}
 

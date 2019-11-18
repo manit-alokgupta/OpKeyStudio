@@ -11,16 +11,25 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
@@ -29,10 +38,20 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
-import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactTreeUI extends Composite {
 	MenuItem mntmNew;
+	private ToolItem toolbarRename;
+	private ToolItem toolbarDelete;
+	private ToolItem toolbarNew;
+	String[] items = {};
+	private Menu menu_1;
+	private Menu newMenu;
+	private MenuItem toolbarFolder;
+	private MenuItem toolbarTestCase;
+	private MenuItem toolbarObjectRepository;
+	private MenuItem toolbarFunctionLibrary;
+
 	/**
 	 * Create the composite.
 	 * 
@@ -43,7 +62,7 @@ public class ArtifactTreeUI extends Composite {
 	ArtifactTree artifactTree;
 	private Text txtSearch;
 
-	public ArtifactTreeUI(Composite parent, int style) throws IOException {
+	public ArtifactTreeUI(Composite parent, int style) {
 
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
@@ -89,8 +108,27 @@ public class ArtifactTreeUI extends Composite {
 		searchArtifactTreeButton.setLayoutData(gd_btnNewButton);
 		searchArtifactTreeButton.setText("Search");
 
+		Composite composite_1 = new Composite(this, SWT.NONE);
+		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
+		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT);
+
+		toolbarNew = new ToolItem(toolBar_1, SWT.DROP_DOWN);
+		toolbarNew.setText("New");
+//		toolbarNew.setDropDownMenu(menu_1);
+
+		toolbarRename = new ToolItem(toolBar_1, SWT.NONE);
+		toolbarRename.setText("Rename");
+		toolbarRename.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+
+		toolbarDelete = new ToolItem(toolBar_1, SWT.NONE);
+		toolbarDelete.setText("Delete");
+		toolbarDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
 		ServiceRepository.getInstance().setProjectTreeObject(artifactTree);
 		Menu menu = new Menu(artifactTree);
 		artifactTree.setMenu(menu);
@@ -100,8 +138,26 @@ public class ArtifactTreeUI extends Composite {
 		mntmNew.setText("New");
 		mntmNew.setEnabled(false);
 
-		Menu menu_1 = new Menu(mntmNew);
+		menu_1 = new Menu(mntmNew);
 		mntmNew.setMenu(menu_1);
+
+		newMenu = new Menu(toolBar_1);
+		toolBar_1.setMenu(newMenu);
+		toolbarFolder = new MenuItem(newMenu, SWT.PUSH);
+		toolbarFolder.setText("Folder");
+		toolbarFolder.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
+
+		toolbarTestCase = new MenuItem(newMenu, SWT.PUSH);
+		toolbarTestCase.setText("TestCase");
+		toolbarTestCase.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testcase.png"));
+
+		toolbarFunctionLibrary = new MenuItem(newMenu, SWT.PUSH);
+		toolbarFunctionLibrary.setText("Function Library");
+
+		toolbarObjectRepository = new MenuItem(newMenu, SWT.PUSH);
+		toolbarObjectRepository.setText("Object Repository");
+		toolbarObjectRepository
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
 
 		MenuItem folderMenuItem = new MenuItem(menu_1, SWT.NONE);
 		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
@@ -285,6 +341,255 @@ public class ArtifactTreeUI extends Composite {
 			}
 		});
 
+		toolbarNew.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				System.out.println("Arrow Pressed");
+				Rectangle rect = toolbarNew.getBounds();
+				Point pt = new Point(rect.x, rect.y + rect.height);
+				pt = toolBar_1.toDisplay(pt);
+				newMenu.setLocation(pt.x, pt.y);
+				newMenu.setVisible(true);
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		toolbarRename.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
+						"Rename " + artifact.getName(), artifact.getName());
+				if (renamedText == null) {
+					return;
+				}
+				artifact.setName(renamedText);
+				new ArtifactApi().renameArtifact(artifact);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		toolbarDelete.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				boolean status = new MessageDialogs().openConfirmDialog("Delete",
+						"Do you want to delete " + artifact.getName() + "?");
+				if (!status) {
+					return;
+				}
+				new ArtifactApi().deleteArtifact(artifact);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		toolbarFolder.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+						"TestCase Name", "");
+				if (inputValue == null) {
+					return;
+				}
+
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Folder);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		toolbarTestCase.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+						"TestCase Name", "");
+				if (inputValue == null) {
+					return;
+				}
+
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Flow);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		toolbarFunctionLibrary.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+						"TestCase Name", "");
+				if (inputValue == null) {
+					return;
+				}
+
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Component);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		toolbarObjectRepository.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+						"TestCase Name", "");
+				if (inputValue == null) {
+					return;
+				}
+
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.ObjectRepository);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		artifactTree.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				ArtifactTree tree = (ArtifactTree) e.getSource();
+				ArtifactTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
+//				if (e.button == 3) {
+				System.out.println("Right clicked event");
+
+				if (selectedTreeItem == null) {
+					return;
+				}
+				if (selectedTreeItem.getArtifact() == null) {
+					return;
+				}
+				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
+					mntmNew.setEnabled(true);
+					toolbarNew.setEnabled(true);
+
+				}
+				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
+					mntmNew.setEnabled(false);
+					toolbarNew.setEnabled(false);
+
+				}
+				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
+					mntmNew.setEnabled(false);
+					toolbarNew.setEnabled(false);
+
+//					}
+				}
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		try {
+			artifactTree.renderArtifacts();
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		searchArtifactTreeButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -299,52 +604,6 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
-		try {
-
-			artifactTree.addMouseListener(new MouseListener() {
-
-				@Override
-				public void mouseUp(MouseEvent e) {
-					if (e.button == 3) {
-						System.out.println("Right clicked event");
-						ArtifactTree tree = (ArtifactTree) e.getSource();
-						ArtifactTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
-						if (selectedTreeItem == null) {
-							return;
-						}
-						if (selectedTreeItem.getArtifact() == null) {
-							return;
-						}
-						if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
-							mntmNew.setEnabled(true);
-						}
-						if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
-							mntmNew.setEnabled(false);
-						}
-						if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
-							mntmNew.setEnabled(false);
-						}
-					}
-				}
-
-				@Override
-				public void mouseDown(MouseEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void mouseDoubleClick(MouseEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-
-			artifactTree.renderArtifacts();
-		} catch (SQLException | IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	}
 
 	private void filterArtifactTree(String searchValue) {
