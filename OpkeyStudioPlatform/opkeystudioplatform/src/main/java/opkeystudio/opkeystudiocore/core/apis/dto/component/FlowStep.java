@@ -46,6 +46,10 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	@DBField
 	private String stepid;
 
+	private boolean istestcase;
+	private boolean isfunctionlibrary;
+	private boolean istestsuites;
+
 	public String getKeywordid() {
 		return keywordid;
 	}
@@ -193,5 +197,29 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 
 	public void setFunctionLibraryComponent(FunctionLibraryComponent functionLibraryComponent) {
 		this.functionLibraryComponent = functionLibraryComponent;
+	}
+
+	public boolean isIstestcase() {
+		return istestcase;
+	}
+
+	public void setIstestcase(boolean istestcase) {
+		this.istestcase = istestcase;
+	}
+
+	public boolean isIsfunctionlibrary() {
+		return isfunctionlibrary;
+	}
+
+	public void setIsfunctionlibrary(boolean isfunctionlibrary) {
+		this.isfunctionlibrary = isfunctionlibrary;
+	}
+
+	public boolean isIstestsuites() {
+		return istestsuites;
+	}
+
+	public void setIstestsuites(boolean istestsuites) {
+		this.istestsuites = istestsuites;
 	}
 }
