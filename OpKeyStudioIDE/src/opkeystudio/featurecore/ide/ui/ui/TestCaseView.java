@@ -41,7 +41,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTab
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -297,10 +296,10 @@ public class TestCaseView extends Composite {
 		Composite composite_15 = new Composite(composite_10, SWT.NONE);
 		composite_15.setLayout(new GridLayout(1, false));
 		composite_15.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		composite_15.setBounds(0, 0, 64, 64);
 
-		ToolBar toolBar = new ToolBar(composite_15, SWT.FLAT | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		ToolBar toolBar = new ToolBar(composite_15, SWT.FLAT | SWT.RIGHT | SWT.WRAP);
+		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar.setBounds(0, 0, 64, 64);
 
 		keywordButton = new ToolItem(toolBar, SWT.NONE);
 		keywordButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/keword.png"));
@@ -448,7 +447,7 @@ public class TestCaseView extends Composite {
 		outputDataTable.setLinesVisible(true);
 
 		TableCursor cursor = new TableCursor(flowStepTable, 0);
-		testCaseSashForm.setWeights(new int[] { 402, 222 });
+		testCaseSashForm.setWeights(new int[] { 400, 235 });
 
 		TabItem tbtmNewItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setText("Source Code");
@@ -801,7 +800,7 @@ public class TestCaseView extends Composite {
 				if (!status) {
 					return;
 				}
-				
+
 				try {
 					flowStepTable.deleteStep(flowStepTable.getSelectedFlowStep());
 				} catch (SQLException | IOException e1) {
@@ -822,8 +821,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean status = new MessageDialogs().openConfirmDialog("Save",
-						"Do you want to save?");
+				boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
 				if (!status) {
 					return;
 				}
