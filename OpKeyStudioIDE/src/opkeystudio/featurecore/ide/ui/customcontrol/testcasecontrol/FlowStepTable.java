@@ -218,6 +218,8 @@ public class FlowStepTable extends CustomTable {
 		fstep2.setPosition(fpos1);
 		refreshFlowSteps();
 		selectRow(selectedIndex - 1);
+		fstep1.setModified(true);
+		fstep2.setModified(true);
 		getParentTestCaseView().toggleSaveButton(true);
 	}
 
@@ -230,7 +232,10 @@ public class FlowStepTable extends CustomTable {
 		fstep2.setPosition(fpos1);
 		refreshFlowSteps();
 		selectRow(selectedIndex + 1);
+		fstep1.setModified(true);
+		fstep2.setModified(true);
 		getParentTestCaseView().toggleSaveButton(true);
+
 	}
 
 	public void deleteStep(FlowStep flowStep)
