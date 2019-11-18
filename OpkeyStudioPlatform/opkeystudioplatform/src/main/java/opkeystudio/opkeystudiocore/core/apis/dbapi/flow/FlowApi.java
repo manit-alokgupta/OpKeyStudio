@@ -125,8 +125,8 @@ public class FlowApi {
 				flowStep.setKeyword(keyword);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
-			}
-			else if (flowStep.getComponent_id() != null) {
+				flowStep.setIstestcase(true);
+			} else if (flowStep.getComponent_id() != null) {
 				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getComponent_id()).get(0);
 				List<ComponentInputArgument> inputArgs = getAllComponentInputArgument(flowStep.getComponent_id());
 				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(flowStep.getComponent_id());
@@ -139,6 +139,7 @@ public class FlowApi {
 				flowStep.setFunctionLibraryComponent(flComp);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
+				flowStep.setIsfunctionlibrary(true);
 			}
 		}
 		return flowSteps;
