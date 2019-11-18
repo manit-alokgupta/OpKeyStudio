@@ -38,6 +38,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ArtifactTreeUI extends Composite {
 	MenuItem mntmNew;
@@ -113,14 +114,21 @@ public class ArtifactTreeUI extends Composite {
 		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT);
+		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		toolbarNew = new ToolItem(toolBar_1, SWT.DROP_DOWN);
+		toolbarNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		toolbarNew.setText("New");
+		toolbarNew.setEnabled(false);
+
+		ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
 //		toolbarNew.setDropDownMenu(menu_1);
 
 		toolbarRename = new ToolItem(toolBar_1, SWT.NONE);
 		toolbarRename.setText("Rename");
 		toolbarRename.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+
+		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		toolbarDelete = new ToolItem(toolBar_1, SWT.NONE);
 		toolbarDelete.setText("Delete");
@@ -131,6 +139,7 @@ public class ArtifactTreeUI extends Composite {
 
 		ServiceRepository.getInstance().setProjectTreeObject(artifactTree);
 		Menu menu = new Menu(artifactTree);
+
 		artifactTree.setMenu(menu);
 
 		mntmNew = new MenuItem(menu, SWT.CASCADE);
@@ -421,8 +430,8 @@ public class ArtifactTreeUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "");
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
+						"");
 				if (inputValue == null) {
 					return;
 				}
@@ -477,8 +486,8 @@ public class ArtifactTreeUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "");
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
+						"Function Library Name", "");
 				if (inputValue == null) {
 					return;
 				}
@@ -505,8 +514,8 @@ public class ArtifactTreeUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "");
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
+						"Object Repository Name", "");
 				if (inputValue == null) {
 					return;
 				}
@@ -525,6 +534,29 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
 
+			}
+		});
+		
+		toolBar_1.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseUp(MouseEvent e) {
+				if(e.button==3) {
+					newMenu.setVisible(false);
+				}
+				
+			}
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 
