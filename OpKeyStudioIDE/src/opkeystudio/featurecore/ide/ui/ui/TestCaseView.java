@@ -46,6 +46,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import org.eclipse.swt.widgets.TreeItem;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable flowStepTable;
@@ -445,6 +446,8 @@ public class TestCaseView extends Composite {
 
 		ToolItem tltmNewItem = new ToolItem(sourceCodeToolBar, SWT.NONE);
 		tltmNewItem.setText("New Item");
+		
+		ToolItem seperator=new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
 
 		ToolItem tltmNewItem_1 = new ToolItem(sourceCodeToolBar, SWT.NONE);
 		tltmNewItem_1.setText("New Item");
@@ -454,9 +457,17 @@ public class TestCaseView extends Composite {
 		composite_16.setLayout(new GridLayout(2, false));
 
 		Tree sourceCodeTree = new Tree(composite_16, SWT.BORDER);
+		sourceCodeTree.setHeaderVisible(true);
+		sourceCodeTree.setLinesVisible(true);
 		GridData gd_sourceCodeTree = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_sourceCodeTree.widthHint = 115;
 		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
+		
+		TreeItem trtmNewTreeitem = new TreeItem(sourceCodeTree, SWT.NONE);
+		trtmNewTreeitem.setText("New TreeItem");
+		
+		TreeItem trtmNewTreeitem_1 = new TreeItem(sourceCodeTree, SWT.NONE);
+		trtmNewTreeitem_1.setText("New TreeItem");
 
 		TabFolder tabFolder = new TabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -485,7 +496,7 @@ public class TestCaseView extends Composite {
 		d.set(code);
 		d.setDocumentPartitioner(partitioner);
 		partitioner.connect(d);
-		sv.configure(config);
+//		sv.configure(config);
 		sv.setDocument(d);
 
 		cursor.addSelectionListener(new SelectionListener() {
