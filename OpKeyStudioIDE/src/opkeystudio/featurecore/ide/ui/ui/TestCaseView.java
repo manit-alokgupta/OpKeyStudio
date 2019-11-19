@@ -10,6 +10,8 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -332,12 +334,46 @@ public class TestCaseView extends Composite {
 
 		searchBox = new Text(composite_12, SWT.BORDER);
 		searchBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		searchBox.setToolTipText("Search");
+		searchBox.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				Text text = (Text) e.getSource();
+				String searchValue = text.getText();
+				if (searchValue.length() > 2 || searchValue.trim().isEmpty()) {
+					filterAddStepTree(searchValue);
+				}
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		Button searchButton = new Button(composite_12, SWT.NONE);
 		searchButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		searchButton.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		searchButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
 		searchButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		searchButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String textToSearch = searchBox.getText();
+				filterAddStepTree(textToSearch);
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		allDataTreeView = new Tree(composite_10, SWT.BORDER);
 		allDataTreeView.setLinesVisible(true);
@@ -878,9 +914,72 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
+			}
+		});
+
+		keywordButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
+
+		functionLibraryButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		serviceRepoButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		codedFunLibraryButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	private void filterAddStepTree(String searchValue) {
+
 	}
 
 	@Override
