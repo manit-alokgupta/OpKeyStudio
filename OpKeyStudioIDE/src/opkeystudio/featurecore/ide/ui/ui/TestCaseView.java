@@ -365,7 +365,8 @@ public class TestCaseView extends Composite {
 		testObjectTable.setMenu(menu);
 
 		testObjectMenu1 = new MenuItem(menu, SWT.NONE);
-		testObjectMenu1.setText("Menu New Item1");
+		testObjectMenu1.setText("Open in New Tab");
+		testObjectMenu1.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/open.png"));
 
 		testObjectMenu2 = new MenuItem(menu, SWT.NONE);
 		testObjectMenu2.setText("Menu New Item2");
