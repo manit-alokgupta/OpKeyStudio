@@ -125,9 +125,9 @@ public class ArtifactTreeUI extends Composite {
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		toolbarNew = new ToolItem(toolBar_1, SWT.DROP_DOWN);
+		toolbarNew.setEnabled(false);
 		toolbarNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		toolbarNew.setText("New");
-		toolbarNew.setEnabled(false);
 
 		ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
 //		toolbarNew.setDropDownMenu(menu_1);
