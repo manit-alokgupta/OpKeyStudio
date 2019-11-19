@@ -70,14 +70,15 @@ public class ArtifactTreeUI extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 
-		Composite composite = new Composite(this, SWT.BORDER);
+		Composite composite = new Composite(this, SWT.NONE);
+		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite.setLayout(new GridLayout(3, false));
 		GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_composite.heightHint = 33;
+		gd_composite.heightHint = 39;
 		composite.setLayoutData(gd_composite);
 
 		txtSearch = new Text(composite, SWT.BORDER);
-		GridData gd_txtSearch = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		GridData gd_txtSearch = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_txtSearch.widthHint = 154;
 		txtSearch.setLayoutData(gd_txtSearch);
 		txtSearch.setToolTipText("Search");
@@ -101,19 +102,24 @@ public class ArtifactTreeUI extends Composite {
 		});
 
 		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
+		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		toolBar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 1));
 
 		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.SEPARATOR);
 		tltmNewItem.setText("New Item");
 
 		Button searchArtifactTreeButton = new Button(composite, SWT.NONE);
-		GridData gd_btnNewButton = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_btnNewButton.widthHint = 60;
+		searchArtifactTreeButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		searchArtifactTreeButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
+		GridData gd_btnNewButton = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_btnNewButton.widthHint = 46;
 		searchArtifactTreeButton.setLayoutData(gd_btnNewButton);
-		searchArtifactTreeButton.setText("Search");
 
-		Composite composite_1 = new Composite(this, SWT.NONE);
+		Composite composite_1 = new Composite(this, SWT.BORDER);
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
-		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_composite_1.heightHint = 35;
+		composite_1.setLayoutData(gd_composite_1);
 
 		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
