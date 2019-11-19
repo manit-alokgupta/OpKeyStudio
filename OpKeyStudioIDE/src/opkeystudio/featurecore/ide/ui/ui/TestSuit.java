@@ -106,7 +106,7 @@ public class TestSuit extends Composite {
 
 		toolScheduleSuite = new ToolItem(toolBar_1, SWT.NONE);
 		toolScheduleSuite.setToolTipText("Schedule this Suite");
-		toolScheduleSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/temp.png"));
+		toolScheduleSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/schedule.png"));
 
 		ToolItem toolItem_5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
