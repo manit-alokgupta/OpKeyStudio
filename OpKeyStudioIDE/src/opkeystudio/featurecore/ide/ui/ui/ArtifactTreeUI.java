@@ -230,8 +230,8 @@ public class ArtifactTreeUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "");
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
+						"");
 				if (inputValue == null) {
 					return;
 				}
@@ -256,8 +256,8 @@ public class ArtifactTreeUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "");
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
+						"Object Repository Name", "");
 				if (inputValue == null) {
 					return;
 				}
@@ -282,8 +282,8 @@ public class ArtifactTreeUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "");
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
+						"Function Library Name", "");
 				if (inputValue == null) {
 					return;
 				}
