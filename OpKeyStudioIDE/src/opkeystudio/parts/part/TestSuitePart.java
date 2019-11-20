@@ -11,7 +11,7 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 
-import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 
 public class TestSuitePart {
 	@Inject
@@ -19,7 +19,7 @@ public class TestSuitePart {
 
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
-		new TestCaseView(parent, 0);
+		new TestSuiteView(parent, 0);
 	}
 
 	@PreDestroy

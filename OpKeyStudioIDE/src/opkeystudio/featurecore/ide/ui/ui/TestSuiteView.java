@@ -26,7 +26,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.TableItem;
 
-public class TestSuite extends Composite {
+public class TestSuiteView extends Composite {
 	private Text text;
 	private Table table;
 	private ToolItem toolRun;
@@ -55,7 +55,7 @@ public class TestSuite extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public TestSuite(Composite parent, int style) {
+	public TestSuiteView(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 

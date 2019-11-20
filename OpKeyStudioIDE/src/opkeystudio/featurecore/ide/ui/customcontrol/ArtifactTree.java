@@ -88,7 +88,7 @@ public class ArtifactTree extends CustomTree {
 		}
 		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Suite) {
 			EPartService partService = Utilities.getInstance().getEpartService();
-			MPart part = partService.createPart("opkeystudio.partdescriptor.testCaseViewer");
+			MPart part = partService.createPart("opkeystudio.partdescriptor.testSuiteViewer");
 			part.setLabel(artifactTreeItem.getArtifact().getName());
 			part.setTooltip(artifactTreeItem.getArtifact().getName());
 			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
