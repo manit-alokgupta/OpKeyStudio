@@ -1,10 +1,5 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.ModifyEvent;
@@ -17,37 +12,55 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
-
-import org.eclipse.wb.swt.ResourceManager;
 
 public class GlobalVariableDialog extends Dialog {
 
 	String[] tableHeaders = { "Name", "Data Type", "Value", "Externally Updatable" };
 	protected Object result;
 	protected Shell shlGlobalVariable;
-	private GlobalVariableTable table;
-//	private Table table;
+	private GlobalVariableTable globalVariablesTable;
 	private ToolItem addtoolitem;
 	private ToolItem deletetoolitem;
 	private ToolItem savetoolitem;
 	private ToolItem refreshtoolitem;
 
+	public void toggleAddToolItem(boolean status) {
+		addtoolitem.setEnabled(status);
+	}
+
+	public void toggleDeleteToolItem(boolean status) {
+		deletetoolitem.setEnabled(status);
+	}
+
+	public void toggleSaveToolItem(boolean status) {
+		savetoolitem.setEnabled(status);
+	}
+
+	public void toggleRefreshToolItem(boolean status) {
+		refreshtoolitem.setEnabled(status);
+	}
+
 	/**
-	 * Create the dialog. 
+	 * Create the dialog.
 	 * 
 	 * @param parent
 	 * @param style
@@ -86,11 +99,11 @@ public class GlobalVariableDialog extends Dialog {
 		shlGlobalVariable.setSize(546, 443);
 		shlGlobalVariable.setText("Global Variable");
 		shlGlobalVariable.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlGlobalVariable.getBounds();
-		int locationX = (parentSize.width - shellSize.width)/2+parentSize.x;
-		int locationY = (parentSize.height - shellSize.height)/2+parentSize.y;
+		int locationX = (parentSize.width - shellSize.width) / 2 + parentSize.x;
+		int locationY = (parentSize.height - shellSize.height) / 2 + parentSize.y;
 		shlGlobalVariable.setLocation(new Point(locationX, locationY));
 
 		Composite composite = new Composite(shlGlobalVariable, SWT.NONE);
@@ -107,7 +120,7 @@ public class GlobalVariableDialog extends Dialog {
 		addtoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				table.addBlankGlobalVariableStep();
+				globalVariablesTable.addBlankGlobalVariableStep();
 			}
 		});
 
@@ -120,8 +133,8 @@ public class GlobalVariableDialog extends Dialog {
 		deletetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				table.deleteGlobalVariableStep();
-				savetoolitem.setEnabled(true);
+				globalVariablesTable.deleteGlobalVariableStep();
+				toggleSaveToolItem(true);
 			}
 		});
 
@@ -134,8 +147,8 @@ public class GlobalVariableDialog extends Dialog {
 		savetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				table.saveAll();
-				savetoolitem.setEnabled(false);
+				globalVariablesTable.saveAll();
+				toggleSaveToolItem(false);
 			}
 		});
 
@@ -148,15 +161,15 @@ public class GlobalVariableDialog extends Dialog {
 		refreshtoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				table.refreshGlobalVariables();
+				globalVariablesTable.refreshGlobalVariables();
 			}
 		});
 
-		table = new GlobalVariableTable(composite, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
-		table.addPaintListener(new PaintListener() {
+		globalVariablesTable = new GlobalVariableTable(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		globalVariablesTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		globalVariablesTable.setHeaderVisible(true);
+		globalVariablesTable.setLinesVisible(true);
+		globalVariablesTable.addPaintListener(new PaintListener() {
 
 			@Override
 			public void paintControl(PaintEvent arg0) {
@@ -167,20 +180,20 @@ public class GlobalVariableDialog extends Dialog {
 			}
 		});
 
-		final TableEditor editor = new TableEditor(table);
+		final TableEditor editor = new TableEditor(globalVariablesTable);
 		editor.horizontalAlignment = SWT.LEFT;
 		editor.grabHorizontal = true;
 		editor.minimumWidth = 50;
-		table.addMouseListener(new MouseListener() {
+		globalVariablesTable.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				int selectedIndex = table.getSelectionIndex();
+				int selectedIndex = globalVariablesTable.getSelectionIndex();
 				if (selectedIndex == -1) {
-					deletetoolitem.setEnabled(false);
+					toggleDeleteToolItem(false);
 					return;
 				} else {
-					deletetoolitem.setEnabled(true);
+					toggleDeleteToolItem(true);
 				}
 				Control oldEditor = editor.getEditor();
 				if (oldEditor != null) {
@@ -215,7 +228,7 @@ public class GlobalVariableDialog extends Dialog {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
-						savetoolitem.setEnabled(true);
+						toggleSaveToolItem(true);
 						gVar.setModified(true);
 						Text text = (Text) editor.getEditor();
 						editor.getItem().setText(EDITABLECOLUMN, text.getText());
@@ -256,15 +269,15 @@ public class GlobalVariableDialog extends Dialog {
 		});
 
 		for (String header : tableHeaders) {
-			TableColumn column = new TableColumn(table, 0);
+			TableColumn column = new TableColumn(globalVariablesTable, 0);
 			column.setText(header);
 		}
-		table.pack();
+		globalVariablesTable.pack();
 		for (int i = 0; i < tableHeaders.length; i++) {
-			table.getColumn(i).pack();
+			globalVariablesTable.getColumn(i).pack();
 		}
 
-		table.refreshGlobalVariables();
+		globalVariablesTable.refreshGlobalVariables();
 
 	}
 }

@@ -10,14 +10,9 @@
           </toolbar>
         </children>
       </children>
-      <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600" selectedElement="_EfD4oNVsEemLeZBMchgvxw">
         <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.workbenchpartstack" containerData="600">
           <tags>workbenchCategory</tags>
-        </children>
-        <children xsi:type="basic:PartStack" xmi:id="_FfA5wNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.consolewindowpartstack" toBeRendered="false" visible="false" containerData="300">
-          <children xsi:type="basic:Part" xmi:id="_Jk6_MNVsEemLeZBMchgvxw" elementId="opkeystudio.part.consolewindowpart" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ConsoleWindowPart" label="Coded FL" iconURI="">
-            <toolbar xmi:id="_wXBP4N99Eem4S9D8hNuZrQ" elementId="opkeystudio.toolbar.4"/>
-          </children>
         </children>
       </children>
     </children>

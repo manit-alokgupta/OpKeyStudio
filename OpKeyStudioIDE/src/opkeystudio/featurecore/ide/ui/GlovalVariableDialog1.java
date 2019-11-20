@@ -1,7 +1,5 @@
 package opkeystudio.featurecore.ide.ui;
 
-import java.awt.Checkbox;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableEditor;
@@ -16,7 +14,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -28,10 +25,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class GlovalVariableDialog1 extends Dialog {
 	String[] tableHeaders = { "Name", "Data Type", "Value", "Externally Updatable" };
