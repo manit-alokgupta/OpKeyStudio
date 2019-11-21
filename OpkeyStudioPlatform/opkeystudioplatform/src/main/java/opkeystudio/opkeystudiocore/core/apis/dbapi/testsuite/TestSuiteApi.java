@@ -22,8 +22,4 @@ public class TestSuiteApi {
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, TestSuite.class);
 		return mapper.readValue(result, type);
 	}
-	
-	public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
-		new TestSuiteApi().getAllTestSuitesStep("d620abc2-9f1d-4d2f-b20f-e6974ef47113");
-	}
 }
