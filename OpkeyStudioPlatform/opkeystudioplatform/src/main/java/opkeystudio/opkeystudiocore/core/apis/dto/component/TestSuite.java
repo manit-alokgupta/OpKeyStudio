@@ -1,13 +1,24 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import opkeystudio.opkeystudiocore.core.query.DBField;
+
 public class TestSuite {
+	@DBField
 	private String suite_stepid;
+	@DBField
 	private String flow_id;
+	
 	private int clustering_key;
+	
+	@DBField
 	private int position;
+	@DBField
 	private boolean shouldrun;
+	@DBField
 	private boolean usedatasheet;
+	@DBField
 	private String suite_id;
+	@DBField
 	private String flow_type_enum;
 
 	private Artifact artifact;
