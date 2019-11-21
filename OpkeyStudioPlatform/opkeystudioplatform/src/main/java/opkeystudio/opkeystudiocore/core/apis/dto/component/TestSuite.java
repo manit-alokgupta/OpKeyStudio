@@ -10,6 +10,8 @@ public class TestSuite {
 	private String suite_id;
 	private String flow_type_enum;
 
+	private Artifact artifact;
+
 	public String getSuite_stepid() {
 		return suite_stepid;
 	}
@@ -72,5 +74,13 @@ public class TestSuite {
 
 	public void setFlow_type_enum(String flow_type_enum) {
 		this.flow_type_enum = flow_type_enum;
+	}
+
+	public Artifact getArtifact() {
+		return artifact;
+	}
+
+	public void setArtifact(Artifact artifact) {
+		this.artifact = artifact;
 	}
 }

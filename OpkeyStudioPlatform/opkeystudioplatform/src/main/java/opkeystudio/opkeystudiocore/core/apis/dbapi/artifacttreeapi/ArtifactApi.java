@@ -29,7 +29,15 @@ public class ArtifactApi {
 		return mapper.readValue(result, type);
 	}
 
-	public List<Artifact> getAllArtificatesByType(String artifactType) throws JsonParseException, JsonMappingException, IOException {
+	public Artifact getArtifact(String artifactId) throws JsonParseException, JsonMappingException, IOException {
+		String query = String.format("select * from main_artifact_filesystem where id='%s'", artifactId);
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		return mapper.readValue(result, Artifact.class);
+	}
+
+	public List<Artifact> getAllArtificatesByType(String artifactType)
+			throws JsonParseException, JsonMappingException, IOException {
 		String result = QueryExecutor.getInstance().executeQuery(String.format(
 				"select * from main_artifact_filesystem where file_type_enum='%s' order by position", artifactType));
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
