@@ -10,14 +10,11 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
-import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class TestSuiteApi {
 	public List<TestSuite> getAllTestSuitesStep(String testSuiteId)
 			throws JsonParseException, JsonMappingException, IOException {
-		
-		ServiceRepository.getInstance().setExortedDBFilePath("E:\\ExportedArtifactsNeon\\Suite\\ExportedArtifact.db");
 		String query = String.format("SELECT * FROM suite_design_steps where suite_id='%s' ORDER BY position",
 				testSuiteId);
 		String result = QueryExecutor.getInstance().executeQuery(query);
