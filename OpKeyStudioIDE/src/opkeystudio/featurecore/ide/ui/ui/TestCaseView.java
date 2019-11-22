@@ -61,12 +61,19 @@ public class TestCaseView extends Composite {
 	private Table globalVariableTable;
 	private Table autoDataGenTable;
 	private Text searchBox;
+	@SuppressWarnings("unused")
 	private ToolItem seperator1;
+	@SuppressWarnings("unused")
 	private ToolItem seperator2;
+	@SuppressWarnings("unused")
 	private ToolItem seperator3;
+	@SuppressWarnings("unused")
 	private ToolItem seperator4;
+	@SuppressWarnings("unused")
 	private ToolItem seperator5;
+	@SuppressWarnings("unused")
 	private ToolItem seperator6;
+	@SuppressWarnings("unused")
 	private ToolItem seperator7;
 	private ToolItem itemRunnow;
 	private ToolItem itemMoveup;
