@@ -13,6 +13,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
@@ -92,7 +93,10 @@ public class ObjectRepositoryView extends Composite {
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar.setBounds(0, 0, 87, 23);
-
+		
+		ToolItem septoolItem = new ToolItem(toolBar, SWT.SEPARATOR);
+		
+		
 		saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 		saveObject.setText("Save");
