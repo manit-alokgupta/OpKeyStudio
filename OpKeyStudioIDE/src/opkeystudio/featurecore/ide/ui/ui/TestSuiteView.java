@@ -23,11 +23,15 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import opkeystudio.core.utils.MessageDialogs;
+
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.custom.TableCursor;
 
 public class TestSuiteView extends Composite {
-	private Text text;
+	private Text searchTextBox;
 	private Table table;
 	private ToolItem toolRun;
 	private ToolItem toolRunOnBrowser;
@@ -176,12 +180,14 @@ public class TestSuiteView extends Composite {
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setBounds(0, 0, 85, 45);
 		table.setLinesVisible(true);
-		
+
 		TableItem tableItem = new TableItem(table, SWT.NONE);
 		tableItem.setText("New TableItem");
-		
+
 		TableItem tableItem_1 = new TableItem(table, SWT.NONE);
 		tableItem_1.setText("New TableItem");
+		
+		TableCursor tableCursor = new TableCursor(table, SWT.NONE);
 
 		Composite composite_2 = new Composite(sashForm, SWT.BORDER);
 		composite_2.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -207,15 +213,15 @@ public class TestSuiteView extends Composite {
 		btnNewButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		btnNewButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/leftArrow.png"));
 
-		text = new Text(composite_5, SWT.BORDER);
-		text.setToolTipText("Available Test Cases/Sparkin/Gherkin Features");
-		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		searchTextBox = new Text(composite_5, SWT.BORDER);
+		searchTextBox.setToolTipText("Available Test Cases/Sparkin/Gherkin Features");
+		searchTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		Button btnNewButton_1 = new Button(composite_5, SWT.NONE);
-		btnNewButton_1.setToolTipText("Search");
-		btnNewButton_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		btnNewButton_1.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
-		btnNewButton_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		Button searchBtn = new Button(composite_5, SWT.NONE);
+		searchBtn.setToolTipText("Search");
+		searchBtn.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		searchBtn.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
+		searchBtn.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
 		Composite composite_6 = new Composite(sashForm_1, SWT.NONE);
 		composite_6.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -243,10 +249,10 @@ public class TestSuiteView extends Composite {
 		Tree tree = new Tree(composite_4, SWT.BORDER);
 		tree.setLinesVisible(true);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
+
 		TreeItem trtmNewTreeitem = new TreeItem(tree, SWT.NONE);
 		trtmNewTreeitem.setText("New TreeItem");
-		
+
 		TreeItem trtmNewTreeitem_1 = new TreeItem(tree, SWT.NONE);
 		trtmNewTreeitem_1.setText("New TreeItem");
 		sashForm.setWeights(new int[] { 2, 1 });
@@ -294,184 +300,206 @@ public class TestSuiteView extends Composite {
 
 			}
 		});
-		
+
+		addButtonListeners();
+
+	}
+
+	public void toggleMoveUpBtn(boolean status) {
+
+	}
+
+	public void toggleMoveDownBtn(boolean status) {
+
+	}
+
+	public void toggleDeleteBtn(boolean status) {
+
+	}
+
+	private void addButtonListeners() {
+
 		toolRun.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolRunOnBrowser.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolRunOnSauceLabs.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
 		toolRunOnPCloudy.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolGenerateDoc.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolScheduleSuite.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolDeleteSuiteStep.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				boolean status = new MessageDialogs().openConfirmDialog("Delete",
+						"Do you want to delete selected step?");
+				if (!status) {
+					return;
+				}
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolMoveUp.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolMoveDown.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolSave.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolRefresh.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		toolJavaExport.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
