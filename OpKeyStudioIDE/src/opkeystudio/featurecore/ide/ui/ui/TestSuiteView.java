@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -17,18 +18,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
-
-import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.custom.TableCursor;
 
 public class TestSuiteView extends Composite {
 	private Text searchTextBox;
@@ -186,7 +185,7 @@ public class TestSuiteView extends Composite {
 
 		TableItem tableItem_1 = new TableItem(table, SWT.NONE);
 		tableItem_1.setText("New TableItem");
-		
+
 		TableCursor tableCursor = new TableCursor(table, SWT.NONE);
 
 		Composite composite_2 = new Composite(sashForm, SWT.BORDER);
