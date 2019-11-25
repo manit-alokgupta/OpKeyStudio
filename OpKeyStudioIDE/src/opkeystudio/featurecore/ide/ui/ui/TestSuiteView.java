@@ -35,18 +35,18 @@ public class TestSuiteView extends Composite {
 	private Text searchTextBox;
 //	private SuiteStepTable table;
 	private SuiteStepTable testSuiteTable;
-	private ToolItem toolRun;
-	private ToolItem toolRunOnBrowser;
-	private ToolItem toolRunOnSauceLabs;
-	private ToolItem toolRunOnPCloudy;
+	private ToolItem runtoolitem;
+	private ToolItem runOnBrowserToolItem;
+	private ToolItem runOnSauceLabsToolItem;
+	private ToolItem runOnPcloudyToolItem;
 	private ToolItem toolGenerateDoc;
-	private ToolItem toolScheduleSuite;
-	private ToolItem toolDeleteSuiteStep;
-	private ToolItem toolMoveUp;
-	private ToolItem toolMoveDown;
-	private ToolItem toolSave;
-	private ToolItem toolRefresh;
-	private ToolItem toolJavaExport;
+	private ToolItem scheduleSuiteToolItem;
+	private ToolItem deleteSuiteStepToolItem;
+	private ToolItem moveUpToolItem;
+	private ToolItem moveDownToolItem;
+	private ToolItem saveToolItem;
+	private ToolItem refreshToolItem;
+	private ToolItem javaExportToolItem;
 	private ToolItem toolDropDown;
 	private ToolBar toolBar_1;
 	private Menu dropDownMenu;
@@ -79,27 +79,27 @@ public class TestSuiteView extends Composite {
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBounds(0, 0, 87, 23);
 
-		toolRun = new ToolItem(toolBar_1, SWT.NONE);
-		toolRun.setToolTipText("Run Now");
-		toolRun.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
+		runtoolitem = new ToolItem(toolBar_1, SWT.NONE);
+		runtoolitem.setToolTipText("Run Now");
+		runtoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
 
 		ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolRunOnBrowser = new ToolItem(toolBar_1, SWT.NONE);
-		toolRunOnBrowser.setToolTipText("Run on Browser Stack");
-		toolRunOnBrowser.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/stackbrowser.png"));
+		runOnBrowserToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		runOnBrowserToolItem.setToolTipText("Run on Browser Stack");
+		runOnBrowserToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/stackbrowser.png"));
 
 		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolRunOnSauceLabs = new ToolItem(toolBar_1, SWT.NONE);
-		toolRunOnSauceLabs.setToolTipText("Run on SauceLabs");
-		toolRunOnSauceLabs.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/saucelab.png"));
+		runOnSauceLabsToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		runOnSauceLabsToolItem.setToolTipText("Run on SauceLabs");
+		runOnSauceLabsToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/saucelab.png"));
 
 		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolRunOnPCloudy = new ToolItem(toolBar_1, SWT.NONE);
-		toolRunOnPCloudy.setToolTipText("Run on PCloudy");
-		toolRunOnPCloudy.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/pcloudy.png"));
+		runOnPcloudyToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		runOnPcloudyToolItem.setToolTipText("Run on PCloudy");
+		runOnPcloudyToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/pcloudy.png"));
 
 		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -110,46 +110,46 @@ public class TestSuiteView extends Composite {
 
 		ToolItem toolItem_4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolScheduleSuite = new ToolItem(toolBar_1, SWT.NONE);
-		toolScheduleSuite.setToolTipText("Schedule this Suite");
-		toolScheduleSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/schedule.png"));
+		scheduleSuiteToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		scheduleSuiteToolItem.setToolTipText("Schedule this Suite");
+		scheduleSuiteToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/schedule.png"));
 
 		ToolItem toolItem_5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolDeleteSuiteStep = new ToolItem(toolBar_1, SWT.NONE);
-		toolDeleteSuiteStep.setToolTipText("Delete Suite Step");
-		toolDeleteSuiteStep
+		deleteSuiteStepToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		deleteSuiteStepToolItem.setToolTipText("Delete Suite Step");
+		deleteSuiteStepToolItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 
 		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolMoveUp = new ToolItem(toolBar_1, SWT.NONE);
-		toolMoveUp.setToolTipText("Move UP");
-		toolMoveUp.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
+		moveUpToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveUpToolItem.setToolTipText("Move UP");
+		moveUpToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 
 		ToolItem toolItem_7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolMoveDown = new ToolItem(toolBar_1, SWT.NONE);
-		toolMoveDown.setToolTipText("Move Down");
-		toolMoveDown.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
+		moveDownToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveDownToolItem.setToolTipText("Move Down");
+		moveDownToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 
 		ToolItem toolItem_8 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolSave = new ToolItem(toolBar_1, SWT.NONE);
-		toolSave.setToolTipText("Save");
-		toolSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
+		saveToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		saveToolItem.setToolTipText("Save");
+		saveToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 
 		ToolItem toolItem_9 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolRefresh = new ToolItem(toolBar_1, SWT.NONE);
-		toolRefresh.setToolTipText("Refresh");
-		toolRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		refreshToolItem.setToolTipText("Refresh");
+		refreshToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
 		ToolItem toolItem_10 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolJavaExport = new ToolItem(toolBar_1, SWT.NONE);
-		toolJavaExport.setToolTipText("Java Export");
-		toolJavaExport.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/export.png"));
+		javaExportToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		javaExportToolItem.setToolTipText("Java Export");
+		javaExportToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/export.png"));
 
 		ToolItem toolItem_11 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -313,26 +313,12 @@ public class TestSuiteView extends Composite {
 		}
 
 	}
-
-	public void toggleMoveUpBtn(boolean status) {
-
-	}
-
-	public void toggleMoveDownBtn(boolean status) {
-
-	}
-
-	public void toggleDeleteBtn(boolean status) {
-
-	}
-
-	public void toggleSaveBtn(boolean status) {
-
-	}
+	
+	
 
 	private void addButtonListeners() {
 
-		toolRun.addSelectionListener(new SelectionListener() {
+		runtoolitem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -347,7 +333,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolRunOnBrowser.addSelectionListener(new SelectionListener() {
+		runOnBrowserToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -362,7 +348,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolRunOnSauceLabs.addSelectionListener(new SelectionListener() {
+		runOnSauceLabsToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -377,7 +363,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolRunOnPCloudy.addSelectionListener(new SelectionListener() {
+		runOnPcloudyToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -407,7 +393,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolScheduleSuite.addSelectionListener(new SelectionListener() {
+		scheduleSuiteToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -422,7 +408,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolDeleteSuiteStep.addSelectionListener(new SelectionListener() {
+		deleteSuiteStepToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -441,7 +427,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolMoveUp.addSelectionListener(new SelectionListener() {
+		moveUpToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -456,7 +442,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolMoveDown.addSelectionListener(new SelectionListener() {
+		moveDownToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -471,7 +457,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolSave.addSelectionListener(new SelectionListener() {
+		saveToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -486,7 +472,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolRefresh.addSelectionListener(new SelectionListener() {
+		refreshToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -501,7 +487,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolJavaExport.addSelectionListener(new SelectionListener() {
+		javaExportToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
