@@ -26,7 +26,7 @@ public class SuiteStepTable extends CustomTable {
 	private TestSuiteView parentTestSuiteView;
 	private List<Control> allTableEditors = new ArrayList<Control>();
 
-	public SuiteStepTable(Composite parent, int style) {
+	public SuiteStepTable(Composite parent, int style, TestSuiteView parentView) {
 		super(parent, style);
 	}
 
@@ -134,14 +134,29 @@ public class SuiteStepTable extends CustomTable {
 		selectRow(selectedIndex - 1);
 		suiteStep1.setModified(true);
 		suiteStep2.setModified(true);
+		getParentTestSuiteView().toggleSaveBtn(true);
 	}
 
 	public void moveStepDown(TestSuite suiteStep1, TestSuite suiteStep2) {
+		int selectedIndex = this.getSelectionIndex();
+		int spos1 = suiteStep1.getPosition();
+		int spos2 = suiteStep2.getPosition();
 
+		suiteStep1.setPosition(spos2);
+		suiteStep2.setPosition(spos1);
+
+		selectRow(selectedIndex + 1);
+		suiteStep1.setModified(true);
+		suiteStep2.setModified(true);
+		getParentTestSuiteView().toggleSaveBtn(true);
 	}
 
 	public void deleteSuiteStep(TestSuite suiteStep) {
 		suiteStep.setDeleted(true);
+	}
+
+	public TestSuiteView getParentTestSuiteView() {
+		return parentTestSuiteView;
 	}
 
 }

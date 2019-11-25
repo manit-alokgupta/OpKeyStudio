@@ -28,9 +28,11 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 
 public class TestSuiteView extends Composite {
 	private Text searchTextBox;
+//	private SuiteStepTable table;
 	private Table table;
 	private ToolItem toolRun;
 	private ToolItem toolRunOnBrowser;
@@ -174,6 +176,7 @@ public class TestSuiteView extends Composite {
 		menuPublished = new MenuItem(dropDownMenu, SWT.NONE);
 		menuPublished.setText("Published");
 
+//		table = new SuiteStepTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION,this);
 		table = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setHeaderVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -313,6 +316,10 @@ public class TestSuiteView extends Composite {
 	}
 
 	public void toggleDeleteBtn(boolean status) {
+
+	}
+
+	public void toggleSaveBtn(boolean status) {
 
 	}
 
