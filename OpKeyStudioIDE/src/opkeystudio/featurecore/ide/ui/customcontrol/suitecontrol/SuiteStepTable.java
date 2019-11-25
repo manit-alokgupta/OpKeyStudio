@@ -1,8 +1,10 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.MouseEvent;
@@ -15,9 +17,15 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
 
 public class SuiteStepTable extends CustomTable {
@@ -28,6 +36,8 @@ public class SuiteStepTable extends CustomTable {
 
 	public SuiteStepTable(Composite parent, int style, TestSuiteView parentView) {
 		super(parent, style);
+		init();
+		this.setParentTestSuiteView(parentView);
 	}
 
 	public void init() {
@@ -52,8 +62,10 @@ public class SuiteStepTable extends CustomTable {
 					TableColumn column = table_0.getColumn(i);
 					if (i == 0) {
 						column.setWidth(50);
+					} else if (i == 1) {
+						column.setWidth(50);
 					} else {
-						column.setWidth((table_0.getBounds().width - 50) / 4);
+						column.setWidth((table_0.getBounds().width - 100) / 3);
 					}
 				}
 
@@ -133,7 +145,6 @@ public class SuiteStepTable extends CustomTable {
 
 		selectRow(selectedIndex - 1);
 		suiteStep1.setModified(true);
-		suiteStep2.setModified(true);
 		getParentTestSuiteView().toggleSaveBtn(true);
 	}
 
@@ -155,8 +166,25 @@ public class SuiteStepTable extends CustomTable {
 		suiteStep.setDeleted(true);
 	}
 
+	public void renderAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
+		this.removeAll();
+		MPart mpart = Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		List<TestSuite> testSuites = new TestSuiteApi().getAllTestSuitesStepsWithArtifact(artifact.getId());
+		for (TestSuite testSuite : testSuites) {
+			System.out.println(testSuite.getArtifact().getName());
+			SuiteStepTableItem suiteStepTableItem = new SuiteStepTableItem(this, 0);
+			suiteStepTableItem.setText(new String[] { "", "", testSuite.getArtifact().getName(), "", "" });
+			suiteStepTableItem.setTestSuiteData(testSuite);
+		}
+	}
+
 	public TestSuiteView getParentTestSuiteView() {
 		return parentTestSuiteView;
+	}
+
+	public void setParentTestSuiteView(TestSuiteView parentTestSuiteView) {
+		this.parentTestSuiteView = parentTestSuiteView;
 	}
 
 }

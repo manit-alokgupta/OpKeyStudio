@@ -21,8 +21,8 @@ public class SuiteStepTableItem extends CustomTableItem {
 		return (TestSuite) super.getOpKeyData();
 	}
 
-	public void setTestSuiteData(TestSuite objectProperty) {
-		super.setOpKeyData(objectProperty);
+	public void setTestSuiteData(TestSuite testSuite) {
+		super.setOpKeyData(testSuite);
 	}
 
 }

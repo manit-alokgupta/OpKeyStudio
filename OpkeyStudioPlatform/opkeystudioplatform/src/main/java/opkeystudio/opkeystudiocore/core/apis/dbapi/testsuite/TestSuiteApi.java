@@ -26,7 +26,7 @@ public class TestSuiteApi {
 	}
 
 	private Artifact getArtifact(String id) throws JsonParseException, JsonMappingException, IOException {
-		return new ArtifactApi().getArtifact(id);
+		return new ArtifactApi().getArtifact(id).get(0);
 	}
 
 	public List<TestSuite> getAllTestSuitesStepsWithArtifact(String testSuiteId)

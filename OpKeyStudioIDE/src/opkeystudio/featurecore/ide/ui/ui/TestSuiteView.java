@@ -1,5 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.IOException;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
@@ -17,7 +19,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
@@ -33,7 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 public class TestSuiteView extends Composite {
 	private Text searchTextBox;
 //	private SuiteStepTable table;
-	private Table table;
+	private SuiteStepTable testSuiteTable;
 	private ToolItem toolRun;
 	private ToolItem toolRunOnBrowser;
 	private ToolItem toolRunOnSauceLabs;
@@ -177,19 +178,19 @@ public class TestSuiteView extends Composite {
 		menuPublished.setText("Published");
 
 //		table = new SuiteStepTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION,this);
-		table = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setHeaderVisible(true);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		table.setBounds(0, 0, 85, 45);
-		table.setLinesVisible(true);
+		testSuiteTable = new SuiteStepTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION, this);
+		testSuiteTable.setHeaderVisible(true);
+		testSuiteTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		testSuiteTable.setBounds(0, 0, 85, 45);
+		testSuiteTable.setLinesVisible(true);
 
-		TableItem tableItem = new TableItem(table, SWT.NONE);
+		TableItem tableItem = new TableItem(testSuiteTable, SWT.NONE);
 		tableItem.setText("New TableItem");
 
-		TableItem tableItem_1 = new TableItem(table, SWT.NONE);
+		TableItem tableItem_1 = new TableItem(testSuiteTable, SWT.NONE);
 		tableItem_1.setText("New TableItem");
 
-		TableCursor tableCursor = new TableCursor(table, SWT.NONE);
+		TableCursor tableCursor = new TableCursor(testSuiteTable, SWT.NONE);
 
 		Composite composite_2 = new Composite(sashForm, SWT.BORDER);
 		composite_2.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -304,6 +305,12 @@ public class TestSuiteView extends Composite {
 		});
 
 		addButtonListeners();
+		try {
+			testSuiteTable.renderAllTestSuites();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	}
 
