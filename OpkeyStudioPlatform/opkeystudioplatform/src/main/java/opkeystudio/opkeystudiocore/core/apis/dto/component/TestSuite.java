@@ -1,15 +1,16 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class TestSuite {
+public class TestSuite extends Modified {
 	@DBField
 	private String suite_stepid;
 	@DBField
 	private String flow_id;
-	
+
 	private int clustering_key;
-	
+
 	@DBField
 	private int position;
 	@DBField
