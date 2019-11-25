@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.TableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariableTable extends CustomTable {
@@ -74,7 +75,7 @@ public class GlobalVariableTable extends CustomTable {
 		GlobalVariable gv = new GlobalVariable();
 		gv.setPosition(lastPosition + 1);
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
-		gv.setP_id("b0176085-f7fc-4f21-aa79-14bbf4a0e040");
+		gv.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
 		gv.setName("");
 		gv.setAdded(true);
 		addGlobalVariable(gv);
@@ -94,7 +95,7 @@ public class GlobalVariableTable extends CustomTable {
 			refreshGlobalVariables();
 			return;
 		}
-		
+
 		List<GlobalVariable> allGlobalVariables = getGlobalVariablesData();
 		for (GlobalVariable gv : allGlobalVariables) {
 			if (gv.isDeleted()) {
