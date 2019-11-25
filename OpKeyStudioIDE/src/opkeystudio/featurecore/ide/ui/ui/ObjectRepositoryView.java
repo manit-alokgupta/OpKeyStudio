@@ -10,11 +10,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -52,6 +55,8 @@ public class ObjectRepositoryView extends Composite {
 	private MenuItem pasteMenuItem;
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
+	private ToolItem addParentObjectToolItem;
+	private ToolItem addChildObjectToolItem;
 	private ORObject obRepo;
 
 	/**
@@ -74,6 +79,16 @@ public class ObjectRepositoryView extends Composite {
 		return this.objectRepositoryTree;
 	}
 
+	private Menu createParentObjectCreationMenu(Control parent) {
+		String[] menuItems = new String[] { "A", "B", "C" };
+		Menu menu = new Menu(parent);
+		for (String menuItem : menuItems) {
+			MenuItem item = new MenuItem(menu, 0);
+			item.setText(menuItem);
+		}
+		return menu;
+	}
+
 	public void ObjectRepositoryUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -93,10 +108,39 @@ public class ObjectRepositoryView extends Composite {
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar.setBounds(0, 0, 87, 23);
-		
+
 		ToolItem septoolItem = new ToolItem(toolBar, SWT.SEPARATOR);
-		
-		
+
+		addParentObjectToolItem = new ToolItem(toolBar, SWT.DROP_DOWN);
+		addParentObjectToolItem.setText("Add(HtmlPage)");
+
+		ToolItem septoolItem2 = new ToolItem(toolBar, SWT.SEPARATOR);
+
+		addChildObjectToolItem = new ToolItem(toolBar, SWT.DROP_DOWN);
+		addChildObjectToolItem.setText("Add(Area)");
+
+		Menu parentObjectMenu = createParentObjectCreationMenu(addParentObjectToolItem.getControl().getShell());
+
+		addParentObjectToolItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (e.detail == SWT.ARROW) {
+					Rectangle rect = addParentObjectToolItem.getBounds();
+					Point pt = new Point(rect.x, rect.y + rect.height);
+					pt = toolBar.toDisplay(pt);
+					parentObjectMenu.setLocation(pt.x, pt.y);
+					parentObjectMenu.setVisible(true);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 		saveObject.setText("Save");
