@@ -6,6 +6,10 @@ import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
+import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -19,7 +23,27 @@ public class GlobalVariableTable extends CustomTable {
 
 	public GlobalVariableTable(Composite parent, int style) {
 		super(parent, SWT.NONE);
-		// TODO Auto-generated constructor stub
+		init();
+	}
+
+	private void init() {
+		TableCursor cursor = new TableCursor(this, 0);
+		ControlEditor controlEditor = new ControlEditor(cursor);
+		controlEditor.grabHorizontal = true;
+		controlEditor.grabVertical = true;
+		cursor.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	@Override
