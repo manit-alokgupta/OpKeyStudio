@@ -51,19 +51,23 @@ public class TestSuiteApi {
 
 	private void updateTestSuite(TestSuite testSuite) {
 		if (testSuite.isModified()) {
-
+			String query = new QueryMaker().createUpdateQuery(testSuite, "suite_design_steps",
+					String.format("WHERE suite_stepid='%s'", testSuite.getSuite_stepid()));
+			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void addTestSuite(TestSuite testSuite) {
-		if (testSuite.isModified()) {
-
+		if (testSuite.isAdded()) {
+			String query = new QueryMaker().createInsertQuery(testSuite, "suite_design_steps", null);
+			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	public void saveAllTestSuite(List<TestSuite> testSuites) {
 		for (TestSuite testSuite : testSuites) {
-			String updateQuery = new QueryMaker().createUpdateQuery(testSuite, "suite_design_steps", null);
+			String updateQuery = new QueryMaker().createUpdateQuery(testSuite, "suite_design_steps",
+					String.format("WHERE suite_stepid='%s'", testSuite.getSuite_stepid()));
 			System.out.println("update Query:- " + updateQuery);
 			System.out.println("Save Query:- " + testSuite.getArtifact().getName());
 			String addQuery = new QueryMaker().createInsertQuery(testSuite, "suite_design_steps", null);
