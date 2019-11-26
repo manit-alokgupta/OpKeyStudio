@@ -34,7 +34,7 @@ public class TestSuiteApi {
 			throws JsonParseException, JsonMappingException, IOException {
 		List<TestSuite> testSuites = getAllTestSuitesStep(testSuiteId);
 		for (TestSuite suite : testSuites) {
-			Artifact artifact = getArtifact(suite.getSuite_id());
+			Artifact artifact = getArtifact(suite.getFlow_id());
 			suite.setArtifact(artifact);
 		}
 		return testSuites;
