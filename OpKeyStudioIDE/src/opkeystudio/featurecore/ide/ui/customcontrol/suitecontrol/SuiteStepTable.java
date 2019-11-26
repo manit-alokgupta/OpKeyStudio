@@ -180,6 +180,7 @@ public class SuiteStepTable extends CustomTable {
 		for (TestSuite testSuite : testSuites) {
 			SuiteStepTableItem suiteStepTableItem = new SuiteStepTableItem(this, 0);
 			suiteStepTableItem.setText(new String[] { "", "", testSuite.getArtifact().getName(), "", "" });
+			System.out.println(testSuite.getArtifact().getName());
 			suiteStepTableItem.setTestSuiteData(testSuite);
 		}
 	}
