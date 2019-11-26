@@ -118,6 +118,7 @@ public class ObjectRepositoryView extends Composite {
 		addChildObjectToolItem = new ToolItem(toolBar, SWT.DROP_DOWN);
 		addChildObjectToolItem.setText("Add(Area)");
 
+		/*
 		Menu parentObjectMenu = createParentObjectCreationMenu(addParentObjectToolItem.getControl().getShell());
 
 		addParentObjectToolItem.addSelectionListener(new SelectionListener() {
@@ -138,7 +139,7 @@ public class ObjectRepositoryView extends Composite {
 				// TODO Auto-generated method stub
 
 			}
-		});
+		});*/
 
 		saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
