@@ -114,6 +114,8 @@ public class ArtifactTree extends CustomTree {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testcase.png"));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.ObjectRepository) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Suite) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/user.png"));
 		}
 	}
 
