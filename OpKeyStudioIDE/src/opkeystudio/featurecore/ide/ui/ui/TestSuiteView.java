@@ -30,6 +30,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 
 public class TestSuiteView extends Composite {
 	private Text searchTextBox;
@@ -87,7 +88,8 @@ public class TestSuiteView extends Composite {
 
 		runOnBrowserToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		runOnBrowserToolItem.setToolTipText("Run on Browser Stack");
-		runOnBrowserToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/stackbrowser.png"));
+		runOnBrowserToolItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/stackbrowser.png"));
 
 		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -131,7 +133,8 @@ public class TestSuiteView extends Composite {
 
 		moveDownToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveDownToolItem.setToolTipText("Move Down");
-		moveDownToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
+		moveDownToolItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 
 		ToolItem toolItem_8 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -143,7 +146,8 @@ public class TestSuiteView extends Composite {
 
 		refreshToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		refreshToolItem.setToolTipText("Refresh");
-		refreshToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshToolItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
 		ToolItem toolItem_10 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -313,8 +317,6 @@ public class TestSuiteView extends Composite {
 		}
 
 	}
-	
-	
 
 	private void addButtonListeners() {
 
@@ -417,7 +419,12 @@ public class TestSuiteView extends Composite {
 				if (!status) {
 					return;
 				}
-
+				try {
+					testSuiteTable.deleteSuiteStep(testSuiteTable.getSelectedTestSuite());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override
@@ -431,7 +438,12 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				try {
+					testSuiteTable.moveStepUp(testSuiteTable.getSelectedTestSuite(), testSuiteTable.getPrevTestSuite());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 
@@ -446,7 +458,12 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				try {
+					testSuiteTable.moveStepUp(testSuiteTable.getSelectedTestSuite(), testSuiteTable.getNextTestSuite());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 
@@ -461,7 +478,17 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
+				if (!status) {
+					return;
+				}
+				new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
+				try {
+					testSuiteTable.renderAllTestSuites();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 
@@ -476,7 +503,12 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				try {
+					testSuiteTable.renderAllTestSuites();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 

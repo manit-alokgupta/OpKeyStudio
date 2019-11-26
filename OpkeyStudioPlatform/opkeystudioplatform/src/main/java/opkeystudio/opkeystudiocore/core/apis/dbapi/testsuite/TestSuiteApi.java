@@ -12,6 +12,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
+import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class TestSuiteApi {
@@ -37,5 +38,39 @@ public class TestSuiteApi {
 			suite.setArtifact(artifact);
 		}
 		return testSuites;
+	}
+
+	private void deleteTestSuite(TestSuite testSuite) {
+		if (testSuite.isDeleted()) {
+			System.out.println("" + testSuite.getSuite_stepid());
+			String query = String.format("delete from suite_design_steps where suite_stepid='%s'",
+					testSuite.getSuite_stepid());
+			QueryExecutor.getInstance().executeUpdateQuery(query);
+		}
+	}
+
+	private void updateTestSuite(TestSuite testSuite) {
+		if (testSuite.isModified()) {
+
+		}
+	}
+
+	private void addTestSuite(TestSuite testSuite) {
+		if (testSuite.isModified()) {
+
+		}
+	}
+
+	public void saveAllTestSuite(List<TestSuite> testSuites) {
+		for (TestSuite testSuite : testSuites) {
+			String updateQuery = new QueryMaker().createUpdateQuery(testSuite, "suite_design_steps", null);
+			System.out.println("update Query:- " + updateQuery);
+			System.out.println("Save Query:- " + testSuite.getArtifact().getName());
+			String addQuery = new QueryMaker().createInsertQuery(testSuite, "suite_design_steps", null);
+			System.out.println("Add Query:- " + addQuery);
+			deleteTestSuite(testSuite);
+			updateTestSuite(testSuite);
+			addTestSuite(testSuite);
+		}
 	}
 }

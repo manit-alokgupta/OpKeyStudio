@@ -135,26 +135,30 @@ public class SuiteStepTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
-	public void moveStepUp(TestSuite suiteStep1, TestSuite suiteStep2) {
+	public void moveStepUp(TestSuite suiteStep1, TestSuite suiteStep2)
+			throws JsonParseException, JsonMappingException, IOException {
 		int selectedIndex = this.getSelectionIndex();
 		int spos1 = suiteStep1.getPosition();
 		int spos2 = suiteStep2.getPosition();
 
 		suiteStep1.setPosition(spos2);
 		suiteStep2.setPosition(spos1);
+		refreshAllTestSuites();
 
 		selectRow(selectedIndex - 1);
 		suiteStep1.setModified(true);
-		//getParentTestSuiteView().toggleSaveBtn(true);
+		// getParentTestSuiteView().toggleSaveBtn(true);
 	}
 
-	public void moveStepDown(TestSuite suiteStep1, TestSuite suiteStep2) {
+	public void moveStepDown(TestSuite suiteStep1, TestSuite suiteStep2)
+			throws JsonParseException, JsonMappingException, IOException {
 		int selectedIndex = this.getSelectionIndex();
 		int spos1 = suiteStep1.getPosition();
 		int spos2 = suiteStep2.getPosition();
 
 		suiteStep1.setPosition(spos2);
 		suiteStep2.setPosition(spos1);
+		refreshAllTestSuites();
 
 		selectRow(selectedIndex + 1);
 		suiteStep1.setModified(true);
@@ -162,8 +166,9 @@ public class SuiteStepTable extends CustomTable {
 		// getParentTestSuiteView().toggleSaveBtn(true);
 	}
 
-	public void deleteSuiteStep(TestSuite suiteStep) {
+	public void deleteSuiteStep(TestSuite suiteStep) throws JsonParseException, JsonMappingException, IOException {
 		suiteStep.setDeleted(true);
+		refreshAllTestSuites();
 	}
 
 	public void renderAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
@@ -190,6 +195,37 @@ public class SuiteStepTable extends CustomTable {
 				suiteStepTableItem.setTestSuiteData(testSuite);
 			}
 		}
+	}
+
+	public TestSuite getSelectedTestSuite() {
+		SuiteStepTableItem suiteStepTableItem = (SuiteStepTableItem) this.getSelection()[0];
+		return suiteStepTableItem.getTestSuiteData();
+	}
+
+	public TestSuite getPrevTestSuite() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == 0) {
+			return null;
+		}
+		selectedIndex = selectedIndex - 1;
+		SuiteStepTableItem suiteStepTableItem = (SuiteStepTableItem) this.getItem(selectedIndex);
+		if (suiteStepTableItem != null) {
+			return suiteStepTableItem.getTestSuiteData();
+		}
+		return null;
+	}
+
+	public TestSuite getNextTestSuite() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == this.getItemCount() - 1) {
+			return null;
+		}
+		selectedIndex = selectedIndex + 1;
+		SuiteStepTableItem suiteStepTableItem = (SuiteStepTableItem) this.getItem(selectedIndex);
+		if (suiteStepTableItem != null) {
+			return suiteStepTableItem.getTestSuiteData();
+		}
+		return null;
 	}
 
 	public TestSuiteView getParentTestSuiteView() {
