@@ -642,7 +642,7 @@ public class ArtifactTreeUI extends Composite {
 				ArtifactTree tree = (ArtifactTree) e.getSource();
 				ArtifactTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
 
-				System.out.println("Right clicked event");
+				System.out.println("Mouse clicked event");
 
 				if (selectedTreeItem == null) {
 					return;
