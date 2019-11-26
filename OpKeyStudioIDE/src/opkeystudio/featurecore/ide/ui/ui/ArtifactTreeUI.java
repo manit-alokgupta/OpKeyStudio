@@ -641,7 +641,7 @@ public class ArtifactTreeUI extends Composite {
 			public void mouseUp(MouseEvent e) {
 				ArtifactTree tree = (ArtifactTree) e.getSource();
 				ArtifactTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
-//				if (e.button == 3) {
+
 				System.out.println("Right clicked event");
 
 				if (selectedTreeItem == null) {
@@ -676,7 +676,14 @@ public class ArtifactTreeUI extends Composite {
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 
-//					}
+				}
+				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Suite) {
+					mntmNew.setEnabled(false);
+					toolbarNew.setEnabled(false);
+					toolbarRename.setEnabled(true);
+					toolbarDelete.setEnabled(true);
+					deleteMenuItem.setEnabled(true);
+					renameMenuItem.setEnabled(true);
 				}
 			}
 
