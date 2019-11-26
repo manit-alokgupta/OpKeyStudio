@@ -165,7 +165,7 @@ public class GlobalVariableDialog extends Dialog {
 			}
 		});
 
-		globalVariablesTable = new GlobalVariableTable(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		globalVariablesTable = new GlobalVariableTable(composite, SWT.BORDER | SWT.FULL_SELECTION, this);
 		globalVariablesTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		globalVariablesTable.setHeaderVisible(true);
 		globalVariablesTable.setLinesVisible(true);
