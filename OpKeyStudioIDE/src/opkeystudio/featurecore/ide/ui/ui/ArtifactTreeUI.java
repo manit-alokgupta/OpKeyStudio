@@ -49,10 +49,12 @@ public class ArtifactTreeUI extends Composite {
 	private MenuItem toolbarTestCase;
 	private MenuItem toolbarObjectRepository;
 	private MenuItem toolbarFunctionLibrary;
+	private MenuItem toolbarTestSuite;
 	private MenuItem folderMenuItem;
 	private MenuItem testcaseMenuItem;
 	private MenuItem objectRepositoryMenuItem;
 	private MenuItem functionLibraryMenuItem;
+	private MenuItem testSuiteMenuItem;
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
 	/**
@@ -178,6 +180,10 @@ public class ArtifactTreeUI extends Composite {
 		toolbarObjectRepository
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
 
+		toolbarTestSuite = new MenuItem(newMenu, SWT.PUSH);
+		toolbarTestSuite.setText("Test Suite");
+		toolbarTestSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testSuite.png"));
+
 		folderMenuItem = new MenuItem(menu_1, SWT.NONE);
 		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
 		folderMenuItem.setText("Folder");
@@ -193,6 +199,10 @@ public class ArtifactTreeUI extends Composite {
 
 		functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
 		functionLibraryMenuItem.setText("Function Library");
+
+		testSuiteMenuItem = new MenuItem(menu_1, SWT.PUSH);
+		testSuiteMenuItem.setText("Test Suite");
+		testSuiteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testSuite.png"));
 
 		renameMenuItem = new MenuItem(menu, SWT.NONE);
 		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
@@ -222,6 +232,33 @@ public class ArtifactTreeUI extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		testSuiteMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
+						"TestSuite Name", "");
+				if (inputValue == null) {
+					return;
+				}
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Suite);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 			}
 
 			@Override
@@ -550,6 +587,31 @@ public class ArtifactTreeUI extends Composite {
 			}
 		});
 
+		toolbarTestSuite.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
+						"TestSuite Name", "");
+				if (inputValue == null) {
+					return;
+				}
+				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Suite);
+				try {
+					artifactTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		toolBar_1.addMouseListener(new MouseListener() {
 
 			@Override
