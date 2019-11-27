@@ -14,8 +14,9 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.custom.TableCursor;
 
-public class DataRepository extends Composite {
+public class DataRepositoryView extends Composite {
 	private Table excelTable;
 	private int colCount = 0;
 	private int rowCount = 0;
@@ -26,7 +27,7 @@ public class DataRepository extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public DataRepository(Composite parent, int style) {
+	public DataRepositoryView(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -100,6 +101,8 @@ public class DataRepository extends Composite {
 		excelTable.setBounds(0, 0, 85, 45);
 		excelTable.setHeaderVisible(true);
 		excelTable.setLinesVisible(true);
+		
+		TableCursor tableCursor = new TableCursor(excelTable, SWT.NONE);
 
 		colCount = excelTable.getColumnCount();
 		rowCount = excelTable.getItemCount();
