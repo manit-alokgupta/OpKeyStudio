@@ -18,17 +18,15 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.TableItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.ui.GlobalVariableDialog;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -123,7 +121,7 @@ public class GlobalVariableTable extends CustomTable {
 		TableEditor editor = new TableEditor(this);
 		editor.horizontalAlignment = SWT.CENTER;
 		editor.grabHorizontal = true;
-		editor.minimumWidth = 50;
+		editor.grabVertical = true;
 		return editor;
 	}
 
@@ -133,6 +131,12 @@ public class GlobalVariableTable extends CustomTable {
 		GlobalVariable globalVariable = (GlobalVariable) item.getControlData();
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
+		CustomCombo combo = new CustomCombo(this, 0);
+		combo.setItems(ServiceRepository.getInstance().getAllVaraiblesType());
+		combo.select(Utilities.getInstance().getIndexOfItem(ServiceRepository.getInstance().getAllVaraiblesType(),
+				globalVariable.getDatatype()));
+
+		combo.setControlData(globalVariable);
 		CustomButton isExternallyUpdatable = new CustomButton(this, SWT.CHECK);
 		isExternallyUpdatable.setSelection(globalVariable.isExternallyupdatable());
 
@@ -155,10 +159,31 @@ public class GlobalVariableTable extends CustomTable {
 
 			}
 		});
-
+		
+		combo.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setSelection(item);
+				CustomCombo button = (CustomCombo) e.getSource();
+				GlobalVariable oatr = (GlobalVariable) button.getControlData();
+				int selected=combo.getSelectionIndex();
+				String selectedDataType=combo.getItem(selected);
+				oatr.setDatatype(selectedDataType);
+				oatr.setModified(true);
+				getParentGlobalVariableView().toggleSaveToolItem(true);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		editor1.setEditor(isExternallyUpdatable, item, 3);
-
+		editor2.setEditor(combo, item, 1);
 		allTableEditors.add(editor1.getEditor());
+		allTableEditors.add(editor2.getEditor());
 	}
 
 	private void disposeAllTableEditors() {

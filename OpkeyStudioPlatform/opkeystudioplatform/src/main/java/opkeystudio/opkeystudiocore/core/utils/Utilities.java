@@ -77,4 +77,13 @@ public class Utilities {
 	public String getCurrentTimeZone() {
 		return "Coordinated Universal Time";
 	}
+
+	public int getIndexOfItem(String[] arrays, String item) {
+		for (int i = 0; i < arrays.length; i++) {
+			if (arrays[i].toLowerCase().equals(item.toLowerCase())) {
+				return i;
+			}
+		}
+		return -1;
+	}
 }

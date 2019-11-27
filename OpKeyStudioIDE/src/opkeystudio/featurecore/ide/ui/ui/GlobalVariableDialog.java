@@ -195,64 +195,6 @@ public class GlobalVariableDialog extends Dialog {
 				} else {
 					toggleDeleteToolItem(true);
 				}
-				Control oldEditor = editor.getEditor();
-				if (oldEditor != null) {
-					oldEditor.dispose();
-				}
-
-				Table table = (Table) e.getSource();
-				TableItem item = table.getSelection()[0];
-
-				Point pt = new Point(e.x, e.y);
-				if (item != null) {
-					for (int col = 0; col < table.getColumnCount(); col++) {
-						Rectangle rect = item.getBounds(col);
-						if ((pt.x > rect.x && pt.x < rect.x + rect.width)
-								&& (pt.y > rect.y && pt.y < rect.y + rect.height)) {
-							EDITABLECOLUMN = col;
-						}
-					}
-				}
-
-				if (item == null) {
-					return;
-				}
-				GlobalVariable gVar = (GlobalVariable) item.getData();
-				String selectedColumn = tableHeaders[EDITABLECOLUMN];
-				if (selectedColumn.equals("Externally Updatable")) {
-
-				}
-				Text newEditor = new Text(table, SWT.NONE);
-				newEditor.setText(item.getText(EDITABLECOLUMN));
-				newEditor.addModifyListener(new ModifyListener() {
-
-					@Override
-					public void modifyText(ModifyEvent e) {
-						toggleSaveToolItem(true);
-						gVar.setModified(true);
-						Text text = (Text) editor.getEditor();
-						editor.getItem().setText(EDITABLECOLUMN, text.getText());
-						if (selectedColumn.equals("Name")) {
-							gVar.setName(text.getText());
-						}
-						if (selectedColumn.equals("Data Type")) {
-							gVar.setDatatype(text.getText());
-						}
-						if (selectedColumn.equals("Value")) {
-							gVar.setValue(text.getText());
-						}
-						if (selectedColumn.equals("Externally Updatable")) {
-							if (text.getText().equals("true")) {
-								gVar.setExternallyupdatable(true);
-							} else {
-								gVar.setExternallyupdatable(false);
-							}
-						}
-					}
-				});
-				newEditor.selectAll();
-				newEditor.setFocus();
-				editor.setEditor(newEditor, item, EDITABLECOLUMN);
 			}
 
 			@Override

@@ -79,4 +79,8 @@ public class ServiceRepository {
 	public Project getDefaultProject() {
 		return (Project) getServiceRepositoryVariable("opkeystudio.defaultProject");
 	}
+
+	public String[] getAllVaraiblesType() {
+		return new String[] { "INT", "FLOAT", "STRING" };
+	}
 }
