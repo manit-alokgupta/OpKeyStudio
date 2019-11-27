@@ -10,6 +10,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
@@ -19,6 +23,7 @@ import org.eclipse.swt.widgets.TableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.ui.GlobalVariableDialog;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
@@ -45,7 +50,47 @@ public class GlobalVariableTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				// thisTable.deselectAll();
+				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
+				GlobalVariable globalVariable = (GlobalVariable) selectedTableItem.getControlData();
+				int selectedColumn = cursor.getColumn();
+				CustomText text = new CustomText(cursor, 0);
+				if (selectedColumn == 0) {
+					text.setText(globalVariable.getName());
+				}
+				if (selectedColumn == 2) {
+					text.setText(globalVariable.getValue());
+				}
+				text.addFocusListener(new FocusListener() {
 
+					@Override
+					public void focusLost(FocusEvent e) {
+						text.dispose();
+					}
+
+					@Override
+					public void focusGained(FocusEvent e) {
+
+					}
+				});
+
+				text.addModifyListener(new ModifyListener() {
+
+					@Override
+					public void modifyText(ModifyEvent e) {
+						selectedTableItem.setText(selectedColumn, text.getText());
+						globalVariable.setModified(true);
+						getParentGlobalVariableView().toggleSaveToolItem(true);
+						if (selectedColumn == 0) {
+							globalVariable.setName(text.getText());
+						}
+						if (selectedColumn == 2) {
+							globalVariable.setValue(text.getText());
+						}
+					}
+				});
+				controlEditor.setEditor(text);
+				getParentGlobalVariableView().toggleDeleteToolItem(true);
 			}
 
 			@Override
@@ -85,7 +130,7 @@ public class GlobalVariableTable extends CustomTable {
 	private List<Control> allTableEditors = new ArrayList<Control>();
 
 	private void addTableEditor(CustomTableItem item) {
-		GlobalVariable globalVariable = (GlobalVariable) item.getOpKeyData();
+		GlobalVariable globalVariable = (GlobalVariable) item.getControlData();
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
 		CustomButton isExternallyUpdatable = new CustomButton(this, SWT.CHECK);
@@ -114,7 +159,6 @@ public class GlobalVariableTable extends CustomTable {
 		editor1.setEditor(isExternallyUpdatable, item, 3);
 
 		allTableEditors.add(editor1.getEditor());
-		allTableEditors.add(editor2.getEditor());
 	}
 
 	private void disposeAllTableEditors() {
@@ -131,7 +175,7 @@ public class GlobalVariableTable extends CustomTable {
 			for (GlobalVariable globalvariable : globalvariables) {
 				CustomTableItem ti = new CustomTableItem(this, 0);
 				ti.setData(globalvariable);
-				ti.setOpKeyData(globalvariable);
+				ti.setControlData(globalvariable);
 				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
 						globalvariable.getValue(), "" });
 				addTableEditor(ti);
@@ -151,7 +195,7 @@ public class GlobalVariableTable extends CustomTable {
 			if (globalvariable.isDeleted() == false) {
 				CustomTableItem ti = new CustomTableItem(this, 0);
 				ti.setData(globalvariable);
-				ti.setOpKeyData(globalvariable);
+				ti.setControlData(globalvariable);
 				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
 						globalvariable.getValue(), "" });
 				addTableEditor(ti);
@@ -166,6 +210,8 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
 		gv.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
 		gv.setName("");
+		gv.setValue("");
+		gv.setDatatype("STRING");
 		gv.setAdded(true);
 		addGlobalVariable(gv);
 		renderGlobalVariables();

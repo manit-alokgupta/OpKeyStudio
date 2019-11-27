@@ -17,11 +17,11 @@ public class ObjectRepositoryTreeItem extends CustomTreeItem {
 	}
 	
 	public ORObject getObjectRepository() {
-		return (ORObject) super.getOpKeyData();
+		return (ORObject) super.getControlData();
 	}
 
 	public void setArtifact(ORObject objectRepository) {
-		super.setOpKeyData(objectRepository);
+		super.setControlData(objectRepository);
 	}
 
 	@Override

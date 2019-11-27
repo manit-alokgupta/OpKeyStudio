@@ -10,11 +10,11 @@ public class CustomTableItem extends TableItem {
 		super(parent, style);
 	}
 
-	public Object getOpKeyData() {
+	public Object getControlData() {
 		return this.data;
 	}
 
-	public void setOpKeyData(Object data) {
+	public void setControlData(Object data) {
 		this.data = data;
 	}
 

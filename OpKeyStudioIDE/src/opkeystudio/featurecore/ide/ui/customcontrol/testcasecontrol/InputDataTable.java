@@ -81,7 +81,7 @@ public class InputDataTable extends CustomTable {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				CustomTableItem row = (CustomTableItem) cursor.getRow();
-				FlowInputArgument flowInputArgument = (FlowInputArgument) row.getOpKeyData();
+				FlowInputArgument flowInputArgument = (FlowInputArgument) row.getControlData();
 				int selectedColumn = cursor.getColumn();
 				Text text = new Text(cursor, 0);
 				text.setText(flowInputArgument.getStaticvalue());
@@ -159,7 +159,7 @@ public class InputDataTable extends CustomTable {
 					CustomTableItem cti = new CustomTableItem(this, 0);
 					cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
 							flowInputArg.getStaticvalue() });
-					cti.setOpKeyData(flowInputArg);
+					cti.setControlData(flowInputArg);
 				}
 			}
 		}
@@ -171,7 +171,7 @@ public class InputDataTable extends CustomTable {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
 						flowInputArg.getStaticvalue() });
-				cti.setOpKeyData(flowInputArg);
+				cti.setControlData(flowInputArg);
 			}
 		}
 	}
@@ -181,7 +181,7 @@ public class InputDataTable extends CustomTable {
 			return null;
 		}
 		CustomTableItem selectedTableItem = (CustomTableItem) this.getSelection()[0];
-		return (FlowInputArgument) selectedTableItem.getOpKeyData();
+		return (FlowInputArgument) selectedTableItem.getControlData();
 	}
 
 	public List<ComponentInputArgument> getComponentInputArgs() {

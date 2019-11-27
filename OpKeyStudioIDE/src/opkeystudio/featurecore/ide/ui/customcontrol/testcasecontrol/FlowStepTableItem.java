@@ -17,11 +17,11 @@ public class FlowStepTableItem extends CustomTableItem {
 	}
 
 	public FlowStep getFlowStepeData() {
-		return (FlowStep) super.getOpKeyData();
+		return (FlowStep) super.getControlData();
 	}
 
 	public void setFlowStepData(FlowStep objectProperty) {
-		super.setOpKeyData(objectProperty);
+		super.setControlData(objectProperty);
 	}
 
 }

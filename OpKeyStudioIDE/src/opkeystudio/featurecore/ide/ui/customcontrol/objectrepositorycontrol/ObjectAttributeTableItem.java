@@ -17,11 +17,11 @@ public class ObjectAttributeTableItem extends CustomTableItem {
 	}
 
 	public ObjectAttributeProperty getObjectAttributeData() {
-		return (ObjectAttributeProperty) super.getOpKeyData();
+		return (ObjectAttributeProperty) super.getControlData();
 	}
 
 	public void setObjectAttributeData(ObjectAttributeProperty objectProperty) {
-		super.setOpKeyData(objectProperty);
+		super.setControlData(objectProperty);
 	}
 
 }

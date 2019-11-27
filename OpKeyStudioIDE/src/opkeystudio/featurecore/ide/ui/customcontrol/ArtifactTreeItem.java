@@ -16,11 +16,11 @@ public class ArtifactTreeItem extends CustomTreeItem {
 	}
 
 	public Artifact getArtifact() {
-		return (Artifact) super.getOpKeyData();
+		return (Artifact) super.getControlData();
 	}
 
 	public void setArtifact(Artifact artifact) {
-		super.setOpKeyData(artifact);
+		super.setControlData(artifact);
 	}
 
 	@Override

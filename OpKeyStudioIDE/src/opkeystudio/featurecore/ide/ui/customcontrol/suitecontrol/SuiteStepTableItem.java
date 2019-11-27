@@ -18,11 +18,11 @@ public class SuiteStepTableItem extends CustomTableItem {
 	}
 
 	public TestSuite getTestSuiteData() {
-		return (TestSuite) super.getOpKeyData();
+		return (TestSuite) super.getControlData();
 	}
 
 	public void setTestSuiteData(TestSuite testSuite) {
-		super.setOpKeyData(testSuite);
+		super.setControlData(testSuite);
 	}
 
 }
