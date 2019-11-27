@@ -116,6 +116,7 @@ public class TestCaseView extends Composite {
 
 	}
 
+	@SuppressWarnings("unused")
 	public void TestCaseUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
