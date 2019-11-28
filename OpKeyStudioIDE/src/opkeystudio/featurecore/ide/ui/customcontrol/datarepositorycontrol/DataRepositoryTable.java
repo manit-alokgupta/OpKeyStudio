@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
@@ -18,12 +19,15 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.DataRepositoryView;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
 public class DataRepositoryTable extends CustomTable {
 
 	private boolean paintCalled = false;
 	private DataRepositoryTable thisTable;
 	private DataRepositoryView parentDataRepositoryView;
+	private DRColumnAttributes drCol;
 
 	public DataRepositoryTable(Composite parent, int style, DataRepositoryView parentView)
 			throws JsonParseException, JsonMappingException, IOException {
@@ -36,6 +40,14 @@ public class DataRepositoryTable extends CustomTable {
 
 	private void init() throws JsonParseException, JsonMappingException, IOException {
 
+//		int numberOfCol = drCol.getClustering_key();
+//		System.out.println(numberOfCol);
+//		for (int i = 0; i < numberOfCol; i++) {
+////			TableColumn column = new TableColumn(this, 0);
+////			column.setText(drCol.getName());
+////			column.setWidth(100);
+//			System.out.println(drCol.getName());
+//		}
 		TableCursor cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
@@ -84,6 +96,17 @@ public class DataRepositoryTable extends CustomTable {
 
 			}
 		});
+		renderAllColumnDetails();
+	}
+
+	public void renderAllColumnDetails() throws JsonParseException, JsonMappingException, IOException {
+
+		List<DRColumnAttributes> drColumnAtt = new DataRepositoryApi().getAllColumnsValues();
+
+		for (DRColumnAttributes drColumnAttributes : drColumnAtt) {
+			DataRepositoryTableItem dataRepositoryTableItem = new DataRepositoryTableItem(this, 0);
+			dataRepositoryTableItem.setDRColumnData(drColumnAttributes);
+		}
 	}
 
 	public DataRepositoryView getParentDataRepositoryView() {

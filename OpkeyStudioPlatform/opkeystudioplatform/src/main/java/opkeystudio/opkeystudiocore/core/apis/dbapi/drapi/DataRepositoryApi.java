@@ -16,12 +16,11 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class DataRepositoryApi {
 
 	@SuppressWarnings("unused")
-	public List<DRColumnAttributes> getAllColumnsValues(String columnId)
-			throws JsonParseException, JsonMappingException, IOException {
-		String query = String.format("SELECT * FROM dr_columns where column_id='%s' ORDER BY position", columnId);
+	public List<DRColumnAttributes> getAllColumnsValues() throws JsonParseException, JsonMappingException, IOException {
+		String query = String.format("SELECT * FROM dr_columns  ORDER BY position");
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, TestSuite.class);
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, DRColumnAttributes.class);
 		return mapper.readValue(result, type);
 
 	}
