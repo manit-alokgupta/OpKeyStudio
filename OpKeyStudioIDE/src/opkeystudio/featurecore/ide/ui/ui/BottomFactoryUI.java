@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-public class BottomFactory extends Composite {
+public class BottomFactoryUI extends Composite {
 	private Table table;
 	private Table table_1;
 	private Table table_2;
@@ -36,7 +36,7 @@ public class BottomFactory extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public BottomFactory(Composite parent, int style) {
+	public BottomFactoryUI(Composite parent, int style) {
 		super(parent, style);
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		setLayout(new FillLayout(SWT.HORIZONTAL));
