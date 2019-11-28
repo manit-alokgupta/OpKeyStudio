@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
@@ -25,7 +26,13 @@ public class DataRepositoryApi {
 
 	}
 
-//	private List<DR_Cells> getAllCellValues(String ){
-//		
-//	}
+	public List<DRCellAttributes> getAllCellValues() throws JsonParseException, JsonMappingException, IOException {
+		String query = String.format("SELECT * FROM dr_cell  ORDER BY position");
+//		String query = String.format(
+//				"SELECT * FROM dr_cell,dr_columns where dr_columns.column_id=dr_cell.Column_ID order by position");
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, DRCellAttributes.class);
+		return mapper.readValue(result, type);
+	}
 }

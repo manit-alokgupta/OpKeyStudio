@@ -20,13 +20,14 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTableItem;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
 public class DataRepositoryView extends Composite {
 	private DataRepositoryTable excelTable;
 	private int colCount = 0;
 	private int rowCount = 0;
 	private TableColumn newColumn;
+	private DRColumnAttributes drCol;
 
 	/**
 	 * Create the composite.
@@ -135,17 +136,14 @@ public class DataRepositoryView extends Composite {
 
 		excelTable = new DataRepositoryTable(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI, this);
 		excelTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
 		excelTable.setHeaderVisible(true);
 		excelTable.setLinesVisible(true);
 
-		TableColumn firstColumn = new TableColumn(excelTable, SWT.NONE);
-		firstColumn.setWidth(40);
-		firstColumn.setText(" ");
-		firstColumn.setResizable(false);
 
 		colCount = excelTable.getColumnCount();
 		rowCount = excelTable.getItemCount();
+
+		
 
 		addColmToolItm.addSelectionListener(new SelectionListener() {
 
