@@ -1,6 +1,4 @@
-package opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol;
-
-import java.io.IOException;
+package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
@@ -8,33 +6,58 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.ui.DataRepositoryView;
+import opkeystudio.featurecore.ide.ui.ui.BottomFactoryUI;
 
-public class DataRepositoryTable extends CustomTable {
+public class BackupTable extends CustomTable {
 
 	private boolean paintCalled = false;
-	private DataRepositoryTable thisTable;
-	private DataRepositoryView parentDataRepositoryView;
+	private BackupTable thisTable = this;
+	private BottomFactoryUI parentBottomFactoryUI;
 
-	public DataRepositoryTable(Composite parent, int style, DataRepositoryView parentView)
-			throws JsonParseException, JsonMappingException, IOException {
+	public BackupTable(Composite parent, int style, BottomFactoryUI bottomFactoryUI) {
 		super(parent, style);
-
 		init();
 		thisTable = this;
-		this.setParentDataRepositoryView(parentView);
+		this.setParentBottomFactoryUI(bottomFactoryUI);
 	}
 
-	private void init() throws JsonParseException, JsonMappingException, IOException {
+	private void init() {
+		String[] tableHeaders = { "Name", "Number", "Comment", "Action" };
+		for (String header : tableHeaders) {
+			TableColumn column = new TableColumn(this, 0);
+			column.setText(header);
+			column.setWidth(100);
+		}
+		this.pack();
+		for (int i = 0; i < tableHeaders.length; i++) {
+			this.getColumn(i).pack();
+		}
+
+		this.addPaintListener(new PaintListener() {
+
+			@Override
+			public void paintControl(PaintEvent e) {
+				if (paintCalled) {
+					// return;
+				}
+				Table table_0 = (Table) e.getSource();
+				for (TableColumn column : table_0.getColumns()) {
+					column.setWidth(table_0.getBounds().width / 4);
+				}
+				paintCalled = true;
+
+			}
+		});
 
 		TableCursor cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
@@ -84,14 +107,14 @@ public class DataRepositoryTable extends CustomTable {
 
 			}
 		});
+
 	}
 
-	public DataRepositoryView getParentDataRepositoryView() {
-		return parentDataRepositoryView;
+	public BottomFactoryUI getParentBottomFactoryUI() {
+		return parentBottomFactoryUI;
 	}
 
-	public void setParentDataRepositoryView(DataRepositoryView parentDataRepositoryView) {
-		this.parentDataRepositoryView = parentDataRepositoryView;
+	public void setParentBottomFactoryUI(BottomFactoryUI parentBottomFactoryUI) {
+		this.parentBottomFactoryUI = parentBottomFactoryUI;
 	}
-
 }

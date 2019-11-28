@@ -1,5 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.IOException;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -14,7 +16,11 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTableItem;
 
 public class DataRepositoryView extends Composite {
 	private DataRepositoryTable excelTable;
@@ -27,9 +33,13 @@ public class DataRepositoryView extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
+	 * @throws IOException
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
 	 */
 	@SuppressWarnings("unused")
-	public DataRepositoryView(Composite parent, int style) {
+	public DataRepositoryView(Composite parent, int style)
+			throws JsonParseException, JsonMappingException, IOException {
 		super(parent, SWT.BORDER);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -128,7 +138,7 @@ public class DataRepositoryView extends Composite {
 
 		excelTable.setHeaderVisible(true);
 		excelTable.setLinesVisible(true);
-		 
+
 		TableColumn firstColumn = new TableColumn(excelTable, SWT.NONE);
 		firstColumn.setWidth(40);
 		firstColumn.setText(" ");
