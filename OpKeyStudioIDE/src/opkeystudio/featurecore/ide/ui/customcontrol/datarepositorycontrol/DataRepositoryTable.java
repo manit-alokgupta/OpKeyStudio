@@ -4,6 +4,8 @@ import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
@@ -36,7 +38,10 @@ public class DataRepositoryTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				int selectedColumn = cursor.getColumn();
 				CustomText text = new CustomText(cursor, 0);
+				System.out.println("Column number:-" + cursor.getColumn());
+				System.out.println("Row number:-" + cursor.getRow());
 
 				text.addFocusListener(new FocusListener() {
 
@@ -49,6 +54,15 @@ public class DataRepositoryTable extends CustomTable {
 					@Override
 					public void focusGained(FocusEvent e) {
 						// TODO Auto-generated method stub
+
+					}
+				});
+
+				text.addModifyListener(new ModifyListener() {
+
+					@Override
+					public void modifyText(ModifyEvent e) {
+						cursor.getRow().setText(selectedColumn, text.getText());
 
 					}
 				});

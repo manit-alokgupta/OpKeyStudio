@@ -128,10 +128,11 @@ public class DataRepositoryView extends Composite {
 
 		excelTable.setHeaderVisible(true);
 		excelTable.setLinesVisible(true);
-
+		 
 		TableColumn firstColumn = new TableColumn(excelTable, SWT.NONE);
 		firstColumn.setWidth(40);
 		firstColumn.setText(" ");
+		firstColumn.setResizable(false);
 
 		colCount = excelTable.getColumnCount();
 		rowCount = excelTable.getItemCount();
