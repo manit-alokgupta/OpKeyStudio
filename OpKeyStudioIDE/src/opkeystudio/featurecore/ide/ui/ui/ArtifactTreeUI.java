@@ -84,6 +84,7 @@ public class ArtifactTreeUI extends Composite {
 		gd_txtSearch.widthHint = 154;
 		txtSearch.setLayoutData(gd_txtSearch);
 		txtSearch.setToolTipText("Search");
+		txtSearch.setMessage("Search");
 		txtSearch.addKeyListener(new KeyListener() {
 
 			@Override
