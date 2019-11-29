@@ -13,6 +13,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
+import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
@@ -21,15 +22,17 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class ObjectRepositoryTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
-
-	public ObjectRepositoryTree(Composite parent, int style) {
-		super(parent, style);
-		renderObjectRepositories();
-	}
+	private ObjectRepositoryView parentORView;
 
 	public ObjectRepositoryTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
 		this.setParentTestCaseView(testCaseView);
+	}
+
+	public ObjectRepositoryTree(Composite parent, int style, ObjectRepositoryView orView) {
+		super(parent, style);
+		this.setParentORView(orView);
+		renderObjectRepositories();
 	}
 
 	public void setObjectRepositoriesData(List<ORObject> objectRepository) {
@@ -110,7 +113,7 @@ public class ObjectRepositoryTree extends CustomTree {
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		System.out.println("Neon " + artifact.getId());
+		getParentORView().setOrId(artifact.getId());
 		try {
 
 			ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
@@ -144,7 +147,7 @@ public class ObjectRepositoryTree extends CustomTree {
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		System.out.println("Neon " + artifact.getId());
+		getParentORView().setOrId(artifact.getId());
 		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
 		rootNode.setText(artifact.getName());
 		rootNode.setExpanded(true);
@@ -222,5 +225,13 @@ public class ObjectRepositoryTree extends CustomTree {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public ObjectRepositoryView getParentORView() {
+		return parentORView;
+	}
+
+	public void setParentORView(ObjectRepositoryView parentORView) {
+		this.parentORView = parentORView;
 	}
 }

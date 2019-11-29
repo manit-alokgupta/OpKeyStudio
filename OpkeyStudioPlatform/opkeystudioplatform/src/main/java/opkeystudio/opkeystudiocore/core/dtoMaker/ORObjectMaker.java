@@ -14,9 +14,10 @@ public class ORObjectMaker {
 		return objectAttributeProperty;
 	}
 
-	public ORObject getORObjectDTO(String parentId, String orname, String ortype) {
+	public ORObject getORObjectDTO(String orid, String parentId, String objectName, String objectType) {
 		ORObject orobject = new ORObject();
 		orobject.setObject_id(Utilities.getInstance().getUniqueUUID(""));
+		orobject.setOr_id(orid);
 		orobject.setCreatedon(Utilities.getInstance().getCurrentDateTime());
 		orobject.setCreatedon_tz(Utilities.getInstance().getCurrentTimeZone());
 		orobject.setCreatedby("ABC");
@@ -25,8 +26,8 @@ public class ORObjectMaker {
 		orobject.setModifiedon_tz(Utilities.getInstance().getCurrentTimeZone());
 
 		orobject.setParent_object_id(parentId);
-		orobject.setName(orname);
-		orobject.setOpkeytype(ortype);
+		orobject.setName(objectName);
+		orobject.setOpkeytype(objectType);
 
 		orobject.setAdded(true);
 		return orobject;

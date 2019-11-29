@@ -66,8 +66,10 @@ public class ObjectRepositoryApi {
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
-	private void addORObject(ORObject orObject) throws SQLException {
-
+	public void addORObject(ORObject orObject) throws SQLException {
+		String query = new QueryMaker().createInsertQuery(orObject, "or_objects", "");
+		System.out.println("Saving "+query);
+		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	private void addObjectAttributeProperty(ObjectAttributeProperty objectAttributeProperty) throws SQLException {

@@ -57,6 +57,9 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem addParentObjectToolItem;
 	private ToolItem addChildObjectToolItem;
 	private ORObject obRepo;
+	private String orId;
+	private String[] parentObjectTypes = new String[] { "HTML PAGE", "FRAME" };
+	private String[] childObjectTypes = new String[] { "", "" };
 
 	/**
 	 * Create the composite.
@@ -79,21 +82,50 @@ public class ObjectRepositoryView extends Composite {
 	}
 
 	private Menu createParentObjectCreationMenu(Control parent) {
-		String[] menuItems = new String[] { "A", "B", "C" };
 		Menu menu = new Menu(parent);
-		for (String menuItem : menuItems) {
+		for (String menuItem : parentObjectTypes) {
 			MenuItem item = new MenuItem(menu, 0);
 			item.setText(menuItem);
+			item.addSelectionListener(new SelectionListener() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					ORObject orobject = new ORObjectMaker().getORObjectDTO(getOrId(), null,
+							"New Node " + item.getText(), item.getText());
+					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
+					toggleSaveButton(true);
+					objectRepositoryTree.refreshObjectRepositories();
+
+				}
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+			});
 		}
 		return menu;
 	}
-	
+
 	private Menu createChildObjectCreationMenu(Control parent) {
-		String[] menuItems = new String[] { "A", "B", "C" };
 		Menu menu = new Menu(parent);
-		for (String menuItem : menuItems) {
+		for (String menuItem : childObjectTypes) {
 			MenuItem item = new MenuItem(menu, 0);
 			item.setText(menuItem);
+			item.addSelectionListener(new SelectionListener() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+
+				}
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+			});
 		}
 		return menu;
 	}
@@ -128,7 +160,6 @@ public class ObjectRepositoryView extends Composite {
 		addChildObjectToolItem = new ToolItem(toolBar, SWT.DROP_DOWN);
 		addChildObjectToolItem.setText("Add(Area)");
 
-		
 		Menu parentObjectMenu = createParentObjectCreationMenu(addParentObjectToolItem.getDisplay().getActiveShell());
 
 		addParentObjectToolItem.addSelectionListener(new SelectionListener() {
@@ -151,7 +182,6 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
-		
 		Menu childObjectMenu = createChildObjectCreationMenu(addChildObjectToolItem.getDisplay().getActiveShell());
 
 		addChildObjectToolItem.addSelectionListener(new SelectionListener() {
@@ -173,8 +203,7 @@ public class ObjectRepositoryView extends Composite {
 
 			}
 		});
-		
-		
+
 		saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 		saveObject.setText("Save");
@@ -201,7 +230,7 @@ public class ObjectRepositoryView extends Composite {
 		refreshObject.setText("Refresh");
 		refreshObject.setToolTipText("Refresh");
 
-		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER);
+		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
 //		Tree tree = new Tree(composite_3, SWT.BORDER);
 		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectRepositoryTree.setBounds(0, 0, 85, 85);
@@ -591,5 +620,13 @@ public class ObjectRepositoryView extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public String getOrId() {
+		return orId;
+	}
+
+	public void setOrId(String orId) {
+		this.orId = orId;
 	}
 }
