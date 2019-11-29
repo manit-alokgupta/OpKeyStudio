@@ -59,7 +59,7 @@ public class ObjectRepositoryView extends Composite {
 	private ORObject obRepo;
 	private String orId;
 	private String[] parentObjectTypes = new String[] { "HTML PAGE", "FRAME" };
-	private String[] childObjectTypes = new String[] { "", "" };
+	private String[] childObjectTypes = new String[] { "BUTTON", "INPUT" };
 
 	/**
 	 * Create the composite.
@@ -117,7 +117,13 @@ public class ObjectRepositoryView extends Composite {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-
+					ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
+					ORObject selectedobject = treeItem.getObjectRepository();
+					ORObject orobject = new ORObjectMaker().getORObjectDTO(getOrId(), selectedobject.getObject_id(),
+							"New Node " + item.getText(), item.getText());
+					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
+					toggleSaveButton(true);
+					objectRepositoryTree.refreshObjectRepositories();
 				}
 
 				@Override
