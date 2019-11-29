@@ -37,6 +37,9 @@ public class TestSuiteView extends Composite {
 //	private SuiteStepTable table;
 	private SuiteStepTable testSuiteTable;
 	private ToolItem runtoolitem;
+	private ToolItem tagVersionRunToolItem;
+	private ToolItem debugToolItem;
+	private ToolItem runOnCloudToolItem;
 	private ToolItem runOnBrowserToolItem;
 	private ToolItem runOnSauceLabsToolItem;
 	private ToolItem runOnPcloudyToolItem;
@@ -83,6 +86,25 @@ public class TestSuiteView extends Composite {
 		runtoolitem = new ToolItem(toolBar_1, SWT.NONE);
 		runtoolitem.setToolTipText("Run Now");
 		runtoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
+
+		ToolItem toolItem_12 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
+		tagVersionRunToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		tagVersionRunToolItem.setToolTipText("Run With Tag Version");
+		tagVersionRunToolItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
+
+		ToolItem toolItem_13 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
+		debugToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		debugToolItem.setToolTipText("Debug Now");
+		debugToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/bug.png"));
+
+		ToolItem toolItem_14 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
+		runOnCloudToolItem = new ToolItem(toolBar_1, SWT.NONE);
+		runOnCloudToolItem.setToolTipText("Run on Cloud");
+		runOnCloudToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/cloud.png"));
 
 		ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -335,6 +357,51 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
+		tagVersionRunToolItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		debugToolItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		runOnCloudToolItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		runOnBrowserToolItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -459,7 +526,8 @@ public class TestSuiteView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					testSuiteTable.moveStepUp(testSuiteTable.getSelectedTestSuite(), testSuiteTable.getNextTestSuite());
+					testSuiteTable.moveStepDown(testSuiteTable.getSelectedTestSuite(),
+							testSuiteTable.getNextTestSuite());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

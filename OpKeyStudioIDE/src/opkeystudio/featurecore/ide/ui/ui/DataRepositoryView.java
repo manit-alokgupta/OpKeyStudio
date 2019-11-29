@@ -1,14 +1,20 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.ole.win32.OleClientSite;
+import org.eclipse.swt.ole.win32.OleFrame;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
@@ -19,6 +25,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
@@ -28,6 +35,8 @@ public class DataRepositoryView extends Composite {
 	private int rowCount = 0;
 	private TableColumn newColumn;
 	private DRColumnAttributes drCol;
+	private XSSFWorkbook wb;
+	private OleClientSite site;
 
 	/**
 	 * Create the composite.
@@ -106,15 +115,15 @@ public class DataRepositoryView extends Composite {
 
 		ToolItem toolItem_8 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem inportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
-		inportExcelDataToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/import.png"));
-		inportExcelDataToolItm.setToolTipText("Import Data From Excel");
+		ToolItem exportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
+		exportExcelDataToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/import.png"));
+		exportExcelDataToolItm.setToolTipText("Export Data From Excel");
 
 		ToolItem toolItem_9 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem exportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
-		exportExcelDataToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
-		exportExcelDataToolItm.setToolTipText("Export Data In Excel");
+		ToolItem inportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
+		inportExcelDataToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
+		inportExcelDataToolItm.setToolTipText("Import Data In Excel");
 
 		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
@@ -134,16 +143,16 @@ public class DataRepositoryView extends Composite {
 		createBackupToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/backup_create.png"));
 		createBackupToolItm.setToolTipText("Create New Backup");
 
+//		OleFrame frame = new OleFrame(parent, SWT.NONE);
+//		site = new OleClientSite(frame, SWT.NONE, "Excel.Sheet");
+
 		excelTable = new DataRepositoryTable(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI, this);
 		excelTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		excelTable.setHeaderVisible(true);
 		excelTable.setLinesVisible(true);
 
-
 		colCount = excelTable.getColumnCount();
 		rowCount = excelTable.getItemCount();
-
-		
 
 		addColmToolItm.addSelectionListener(new SelectionListener() {
 
@@ -177,6 +186,260 @@ public class DataRepositoryView extends Composite {
 			}
 		});
 
+		exportExcelDataToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String fileName = new MessageDialogs().openInputDialogAandGetValue("File Name",
+						"Please Enter File Name", "NewFile");
+				dumpWorkbookToAFile(wb, fileName);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		renameColmToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+//				String columnName = new MessageDialogs().openInputDialogAandGetValue("File Name",
+//						"Please Enter File Name", "NewFile");
+				System.out.println();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteColmToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveColmLeftToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveColmRightToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteRowToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveRowUpToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveRowDownToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		inportExcelDataToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		saveToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		refreshToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		createBackupToolItm.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+//	@SuppressWarnings({ "deprecation", "unused" })
+//	private XSSFWorkbook createWorkbookFromTable(TableViewer table) {
+//		// create a workbook
+//		wb = new XSSFWorkbook();
+//
+//		// add a worksheet
+//		XSSFSheet sheet = wb.createSheet("My Table Data");
+//
+//		// shade the background of the header row
+//		XSSFCellStyle headerStyle = wb.createCellStyle();
+//		headerStyle.setFillForegroundColor(IndexedColors.LEMON_CHIFFON.getIndex());
+//
+//		headerStyle.setAlignment(HorizontalAlignment.CENTER);
+//
+//		Table headerRow = table.getTable();
+//		TableColumn[] columns = headerRow.getColumns();
+//		int rowIndex = 0;
+//		int cellIndex = 0;
+//		XSSFRow header = sheet.createRow((short) rowIndex++);
+//		for (TableColumn column : columns) {
+//			String columnName = column.getText();
+//			XSSFCell cell = header.createCell(cellIndex++);
+//			cell.setCellValue(column.getText());
+//			cell.setCellStyle(headerStyle);
+//		}
+//		// add data rows
+//		TableItem[] items = table.getTable().getItems();
+//		for (TableItem item : items) {
+//			// create a new row
+//			XSSFRow row = sheet.createRow((short) rowIndex++);
+//			cellIndex = 0;
+//
+//			for (int i = 0; i < columns.length; i++) {
+//				// create a new cell
+////				String columnName = tableColumnNames[i];
+//				XSSFCell cell = row.createCell(cellIndex++);
+//
+//				// set the horizontal alignment (default to RIGHT)
+//				XSSFCellStyle cellStyle = wb.createCellStyle();
+//				cellStyle.setAlignment(HorizontalAlignment.RIGHT);
+//				cell.setCellStyle(cellStyle);
+//
+//				// set the cell's value
+//				String text = item.getText(i);
+//				cell.setCellValue(text);
+//			}
+//		}
+//
+//		for (int i = 0; i < columns.length; i++) {
+//			sheet.autoSizeColumn((short) i);
+//		}
+//
+//		return wb;
+//	}
+
+	public void dumpWorkbookToAFile(XSSFWorkbook wb, String filename) {
+		try {
+			FileOutputStream fos = new FileOutputStream(filename);
+			wb.write(fos);
+			fos.close();
+			MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Save Workbook Successful",
+					"Workbook saved to the file:\n\n" + filename);
+
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			String msg = ioe.getMessage();
+			MessageDialog.openError(Display.getCurrent().getActiveShell(), "Save Workbook Failed",
+					"Could not save workbook to the file:\n\n" + msg);
+		}
 	}
 
 	@Override
