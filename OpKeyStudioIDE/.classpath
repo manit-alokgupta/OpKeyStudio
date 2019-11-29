@@ -4,7 +4,5 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/OpKeyStudioPlatform"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Downloads/jar_files (2)/poi-ooxml-3.5-beta4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nikhil.tyagi/Downloads/poi-bin-3.16-20170419/poi-3.16/poi-3.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
