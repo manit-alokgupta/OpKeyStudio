@@ -1,5 +1,6 @@
 package opkeystudio.commandhandler;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,6 +30,14 @@ public class ImportDBCommand {
 		dialog.open();
 		String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 		if (filePath != null) {
+			System.out.println("File Path is " + filePath);
+			File file = new File(filePath);
+			if (!file.exists()) {
+				return;
+			}
+			if (!file.isFile()) {
+				return;
+			}
 			ServiceRepository.getInstance().setExortedDBFilePath(filePath);
 			List<Project> projects = new ProjectDataApi().getProjectList();
 			ServiceRepository.getInstance().setDefaultProject(projects.get(0));

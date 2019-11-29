@@ -225,13 +225,7 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Flow);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				createArtifact(artifact, inputValue, MODULETYPE.Flow);
 			}
 
 			@Override
@@ -251,13 +245,7 @@ public class ArtifactTreeUI extends Composite {
 				if (inputValue == null) {
 					return;
 				}
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Suite);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				createArtifact(artifact, inputValue, MODULETYPE.Suite);
 
 			}
 
@@ -278,14 +266,7 @@ public class ArtifactTreeUI extends Composite {
 				if (inputValue == null) {
 					return;
 				}
-
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Folder);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				createArtifact(artifact, inputValue, MODULETYPE.Folder);
 			}
 
 			@Override
@@ -305,13 +286,7 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.ObjectRepository);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
 			}
 
 			@Override
@@ -331,13 +306,7 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Component);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				createArtifact(artifact, inputValue, MODULETYPE.Component);
 			}
 
 			@Override
@@ -486,7 +455,13 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Folder);
+				String artifactId = null;
+				if (artifact != null) {
+					if (artifact.getId() != null) {
+						artifactId = artifact.getId();
+					}
+				}
+				new ArtifactApi().createArtifact(artifactId, inputValue, MODULETYPE.Folder);
 				try {
 					artifactTree.renderArtifacts();
 				} catch (SQLException | IOException e1) {
@@ -597,13 +572,7 @@ public class ArtifactTreeUI extends Composite {
 				if (inputValue == null) {
 					return;
 				}
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Suite);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+
 			}
 
 			@Override
@@ -730,6 +699,22 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
+	}
+
+	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
+		String artifactId = null;
+		if (parentArtifact != null) {
+			if (parentArtifact.getId() != null) {
+				artifactId = parentArtifact.getId();
+			}
+		}
+		new ArtifactApi().createArtifact(artifactId, artifactName, moduleType);
+		try {
+			artifactTree.renderArtifacts();
+		} catch (SQLException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	private void filterArtifactTree(String searchValue) {

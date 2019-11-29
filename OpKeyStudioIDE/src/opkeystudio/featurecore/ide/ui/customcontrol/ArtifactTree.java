@@ -224,6 +224,9 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {
+		if (this.getSelection().length==0) {
+			return null;
+		}
 		if (this.getSelection()[0] == null) {
 			return null;
 		}
