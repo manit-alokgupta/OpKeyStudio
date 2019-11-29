@@ -58,8 +58,14 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem addChildObjectToolItem;
 	private ORObject obRepo;
 	private String orId;
-	private String[] parentObjectTypes = new String[] { "HTML PAGE", "FRAME" };
-	private String[] childObjectTypes = new String[] { "BUTTON", "INPUT" };
+	private String[] parentObjectTypes = new String[] { "Html Page", "Frame", "Page" };
+	private String[] childObjectTypes = new String[] { "Area", "Base", "Button", "Checkbox", "Clickable Image Map",
+			"Color Picker", "Custom", "Custom Object", "Datetime Picker", "Div", "Drop Down List", "Edit Field",
+			"Email Address", "File Field", "Form", "Frame", "Frameset", "Heading 1", "Heading 2", "Heading 3",
+			"Heading 4", "Heading 5", "Heading 6", "Hidden", "IFrame", "Image", "Input Button", "Input Image", "Label",
+			"Li", "Link", "List", "Meta", "Number Picker", "Object", "Option", "Paragraph", "Password",
+			"Preformated Text", "Radio", "Reset", "Search", "Span", "Submit", "Table", "Table Cell", "Table Row",
+			"Telephone", "Text Field", "Textarea", "Time Picker", "UI", "Url", "Webelement", "Week Picker" };
 
 	/**
 	 * Create the composite.
