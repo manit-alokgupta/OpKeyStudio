@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class KeywordManager {
 	private static KeywordManager manager;
@@ -28,7 +29,7 @@ public class KeywordManager {
 	}
 
 	public void loadAllKeywords() throws JsonParseException, JsonMappingException, SQLException, IOException {
-		String keywordDirPath = "E:\\ExportedArtifactsNeon\\GenericDB";
+		String keywordDirPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "GenericDB";
 		File keywordDirFolder = new File(keywordDirPath);
 		File[] keywordsDBFiles = keywordDirFolder.listFiles();
 		for (File keywordsDBFile : keywordsDBFiles) {

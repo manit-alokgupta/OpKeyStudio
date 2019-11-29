@@ -24,10 +24,6 @@
                   name="startupForegroundColor"
                   value="000000">
             </property>
-            <property
-                  name="preferenceCustomization"
-                  value="plugin_customization.ini">
-            </property>
       </product>
    </extension>
    <extension
