@@ -87,6 +87,16 @@ public class ObjectRepositoryView extends Composite {
 		}
 		return menu;
 	}
+	
+	private Menu createChildObjectCreationMenu(Control parent) {
+		String[] menuItems = new String[] { "A", "B", "C" };
+		Menu menu = new Menu(parent);
+		for (String menuItem : menuItems) {
+			MenuItem item = new MenuItem(menu, 0);
+			item.setText(menuItem);
+		}
+		return menu;
+	}
 
 	public void ObjectRepositoryUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -118,8 +128,8 @@ public class ObjectRepositoryView extends Composite {
 		addChildObjectToolItem = new ToolItem(toolBar, SWT.DROP_DOWN);
 		addChildObjectToolItem.setText("Add(Area)");
 
-		/*
-		Menu parentObjectMenu = createParentObjectCreationMenu(addParentObjectToolItem.getControl().getShell());
+		
+		Menu parentObjectMenu = createParentObjectCreationMenu(addParentObjectToolItem.getDisplay().getActiveShell());
 
 		addParentObjectToolItem.addSelectionListener(new SelectionListener() {
 
@@ -139,8 +149,32 @@ public class ObjectRepositoryView extends Composite {
 				// TODO Auto-generated method stub
 
 			}
-		});*/
+		});
 
+		
+		Menu childObjectMenu = createChildObjectCreationMenu(addChildObjectToolItem.getDisplay().getActiveShell());
+
+		addChildObjectToolItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (e.detail == SWT.ARROW) {
+					Rectangle rect = addChildObjectToolItem.getBounds();
+					Point pt = new Point(rect.x, rect.y + rect.height);
+					pt = toolBar.toDisplay(pt);
+					childObjectMenu.setLocation(pt.x, pt.y);
+					childObjectMenu.setVisible(true);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
+		
 		saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 		saveObject.setText("Save");
