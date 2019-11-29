@@ -174,7 +174,8 @@ public class ArtifactTreeUI extends Composite {
 
 		toolbarFunctionLibrary = new MenuItem(newMenu, SWT.PUSH);
 		toolbarFunctionLibrary.setText("Function Library");
-
+		toolbarFunctionLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
+		
 		toolbarObjectRepository = new MenuItem(newMenu, SWT.PUSH);
 		toolbarObjectRepository.setText("Object Repository");
 		toolbarObjectRepository
@@ -199,7 +200,8 @@ public class ArtifactTreeUI extends Composite {
 
 		functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
 		functionLibraryMenuItem.setText("Function Library");
-
+		functionLibraryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
+		
 		testSuiteMenuItem = new MenuItem(menu_1, SWT.PUSH);
 		testSuiteMenuItem.setText("Test Suite");
 		testSuiteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testSuite.png"));
