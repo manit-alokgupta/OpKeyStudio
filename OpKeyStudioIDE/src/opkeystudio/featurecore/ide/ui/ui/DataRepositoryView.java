@@ -3,7 +3,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -35,7 +35,7 @@ public class DataRepositoryView extends Composite {
 	private int rowCount = 0;
 	private TableColumn newColumn;
 	private DRColumnAttributes drCol;
-	private XSSFWorkbook wb;
+	//private XSSFWorkbook wb;
 	private OleClientSite site;
 
 	/**
@@ -192,7 +192,7 @@ public class DataRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				String fileName = new MessageDialogs().openInputDialogAandGetValue("File Name",
 						"Please Enter File Name", "NewFile");
-				dumpWorkbookToAFile(wb, fileName);
+			//	dumpWorkbookToAFile(wb, fileName);
 			}
 
 			@Override
@@ -426,6 +426,7 @@ public class DataRepositoryView extends Composite {
 //		return wb;
 //	}
 
+	/*
 	public void dumpWorkbookToAFile(XSSFWorkbook wb, String filename) {
 		try {
 			FileOutputStream fos = new FileOutputStream(filename);
@@ -440,7 +441,7 @@ public class DataRepositoryView extends Composite {
 			MessageDialog.openError(Display.getCurrent().getActiveShell(), "Save Workbook Failed",
 					"Could not save workbook to the file:\n\n" + msg);
 		}
-	}
+	}*/
 
 	@Override
 	protected void checkSubclass() {
