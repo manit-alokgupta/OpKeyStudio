@@ -126,6 +126,9 @@ public class ArtifactTree extends CustomTree {
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Suite) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testsuite.png"));
 		}
+		else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Component) {
+			//artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testsuite.png"));
+		}
 	}
 
 	private void renderAllArtifactTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {

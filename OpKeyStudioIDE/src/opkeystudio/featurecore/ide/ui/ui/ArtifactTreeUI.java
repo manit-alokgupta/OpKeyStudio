@@ -617,6 +617,12 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 				if (selectedTreeItem.getArtifact() == null) {
+					mntmNew.setEnabled(true);
+					toolbarNew.setEnabled(true);
+					toolbarRename.setEnabled(false);
+					toolbarDelete.setEnabled(false);
+					deleteMenuItem.setEnabled(false);
+					renameMenuItem.setEnabled(false);
 					return;
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
