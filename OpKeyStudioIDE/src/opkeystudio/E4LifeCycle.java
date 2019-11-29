@@ -10,6 +10,7 @@ import org.eclipse.e4.ui.workbench.lifecycle.ProcessAdditions;
 import org.eclipse.e4.ui.workbench.lifecycle.ProcessRemovals;
 
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 /**
  * This is a stub implementation containing e4 LifeCycle annotated
@@ -28,6 +29,7 @@ public class E4LifeCycle {
 //		LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER);
 //		ldialog.open();
 
+		Utilities.getInstance().initializeOpKeyStudioPath();
 		try {
 			KeywordManager.getInstance().loadAllKeywords();
 		} catch (SQLException | IOException e) {
@@ -35,7 +37,6 @@ public class E4LifeCycle {
 			e.printStackTrace();
 		}
 	}
-
 
 	@PreSave
 	void preSave(IEclipseContext workbenchContext) {

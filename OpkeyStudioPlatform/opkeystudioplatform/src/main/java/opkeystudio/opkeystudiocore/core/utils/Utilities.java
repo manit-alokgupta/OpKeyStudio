@@ -23,9 +23,20 @@ public class Utilities {
 		return util;
 	}
 
+	public void initializeOpKeyStudioPath() {
+		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio";
+		System.out.println(path);
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
+	}
+
 	public String getDefaultWorkSpacePath() {
-		String path = System.getProperty("user.dir") + File.separator + "OpKeyStudio" + File.separator + "workspace";
-		new File(path).mkdir();
+		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace";
 		return path;
 	}
 
