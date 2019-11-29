@@ -81,10 +81,20 @@ public class ObjectRepositoryView extends Composite {
 		toggleDeleteButton(false);
 		toggleAddAttributeButton(false);
 		toggleDeleteAttributeButton(false);
+		toggleParentObjectToolItem(true);
+		toggleChildObjectToolItem(false);
 	}
 
 	public ObjectRepositoryTree getObjectRepositoryTree() {
 		return this.objectRepositoryTree;
+	}
+
+	public void toggleParentObjectToolItem(boolean status) {
+		addParentObjectToolItem.setEnabled(status);
+	}
+
+	public void toggleChildObjectToolItem(boolean status) {
+		addChildObjectToolItem.setEnabled(status);
 	}
 
 	private Menu createParentObjectCreationMenu(Control parent) {
@@ -313,6 +323,11 @@ public class ObjectRepositoryView extends Composite {
 					togglePasteMenuItem(true);
 					toggleCutMenuItem(true);
 					toggleDeleteMenuItem(true);
+					if (item.getObjectRepository().getParent_object_id() == null) {
+						toggleChildObjectToolItem(true);
+					} else {
+						toggleChildObjectToolItem(false);
+					}
 				} else {
 					toggleDeleteButton(false);
 					toggleRenameButton(false);
@@ -322,6 +337,7 @@ public class ObjectRepositoryView extends Composite {
 					togglePasteMenuItem(false);
 					toggleCutMenuItem(false);
 					toggleDeleteMenuItem(false);
+					toggleChildObjectToolItem(false);
 				}
 
 			}

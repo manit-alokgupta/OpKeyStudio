@@ -141,6 +141,9 @@ public class ObjectRepositoryTree extends CustomTree {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		getParentORView().toggleDeleteButton(false);
+		getParentORView().toggleChildObjectToolItem(false);
+		getParentORView().toggleRenameButton(false);
 	}
 
 	public void refreshObjectRepositories() {
@@ -171,6 +174,9 @@ public class ObjectRepositoryTree extends CustomTree {
 			refereshAllArtifactTree(topMostNode, objectRepositories);
 		}
 		expandAll(rootNode);
+		getParentORView().toggleDeleteButton(false);
+		getParentORView().toggleChildObjectToolItem(false);
+		getParentORView().toggleRenameButton(false);
 	}
 
 	public void fetchAndRenderORTree() {
