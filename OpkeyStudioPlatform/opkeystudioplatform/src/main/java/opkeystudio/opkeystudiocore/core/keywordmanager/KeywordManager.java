@@ -43,7 +43,7 @@ public class KeywordManager {
 						keywordInputArguments.add(keyWordInputArgument);
 					}
 				}
-				keyword.setPluginName(keywordsDBFile.getName());
+				keyword.setPluginName(keywordsDBFile.getName().replaceAll(".db", ""));
 				keyword.setKeywordInputArguments(keywordInputArguments);
 			}
 			addAllKeyWords(allKeywords);
