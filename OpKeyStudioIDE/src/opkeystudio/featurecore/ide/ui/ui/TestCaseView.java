@@ -351,7 +351,7 @@ public class TestCaseView extends Composite {
 				Text text = (Text) e.getSource();
 				String searchValue = text.getText();
 				if (searchValue.length() > 2 || searchValue.trim().isEmpty()) {
-					filterAddStepTree(searchValue);
+					allDataTreeView.filterDataInTree(searchValue);
 				}
 
 			}
@@ -373,7 +373,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String textToSearch = searchBox.getText();
-				filterAddStepTree(textToSearch);
+				allDataTreeView.filterDataInTree(textToSearch);
 
 			}
 
@@ -1034,10 +1034,6 @@ public class TestCaseView extends Composite {
 
 			}
 		});
-
-	}
-
-	private void filterAddStepTree(String searchValue) {
 
 	}
 
