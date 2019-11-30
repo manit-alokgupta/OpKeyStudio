@@ -577,6 +577,10 @@ public class TestCaseView extends Composite {
 				System.out.println("Column " + selectedColumn);
 				if (selectedColumn == 1) {
 					testCaseArgumentsTabFolder.setSelection(1);
+					FlowStep flowStep = flowStepTable.getSelectedFlowStep();
+					if (flowStep.getKeyword() != null) {
+						allDataTreeView.selectKeyword(flowStep.getKeyword());
+					}
 				} else if (selectedColumn == 2) {
 					testCaseArgumentsTabFolder.setSelection(2);
 				} else if (selectedColumn == 3) {
