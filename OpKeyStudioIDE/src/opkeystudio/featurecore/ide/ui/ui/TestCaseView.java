@@ -40,6 +40,7 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.KeywordsTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
@@ -93,7 +94,7 @@ public class TestCaseView extends Composite {
 	private ExpandItem expenditemInputData;
 	private ExpandItem expanditemTestObject;
 	private TabItem addStepTabItem;
-	private Tree allDataTreeView;
+	private KeywordsTree allDataTreeView;
 	private Label stepInfoImage;
 	private CLabel stepInfoLabel;
 	private FlowStep selectedFlowStep;
@@ -383,7 +384,7 @@ public class TestCaseView extends Composite {
 			}
 		});
 
-		allDataTreeView = new Tree(composite_10, SWT.BORDER);
+		allDataTreeView = new KeywordsTree(composite_10, SWT.BORDER, this);
 		allDataTreeView.setLinesVisible(true);
 		allDataTreeView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm_3.setWeights(new int[] { 0, 1 });

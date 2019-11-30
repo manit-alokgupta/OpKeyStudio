@@ -43,6 +43,7 @@ public class KeywordManager {
 						keywordInputArguments.add(keyWordInputArgument);
 					}
 				}
+				keyword.setPluginName(keywordsDBFile.getName());
 				keyword.setKeywordInputArguments(keywordInputArguments);
 			}
 			addAllKeyWords(allKeywords);
@@ -87,7 +88,7 @@ public class KeywordManager {
 
 	private void addAllKeywordsInGroup(List<Keyword> allKeyowrds) {
 		for (Keyword keyword : allKeyowrds) {
-			addKeywordInGroup(keyword.getKeywordtype(), keyword);
+			addKeywordInGroup(keyword.getPluginName(), keyword);
 		}
 	}
 

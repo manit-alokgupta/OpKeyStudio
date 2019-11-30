@@ -26,6 +26,7 @@ public class Keyword {
 	private String argumentname;
 	private String pluginid;
 	private String deprecation_reason;
+	private String pluginName;
 	private List<KeyWordInputArgument> keywordInputArguments;
 
 	public String getKeywordid() {
@@ -194,5 +195,13 @@ public class Keyword {
 
 	public void setKeywordInputArguments(List<KeyWordInputArgument> keywordInputArguments) {
 		this.keywordInputArguments = keywordInputArguments;
+	}
+
+	public String getPluginName() {
+		return pluginName;
+	}
+
+	public void setPluginName(String pluginName) {
+		this.pluginName = pluginName;
 	}
 }
