@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
@@ -17,6 +18,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TableItem;
@@ -546,10 +548,11 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
-				if (!status) {
-					return;
-				}
+				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Save ", "Save Successful");
+//				boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
+//				if (!status) {
+//					return;
+//				}
 				new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
 				try {
 					testSuiteTable.renderAllTestSuites();

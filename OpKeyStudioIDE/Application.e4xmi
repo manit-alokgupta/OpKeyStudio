@@ -33,7 +33,7 @@
         <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.open" label="Open" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/datafile.png" tooltip="Open File" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
         </children>
-        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" label="Item 2" iconURI="platform:/plugin/OpKeyStudio/icons/testcase_icons/save_icon.png" tooltip="Item 2">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" label="Save" iconURI="platform:/plugin/OpKeyStudio/icons/testcase_icons/save_icon.png" tooltip="Save">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UFWaAAXdEeqm4_Ox7Tro1w"/>
         </children>
       </children>

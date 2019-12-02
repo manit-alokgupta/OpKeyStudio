@@ -112,6 +112,7 @@ public class LoginDialog extends Dialog {
 		lblNewLabel_5.setBounds(321, 10, 113, 44);
 		
 		Button loginButton = new Button(shlLoginToOpkey, SWT.NONE);
+		loginButton.setToolTipText("Login");
 		loginButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		loginButton.addSelectionListener(new SelectionAdapter() {
 			@Override

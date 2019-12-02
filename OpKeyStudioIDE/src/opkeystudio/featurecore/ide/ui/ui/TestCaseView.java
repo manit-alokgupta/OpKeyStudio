@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
@@ -19,6 +20,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
@@ -33,6 +35,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -153,18 +156,21 @@ public class TestCaseView extends Composite {
 		itemAdd = new ToolItem(toolBar_1, SWT.NONE);
 		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		itemAdd.setText("Add");
+		itemAdd.setToolTipText("Add");
 
 		seperator1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemRecord = new ToolItem(toolBar_1, SWT.NONE);
 		itemRecord.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/record_icon.png"));
 		itemRecord.setText("Record");
+		itemRecord.setToolTipText("Record");
 
 		seperator2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemRunnow = new ToolItem(toolBar_1, SWT.NONE);
 		itemRunnow.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
 		itemRunnow.setText("Run Now");
+		itemRunnow.setToolTipText("Run Now");
 
 		seperator3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -172,6 +178,7 @@ public class TestCaseView extends Composite {
 		itemMoveup.setEnabled(false);
 		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		itemMoveup.setText("Move up");
+		itemMoveup.setToolTipText("Move up");
 
 		seperator4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -179,6 +186,7 @@ public class TestCaseView extends Composite {
 		itemMovedown.setEnabled(false);
 		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		itemMovedown.setText("Move Down");
+		itemMovedown.setToolTipText("Move Down");
 
 		seperator5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -186,6 +194,7 @@ public class TestCaseView extends Composite {
 		itemDelete.setEnabled(false);
 		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		itemDelete.setText("Delete");
+		itemDelete.setToolTipText("Delete");
 
 		seperator6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -193,12 +202,14 @@ public class TestCaseView extends Composite {
 		itemSave.setEnabled(false);
 		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
 		itemSave.setText("Save");
+		itemSave.setToolTipText("Save");
 
 		seperator7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemRefresh = new ToolItem(toolBar_1, SWT.NONE);
 		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		itemRefresh.setText("Refresh");
+		itemRefresh.setToolTipText("Refresh");
 
 		flowStepTable = new FlowStepTable(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		flowStepTable.setLinesVisible(true);
@@ -215,6 +226,7 @@ public class TestCaseView extends Composite {
 
 		stepDetailsTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		stepDetailsTabItem.setText("Step Details");
+		stepDetailsTabItem.setToolTipText("Step Details");
 		stepDetailsTabItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/stepdetails.png"));
 
@@ -293,7 +305,7 @@ public class TestCaseView extends Composite {
 		addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/addstep.png"));
 		addStepTabItem.setText("Add Step");
-
+		addStepTabItem.setToolTipText("Add Step");
 		SashForm sashForm_3 = new SashForm(testCaseArgumentsTabFolder, SWT.NONE);
 		sashForm_3.setOrientation(SWT.VERTICAL);
 		addStepTabItem.setControl(sashForm_3);
@@ -315,28 +327,28 @@ public class TestCaseView extends Composite {
 		keywordButton = new ToolItem(toolBar, SWT.NONE);
 		keywordButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/keword.png"));
 		keywordButton.setText("Keyword");
-
+		keywordButton.setToolTipText("Keyword");
 		ToolItem seperator9 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		functionLibraryButton = new ToolItem(toolBar, SWT.NONE);
 		functionLibraryButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/functionlibrary.png"));
 		functionLibraryButton.setText("Function Library");
-
+		functionLibraryButton.setToolTipText("Function Library");
 		ToolItem seperator10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		serviceRepoButton = new ToolItem(toolBar, SWT.NONE);
 		serviceRepoButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/servicerepo.png"));
 		serviceRepoButton.setText("Service Repositpry");
-
+		serviceRepoButton.setToolTipText("Service Repositpry");
 		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		codedFunLibraryButton = new ToolItem(toolBar, SWT.NONE);
 		codedFunLibraryButton.setImage(
 				ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/coded_functionlibrary.png"));
 		codedFunLibraryButton.setText("Coded Function Library");
-
+		codedFunLibraryButton.setToolTipText("Coded Function Library");
 		Composite composite_12 = new Composite(composite_10, SWT.NONE);
 		composite_12.setLayout(new GridLayout(2, false));
 		composite_12.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -392,7 +404,7 @@ public class TestCaseView extends Composite {
 		TabItem testObjectTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		testObjectTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/object.png"));
 		testObjectTabItem.setText("Test Object");
-
+		testObjectTabItem.setToolTipText("Test Object");
 		Composite composite_2 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
 		testObjectTabItem.setControl(composite_2);
 		composite_2.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -430,7 +442,7 @@ public class TestCaseView extends Composite {
 		TabItem inputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		inputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/inputdata.png"));
 		inputDataTabItem.setText("Input Data");
-
+		inputDataTabItem.setToolTipText("Input Data");
 		Composite composite_3 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
 		inputDataTabItem.setControl(composite_3);
 		composite_3.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -453,7 +465,7 @@ public class TestCaseView extends Composite {
 		TabItem dataOutputTabItem = new TabItem(tabFolder_1, SWT.NONE);
 		dataOutputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
 		dataOutputTabItem.setText("Data Output");
-
+		dataOutputTabItem.setToolTipText("Data Output");
 		dataOutputTable = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
 		dataOutputTabItem.setControl(dataOutputTable);
 		dataOutputTable.setHeaderVisible(true);
@@ -463,7 +475,7 @@ public class TestCaseView extends Composite {
 		globalVariablesTabItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
 		globalVariablesTabItem.setText("Global Variable");
-
+		globalVariablesTabItem.setToolTipText("Global Variable");
 		globalVariableTable = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
 		globalVariablesTabItem.setControl(globalVariableTable);
 		globalVariableTable.setHeaderVisible(true);
@@ -472,6 +484,7 @@ public class TestCaseView extends Composite {
 		TabItem autoDataGenTabItem = new TabItem(tabFolder_1, SWT.NONE);
 		autoDataGenTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/autodata.png"));
 		autoDataGenTabItem.setText("Auto Data Generation");
+		autoDataGenTabItem.setToolTipText("Auto Data Generation");
 
 		autoDataGenTable = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
 		autoDataGenTabItem.setControl(autoDataGenTable);
@@ -483,6 +496,7 @@ public class TestCaseView extends Composite {
 		outputDataTabItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/outputdata.png"));
 		outputDataTabItem.setText("Output Data");
+		outputDataTabItem.setToolTipText("Output Data");
 
 		Composite composite_4 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
 		outputDataTabItem.setControl(composite_4);
@@ -497,6 +511,7 @@ public class TestCaseView extends Composite {
 
 		TabItem tbtmNewItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setText("Source Code");
+		tbtmNewItem.setToolTipText("Source Code");
 
 		Composite composite_121 = new Composite(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setControl(composite_121);
@@ -680,6 +695,21 @@ public class TestCaseView extends Composite {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		itemAdd.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				PlatformUI.getWorkbench().close();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		addButtonListeners();
 		populateInputTabData();
@@ -891,10 +921,11 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
-				if (!status) {
-					return;
-				}
+				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Save ", "Save Successful");
+//				boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
+//				if (!status) {
+//					return;
+//				}
 				new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 				try {
 					flowStepTable.renderFlowSteps();
