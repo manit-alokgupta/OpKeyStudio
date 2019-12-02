@@ -637,7 +637,10 @@ public class TestSuiteView extends Composite {
 					if (saveToolItem.isEnabled()) {
 						boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
 						if (!status) {
-							saveToolItem.setEnabled(false);
+							toggleSaveButton(false);
+							toggleDeleteButton(false);
+							toggleMoveUpButton(false);
+							toggleMoveDownButton(false);
 							testSuiteTable.renderAllTestSuites();
 							return;
 						}
