@@ -333,7 +333,8 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				TestSuite item = testSuiteTable.getSelectedTestSuite();
+				TestSuite testSuite = testSuiteTable.getSelectedTestSuite();
+				populateTestSuiteData(testSuite);
 
 			}
 
@@ -360,6 +361,22 @@ public class TestSuiteView extends Composite {
 		if (testSuite != null) {
 			setSelectedTEstSuite(testSuite);
 
+			toggleDeleteButton(true);
+			if (testSuiteTable.getPrevTestSuite() == null) {
+				moveUpToolItem.setEnabled(false);
+			} else {
+				moveUpToolItem.setEnabled(true);
+			}
+			if (testSuiteTable.getNextTestSuite() == null) {
+				moveDownToolItem.setEnabled(false);
+			} else {
+				moveDownToolItem.setEnabled(true);
+			}
+		} else {
+			toggleSaveButton(false);
+			toggleDeleteButton(false);
+			toggleMoveUpButton(false);
+			toggleMoveDownButton(false);
 		}
 
 	}
