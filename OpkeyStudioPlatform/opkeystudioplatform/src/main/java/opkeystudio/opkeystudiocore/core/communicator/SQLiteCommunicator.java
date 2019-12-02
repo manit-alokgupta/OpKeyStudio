@@ -44,7 +44,7 @@ public class SQLiteCommunicator {
 	}
 
 	public String executeQueryString(String query) throws SQLException {
-		System.out.println(query);
+		//System.out.println(query);
 		ResultSet rs = executeQuery(query);
 		return convertToJSON(rs);
 	}
@@ -64,7 +64,7 @@ public class SQLiteCommunicator {
 			}
 			jsonArray.put(obj);
 		}
-		System.out.println(jsonArray.toString());
+		//System.out.println(jsonArray.toString());
 		return jsonArray.toString();
 	}
 }

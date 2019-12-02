@@ -29,15 +29,15 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private boolean shouldrun;
 	@DBField
 	private int position;
-	@DBField
+	
 	private Keyword keyword;
-	@DBField
+
 	private FunctionLibraryComponent functionLibraryComponent;
-	@DBField
+
 	private List<ORObject> orObject = new ArrayList<ORObject>();
-	@DBField
+
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
-	@DBField
+
 	private List<FlowOutputArgument> flowOutputArgs = new ArrayList<FlowOutputArgument>();
 	@DBField
 	private String component_id;

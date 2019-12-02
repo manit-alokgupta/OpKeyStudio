@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
@@ -67,7 +68,12 @@ public class KeywordsTree extends CustomTree {
 				System.out.println(keyWord.getKeywordname());
 				FlowStepTable flowStepTable = getParentTestCaseView().getFlowStepTable();
 				if (flowStepTable != null) {
-					Keyword keyword_1 = flowStepTable.getSelectedFlowStep();
+					FlowStep flowStep = flowStepTable.getSelectedFlowStep();
+					flowStep.setKeyword(keyWord);
+					flowStep.setKeywordid(keyWord.getKeywordid());
+					flowStep.setModified(true);
+					getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+					getParentTestCaseView().toggleSaveButton(true);
 				}
 			}
 
