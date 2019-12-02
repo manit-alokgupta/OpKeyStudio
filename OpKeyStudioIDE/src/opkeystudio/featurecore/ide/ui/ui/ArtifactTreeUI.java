@@ -77,6 +77,7 @@ public class ArtifactTreeUI extends Composite {
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite.setLayout(new GridLayout(3, false));
+
 		GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_composite.heightHint = 39;
 		composite.setLayoutData(gd_composite);
@@ -117,22 +118,28 @@ public class ArtifactTreeUI extends Composite {
 		searchArtifactTreeButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		searchArtifactTreeButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
 		GridData gd_btnNewButton = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_btnNewButton.widthHint = 46;
+		gd_btnNewButton.widthHint = 35;
 		searchArtifactTreeButton.setLayoutData(gd_btnNewButton);
 
 		Composite composite_1 = new Composite(this, SWT.BORDER);
+//		composite_1.setLayout(new GridLayout(1, true));
+//		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+//		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
 		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_composite_1.heightHint = 35;
+//		gd_composite_1.widthHint = 110; 
 		composite_1.setLayoutData(gd_composite_1);
 
-		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT);
+		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT | SWT.WRAP);
+//		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		toolbarNew = new ToolItem(toolBar_1, SWT.DROP_DOWN);
 		toolbarNew.setEnabled(false);
 		toolbarNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		toolbarNew.setText("New");
+		toolbarNew.setToolTipText("New");
 
 		ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
 //		toolbarNew.setDropDownMenu(menu_1);
@@ -141,6 +148,7 @@ public class ArtifactTreeUI extends Composite {
 		toolbarRename.setText("Rename");
 		toolbarRename.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
 		toolbarRename.setEnabled(false);
+		toolbarRename.setToolTipText("Rename");
 
 		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -148,6 +156,9 @@ public class ArtifactTreeUI extends Composite {
 		toolbarDelete.setText("Delete");
 		toolbarDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		toolbarDelete.setEnabled(false);
+		toolbarDelete.setToolTipText("Delete");
+
+		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
