@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -18,6 +19,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
@@ -226,8 +228,10 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
 						"TestCase Name", "");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
@@ -247,8 +251,10 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
 						"TestSuite Name", "");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
 				createArtifact(artifact, inputValue, MODULETYPE.Suite);
 
@@ -268,8 +274,10 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
 						"");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
 				createArtifact(artifact, inputValue, MODULETYPE.Folder);
 			}
@@ -287,8 +295,10 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
 						"Object Repository Name", "");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
@@ -307,8 +317,10 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 						"Function Library Name", "");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
@@ -354,8 +366,10 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 						"Rename " + artifact.getName(), artifact.getName());
-				if (renamedText == null) {
-					return;
+				while (renamedText.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
+							"Rename " + artifact.getName(), artifact.getName());
 				}
 				artifact.setName(renamedText);
 				new ArtifactApi().renameArtifact(artifact);
@@ -404,20 +418,24 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 						"Rename " + artifact.getName(), artifact.getName());
-				if (renamedText == null) {
-					return;
+				while (renamedText.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
+							"Rename " + artifact.getName(), artifact.getName());
 				}
 				artifact.setName(renamedText);
 				new ArtifactApi().renameArtifact(artifact);
 				try {
 					toggleRenameToolbarItem(false);
 					toogleDeleteToolbarItem(false);
+					toogleNewToolbarMenuItem(false);
 					artifactTree.renderArtifacts();
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 //				toolbarRename.setEnabled(false);
+
 			}
 
 			@Override
@@ -440,6 +458,7 @@ public class ArtifactTreeUI extends Composite {
 				try {
 					toggleRenameToolbarItem(false);
 					toogleDeleteToolbarItem(false);
+					toogleNewToolbarMenuItem(false);
 					artifactTree.renderArtifacts();
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -462,8 +481,10 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
 						"");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
 
 				String artifactId = null;
@@ -496,8 +517,10 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
 						"TestCase Name", "");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
 
 				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Flow);
@@ -524,8 +547,10 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 						"Function Library Name", "");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
 
 				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Component);
@@ -625,7 +650,7 @@ public class ArtifactTreeUI extends Composite {
 				System.out.println("Mouse clicked event");
 
 				if (selectedTreeItem == null) {
-					mntmNew.setEnabled(false);
+					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(false);
 					toogleDeleteToolbarItem(false);
@@ -634,7 +659,7 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 				if (selectedTreeItem.getArtifact() == null) {
-					mntmNew.setEnabled(true);
+					toogleNewToolbarMenuItem(true);
 					toogleNewToolbarItem(true);
 					toggleRenameToolbarItem(false);
 					toogleDeleteToolbarItem(false);
@@ -643,7 +668,7 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
-					mntmNew.setEnabled(true);
+					toogleNewToolbarMenuItem(true);
 					toogleNewToolbarItem(true);
 					toggleRenameToolbarItem(true);
 					toogleDeleteToolbarItem(true);
@@ -652,7 +677,7 @@ public class ArtifactTreeUI extends Composite {
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
-					mntmNew.setEnabled(false);
+					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(true);
 					toogleDeleteToolbarItem(true);
@@ -661,7 +686,7 @@ public class ArtifactTreeUI extends Composite {
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
-					mntmNew.setEnabled(false);
+					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(true);
 					toogleDeleteToolbarItem(true);
@@ -670,7 +695,7 @@ public class ArtifactTreeUI extends Composite {
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Suite) {
-					mntmNew.setEnabled(false);
+					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(true);
 					toogleDeleteToolbarItem(true);
@@ -764,6 +789,10 @@ public class ArtifactTreeUI extends Composite {
 
 	public void toogleDeleteToolbarItem(boolean status) {
 		toolbarDelete.setEnabled(status);
+	}
+
+	public void toogleNewToolbarMenuItem(boolean status) {
+		mntmNew.setEnabled(status);
 	}
 
 	@Override
