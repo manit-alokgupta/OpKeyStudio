@@ -948,7 +948,24 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
+					if (itemSave.isEnabled()) {
+						boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
+						if (!status) {
+							flowStepTable.renderFlowSteps();
+							return;
+						}
+						new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
+						try {
+							flowStepTable.renderFlowSteps();
+						} catch (SQLException | IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						toggleSaveButton(false);
+					}
+
 					flowStepTable.renderFlowSteps();
+
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

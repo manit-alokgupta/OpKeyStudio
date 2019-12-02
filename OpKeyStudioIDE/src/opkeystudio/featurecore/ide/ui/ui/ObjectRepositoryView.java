@@ -368,11 +368,12 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Save",
-						"Please press OK to Svae");
-				if (!result) {
-					return;
-				}
+				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Save ", "Save Successful");
+//				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Save",
+//						"Please press OK to Svae");
+//				if (!result) {
+//					return;
+//				}
 				List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 				try {
 					new ObjectRepositoryApi().saveORObjects(allors);
@@ -408,7 +409,25 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				toggleSaveButton(false);
+				if (saveObject.isEnabled()) {
+					boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Save",
+							"Do you want to Svae");
+					if (!result) {
+						toggleSaveButton(false);
+						objectRepositoryTree.renderObjectRepositories();
+						return;
+					}
+					List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
+					try {
+						new ObjectRepositoryApi().saveORObjects(allors);
+						toggleSaveButton(false);
+						objectRepositoryTree.renderObjectRepositories();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					toggleSaveButton(false);
+				}
+
 				objectRepositoryTree.renderObjectRepositories();
 			}
 

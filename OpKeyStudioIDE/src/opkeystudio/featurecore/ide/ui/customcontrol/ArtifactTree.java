@@ -125,8 +125,9 @@ public class ArtifactTree extends CustomTree {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Suite) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testsuite.png"));
-		}
-		else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Component) {
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.DataRepository) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testsuite.png"));
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Component) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
 		}
 	}
@@ -227,7 +228,7 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {
-		if (this.getSelection().length==0) {
+		if (this.getSelection().length == 0) {
 			return null;
 		}
 		if (this.getSelection()[0] == null) {

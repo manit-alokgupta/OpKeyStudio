@@ -32,12 +32,15 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
 
 public class TestSuiteView extends Composite {
 	private Text searchTextBox;
 //	private SuiteStepTable table;
 	private SuiteStepTable testSuiteTable;
+	private TestSuite testSuite;
 	private ToolItem runtoolitem;
 	private ToolItem tagVersionRunToolItem;
 	private ToolItem debugToolItem;
@@ -212,12 +215,6 @@ public class TestSuiteView extends Composite {
 		testSuiteTable.setBounds(0, 0, 85, 45);
 		testSuiteTable.setLinesVisible(true);
 
-		TableItem tableItem = new TableItem(testSuiteTable, SWT.NONE);
-		tableItem.setText("New TableItem");
-
-		TableItem tableItem_1 = new TableItem(testSuiteTable, SWT.NONE);
-		tableItem_1.setText("New TableItem");
-
 		TableCursor tableCursor = new TableCursor(testSuiteTable, SWT.NONE);
 
 		Composite composite_2 = new Composite(sashForm, SWT.BORDER);
@@ -332,6 +329,21 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
+		testSuiteTable.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TestSuite item = testSuiteTable.getSelectedTestSuite();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		addButtonListeners();
 		try {
 			testSuiteTable.renderAllTestSuites();
@@ -340,6 +352,32 @@ public class TestSuiteView extends Composite {
 			e1.printStackTrace();
 		}
 
+		toggleSaveButton(false);
+
+	}
+
+	public void populateTestSuiteData(TestSuite testSuite) {
+		if (testSuite != null) {
+			setSelectedTEstSuite(testSuite);
+
+		}
+
+	}
+
+	public void toggleSaveButton(boolean status) {
+		saveToolItem.setEnabled(false);
+	}
+
+	public void toggleMoveUpButton(boolean status) {
+		moveUpToolItem.setEnabled(false);
+	}
+
+	public void toggleMoveDownButton(boolean status) {
+		moveDownToolItem.setEnabled(false);
+	}
+
+	public void toggleDeleteButton(boolean status) {
+		deleteSuiteStepToolItem.setEnabled(false);
 	}
 
 	private void addButtonListeners() {
@@ -494,6 +532,7 @@ public class TestSuiteView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				saveToolItem.setEnabled(true);
 			}
 
 			@Override
@@ -513,7 +552,7 @@ public class TestSuiteView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
+				saveToolItem.setEnabled(true);
 			}
 
 			@Override
@@ -534,7 +573,7 @@ public class TestSuiteView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
+				saveToolItem.setEnabled(true);
 			}
 
 			@Override
@@ -560,7 +599,7 @@ public class TestSuiteView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
+				saveToolItem.setEnabled(false);
 			}
 
 			@Override
@@ -575,6 +614,22 @@ public class TestSuiteView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
+					if (saveToolItem.isEnabled()) {
+						boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
+						if (!status) {
+							saveToolItem.setEnabled(false);
+							testSuiteTable.renderAllTestSuites();
+							return;
+						}
+						new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
+						try {
+							testSuiteTable.renderAllTestSuites();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						saveToolItem.setEnabled(false);
+					}
 					testSuiteTable.renderAllTestSuites();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -604,6 +659,10 @@ public class TestSuiteView extends Composite {
 
 			}
 		});
+	}
+
+	private void setSelectedTEstSuite(TestSuite testSuite) {
+		this.testSuite = testSuite;
 	}
 
 	@Override
