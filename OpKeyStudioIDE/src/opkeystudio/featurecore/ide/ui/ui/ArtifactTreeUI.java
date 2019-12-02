@@ -429,6 +429,7 @@ public class ArtifactTreeUI extends Composite {
 					toggleRenameToolbarItem(false);
 					toogleDeleteToolbarItem(false);
 					toogleNewToolbarMenuItem(false);
+					toogleNewToolbarItem(false);
 					artifactTree.renderArtifacts();
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -459,6 +460,7 @@ public class ArtifactTreeUI extends Composite {
 					toggleRenameToolbarItem(false);
 					toogleDeleteToolbarItem(false);
 					toogleNewToolbarMenuItem(false);
+					toogleNewToolbarItem(false);
 					artifactTree.renderArtifacts();
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -493,13 +495,16 @@ public class ArtifactTreeUI extends Composite {
 						artifactId = artifact.getId();
 					}
 				}
-				new ArtifactApi().createArtifact(artifactId, inputValue, MODULETYPE.Folder);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				toogleNewToolbarItem(false);
+				createArtifact(artifact, inputValue, MODULETYPE.Folder);
+
+//				new ArtifactApi().createArtifact(artifactId, inputValue, MODULETYPE.Folder);
+//				try {
+//					artifactTree.renderArtifacts();
+//				} catch (SQLException | IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 
 			}
 
@@ -522,14 +527,16 @@ public class ArtifactTreeUI extends Composite {
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
 							artifact.getName());
 				}
+				toogleNewToolbarItem(false);
+				createArtifact(artifact, inputValue, MODULETYPE.Flow);
 
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Flow);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Flow);
+//				try {
+//					artifactTree.renderArtifacts();
+//				} catch (SQLException | IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 
 			}
 
@@ -552,14 +559,16 @@ public class ArtifactTreeUI extends Composite {
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
 							artifact.getName());
 				}
+				toogleNewToolbarItem(false);
+				createArtifact(artifact, inputValue, MODULETYPE.Component);
 
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Component);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Component);
+//				try {
+//					artifactTree.renderArtifacts();
+//				} catch (SQLException | IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 
 			}
 
@@ -577,17 +586,21 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
 						"Object Repository Name", "");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
+				toogleNewToolbarItem(false);
+				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
 
-				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.ObjectRepository);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.ObjectRepository);
+//				try {
+//					artifactTree.renderArtifacts();
+//				} catch (SQLException | IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 
 			}
 
@@ -605,10 +618,13 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
 						"TestSuite Name", "");
-				if (inputValue == null) {
-					return;
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
+							artifact.getName());
 				}
-
+				toogleNewToolbarItem(false);
+				createArtifact(artifact, inputValue, MODULETYPE.Suite);
 			}
 
 			@Override
@@ -695,6 +711,15 @@ public class ArtifactTreeUI extends Composite {
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Suite) {
+					toogleNewToolbarMenuItem(false);
+					toogleNewToolbarItem(false);
+					toggleRenameToolbarItem(true);
+					toogleDeleteToolbarItem(true);
+					deleteMenuItem.setEnabled(true);
+					renameMenuItem.setEnabled(true);
+				}
+
+				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(true);
