@@ -1089,6 +1089,10 @@ public class TestCaseView extends Composite {
 		// Disable the check that prevents subclassing of SWT components
 	}
 
+	public FlowStepTable getFlowStepTable() {
+		return this.flowStepTable;
+	}
+
 	public FlowStep getSelectedFlowStep() {
 		return selectedFlowStep;
 	}

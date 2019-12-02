@@ -65,6 +65,10 @@ public class KeywordsTree extends CustomTree {
 
 				Keyword keyWord = (Keyword) selectedKeywordItem.getControlData();
 				System.out.println(keyWord.getKeywordname());
+				FlowStepTable flowStepTable = getParentTestCaseView().getFlowStepTable();
+				if (flowStepTable != null) {
+					Keyword keyword_1 = flowStepTable.getSelectedFlowStep();
+				}
 			}
 
 			@Override
