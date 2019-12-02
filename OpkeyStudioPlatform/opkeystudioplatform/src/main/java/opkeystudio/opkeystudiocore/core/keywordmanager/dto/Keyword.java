@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Keyword {
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+
+public class Keyword extends Modified {
 	private String keywordid;
 	private String outputdescription;
 	private String description;
