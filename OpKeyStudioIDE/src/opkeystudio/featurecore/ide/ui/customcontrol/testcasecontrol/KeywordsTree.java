@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -31,9 +33,44 @@ public class KeywordsTree extends CustomTree {
 		addMenuItem.setText("Add");
 		MenuItem updateMenuItem = new MenuItem(menu, 0);
 		updateMenuItem.setText("Update");
-
 		this.setMenu(menu);
 
+		addMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+
+		updateMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TreeItem[] selectedItems = getSelection();
+				if (selectedItems == null) {
+					return;
+				}
+				if (selectedItems.length == 0) {
+					return;
+				}
+
+				CustomTreeItem selectedKeywordItem = (CustomTreeItem) getSelection()[0];
+				if (selectedKeywordItem == null) {
+					return;
+				}
+
+				Keyword keyWord = (Keyword) selectedKeywordItem.getControlData();
+				System.out.println(keyWord.getKeywordname());
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
 	}
 
 	public TestCaseView getParentTestCaseView() {
