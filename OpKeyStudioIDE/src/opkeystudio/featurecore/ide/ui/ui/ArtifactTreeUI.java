@@ -175,8 +175,9 @@ public class ArtifactTreeUI extends Composite {
 
 		toolbarFunctionLibrary = new MenuItem(newMenu, SWT.PUSH);
 		toolbarFunctionLibrary.setText("Function Library");
-		toolbarFunctionLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
-		
+		toolbarFunctionLibrary
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
+
 		toolbarObjectRepository = new MenuItem(newMenu, SWT.PUSH);
 		toolbarObjectRepository.setText("Object Repository");
 		toolbarObjectRepository
@@ -201,8 +202,9 @@ public class ArtifactTreeUI extends Composite {
 
 		functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
 		functionLibraryMenuItem.setText("Function Library");
-		functionLibraryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
-		
+		functionLibraryMenuItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
+
 		testSuiteMenuItem = new MenuItem(menu_1, SWT.PUSH);
 		testSuiteMenuItem.setText("Test Suite");
 		testSuiteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testSuite.png"));
@@ -359,10 +361,12 @@ public class ArtifactTreeUI extends Composite {
 				new ArtifactApi().renameArtifact(artifact);
 				try {
 					artifactTree.renderArtifacts();
+					renameMenuItem.setEnabled(false);
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				renameMenuItem.setEnabled(false);
 			}
 
 			@Override
@@ -406,12 +410,14 @@ public class ArtifactTreeUI extends Composite {
 				artifact.setName(renamedText);
 				new ArtifactApi().renameArtifact(artifact);
 				try {
+					toggleRenameToolbarItem(false);
+					toogleDeleteToolbarItem(false);
 					artifactTree.renderArtifacts();
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
+//				toolbarRename.setEnabled(false);
 			}
 
 			@Override
@@ -432,6 +438,8 @@ public class ArtifactTreeUI extends Composite {
 				}
 				new ArtifactApi().deleteArtifact(artifact);
 				try {
+					toggleRenameToolbarItem(false);
+					toogleDeleteToolbarItem(false);
 					artifactTree.renderArtifacts();
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -617,49 +625,55 @@ public class ArtifactTreeUI extends Composite {
 				System.out.println("Mouse clicked event");
 
 				if (selectedTreeItem == null) {
+					mntmNew.setEnabled(false);
+					toogleNewToolbarItem(false);
+					toggleRenameToolbarItem(false);
+					toogleDeleteToolbarItem(false);
+					deleteMenuItem.setEnabled(false);
+					renameMenuItem.setEnabled(false);
 					return;
 				}
 				if (selectedTreeItem.getArtifact() == null) {
 					mntmNew.setEnabled(true);
-					toolbarNew.setEnabled(true);
-					toolbarRename.setEnabled(false);
-					toolbarDelete.setEnabled(false);
+					toogleNewToolbarItem(true);
+					toggleRenameToolbarItem(false);
+					toogleDeleteToolbarItem(false);
 					deleteMenuItem.setEnabled(false);
 					renameMenuItem.setEnabled(false);
 					return;
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
 					mntmNew.setEnabled(true);
-					toolbarNew.setEnabled(true);
-					toolbarRename.setEnabled(true);
-					toolbarDelete.setEnabled(true);
+					toogleNewToolbarItem(true);
+					toggleRenameToolbarItem(true);
+					toogleDeleteToolbarItem(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
 					mntmNew.setEnabled(false);
-					toolbarNew.setEnabled(false);
-					toolbarRename.setEnabled(true);
-					toolbarDelete.setEnabled(true);
+					toogleNewToolbarItem(false);
+					toggleRenameToolbarItem(true);
+					toogleDeleteToolbarItem(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
 					mntmNew.setEnabled(false);
-					toolbarNew.setEnabled(false);
-					toolbarRename.setEnabled(true);
-					toolbarDelete.setEnabled(true);
+					toogleNewToolbarItem(false);
+					toggleRenameToolbarItem(true);
+					toogleDeleteToolbarItem(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Suite) {
 					mntmNew.setEnabled(false);
-					toolbarNew.setEnabled(false);
-					toolbarRename.setEnabled(true);
-					toolbarDelete.setEnabled(true);
+					toogleNewToolbarItem(false);
+					toggleRenameToolbarItem(true);
+					toogleDeleteToolbarItem(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 				}
@@ -738,6 +752,18 @@ public class ArtifactTreeUI extends Composite {
 			}
 		}
 		artifactTree.refereshArtifacts();
+	}
+
+	public void toggleRenameToolbarItem(boolean status) {
+		toolbarRename.setEnabled(status);
+	}
+
+	public void toogleNewToolbarItem(boolean status) {
+		toolbarNew.setEnabled(status);
+	}
+
+	public void toogleDeleteToolbarItem(boolean status) {
+		toolbarDelete.setEnabled(status);
 	}
 
 	@Override

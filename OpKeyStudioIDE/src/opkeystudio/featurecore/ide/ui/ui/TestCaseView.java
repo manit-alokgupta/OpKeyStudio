@@ -21,9 +21,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
@@ -102,7 +104,7 @@ public class TestCaseView extends Composite {
 	private CLabel stepInfoLabel;
 	private FlowStep selectedFlowStep;
 	private StyledText styledText;
-	String code;
+	private String code;
 	private MenuItem testObjectMenu1;
 	private MenuItem testObjectMenu2;
 	private MenuItem testObjectMenu3;
@@ -116,6 +118,7 @@ public class TestCaseView extends Composite {
 	 */
 	public TestCaseView(Composite parent, int style) {
 		super(parent, style);
+
 		TestCaseUI();
 
 	}
@@ -700,7 +703,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				PlatformUI.getWorkbench().close();
 
 			}
 

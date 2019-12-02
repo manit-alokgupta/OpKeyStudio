@@ -354,6 +354,9 @@ public class TestSuiteView extends Composite {
 		}
 
 		toggleSaveButton(false);
+		toggleDeleteButton(false);
+		toggleMoveUpButton(false);
+		toggleMoveDownButton(false);
 
 	}
 
