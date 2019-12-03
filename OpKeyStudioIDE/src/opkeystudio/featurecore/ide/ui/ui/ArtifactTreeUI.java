@@ -158,7 +158,7 @@ public class ArtifactTreeUI extends Composite {
 		toolbarDelete.setEnabled(false);
 		toolbarDelete.setToolTipText("Delete");
 
-		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+//		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

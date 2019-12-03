@@ -340,7 +340,7 @@ public class TestCaseView extends Composite {
 		serviceRepoButton = new ToolItem(toolBar, SWT.NONE);
 		serviceRepoButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/servicerepo.png"));
-		serviceRepoButton.setText("Service Repositpry");
+		serviceRepoButton.setText("Service Repository");
 		serviceRepoButton.setToolTipText("Service Repositpry");
 		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
