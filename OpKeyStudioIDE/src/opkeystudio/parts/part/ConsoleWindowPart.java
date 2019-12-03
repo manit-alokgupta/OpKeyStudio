@@ -26,6 +26,7 @@ public class ConsoleWindowPart {
 	@PreDestroy
 	public void preDestroy() {
 		System.out.println("Console Window Destroyed");
+		
 	}
 
 	@Focus

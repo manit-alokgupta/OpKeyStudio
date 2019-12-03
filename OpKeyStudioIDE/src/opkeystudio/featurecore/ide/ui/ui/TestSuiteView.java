@@ -542,7 +542,7 @@ public class TestSuiteView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				boolean status = new MessageDialogs().openConfirmDialog("Delete",
-						"Do you want to delete selected step?");
+						"Do you want to delete '" + testSuiteTable.getSelectedTestSuite() + "'?");
 				if (!status) {
 					return;
 				}

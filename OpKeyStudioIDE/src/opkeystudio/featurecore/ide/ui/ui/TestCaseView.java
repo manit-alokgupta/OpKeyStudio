@@ -895,7 +895,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				boolean status = new MessageDialogs().openConfirmDialog("Delete",
-						"Do you want to delete selected step?");
+						"Do you want to delete '" + flowStepTable.getSelectedFlowStep().getKeyword() + "'?");
 				if (!status) {
 					return;
 				}
@@ -1083,8 +1083,6 @@ public class TestCaseView extends Composite {
 		});
 
 	}
-
-	
 
 	@Override
 	protected void checkSubclass() {

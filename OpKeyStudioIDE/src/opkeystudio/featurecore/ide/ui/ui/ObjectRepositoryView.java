@@ -629,7 +629,7 @@ public class ObjectRepositoryView extends Composite {
 
 	public void deleteFunction() {
 		boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
-				"Please press OK to Delete");
+				"Do you want to delete '" + objectRepositoryTree.getSelectedTreeItem().getText() + "'?");
 		if (!result) {
 			return;
 		}

@@ -7,7 +7,9 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 public class MainWorkBenchPart {
 	@Inject
@@ -23,6 +25,7 @@ public class MainWorkBenchPart {
 	@PreDestroy
 	public void preDestroy() {
 		System.out.println("Console Window Destroyed");
+//		
 	}
 
 	@Focus
