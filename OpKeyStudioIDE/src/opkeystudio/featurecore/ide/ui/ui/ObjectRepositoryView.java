@@ -47,6 +47,15 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem renameObject;
 	private ToolItem deleteObject;
 	private ToolItem refreshObject;
+	private ToolItem addToOR;
+	private ToolItem createBackup;
+	private ToolItem importOR;
+	private ToolItem toolDropDown;
+	private Menu dropDownMenu;
+	private MenuItem menuDraft;
+	private MenuItem menuReview;
+	private MenuItem menuApproved;
+	private MenuItem menuPublished;
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
 	private MenuItem cutMenuItem;
@@ -228,29 +237,68 @@ public class ObjectRepositoryView extends Composite {
 
 		saveObject = new ToolItem(toolBar, SWT.NONE);
 		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
-		saveObject.setText("Save");
 		saveObject.setToolTipText("Save");
 
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		renameObject = new ToolItem(toolBar, SWT.NONE);
 		renameObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
-		renameObject.setText("Rename");
 		renameObject.setToolTipText("Rename");
 
-		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
+		ToolItem toolItem_5 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		deleteObject = new ToolItem(toolBar, SWT.NONE);
 		deleteObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		deleteObject.setText("Delete");
 		deleteObject.setToolTipText("Delete");
 
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		refreshObject = new ToolItem(toolBar, SWT.NONE);
 		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-		refreshObject.setText("Refresh");
 		refreshObject.setToolTipText("Refresh");
+
+		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.SEPARATOR);
+
+		addToOR = new ToolItem(toolBar, SWT.NONE);
+		addToOR.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/temp.png"));
+		addToOR.setToolTipText("Add to OR");
+
+		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
+
+		createBackup = new ToolItem(toolBar, SWT.NONE);
+		createBackup.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/backup_create.png"));
+		createBackup.setToolTipText("Create NEw Backup");
+
+		ToolItem toolItem_4 = new ToolItem(toolBar, SWT.SEPARATOR);
+
+		importOR = new ToolItem(toolBar, SWT.NONE);
+		importOR.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/import.png"));
+		importOR.setToolTipText("Import OR");
+
+		ToolItem toolItem_7 = new ToolItem(toolBar, SWT.SEPARATOR);
+
+		toolDropDown = new ToolItem(toolBar, SWT.DROP_DOWN);
+		toolDropDown.setText("More");
+		dropDownMenu = new Menu(toolBar);
+		toolBar.setMenu(dropDownMenu);
+
+		menuDraft = new MenuItem(dropDownMenu, SWT.NONE);
+		menuDraft.setText("Draft");
+
+		new MenuItem(dropDownMenu, SWT.SEPARATOR);
+
+		menuReview = new MenuItem(dropDownMenu, SWT.NONE);
+		menuReview.setText("Review");
+
+		new MenuItem(dropDownMenu, SWT.SEPARATOR);
+
+		menuApproved = new MenuItem(dropDownMenu, SWT.NONE);
+		menuApproved.setText("Approved");
+
+		new MenuItem(dropDownMenu, SWT.SEPARATOR);
+
+		menuPublished = new MenuItem(dropDownMenu, SWT.NONE);
+		menuPublished.setText("Published");
 
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
 //		Tree tree = new Tree(composite_3, SWT.BORDER);
@@ -294,7 +342,7 @@ public class ObjectRepositoryView extends Composite {
 		addObjectAttribute.setText("Add");
 		addObjectAttribute.setToolTipText("Add");
 
-		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
 		deleteObjectAttribute

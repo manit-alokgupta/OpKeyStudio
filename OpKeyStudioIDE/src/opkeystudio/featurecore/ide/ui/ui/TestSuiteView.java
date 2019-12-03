@@ -363,8 +363,11 @@ public class TestSuiteView extends Composite {
 	public void populateTestSuiteData(TestSuite testSuite) {
 		if (testSuite != null) {
 			setSelectedTEstSuite(testSuite);
-
-			toggleDeleteButton(true);
+			if (testSuiteTable.getSelectedTestSuite() == null) {
+				toggleDeleteButton(false);
+			} else {
+				toggleDeleteButton(true);
+			}
 			if (testSuiteTable.getPrevTestSuite() == null) {
 				moveUpToolItem.setEnabled(false);
 			} else {
@@ -385,19 +388,19 @@ public class TestSuiteView extends Composite {
 	}
 
 	public void toggleSaveButton(boolean status) {
-		saveToolItem.setEnabled(false);
+		saveToolItem.setEnabled(status);
 	}
 
 	public void toggleMoveUpButton(boolean status) {
-		moveUpToolItem.setEnabled(false);
+		moveUpToolItem.setEnabled(status);
 	}
 
 	public void toggleMoveDownButton(boolean status) {
-		moveDownToolItem.setEnabled(false);
+		moveDownToolItem.setEnabled(status);
 	}
 
 	public void toggleDeleteButton(boolean status) {
-		deleteSuiteStepToolItem.setEnabled(false);
+		deleteSuiteStepToolItem.setEnabled(status);
 	}
 
 	private void addButtonListeners() {
@@ -542,7 +545,7 @@ public class TestSuiteView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				boolean status = new MessageDialogs().openConfirmDialog("Delete",
-						"Do you want to delete '" + testSuiteTable.getSelectedTestSuite() + "'?");
+						"Do you want to delete '" + testSuiteTable.getSelectedTestSuite().getSuite_id() + "'?");
 				if (!status) {
 					return;
 				}
@@ -638,9 +641,7 @@ public class TestSuiteView extends Composite {
 						boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
 						if (!status) {
 							toggleSaveButton(false);
-							toggleDeleteButton(false);
-							toggleMoveUpButton(false);
-							toggleMoveDownButton(false);
+
 							testSuiteTable.renderAllTestSuites();
 							return;
 						}
@@ -651,8 +652,13 @@ public class TestSuiteView extends Composite {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+
 						saveToolItem.setEnabled(false);
 					}
+
+					toggleDeleteButton(false);
+					toggleMoveUpButton(false);
+					toggleMoveDownButton(false);
 					testSuiteTable.renderAllTestSuites();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
