@@ -83,7 +83,7 @@ public class ArtifactTreeUI extends Composite {
 		composite.setLayoutData(gd_composite);
 
 		txtSearch = new Text(composite, SWT.BORDER);
-		GridData gd_txtSearch = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		GridData gd_txtSearch = new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1);
 		gd_txtSearch.widthHint = 154;
 		txtSearch.setLayoutData(gd_txtSearch);
 		txtSearch.setToolTipText("Search");
@@ -94,7 +94,7 @@ public class ArtifactTreeUI extends Composite {
 			public void keyReleased(KeyEvent e) {
 				Text text = (Text) e.getSource();
 				String searchValue = text.getText();
-				if (searchValue.length() > 2 || searchValue.trim().isEmpty()) {
+				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
 					filterArtifactTree(searchValue);
 				}
 
@@ -107,27 +107,34 @@ public class ArtifactTreeUI extends Composite {
 			}
 		});
 
-		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
-		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		toolBar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 1));
-
-		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.SEPARATOR);
-		tltmNewItem.setText("New Item");
-
-		Button searchArtifactTreeButton = new Button(composite, SWT.NONE);
-		searchArtifactTreeButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		searchArtifactTreeButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
-		GridData gd_btnNewButton = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_btnNewButton.widthHint = 35;
-		searchArtifactTreeButton.setLayoutData(gd_btnNewButton);
-
+		/*
+		 * Hiding Search button as searching is working without it
+		 * 
+		 * ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
+		 * toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		 * toolBar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1,
+		 * 1));
+		 * 
+		 * ToolItem tltmNewItem = new ToolItem(toolBar, SWT.SEPARATOR);
+		 * 
+		 * Button searchArtifactTreeButton = new Button(composite, SWT.NONE);
+		 * searchArtifactTreeButton.setBackground(SWTResourceManager.getColor(SWT.
+		 * COLOR_TRANSPARENT));
+		 * searchArtifactTreeButton.setImage(ResourceManager.getPluginImage(
+		 * "OpKeyStudio", "icons/search.png"));
+		 * 
+		 * GridData gd_btnNewButton = new GridData(SWT.CENTER, SWT.CENTER, false, false,
+		 * 1, 1); gd_btnNewButton.widthHint = 35;
+		 * searchArtifactTreeButton.setLayoutData(gd_btnNewButton);
+		 * 
+		 */
 		Composite composite_1 = new Composite(this, SWT.BORDER);
 //		composite_1.setLayout(new GridLayout(1, true));
 //		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 //		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
 		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_composite_1.heightHint = 35;
+		gd_composite_1.heightHint = 34;
 //		gd_composite_1.widthHint = 110; 
 		composite_1.setLayoutData(gd_composite_1);
 
@@ -769,20 +776,22 @@ public class ArtifactTreeUI extends Composite {
 			e1.printStackTrace();
 		}
 
-		searchArtifactTreeButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String textToSearch = txtSearch.getText();
-				filterArtifactTree(textToSearch);
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		/*
+		 * 
+		 * Search button listener
+		 *
+		 * searchArtifactTreeButton.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) { String textToSearch
+		 * = txtSearch.getText(); filterArtifactTree(textToSearch); }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) { // TODO
+		 * Auto-generated method stub
+		 * 
+		 * } });
+		 * 
+		 * 
+		 */
 	}
 
 	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
