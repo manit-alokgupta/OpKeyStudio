@@ -362,7 +362,7 @@ public class TestCaseView extends Composite {
 			public void keyReleased(KeyEvent e) {
 				Text text = (Text) e.getSource();
 				String searchValue = text.getText();
-				if (searchValue.length() > 2 || searchValue.trim().isEmpty()) {
+				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
 					allDataTreeView.filterDataInTree(searchValue);
 				}
 
@@ -1083,6 +1083,8 @@ public class TestCaseView extends Composite {
 		});
 
 	}
+
+	
 
 	@Override
 	protected void checkSubclass() {

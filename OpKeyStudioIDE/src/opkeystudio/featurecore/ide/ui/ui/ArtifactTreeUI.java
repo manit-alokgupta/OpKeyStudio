@@ -129,17 +129,17 @@ public class ArtifactTreeUI extends Composite {
 		 * 
 		 */
 		Composite composite_1 = new Composite(this, SWT.BORDER);
-//		composite_1.setLayout(new GridLayout(1, true));
-//		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-//		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_composite_1.heightHint = 34;
+		composite_1.setLayout(new GridLayout(1, true));
+		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+//		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
+//		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+//		gd_composite_1.heightHint = 34;
 //		gd_composite_1.widthHint = 110; 
-		composite_1.setLayoutData(gd_composite_1);
+//		composite_1.setLayoutData(gd_composite_1);
 
 		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT | SWT.WRAP);
-//		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		toolbarNew = new ToolItem(toolBar_1, SWT.DROP_DOWN);

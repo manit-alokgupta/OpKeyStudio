@@ -120,8 +120,8 @@ public class KeywordsTree extends CustomTree {
 	public void filterDataInTree(String query) {
 		TreeItem[] items = this.getItems();
 		for (TreeItem item : items) {
-			if (item.getText().toLowerCase().contains(query.toLowerCase())) {
-				// item.
+			if (item.getText().toLowerCase().contains(query.trim().toLowerCase())) {
+//				 item.
 			}
 		}
 		// List<TreeItem> treeItems = getAllItems(treeItem);
