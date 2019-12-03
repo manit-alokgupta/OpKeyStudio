@@ -332,7 +332,7 @@ public class TestCaseView extends Composite {
 
 		functionLibraryButton = new ToolItem(toolBar, SWT.NONE);
 		functionLibraryButton
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/functionlibrary.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
 		functionLibraryButton.setText("Function Library");
 		functionLibraryButton.setToolTipText("Function Library");
 		ToolItem seperator10 = new ToolItem(toolBar, SWT.SEPARATOR);
