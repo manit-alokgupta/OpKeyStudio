@@ -397,6 +397,26 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
+		toolDropDown.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Arrow Pressed");
+				Rectangle rect = toolDropDown.getBounds();
+				Point pt = new Point(rect.x, rect.y + rect.height);
+				pt = toolBar.toDisplay(pt);
+				dropDownMenu.setLocation(pt.x, pt.y);
+				dropDownMenu.setVisible(true);
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		objectAttributeTable.addSelectionListener(new SelectionListener() {
 
 			@Override
