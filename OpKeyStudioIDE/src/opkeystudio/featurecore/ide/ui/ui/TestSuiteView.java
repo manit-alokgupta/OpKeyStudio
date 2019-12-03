@@ -544,7 +544,7 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean status = new MessageDialogs().openConfirmDialog("Delete",
+				boolean status = new MessageDialogs().openConfirmDialog("OpKey",
 						"Do you want to delete '" + testSuiteTable.getSelectedTestSuite().getSuite_id() + "'?");
 				if (!status) {
 					return;
@@ -610,7 +610,7 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Save ", "Save Successful");
+				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "OpKey ", "Save Successful");
 //				boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
 //				if (!status) {
 //					return;
@@ -638,7 +638,8 @@ public class TestSuiteView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					if (saveToolItem.isEnabled()) {
-						boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
+						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+								"Do you want to Save changes?");
 						if (!status) {
 							toggleSaveButton(false);
 

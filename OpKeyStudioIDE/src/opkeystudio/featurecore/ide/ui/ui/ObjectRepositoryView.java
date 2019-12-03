@@ -8,6 +8,8 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -369,8 +371,13 @@ public class ObjectRepositoryView extends Composite {
 					toggleRenameMenuItem(true);
 					toggleCopyMenuItem(true);
 					togglePasteMenuItem(true);
-					toggleCutMenuItem(true);
+
 					toggleDeleteMenuItem(true);
+					if (item.getExpanded()) {
+						toggleCutMenuItem(false);
+					} else {
+						toggleCutMenuItem(true);
+					}
 					if (item.getObjectRepository().getParent_object_id() == null) {
 						toggleChildObjectToolItem(true);
 					} else {
@@ -417,6 +424,30 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
+		toolBar.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				if (e.button == 3) {
+					System.out.println("Clicked");
+					dropDownMenu.setVisible(false);
+				}
+
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		objectAttributeTable.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -436,7 +467,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Save ", "Save Successful");
+				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "OpKey ", "Save Successful");
 //				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Save",
 //						"Please press OK to Svae");
 //				if (!result) {
@@ -478,8 +509,8 @@ public class ObjectRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (saveObject.isEnabled()) {
-					boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Save",
-							"Do you want to Svae");
+					boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
+							"Do you want to save changes?");
 					if (!result) {
 						toggleSaveButton(false);
 						objectRepositoryTree.renderObjectRepositories();
@@ -521,8 +552,8 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
-						"Please press OK to Delete");
+				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
+						"Do you want to Delete");
 				if (!result) {
 					return;
 				}
@@ -679,7 +710,7 @@ public class ObjectRepositoryView extends Composite {
 	public void renameFunction() {
 		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 		ORObject obRepo = selectedTreeItem.getObjectRepository();
-		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "Rename", "Enter name to rename",
+		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "OpKey", "Enter name to rename",
 				obRepo.getName(), null);
 
 		if (input.open() != InputDialog.OK) {
@@ -696,7 +727,7 @@ public class ObjectRepositoryView extends Composite {
 	}
 
 	public void deleteFunction() {
-		boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Delete",
+		boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
 				"Do you want to delete '" + objectRepositoryTree.getSelectedTreeItem().getText() + "'?");
 		if (!result) {
 			return;

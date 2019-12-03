@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+//import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
@@ -106,6 +107,7 @@ public class TestCaseView extends Composite {
 	private MenuItem testObjectMenu2;
 	private MenuItem testObjectMenu3;
 	private MenuItem testObjectMenu4;
+	private Display display;
 
 	/**
 	 * Create the composite.
@@ -894,7 +896,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean status = new MessageDialogs().openConfirmDialog("Delete",
+				boolean status = new MessageDialogs().openConfirmDialog("OpKey",
 						"Do you want to delete '" + flowStepTable.getSelectedFlowStep().getKeyword() + "'?");
 				if (!status) {
 					return;
@@ -920,11 +922,10 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Save ", "Save Successful");
-//				boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
-//				if (!status) {
-//					return;
-//				}
+				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "OpKey ", "Save Successful");
+//				AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+//				notification.open();
+
 				new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 				try {
 					flowStepTable.renderFlowSteps();
@@ -948,7 +949,8 @@ public class TestCaseView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					if (itemSave.isEnabled()) {
-						boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
+						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+								"Do you want to Save changes?");
 						if (!status) {
 							flowStepTable.renderFlowSteps();
 							return;
