@@ -11,7 +11,6 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
-import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
@@ -20,18 +19,11 @@ public class OutputDataTable extends CustomTable {
 	private Keyword keyword;
 	private List<FlowOutputArgument> flowOutputArgs;
 	private TestCaseView parentTestCaseView;
-	private FLView parentFLView;
 
 	public OutputDataTable(Composite parent, int style, TestCaseView parentView) {
 		super(parent, style);
 		init();
 		this.setParentTestCaseView(parentView);
-	}
-
-	public OutputDataTable(Composite parent, int style, FLView parentView) {
-		super(parent, style);
-		init();
-		this.setParentFLView(parentView);
 	}
 
 	public OutputDataTable(Composite parent, int style) {
@@ -94,11 +86,4 @@ public class OutputDataTable extends CustomTable {
 		this.parentTestCaseView = parentTestCaseView;
 	}
 
-	public FLView getParentFLView() {
-		return parentFLView;
-	}
-
-	public void setParentFLView(FLView parentFLView) {
-		this.parentFLView = parentFLView;
-	}
 }

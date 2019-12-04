@@ -62,19 +62,18 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.eclipse.mylyn.commons/core -->
-		<!-- <dependency> <groupId>org.eclipse.mylyn.commons</groupId> <artifactId>core</artifactId> 
-			<version>3.9.1</version> </dependency> -->
+		<dependency>
+			<groupId>org.eclipse.mylyn.commons</groupId>
+			<artifactId>core</artifactId>
+			<version>3.9.1</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.eclipse.mylyn.commons/ui -->
-		<!-- <dependency> <groupId>org.eclipse.mylyn.commons</groupId> <artifactId>ui</artifactId> 
-			<version>3.9.1</version> </dependency> -->
-
-
-
-
-
-
-
+		<dependency>
+			<groupId>org.eclipse.mylyn.commons</groupId>
+			<artifactId>ui</artifactId>
+			<version>3.9.1</version>
+		</dependency>
 
 	</dependencies>
 

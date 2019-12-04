@@ -345,7 +345,7 @@ public class TestCaseView extends Composite {
 		serviceRepoButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/servicerepo.png"));
 		serviceRepoButton.setText("Service Repository");
-		serviceRepoButton.setToolTipText("Service Repositpry");
+		serviceRepoButton.setToolTipText("Service Repository");
 		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		codedFunLibraryButton = new ToolItem(toolBar, SWT.NONE);
@@ -360,6 +360,7 @@ public class TestCaseView extends Composite {
 		searchBox = new Text(composite_12, SWT.BORDER);
 		searchBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		searchBox.setToolTipText("Search");
+		searchBox.setMessage("Search Keyword");
 		searchBox.addKeyListener(new KeyListener() {
 
 			@Override

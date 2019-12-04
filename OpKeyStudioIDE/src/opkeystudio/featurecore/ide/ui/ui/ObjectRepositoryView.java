@@ -342,7 +342,7 @@ public class ObjectRepositoryView extends Composite {
 		addObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
 		addObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		addObjectAttribute.setText("Add");
-		addObjectAttribute.setToolTipText("Add");
+		addObjectAttribute.setToolTipText("Add Property");
 
 		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -350,7 +350,7 @@ public class ObjectRepositoryView extends Composite {
 		deleteObjectAttribute
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteObjectAttribute.setText("Delete");
-		deleteObjectAttribute.setToolTipText("Delete");
+		deleteObjectAttribute.setToolTipText("Delete Property");
 
 		objectAttributeTable = new ObjectAttributeTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION, this);
 		objectAttributeTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -362,6 +362,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+
 				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) objectRepositoryTree.getSelection()[0];
 				renderObjectAttributeProperty(item);
 				if (item.getObjectRepository() != null) {
@@ -454,7 +455,7 @@ public class ObjectRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ObjectAttributeTableItem oati = (ObjectAttributeTableItem) objectAttributeTable.getSelection()[0];
 				System.out.println(oati.getObjectAttributeData().getProperty());
-				deleteObjectAttribute.setEnabled(true);
+				toggleDeleteAttributeButton(true);
 			}
 
 			@Override
@@ -509,6 +510,9 @@ public class ObjectRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (saveObject.isEnabled()) {
+
+					toggleDeleteAttributeButton(false);
+					toggleAddAttributeButton(false);
 					boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
 							"Do you want to save changes?");
 					if (!result) {
@@ -524,9 +528,12 @@ public class ObjectRepositoryView extends Composite {
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
+
 					toggleSaveButton(false);
 				}
 
+				toggleDeleteAttributeButton(false);
+				toggleAddAttributeButton(false);
 				objectRepositoryTree.renderObjectRepositories();
 			}
 

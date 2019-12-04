@@ -243,7 +243,8 @@ public class TestSuiteView extends Composite {
 
 		searchTextBox = new Text(composite_5, SWT.BORDER);
 		searchTextBox.setToolTipText("Available Test Cases/Sparkin/Gherkin Features");
-		searchTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		searchTextBox.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		searchTextBox.setMessage("Available Test Cases");
 
 		Button searchBtn = new Button(composite_5, SWT.NONE);
 		searchBtn.setToolTipText("Search");

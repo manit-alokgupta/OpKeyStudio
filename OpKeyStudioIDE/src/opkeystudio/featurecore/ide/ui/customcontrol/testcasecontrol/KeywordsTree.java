@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
-import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
@@ -21,18 +20,10 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class KeywordsTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
-	private FLView parentFLView;
 
 	public KeywordsTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
 		this.setParentTestCaseView(testCaseView);
-		init();
-		initKeywords();
-	}
-
-	public KeywordsTree(Composite parent, int style, FLView flView) {
-		super(parent, style);
-		this.setFLView(flView);
 		init();
 		initKeywords();
 	}
@@ -98,14 +89,6 @@ public class KeywordsTree extends CustomTree {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
-	}
-
-	public FLView getParentFLViewView() {
-		return parentFLView;
-	}
-
-	public void setFLView(FLView parentFLView) {
-		this.parentFLView = parentFLView;
 	}
 
 	public void selectKeyword(Keyword keyword) {
