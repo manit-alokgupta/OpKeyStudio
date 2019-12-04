@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
+import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
@@ -35,6 +36,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 public class FlowStepTable extends CustomTable {
 	private FlowStepTable thisTable = this;
 	private TestCaseView parentTestCaseView;
+	private FLView parentFLView;
 
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
@@ -45,6 +47,12 @@ public class FlowStepTable extends CustomTable {
 		super(parent, style);
 		init();
 		this.setParentTestCaseView(parentView);
+	}
+
+	public FlowStepTable(Composite parent, int style, FLView flView) {
+		super(parent, style);
+		init();
+		this.setParentFLView(flView);
 	}
 
 	private void init() {
@@ -223,6 +231,7 @@ public class FlowStepTable extends CustomTable {
 		fstep1.setModified(true);
 		fstep2.setModified(true);
 		getParentTestCaseView().toggleSaveButton(true);
+		
 	}
 
 	public void moveStepDown(FlowStep fstep1, FlowStep fstep2) {
@@ -237,6 +246,38 @@ public class FlowStepTable extends CustomTable {
 		fstep1.setModified(true);
 		fstep2.setModified(true);
 		getParentTestCaseView().toggleSaveButton(true);
+	
+
+	}
+
+	public void moveStepUpFL(FlowStep fstep1, FlowStep fstep2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = fstep1.getPosition();
+		int fpos2 = fstep2.getPosition();
+
+		fstep1.setPosition(fpos2);
+		fstep2.setPosition(fpos1);
+		refreshFlowSteps();
+		selectRow(selectedIndex - 1);
+		fstep1.setModified(true);
+		fstep2.setModified(true);
+		
+		getParentFLView().toggleSaveButton(true);
+	}
+
+	public void moveStepDownFL(FlowStep fstep1, FlowStep fstep2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = fstep1.getPosition();
+		int fpos2 = fstep2.getPosition();
+
+		fstep1.setPosition(fpos2);
+		fstep2.setPosition(fpos1);
+		refreshFlowSteps();
+		selectRow(selectedIndex + 1);
+		fstep1.setModified(true);
+		fstep2.setModified(true);
+		
+		getParentFLView().toggleSaveButton(true);
 
 	}
 
@@ -287,7 +328,15 @@ public class FlowStepTable extends CustomTable {
 		return parentTestCaseView;
 	}
 
+	public FLView getParentFLView() {
+		return parentFLView;
+	}
+
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public void setParentFLView(FLView flView) {
+		this.parentFLView = flView;
 	}
 }
