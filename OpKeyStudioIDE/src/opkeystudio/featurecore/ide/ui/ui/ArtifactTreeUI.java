@@ -783,9 +783,10 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				String textToSearch = txtSearch.getText();
+
 				txtSearch.setText("");
-//				filterArtifactTree(textToSearch);
+				String textToSearch = txtSearch.getText();
+				filterArtifactTree(textToSearch);
 			}
 
 			@Override
