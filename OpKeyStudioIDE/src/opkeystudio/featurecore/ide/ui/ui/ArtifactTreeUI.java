@@ -108,27 +108,23 @@ public class ArtifactTreeUI extends Composite {
 			}
 		});
 
-		/*
-		 * Hiding Search button as searching is working without it
-		 * 
-		 * ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
-		 * toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		 * toolBar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1,
-		 * 1));
-		 * 
-		 * ToolItem tltmNewItem = new ToolItem(toolBar, SWT.SEPARATOR);
-		 * 
-		 * Button searchArtifactTreeButton = new Button(composite, SWT.NONE);
-		 * searchArtifactTreeButton.setBackground(SWTResourceManager.getColor(SWT.
-		 * COLOR_TRANSPARENT));
-		 * searchArtifactTreeButton.setImage(ResourceManager.getPluginImage(
-		 * "OpKeyStudio", "icons/search.png"));
-		 * 
-		 * GridData gd_btnNewButton = new GridData(SWT.CENTER, SWT.CENTER, false, false,
-		 * 1, 1); gd_btnNewButton.widthHint = 35;
-		 * searchArtifactTreeButton.setLayoutData(gd_btnNewButton);
-		 * 
-		 */
+//		  Hiding Search button as searching is working without it
+
+		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
+		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		toolBar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 1));
+
+		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.SEPARATOR);
+
+		Button clearArtifactTreeButton = new Button(composite, SWT.NONE);
+		clearArtifactTreeButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		clearArtifactTreeButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/erase.png"));
+		clearArtifactTreeButton.setToolTipText("Clear Text");
+
+		GridData gd_btnNewButton = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_btnNewButton.widthHint = 30;
+		clearArtifactTreeButton.setLayoutData(gd_btnNewButton);
+
 		Composite composite_1 = new Composite(this, SWT.BORDER);
 		composite_1.setLayout(new GridLayout(1, true));
 		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -269,11 +265,11 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
-						"TestSuite Name", "");
+						"Test Suite Name", "Test Suite " + java.time.LocalDateTime.now());
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Test Suite Name ",
-							"Test Suite " + java.time.LocalDateTime.now());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
+							"Test Suite Name ", "Test Suite " + java.time.LocalDateTime.now());
 				}
 				createArtifact(artifact, inputValue, MODULETYPE.Suite);
 
@@ -292,10 +288,10 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
-						"");
+						"Folder " + java.time.LocalDateTime.now());
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Folder Name ",
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name ",
 							"Folder " + java.time.LocalDateTime.now());
 				}
 
@@ -314,11 +310,11 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
-						"Object Repository Name", "");
+						"Object Repository Name", "Object Repository " + java.time.LocalDateTime.now());
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Object Repository Name ",
-							"Object Repository " + java.time.LocalDateTime.now());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
+							"Object Repository Name ", "Object Repository " + java.time.LocalDateTime.now());
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
@@ -336,11 +332,11 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
-						"Function Library Name", "");
+						"Function Library Name", "Function Library " + java.time.LocalDateTime.now());
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Function Library Name ",
-							"Function Library " + java.time.LocalDateTime.now());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
+							"Function Library Name ", "Function Library " + java.time.LocalDateTime.now());
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
@@ -502,10 +498,10 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
-						"");
+						"Folder " + java.time.LocalDateTime.now());
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Enter Name ",
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Enter Name ",
 							"Folder " + java.time.LocalDateTime.now());
 				}
 
@@ -541,11 +537,11 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "");
+						"TestCase Name", "Test Case " + java.time.LocalDateTime.now());
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Test Case Name ",
-							"Test Case " + java.time.LocalDateTime.now());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+							"Test Case Name ", "Test Case " + java.time.LocalDateTime.now());
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
@@ -573,11 +569,11 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
-						"Function Library Name", "");
+						"Function Library Name", "Function Library " + java.time.LocalDateTime.now());
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Function Library Name ",
-							"Function Library " + java.time.LocalDateTime.now());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
+							"Function Library Name ", "Function Library " + java.time.LocalDateTime.now());
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
@@ -605,11 +601,11 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
-						"Object Repository Name", "");
+						"Object Repository Name", "Object Repository " + java.time.LocalDateTime.now());
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Object Repository Name ",
-							"Object Repository " + java.time.LocalDateTime.now());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
+							"Object Repository Name ", "Object Repository " + java.time.LocalDateTime.now());
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
@@ -692,6 +688,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleDeleteToolbarItem(false);
 					deleteMenuItem.setEnabled(false);
 					renameMenuItem.setEnabled(false);
+
 					return;
 				}
 				if (selectedTreeItem.getArtifact() == null) {
@@ -757,8 +754,10 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
 
+				System.out.println("double clicked");
+
+				return;
 			}
 		});
 
@@ -778,22 +777,24 @@ public class ArtifactTreeUI extends Composite {
 			e1.printStackTrace();
 		}
 
-		/*
-		 * 
-		 * Search button listener
-		 *
-		 * searchArtifactTreeButton.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) { String textToSearch
-		 * = txtSearch.getText(); filterArtifactTree(textToSearch); }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) { // TODO
-		 * Auto-generated method stub
-		 * 
-		 * } });
-		 * 
-		 * 
-		 */
+//		  Search button listener
+
+		clearArtifactTreeButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+//				String textToSearch = txtSearch.getText();
+				txtSearch.setText("");
+//				filterArtifactTree(textToSearch);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODo Auto-generated method stub
+
+			}
+		});
+
 	}
 
 	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
