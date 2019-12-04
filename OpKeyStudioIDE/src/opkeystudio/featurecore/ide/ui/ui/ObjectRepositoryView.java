@@ -469,11 +469,7 @@ public class ObjectRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "OpKey ", "Save Successful");
-//				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Save",
-//						"Please press OK to Svae");
-//				if (!result) {
-//					return;
-//				}
+
 				List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 				try {
 					new ObjectRepositoryApi().saveORObjects(allors);

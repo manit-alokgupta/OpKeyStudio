@@ -106,6 +106,7 @@ public class TestCaseView extends Composite {
 	private MenuItem testObjectMenu2;
 	private MenuItem testObjectMenu3;
 	private MenuItem testObjectMenu4;
+
 //	private Display display;
 
 	/**

@@ -59,6 +59,7 @@ public class ArtifactTreeUI extends Composite {
 	private MenuItem testSuiteMenuItem;
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
+	private ArtifactTreeItem artifactTreeItem;
 	/**
 	 * Create the composite.
 	 * 
@@ -271,8 +272,8 @@ public class ArtifactTreeUI extends Composite {
 						"TestSuite Name", "");
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Test Suite Name ",
+							"Test Suite " + java.time.LocalDateTime.now());
 				}
 				createArtifact(artifact, inputValue, MODULETYPE.Suite);
 
@@ -294,9 +295,10 @@ public class ArtifactTreeUI extends Composite {
 						"");
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Folder Name ",
+							"Folder " + java.time.LocalDateTime.now());
 				}
+
 				createArtifact(artifact, inputValue, MODULETYPE.Folder);
 			}
 
@@ -315,8 +317,8 @@ public class ArtifactTreeUI extends Composite {
 						"Object Repository Name", "");
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Object Repository Name ",
+							"Object Repository " + java.time.LocalDateTime.now());
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
@@ -337,8 +339,8 @@ public class ArtifactTreeUI extends Composite {
 						"Function Library Name", "");
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Function Library Name ",
+							"Function Library " + java.time.LocalDateTime.now());
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
@@ -503,8 +505,8 @@ public class ArtifactTreeUI extends Composite {
 						"");
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Enter Name ",
+							"Folder " + java.time.LocalDateTime.now());
 				}
 
 				String artifactId = null;
@@ -542,8 +544,8 @@ public class ArtifactTreeUI extends Composite {
 						"TestCase Name", "");
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Test Case Name ",
+							"Test Case " + java.time.LocalDateTime.now());
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
@@ -574,8 +576,8 @@ public class ArtifactTreeUI extends Composite {
 						"Function Library Name", "");
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Function Library Name ",
+							"Function Library " + java.time.LocalDateTime.now());
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
@@ -606,8 +608,8 @@ public class ArtifactTreeUI extends Composite {
 						"Object Repository Name", "");
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Object Repository Name ",
+							"Object Repository " + java.time.LocalDateTime.now());
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
@@ -638,8 +640,8 @@ public class ArtifactTreeUI extends Composite {
 						"TestSuite Name", "");
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Test Suite Name ",
+							"Test Suite " + java.time.LocalDateTime.now());
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Suite);
