@@ -8,12 +8,14 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class TestObjectTable extends CustomTable {
 	private List<ORObject> orobject;
 	private TestCaseView parentTestCaseView;
+	private FLView parentFLView;
 
 	public TestObjectTable(Composite parent, int style) {
 		super(parent, style);
@@ -24,6 +26,12 @@ public class TestObjectTable extends CustomTable {
 		super(parent, style);
 		init();
 		this.setParentTestCaseView(parentView);
+	}
+
+	public TestObjectTable(Composite parent, int style, FLView parentView) {
+		super(parent, style);
+		init();
+		this.setParentFLView(parentView);
 	}
 
 	private void init() {
@@ -60,5 +68,13 @@ public class TestObjectTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public FLView getParentFLView() {
+		return parentFLView;
+	}
+
+	public void setParentFLView(FLView parentFLView) {
+		this.parentFLView = parentFLView;
 	}
 }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-//import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
@@ -107,7 +106,7 @@ public class TestCaseView extends Composite {
 	private MenuItem testObjectMenu2;
 	private MenuItem testObjectMenu3;
 	private MenuItem testObjectMenu4;
-	private Display display;
+//	private Display display;
 
 	/**
 	 * Create the composite.
@@ -119,6 +118,9 @@ public class TestCaseView extends Composite {
 		super(parent, style);
 
 		TestCaseUI();
+		toggleMovedownButton(false);
+		toggleMoveupButton(false);
+		toggleDeleteButton(false);
 
 	}
 
@@ -155,17 +157,17 @@ public class TestCaseView extends Composite {
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
-		itemAdd = new ToolItem(toolBar_1, SWT.NONE);
-		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		itemAdd.setText("Add");
-		itemAdd.setToolTipText("Add");
-
-		seperator1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
 		itemRecord = new ToolItem(toolBar_1, SWT.NONE);
 		itemRecord.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/record_icon.png"));
 		itemRecord.setText("Record");
 		itemRecord.setToolTipText("Record");
+
+		seperator1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
+		itemAdd = new ToolItem(toolBar_1, SWT.NONE);
+		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		itemAdd.setText("Add");
+		itemAdd.setToolTipText("Add Test Step");
 
 		seperator2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -180,7 +182,7 @@ public class TestCaseView extends Composite {
 		itemMoveup.setEnabled(false);
 		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		itemMoveup.setText("Move up");
-		itemMoveup.setToolTipText("Move up");
+		itemMoveup.setToolTipText("Move Step Up");
 
 		seperator4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -188,7 +190,7 @@ public class TestCaseView extends Composite {
 		itemMovedown.setEnabled(false);
 		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		itemMovedown.setText("Move Down");
-		itemMovedown.setToolTipText("Move Down");
+		itemMovedown.setToolTipText("Move Step Down");
 
 		seperator5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -196,7 +198,7 @@ public class TestCaseView extends Composite {
 		itemDelete.setEnabled(false);
 		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		itemDelete.setText("Delete");
-		itemDelete.setToolTipText("Delete");
+		itemDelete.setToolTipText(" Delete Test Step");
 
 		seperator6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -869,6 +871,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				flowStepTable.moveStepUp(flowStepTable.getSelectedFlowStep(), flowStepTable.getPrevFlowStep());
+				toggleSaveButton(true);
 
 			}
 
@@ -883,6 +886,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				flowStepTable.moveStepDown(flowStepTable.getSelectedFlowStep(), flowStepTable.getNextFlowStep());
+				toggleSaveButton(true);
 			}
 
 			@Override
@@ -903,6 +907,7 @@ public class TestCaseView extends Composite {
 				}
 
 				try {
+					toggleSaveButton(true);
 					flowStepTable.deleteStep(flowStepTable.getSelectedFlowStep());
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -949,6 +954,7 @@ public class TestCaseView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					if (itemSave.isEnabled()) {
+						toggleSaveButton(false);
 						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
 								"Do you want to Save changes?");
 						if (!status) {
@@ -962,7 +968,7 @@ public class TestCaseView extends Composite {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						toggleSaveButton(false);
+//						toggleSaveButton(false);
 					}
 
 					flowStepTable.renderFlowSteps();
@@ -1086,11 +1092,6 @@ public class TestCaseView extends Composite {
 
 	}
 
-	@Override
-	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
-	}
-
 	public FlowStepTable getFlowStepTable() {
 		return this.flowStepTable;
 	}
@@ -1101,5 +1102,10 @@ public class TestCaseView extends Composite {
 
 	public void setSelectedFlowStep(FlowStep selectedFlowStep) {
 		this.selectedFlowStep = selectedFlowStep;
+	}
+
+	@Override
+	protected void checkSubclass() {
+		// Disable the check that prevents subclassing of SWT components
 	}
 }

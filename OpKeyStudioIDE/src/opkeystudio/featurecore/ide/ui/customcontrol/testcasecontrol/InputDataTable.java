@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Text;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -31,6 +32,7 @@ public class InputDataTable extends CustomTable {
 	private List<FlowInputArgument> flowInputArgs;
 	private List<ComponentInputArgument> componentInputArgs;
 	private TestCaseView parentTestCaseView;
+	private FLView parentFLView;
 
 	public InputDataTable(Composite parent, int style) {
 		super(parent, style);
@@ -42,6 +44,13 @@ public class InputDataTable extends CustomTable {
 		init();
 		addControlEditor();
 		this.setParentTestCaseView(parentView);
+	}
+
+	public InputDataTable(Composite parent, int style, FLView parentView) {
+		super(parent, style);
+		init();
+		addControlEditor();
+		this.setParentFLView(parentView);
 	}
 
 	public InputDataTable getCurrentInstance() {
@@ -198,5 +207,13 @@ public class InputDataTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public FLView getParentFLView() {
+		return parentFLView;
+	}
+
+	public void setParentFLView(FLView parentFLView) {
+		this.parentFLView = parentFLView;
 	}
 }
