@@ -34,7 +34,7 @@ public class E4LifeCycle {
 			KeywordManager.getInstance().loadAllKeywords();
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 	}
 
@@ -48,5 +48,6 @@ public class E4LifeCycle {
 
 	@ProcessRemovals
 	void processRemovals(IEclipseContext workbenchContext) {
+		
 	}
 }

@@ -40,7 +40,7 @@ public class ExceptionDialog extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 	}
-
+ 
 	/**
 	 * Open the dialog.
 	 * 

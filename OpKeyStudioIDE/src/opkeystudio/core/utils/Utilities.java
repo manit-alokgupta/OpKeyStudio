@@ -31,8 +31,8 @@ public class Utilities {
 	public MPart getActivePart() {
 		return getEpartService().getActivePart();
 	}
-	
-	public void showErrorDialog(Shell shell,String title,String message) {
+
+	public void showErrorDialog(Shell shell, String title, String message) {
 		MessageDialog.openError(shell, title, message);
 	}
 }

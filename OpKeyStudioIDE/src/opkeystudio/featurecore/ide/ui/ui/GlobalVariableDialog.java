@@ -1,7 +1,12 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.util.List;
+
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -10,11 +15,13 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
@@ -42,6 +49,7 @@ public class GlobalVariableDialog extends Dialog {
 	private ToolItem deletetoolitem;
 	private ToolItem savetoolitem;
 	private ToolItem refreshtoolitem;
+	private static Text txtSearch;
 
 	public void toggleAddToolItem(boolean status) {
 		addtoolitem.setEnabled(status);
@@ -148,6 +156,7 @@ public class GlobalVariableDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				globalVariablesTable.saveAll();
+				globalVariablesTable.refreshGlobalVariables();
 				toggleSaveToolItem(false);
 			}
 		});
@@ -161,7 +170,67 @@ public class GlobalVariableDialog extends Dialog {
 		refreshtoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+
+				if (savetoolitem.isEnabled()) {
+					boolean status = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(),
+							"Global Variable Save", "Do you want to save global varaible?");
+					if (status) {
+						globalVariablesTable.saveAll();
+						globalVariablesTable.refreshGlobalVariables();
+						toggleSaveToolItem(false);
+					}
+
+				}
+				toggleSaveToolItem(false);
 				globalVariablesTable.refreshGlobalVariables();
+			}
+		});
+
+		Composite composite_1 = new Composite(composite, SWT.NONE);
+		composite_1.setLayout(new GridLayout(2, false));
+		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		txtSearch = new Text(composite_1, SWT.BORDER);
+		txtSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtSearch.setMessage("Search");
+
+		txtSearch.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				Text text = (Text) e.getSource();
+				String searchValue = text.getText();
+				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
+					filterGlobalVariable(searchValue);
+				}
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		Button clearButton = new Button(composite_1, SWT.NONE);
+		clearButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/erase.png"));
+		clearButton.setToolTipText("Clear");
+
+		clearButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				txtSearch.setText("");
+				String textToSearch = txtSearch.getText();
+				filterGlobalVariable(textToSearch);
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
 			}
 		});
 
@@ -221,5 +290,16 @@ public class GlobalVariableDialog extends Dialog {
 
 		globalVariablesTable.refreshGlobalVariables();
 
+	}
+
+	private void filterGlobalVariable(String searchValue) {
+		List<GlobalVariable> globalvariables = globalVariablesTable.getGlobalVariablesData();
+		for (GlobalVariable globalVariable : globalvariables) {
+			if (globalVariable.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
+				globalVariable.setVisible(true);
+			} else {
+				globalVariable.setVisible(false);
+			}
+		}
 	}
 }

@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.TreeItem;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -25,16 +26,20 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class FlowStepTable extends CustomTable {
 	private FlowStepTable thisTable = this;
 	private TestCaseView parentTestCaseView;
+	private Keyword keyWord;
+	private KeywordsTree allDataTreeView;
 
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
@@ -311,6 +316,30 @@ public class FlowStepTable extends CustomTable {
 		}
 		return null;
 	}
+
+	public int addKeyword() {
+
+		int lastPosition = getFlowStepsData().get(getFlowStepsData().size() - 1).getPosition();
+		return lastPosition;
+	}
+
+//	public void addKeyword() {
+//
+//		int lastPosition = getFlowStepsData().get(getFlowStepsData().size() - 1).getPosition();
+//		System.out.println(lastPosition);
+//
+//		FlowStep flowStep = new FlowStep();
+//		flowStep.setPosition(lastPosition + 1);
+//		flowStep.setFlow_id(Utilities.getInstance().getUniqueUUID(""));
+//		flowStep.setShouldrun(true);
+//		keyWord = allDataTreeView.selectedKeyword();
+//		System.out.println(allDataTreeView.selectedKeyword().getKeywordname());
+//		flowStep.setKeyword(keyWord);
+////		flowStep.setKeywordid(keyWord.getKeywordid());
+////		flowStep.setModified(true);
+//		flowStep.setOrObject(null);
+//
+//	}
 
 	@Override
 	protected void checkSubclass() {

@@ -13,7 +13,7 @@ public class FlowConstruct {
 		for (FlowStep flowStep : allFlowSteps) {
 			saveFlowInputArguments(flowStep.getFlowInputArgs());
 			saveFlowOutputArguments(flowStep.getFlowOutputArgs());
-			saveFlowStep(flowStep);
+			saveFlowStep(flowStep); 
 		}
 	}
 

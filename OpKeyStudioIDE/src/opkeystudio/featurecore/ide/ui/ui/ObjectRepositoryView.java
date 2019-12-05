@@ -416,7 +416,7 @@ public class ObjectRepositoryView extends Composite {
 				dropDownMenu.setLocation(pt.x, pt.y);
 				dropDownMenu.setVisible(true);
 
-			}
+			} 
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {

@@ -40,6 +40,7 @@ public class KeywordsTree extends CustomTree {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				System.out.println(selectedKeyword().getKeywordname());
 			}
 
 			@Override
@@ -74,6 +75,7 @@ public class KeywordsTree extends CustomTree {
 					flowStep.setModified(true);
 					getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 					getParentTestCaseView().toggleSaveButton(true);
+
 				}
 			}
 
@@ -81,6 +83,28 @@ public class KeywordsTree extends CustomTree {
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
+	}
+
+	public Keyword selectedKeyword() {
+		TreeItem[] selectedItems = getSelection();
+		if (selectedItems == null) {
+			return null;
+		}
+		if (selectedItems.length == 0) {
+			return null;
+		}
+
+		CustomTreeItem selectedKeywordItem = (CustomTreeItem) getSelection()[0];
+		if (selectedKeywordItem == null) {
+			return null;
+		}
+
+		else {
+
+			Keyword keyWord = (Keyword) selectedKeywordItem.getControlData();
+
+			return keyWord;
+		}
 	}
 
 	public TestCaseView getParentTestCaseView() {

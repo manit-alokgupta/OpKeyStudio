@@ -1,9 +1,10 @@
-package opkeystudio.featurecore.ide.ui.ui;
+package opkeystudio.notification;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -14,9 +15,10 @@ public class SaveNotificationPopup {// extends AbstractNotificationPopup
 	/**
 	 * @param display
 	 */
-//	public SaveNotificationPopup(Display display) {
-//		super(display);
-//	}
+
+	/*
+	 * public SaveNotificationPopup(Display display) { super(display); }
+	 */
 
 	protected void createContentArea(Composite parent) {
 

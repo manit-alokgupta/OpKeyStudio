@@ -159,25 +159,25 @@ public class GlobalVariableTable extends CustomTable {
 
 			}
 		});
-		
+
 		combo.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				setSelection(item);
 				CustomCombo button = (CustomCombo) e.getSource();
 				GlobalVariable oatr = (GlobalVariable) button.getControlData();
-				int selected=combo.getSelectionIndex();
-				String selectedDataType=combo.getItem(selected);
+				int selected = combo.getSelectionIndex();
+				String selectedDataType = combo.getItem(selected);
 				oatr.setDatatype(selectedDataType);
 				oatr.setModified(true);
 				getParentGlobalVariableView().toggleSaveToolItem(true);
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		editor1.setEditor(isExternallyUpdatable, item, 3);
@@ -230,16 +230,20 @@ public class GlobalVariableTable extends CustomTable {
 
 	public void addBlankGlobalVariableStep() {
 		int lastPosition = getGlobalVariablesData().get(getGlobalVariablesData().size() - 1).getPosition();
+		System.out.println(lastPosition);
 		GlobalVariable gv = new GlobalVariable();
 		gv.setPosition(lastPosition + 1);
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
 		gv.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
 		gv.setName("");
-		gv.setValue("");
+		gv.setValue("Chrome");
 		gv.setDatatype("STRING");
 		gv.setAdded(true);
+		gv.setExternallyupdatable(true);
 		addGlobalVariable(gv);
 		renderGlobalVariables();
+		parentGlobalVariableView.toggleSaveToolItem(true);
+
 	}
 
 	public void deleteGlobalVariableStep() {
@@ -249,12 +253,12 @@ public class GlobalVariableTable extends CustomTable {
 	}
 
 	public void saveAll() {
-		boolean status = MessageDialog.openConfirm(this.getShell(), "Global Variable Save",
-				"Do you want to save global varaible?");
-		if (!status) {
-			refreshGlobalVariables();
-			return;
-		}
+//		boolean status = MessageDialog.openConfirm(this.getShell(), "Global Variable Save",
+//				"Do you want to save global varaible?");
+//		if (!status) {
+//			refreshGlobalVariables();
+//			return;
+//		}
 
 		List<GlobalVariable> allGlobalVariables = getGlobalVariablesData();
 		for (GlobalVariable gv : allGlobalVariables) {
