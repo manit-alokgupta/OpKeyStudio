@@ -133,6 +133,7 @@ public class StepDetailsInputData extends CustomTable {
 					CustomTableItem cti = new CustomTableItem(this, 0);
 					cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
 							flowInputArg.getStaticvalue() });
+					cti.setControlData(flowInputArg);
 				}
 			}
 		}
@@ -144,6 +145,7 @@ public class StepDetailsInputData extends CustomTable {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
 						flowInputArg.getStaticvalue() });
+				cti.setControlData(flowInputArg);
 			}
 		}
 	}

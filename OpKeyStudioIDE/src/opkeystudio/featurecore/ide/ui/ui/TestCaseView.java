@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
@@ -19,6 +20,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
@@ -44,6 +46,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.KeywordsTree
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
+import opkeystudio.notification.SaveNotificationPopup;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -108,7 +111,7 @@ public class TestCaseView extends Composite {
 	private MenuItem testObjectMenu4;
 	private Keyword keyWord;
 
-//	private Display display;
+	private Display display;
 
 	/**
 	 * Create the composite.
@@ -123,6 +126,7 @@ public class TestCaseView extends Composite {
 		toggleMovedownButton(false);
 		toggleMoveupButton(false);
 		toggleDeleteButton(false);
+		toggleAddButton(false);
 
 		if (parent.isDisposed()) {
 			System.out.println("ho gya bnd");
@@ -141,7 +145,7 @@ public class TestCaseView extends Composite {
 	@SuppressWarnings("unused")
 	public void TestCaseUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
-
+		display = getParent().getDisplay();
 		TabFolder mainTestCaseTabFolder = new TabFolder(this, SWT.BORDER | SWT.BOTTOM);
 		mainTestCaseTabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 
@@ -608,22 +612,28 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				flowStepTable.deselectAll();
+				toggleAddButton(false);
 				flowStepTable.setSelection(new TableItem[] { cursor.getRow() });
 				int selectedColumn = cursor.getColumn();
 				System.out.println("Column " + selectedColumn);
 				if (selectedColumn == 1) {
+					toggleAddButton(true);
 					testCaseArgumentsTabFolder.setSelection(1);
 					FlowStep flowStep = flowStepTable.getSelectedFlowStep();
 					if (flowStep.getKeyword() != null) {
 						allDataTreeView.selectKeyword(flowStep.getKeyword());
 					}
 				} else if (selectedColumn == 2) {
+					toggleAddButton(false);
 					testCaseArgumentsTabFolder.setSelection(2);
 				} else if (selectedColumn == 3) {
+					toggleAddButton(false);
 					testCaseArgumentsTabFolder.setSelection(3);
 				} else if (selectedColumn == 4) {
+					toggleAddButton(false);
 					testCaseArgumentsTabFolder.setSelection(4);
 				} else {
+					toggleAddButton(false);
 					testCaseArgumentsTabFolder.setSelection(0);
 				}
 			}
@@ -843,27 +853,30 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				int lastPosition = flowStepTable.addKeyword();
-				System.out.println(lastPosition);
+				System.out.println("Add Button pressed");
 
 				FlowStepTable flowStepTable = getFlowStepTable();
+
 				if (flowStepTable != null) {
+					int lastPosition = flowStepTable.addKeyword();
+					System.out.println("Last index " + lastPosition);
 					FlowStep flowStep = new FlowStep();
 					flowStep.setPosition(lastPosition + 1);
+					System.out.println(flowStep.getPosition());
 					flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
 					flowStep.setShouldrun(true);
+					flowStep.setWantsnapshot(true);
 					keyWord = allDataTreeView.selectedKeyword();
 					System.out.println(allDataTreeView.selectedKeyword().getKeywordname());
 					flowStep.setKeyword(keyWord);
 					flowStep.setKeywordid(keyWord.getKeywordid());
 					flowStep.setIstestcase(true);
 					flowStep.setOrObject(flowStep.getOrObject());
-					flowStep.setWantsnapshot(true);
 					flowStep.setModified(true);
 //					getFlowStepTable().refreshFlowSteps();
 					toggleSaveButton(true);
 				}
+
 			}
 
 			@Override
@@ -965,9 +978,8 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 //				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "OpKey ", "Save Successful");
-//				SaveNotificationPopup notification = new SaveNotificationPopup(
-//						NotificationQuartzJobHelper.getInstance().getCurrentDisp());
-//				notification.open();
+				AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+				notification.open();
 
 				new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 				try {

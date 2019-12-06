@@ -1,5 +1,6 @@
 package opkeystudio.notification;
 
+import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -10,15 +11,15 @@ import org.eclipse.swt.widgets.Label;
 /**
  * Sample Notification Popup Class
  */
-public class SaveNotificationPopup {// extends AbstractNotificationPopup
+public class SaveNotificationPopup extends AbstractNotificationPopup {// extends AbstractNotificationPopup
 
 	/**
 	 * @param display
 	 */
 
-	/*
-	 * public SaveNotificationPopup(Display display) { super(display); }
-	 */
+	public SaveNotificationPopup(Display display) {
+		super(display);
+	}
 
 	protected void createContentArea(Composite parent) {
 
