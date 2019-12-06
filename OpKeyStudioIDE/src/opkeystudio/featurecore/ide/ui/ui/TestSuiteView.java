@@ -3,6 +3,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.IOException;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
@@ -33,7 +34,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTableItem;
+import opkeystudio.notification.DeleteNotificationPopup;
+import opkeystudio.notification.SaveNotificationPopup;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
 
 public class TestSuiteView extends Composite {
@@ -63,6 +67,7 @@ public class TestSuiteView extends Composite {
 	private MenuItem menuReview;
 	private MenuItem menuApproved;
 	private MenuItem menuPublished;
+	private Display display;
 
 	/**
 	 * Create the composite.
@@ -72,6 +77,7 @@ public class TestSuiteView extends Composite {
 	 */
 	public TestSuiteView(Composite parent, int style) {
 		super(parent, style);
+		display = getParent().getDisplay();
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		Composite composite = new Composite(this, SWT.NONE);
@@ -550,6 +556,9 @@ public class TestSuiteView extends Composite {
 				if (!status) {
 					return;
 				}
+				AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
+				notification.setDelayClose(1L);
+				notification.open();
 				try {
 					testSuiteTable.deleteSuiteStep(testSuiteTable.getSelectedTestSuite());
 				} catch (IOException e1) {
@@ -611,11 +620,9 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "OpKey ", "Save Successful");
-//				boolean status = new MessageDialogs().openConfirmDialog("Save", "Do you want to save?");
-//				if (!status) {
-//					return;
-//				}
+				AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+				notification.setDelayClose(1L);
+				notification.open();
 				new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
 				try {
 					testSuiteTable.renderAllTestSuites();
@@ -647,6 +654,9 @@ public class TestSuiteView extends Composite {
 							testSuiteTable.renderAllTestSuites();
 							return;
 						}
+						AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+						notification.setDelayClose(1L);
+						notification.open();
 						new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
 						try {
 							testSuiteTable.renderAllTestSuites();

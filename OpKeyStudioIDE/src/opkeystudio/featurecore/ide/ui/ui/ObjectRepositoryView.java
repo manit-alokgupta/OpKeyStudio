@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.MouseEvent;
@@ -36,6 +37,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
+import opkeystudio.notification.DeleteNotificationPopup;
+import opkeystudio.notification.SaveNotificationPopup;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
@@ -69,6 +72,7 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem addChildObjectToolItem;
 	private ORObject obRepo;
 	private String orId;
+	private Display display;
 	private String[] parentObjectTypes = new String[] { "Html Page", "Frame", "Page" };
 	private String[] childObjectTypes = new String[] { "Area", "Base", "Button", "Checkbox", "Clickable Image Map",
 			"Color Picker", "Custom", "Custom Object", "Datetime Picker", "Div", "Drop Down List", "Edit Field",
@@ -165,7 +169,7 @@ public class ObjectRepositoryView extends Composite {
 
 	public void ObjectRepositoryUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
-
+		display = getParent().getDisplay();
 		TabFolder tabFolder = new TabFolder(this, SWT.BOTTOM);
 
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
@@ -416,7 +420,7 @@ public class ObjectRepositoryView extends Composite {
 				dropDownMenu.setLocation(pt.x, pt.y);
 				dropDownMenu.setVisible(true);
 
-			} 
+			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -468,7 +472,9 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "OpKey ", "Save Successful");
+				AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+				notification.setDelayClose(200L);
+				notification.open();
 
 				List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 				try {
@@ -516,6 +522,9 @@ public class ObjectRepositoryView extends Composite {
 						objectRepositoryTree.renderObjectRepositories();
 						return;
 					}
+					AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+					notification.setDelayClose(200L);
+					notification.open();
 					List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 					try {
 						new ObjectRepositoryApi().saveORObjects(allors);
@@ -560,6 +569,9 @@ public class ObjectRepositoryView extends Composite {
 				if (!result) {
 					return;
 				}
+				AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
+				notification.setDelayClose(200L);
+				notification.open();
 				ObjectAttributeProperty selectedProperty = objectAttributeTable.getSelectedObjectAttributeProperty();
 				System.out.println("Deleting " + selectedProperty.getOr_id());
 				selectedProperty.setDeleted(true);
@@ -735,6 +747,9 @@ public class ObjectRepositoryView extends Composite {
 		if (!result) {
 			return;
 		}
+		AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
+		notification.setDelayClose(200L);
+		notification.open();
 		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 		obRepo = selectedTreeItem.getObjectRepository();
 		System.out.println("Deleting.. " + obRepo.getObject_id());

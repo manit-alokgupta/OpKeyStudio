@@ -46,6 +46,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.KeywordsTree
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
+import opkeystudio.notification.DeleteNotificationPopup;
 import opkeystudio.notification.SaveNotificationPopup;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -956,6 +957,10 @@ public class TestCaseView extends Composite {
 					return;
 				}
 
+				AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
+				notification.setDelayClose(200L);
+				notification.open();
+
 				try {
 					toggleSaveButton(true);
 					flowStepTable.deleteStep(flowStepTable.getSelectedFlowStep());
@@ -979,6 +984,7 @@ public class TestCaseView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 //				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "OpKey ", "Save Successful");
 				AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+				notification.setDelayClose(200L);
 				notification.open();
 
 				new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
@@ -1011,6 +1017,9 @@ public class TestCaseView extends Composite {
 							flowStepTable.renderFlowSteps();
 							return;
 						}
+						AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+						notification.setDelayClose(200L);
+						notification.open();
 						new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 						try {
 							flowStepTable.renderFlowSteps();

@@ -10,9 +10,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
-public class SaveNotificationPopup extends AbstractNotificationPopup {// extends AbstractNotificationPopup
+public class DeleteNotificationPopup extends AbstractNotificationPopup {
 
-	public SaveNotificationPopup(Display display) {
+	public DeleteNotificationPopup(Display display) {
 		super(display);
 	}
 
@@ -26,7 +26,7 @@ public class SaveNotificationPopup extends AbstractNotificationPopup {// extends
 		container.setLayout(new GridLayout(1, false));
 
 		Label successMsg = new Label(container, SWT.NULL);
-		successMsg.setText("Save Successfully!");
+		successMsg.setText("Deleted Successfully");
 		FontData fontData = successMsg.getFont().getFontData()[0];
 		Font font = new Font(Display.getCurrent(),
 				new FontData(fontData.getName(), fontData.getHeight(), SWT.BOLD | SWT.CENTER));
@@ -34,9 +34,9 @@ public class SaveNotificationPopup extends AbstractNotificationPopup {// extends
 		GridData message = new GridData();
 		message.widthHint = 400;
 		successMsg.setLayoutData(message);
+
 	}
 
-	@Override
 	protected String getPopupShellTitle() {
 		return "OpKey";
 	}

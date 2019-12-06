@@ -10,9 +10,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
-public class SaveNotificationPopup extends AbstractNotificationPopup {// extends AbstractNotificationPopup
+public class RefreshNotificationPopup extends AbstractNotificationPopup {
 
-	public SaveNotificationPopup(Display display) {
+	public RefreshNotificationPopup(Display display) {
 		super(display);
 	}
 
@@ -26,7 +26,7 @@ public class SaveNotificationPopup extends AbstractNotificationPopup {// extends
 		container.setLayout(new GridLayout(1, false));
 
 		Label successMsg = new Label(container, SWT.NULL);
-		successMsg.setText("Save Successfully!");
+		successMsg.setText("Refresh Successfully");
 		FontData fontData = successMsg.getFont().getFontData()[0];
 		Font font = new Font(Display.getCurrent(),
 				new FontData(fontData.getName(), fontData.getHeight(), SWT.BOLD | SWT.CENTER));
@@ -36,7 +36,6 @@ public class SaveNotificationPopup extends AbstractNotificationPopup {// extends
 		successMsg.setLayoutData(message);
 	}
 
-	@Override
 	protected String getPopupShellTitle() {
 		return "OpKey";
 	}
