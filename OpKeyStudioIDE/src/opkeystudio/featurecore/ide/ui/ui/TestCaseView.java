@@ -53,7 +53,9 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import opkeystudio.parts.part.TestCasePart;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable flowStepTable;
@@ -864,7 +866,8 @@ public class TestCaseView extends Composite {
 					FlowStep flowStep = new FlowStep();
 					flowStep.setPosition(lastPosition + 1);
 					System.out.println(flowStep.getPosition());
-					flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
+//					flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
+					flowStep.setFlow_id(Utilities.getInstance().getUniqueUUID(""));
 					flowStep.setShouldrun(true);
 					flowStep.setWantsnapshot(true);
 					keyWord = allDataTreeView.selectedKeyword();
@@ -874,6 +877,13 @@ public class TestCaseView extends Composite {
 					flowStep.setIstestcase(true);
 					flowStep.setOrObject(flowStep.getOrObject());
 					flowStep.setModified(true);
+					flowStepTable.addFlowSteps(flowStep);
+					try {
+						flowStepTable.renderFlowSteps();
+					} catch (SQLException | IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 //					getFlowStepTable().refreshFlowSteps();
 					toggleSaveButton(true);
 				}
