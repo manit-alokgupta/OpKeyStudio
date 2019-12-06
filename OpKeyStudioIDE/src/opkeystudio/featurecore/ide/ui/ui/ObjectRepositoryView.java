@@ -472,19 +472,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-				notification.setDelayClose(200L);
-				notification.open();
-
-				List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
-				try {
-					new ObjectRepositoryApi().saveORObjects(allors);
-					toggleSaveButton(false);
-					objectRepositoryTree.renderObjectRepositories();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-
+				saving();
 			}
 
 			@Override
@@ -779,6 +767,22 @@ public class ObjectRepositoryView extends Composite {
 				e1.printStackTrace();
 			}
 		}
+	}
+
+	public void saving() {
+		AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+		notification.setDelayClose(200L);
+		notification.open();
+
+		List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
+		try {
+			new ObjectRepositoryApi().saveORObjects(allors);
+			toggleSaveButton(false);
+			objectRepositoryTree.renderObjectRepositories();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
 	}
 
 	@Override

@@ -620,17 +620,7 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-				notification.setDelayClose(1L);
-				notification.open();
-				new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
-				try {
-					testSuiteTable.renderAllTestSuites();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				saveToolItem.setEnabled(false);
+				saving();
 			}
 
 			@Override
@@ -700,6 +690,20 @@ public class TestSuiteView extends Composite {
 
 			}
 		});
+	}
+
+	public void saving() {
+		AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+		notification.setDelayClose(1L);
+		notification.open();
+		new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
+		try {
+			testSuiteTable.renderAllTestSuites();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		saveToolItem.setEnabled(false);
 	}
 
 	private void setSelectedTEstSuite(TestSuite testSuite) {

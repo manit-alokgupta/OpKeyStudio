@@ -20,17 +20,22 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 public class TestSuitePart {
 	@Inject
 	MPart projectExplorerPart;
-	
+	private TestSuiteView testSuiteView;
 
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
-		new TestSuiteView(parent, 0);
+		testSuiteView = new TestSuiteView(parent, 0);
 	}
 
 	@PreDestroy
 	public void preDestroy() {
 		System.out.println("Console Window Destroyed");
-		
+		boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
+				" Please save before Quiting");
+		if (!status) {
+			return;
+		}
+		testSuiteView.saving();
 	}
 
 	@Focus

@@ -35,7 +35,7 @@ public class DataRepositoryView extends Composite {
 	private int rowCount = 0;
 	private TableColumn newColumn;
 	private DRColumnAttributes drCol;
-	//private XSSFWorkbook wb;
+	// private XSSFWorkbook wb;
 	private OleClientSite site;
 
 	/**
@@ -192,7 +192,7 @@ public class DataRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				String fileName = new MessageDialogs().openInputDialogAandGetValue("File Name",
 						"Please Enter File Name", "NewFile");
-			//	dumpWorkbookToAFile(wb, fileName);
+				// dumpWorkbookToAFile(wb, fileName);
 			}
 
 			@Override
@@ -329,8 +329,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				saving();
 			}
 
 			@Override
@@ -427,21 +426,22 @@ public class DataRepositoryView extends Composite {
 //	}
 
 	/*
-	public void dumpWorkbookToAFile(XSSFWorkbook wb, String filename) {
-		try {
-			FileOutputStream fos = new FileOutputStream(filename);
-			wb.write(fos);
-			fos.close();
-			MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "Save Workbook Successful",
-					"Workbook saved to the file:\n\n" + filename);
+	 * public void dumpWorkbookToAFile(XSSFWorkbook wb, String filename) { try {
+	 * FileOutputStream fos = new FileOutputStream(filename); wb.write(fos);
+	 * fos.close();
+	 * MessageDialog.openInformation(Display.getCurrent().getActiveShell(),
+	 * "Save Workbook Successful", "Workbook saved to the file:\n\n" + filename);
+	 * 
+	 * } catch (IOException ioe) { ioe.printStackTrace(); String msg =
+	 * ioe.getMessage();
+	 * MessageDialog.openError(Display.getCurrent().getActiveShell(),
+	 * "Save Workbook Failed", "Could not save workbook to the file:\n\n" + msg); }
+	 * }
+	 */
 
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			String msg = ioe.getMessage();
-			MessageDialog.openError(Display.getCurrent().getActiveShell(), "Save Workbook Failed",
-					"Could not save workbook to the file:\n\n" + msg);
-		}
-	}*/
+	public void saving() {
+
+	}
 
 	@Override
 	protected void checkSubclass() {

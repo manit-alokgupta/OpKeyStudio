@@ -27,7 +27,7 @@ public class TestCasePart {
 
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
-		new TestCaseView(parent, 0);
+		parentTestCaseView = new TestCaseView(parent, 0);
 
 	}
 
@@ -35,7 +35,13 @@ public class TestCasePart {
 	public void preDestroy() {
 		System.out.println("Console Window Destroyed");
 
-		save();
+		boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
+				"Please save before Quiting");
+		if (!status) {
+			return;
+		}
+
+		parentTestCaseView.saving();
 	}
 
 	@Focus
@@ -46,12 +52,7 @@ public class TestCasePart {
 	@Persist
 	public void save() {
 		System.out.println("Console Window Save");
-		boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
-				"TestCase Please save before Quiting");
-		if (status) {
-			System.out.println(status);
-			new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
-		}
+
 	}
 
 }

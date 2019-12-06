@@ -982,19 +982,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				MessageDialog.openInformation(Display.getCurrent().getActiveShell(), "OpKey ", "Save Successful");
-				AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-				notification.setDelayClose(200L);
-				notification.open();
-
-				new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
-				try {
-					flowStepTable.renderFlowSteps();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				toggleSaveButton(false);
+				saving();
 			}
 
 			@Override
@@ -1149,6 +1137,21 @@ public class TestCaseView extends Composite {
 			}
 		});
 
+	}
+
+	public void saving() {
+		AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+		notification.setDelayClose(200L);
+		notification.open();
+
+		new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
+		try {
+			flowStepTable.renderFlowSteps();
+		} catch (SQLException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		toggleSaveButton(false);
 	}
 
 	public FlowStepTable getFlowStepTable() {

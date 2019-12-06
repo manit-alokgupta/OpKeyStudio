@@ -18,22 +18,22 @@ import opkeystudio.featurecore.ide.ui.ui.DataRepositoryView;
 public class DataRepositoryPart {
 	@Inject
 	MPart projectExplorerPart;
+	private DataRepositoryView dataRepositoryView;
 
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
-		new DataRepositoryView(parent, 0);
+		dataRepositoryView = new DataRepositoryView(parent, 0);
 	}
 
 	@PreDestroy
 	public void preDestroy() {
 		System.out.println("Console Window Destroyed");
-//		boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
-//				"Please save before Quiting");
-//		if (!status) {
-//			System.out.println(status);
-////			postConstruct(this);
-//			return;
-//		}
+		boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
+				"Please save before Quiting");
+		if (!status) {
+			return;
+		}
+		dataRepositoryView.saving();
 	}
 
 	@Focus
