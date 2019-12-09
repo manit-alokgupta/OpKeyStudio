@@ -211,7 +211,7 @@ public class TestCaseView extends Composite {
 
 		itemSave = new ToolItem(toolBar_1, SWT.NONE);
 		itemSave.setEnabled(false);
-		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
+		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
 		itemSave.setText("Save");
 		itemSave.setToolTipText("Save");
 
@@ -342,8 +342,7 @@ public class TestCaseView extends Composite {
 		ToolItem seperator9 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		functionLibraryButton = new ToolItem(toolBar, SWT.NONE);
-		functionLibraryButton
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
+		functionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
 		functionLibraryButton.setText("Function Library");
 		functionLibraryButton.setToolTipText("Function Library");
 		ToolItem seperator10 = new ToolItem(toolBar, SWT.SEPARATOR);
@@ -1136,7 +1135,6 @@ public class TestCaseView extends Composite {
 	}
 
 	public void saving() {
-		
 
 		AbstractNotificationPopup notification = new SaveNotificationPopup(display);
 		notification.setDelayClose(200L);

@@ -128,7 +128,7 @@ public class DataRepositoryView extends Composite {
 		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem saveToolItm = new ToolItem(toolBar, SWT.NONE);
-		saveToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
+		saveToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
 		saveToolItm.setToolTipText("Save");
 
 		ToolItem toolItem_12 = new ToolItem(toolBar, SWT.SEPARATOR);

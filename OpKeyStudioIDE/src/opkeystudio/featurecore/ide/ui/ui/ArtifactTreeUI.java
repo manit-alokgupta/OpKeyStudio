@@ -185,7 +185,7 @@ public class ArtifactTreeUI extends Composite {
 		toolBar_1.setMenu(newMenu);
 		toolbarFolder = new MenuItem(newMenu, SWT.PUSH);
 		toolbarFolder.setText("Folder");
-		toolbarFolder.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
+		toolbarFolder.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/create_folder.png"));
 
 		toolbarTestCase = new MenuItem(newMenu, SWT.PUSH);
 		toolbarTestCase.setText("TestCase");
@@ -193,39 +193,35 @@ public class ArtifactTreeUI extends Composite {
 
 		toolbarFunctionLibrary = new MenuItem(newMenu, SWT.PUSH);
 		toolbarFunctionLibrary.setText("Function Library");
-		toolbarFunctionLibrary
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
+		toolbarFunctionLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
 
 		toolbarObjectRepository = new MenuItem(newMenu, SWT.PUSH);
 		toolbarObjectRepository.setText("Object Repository");
-		toolbarObjectRepository
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
+		toolbarObjectRepository.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
 
 		toolbarTestSuite = new MenuItem(newMenu, SWT.PUSH);
 		toolbarTestSuite.setText("Test Suite");
-		toolbarTestSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testSuite.png"));
+		toolbarTestSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testSuite.png"));
 
 		folderMenuItem = new MenuItem(menu_1, SWT.NONE);
-		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
+		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/create_folder.png"));
 		folderMenuItem.setText("Folder");
 
 		testcaseMenuItem = new MenuItem(menu_1, SWT.NONE);
-		testcaseMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testcase.png"));
+		testcaseMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
 		testcaseMenuItem.setText("TestCase");
 
 		objectRepositoryMenuItem = new MenuItem(menu_1, SWT.NONE);
-		objectRepositoryMenuItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
+		objectRepositoryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
 		objectRepositoryMenuItem.setText("ObjectRepository");
 
 		functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
 		functionLibraryMenuItem.setText("Function Library");
-		functionLibraryMenuItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/functionlibrary.png"));
+		functionLibraryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
 
 		testSuiteMenuItem = new MenuItem(menu_1, SWT.PUSH);
 		testSuiteMenuItem.setText("Test Suite");
-		testSuiteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testSuite.png"));
+		testSuiteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testSuite.png"));
 
 		renameMenuItem = new MenuItem(menu, SWT.NONE);
 		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));

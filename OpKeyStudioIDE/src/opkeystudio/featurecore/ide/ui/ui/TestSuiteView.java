@@ -173,7 +173,7 @@ public class TestSuiteView extends Composite {
 
 		saveToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		saveToolItem.setToolTipText("Save");
-		saveToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
+		saveToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
 
 		ToolItem toolItem_9 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 

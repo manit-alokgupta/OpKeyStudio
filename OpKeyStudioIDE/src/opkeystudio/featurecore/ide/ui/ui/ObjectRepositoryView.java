@@ -242,7 +242,7 @@ public class ObjectRepositoryView extends Composite {
 		});
 
 		saveObject = new ToolItem(toolBar, SWT.NONE);
-		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
+		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
 		saveObject.setToolTipText("Save");
 
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
