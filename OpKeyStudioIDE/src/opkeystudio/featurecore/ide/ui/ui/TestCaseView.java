@@ -53,9 +53,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
-import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
-import opkeystudio.parts.part.TestCasePart;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable flowStepTable;
@@ -130,18 +128,6 @@ public class TestCaseView extends Composite {
 		toggleMoveupButton(false);
 		toggleDeleteButton(false);
 		toggleAddButton(false);
-
-		if (parent.isDisposed()) {
-			System.out.println("ho gya bnd");
-			/*
-			 * if (itemSave.isEnabled()) { boolean status =
-			 * MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
-			 * "Please save before Quiting"); if (!status) { new
-			 * FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData()); try {
-			 * flowStepTable.renderFlowSteps(); } catch (SQLException | IOException e1) {
-			 * e1.printStackTrace(); } } }
-			 */
-		}
 
 	}
 
@@ -866,8 +852,8 @@ public class TestCaseView extends Composite {
 					FlowStep flowStep = new FlowStep();
 					flowStep.setPosition(lastPosition + 1);
 					System.out.println(flowStep.getPosition());
-//					flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
-					flowStep.setFlow_id(Utilities.getInstance().getUniqueUUID(""));
+					flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
+//					flowStep.setFlow_id(Utilities.getInstance().getUniqueUUID(""));
 					flowStep.setShouldrun(true);
 					flowStep.setWantsnapshot(true);
 					keyWord = allDataTreeView.selectedKeyword();
@@ -1150,6 +1136,8 @@ public class TestCaseView extends Composite {
 	}
 
 	public void saving() {
+		
+
 		AbstractNotificationPopup notification = new SaveNotificationPopup(display);
 		notification.setDelayClose(200L);
 		notification.open();

@@ -9,19 +9,20 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class SaveNotificationPopup extends AbstractNotificationPopup {// extends AbstractNotificationPopup
 
 	public SaveNotificationPopup(Display display) {
 		super(display);
+		setShellStyle(SWT.NO_TRIM);
 	}
 
 	protected void createContentArea(Composite parent) {
+		parent.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 
-		Composite container = new Composite(parent, SWT.NULL);
-
-		GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		container.setLayoutData(data);
+		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		container.setLayout(new GridLayout(1, false));
 
