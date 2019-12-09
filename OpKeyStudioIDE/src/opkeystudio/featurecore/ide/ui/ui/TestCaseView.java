@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -62,6 +63,13 @@ public class TestCaseView extends Composite {
 	private InputDataTable inputDataTable;
 	private StepDetailsInputData InputDataTable;
 	private ObjectRepositoryTree testObjectTree;
+//	private Table flowStepTable;
+//	private Table outputDataTable;
+//	private Table testObjectTable;
+//	private Table InputDataTable;
+//	private Table inputDataTable;
+//	private Tree testObjectTree;
+
 	private Table mappedTable;
 	private Table propertyTable;
 	private Table dataOutputTable;
@@ -101,6 +109,7 @@ public class TestCaseView extends Composite {
 	private ExpandItem expanditemTestObject;
 	private TabItem addStepTabItem;
 	private KeywordsTree allDataTreeView;
+//	private Tree allDataTreeView;
 	private Label stepInfoImage;
 	private CLabel stepInfoLabel;
 	private FlowStep selectedFlowStep;
@@ -223,6 +232,7 @@ public class TestCaseView extends Composite {
 		itemRefresh.setToolTipText("Refresh");
 
 		flowStepTable = new FlowStepTable(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		flowStepTable = new Table(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION);
 		flowStepTable.setLinesVisible(true);
 		flowStepTable.setHeaderVisible(true);
 		flowStepTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -310,6 +320,7 @@ public class TestCaseView extends Composite {
 		composite_7.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		InputDataTable = new StepDetailsInputData(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		InputDataTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 		InputDataTable.setHeaderVisible(true);
 		InputDataTable.setLinesVisible(true);
 
@@ -371,11 +382,11 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				Text text = (Text) e.getSource();
-				String searchValue = text.getText();
-				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
-					allDataTreeView.filterDataInTree(searchValue);
-				}
+//				Text text = (Text) e.getSource();
+//				String searchValue = text.getText();
+//				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
+//					allDataTreeView.filterDataInTree(searchValue);
+//				}
 
 			}
 
@@ -410,6 +421,7 @@ public class TestCaseView extends Composite {
 		});
 
 		allDataTreeView = new KeywordsTree(composite_10, SWT.BORDER, this);
+//		allDataTreeView = new Tree(composite_10, SWT.BORDER);
 		allDataTreeView.setLinesVisible(true);
 		allDataTreeView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm_3.setWeights(new int[] { 0, 1 });
@@ -426,6 +438,7 @@ public class TestCaseView extends Composite {
 		sashForm_1.setOrientation(SWT.VERTICAL);
 
 		testObjectTable = new TestObjectTable(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		testObjectTable = new Table(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
 		testObjectTable.setLinesVisible(true);
 		testObjectTable.setHeaderVisible(true);
 		testObjectTable.setLinesVisible(true);
@@ -448,6 +461,7 @@ public class TestCaseView extends Composite {
 		testObjectMenu4.setText("Menu New Item4");
 
 		testObjectTree = new ObjectRepositoryTree(sashForm_1, SWT.BORDER, this);
+//		testObjectTree = new Tree(sashForm_1, SWT.BORDER);
 		testObjectTree.setLinesVisible(true);
 		testObjectTree.setHeaderVisible(true);
 		sashForm_1.setWeights(new int[] { 1, 1 });
@@ -467,6 +481,7 @@ public class TestCaseView extends Composite {
 		composite_13.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		inputDataTable = new InputDataTable(composite_13, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		inputDataTable = new Table(composite_13, SWT.BORDER | SWT.FULL_SELECTION);
 		inputDataTable.setHeaderVisible(true);
 		inputDataTable.setLinesVisible(true);
 
@@ -516,10 +531,18 @@ public class TestCaseView extends Composite {
 		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		outputDataTable = new OutputDataTable(composite_4, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		outputDataTable = new Table(composite_4, SWT.BORDER | SWT.FULL_SELECTION);
 		outputDataTable.setHeaderVisible(true);
 		outputDataTable.setLinesVisible(true);
 
 		TableCursor cursor = new TableCursor(flowStepTable, 0);
+
+		ExpandBar expandBar_1 = new ExpandBar(testCaseStepsHolder, SWT.NONE);
+		expandBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		expandBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		ExpandItem item = new ExpandItem(expandBar_1, SWT.NONE);
+		item.setText("New ExpandItem");
 		testCaseSashForm.setWeights(new int[] { 400, 235 });
 
 		TabItem tbtmNewItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
