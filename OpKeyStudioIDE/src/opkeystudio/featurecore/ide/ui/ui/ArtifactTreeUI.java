@@ -59,6 +59,7 @@ public class ArtifactTreeUI extends Composite {
 	private MenuItem testSuiteMenuItem;
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
+	private MenuItem refreshMenuItem;
 	private ArtifactTreeItem artifactTreeItem;
 	/**
 	 * Create the composite.
@@ -236,7 +237,13 @@ public class ArtifactTreeUI extends Composite {
 		deleteMenuItem.setText("Delete");
 		deleteMenuItem.setEnabled(false);
 
-		testcaseMenuItem.addSelectionListener(new SelectionListener() {
+		refreshMenuItem = new MenuItem(menu, SWT.NONE);
+		refreshMenuItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshMenuItem.setText("Refresh");
+		refreshMenuItem.setEnabled(false);
+
+		renameMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -406,6 +413,21 @@ public class ArtifactTreeUI extends Composite {
 			}
 		});
 
+		refreshMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				artifactTree.refereshArtifacts();
+				System.out.println("Refresh Success");
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		toolbarNew.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -461,6 +483,7 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
+
 		toolbarDelete.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -688,6 +711,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleDeleteToolbarItem(false);
 					deleteMenuItem.setEnabled(false);
 					renameMenuItem.setEnabled(false);
+					toggleRefreshMenuItem(false);
 
 					return;
 				}
@@ -698,6 +722,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleDeleteToolbarItem(false);
 					deleteMenuItem.setEnabled(false);
 					renameMenuItem.setEnabled(false);
+					toggleRefreshMenuItem(true);
 					return;
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
@@ -707,6 +732,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleDeleteToolbarItem(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
+					toggleRefreshMenuItem(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
@@ -716,6 +742,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleDeleteToolbarItem(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
+					toggleRefreshMenuItem(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
@@ -725,6 +752,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleDeleteToolbarItem(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
+					toggleRefreshMenuItem(true);
 
 				}
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Suite) {
@@ -734,6 +762,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleDeleteToolbarItem(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
+					toggleRefreshMenuItem(true);
 				}
 
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Component) {
@@ -743,6 +772,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleDeleteToolbarItem(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
+					toggleRefreshMenuItem(true);
 				}
 			}
 
@@ -842,6 +872,10 @@ public class ArtifactTreeUI extends Composite {
 
 	public void toogleNewToolbarMenuItem(boolean status) {
 		mntmNew.setEnabled(status);
+	}
+
+	public void toggleRefreshMenuItem(boolean status) {
+		refreshMenuItem.setEnabled(status);
 	}
 
 	@Override
