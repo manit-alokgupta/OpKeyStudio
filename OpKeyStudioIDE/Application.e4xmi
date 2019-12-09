@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.window.main" label="OpKey Studio " bindingContexts="_6wlLesgZEeSyMNYR5xypkQ" x="0" y="0" width="1024" height="600">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.window.main" label="OpKey Studio " iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/opkeyicon.png" bindingContexts="_6wlLesgZEeSyMNYR5xypkQ" x="0" y="0" width="1024" height="600">
     <tags>shellMaximized</tags>
     <children xsi:type="basic:PartSashContainer" xmi:id="_9ST-ENVrEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.0" containerData="" horizontal="true">
       <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.explorertreepartstack" containerData="110">
@@ -33,7 +33,7 @@
         <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.open" label="Open" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/datafile.png" tooltip="Open File" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
         </children>
-        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" label="Save" iconURI="platform:/plugin/OpKeyStudio/icons/testcase_icons/save_icon.png" tooltip="Save">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" label="Save" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/save.png" tooltip="Save">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UFWaAAXdEeqm4_Ox7Tro1w"/>
         </children>
       </children>

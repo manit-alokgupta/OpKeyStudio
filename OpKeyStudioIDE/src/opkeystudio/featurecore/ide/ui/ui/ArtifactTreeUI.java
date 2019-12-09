@@ -47,6 +47,7 @@ public class ArtifactTreeUI extends Composite {
 	private Menu menu_1;
 	private Menu newMenu;
 	private MenuItem toolbarFolder;
+	private MenuItem toolbarDR;
 	private MenuItem toolbarTestCase;
 	private MenuItem toolbarObjectRepository;
 	private MenuItem toolbarFunctionLibrary;
@@ -56,6 +57,7 @@ public class ArtifactTreeUI extends Composite {
 	private MenuItem objectRepositoryMenuItem;
 	private MenuItem functionLibraryMenuItem;
 	private MenuItem testSuiteMenuItem;
+	private MenuItem drMenuItem;
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
 	private MenuItem refreshMenuItem;
@@ -202,6 +204,10 @@ public class ArtifactTreeUI extends Composite {
 		toolbarTestSuite.setText("Test Suite");
 		toolbarTestSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testSuite.png"));
 
+		toolbarDR = new MenuItem(newMenu, SWT.PUSH);
+		toolbarDR.setText("DR");
+		toolbarDR.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
+
 		folderMenuItem = new MenuItem(menu_1, SWT.NONE);
 		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/create_folder.png"));
 		folderMenuItem.setText("Folder");
@@ -221,6 +227,10 @@ public class ArtifactTreeUI extends Composite {
 		testSuiteMenuItem = new MenuItem(menu_1, SWT.PUSH);
 		testSuiteMenuItem.setText("Test Suite");
 		testSuiteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testSuite.png"));
+
+		drMenuItem = new MenuItem(menu_1, SWT.PUSH);
+		drMenuItem.setText("DR");
+		drMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
 
 		renameMenuItem = new MenuItem(menu, SWT.NONE);
 		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
@@ -412,8 +422,34 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+
 				artifactTree.refereshArtifacts();
+
 				System.out.println("Refresh Success");
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		drMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name",
+						"DR " + java.time.LocalDateTime.now());
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name ",
+							"DR " + java.time.LocalDateTime.now());
+				}
+
+				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
+
 			}
 
 			@Override
@@ -667,6 +703,31 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
+
+		toolbarDR.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name",
+						"DR " + java.time.LocalDateTime.now());
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name ",
+							"DR " + java.time.LocalDateTime.now());
+				}
+
+				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		toolBar_1.addMouseListener(new MouseListener() {
 
 			@Override

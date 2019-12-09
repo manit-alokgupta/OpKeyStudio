@@ -52,7 +52,6 @@ public class ArtifactTree extends CustomTree {
 				ArtifactTreeItem selectedTreeItem = (ArtifactTreeItem) tree.getSelection()[0];
 				System.out.println("selectedTreeItem");
 				populateArtifact(selectedTreeItem);
-				refereshArtifacts();
 
 			}
 
