@@ -70,6 +70,7 @@ public class StepDetailsInputData extends CustomTable {
 		return editor;
 	}
 
+	@SuppressWarnings("unused")
 	private void addTableEditor(FlowStepTableItem item) {
 		FlowStep attrProperty = item.getFlowStepeData();
 		TableEditor editor1 = getTableEditor();

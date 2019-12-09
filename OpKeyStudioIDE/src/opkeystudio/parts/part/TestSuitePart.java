@@ -13,9 +13,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 
 public class TestSuitePart {
 	@Inject

@@ -2,7 +2,6 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -22,7 +21,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -33,11 +31,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTableItem;
 import opkeystudio.notification.DeleteNotificationPopup;
 import opkeystudio.notification.SaveNotificationPopup;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
 
 public class TestSuiteView extends Composite {
@@ -75,6 +71,7 @@ public class TestSuiteView extends Composite {
 	 * @param parent
 	 * @param style
 	 */
+	@SuppressWarnings("unused")
 	public TestSuiteView(Composite parent, int style) {
 		super(parent, style);
 		display = getParent().getDisplay();
@@ -611,7 +608,6 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -625,7 +621,6 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -651,7 +646,6 @@ public class TestSuiteView extends Composite {
 						try {
 							testSuiteTable.renderAllTestSuites();
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 
@@ -663,7 +657,6 @@ public class TestSuiteView extends Composite {
 					toggleMoveDownButton(false);
 					testSuiteTable.renderAllTestSuites();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -671,7 +664,6 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -680,13 +672,11 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});

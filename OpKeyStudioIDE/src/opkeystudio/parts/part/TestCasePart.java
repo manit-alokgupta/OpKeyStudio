@@ -1,7 +1,6 @@
 package opkeystudio.parts.part;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -14,16 +13,13 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 
 public class TestCasePart {
 	@Inject
 	MPart projectExplorerPart;
 	private TestCaseView parentTestCaseView;
 
-	private FlowStepTable flowStepTable;
 
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {

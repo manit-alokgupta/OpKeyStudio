@@ -14,7 +14,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -60,7 +59,6 @@ public class ArtifactTreeUI extends Composite {
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
 	private MenuItem refreshMenuItem;
-	private ArtifactTreeItem artifactTreeItem;
 	/**
 	 * Create the composite.
 	 * 
@@ -71,6 +69,7 @@ public class ArtifactTreeUI extends Composite {
 	ArtifactTree artifactTree;
 	private Text txtSearch;
 
+	@SuppressWarnings("unused")
 	public ArtifactTreeUI(Composite parent, int style) {
 
 		super(parent, style);
@@ -239,7 +238,7 @@ public class ArtifactTreeUI extends Composite {
 		refreshMenuItem.setText("Refresh");
 		refreshMenuItem.setEnabled(false);
 
-		renameMenuItem.addSelectionListener(new SelectionListener() {
+		testcaseMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {

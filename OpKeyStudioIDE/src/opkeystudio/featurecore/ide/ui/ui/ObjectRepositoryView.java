@@ -167,6 +167,7 @@ public class ObjectRepositoryView extends Composite {
 		return menu;
 	}
 
+	@SuppressWarnings("unused")
 	public void ObjectRepositoryUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		display = getParent().getDisplay();

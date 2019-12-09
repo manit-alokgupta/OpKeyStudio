@@ -1,12 +1,20 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
@@ -15,19 +23,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.Executi
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
-
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.wb.swt.ResourceManager;
 
 public class BottomFactoryUI extends Composite {
 	private UsedByTable usedByTable;
@@ -43,6 +38,7 @@ public class BottomFactoryUI extends Composite {
 	 * @param parent
 	 * @param style
 	 */
+	@SuppressWarnings("unused")
 	public BottomFactoryUI(Composite parent, int style) {
 		super(parent, style);
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));

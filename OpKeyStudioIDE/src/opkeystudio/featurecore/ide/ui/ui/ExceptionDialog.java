@@ -1,22 +1,21 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ExceptionDialog extends Dialog {
 
@@ -40,7 +39,7 @@ public class ExceptionDialog extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 	}
- 
+
 	/**
 	 * Open the dialog.
 	 * 
@@ -125,33 +124,33 @@ public class ExceptionDialog extends Dialog {
 		new Label(composite_1, SWT.NONE);
 		new Label(composite_1, SWT.NONE);
 		new Label(composite_1, SWT.NONE);
-		
-				okBtn = new Button(composite_1, SWT.CENTER);
-				okBtn.setToolTipText("OK");
-				okBtn.setText("OK");
-				okBtn.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
-				okBtn.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-				okBtn.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/ok.png"));
-				okBtn.addMouseListener(new MouseListener() {
 
-					@Override
-					public void mouseUp(MouseEvent e) {
-						// TODO Auto-generated method stub
+		okBtn = new Button(composite_1, SWT.CENTER);
+		okBtn.setToolTipText("OK");
+		okBtn.setText("OK");
+		okBtn.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
+		okBtn.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		okBtn.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/ok.png"));
+		okBtn.addMouseListener(new MouseListener() {
 
-					}
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
 
-					@Override
-					public void mouseDown(MouseEvent e) {
-						// TODO Auto-generated method stub
+			}
 
-					}
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
 
-					@Override
-					public void mouseDoubleClick(MouseEvent e) {
-						// TODO Auto-generated method stub
+			}
 
-					}
-				});
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		reportBtn = new Button(composite_1, SWT.CENTER);
 		reportBtn.setText("Report");

@@ -98,7 +98,6 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -112,7 +111,6 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
