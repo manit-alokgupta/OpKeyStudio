@@ -20,7 +20,6 @@ public class TestCasePart {
 	MPart projectExplorerPart;
 	private TestCaseView parentTestCaseView;
 
-
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
 		parentTestCaseView = new TestCaseView(parent, 0);

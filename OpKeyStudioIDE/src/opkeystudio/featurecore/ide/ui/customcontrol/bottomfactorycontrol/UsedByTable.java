@@ -15,10 +15,12 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
+import opkeystudio.featurecore.ide.ui.ui.FLView;
 
 public class UsedByTable extends CustomTable {
 
@@ -27,6 +29,7 @@ public class UsedByTable extends CustomTable {
 	private BottomFactoryTestCaseUi parentBottomFactoryTestCaseUi;
 	private BottomFactoryORUi parentBottomFactoryORUi;
 	private BottomFactoryDataRepoUi parentBottomFactoryDataRepoUi;
+	private BottomFactoryFLUi parentBottomFactoryFLUi;
 
 	public UsedByTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUi) {
 		super(parent, style);
@@ -41,12 +44,19 @@ public class UsedByTable extends CustomTable {
 		thisTable = this;
 		this.setParentBottomFactoryORUi(bottomFactoryUi);
 	}
-
+ 
 	public UsedByTable(Composite parent, int style, BottomFactoryDataRepoUi bottomFactoryUi) {
 		super(parent, style);
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryDataRepoUi(bottomFactoryUi);
+	}
+
+	public UsedByTable(Composite parent, int style, BottomFactoryFLUi parentView) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryFLUi(parentView);
 	}
 
 	private void init() {
@@ -150,5 +160,13 @@ public class UsedByTable extends CustomTable {
 
 	public void setParentBottomFactoryDataRepoUi(BottomFactoryDataRepoUi parentBottomFactoryUi) {
 		this.parentBottomFactoryDataRepoUi = parentBottomFactoryUi;
+	}
+
+	public BottomFactoryFLUi getParentBottomFactoryFLUi() {
+		return parentBottomFactoryFLUi;
+	}
+
+	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
+		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
 	}
 }

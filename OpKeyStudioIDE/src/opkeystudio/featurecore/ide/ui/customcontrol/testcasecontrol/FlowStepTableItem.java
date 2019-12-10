@@ -21,7 +21,7 @@ public class FlowStepTableItem extends CustomTableItem {
 	}
 
 	public void setFlowStepData(FlowStep objectProperty) {
-		super.setControlData(objectProperty);
+		super.setControlData(objectProperty); 
 	}
 
 }

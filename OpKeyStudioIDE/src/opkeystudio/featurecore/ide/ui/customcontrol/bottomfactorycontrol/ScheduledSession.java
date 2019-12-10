@@ -14,26 +14,26 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 
-public class InputTable extends CustomTable {
+public class ScheduledSession extends CustomTable {
 
 	private boolean paintCalled = false;
-	private InputTable thisTable = this;
-	private BottomFactoryFLUi parentBottomFactoryFLUi;
+	private ScheduledSession thisTable = this;
+	private BottomFactoryTestSuiteUi parentBottomFactoryTestSuiteUi;
 
-	public InputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
+	public ScheduledSession(Composite parent, int style, BottomFactoryTestSuiteUi bottomFactoryUi) {
 		super(parent, style);
 		init();
 		thisTable = this;
-		this.setParentBottomFactoryFLUi(parentView);
+		this.setParentBottomFactoryTestSuiteUi(bottomFactoryUi);
 	}
 
 	private void init() {
-		String[] tableHeaders = { "Name", "Data Type", "Default Value", "Optional", "Description" };
+		String[] tableHeaders = { "Session", "Status", "Build", "Plugin", "Agent", "Start Time", "Time Zone",
+				"Actions" };
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
 			column.setText(header);
@@ -53,7 +53,7 @@ public class InputTable extends CustomTable {
 				}
 				Table table_0 = (Table) e.getSource();
 				for (TableColumn column : table_0.getColumns()) {
-					column.setWidth(table_0.getBounds().width / 5);
+					column.setWidth(table_0.getBounds().width / 8);
 				}
 				paintCalled = true;
 
@@ -110,12 +110,12 @@ public class InputTable extends CustomTable {
 		});
 	}
 
-	public BottomFactoryFLUi getParentBottomFactoryFLUi() {
-		return parentBottomFactoryFLUi;
+	public BottomFactoryTestSuiteUi getParentBottomFactoryTestSuiteUI() {
+		return parentBottomFactoryTestSuiteUi;
 	}
 
-	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
-		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
+	public void setParentBottomFactoryTestSuiteUi(BottomFactoryTestSuiteUi parentBottomFactoryUi) {
+		this.parentBottomFactoryTestSuiteUi = parentBottomFactoryUi;
 	}
 
 }

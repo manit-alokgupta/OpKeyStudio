@@ -13,6 +13,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
+import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
@@ -23,10 +24,16 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 public class ObjectRepositoryTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
 	private ObjectRepositoryView parentORView;
+	private FLView parentFLView;
 
 	public ObjectRepositoryTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
 		this.setParentTestCaseView(testCaseView);
+	}
+
+	public ObjectRepositoryTree(Composite parent, int style, FLView parentView) {
+		super(parent, style);
+		this.setParentFLView(parentView);
 	}
 
 	public ObjectRepositoryTree(Composite parent, int style, ObjectRepositoryView orView) {
@@ -239,5 +246,13 @@ public class ObjectRepositoryTree extends CustomTree {
 
 	public void setParentORView(ObjectRepositoryView parentORView) {
 		this.parentORView = parentORView;
+	}
+
+	public FLView getParentFLView() {
+		return parentFLView;
+	}
+
+	public void setParentFLView(FLView parentFLView) {
+		this.parentFLView = parentFLView;
 	}
 }

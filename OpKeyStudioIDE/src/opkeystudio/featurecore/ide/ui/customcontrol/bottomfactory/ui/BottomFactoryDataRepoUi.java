@@ -148,28 +148,35 @@ public class BottomFactoryDataRepoUi extends Composite {
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		ToolItem addToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		addToolItem.setWidth(27);
-		addToolItem.setEnabled(true);
-		addToolItem.setSelection(false);
+//		addToolItem.setWidth(27);
 		addToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		addToolItem.setToolTipText("Add");
-		addToolItem.setText("");
+
+		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem deleteToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		deleteToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteToolItem.setToolTipText("Delete");
 
+		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
 		ToolItem copyToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		copyToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
 		copyToolItem.setToolTipText("copy");
+
+		ToolItem toolItem3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem pasteToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		pasteToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
 		pasteToolItem.setToolTipText("Paste");
 
+		ToolItem toolItem4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
 		ToolItem moveUpToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveUpToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		moveUpToolItem.setToolTipText("Move Up");
+
+		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem moveDownToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveDownToolItem

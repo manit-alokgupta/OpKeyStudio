@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
+import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
@@ -20,11 +21,19 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class KeywordsTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
+	private FLView parentFLView;
 
 	public KeywordsTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
 		this.setParentTestCaseView(testCaseView);
 		init();
+		initKeywords();
+	}
+
+	public KeywordsTree(Composite parent, int style, FLView parentView) {
+		super(parent, style);
+		init();
+		this.setParentFLView(parentView);
 		initKeywords();
 	}
 
@@ -163,5 +172,13 @@ public class KeywordsTree extends CustomTree {
 				keywItem.setControlData(keyword);
 			}
 		}
+	}
+
+	public FLView getParentFLView() {
+		return parentFLView;
+	}
+
+	public void setParentFLView(FLView parentFLView) {
+		this.parentFLView = parentFLView;
 	}
 }

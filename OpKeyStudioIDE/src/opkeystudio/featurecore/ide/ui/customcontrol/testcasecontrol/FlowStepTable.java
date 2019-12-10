@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
+import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
@@ -35,6 +36,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 public class FlowStepTable extends CustomTable {
 	private FlowStepTable thisTable = this;
 	private TestCaseView parentTestCaseView;
+	private FLView parentFLView;
 
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
@@ -45,6 +47,12 @@ public class FlowStepTable extends CustomTable {
 		super(parent, style);
 		init();
 		this.setParentTestCaseView(parentView);
+	}
+
+	public FlowStepTable(Composite parent, int style, FLView parentView) {
+		super(parent, style);
+		init();
+		this.setParentFLView(parentView);
 	}
 
 	private void init() {
@@ -64,7 +72,7 @@ public class FlowStepTable extends CustomTable {
 			public void paintControl(PaintEvent arg0) {
 				Table table_0 = (Table) arg0.getSource();
 				for (int i = 0; i < table_0.getColumnCount(); i++) {
-					TableColumn column = table_0.getColumn(i); 
+					TableColumn column = table_0.getColumn(i);
 					if (i == 0) {
 						column.setWidth(50);
 					} else {
@@ -351,6 +359,14 @@ public class FlowStepTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public FLView getParentFLView() {
+		return parentFLView;
+	}
+
+	public void setParentFLView(FLView parentFLView) {
+		this.parentFLView = parentFLView;
 	}
 
 }

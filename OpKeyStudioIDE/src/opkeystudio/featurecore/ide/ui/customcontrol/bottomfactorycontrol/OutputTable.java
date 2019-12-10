@@ -16,18 +16,20 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 
 public class OutputTable extends CustomTable {
 	private boolean paintCalled = false;
 	private OutputTable thisTable = this;
-	private BottomFactoryTestCaseUi parentBottomFactoryUi;
 
-	public OutputTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUI) {
+	private BottomFactoryFLUi parentBottomFactoryFLUi;
+
+	public OutputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
 		init();
 		thisTable = this;
-		this.setParentBottomFactoryUi(bottomFactoryUI);
+		this.setParentBottomFactoryFLUi(parentView);
 	}
 
 	private void init() {
@@ -108,12 +110,11 @@ public class OutputTable extends CustomTable {
 		});
 	}
 
-	public BottomFactoryTestCaseUi getParentBottomFactoryUi() {
-		return parentBottomFactoryUi;
+	public BottomFactoryFLUi getParentBottomFactoryFLUi() {
+		return parentBottomFactoryFLUi;
 	}
 
-	private void setParentBottomFactoryUi(BottomFactoryTestCaseUi bottomFactoryUI) {
-		this.parentBottomFactoryUi = parentBottomFactoryUi;
-
+	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
+		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
 	}
 }

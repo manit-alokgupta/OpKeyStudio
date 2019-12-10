@@ -12,9 +12,9 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -23,13 +23,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.ExecutionStatusTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 
 public class BottomFactoryTestCaseUi extends Composite {
 	private UsedByTable usedByTable;
@@ -38,8 +34,6 @@ public class BottomFactoryTestCaseUi extends Composite {
 	private ExecutionStatusTable executionStatusTable;
 	private BackupTable backupTable;
 	private TestCaseDocumentTable testCaseDocTable;
-	private InputTable inputTable;
-	private OutputTable outputTable;
 
 //	private Table usedByTable;
 //	private Table auditTrailsTable;
@@ -47,8 +41,6 @@ public class BottomFactoryTestCaseUi extends Composite {
 //	private Table executionStatusTable;
 //	private Table backupTable;
 //	private Table testCaseDocTable;
-//	private Table inputTable;
-//	private Table outputTable;
 	private Display display;
 
 	/**
@@ -136,6 +128,7 @@ public class BottomFactoryTestCaseUi extends Composite {
 
 		ToolBar toolBar = new ToolBar(composite_6, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		ToolItem exportToolItem = new ToolItem(toolBar, SWT.NONE);
 		exportToolItem.setWidth(27);
@@ -159,30 +152,40 @@ public class BottomFactoryTestCaseUi extends Composite {
 
 		ToolBar toolBar_1 = new ToolBar(composite_7, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		ToolItem addToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		addToolItem.setWidth(27);
-		addToolItem.setEnabled(true);
-		addToolItem.setSelection(false);
+//		addToolItem.setEnabled(true);
+//		addToolItem.setSelection(false);
 		addToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		addToolItem.setToolTipText("Add");
-		addToolItem.setText("");
+
+		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem deleteToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		deleteToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteToolItem.setToolTipText("Delete");
 
+		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
 		ToolItem copyToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		copyToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
 		copyToolItem.setToolTipText("copy");
+
+		ToolItem toolItem3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem pasteToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		pasteToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
 		pasteToolItem.setToolTipText("Paste");
 
+		ToolItem toolItem4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
 		ToolItem moveUpToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveUpToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		moveUpToolItem.setToolTipText("Move Up");
+
+		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		ToolItem moveDownToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveDownToolItem
@@ -206,6 +209,7 @@ public class BottomFactoryTestCaseUi extends Composite {
 
 		ToolBar toolBar_2 = new ToolBar(composite_8, SWT.FLAT | SWT.RIGHT);
 		toolBar_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_2.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		ToolItem refreshExecutionStatusToolItem = new ToolItem(toolBar_2, SWT.NONE);
 		refreshExecutionStatusToolItem.setWidth(27);
@@ -233,6 +237,7 @@ public class BottomFactoryTestCaseUi extends Composite {
 
 		ToolBar toolBar_3 = new ToolBar(composite_9, SWT.FLAT | SWT.RIGHT);
 		toolBar_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		ToolItem compareBackupItem = new ToolItem(toolBar_3, SWT.NONE);
 		compareBackupItem.setToolTipText("Compare With Backup");
@@ -255,6 +260,7 @@ public class BottomFactoryTestCaseUi extends Composite {
 
 		ToolBar toolBar_4 = new ToolBar(composite_10, SWT.FLAT | SWT.RIGHT);
 		toolBar_4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		ToolItem refreshTestCaseDocToolItem = new ToolItem(toolBar_4, SWT.NONE);
 		refreshTestCaseDocToolItem.setToolTipText("Refresh");
@@ -266,95 +272,6 @@ public class BottomFactoryTestCaseUi extends Composite {
 		testCaseDocTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		testCaseDocTable.setHeaderVisible(true);
 		testCaseDocTable.setLinesVisible(true);
-
-		TabItem inputTabItem = new TabItem(tabFolder, SWT.NONE);
-		inputTabItem.setText("Input");
-		inputTabItem.setToolTipText("Input");
-
-		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
-		inputTabItem.setControl(composite_11);
-		composite_11.setLayout(new GridLayout(1, false));
-
-		ToolBar inputTabToolBar = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
-		inputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		ToolItem addInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		addInputItem.setToolTipText("Add");
-		addInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-
-		ToolItem toolItem = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-
-		ToolItem deleteInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		deleteInputItem.setToolTipText("Delete");
-		deleteInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-
-		ToolItem toolItem_1 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-
-		ToolItem moveUpInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		moveUpInputItem.setToolTipText("Move Up");
-		moveUpInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
-
-		ToolItem toolItem_2 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-
-		ToolItem moveDownInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		moveDownInputItem.setToolTipText("Move Down");
-		moveDownInputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
-
-		ToolItem toolItem_3 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-
-		ToolItem refreshInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		refreshInputItem.setToolTipText("Refresh");
-		refreshInputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-
-		inputTable = new InputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		inputTable = new Table(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
-		inputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		inputTable.setHeaderVisible(true);
-		inputTable.setLinesVisible(true);
-
-		TabItem outputTabItem = new TabItem(tabFolder, SWT.NONE);
-		outputTabItem.setText("Output");
-		outputTabItem.setToolTipText("Output");
-
-		Composite composite_12 = new Composite(tabFolder, SWT.NONE);
-		outputTabItem.setControl(composite_12);
-		composite_12.setLayout(new GridLayout(1, false));
-
-		ToolBar outputTabToolBar = new ToolBar(composite_12, SWT.FLAT | SWT.RIGHT);
-		outputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		ToolItem addOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		addOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		addOutputItem.setToolTipText("Add");
-
-		ToolItem toolItem_4 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-
-		ToolItem deleteOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		deleteOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		deleteOutputItem.setToolTipText("Delete");
-
-		ToolItem toolItem_5 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-
-		ToolItem moveUpOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		moveUpOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
-		moveUpOutputItem.setToolTipText("Move Up");
-
-		ToolItem toolItem_6 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-
-		ToolItem moveDownOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		moveDownOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
-		moveDownOutputItem.setToolTipText("Move Down");
-
-		outputTable = new OutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		outputTable = new Table(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
-		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		outputTable.setHeaderVisible(true);
-		outputTable.setLinesVisible(true);
 
 		expandBar.addListener(SWT.Expand, new Listener() {
 

@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 
@@ -27,6 +28,7 @@ public class AuditTrailsTable extends CustomTable {
 	private BottomFactoryTestCaseUi parentBottomFactoryTestCaseUi;
 	private BottomFactoryORUi parentBottomFactoryORUi;
 	private BottomFactoryDataRepoUi parentBottomFactoryDataRepoUi;
+	private BottomFactoryFLUi parentBottomFactoryFLUi;
 
 	public AuditTrailsTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUi) {
 		super(parent, style);
@@ -47,6 +49,13 @@ public class AuditTrailsTable extends CustomTable {
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryDataRepoUi(bottomFactoryUi);
+	}
+
+	public AuditTrailsTable(Composite parent, int style, BottomFactoryFLUi parentView) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryFLUi(parentView);
 	}
 
 	private void init() {
@@ -150,5 +159,13 @@ public class AuditTrailsTable extends CustomTable {
 
 	public void setParentBottomFactoryDataRepoUi(BottomFactoryDataRepoUi parentBottomFactoryUi) {
 		this.parentBottomFactoryDataRepoUi = parentBottomFactoryUi;
+	}
+
+	public BottomFactoryFLUi getParentBottomFactoryFLUi() {
+		return parentBottomFactoryFLUi;
+	}
+
+	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
+		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
 	}
 }
