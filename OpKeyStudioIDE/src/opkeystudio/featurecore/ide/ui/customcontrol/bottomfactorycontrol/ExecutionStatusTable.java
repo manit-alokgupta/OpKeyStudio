@@ -16,15 +16,15 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUI;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 
 public class ExecutionStatusTable extends CustomTable {
 
 	private boolean paintCalled = false;
 	private ExecutionStatusTable thisTable = this;
-	private BottomFactoryTestCaseUI parentBottomFactoryUI;
+	private BottomFactoryTestCaseUi parentBottomFactoryUI;
 
-	public ExecutionStatusTable(Composite parent, int style, BottomFactoryTestCaseUI bottomFactoryUI) {
+	public ExecutionStatusTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUI) {
 		super(parent, style);
 		init();
 		thisTable = this;
@@ -37,7 +37,7 @@ public class ExecutionStatusTable extends CustomTable {
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
 			column.setText(header);
-			column.setWidth(100);
+			column.setWidth(100); 
 		}
 		this.pack();
 		for (int i = 0; i < tableHeaders.length; i++) {
@@ -111,11 +111,11 @@ public class ExecutionStatusTable extends CustomTable {
 
 	}
 
-	public BottomFactoryTestCaseUI getParentBottomFactoryUI() {
+	public BottomFactoryTestCaseUi getParentBottomFactoryUI() {
 		return parentBottomFactoryUI;
 	}
 
-	public void setParentBottomFactoryUI(BottomFactoryTestCaseUI parentBottomFactoryUI) {
+	public void setParentBottomFactoryUI(BottomFactoryTestCaseUi parentBottomFactoryUI) {
 		this.parentBottomFactoryUI = parentBottomFactoryUI;
 	}
 

@@ -16,19 +16,37 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUI;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 
 public class TagsTable extends CustomTable {
 
 	private boolean paintCalled = false;
 	private TagsTable thisTable = this;
-	private BottomFactoryTestCaseUI parentBottomFactoryUI;
+	private BottomFactoryTestCaseUi parentBottomFactoryUI;
+	private BottomFactoryORUi parentBottomFactoryORUi;
+	private BottomFactoryDataRepoUi parentBottomFactoryDataRepoUi;
 
-	public TagsTable(Composite parent, int style, BottomFactoryTestCaseUI bottomFactoryUI) {
+	public TagsTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUI) {
 		super(parent, style);
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryUI(bottomFactoryUI);
+	}
+
+	public TagsTable(Composite parent, int style, BottomFactoryORUi bottomFactoryUi) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryORUi(bottomFactoryUi);
+	}
+
+	public TagsTable(Composite parent, int style, BottomFactoryDataRepoUi bottomFactoryUi) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryDataRepoUi(bottomFactoryUi);
 	}
 
 	private void init() {
@@ -110,12 +128,28 @@ public class TagsTable extends CustomTable {
 
 	}
 
-	public BottomFactoryTestCaseUI getParentBottomFactoryUI() {
+	public BottomFactoryTestCaseUi getParentBottomFactoryUI() {
 		return parentBottomFactoryUI;
 	}
 
-	public void setParentBottomFactoryUI(BottomFactoryTestCaseUI parentBottomFactoryUI) {
+	public void setParentBottomFactoryUI(BottomFactoryTestCaseUi parentBottomFactoryUI) {
 		this.parentBottomFactoryUI = parentBottomFactoryUI;
+	}
+
+	public BottomFactoryORUi getParentBottomFactoryORUI() {
+		return parentBottomFactoryORUi;
+	}
+
+	public void setParentBottomFactoryORUi(BottomFactoryORUi parentBottomFactoryUi) {
+		this.parentBottomFactoryORUi = parentBottomFactoryUi;
+	}
+
+	public BottomFactoryORUi getParentBottomFactoryDataRepoUi() {
+		return parentBottomFactoryORUi;
+	}
+
+	public void setParentBottomFactoryDataRepoUi(BottomFactoryDataRepoUi parentBottomFactoryUi) {
+		this.parentBottomFactoryDataRepoUi = parentBottomFactoryUi;
 	}
 
 }

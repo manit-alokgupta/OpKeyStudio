@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
@@ -30,6 +31,7 @@ public class DataRepositoryView extends Composite {
 	private int rowCount = 0;
 	private TableColumn newColumn;
 	private DRColumnAttributes drCol;
+	private BottomFactoryORUi bottomFactoryORUi;
 	// private XSSFWorkbook wb;
 	private OleClientSite site;
 
@@ -145,6 +147,10 @@ public class DataRepositoryView extends Composite {
 		excelTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		excelTable.setHeaderVisible(true);
 		excelTable.setLinesVisible(true);
+
+		bottomFactoryORUi = new BottomFactoryORUi(composite, SWT.BORDER);
+		bottomFactoryORUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		bottomFactoryORUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		colCount = excelTable.getColumnCount();
 		rowCount = excelTable.getItemCount();

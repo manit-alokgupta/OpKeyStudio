@@ -14,7 +14,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUI;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 
@@ -22,13 +24,29 @@ public class UsedByTable extends CustomTable {
 
 	private boolean paintCalled = false;
 	private UsedByTable thisTable = this;
-	private BottomFactoryTestCaseUI parentBottomFactoryUi;
+	private BottomFactoryTestCaseUi parentBottomFactoryTestCaseUi;
+	private BottomFactoryORUi parentBottomFactoryORUi;
+	private BottomFactoryDataRepoUi parentBottomFactoryDataRepoUi;
 
-	public UsedByTable(Composite parent, int style, BottomFactoryTestCaseUI bottomFactoryUI) {
+	public UsedByTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUi) {
 		super(parent, style);
 		init();
 		thisTable = this;
-		this.setParentBottomFactoryUi(bottomFactoryUI);
+		this.setParentBottomFactoryTestCaseUi(bottomFactoryUi);
+	}
+
+	public UsedByTable(Composite parent, int style, BottomFactoryORUi bottomFactoryUi) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryORUi(bottomFactoryUi);
+	}
+
+	public UsedByTable(Composite parent, int style, BottomFactoryDataRepoUi bottomFactoryUi) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryDataRepoUi(bottomFactoryUi);
 	}
 
 	private void init() {
@@ -110,11 +128,27 @@ public class UsedByTable extends CustomTable {
 
 	}
 
-	public BottomFactoryTestCaseUI getParentBottomFactoryUi() {
-		return parentBottomFactoryUi;
+	public BottomFactoryTestCaseUi getParentBottomFactoryTestCaseUi() {
+		return parentBottomFactoryTestCaseUi;
 	}
 
-	public void setParentBottomFactoryUi(BottomFactoryTestCaseUI parentBottomFactoryUi) {
-		this.parentBottomFactoryUi = parentBottomFactoryUi;
+	public void setParentBottomFactoryTestCaseUi(BottomFactoryTestCaseUi parentBottomFactoryUi) {
+		this.parentBottomFactoryTestCaseUi = parentBottomFactoryUi;
+	}
+
+	public BottomFactoryORUi getParentBottomFactoryORUi() {
+		return parentBottomFactoryORUi;
+	}
+
+	public void setParentBottomFactoryORUi(BottomFactoryORUi parentBottomFactoryUi) {
+		this.parentBottomFactoryORUi = parentBottomFactoryUi;
+	}
+
+	public BottomFactoryORUi getParentBottomFactoryDataRepoUi() {
+		return parentBottomFactoryORUi;
+	}
+
+	public void setParentBottomFactoryDataRepoUi(BottomFactoryDataRepoUi parentBottomFactoryUi) {
+		this.parentBottomFactoryDataRepoUi = parentBottomFactoryUi;
 	}
 }

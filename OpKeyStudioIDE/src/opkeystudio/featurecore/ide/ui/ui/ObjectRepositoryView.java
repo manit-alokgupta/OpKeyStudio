@@ -33,6 +33,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
@@ -48,6 +49,7 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 public class ObjectRepositoryView extends Composite {
 	private ObjectAttributeTable objectAttributeTable;
 	private ObjectRepositoryTree objectRepositoryTree;
+	private BottomFactoryORUi bottomFactoryORUi;
 	private ToolItem saveObject;
 	private ToolItem renameObject;
 	private ToolItem deleteObject;
@@ -87,7 +89,7 @@ public class ObjectRepositoryView extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
-	 */
+	 */ 
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
 		ObjectRepositoryUI();
@@ -311,6 +313,10 @@ public class ObjectRepositoryView extends Composite {
 //		Tree tree = new Tree(composite_3, SWT.BORDER);
 		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectRepositoryTree.setBounds(0, 0, 85, 85);
+
+		bottomFactoryORUi = new BottomFactoryORUi(composite_3, SWT.BORDER);
+		bottomFactoryORUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		bottomFactoryORUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		ServiceRepository.getInstance().setProjectTreeObject(objectRepositoryTree);
 		Menu menu = new Menu(objectRepositoryTree);

@@ -64,7 +64,7 @@ public class FlowStepTable extends CustomTable {
 			public void paintControl(PaintEvent arg0) {
 				Table table_0 = (Table) arg0.getSource();
 				for (int i = 0; i < table_0.getColumnCount(); i++) {
-					TableColumn column = table_0.getColumn(i);
+					TableColumn column = table_0.getColumn(i); 
 					if (i == 0) {
 						column.setWidth(50);
 					} else {

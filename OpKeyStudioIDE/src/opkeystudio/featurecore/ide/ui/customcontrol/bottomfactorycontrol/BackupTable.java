@@ -16,23 +16,41 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUI;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 
 public class BackupTable extends CustomTable {
 
 	private boolean paintCalled = false;
 	private BackupTable thisTable = this;
-	private BottomFactoryTestCaseUI parentBottomFactoryUI;
+	private BottomFactoryTestCaseUi parentBottomFactoryUI;
+	private BottomFactoryORUi parentBottomFactoryORUi;
+	private BottomFactoryDataRepoUi parentBottomFactoryDataRepoUi;
 
-	public BackupTable(Composite parent, int style, BottomFactoryTestCaseUI bottomFactoryUI) {
+	public BackupTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUI) {
 		super(parent, style);
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryUI(bottomFactoryUI);
 	}
 
+	public BackupTable(Composite parent, int style, BottomFactoryORUi bottomFactoryUi) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryORUi(bottomFactoryUi);
+	}
+
+	public BackupTable(Composite parent, int style, BottomFactoryDataRepoUi bottomFactoryUi) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryDataRepoUi(bottomFactoryUi);
+	}
+
 	private void init() {
-		String[] tableHeaders = { "Name", "Number", "Comment", "Action" };
+		String[] tableHeaders = { "Number", "Name", "Comment", "Action" };
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
 			column.setText(header);
@@ -51,8 +69,13 @@ public class BackupTable extends CustomTable {
 					// return;
 				}
 				Table table_0 = (Table) e.getSource();
-				for (TableColumn column : table_0.getColumns()) {
-					column.setWidth(table_0.getBounds().width / 4);
+				for (int i = 0; i < table_0.getColumnCount(); i++) {
+					TableColumn column = table_0.getColumn(i);
+					if (i == 0) {
+						column.setWidth(100);
+					} else {
+						column.setWidth((table_0.getBounds().width - 100) / 4);
+					}
 				}
 				paintCalled = true;
 
@@ -110,11 +133,28 @@ public class BackupTable extends CustomTable {
 
 	}
 
-	public BottomFactoryTestCaseUI getParentBottomFactoryUI() {
+	public BottomFactoryTestCaseUi getParentBottomFactoryUI() {
 		return parentBottomFactoryUI;
 	}
 
-	public void setParentBottomFactoryUI(BottomFactoryTestCaseUI parentBottomFactoryUI) {
+	public void setParentBottomFactoryUI(BottomFactoryTestCaseUi parentBottomFactoryUI) {
 		this.parentBottomFactoryUI = parentBottomFactoryUI;
 	}
+
+	public BottomFactoryORUi getParentBottomFactoryORUI() {
+		return parentBottomFactoryORUi;
+	}
+
+	public void setParentBottomFactoryORUi(BottomFactoryORUi parentBottomFactoryUi) {
+		this.parentBottomFactoryORUi = parentBottomFactoryUi;
+	}
+
+	public BottomFactoryDataRepoUi getParentBottomFactoryDataRepoUi() {
+		return parentBottomFactoryDataRepoUi;
+	}
+
+	public void setParentBottomFactoryDataRepoUi(BottomFactoryDataRepoUi parentBottomFactoryUi) {
+		this.parentBottomFactoryDataRepoUi = parentBottomFactoryUi;
+	}
+
 }
