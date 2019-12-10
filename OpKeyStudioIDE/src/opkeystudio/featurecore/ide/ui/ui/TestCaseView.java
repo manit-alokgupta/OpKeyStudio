@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -120,6 +119,7 @@ public class TestCaseView extends Composite {
 	private MenuItem testObjectMenu3;
 	private MenuItem testObjectMenu4;
 	private Keyword keyWord;
+	private BottomFactoryUI bottomFactory;
 
 	private Display display;
 
@@ -537,13 +537,14 @@ public class TestCaseView extends Composite {
 
 		TableCursor cursor = new TableCursor(flowStepTable, 0);
 
-		ExpandBar expandBar_1 = new ExpandBar(testCaseStepsHolder, SWT.NONE);
-		expandBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		expandBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+//	
+		bottomFactory = new BottomFactoryUI(testCaseStepsHolder, SWT.NONE);
+		bottomFactory.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		ExpandItem item = new ExpandItem(expandBar_1, SWT.NONE);
-		item.setText("New ExpandItem");
-		testCaseSashForm.setWeights(new int[] { 400, 235 });
+//		ExpandItem item = new ExpandItem(expandBar_1, SWT.NONE);
+//		item.setText("New ExpandItem");
+//		testCaseSashForm.setWeights(new int[] { 400, 235 });
 
 		TabItem tbtmNewItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
 		tbtmNewItem.setText("Source Code");

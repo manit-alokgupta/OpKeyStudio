@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Label;
 public class DeleteNotificationPopup extends AbstractNotificationPopup {
 
 	public DeleteNotificationPopup(Display display) {
-		super(display);
+		super(display); 
 	}
 
 	protected void createContentArea(Composite parent) {

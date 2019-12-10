@@ -7,6 +7,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Group;
@@ -27,6 +29,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagsTab
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 
 public class BottomFactoryUI extends Composite {
 	private UsedByTable usedByTable;
@@ -46,6 +49,7 @@ public class BottomFactoryUI extends Composite {
 //	private Table testCaseDocTable;
 //	private Table inputTable;
 //	private Table outputTable;
+	private Display display;
 
 	/**
 	 * Create the composite.
@@ -56,6 +60,7 @@ public class BottomFactoryUI extends Composite {
 	@SuppressWarnings("unused")
 	public BottomFactoryUI(Composite parent, int style) {
 		super(parent, style);
+		display = getParent().getDisplay();
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -63,9 +68,11 @@ public class BottomFactoryUI extends Composite {
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite.setLayout(new GridLayout(1, false));
 
-		Composite composite_1 = new Composite(composite, SWT.NONE);
-		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+//		Composite composite_1 = new Composite(composite, SWT.NONE);
+//		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+//		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+//		gd_composite_1.heightHint = 54;
+//		composite_1.setLayoutData(gd_composite_1);
 
 		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
 		expandBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -74,7 +81,6 @@ public class BottomFactoryUI extends Composite {
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
 		item.setText("Bottom Factory");
 		item.setHeight(400);
-		item.setExpanded(true);
 
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
@@ -87,6 +93,7 @@ public class BottomFactoryUI extends Composite {
 
 		TabItem detailsTabItem = new TabItem(tabFolder, SWT.NONE);
 		detailsTabItem.setText("Details");
+		detailsTabItem.setToolTipText("Details");
 
 		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
 		detailsTabItem.setControl(composite_2);
@@ -104,6 +111,7 @@ public class BottomFactoryUI extends Composite {
 
 		TabItem usedByTabItem = new TabItem(tabFolder, SWT.NONE);
 		usedByTabItem.setText("Used By");
+		usedByTabItem.setToolTipText("Used By");
 
 		Composite composite_5 = new Composite(tabFolder, SWT.NONE);
 		usedByTabItem.setControl(composite_5);
@@ -119,6 +127,7 @@ public class BottomFactoryUI extends Composite {
 
 		TabItem auditTrailsTabItem = new TabItem(tabFolder, SWT.NONE);
 		auditTrailsTabItem.setText("Audit Trails");
+		auditTrailsTabItem.setToolTipText("Audit Trails");
 
 		Composite composite_6 = new Composite(tabFolder, SWT.NONE);
 		auditTrailsTabItem.setControl(composite_6);
@@ -141,6 +150,7 @@ public class BottomFactoryUI extends Composite {
 
 		TabItem tagsTabItem = new TabItem(tabFolder, SWT.NONE);
 		tagsTabItem.setText("Tags");
+		tagsTabItem.setToolTipText("Tags");
 
 		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
 		tagsTabItem.setControl(composite_7);
@@ -187,6 +197,7 @@ public class BottomFactoryUI extends Composite {
 
 		TabItem executionStatusTabItem = new TabItem(tabFolder, SWT.NONE);
 		executionStatusTabItem.setText("Execution Status");
+		executionStatusTabItem.setToolTipText("Execution Status");
 
 		Composite composite_8 = new Composite(tabFolder, SWT.NONE);
 		executionStatusTabItem.setControl(composite_8);
@@ -213,6 +224,7 @@ public class BottomFactoryUI extends Composite {
 
 		TabItem backupTabItem = new TabItem(tabFolder, SWT.NONE);
 		backupTabItem.setText("Backup");
+		backupTabItem.setToolTipText("Backup");
 
 		Composite composite_9 = new Composite(tabFolder, SWT.NONE);
 		backupTabItem.setControl(composite_9);
@@ -234,6 +246,7 @@ public class BottomFactoryUI extends Composite {
 
 		TabItem testCaseDocTabItem = new TabItem(tabFolder, SWT.NONE);
 		testCaseDocTabItem.setText("Test Case Document");
+		testCaseDocTabItem.setToolTipText("Test Case Document");
 
 		Composite composite_10 = new Composite(tabFolder, SWT.NONE);
 		testCaseDocTabItem.setControl(composite_10);
@@ -256,6 +269,7 @@ public class BottomFactoryUI extends Composite {
 
 		TabItem inputTabItem = new TabItem(tabFolder, SWT.NONE);
 		inputTabItem.setText("Input");
+		inputTabItem.setToolTipText("Input");
 
 		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
 		inputTabItem.setControl(composite_11);
@@ -295,12 +309,14 @@ public class BottomFactoryUI extends Composite {
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
 		inputTable = new InputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		inputTable = new Table(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
 		inputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		inputTable.setHeaderVisible(true);
 		inputTable.setLinesVisible(true);
 
 		TabItem outputTabItem = new TabItem(tabFolder, SWT.NONE);
 		outputTabItem.setText("Output");
+		outputTabItem.setToolTipText("Output");
 
 		Composite composite_12 = new Composite(tabFolder, SWT.NONE);
 		outputTabItem.setControl(composite_12);
@@ -335,9 +351,41 @@ public class BottomFactoryUI extends Composite {
 		moveDownOutputItem.setToolTipText("Move Down");
 
 		outputTable = new OutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		outputTable = new Table(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
 		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		outputTable.setHeaderVisible(true);
 		outputTable.setLinesVisible(true);
+
+		expandBar.addListener(SWT.Expand, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				display.asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						System.out.println("Expand: " + expandBar.getSize());
+						parent.layout();
+						System.out.println("Expand: " + expandBar.getSize());
+					}
+				});
+			}
+		});
+		expandBar.addListener(SWT.Collapse, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				display.asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						System.out.println("Collapse: " + expandBar.getSize());
+						parent.layout();
+						System.out.println("Collapse: " + expandBar.getSize());
+					}
+				});
+			}
+		});
 
 	}
 
