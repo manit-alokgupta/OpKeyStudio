@@ -124,10 +124,10 @@ public class BottomFactoryDataRepoUi extends Composite {
 		ToolBar toolBar = new ToolBar(composite_6, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		ToolItem exportToolItem = new ToolItem(toolBar, SWT.NONE);
-		exportToolItem.setWidth(27);
-		exportToolItem.setToolTipText("Export Audit Trails");
-		exportToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
+		ToolItem exportAuditToolItem = new ToolItem(toolBar, SWT.NONE);
+		exportAuditToolItem.setWidth(27);
+		exportAuditToolItem.setToolTipText("Export Audit Trails");
+		exportAuditToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
 
 		auditTrailsTable = new AuditTrailsTable(composite_6, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		auditTrailsTable = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
@@ -147,41 +147,41 @@ public class BottomFactoryDataRepoUi extends Composite {
 		ToolBar toolBar_1 = new ToolBar(composite_7, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		ToolItem addToolItem = new ToolItem(toolBar_1, SWT.NONE);
-//		addToolItem.setWidth(27);
-		addToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		addToolItem.setToolTipText("Add");
+		ToolItem addTagItem = new ToolItem(toolBar_1, SWT.NONE);
+//		addTagItem.setWidth(27);
+		addTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		addTagItem.setToolTipText("Add");
 
 		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem deleteToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		deleteToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		deleteToolItem.setToolTipText("Delete");
+		ToolItem deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		deleteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteTagItem.setToolTipText("Delete");
 
 		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem copyToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		copyToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
-		copyToolItem.setToolTipText("copy");
+		ToolItem copyTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		copyTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
+		copyTagItem.setToolTipText("copy");
 
 		ToolItem toolItem3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem pasteToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		pasteToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
-		pasteToolItem.setToolTipText("Paste");
+		ToolItem pasteTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		pasteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
+		pasteTagItem.setToolTipText("Paste");
 
 		ToolItem toolItem4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem moveUpToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		moveUpToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
-		moveUpToolItem.setToolTipText("Move Up");
+		ToolItem moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveUpTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
+		moveUpTagItem.setToolTipText("Move Up");
 
 		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem moveDownToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		moveDownToolItem
+		ToolItem moveDownTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveDownTagItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
-		moveDownToolItem.setToolTipText("Move Down");
+		moveDownTagItem.setToolTipText("Move Down");
 
 		tagsTable = new TagsTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
