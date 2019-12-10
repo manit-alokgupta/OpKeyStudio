@@ -16,15 +16,15 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.ui.BottomFactoryUI;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUI;
 
 public class InputTable extends CustomTable {
 
 	private boolean paintCalled = false;
 	private InputTable thisTable = this;
-	private BottomFactoryUI parentBottomFactoryUi;
+	private BottomFactoryTestCaseUI parentBottomFactoryUi;
 
-	public InputTable(Composite parent, int style, BottomFactoryUI bottomFactoryUI) {
+	public InputTable(Composite parent, int style, BottomFactoryTestCaseUI bottomFactoryUI) {
 		super(parent, style);
 		init();
 		thisTable = this;
@@ -109,11 +109,11 @@ public class InputTable extends CustomTable {
 		});
 	}
 
-	public BottomFactoryUI getParentBottomFactoryUi() {
+	public BottomFactoryTestCaseUI getParentBottomFactoryUi() {
 		return parentBottomFactoryUi;
 	}
 
-	private void setParentBottomFactoryUi(BottomFactoryUI bottomFactoryUI) {
+	private void setParentBottomFactoryUi(BottomFactoryTestCaseUI bottomFactoryUI) {
 		this.parentBottomFactoryUi = parentBottomFactoryUi;
 
 	}

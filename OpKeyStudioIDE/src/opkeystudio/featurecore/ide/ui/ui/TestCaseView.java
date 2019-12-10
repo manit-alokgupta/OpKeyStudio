@@ -39,6 +39,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUI;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
@@ -119,7 +120,7 @@ public class TestCaseView extends Composite {
 	private MenuItem testObjectMenu3;
 	private MenuItem testObjectMenu4;
 	private Keyword keyWord;
-	private BottomFactoryUI bottomFactory;
+	private BottomFactoryTestCaseUI bottomFactory;
 
 	private Display display;
 
@@ -538,7 +539,7 @@ public class TestCaseView extends Composite {
 		TableCursor cursor = new TableCursor(flowStepTable, 0);
 
 //	
-		bottomFactory = new BottomFactoryUI(testCaseStepsHolder, SWT.NONE);
+		bottomFactory = new BottomFactoryTestCaseUI(testCaseStepsHolder, SWT.NONE);
 		bottomFactory.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 

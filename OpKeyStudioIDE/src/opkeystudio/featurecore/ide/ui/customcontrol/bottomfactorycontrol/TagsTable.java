@@ -16,15 +16,15 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.ui.BottomFactoryUI;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUI;
 
 public class TagsTable extends CustomTable {
 
 	private boolean paintCalled = false;
 	private TagsTable thisTable = this;
-	private BottomFactoryUI parentBottomFactoryUI;
+	private BottomFactoryTestCaseUI parentBottomFactoryUI;
 
-	public TagsTable(Composite parent, int style, BottomFactoryUI bottomFactoryUI) {
+	public TagsTable(Composite parent, int style, BottomFactoryTestCaseUI bottomFactoryUI) {
 		super(parent, style);
 		init();
 		thisTable = this;
@@ -110,11 +110,11 @@ public class TagsTable extends CustomTable {
 
 	}
 
-	public BottomFactoryUI getParentBottomFactoryUI() {
+	public BottomFactoryTestCaseUI getParentBottomFactoryUI() {
 		return parentBottomFactoryUI;
 	}
 
-	public void setParentBottomFactoryUI(BottomFactoryUI parentBottomFactoryUI) {
+	public void setParentBottomFactoryUI(BottomFactoryTestCaseUI parentBottomFactoryUI) {
 		this.parentBottomFactoryUI = parentBottomFactoryUI;
 	}
 

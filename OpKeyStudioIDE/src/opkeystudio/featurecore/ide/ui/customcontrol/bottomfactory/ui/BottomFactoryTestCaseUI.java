@@ -1,4 +1,4 @@
-package opkeystudio.featurecore.ide.ui.ui;
+package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -31,7 +31,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByT
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
-public class BottomFactoryUI extends Composite {
+public class BottomFactoryTestCaseUI extends Composite {
 	private UsedByTable usedByTable;
 	private AuditTrailsTable auditTrailsTable;
 	private TagsTable tagsTable;
@@ -58,7 +58,7 @@ public class BottomFactoryUI extends Composite {
 	 * @param style
 	 */
 	@SuppressWarnings("unused")
-	public BottomFactoryUI(Composite parent, int style) {
+	public BottomFactoryTestCaseUI(Composite parent, int style) {
 		super(parent, style);
 		display = getParent().getDisplay();
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));

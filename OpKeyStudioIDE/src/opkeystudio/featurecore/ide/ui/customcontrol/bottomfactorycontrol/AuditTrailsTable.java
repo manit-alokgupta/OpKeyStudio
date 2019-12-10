@@ -16,15 +16,15 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.ui.BottomFactoryUI;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUI;
 
 public class AuditTrailsTable extends CustomTable {
 
 	private boolean paintCalled = false;
 	private AuditTrailsTable thisTable = this;
-	private BottomFactoryUI parentBottomFactoryUI;
+	private BottomFactoryTestCaseUI parentBottomFactoryUI;
 
-	public AuditTrailsTable(Composite parent, int style, BottomFactoryUI bottomFactoryUI) {
+	public AuditTrailsTable(Composite parent, int style, BottomFactoryTestCaseUI bottomFactoryUI) {
 		super(parent, style);
 		init();
 		thisTable = this;
@@ -32,7 +32,7 @@ public class AuditTrailsTable extends CustomTable {
 	}
 
 	private void init() {
-		String[] tableHeaders = { "Task", "Field", "Old Value", "New Value","Time Stamp","By User" };
+		String[] tableHeaders = { "Task", "Field", "Old Value", "New Value", "Time Stamp", "By User" };
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
 			column.setText(header);
@@ -110,11 +110,11 @@ public class AuditTrailsTable extends CustomTable {
 
 	}
 
-	public BottomFactoryUI getParentBottomFactoryUI() {
+	public BottomFactoryTestCaseUI getParentBottomFactoryUI() {
 		return parentBottomFactoryUI;
 	}
 
-	public void setParentBottomFactoryUI(BottomFactoryUI parentBottomFactoryUI) {
+	public void setParentBottomFactoryUI(BottomFactoryTestCaseUI parentBottomFactoryUI) {
 		this.parentBottomFactoryUI = parentBottomFactoryUI;
 	}
 }
