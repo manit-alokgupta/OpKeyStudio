@@ -735,7 +735,7 @@ public class FLView extends Composite {
 			}
 		});
 		try {
-			flowStepTable.renderFlowSteps();
+			flowStepTable.renderFLFlowSteps();
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -890,7 +890,7 @@ public class FLView extends Composite {
 					flowStep.setModified(true);
 					flowStepTable.addFlowSteps(flowStep);
 					try {
-						flowStepTable.renderFlowSteps();
+						flowStepTable.renderFLFlowSteps();
 					} catch (SQLException | IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -942,7 +942,7 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				flowStepTable.moveStepUp(flowStepTable.getSelectedFlowStep(), flowStepTable.getPrevFlowStep());
+				flowStepTable.moveStepUpFL(flowStepTable.getSelectedFlowStep(), flowStepTable.getPrevFlowStep());
 				toggleSaveButton(true);
 
 			}
@@ -957,7 +957,7 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				flowStepTable.moveStepDown(flowStepTable.getSelectedFlowStep(), flowStepTable.getNextFlowStep());
+				flowStepTable.moveStepDownFL(flowStepTable.getSelectedFlowStep(), flowStepTable.getNextFlowStep());
 				toggleSaveButton(true);
 			}
 
@@ -1023,7 +1023,7 @@ public class FLView extends Composite {
 						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
 								"Do you want to Save changes?");
 						if (!status) {
-							flowStepTable.renderFlowSteps();
+							flowStepTable.renderFLFlowSteps();
 							return;
 						}
 						AbstractNotificationPopup notification = new SaveNotificationPopup(display);
@@ -1168,7 +1168,7 @@ public class FLView extends Composite {
 
 		new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 		try {
-			flowStepTable.renderFlowSteps();
+			flowStepTable.renderFLFlowSteps();
 		} catch (SQLException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

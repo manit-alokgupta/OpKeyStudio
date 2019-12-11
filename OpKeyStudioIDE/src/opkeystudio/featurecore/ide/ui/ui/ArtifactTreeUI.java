@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -19,6 +20,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
@@ -255,10 +258,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
 						"TestCase Name", "");
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
 							artifact.getName());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
@@ -278,10 +289,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
 						"Test Suite Name", "Test Suite " + java.time.LocalDateTime.now());
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
 							"Test Suite Name ", "Test Suite " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 				createArtifact(artifact, inputValue, MODULETYPE.Suite);
 
@@ -301,10 +320,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
 						"Folder " + java.time.LocalDateTime.now());
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name ",
 							"Folder " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Folder);
@@ -323,10 +350,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
 						"Object Repository Name", "Object Repository " + java.time.LocalDateTime.now());
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
 							"Object Repository Name ", "Object Repository " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
@@ -345,10 +380,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 						"Function Library Name", "Function Library " + java.time.LocalDateTime.now());
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 							"Function Library Name ", "Function Library " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
@@ -394,10 +437,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 						"Rename " + artifact.getName(), artifact.getName());
+				if (renamedText == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (renamedText.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 							"Rename " + artifact.getName(), artifact.getName());
+					if (renamedText == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 				artifact.setName(renamedText);
 				new ArtifactApi().renameArtifact(artifact);
@@ -442,10 +493,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name",
 						"DR " + java.time.LocalDateTime.now());
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name ",
 							"DR " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
@@ -487,10 +546,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 						"Rename " + artifact.getName(), artifact.getName());
+				if (renamedText == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (renamedText.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 							"Rename " + artifact.getName(), artifact.getName());
+					if (renamedText == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 				artifact.setName(renamedText);
 				new ArtifactApi().renameArtifact(artifact);
@@ -553,10 +620,19 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
 						"Folder " + java.time.LocalDateTime.now());
+
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Enter Name ",
 							"Folder " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 
 				String artifactId = null;
@@ -592,10 +668,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
 						"TestCase Name", "Test Case " + java.time.LocalDateTime.now());
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
 							"Test Case Name ", "Test Case " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
@@ -624,10 +708,20 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 						"Function Library Name", "Function Library " + java.time.LocalDateTime.now());
+
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
+
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 							"Function Library Name ", "Function Library " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
@@ -656,10 +750,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
 						"Object Repository Name", "Object Repository " + java.time.LocalDateTime.now());
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
 							"Object Repository Name ", "Object Repository " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
@@ -688,10 +790,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
 						"TestSuite Name", "");
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Test Suite Name ",
 							"Test Suite " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Suite);
@@ -711,10 +821,18 @@ public class ArtifactTreeUI extends Composite {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name",
 						"DR " + java.time.LocalDateTime.now());
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
 				while (inputValue.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name ",
 							"DR " + java.time.LocalDateTime.now());
+					if (inputValue == null) {
+						System.out.println("cancel pressed inside while loop");
+						return;
+					}
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
@@ -937,5 +1055,11 @@ public class ArtifactTreeUI extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public void keyPressed(KeyEvent event) {
+		if (event.keyCode == SWT.ESC) {
+			System.out.println("Escape pressed");
+		}
 	}
 }
