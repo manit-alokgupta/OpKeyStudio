@@ -11,17 +11,22 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TreeItem;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class KeywordsTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
 	private FLView parentFLView;
+	private KeywordsTree thisTable = this;
+	private FlowStep flowStep;
+	private ArtifactTreeItem artifactTreeItem;
 
 	public KeywordsTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
@@ -76,9 +81,23 @@ public class KeywordsTree extends CustomTree {
 
 				Keyword keyWord = (Keyword) selectedKeywordItem.getControlData();
 				System.out.println(keyWord.getKeywordname());
+//				if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.DataRepository) {
+//				FlowStepTable flowStepTableFL = getParentFLView().getFlowStepTable();
+//				if (flowStepTableFL != null) {
+//					FlowStep flowStep = flowStepTableFL.getSelectedFlowStep();
+//					flowStep.setKeyword(keyWord);
+//					flowStep.setKeywordid(keyWord.getKeywordid());
+//					flowStep.setModified(true);
+//					getParentFLView().getFlowStepTable().refreshFLFlowSteps();
+//					getParentFLView().toggleSaveButton(true);
+//
+//				}
+//				}
+
+//				if (flowStep.isIstestcase()) {
 				FlowStepTable flowStepTable = getParentTestCaseView().getFlowStepTable();
 				if (flowStepTable != null) {
-					FlowStep flowStep = flowStepTable.getSelectedFlowStep();
+					flowStep = flowStepTable.getSelectedFlowStep();
 					flowStep.setKeyword(keyWord);
 					flowStep.setKeywordid(keyWord.getKeywordid());
 					flowStep.setModified(true);
@@ -86,6 +105,8 @@ public class KeywordsTree extends CustomTree {
 					getParentTestCaseView().toggleSaveButton(true);
 
 				}
+//				}
+
 			}
 
 			@Override

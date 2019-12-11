@@ -22,10 +22,12 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class ArtifactTree extends CustomTree {
+	private FlowStep flowStep;
 
 	public ArtifactTree(Composite parent, int style) {
 		super(parent, style);
@@ -80,6 +82,7 @@ public class ArtifactTree extends CustomTree {
 			part.setTooltip(artifactTreeItem.getArtifact().getName());
 			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
 			partService.showPart(part, PartState.ACTIVATE);
+//			flowStep.setIstestcase(true);
 		}
 		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			EPartService partService = Utilities.getInstance().getEpartService();
@@ -105,6 +108,7 @@ public class ArtifactTree extends CustomTree {
 			part.setTooltip(artifactTreeItem.getArtifact().getName());
 			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
 			partService.showPart(part, PartState.ACTIVATE);
+			flowStep.setIsfunctionlibrary(true);
 		}
 	}
 

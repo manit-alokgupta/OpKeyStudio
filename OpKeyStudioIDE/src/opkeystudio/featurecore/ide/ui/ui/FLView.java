@@ -151,7 +151,7 @@ public class FLView extends Composite {
 
 		TabItem fLTabItem = new TabItem(mainFLTabFolder, SWT.NONE);
 		fLTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
-		fLTabItem.setText("TestCase");
+		fLTabItem.setText("Function Library");
 
 		Composite fLHolder = new Composite(mainFLTabFolder, SWT.NONE);
 		fLHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -942,7 +942,7 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				flowStepTable.moveStepUpFL(flowStepTable.getSelectedFlowStep(), flowStepTable.getPrevFlowStep());
+				flowStepTable.moveFLStepUp(flowStepTable.getSelectedFlowStep(), flowStepTable.getPrevFlowStep());
 				toggleSaveButton(true);
 
 			}
@@ -957,7 +957,7 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				flowStepTable.moveStepDownFL(flowStepTable.getSelectedFlowStep(), flowStepTable.getNextFlowStep());
+				flowStepTable.moveFLStepDown(flowStepTable.getSelectedFlowStep(), flowStepTable.getNextFlowStep());
 				toggleSaveButton(true);
 			}
 
@@ -984,7 +984,7 @@ public class FLView extends Composite {
 
 				try {
 					toggleSaveButton(true);
-					flowStepTable.deleteStep(flowStepTable.getSelectedFlowStep());
+					flowStepTable.deleteFLStep(flowStepTable.getSelectedFlowStep());
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1031,7 +1031,7 @@ public class FLView extends Composite {
 						notification.open();
 						new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 						try {
-							flowStepTable.renderFlowSteps();
+							flowStepTable.renderFLFlowSteps();
 						} catch (SQLException | IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -1039,7 +1039,7 @@ public class FLView extends Composite {
 //						toggleSaveButton(false);
 					}
 
-					flowStepTable.renderFlowSteps();
+					flowStepTable.renderFLFlowSteps();
 
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block

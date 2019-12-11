@@ -39,6 +39,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
@@ -53,6 +54,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -121,8 +123,9 @@ public class TestCaseView extends Composite {
 	private MenuItem testObjectMenu4;
 	private Keyword keyWord;
 	private BottomFactoryTestCaseUi bottomFactory;
-
+	private FlowStep flowStep;
 	private Display display;
+	private ArtifactTreeItem artifactTreeItem;
 
 	/**
 	 * Create the composite.
@@ -149,8 +152,14 @@ public class TestCaseView extends Composite {
 		mainTestCaseTabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 
 		TabItem testCaseTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
-		testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase.gif"));
-		testCaseTabItem.setText("TestCase");
+//		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
+			testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase.gif"));
+			testCaseTabItem.setText("TestCase");
+//		}
+//		if (flowStep.isIsfunctionlibrary()) {
+//			testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+//			testCaseTabItem.setText("Function Library");
+//		}
 
 		Composite testCaseHolder = new Composite(mainTestCaseTabFolder, SWT.NONE);
 		testCaseHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));

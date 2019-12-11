@@ -27,6 +27,8 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class FunctionLibraryApi {
 	private List<FlowInputArgument> flowInputArguments;
 	private List<FlowOutputArgument> flowOutputArguments;
+//	private List<ComponentInputArgument> flowInputArguments;
+//	private List<ComponentOutputArgument> flowOutputArguments;
 	private static FunctionLibraryApi flowApi;
 
 	public static FunctionLibraryApi getInstance() {
@@ -61,6 +63,9 @@ public class FunctionLibraryApi {
 		sqlComm.disconnect();
 		List<FlowInputArgument> flowInputArgs = mapper.readValue(result, type);
 		setFlowInputArguments(flowInputArgs);
+
+//		List<ComponentInputArgument> flowInputArgs = mapper.readValue(result, type);
+//		setComponentInputArguments(flowInputArgs);
 	}
 
 	public void initAllFlowOutputArguments()
@@ -75,6 +80,9 @@ public class FunctionLibraryApi {
 		sqlComm.disconnect();
 		List<FlowOutputArgument> outputArguments = mapper.readValue(result, type);
 		setFlowOutputArguments(outputArguments);
+
+//		List<ComponentOutputArgument> outputArguments = mapper.readValue(result, type);
+//		setComponentOutputArguments(outputArguments);
 	}
 
 	private List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep)
@@ -89,6 +97,18 @@ public class FunctionLibraryApi {
 		return flowInputArgs;
 	}
 
+//	private List<ComponentInputArgument> getFlowStepInputArguments(FlowStep flowStep)
+//			throws SQLException, JsonParseException, JsonMappingException, IOException {
+//		List<ComponentInputArgument> flowInputArgs = new ArrayList<ComponentInputArgument>();
+//		List<ComponentInputArgument> inputArguments = getComponentInputArguments();
+//		for (ComponentInputArgument flowInputArgument : inputArguments) {
+//			if (flowInputArgument.getStepid().equals(flowStep.getStepid())) {
+//				flowInputArgs.add(flowInputArgument);
+//			}
+//		}
+//		return flowInputArgs;
+//	}
+
 	private List<FlowOutputArgument> getFlowStepOutputArguments(FlowStep flowStep)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		List<FlowOutputArgument> flowInputArgs = new ArrayList<FlowOutputArgument>();
@@ -100,6 +120,18 @@ public class FunctionLibraryApi {
 		}
 		return flowInputArgs;
 	}
+
+//	private List<ComponentOutputArgument> getFlowStepOutputArguments(FlowStep flowStep)
+//			throws SQLException, JsonParseException, JsonMappingException, IOException {
+//		List<ComponentOutputArgument> flowInputArgs = new ArrayList<ComponentOutputArgument>();
+//		List<ComponentOutputArgument> inputArguments = getComponentOutputArguments();
+//		for (ComponentOutputArgument flowInputArgument : inputArguments) {
+//			if (flowInputArgument.getComponentstep_id().equals(flowStep.getStepid())) {
+//				flowInputArgs.add(flowInputArgument);
+//			}
+//		}
+//		return flowInputArgs;
+//	}
 
 	private List<ORObject> getORObjectsArguments(FlowStep flowStep)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
@@ -115,6 +147,20 @@ public class FunctionLibraryApi {
 
 	}
 
+//	private List<ORObject> getORObjectsArguments(FlowStep flowStep)
+//			throws JsonParseException, JsonMappingException, SQLException, IOException {
+//		List<ORObject> allORObjects = new ArrayList<ORObject>();
+//		List<ComponentInputArgument> inputArguments = getFlowStepInputArguments(flowStep);
+//		for (ComponentInputArgument inputArgument : inputArguments) {
+//			if (inputArgument.getStaticobjectid() != null) {
+//				List<ORObject> orobjects = new ObjectRepositoryApi().getORObject(inputArgument.getStaticobjectid());
+//				allORObjects.addAll(orobjects);
+//			}
+//		}
+//		return allORObjects;
+//
+//	}
+
 	public List<FlowStep> getAllFlowSteps(String flowId)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
@@ -124,21 +170,34 @@ public class FunctionLibraryApi {
 				Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
+//				List<ComponentInputArgument> fis = getFlowStepInputArguments(flowStep);
+//				List<ComponentOutputArgument> fos = getFlowStepOutputArguments(flowStep);
+
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flowStep.setOrObject(allORObject);
 				flowStep.setKeyword(keyword);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
+//				flowStep.setComponentInputArgs(fis);
+//				flowStep.setComponentOutputArgs(fos);
+
 				flowStep.setIstestcase(true);
 			} else if (flowStep.getComponent_id() != null) {
-				FunctionLibraryComponent flComp = new FlowApi().getFunctinLibraryComponent(flowStep.getComponent_id())
-						.get(0);
-				List<ComponentInputArgument> inputArgs = new FlowApi()
-						.getAllComponentInputArgument(flowStep.getComponent_id());
-				List<ComponentOutputArgument> outputArgs = new FlowApi()
-						.getAllComponentOutputArgument(flowStep.getComponent_id());
+				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getComponent_id()).get(0);
+				// FunctionLibraryComponent flComp = new
+				// FlowApi().getFunctinLibraryComponent(flowStep.getComponent_id()).get(0);
+				List<ComponentInputArgument> inputArgs = getAllComponentInputArgument(flowStep.getComponent_id());
+				// List<ComponentInputArgument> inputArgs = new
+				// FlowApi().getAllComponentInputArgument(flowStep.getComponent_id());
+				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(flowStep.getComponent_id());
+				// List<ComponentOutputArgument> outputArgs = new
+				// FlowApi().getAllComponentOutputArgument(flowStep.getComponent_id());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
+
+//				List<ComponentInputArgument> fis = getFlowStepInputArguments(flowStep);
+//				List<ComponentOutputArgument> fos = getFlowStepOutputArguments(flowStep);
+
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flComp.setComponentInputArgument(inputArgs);
 				flComp.setComponentOutputArgument(outputArgs);
@@ -146,10 +205,53 @@ public class FunctionLibraryApi {
 				flowStep.setFunctionLibraryComponent(flComp);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
+
+//				flowStep.setComponentInputArgs(fis);
+//				flowStep.setComponentOutputArgs(fos);
 				flowStep.setIsfunctionlibrary(true);
 			}
 		}
 		return flowSteps;
+	}
+
+	public List<ComponentInputArgument> getAllComponentInputArgument(String componentId)
+			throws SQLException, JsonParseException, JsonMappingException, IOException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format(
+				"select * from component_input_parameters where component_id='%s' ORDER BY position asc", componentId);
+		String result = sqlComm.executeQueryString(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ComponentInputArgument.class);
+		sqlComm.disconnect();
+		return mapper.readValue(result, type);
+	}
+
+	public List<ComponentOutputArgument> getAllComponentOutputArgument(String componentId)
+			throws SQLException, JsonParseException, JsonMappingException, IOException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format(
+				"select * from component_output_parameters where component_id='%s' ORDER BY position asc", componentId);
+		String result = sqlComm.executeQueryString(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
+				ComponentOutputArgument.class);
+		sqlComm.disconnect();
+		return mapper.readValue(result, type);
+	}
+
+	public List<FunctionLibraryComponent> getFunctinLibraryComponent(String componentId)
+			throws SQLException, JsonParseException, JsonMappingException, IOException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format("select * from main_artifact_filesystem where id='%s'", componentId);
+		String result = sqlComm.executeQueryString(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
+				FunctionLibraryComponent.class);
+		sqlComm.disconnect();
+		return mapper.readValue(result, type);
 	}
 
 	public List<FlowInputArgument> getFlowInputArguments() {
@@ -160,6 +262,14 @@ public class FunctionLibraryApi {
 		this.flowInputArguments = flowInputArguments;
 	}
 
+//	public List<ComponentInputArgument> getComponentInputArguments() {
+//		return flowInputArguments;
+//	}
+//
+//	private void setComponentInputArguments(List<ComponentInputArgument> flowInputArguments) {
+//		this.flowInputArguments = flowInputArguments;
+//	}
+
 	public List<FlowOutputArgument> getFlowOutputArguments() {
 		return flowOutputArguments;
 	}
@@ -167,4 +277,13 @@ public class FunctionLibraryApi {
 	private void setFlowOutputArguments(List<FlowOutputArgument> flowOutputArguments) {
 		this.flowOutputArguments = flowOutputArguments;
 	}
+
+//	public List<ComponentOutputArgument> getComponentOutputArguments() {
+//		return flowOutputArguments;
+//	}
+//
+//	private void setComponentOutputArguments(List<ComponentOutputArgument> flowOutputArguments) {
+//		this.flowOutputArguments = flowOutputArguments;
+//	}
+
 }

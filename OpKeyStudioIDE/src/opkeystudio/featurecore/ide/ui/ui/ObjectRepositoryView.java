@@ -89,7 +89,7 @@ public class ObjectRepositoryView extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
-	 */ 
+	 */
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
 		ObjectRepositoryUI();
@@ -269,7 +269,7 @@ public class ObjectRepositoryView extends Composite {
 		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		addToOR = new ToolItem(toolBar, SWT.NONE);
-		addToOR.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/temp.png"));
+		addToOR.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/add_to_OR.png"));
 		addToOR.setToolTipText("Add to OR");
 
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);

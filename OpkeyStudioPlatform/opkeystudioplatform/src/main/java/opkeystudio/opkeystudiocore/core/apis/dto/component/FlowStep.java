@@ -29,7 +29,7 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private boolean shouldrun;
 	@DBField
 	private int position;
-	
+
 	private Keyword keyword;
 
 	private FunctionLibraryComponent functionLibraryComponent;
@@ -39,6 +39,11 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
 
 	private List<FlowOutputArgument> flowOutputArgs = new ArrayList<FlowOutputArgument>();
+
+	private List<ComponentInputArgument> componentInputArgs = new ArrayList<ComponentInputArgument>();
+
+	private List<ComponentOutputArgument> componentOutputArgs = new ArrayList<ComponentOutputArgument>();
+
 	@DBField
 	private String component_id;
 	@DBField
@@ -144,6 +149,22 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 
 	public void setFlowOutputArgs(List<FlowOutputArgument> flowOutputArgs) {
 		this.flowOutputArgs = flowOutputArgs;
+	}
+
+	public List<ComponentInputArgument> getComponentInputArgs() {
+		return componentInputArgs;
+	}
+
+	public void setComponentInputArgs(List<ComponentInputArgument> componentInputArgs) {
+		this.componentInputArgs = componentInputArgs;
+	}
+
+	public List<ComponentOutputArgument> getComponentOutputArgs() {
+		return componentOutputArgs;
+	}
+
+	public void setComponentOutputArgs(List<ComponentOutputArgument> componentOutputArgs) {
+		this.componentOutputArgs = componentOutputArgs;
 	}
 
 	public Keyword getKeyword() {

@@ -106,7 +106,7 @@ public class TestSuiteView extends Composite {
 		tagVersionRunToolItem = new ToolItem(toolBar_1, SWT.NONE);
 		tagVersionRunToolItem.setToolTipText("Run With Tag Version");
 		tagVersionRunToolItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/run_with_tag.png"));
 
 		ToolItem toolItem_13 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 

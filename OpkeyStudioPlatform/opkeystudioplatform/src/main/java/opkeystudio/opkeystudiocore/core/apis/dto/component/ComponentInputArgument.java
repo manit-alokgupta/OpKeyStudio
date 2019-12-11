@@ -1,8 +1,9 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class ComponentInputArgument {
+public class ComponentInputArgument extends Modified {
 	@DBField
 	private boolean ismandatory;
 	@DBField
@@ -13,11 +14,25 @@ public class ComponentInputArgument {
 	private String name;
 
 	private int clustering_key;
+	@DBField
+	private String stepid;
 
+	@DBField
+	private String staticobjectid;
 	@DBField
 	private int position;
 	@DBField
 	private String type;
+	@DBField
+	private String step_arg_id;
+
+	public String getStep_arg_id() {
+		return step_arg_id;
+	}
+
+	public void setStep_arg_id(String step_arg_id) {
+		this.step_arg_id = step_arg_id;
+	}
 
 	public boolean isIsmandatory() {
 		return ismandatory;
@@ -73,5 +88,21 @@ public class ComponentInputArgument {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getStaticobjectid() {
+		return staticobjectid;
+	}
+
+	public void setStaticobjectid(String staticobjectid) {
+		this.staticobjectid = staticobjectid;
+	}
+
+	public String getStepid() {
+		return stepid;
+	}
+
+	public void setStepid(String stepid) {
+		this.stepid = stepid;
 	}
 }
