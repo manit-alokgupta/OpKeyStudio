@@ -44,7 +44,8 @@ public class FunctionLibraryConstruct {
 
 	private void deleteComponentStep(FlowStep flowStep) {
 		if (flowStep.isDeleted()) {
-			String query = String.format("delete from component_design_steps where ='%s'", flowStep.getFlow_stepid());
+			String query = String.format("delete from component_design_steps where flow_stepid ='%s'",
+					flowStep.getFlow_stepid());
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
@@ -53,7 +54,7 @@ public class FunctionLibraryConstruct {
 		if (flowStep.isModified()) {
 			System.out.println("Saving flow step " + flowStep.getFlow_stepid());
 			String query = new QueryMaker().createUpdateQuery(flowStep, "component_design_steps",
-					String.format("WHERE ='%s'", flowStep.getFlow_stepid()));
+					String.format("WHERE flow_stepid ='%s'", flowStep.getFlow_stepid()));
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
