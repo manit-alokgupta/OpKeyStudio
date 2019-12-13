@@ -1339,4 +1339,5 @@ Bundle-ClassPath: target/dependency/accessors-smart-1.2.jar,
  target/dependency/commons-codec-1.11.jar,
  target/dependency/commons-collections4-4.4.jar,
  target/dependency/commons-math3-3.6.1.jar,
- target/dependency/poi-4.1.1.jar
+ target/dependency/poi-4.1.1.jar,
+ target/dependency/sqlite-jdbc-3.25.2.jar

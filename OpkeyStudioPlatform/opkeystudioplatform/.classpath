@@ -18,8 +18,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="target/dependency/sqlite-jdbc-3.25.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/json-20190722.jar"/>
-	<classpathentry exported="true" kind="lib" path="target/dependency/sqlite-jdbc-3.8.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/accessors-smart-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/android-json-0.0.20131108.vaadin1.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/asm-5.0.4.jar"/>
