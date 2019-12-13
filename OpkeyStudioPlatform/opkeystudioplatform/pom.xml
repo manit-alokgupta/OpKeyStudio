@@ -19,10 +19,6 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-	<!-- <repositories> <repository> <id>maven-jabylon-core</id> <name>Public 
-		online jabylon repository</name> <url>http://www.jabylon.org/maven/</url> 
-		</repository> </repositories> -->
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -64,27 +60,7 @@
 			<version>4.1.1</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.eclipse.mylyn.commons/ui -->
-		<!-- <dependency> <groupId>org.eclipse.mylyn.commons</groupId> <artifactId>ui</artifactId> 
-			<version>3.9.1</version> </dependency> -->
-
-		<!-- https://mvnrepository.com/artifact/org.eclipse.mylyn.commons/core -->
-		<!-- <dependency> <groupId>org.eclipse.mylyn.commons</groupId> <artifactId>core</artifactId> 
-			<version>3.9.1</version> </dependency> -->
-
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>28.1-jre</version>
-		</dependency>
-
-
-
-
-
 	</dependencies>
-
 
 	<build>
 		<plugins>
