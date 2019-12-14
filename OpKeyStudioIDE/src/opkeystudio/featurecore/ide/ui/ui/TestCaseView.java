@@ -48,13 +48,10 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.KeywordsTree
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
-import opkeystudio.notification.DeleteNotificationPopup;
-import opkeystudio.notification.SaveNotificationPopup;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -115,7 +112,7 @@ public class TestCaseView extends Composite {
 	private Label stepInfoImage;
 	private CLabel stepInfoLabel;
 	private FlowStep selectedFlowStep;
-	private StyledText styledText;
+
 	private String code;
 	private MenuItem testObjectMenu1;
 	private MenuItem testObjectMenu2;
@@ -153,8 +150,8 @@ public class TestCaseView extends Composite {
 
 		TabItem testCaseTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
 //		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
-			testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase.gif"));
-			testCaseTabItem.setText("TestCase");
+		testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase.gif"));
+		testCaseTabItem.setText("TestCase");
 //		}
 //		if (flowStep.isIsfunctionlibrary()) {
 //			testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
@@ -547,87 +544,16 @@ public class TestCaseView extends Composite {
 
 		TableCursor cursor = new TableCursor(flowStepTable, 0);
 
-//	
 		bottomFactory = new BottomFactoryTestCaseUi(testCaseStepsHolder, SWT.NONE);
 		bottomFactory.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-//		ExpandItem item = new ExpandItem(expandBar_1, SWT.NONE);
-//		item.setText("New ExpandItem");
-//		testCaseSashForm.setWeights(new int[] { 400, 235 });
+		TabItem sourceCodeTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
+		sourceCodeTabItem.setText("Source Code");
+		sourceCodeTabItem.setToolTipText("Source Code");
 
-		TabItem tbtmNewItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
-		tbtmNewItem.setText("Source Code");
-		tbtmNewItem.setToolTipText("Source Code");
-
-		Composite composite_121 = new Composite(mainTestCaseTabFolder, SWT.NONE);
-		tbtmNewItem.setControl(composite_121);
-		composite_121.setLayout(new GridLayout(1, false));
-		ToolBar sourceCodeToolBar = new ToolBar(composite_121, SWT.FLAT | SWT.RIGHT);
-		sourceCodeToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		ToolItem sourceCodeToolBarItem = new ToolItem(sourceCodeToolBar, SWT.NONE);
-		sourceCodeToolBarItem.setText("New Item");
-
-		ToolItem seperator = new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
-
-		ToolItem sourceCodeToolBarItem_1 = new ToolItem(sourceCodeToolBar, SWT.NONE);
-		sourceCodeToolBarItem_1.setText("New Item");
-
-		Composite composite_16 = new Composite(composite_121, SWT.NONE);
-		composite_16.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		composite_16.setLayout(new GridLayout(2, false));
-
-		Tree sourceCodeTree = new Tree(composite_16, SWT.BORDER);
-		sourceCodeTree.setHeaderVisible(true);
-		sourceCodeTree.setLinesVisible(false);
-
-		GridData gd_sourceCodeTree = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_sourceCodeTree.widthHint = 275;
-		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
-
-		TreeItem sourceCodeTreeitem = new TreeItem(sourceCodeTree, SWT.NONE);
-		sourceCodeTreeitem.setText("New TreeItem");
-
-		TreeItem sourceCodeTreeitem_1 = new TreeItem(sourceCodeTree, SWT.NONE);
-		sourceCodeTreeitem_1.setText("New TreeItem");
-
-		TabFolder tabFolder = new TabFolder(composite_16, SWT.NONE);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		TabItem sourceCodeTab = new TabItem(tabFolder, SWT.NONE);
-		sourceCodeTab.setText("New Item");
-
-		styledText = new StyledText(tabFolder, SWT.BORDER);
-		sourceCodeTab.setControl(styledText);
-		styledText.setMouseNavigatorEnabled(true);
-		styledText.setText("int a=5;");
-		code = styledText.getText();
-
-		/*
-		 * SourceViewer sv = new SourceViewer(tabFolder, null, null, false, SWT.NONE,
-		 * null); StyledText styledText_1 = sv.getTextWidget();
-		 * styledText_1.setToolTipText("tip");
-		 * 
-		 * JavaTextTools tools = JavaPlugin.getDefault().getJavaTextTools();
-		 * 
-		 * JavaSourceViewerConfiguration config = new
-		 * JavaSourceViewerConfiguration(tools.getColorManager(),
-		 * JavaPlugin.getDefault().getCombinedPreferenceStore(), editor, null);
-		 * 
-		 * IDocumentPartitioner partitioner = new FastPartitioner(new
-		 * FastJavaPartitionScanner(), new String[] { IJavaPartitions.JAVA_DOC,
-		 * IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
-		 * IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
-		 * IJavaPartitions.JAVA_CHARACTER });
-		 * 
-		 * // sv.configure(config); Document d = new Document(); d.set(code);
-		 * d.setDocumentPartitioner(partitioner); partitioner.connect(d);
-		 * 
-		 * sv.setDocument(d);
-		 */
-		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
-		tabItem.setText("New Item");
+		SourceCodeEditor sourceCodeEditor = new SourceCodeEditor(mainTestCaseTabFolder, SWT.NONE);
+		sourceCodeTabItem.setControl(sourceCodeEditor);
 
 		cursor.addSelectionListener(new SelectionListener() {
 
@@ -986,9 +912,10 @@ public class TestCaseView extends Composite {
 					return;
 				}
 
-			//	AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
-				//notification.setDelayClose(200L);
-				//notification.open();
+				// AbstractNotificationPopup notification = new
+				// DeleteNotificationPopup(display);
+				// notification.setDelayClose(200L);
+				// notification.open();
 
 				try {
 					toggleSaveButton(true);
@@ -1034,11 +961,11 @@ public class TestCaseView extends Composite {
 							flowStepTable.renderFlowSteps();
 							return;
 						}
-				
-						//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-						//notification.setDelayClose(200L);
-						//notification.open();
-						
+
+						// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+						// notification.setDelayClose(200L);
+						// notification.open();
+
 						new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 						try {
 							flowStepTable.renderFlowSteps();
@@ -1172,9 +1099,9 @@ public class TestCaseView extends Composite {
 
 	public void saving() {
 
-		//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-		//notification.setDelayClose(200L);
-		//notification.open();
+		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+		// notification.setDelayClose(200L);
+		// notification.open();
 
 		new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 		try {
