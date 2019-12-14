@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
+//import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
@@ -943,9 +943,9 @@ public class FLView extends Composite {
 					return;
 				}
 
-				AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
-				notification.setDelayClose(200L);
-				notification.open();
+		//		AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
+		//		notification.setDelayClose(200L);
+		//		notification.open();
 
 				try {
 					toggleSaveButton(true);
@@ -988,9 +988,10 @@ public class FLView extends Composite {
 							flowStepTable.renderFLFlowSteps();
 							return;
 						}
-						AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-						notification.setDelayClose(200L);
-						notification.open();
+					//	AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+					//	notification.setDelayClose(200L);
+					//	notification.open();
+						
 						new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 						try {
 							flowStepTable.renderFLFlowSteps();
@@ -1108,9 +1109,9 @@ public class FLView extends Composite {
 
 	public void saving() {
 
-		AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-		notification.setDelayClose(200L);
-		notification.open();
+	//	AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+	//	notification.setDelayClose(200L);
+	//	notification.open();
 
 		new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 		try {

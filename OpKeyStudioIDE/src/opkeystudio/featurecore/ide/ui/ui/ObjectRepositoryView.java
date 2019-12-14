@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
+//import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.MouseEvent;
@@ -517,9 +517,11 @@ public class ObjectRepositoryView extends Composite {
 						objectRepositoryTree.renderObjectRepositories();
 						return;
 					}
-					AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-					notification.setDelayClose(200L);
-					notification.open();
+					
+					//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+					//notification.setDelayClose(200L);
+					//notification.open();
+			
 					List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 					try {
 						new ObjectRepositoryApi().saveORObjects(allors);
@@ -564,9 +566,11 @@ public class ObjectRepositoryView extends Composite {
 				if (!result) {
 					return;
 				}
-				AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
-				notification.setDelayClose(200L);
-				notification.open();
+			
+				//AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
+				//notification.setDelayClose(200L);
+				//notification.open();
+				
 				ObjectAttributeProperty selectedProperty = objectAttributeTable.getSelectedObjectAttributeProperty();
 				System.out.println("Deleting " + selectedProperty.getOr_id());
 				selectedProperty.setDeleted(true);
@@ -742,9 +746,11 @@ public class ObjectRepositoryView extends Composite {
 		if (!result) {
 			return;
 		}
-		AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
-		notification.setDelayClose(200L);
-		notification.open();
+		
+		//AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
+		//notification.setDelayClose(200L);
+		//notification.open();
+		
 		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 		obRepo = selectedTreeItem.getObjectRepository();
 		System.out.println("Deleting.. " + obRepo.getObject_id());
@@ -777,9 +783,10 @@ public class ObjectRepositoryView extends Composite {
 	}
 
 	public void saving() {
-		AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-		notification.setDelayClose(200L);
-		notification.open();
+		
+		//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+		//notification.setDelayClose(200L);
+		//notification.open();
 
 		List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 		try {

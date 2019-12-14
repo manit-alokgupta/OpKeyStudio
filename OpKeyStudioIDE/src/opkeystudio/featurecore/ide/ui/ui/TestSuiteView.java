@@ -2,7 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 
-import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
+//import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
@@ -562,9 +562,11 @@ public class TestSuiteView extends Composite {
 				if (!status) {
 					return;
 				}
-				AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
-				notification.setDelayClose(1L);
-				notification.open();
+				
+				//AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
+				//notification.setDelayClose(1L);
+				//notification.open();
+				
 				try {
 					testSuiteTable.deleteSuiteStep(testSuiteTable.getSelectedTestSuite());
 				} catch (IOException e1) {
@@ -648,9 +650,11 @@ public class TestSuiteView extends Composite {
 							testSuiteTable.renderAllTestSuites();
 							return;
 						}
-						AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-						notification.setDelayClose(1L);
-						notification.open();
+					
+						//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+						//notification.setDelayClose(1L);
+						//notification.open();
+						
 						new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
 						try {
 							testSuiteTable.renderAllTestSuites();
@@ -692,9 +696,11 @@ public class TestSuiteView extends Composite {
 	}
 
 	public void saving() {
-		AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-		notification.setDelayClose(1L);
-		notification.open();
+		
+		//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+		//notification.setDelayClose(1L);
+		//notification.open();
+		
 		new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
 		try {
 			testSuiteTable.renderAllTestSuites();
