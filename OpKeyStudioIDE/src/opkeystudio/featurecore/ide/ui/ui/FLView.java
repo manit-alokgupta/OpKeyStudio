@@ -40,7 +40,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
@@ -394,8 +393,6 @@ public class FLView extends Composite {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -417,8 +414,6 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -654,8 +649,6 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -669,8 +662,6 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -678,14 +669,10 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -693,14 +680,10 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -730,14 +713,11 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		try {
 			flowStepTable.renderFLFlowSteps();
 		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -750,8 +730,6 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -814,8 +792,6 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 	}
@@ -892,7 +868,6 @@ public class FLView extends Composite {
 					try {
 						flowStepTable.renderFLFlowSteps();
 					} catch (SQLException | IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 //					getFlowStepTable().refreshFlowSteps();
@@ -903,8 +878,6 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -918,8 +891,6 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
