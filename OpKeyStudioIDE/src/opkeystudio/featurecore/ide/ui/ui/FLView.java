@@ -47,8 +47,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.KeywordsTree
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
-import opkeystudio.notification.DeleteNotificationPopup;
-import opkeystudio.notification.SaveNotificationPopup;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -591,28 +589,7 @@ public class FLView extends Composite {
 		styledText.setText("int a=5;");
 		code = styledText.getText();
 
-		/*
-		 * SourceViewer sv = new SourceViewer(tabFolder, null, null, false, SWT.NONE,
-		 * null); StyledText styledText_1 = sv.getTextWidget();
-		 * styledText_1.setToolTipText("tip");
-		 * 
-		 * JavaTextTools tools = JavaPlugin.getDefault().getJavaTextTools();
-		 * 
-		 * JavaSourceViewerConfiguration config = new
-		 * JavaSourceViewerConfiguration(tools.getColorManager(),
-		 * JavaPlugin.getDefault().getCombinedPreferenceStore(), editor, null);
-		 * 
-		 * IDocumentPartitioner partitioner = new FastPartitioner(new
-		 * FastJavaPartitionScanner(), new String[] { IJavaPartitions.JAVA_DOC,
-		 * IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
-		 * IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
-		 * IJavaPartitions.JAVA_CHARACTER });
-		 * 
-		 * // sv.configure(config); Document d = new Document(); d.set(code);
-		 * d.setDocumentPartitioner(partitioner); partitioner.connect(d);
-		 * 
-		 * sv.setDocument(d);
-		 */
+
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("New Item");
 

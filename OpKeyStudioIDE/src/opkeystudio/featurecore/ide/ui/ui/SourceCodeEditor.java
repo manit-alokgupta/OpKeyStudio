@@ -1,7 +1,11 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -53,10 +57,12 @@ public class SourceCodeEditor extends Composite {
 		TabItem sourceCodeTab = new TabItem(tabFolder, SWT.NONE);
 		sourceCodeTab.setText("New Item Neon");
 
-		styledText = new StyledText(tabFolder, SWT.BORDER);
-		sourceCodeTab.setControl(styledText);
-		styledText.setMouseNavigatorEnabled(true);
-		styledText.setText("int a=5;");
+		SourceViewer viewer = new SourceViewer(tabFolder, null, SWT.NONE);
+	//	final HConfiguration sourceConf = new HConfiguration(HContentAssistProcessor.PARAM_PROCESSOR);
+		//viewer.configure(sourceConf);
+		viewer.setEditable(true);
+		Font font = JFaceResources.getFont(JFaceResources.TEXT_FONT);
+		viewer.getTextWidget().setFont(font);
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("New Item");
 	}
