@@ -41,15 +41,11 @@ public class SourceCodeEditor extends Composite {
 		sourceCodeTree.setHeaderVisible(true);
 		sourceCodeTree.setLinesVisible(false);
 
+		renderTreeItems(sourceCodeTree);
+
 		GridData gd_sourceCodeTree = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_sourceCodeTree.widthHint = 275;
 		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
-
-		TreeItem sourceCodeTreeitem = new TreeItem(sourceCodeTree, SWT.NONE);
-		sourceCodeTreeitem.setText("New TreeItem");
-
-		TreeItem sourceCodeTreeitem_1 = new TreeItem(sourceCodeTree, SWT.NONE);
-		sourceCodeTreeitem_1.setText("New TreeItem");
 
 		TabFolder tabFolder = new TabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -63,6 +59,14 @@ public class SourceCodeEditor extends Composite {
 		styledText.setText("int a=5;");
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("New Item");
+	}
+
+	private void renderTreeItems(Tree tree) {
+		String[] items = new String[] { "Global Variables", "TestCases", "Object Repositories", "Function Libraries" };
+		for (String item : items) {
+			TreeItem sourceCodeTreeitem_1 = new TreeItem(tree, SWT.NONE);
+			sourceCodeTreeitem_1.setText(item);
+		}
 	}
 
 }
