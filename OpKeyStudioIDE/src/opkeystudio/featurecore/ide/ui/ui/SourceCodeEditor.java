@@ -2,7 +2,6 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.source.SourceViewer;
-import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Font;
@@ -17,8 +16,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 public class SourceCodeEditor extends Composite {
-	private StyledText styledText;
-
 	public SourceCodeEditor(Composite parent, int style) {
 		super(parent, style);
 		init();
