@@ -10,7 +10,10 @@ public class GlobalVariableComposer implements CodeComposer {
 
 	@Override
 	public void compose() {
-
+		List<GlobalVariable> gvars = getGlobalVariables();
+		for (GlobalVariable globalVariable : gvars) {
+			
+		}
 	}
 
 	public List<GlobalVariable> getGlobalVariables() {
