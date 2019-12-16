@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 /**
  * 
  *  Bottom Factory Output Parameters
@@ -10,7 +11,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
  * */
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class Fl_BottomFactoryOutput {
+public class Fl_BottomFactoryOutput extends Modified {
 	@DBField
 	private String name;
 	@DBField
