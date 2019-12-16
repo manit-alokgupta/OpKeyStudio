@@ -108,7 +108,7 @@ public class ArtifactTree extends CustomTree {
 			part.setTooltip(artifactTreeItem.getArtifact().getName());
 			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
 			partService.showPart(part, PartState.ACTIVATE);
-			flowStep.setIsfunctionlibrary(true);
+//			flowStep.setIsfunctionlibrary(true);
 		}
 	}
 
