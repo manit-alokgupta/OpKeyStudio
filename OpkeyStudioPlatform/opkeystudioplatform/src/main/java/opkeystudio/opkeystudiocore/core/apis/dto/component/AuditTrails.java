@@ -5,19 +5,21 @@ import java.sql.Date;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
 public class AuditTrails {
-
+// db- project_audit_trail
 	@DBField
 	private String task;
 	@DBField
-	private String fieldName;
+	private String field_name;
 	@DBField
-	private String oldValue;
+	private String old_value;
 	@DBField
-	private String newValue;
+	private String new_value;
 	@DBField
 	private String byUser;
 	@DBField
-	private Date timeStamp;
+	private Date time_stamp;
+	@DBField
+	private String time_stamp_tz;
 	private int clustering_key;
 
 	public String getTask() {
@@ -29,27 +31,27 @@ public class AuditTrails {
 	}
 
 	public String getField() {
-		return fieldName;
+		return field_name;
 	}
 
 	public void setField(String fieldName) {
-		this.fieldName = fieldName;
+		this.field_name = fieldName;
 	}
 
 	public String getOldValue() {
-		return oldValue;
+		return old_value;
 	}
 
 	public void setOldValue(String oldValue) {
-		this.oldValue = oldValue;
+		this.old_value = oldValue;
 	}
 
 	public String getNewValue() {
-		return newValue;
+		return new_value;
 	}
 
 	public void setNewValue(String newValue) {
-		this.newValue = newValue;
+		this.new_value = newValue;
 	}
 
 	public String getByUser() {
@@ -61,11 +63,19 @@ public class AuditTrails {
 	}
 
 	public Date getTimeStamp() {
-		return timeStamp;
+		return time_stamp;
 	}
 
 	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
+		this.time_stamp = timeStamp;
+	}
+
+	public String getTime_stamp_tz() {
+		return time_stamp_tz;
+	}
+
+	public void setTime_stamp_tz(String time_stamp_tz) {
+		this.time_stamp_tz = time_stamp_tz;
 	}
 
 	public int getAudit_trail_id() {
