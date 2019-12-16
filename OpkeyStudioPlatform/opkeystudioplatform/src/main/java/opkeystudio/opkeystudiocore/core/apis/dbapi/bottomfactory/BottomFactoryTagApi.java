@@ -17,7 +17,7 @@ import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 @SuppressWarnings("unused")
-public class BottomFactoryApi {
+public class BottomFactoryTagApi {
 
 
 	private List<Tags> getAllBottomFactoryTags(String id) throws JsonParseException, JsonMappingException, IOException {
