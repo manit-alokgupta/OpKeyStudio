@@ -20,7 +20,27 @@ public class AuditTrails {
 	private Date time_stamp;
 	@DBField
 	private String time_stamp_tz;
-	private int clustering_key;
+	@DBField
+	private String p_id;
+	@DBField
+	private String db_id;
+	private int audit_trail_id;
+
+	public String getP_id() {
+		return p_id;
+	}
+
+	public void setP_id(String p_id) {
+		this.p_id = p_id;
+	}
+
+	public String getDb_id() {
+		return db_id;
+	}
+
+	public void setDb_id(String db_id) {
+		this.db_id = db_id;
+	}
 
 	public String getTask() {
 		return task;
@@ -79,11 +99,11 @@ public class AuditTrails {
 	}
 
 	public int getAudit_trail_id() {
-		return clustering_key;
+		return audit_trail_id;
 	}
 
 	public void setAudit_trail_id(int audit_trail_id) {
-		this.clustering_key = audit_trail_id;
+		this.audit_trail_id = audit_trail_id;
 	}
 
 }

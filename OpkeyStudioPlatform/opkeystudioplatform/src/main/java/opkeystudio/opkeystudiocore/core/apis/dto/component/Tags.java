@@ -9,6 +9,14 @@ public class Tags {
 	private String key;
 	@DBField
 	private String value;
+	@DBField
+	private int position;
+	@DBField
+	private String tag_id;
+	@DBField
+	private String p_id_denormalized;
+	@DBField
+	private String id;
 
 	public int getClustering_key() {
 		return clustering_key;
@@ -32,6 +40,38 @@ public class Tags {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	public String getTag_id() {
+		return tag_id;
+	}
+
+	public void setTag_id(String tag_id) {
+		this.tag_id = tag_id;
+	}
+
+	public String getP_id_denormalized() {
+		return p_id_denormalized;
+	}
+
+	public void setP_id_denormalized(String p_id_denormalized) {
+		this.p_id_denormalized = p_id_denormalized;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }
