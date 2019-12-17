@@ -2,11 +2,14 @@ package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -16,6 +19,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -24,6 +28,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
@@ -135,6 +140,44 @@ public class InputTable extends CustomTable {
 		bottomFactoryInput.setDeleted(true);
 	}
 
+	private List<Control> allTableEditors = new ArrayList<Control>();
+
+	private TableEditor getTableEditor() {
+		TableEditor editor = new TableEditor(this);
+		editor.horizontalAlignment = SWT.CENTER;
+		editor.grabHorizontal = true;
+		editor.minimumWidth = 50;
+		return editor;
+	}
+
+	private void addTableEditor(InputTableItem inputTableItem) {
+		Fl_BottomFactoryInput bottomFactoryInput = inputTableItem.getBottomFactoryInputData();
+		TableEditor editor1 = getTableEditor();
+		CustomButton isOptional = new CustomButton(this, SWT.CHECK);
+		isOptional.setSelection(bottomFactoryInput.isIs_mandatory());
+		isOptional.setControlData(bottomFactoryInput);
+		isOptional.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				thisTable.setSelection(inputTableItem);
+				CustomButton button = (CustomButton) e.getSource();
+				Fl_BottomFactoryInput bottomFactoryInput1 = (Fl_BottomFactoryInput) button.getControlData();
+				bottomFactoryInput1.setModified(true);
+				bottomFactoryInput1.setIs_mandatory(button.getSelection());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		editor1.setEditor(isOptional, inputTableItem, 3);
+		allTableEditors.add(editor1.getEditor());
+	}
+
 	public void refreshAllBottomFactoryInputData() {
 		this.removeAll();
 		List<Fl_BottomFactoryInput> bottomFactoryInputs = getBottomFactoryInputData();
@@ -164,12 +207,13 @@ public class InputTable extends CustomTable {
 				System.out.println(fl_BottomFactoryInput.getName().toString());
 				System.out.println(fl_BottomFactoryInput.getType());
 				System.out.println(fl_BottomFactoryInput.getDefault_value());
-				System.out.println(fl_BottomFactoryInput.isOptional());
+				System.out.println(fl_BottomFactoryInput.isIs_mandatory());
 				System.out.println(fl_BottomFactoryInput.getDescription());
 				inputTableItem.setText(
 						new String[] { fl_BottomFactoryInput.getName().toString(), fl_BottomFactoryInput.getType(),
 								fl_BottomFactoryInput.getDefault_value(), "", fl_BottomFactoryInput.getDescription() });
 				inputTableItem.setBottomFactoryInputData(fl_BottomFactoryInput);
+				addTableEditor(inputTableItem);
 			}
 		}
 	}

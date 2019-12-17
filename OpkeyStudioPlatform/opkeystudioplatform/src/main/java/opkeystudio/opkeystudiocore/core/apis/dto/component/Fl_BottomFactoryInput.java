@@ -56,14 +56,6 @@ public class Fl_BottomFactoryInput extends Modified {
 		this.default_value = default_value;
 	}
 
-	public boolean isOptional() {
-		return is_mandatory;
-	}
-
-	public void setOptional(boolean isOptional) {
-		this.is_mandatory = isOptional;
-	}
-
 	public String getDescription() {
 		return description;
 	}
