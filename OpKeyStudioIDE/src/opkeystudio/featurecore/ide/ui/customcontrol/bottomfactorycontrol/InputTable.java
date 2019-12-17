@@ -31,11 +31,9 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class InputTable extends CustomTable {
 
@@ -130,10 +128,19 @@ public class InputTable extends CustomTable {
 		renderAllBottomFactoryInputData();
 	}
 
+	private void selectRow(int index) {
+		if (this.getItemCount() == 0) {
+			return;
+		}
+		this.setSelection(index);
+		this.notifyListeners(SWT.Selection, null);
+	}
+
 	public void setBottomFactoryInputData(List<Fl_BottomFactoryInput> bottomFactoryInputs) {
 		super.setControlData(bottomFactoryInputs);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Fl_BottomFactoryInput> getBottomFactoryInputData() {
 		return (List<Fl_BottomFactoryInput>) super.getControlData();
 	}
@@ -192,6 +199,7 @@ public class InputTable extends CustomTable {
 				inputTableItem.setBottomFactoryInputData(fl_BottomFactoryInput);
 			}
 		}
+		selectRow(0);
 	}
 
 	public void renderAllBottomFactoryInputData()
@@ -218,14 +226,7 @@ public class InputTable extends CustomTable {
 				addTableEditor(inputTableItem);
 			}
 		}
-	}
-
-	private void selectRow(int index) {
-		if (this.getItemCount() == 0) {
-			return;
-		}
-		this.setSelection(index);
-		this.notifyListeners(SWT.Selection, null);
+		selectRow(0);
 	}
 
 	public void moveFl_BottomFactoryInputUp(Fl_BottomFactoryInput bottomFactoryInput1,

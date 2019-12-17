@@ -29,7 +29,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
 
 public class OutputTable extends CustomTable {
@@ -125,10 +124,19 @@ public class OutputTable extends CustomTable {
 		renderAllBottomFactoryOutputData();
 	}
 
+	private void selectRow(int index) {
+		if (this.getItemCount() == 0) {
+			return;
+		}
+		this.setSelection(index);
+		this.notifyListeners(SWT.Selection, null);
+	}
+
 	public void setBottomFactoryOutputData(List<Fl_BottomFactoryOutput> bottomFactoryOutputs) {
 		super.setControlData(bottomFactoryOutputs);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Fl_BottomFactoryOutput> getBottomFactoryOutputData() {
 		return (List<Fl_BottomFactoryOutput>) super.getControlData();
 	}
@@ -150,6 +158,7 @@ public class OutputTable extends CustomTable {
 				outputTableItem.setBottomFactoryOutputData(fl_BottomFactoryOutput);
 			}
 		}
+		selectRow(0);
 	}
 
 	public void renderAllBottomFactoryOutputData()
@@ -174,14 +183,7 @@ public class OutputTable extends CustomTable {
 
 			}
 		}
-	}
-
-	private void selectRow(int index) {
-		if (this.getItemCount() == 0) {
-			return;
-		}
-		this.setSelection(index);
-		this.notifyListeners(SWT.Selection, null);
+		selectRow(0);
 	}
 
 	public void moveFl_BottomFactoryOutputUp(Fl_BottomFactoryOutput bottomFactoryOutput1,
