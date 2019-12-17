@@ -1,6 +1,7 @@
 package opkeystudio.parts.part;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -21,7 +22,7 @@ public class FLPart {
 	private FLView parentFLView;
 
 	@PostConstruct
-	public void postConstruct(Composite parent) throws IOException {
+	public void postConstruct(Composite parent) throws IOException, SQLException {
 		parentFLView = new FLView(parent, 0);
 	}
 
@@ -32,7 +33,7 @@ public class FLPart {
 				"Please save before Quiting");
 		if (!status) {
 			return;
-		} 
+		}
 
 		parentFLView.saving();
 	}

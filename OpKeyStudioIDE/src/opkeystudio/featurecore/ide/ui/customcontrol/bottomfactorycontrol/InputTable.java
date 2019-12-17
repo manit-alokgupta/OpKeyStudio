@@ -1,5 +1,10 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.FocusEvent;
@@ -14,10 +19,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 
 public class InputTable extends CustomTable {
 
@@ -25,14 +36,15 @@ public class InputTable extends CustomTable {
 	private InputTable thisTable = this;
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
 
-	public InputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
+	public InputTable(Composite parent, int style, BottomFactoryFLUi parentView)
+			throws JsonParseException, JsonMappingException, IOException, SQLException {
 		super(parent, style);
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryFLUi(parentView);
 	}
 
-	private void init() {
+	private void init() throws JsonParseException, JsonMappingException, IOException, SQLException {
 		String[] tableHeaders = { "Name", "Data Type", "Default Value", "Optional", "Description" };
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
@@ -108,6 +120,58 @@ public class InputTable extends CustomTable {
 
 			}
 		});
+		renderAllBottomFactoryInputData();
+	}
+
+	public void setBottomFactoryInputData(List<Fl_BottomFactoryInput> bottomFactoryInputs) {
+		super.setControlData(bottomFactoryInputs);
+	}
+
+	public List<Fl_BottomFactoryInput> getBottomFactoryInputData() {
+		return (List<Fl_BottomFactoryInput>) super.getControlData();
+	}
+
+	public void deleteBottomFactoryInputData(Fl_BottomFactoryInput bottomFactoryInput) {
+		bottomFactoryInput.setDeleted(true);
+	}
+
+	public void refreshAllBottomFactoryInputData() {
+		this.removeAll();
+		List<Fl_BottomFactoryInput> bottomFactoryInputs = getBottomFactoryInputData();
+		setBottomFactoryInputData(bottomFactoryInputs);
+		for (Fl_BottomFactoryInput fl_BottomFactoryInput : bottomFactoryInputs) {
+			if (fl_BottomFactoryInput.isDeleted() == false) {
+				InputTableItem inputTableItem = new InputTableItem(this, 0);
+				inputTableItem.setText(new String[] { fl_BottomFactoryInput.getName(), fl_BottomFactoryInput.getType(),
+						"", "", fl_BottomFactoryInput.getDescription() });
+				inputTableItem.setBottomFactoryInputData(fl_BottomFactoryInput);
+			}
+		}
+	}
+
+	public void renderAllBottomFactoryInputData()
+			throws JsonParseException, JsonMappingException, IOException, SQLException {
+		this.removeAll();
+		MPart mpart = Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		String artifactId = artifact.getId();
+		List<Fl_BottomFactoryInput> bottomFactoryInputs = new BottomFactoryInputParemeterApi()
+				.getAllBottomFactoryInputParameter(artifactId);
+		setBottomFactoryInputData(bottomFactoryInputs);
+		for (Fl_BottomFactoryInput fl_BottomFactoryInput : bottomFactoryInputs) {
+			if (fl_BottomFactoryInput.isDeleted() == false) {
+				InputTableItem inputTableItem = new InputTableItem(this, 0);
+				System.out.println(fl_BottomFactoryInput.getName().toString());
+				System.out.println(fl_BottomFactoryInput.getType());
+				System.out.println(fl_BottomFactoryInput.getDefault_value());
+				System.out.println(fl_BottomFactoryInput.isOptional());
+				System.out.println(fl_BottomFactoryInput.getDescription());
+				inputTableItem.setText(
+						new String[] { fl_BottomFactoryInput.getName().toString(), fl_BottomFactoryInput.getType(),
+								fl_BottomFactoryInput.getDefault_value(), "", fl_BottomFactoryInput.getDescription() });
+				inputTableItem.setBottomFactoryInputData(fl_BottomFactoryInput);
+			}
+		}
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {

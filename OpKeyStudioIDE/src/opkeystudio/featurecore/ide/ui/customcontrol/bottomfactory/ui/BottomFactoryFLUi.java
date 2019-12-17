@@ -1,8 +1,13 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -19,6 +24,9 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
@@ -54,9 +62,14 @@ public class BottomFactoryFLUi extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
+	 * @throws SQLException
+	 * @throws IOException
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
 	 */
 	@SuppressWarnings("unused")
-	public BottomFactoryFLUi(Composite parent, int style) {
+	public BottomFactoryFLUi(Composite parent, int style)
+			throws JsonParseException, JsonMappingException, IOException, SQLException {
 		super(parent, style);
 		display = getParent().getDisplay();
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -341,6 +354,41 @@ public class BottomFactoryFLUi extends Composite {
 						System.out.println("Collapse: " + expandBar.getSize());
 					}
 				});
+			}
+		});
+
+		addInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+//				try {
+//					inputTable.renderAllBottomFactoryInputData();
+//				} catch (IOException | SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		refreshInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.refreshAllBottomFactoryInputData();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
 			}
 		});
 

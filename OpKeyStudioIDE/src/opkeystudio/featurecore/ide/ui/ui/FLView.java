@@ -38,6 +38,9 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
@@ -127,8 +130,12 @@ public class FLView extends Composite {
 	 * 
 	 * @param parent
 	 * @param style
+	 * @throws SQLException
+	 * @throws IOException
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
 	 */
-	public FLView(Composite parent, int style) {
+	public FLView(Composite parent, int style) throws JsonParseException, JsonMappingException, IOException, SQLException {
 		super(parent, style);
 
 		FLUI();
@@ -140,7 +147,7 @@ public class FLView extends Composite {
 	}
 
 	@SuppressWarnings("unused")
-	public void FLUI() {
+	public void FLUI() throws JsonParseException, JsonMappingException, IOException, SQLException {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		display = getParent().getDisplay();
 		TabFolder mainFLTabFolder = new TabFolder(this, SWT.BORDER | SWT.BOTTOM);
@@ -589,7 +596,6 @@ public class FLView extends Composite {
 		styledText.setText("int a=5;");
 		code = styledText.getText();
 
-
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("New Item");
 
@@ -906,7 +912,7 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 
@@ -920,9 +926,10 @@ public class FLView extends Composite {
 					return;
 				}
 
-		//		AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
-		//		notification.setDelayClose(200L);
-		//		notification.open();
+				// AbstractNotificationPopup notification = new
+				// DeleteNotificationPopup(display);
+				// notification.setDelayClose(200L);
+				// notification.open();
 
 				try {
 					toggleSaveButton(true);
@@ -965,10 +972,10 @@ public class FLView extends Composite {
 							flowStepTable.renderFLFlowSteps();
 							return;
 						}
-					//	AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-					//	notification.setDelayClose(200L);
-					//	notification.open();
-						
+						// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+						// notification.setDelayClose(200L);
+						// notification.open();
+
 						new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 						try {
 							flowStepTable.renderFLFlowSteps();
@@ -1086,9 +1093,9 @@ public class FLView extends Composite {
 
 	public void saving() {
 
-	//	AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-	//	notification.setDelayClose(200L);
-	//	notification.open();
+		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+		// notification.setDelayClose(200L);
+		// notification.open();
 
 		new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
 		try {

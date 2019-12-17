@@ -29,6 +29,7 @@ public class Fl_BottomFactoryInput extends Modified {
 	private String component_id;
 	@DBField
 	private String type;
+	private FunctionLibraryComponent flowStep;
 	private int clustering_key;
 
 	public String getIp_id() {
@@ -101,6 +102,14 @@ public class Fl_BottomFactoryInput extends Modified {
 
 	public void setComponent_id(String component_id) {
 		this.component_id = component_id;
+	}
+
+	public FunctionLibraryComponent getFunctionLibraryComponent() {
+		return flowStep;
+	}
+
+	public void setFunctionLibraryComponent(FunctionLibraryComponent flowStep2) {
+		this.flowStep = flowStep2;
 	}
 
 	public int getClustering_key() {

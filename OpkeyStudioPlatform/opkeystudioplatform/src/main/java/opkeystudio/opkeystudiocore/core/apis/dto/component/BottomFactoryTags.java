@@ -1,8 +1,9 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class Tags {
+public class BottomFactoryTags extends Modified {
 
 	private int clustering_key;
 	@DBField
