@@ -392,6 +392,99 @@ public class BottomFactoryFLUi extends Composite {
 			}
 		});
 
+		moveUpInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.moveFl_BottomFactoryInputUp(inputTable.getSelectedInputParemeter(),
+						inputTable.getPrevInputParemeter());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveDownInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.moveFl_BottomFactoryInputDown(inputTable.getSelectedInputParemeter(),
+						inputTable.getNextInputParemeter());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.deleteBottomFactoryInputData(inputTable.getSelectedInputParemeter());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveUpOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.moveFl_BottomFactoryOutputUp(outputTable.getSelectedOutputParemeter(),
+						outputTable.getPrevOutputParemeter());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveDownOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.moveFl_BottomFactoryOutputDown(outputTable.getSelectedOutputParemeter(),
+						outputTable.getNextOutputParemeter());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.deleteBottomFactoryOutputData(outputTable.getSelectedOutputParemeter());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	@Override

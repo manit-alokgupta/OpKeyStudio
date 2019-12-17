@@ -31,9 +31,11 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class InputTable extends CustomTable {
 
@@ -216,6 +218,75 @@ public class InputTable extends CustomTable {
 				addTableEditor(inputTableItem);
 			}
 		}
+	}
+
+	private void selectRow(int index) {
+		if (this.getItemCount() == 0) {
+			return;
+		}
+		this.setSelection(index);
+		this.notifyListeners(SWT.Selection, null);
+	}
+
+	public void moveFl_BottomFactoryInputUp(Fl_BottomFactoryInput bottomFactoryInput1,
+			Fl_BottomFactoryInput bottomFactoryInput2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = bottomFactoryInput1.getPosition();
+		int fpos2 = bottomFactoryInput2.getPosition();
+
+		bottomFactoryInput1.setPosition(fpos2);
+		bottomFactoryInput2.setPosition(fpos1);
+		refreshAllBottomFactoryInputData();
+		selectRow(selectedIndex - 1);
+		bottomFactoryInput1.setModified(true);
+		bottomFactoryInput2.setModified(true);
+
+	}
+
+	public void moveFl_BottomFactoryInputDown(Fl_BottomFactoryInput bottomFactoryInput1,
+			Fl_BottomFactoryInput bottomFactoryInput2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = bottomFactoryInput1.getPosition();
+		int fpos2 = bottomFactoryInput2.getPosition();
+
+		bottomFactoryInput1.setPosition(fpos2);
+		bottomFactoryInput2.setPosition(fpos1);
+		refreshAllBottomFactoryInputData();
+		selectRow(selectedIndex + 1);
+		bottomFactoryInput1.setModified(true);
+		bottomFactoryInput2.setModified(true);
+
+	}
+
+	public Fl_BottomFactoryInput getSelectedInputParemeter() {
+		InputTableItem inputTableItem = (InputTableItem) this.getSelection()[0];
+		return inputTableItem.getBottomFactoryInputData();
+	}
+
+	public Fl_BottomFactoryInput getPrevInputParemeter() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == 0) {
+			return null;
+		}
+		selectedIndex = selectedIndex - 1;
+		InputTableItem inputTableItem = (InputTableItem) this.getItem(selectedIndex);
+		if (inputTableItem != null) {
+			return inputTableItem.getBottomFactoryInputData();
+		}
+		return null;
+	}
+
+	public Fl_BottomFactoryInput getNextInputParemeter() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == this.getItemCount() - 1) {
+			return null;
+		}
+		selectedIndex = selectedIndex + 1;
+		InputTableItem inputTableItem = (InputTableItem) this.getItem(selectedIndex);
+		if (inputTableItem != null) {
+			return inputTableItem.getBottomFactoryInputData();
+		}
+		return null;
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {

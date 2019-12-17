@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.FocusEvent;
@@ -28,6 +29,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
 
 public class OutputTable extends CustomTable {
@@ -172,6 +174,77 @@ public class OutputTable extends CustomTable {
 
 			}
 		}
+	}
+
+	private void selectRow(int index) {
+		if (this.getItemCount() == 0) {
+			return;
+		}
+		this.setSelection(index);
+		this.notifyListeners(SWT.Selection, null);
+	}
+
+	public void moveFl_BottomFactoryOutputUp(Fl_BottomFactoryOutput bottomFactoryOutput1,
+			Fl_BottomFactoryOutput bottomFactoryOutput2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = bottomFactoryOutput1.getPosition();
+		int fpos2 = bottomFactoryOutput2.getPosition();
+
+		bottomFactoryOutput1.setPosition(fpos2);
+		bottomFactoryOutput2.setPosition(fpos1);
+		refreshAllBottomFactoryOutputData();
+		selectRow(selectedIndex - 1);
+		bottomFactoryOutput1.setModified(true);
+		bottomFactoryOutput2.setModified(true);
+
+	}
+
+	public void moveFl_BottomFactoryOutputDown(Fl_BottomFactoryOutput bottomFactoryOutput1,
+			Fl_BottomFactoryOutput bottomFactoryOutput2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = bottomFactoryOutput1.getPosition();
+		int fpos2 = bottomFactoryOutput2.getPosition();
+
+		bottomFactoryOutput1.setPosition(fpos2);
+		bottomFactoryOutput2.setPosition(fpos1);
+		refreshAllBottomFactoryOutputData();
+		selectRow(selectedIndex + 1);
+		bottomFactoryOutput1.setModified(true);
+		bottomFactoryOutput2.setModified(true);
+
+	}
+
+	public Fl_BottomFactoryOutput getSelectedOutputParemeter() {
+		OutputTableItem OutputTableItem = (OutputTableItem) this.getSelection()[0];
+		return OutputTableItem.getBottomFactoryOutputData();
+	}
+
+	public Fl_BottomFactoryOutput getPrevOutputParemeter() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == 0) {
+			return null;
+		}
+		selectedIndex = selectedIndex - 1;
+		OutputTableItem OutputTableItem = (opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTableItem) this
+				.getItem(selectedIndex);
+		if (OutputTableItem != null) {
+			return OutputTableItem.getBottomFactoryOutputData();
+		}
+		return null;
+	}
+
+	public Fl_BottomFactoryOutput getNextOutputParemeter() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == this.getItemCount() - 1) {
+			return null;
+		}
+		selectedIndex = selectedIndex + 1;
+		OutputTableItem OutputTableItem = (opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTableItem) this
+				.getItem(selectedIndex);
+		if (OutputTableItem != null) {
+			return OutputTableItem.getBottomFactoryOutputData();
+		}
+		return null;
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {
