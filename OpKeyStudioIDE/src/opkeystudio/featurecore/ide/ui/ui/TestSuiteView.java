@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -33,18 +32,13 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
-import opkeystudio.notification.DeleteNotificationPopup;
-import opkeystudio.notification.SaveNotificationPopup;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.Label;
 
 public class TestSuiteView extends Composite {
 	private Text searchTextBox;
-//	private SuiteStepTable table;
 	private SuiteStepTable testSuiteTable;
-//	private Table testSuiteTable;
+	@SuppressWarnings("unused")
 	private TestSuite testSuite;
 	private ToolItem runtoolitem;
 	private ToolItem tagVersionRunToolItem;
@@ -69,6 +63,7 @@ public class TestSuiteView extends Composite {
 	private MenuItem menuApproved;
 	private MenuItem menuPublished;
 	private BottomFactoryTestSuiteUi bottomFactory;
+	@SuppressWarnings("unused")
 	private Display display;
 
 	/**

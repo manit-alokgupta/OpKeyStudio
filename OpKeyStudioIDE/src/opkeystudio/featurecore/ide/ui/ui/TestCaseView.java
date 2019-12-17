@@ -9,7 +9,6 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -33,8 +32,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -62,13 +59,6 @@ public class TestCaseView extends Composite {
 	private InputDataTable inputDataTable;
 	private StepDetailsInputData InputDataTable;
 	private ObjectRepositoryTree testObjectTree;
-//	private Table flowStepTable;
-//	private Table outputDataTable;
-//	private Table testObjectTable;
-//	private Table InputDataTable;
-//	private Table inputDataTable;
-//	private Tree testObjectTree;
-
 	private Table mappedTable;
 	private Table propertyTable;
 	private Table dataOutputTable;
@@ -113,6 +103,7 @@ public class TestCaseView extends Composite {
 	private CLabel stepInfoLabel;
 	private FlowStep selectedFlowStep;
 
+	@SuppressWarnings("unused")
 	private String code;
 	private MenuItem testObjectMenu1;
 	private MenuItem testObjectMenu2;
@@ -120,8 +111,11 @@ public class TestCaseView extends Composite {
 	private MenuItem testObjectMenu4;
 	private Keyword keyWord;
 	private BottomFactoryTestCaseUi bottomFactory;
+	@SuppressWarnings("unused")
 	private FlowStep flowStep;
+	@SuppressWarnings("unused")
 	private Display display;
+	@SuppressWarnings("unused")
 	private ArtifactTreeItem artifactTreeItem;
 
 	/**
