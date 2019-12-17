@@ -1,5 +1,10 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.FocusEvent;
@@ -14,10 +19,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParemeterApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
 
 public class OutputTable extends CustomTable {
 	private boolean paintCalled = false;
@@ -25,14 +36,15 @@ public class OutputTable extends CustomTable {
 
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
 
-	public OutputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
+	public OutputTable(Composite parent, int style, BottomFactoryFLUi parentView)
+			throws JsonParseException, JsonMappingException, IOException, SQLException {
 		super(parent, style);
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryFLUi(parentView);
 	}
 
-	private void init() {
+	private void init() throws JsonParseException, JsonMappingException, IOException, SQLException {
 		String[] tableHeaders = { "Name", "Data Type", "Associated Step Output", "Description" };
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
@@ -108,6 +120,58 @@ public class OutputTable extends CustomTable {
 
 			}
 		});
+		renderAllBottomFactoryOutputData();
+	}
+
+	public void setBottomFactoryOutputData(List<Fl_BottomFactoryOutput> bottomFactoryOutputs) {
+		super.setControlData(bottomFactoryOutputs);
+	}
+
+	public List<Fl_BottomFactoryOutput> getBottomFactoryOutputData() {
+		return (List<Fl_BottomFactoryOutput>) super.getControlData();
+	}
+
+	public void deleteBottomFactoryOutputData(Fl_BottomFactoryOutput bottomFactoryOutput) {
+		bottomFactoryOutput.setDeleted(true);
+	}
+
+	public void refreshAllBottomFactoryOutputData() {
+		this.removeAll();
+		List<Fl_BottomFactoryOutput> bottomFactoryOutputs = getBottomFactoryOutputData();
+		setBottomFactoryOutputData(bottomFactoryOutputs);
+		for (Fl_BottomFactoryOutput fl_BottomFactoryOutput : bottomFactoryOutputs) {
+			if (fl_BottomFactoryOutput.isDeleted() == false) {
+				OutputTableItem outputTableItem = new OutputTableItem(this, 0);
+				outputTableItem.setText(new String[] { fl_BottomFactoryOutput.getName(),
+						fl_BottomFactoryOutput.getType(), fl_BottomFactoryOutput.getComponentstep_oa_id(),
+						fl_BottomFactoryOutput.getDescription() });
+				outputTableItem.setBottomFactoryOutputData(fl_BottomFactoryOutput);
+			}
+		}
+	}
+
+	public void renderAllBottomFactoryOutputData()
+			throws JsonParseException, JsonMappingException, IOException, SQLException {
+		this.removeAll();
+		MPart mpart = Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		String artifactId = artifact.getId();
+		List<Fl_BottomFactoryOutput> bottomFactoryOutputs = new BottomFactoryOutputParemeterApi()
+				.getAllBottomFactoryOutputParameter(artifactId);
+		setBottomFactoryOutputData(bottomFactoryOutputs);
+		for (Fl_BottomFactoryOutput fl_BottomFactoryOutput : bottomFactoryOutputs) {
+			if (fl_BottomFactoryOutput.isDeleted() == false) {
+				OutputTableItem outputTableItem = new OutputTableItem(this, 0);
+				System.out.println(fl_BottomFactoryOutput.getName().toString());
+				System.out.println(fl_BottomFactoryOutput.getType());
+				System.out.println(fl_BottomFactoryOutput.getDescription());
+				outputTableItem.setText(new String[] { fl_BottomFactoryOutput.getName().toString(),
+						fl_BottomFactoryOutput.getType(), fl_BottomFactoryOutput.getComponentstep_oa_id(),
+						fl_BottomFactoryOutput.getDescription() });
+				outputTableItem.setBottomFactoryOutputData(fl_BottomFactoryOutput);
+
+			}
+		}
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {

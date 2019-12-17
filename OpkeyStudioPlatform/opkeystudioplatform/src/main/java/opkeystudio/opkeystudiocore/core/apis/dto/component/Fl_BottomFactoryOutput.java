@@ -28,6 +28,7 @@ public class Fl_BottomFactoryOutput extends Modified {
 	private String component_id;
 	@DBField
 	private String componentstep_oa_id;
+	private FunctionLibraryComponent flowStep;
 
 	public String getName() {
 		return name;
@@ -91,6 +92,14 @@ public class Fl_BottomFactoryOutput extends Modified {
 
 	public void setComponentstep_oa_id(String componentstep_oa_id) {
 		this.componentstep_oa_id = componentstep_oa_id;
+	}
+
+	public FunctionLibraryComponent getFunctionLibraryComponent() {
+		return flowStep;
+	}
+
+	public void setFunctionLibraryComponent(FunctionLibraryComponent flowStep2) {
+		this.flowStep = flowStep2;
 	}
 
 }

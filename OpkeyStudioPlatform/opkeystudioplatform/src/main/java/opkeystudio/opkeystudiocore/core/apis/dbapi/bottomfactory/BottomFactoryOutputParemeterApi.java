@@ -1,6 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -8,9 +9,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
@@ -19,14 +22,32 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 @SuppressWarnings("unused")
 public class BottomFactoryOutputParemeterApi {
 
-	private List<Fl_BottomFactoryOutput> getAllBottomFactoryOutputParameter(String component_id)
+	private List<Fl_BottomFactoryOutput> getBottomFactoryOutputParameter(String component_id)
 			throws JsonParseException, JsonMappingException, IOException {
 		String query = String.format(
 				"SELECT * FROM component_output_parameters where component_id='%s' ORDER BY position", component_id);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, TestSuite.class);
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, Fl_BottomFactoryOutput.class);
 		return mapper.readValue(result, type);
+	}
+
+	private FunctionLibraryComponent getFunctionLibraryComponent(String id)
+			throws JsonParseException, JsonMappingException, IOException, SQLException {
+		return new FunctionLibraryApi().getFunctinLibraryComponent(id).get(0);
+	}
+
+	public List<Fl_BottomFactoryOutput> getAllBottomFactoryOutputParameter(String component_id)
+			throws JsonParseException, JsonMappingException, IOException, SQLException {
+		List<Fl_BottomFactoryOutput> bottomFactoryOutputs = getBottomFactoryOutputParameter(component_id);
+		for (Fl_BottomFactoryOutput fl_BottomFactoryOutput : bottomFactoryOutputs) {
+			System.out.println(fl_BottomFactoryOutput.getComponent_id());
+			if (fl_BottomFactoryOutput.getComponent_id() != null) {
+				FunctionLibraryComponent flComp = getFunctionLibraryComponent(fl_BottomFactoryOutput.getComponent_id());
+				fl_BottomFactoryOutput.setFunctionLibraryComponent(flComp);
+			}
+		}
+		return bottomFactoryOutputs;
 	}
 
 	private void deleteBottomFactoryOutputParameter(Fl_BottomFactoryOutput bottomFactoryOutput) {
@@ -66,5 +87,10 @@ public class BottomFactoryOutputParemeterApi {
 			updateBottomFactoryOutputParameter(bottomFactoryOutput);
 			addBottomFactoryOutputParameter(bottomFactoryOutput);
 		}
+	}
+
+	public static List<Fl_BottomFactoryOutput> getInstance() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
