@@ -28,6 +28,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.ExecutionStatusTable;
@@ -36,6 +37,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputT
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
 
@@ -68,6 +71,8 @@ public class BottomFactoryFLUi extends Composite {
 	private ToolItem deleteOutputItem;
 	private ToolItem moveUpOutputItem;
 	private ToolItem moveDownOutputItem;
+	private ToolItem refreshOutputItem;
+	private boolean flag = false;
 	private Display display;
 
 	/**
@@ -339,6 +344,13 @@ public class BottomFactoryFLUi extends Composite {
 		moveDownOutputItem.setToolTipText("Move Down");
 		moveDownOutputItem.setEnabled(false);
 
+		ToolItem toolItem_7 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+
+		refreshOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		refreshOutputItem.setToolTipText("Refresh");
+		refreshOutputItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+
 		outputTable = new OutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		outputTable = new Table(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
 		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -491,8 +503,30 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				inputTable.refreshAllBottomFactoryInputData();
+				try {
+					if (flag == true) {
+						flag = false;
+						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+								"Do you want to Save changes?");
+						if (!status) {
+							inputTable.renderAllBottomFactoryInputData();
+							return;
+						}
+						new BottomFactoryInputParemeterApi()
+								.saveAllBottomFactoryInputParameter(inputTable.getBottomFactoryInputData());
+						try {
+							inputTable.renderAllBottomFactoryInputData();
+						} catch (IOException | SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
 
+					outputTable.renderAllBottomFactoryOutputData();
+				} catch (IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override
@@ -539,6 +573,7 @@ public class BottomFactoryFLUi extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				inputTable.deleteBottomFactoryInputData(inputTable.getSelectedInputParemeter());
+				flag = true;
 
 			}
 
@@ -586,7 +621,44 @@ public class BottomFactoryFLUi extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				outputTable.deleteBottomFactoryOutputData(outputTable.getSelectedOutputParemeter());
+				flag = true;
+			}
 
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		refreshOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					if (flag == true) {
+						flag = false;
+						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+								"Do you want to Save changes?");
+						if (!status) {
+							outputTable.renderAllBottomFactoryOutputData();
+							return;
+						}
+						new BottomFactoryOutputParemeterApi()
+								.saveAllBottomFactoryOutputParameter(outputTable.getBottomFactoryOutputData());
+						try {
+							outputTable.renderAllBottomFactoryOutputData();
+						} catch (IOException | SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+
+					outputTable.renderAllBottomFactoryOutputData();
+				} catch (IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override

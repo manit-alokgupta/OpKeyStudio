@@ -143,6 +143,7 @@ public class OutputTable extends CustomTable {
 
 	public void deleteBottomFactoryOutputData(Fl_BottomFactoryOutput bottomFactoryOutput) {
 		bottomFactoryOutput.setDeleted(true);
+		refreshAllBottomFactoryOutputData();
 	}
 
 	public void refreshAllBottomFactoryOutputData() {

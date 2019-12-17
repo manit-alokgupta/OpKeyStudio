@@ -147,6 +147,7 @@ public class InputTable extends CustomTable {
 
 	public void deleteBottomFactoryInputData(Fl_BottomFactoryInput bottomFactoryInput) {
 		bottomFactoryInput.setDeleted(true);
+		refreshAllBottomFactoryInputData();
 	}
 
 	private List<Control> allTableEditors = new ArrayList<Control>();
