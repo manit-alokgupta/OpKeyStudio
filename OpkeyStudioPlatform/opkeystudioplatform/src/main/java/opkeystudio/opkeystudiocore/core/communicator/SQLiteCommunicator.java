@@ -61,25 +61,10 @@ public class SQLiteCommunicator {
 				try {
 					String columnName = resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase();
 					String columnTypeName = resultSet.getMetaData().getColumnTypeName(i + 1);
-					if (columnTypeName.equals("BLOB")) {
-						InputStream in = resultSet.getBinaryStream(i + 1);
-						ByteArrayOutputStream out = new ByteArrayOutputStream();
-						byte[] buffer = new byte[1024];
-						int bytesRead = in.read(buffer);
-						while (bytesRead > -1) {
-							out.write(buffer, bytesRead, buffer.length);
-							bytesRead = in.read(buffer);
-						}
-						byte[] datas = out.toByteArray();
-						in.close();
-						String data = new String(datas);
-						obj.put(columnName, data);
-					} else {
-						Object columnData = resultSet.getObject(i + 1);
-						obj.put(columnName, columnData);
-					}
-				} catch (JSONException | SQLException | IOException e) {
-					// TODO Auto-generated catch block
+					Object columnData = resultSet.getObject(i + 1);
+					obj.put(columnName, columnData);
+
+				} catch (JSONException | SQLException e) {
 					e.printStackTrace();
 				}
 			}

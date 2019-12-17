@@ -17,6 +17,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
@@ -55,6 +56,9 @@ public class KeywordsTree extends CustomTree {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println(selectedKeyword().getKeywordname());
+				FlowStep flowStep = new FlowMaker().getFlowStepDTO(selectedKeyword(), "");
+				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 			}
 
 			@Override
