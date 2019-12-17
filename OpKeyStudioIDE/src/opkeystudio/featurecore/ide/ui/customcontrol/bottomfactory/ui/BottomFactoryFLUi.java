@@ -37,6 +37,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputT
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
+import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
@@ -72,7 +73,8 @@ public class BottomFactoryFLUi extends Composite {
 	private ToolItem moveUpOutputItem;
 	private ToolItem moveDownOutputItem;
 	private ToolItem refreshOutputItem;
-	private boolean flag = false;
+	public boolean flag = false;
+	private FLView fLView;
 	private Display display;
 
 	/**
@@ -478,6 +480,10 @@ public class BottomFactoryFLUi extends Composite {
 		deleteOutputItem.setEnabled(status);
 	}
 
+	public void toggleFlag(boolean status) {
+		flag = status;
+	}
+
 	public void addButtonListeners() {
 		addInputItem.addSelectionListener(new SelectionListener() {
 
@@ -505,7 +511,8 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					if (flag == true) {
-						flag = false;
+						toggleFlag(false);
+
 						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
 								"Do you want to Save changes?");
 						if (!status) {
@@ -574,7 +581,7 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				inputTable.deleteBottomFactoryInputData(inputTable.getSelectedInputParemeter());
 				flag = true;
-
+				fLView.toggleSaveButton(flag);
 			}
 
 			@Override
@@ -622,6 +629,7 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				outputTable.deleteBottomFactoryOutputData(outputTable.getSelectedOutputParemeter());
 				flag = true;
+				fLView.toggleSaveButton(true);
 			}
 
 			@Override
@@ -637,7 +645,7 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					if (flag == true) {
-						flag = false;
+						toggleFlag(false);
 						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
 								"Do you want to Save changes?");
 						if (!status) {
@@ -667,6 +675,11 @@ public class BottomFactoryFLUi extends Composite {
 
 			}
 		});
+	}
+
+	public void saving() {
+		new BottomFactoryOutputParemeterApi()
+				.saveAllBottomFactoryOutputParameter(outputTable.getBottomFactoryOutputData());
 	}
 
 	@Override

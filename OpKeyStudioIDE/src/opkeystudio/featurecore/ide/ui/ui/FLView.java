@@ -135,7 +135,8 @@ public class FLView extends Composite {
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
-	public FLView(Composite parent, int style) throws JsonParseException, JsonMappingException, IOException, SQLException {
+	public FLView(Composite parent, int style)
+			throws JsonParseException, JsonMappingException, IOException, SQLException {
 		super(parent, style);
 
 		FLUI();
@@ -1098,6 +1099,10 @@ public class FLView extends Composite {
 		// notification.open();
 
 		new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
+		bottomFactory.saving();
+//		if (bottomFactory.flag == true) {
+//
+//		}
 		try {
 			flowStepTable.renderFLFlowSteps();
 		} catch (SQLException | IOException e1) {
