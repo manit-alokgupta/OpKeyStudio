@@ -30,6 +30,7 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -87,6 +88,7 @@ public class InputTable extends CustomTable {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int selectedColumn = cursor.getColumn();
+				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
 				CustomText text = new CustomText(cursor, 0);
 				System.out.println("Column number:-" + cursor.getColumn());
 				System.out.println("Row number:-" + cursor.getRow());
@@ -110,6 +112,7 @@ public class InputTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
+						selectedTableItem.setText(selectedColumn, text.getText());
 						cursor.getRow().setText(selectedColumn, text.getText());
 
 					}

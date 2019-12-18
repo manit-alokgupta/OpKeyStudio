@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryTagApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -129,6 +130,8 @@ public class TagTable extends CustomTable {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int selectedColumn = cursor.getColumn();
+				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
+				BottomFactoryTag bottomFactoryTag = (BottomFactoryTag) selectedTableItem.getControlData();
 				CustomText text = new CustomText(cursor, 0);
 				System.out.println("Column number:-" + cursor.getColumn());
 				System.out.println("Row number:-" + cursor.getRow());
@@ -152,8 +155,15 @@ public class TagTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
+						selectedTableItem.setText(selectedColumn, text.getText());
+						bottomFactoryTag.setModified(true);
 						cursor.getRow().setText(selectedColumn, text.getText());
-
+						if (selectedColumn == 0) {
+							bottomFactoryTag.setKey(text.getText());
+						}
+						if (selectedColumn == 1) {
+							bottomFactoryTag.setValue(text.getText());
+						}
 					}
 				});
 
