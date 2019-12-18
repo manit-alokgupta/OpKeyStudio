@@ -119,6 +119,7 @@ public class GlobalVariableTable extends CustomTable {
 	private TableEditor getTableEditor() {
 		TableEditor editor = new TableEditor(this);
 		editor.horizontalAlignment = SWT.CENTER;
+		editor.verticalAlignment = SWT.CENTER;
 		editor.grabHorizontal = true;
 		editor.grabVertical = true;
 		return editor;
@@ -136,7 +137,7 @@ public class GlobalVariableTable extends CustomTable {
 				globalVariable.getDatatype()));
 
 		combo.setControlData(globalVariable);
-		CustomButton isExternallyUpdatable = new CustomButton(this, SWT.CHECK);
+		CustomButton isExternallyUpdatable = new CustomButton(this, SWT.CHECK | SWT.CENTER);
 		isExternallyUpdatable.setSelection(globalVariable.isExternallyupdatable());
 
 		isExternallyUpdatable.setControlData(globalVariable);
@@ -228,9 +229,18 @@ public class GlobalVariableTable extends CustomTable {
 	}
 
 	public void addBlankGlobalVariableStep() {
-		int lastPosition = getGlobalVariablesData().get(getGlobalVariablesData().size() - 1).getPosition();
-		System.out.println(lastPosition);
+		int lastPosition = 0;
 		GlobalVariable gv = new GlobalVariable();
+		System.out.println("  " + getGlobalVariablesData().size());
+		if ((getGlobalVariablesData().size()) == 0) {
+			lastPosition = (getGlobalVariablesData().size() - 1);
+
+		} else {
+			lastPosition = getGlobalVariablesData().get(getGlobalVariablesData().size() - 1).getPosition();
+
+		}
+
+//		System.out.println(lastPosition);
 		gv.setPosition(lastPosition + 1);
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
 		gv.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
