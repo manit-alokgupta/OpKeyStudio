@@ -38,7 +38,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTabl
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 import opkeystudio.featurecore.ide.ui.ui.FLView;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParameterApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryTagApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
@@ -540,7 +540,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				inputTable.addBlankInputPArameter();
 			}
 
 			@Override
@@ -564,7 +564,7 @@ public class BottomFactoryFLUi extends Composite {
 							inputTable.renderAllBottomFactoryInputData();
 							return;
 						}
-						new BottomFactoryInputParemeterApi()
+						new BottomFactoryInputParameterApi()
 								.saveAllBottomFactoryInputParameter(inputTable.getBottomFactoryInputData());
 						try {
 							inputTable.renderAllBottomFactoryInputData();
@@ -829,7 +829,7 @@ public class BottomFactoryFLUi extends Composite {
 	public void save() {
 		new BottomFactoryOutputParemeterApi()
 				.saveAllBottomFactoryOutputParameter(outputTable.getBottomFactoryOutputData());
-		new BottomFactoryInputParemeterApi().saveAllBottomFactoryInputParameter(inputTable.getBottomFactoryInputData());
+		new BottomFactoryInputParameterApi().saveAllBottomFactoryInputParameter(inputTable.getBottomFactoryInputData());
 		new BottomFactoryTagApi().saveAllBottomFactoryTag(tagsTable.getTagData());
 	}
 

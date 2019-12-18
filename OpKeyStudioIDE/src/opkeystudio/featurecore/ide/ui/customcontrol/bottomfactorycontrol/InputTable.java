@@ -32,9 +32,10 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParameterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class InputTable extends CustomTable {
 
@@ -148,6 +149,10 @@ public class InputTable extends CustomTable {
 		return (List<Fl_BottomFactoryInput>) super.getControlData();
 	}
 
+	public void addInputParameter(Fl_BottomFactoryInput bottomFactoryInput) {
+		getBottomFactoryInputData().add(bottomFactoryInput);
+	}
+
 	public void deleteBottomFactoryInputData(Fl_BottomFactoryInput bottomFactoryInput) {
 		bottomFactoryInput.setDeleted(true);
 		refreshAllBottomFactoryInputData();
@@ -212,7 +217,7 @@ public class InputTable extends CustomTable {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
-		List<Fl_BottomFactoryInput> bottomFactoryInputs = new BottomFactoryInputParemeterApi()
+		List<Fl_BottomFactoryInput> bottomFactoryInputs = new BottomFactoryInputParameterApi()
 				.getAllBottomFactoryInputParameter(artifactId);
 		setBottomFactoryInputData(bottomFactoryInputs);
 		for (Fl_BottomFactoryInput fl_BottomFactoryInput : bottomFactoryInputs) {
@@ -292,6 +297,34 @@ public class InputTable extends CustomTable {
 			return inputTableItem.getBottomFactoryInputData();
 		}
 		return null;
+	}
+
+	public void addBlankInputPArameter() {
+		int lastPosition = 0;
+		Fl_BottomFactoryInput bottomFactoryInput = new Fl_BottomFactoryInput();
+		System.out.println(getBottomFactoryInputData().size());
+		if ((getBottomFactoryInputData().size()) == 0) {
+			lastPosition = (getBottomFactoryInputData().size() - 1);
+
+		} else {
+			lastPosition = getBottomFactoryInputData().get(getBottomFactoryInputData().size() - 1).getPosition();
+		}
+		bottomFactoryInput.setPosition(lastPosition + 1);
+		bottomFactoryInput.setIp_id(Utilities.getInstance().getUniqueUUID(""));
+		bottomFactoryInput.setComponent_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
+		bottomFactoryInput.setName("");
+		bottomFactoryInput.setType("String");
+		bottomFactoryInput.setIs_mandatory(true);
+		bottomFactoryInput.setDefault_value("");
+		bottomFactoryInput.setDescription("");
+
+		addInputParameter(bottomFactoryInput);
+		try {
+			renderAllBottomFactoryInputData();
+		} catch (IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {

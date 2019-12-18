@@ -1,5 +1,7 @@
 package opkeystudio.core.utils;
 
+import java.util.UUID;
+
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -34,5 +36,9 @@ public class Utilities {
 
 	public void showErrorDialog(Shell shell, String title, String message) {
 		MessageDialog.openError(shell, title, message);
+	}
+
+	public String getUniqueUUID(String prefix) {
+		return prefix + "" + UUID.randomUUID().toString();
 	}
 }

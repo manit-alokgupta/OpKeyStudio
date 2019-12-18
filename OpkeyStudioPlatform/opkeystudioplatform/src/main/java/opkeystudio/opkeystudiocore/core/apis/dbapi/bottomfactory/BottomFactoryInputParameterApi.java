@@ -17,12 +17,13 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
+import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 @SuppressWarnings("unused")
-public class BottomFactoryInputParemeterApi {
+public class BottomFactoryInputParameterApi {
 	public List<Fl_BottomFactoryInput> getBottomFactoryInputParameter(String component_id)
 			throws JsonParseException, JsonMappingException, IOException {
 		String query = String.format(
@@ -87,6 +88,17 @@ public class BottomFactoryInputParemeterApi {
 			updateBottomFactoryInputParameter(inputParameter);
 			addBottomFactoryInputParameter(inputParameter);
 		}
+	}
+
+	public void insertInputParameter(Fl_BottomFactoryInput bottomFactoryInput) throws SQLException {
+		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+		sqlComm.connect();
+		String query = String.format(
+				"insert into component_input_parameters(ip_id,component_id,Name,type,is_mandatory,default_value,position,description) VALUES('%s','%s','%s','%s','%s','%s','%s')",
+				bottomFactoryInput.getIp_id(), bottomFactoryInput.getComponent_id(), bottomFactoryInput.getName(),
+				bottomFactoryInput.getType(), bottomFactoryInput.isIs_mandatory(),
+				bottomFactoryInput.getDefault_value(), bottomFactoryInput.getDescription());
+		int result = sqlComm.executeUpdate(query);
 	}
 
 	public static List<Fl_BottomFactoryInput> getInstance() {
