@@ -196,7 +196,7 @@ public class InputTable extends CustomTable {
 			if (fl_BottomFactoryInput.isDeleted() == false) {
 				InputTableItem inputTableItem = new InputTableItem(this, 0);
 				inputTableItem.setText(new String[] { fl_BottomFactoryInput.getName(), fl_BottomFactoryInput.getType(),
-						"", "", fl_BottomFactoryInput.getDescription() });
+						fl_BottomFactoryInput.getDefault_value(), "", fl_BottomFactoryInput.getDescription() });
 				inputTableItem.setBottomFactoryInputData(fl_BottomFactoryInput);
 			}
 		}

@@ -34,7 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupT
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.ExecutionStatusTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagsTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 import opkeystudio.featurecore.ide.ui.ui.FLView;
@@ -46,7 +46,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutpu
 public class BottomFactoryFLUi extends Composite {
 	private UsedByTable usedByTable;
 	private AuditTrailsTable auditTrailsTable;
-	private TagsTable tagsTable;
+	private TagTable tagsTable;
 	private ExecutionStatusTable executionStatusTable;
 	private BackupTable backupTable;
 	private TestCaseDocumentTable testCaseDocTable;
@@ -229,7 +229,7 @@ public class BottomFactoryFLUi extends Composite {
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		moveDownTagItem.setToolTipText("Move Down");
 
-		tagsTable = new TagsTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
+		tagsTable = new TagTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 		tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tagsTable.setHeaderVisible(true);

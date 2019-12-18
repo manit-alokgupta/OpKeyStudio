@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class BottomFactoryTags extends Modified {
+public class BottomFactoryTag extends Modified {
 
 	private int clustering_key;
 	@DBField
@@ -18,6 +18,7 @@ public class BottomFactoryTags extends Modified {
 	private String p_id_denormalized;
 	@DBField
 	private String id;
+	private FunctionLibraryComponent functionLibraryComponent;
 
 	public int getClustering_key() {
 		return clustering_key;
@@ -73,6 +74,14 @@ public class BottomFactoryTags extends Modified {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public FunctionLibraryComponent getFunctionLibraryComponent() {
+		return functionLibraryComponent;
+	}
+
+	public void setFunctionLibraryComponent(FunctionLibraryComponent functionLibraryComponent) {
+		this.functionLibraryComponent = functionLibraryComponent;
 	}
 
 }

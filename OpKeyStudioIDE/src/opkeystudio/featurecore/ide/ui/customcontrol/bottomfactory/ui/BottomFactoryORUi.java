@@ -22,14 +22,14 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagsTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 
 public class BottomFactoryORUi extends Composite {
 
 	private UsedByTable usedByTable;
 	private AuditTrailsTable auditTrailsTable;
-	private TagsTable tagsTable;
+	private TagTable tagsTable;
 
 	private BackupTable backupTable;
 
@@ -188,7 +188,7 @@ public class BottomFactoryORUi extends Composite {
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		moveDownTagItem.setToolTipText("Move Down");
 
-		tagsTable = new TagsTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
+		tagsTable = new TagTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 		tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tagsTable.setHeaderVisible(true);
