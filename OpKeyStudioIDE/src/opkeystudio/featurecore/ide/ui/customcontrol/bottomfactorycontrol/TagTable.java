@@ -34,6 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 
 public class TagTable extends CustomTable {
 
@@ -43,6 +44,7 @@ public class TagTable extends CustomTable {
 	private BottomFactoryORUi parentBottomFactoryORUi;
 	private BottomFactoryDataRepoUi parentBottomFactoryDataRepoUi;
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
+	private BottomFactoryTestSuiteUi parentBottomFactoryTestSuiteUi;
 
 	public TagTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUI) {
 		super(parent, style);
@@ -90,6 +92,18 @@ public class TagTable extends CustomTable {
 		}
 		thisTable = this;
 		this.setParentBottomFactoryFLUi(parentView);
+	}
+
+	public TagTable(Composite parent, int style, BottomFactoryTestSuiteUi parentView) {
+		super(parent, style);
+		try {
+			init();
+		} catch (IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		thisTable = this;
+		this.setParentBottomFactoryTestSuiteUi(parentView);
 	}
 
 	private void init() throws JsonParseException, JsonMappingException, IOException, SQLException {
@@ -237,6 +251,63 @@ public class TagTable extends CustomTable {
 		selectRow(0);
 	}
 
+	public void moveTagDataUp(BottomFactoryTag bottomFactoryTag1, BottomFactoryTag bottomFactoryTag2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = bottomFactoryTag1.getPosition();
+		int fpos2 = bottomFactoryTag2.getPosition();
+
+		bottomFactoryTag1.setPosition(fpos2);
+		bottomFactoryTag2.setPosition(fpos1);
+		refreshAllTagData();
+		selectRow(selectedIndex - 1);
+		bottomFactoryTag1.setModified(true);
+		bottomFactoryTag2.setModified(true);
+	}
+
+	public void moveTagDataDown(BottomFactoryTag bottomFactoryTag1, BottomFactoryTag bottomFactoryTag2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = bottomFactoryTag1.getPosition();
+		int fpos2 = bottomFactoryTag2.getPosition();
+
+		bottomFactoryTag1.setPosition(fpos2);
+		bottomFactoryTag2.setPosition(fpos1);
+		refreshAllTagData();
+		selectRow(selectedIndex + 1);
+		bottomFactoryTag1.setModified(true);
+		bottomFactoryTag2.setModified(true);
+	}
+
+	public BottomFactoryTag getSelectedTagData() {
+		TagTableItem item = (TagTableItem) this.getSelection()[0];
+		return item.getTagData();
+	}
+
+	public BottomFactoryTag getPrevTagData() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == 0) {
+			return null;
+		}
+		selectedIndex = selectedIndex - 1;
+		TagTableItem item = (TagTableItem) this.getItem(selectedIndex);
+		if (item != null) {
+			return item.getTagData();
+		}
+		return null;
+	}
+
+	public BottomFactoryTag getNextTagData() {
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == this.getItemCount() - 1) {
+			return null;
+		}
+		selectedIndex = selectedIndex + 1;
+		TagTableItem item = (TagTableItem) this.getItem(selectedIndex);
+		if (item != null) {
+			return item.getTagData();
+		}
+		return null;
+	}
+
 	public BottomFactoryTestCaseUi getParentBottomFactoryUI() {
 		return parentBottomFactoryUI;
 	}
@@ -267,6 +338,14 @@ public class TagTable extends CustomTable {
 
 	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
 		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
+	}
+
+	public BottomFactoryTestSuiteUi getParentBottomFactoryTestSuiteUi() {
+		return parentBottomFactoryTestSuiteUi;
+	}
+
+	public void setParentBottomFactoryTestSuiteUi(BottomFactoryTestSuiteUi parentBottomFactoryTestSuiteUi) {
+		this.parentBottomFactoryTestSuiteUi = parentBottomFactoryTestSuiteUi;
 	}
 
 }

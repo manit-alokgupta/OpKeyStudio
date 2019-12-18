@@ -40,6 +40,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByT
 import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParemeterApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
 
@@ -61,6 +62,7 @@ public class BottomFactoryFLUi extends Composite {
 //	private Table testCaseDocTable;
 //	private Table inputTable;
 //	private Table outputTable;
+
 	private TabItem inputTabItem;
 	private ToolItem addInputItem;
 	private ToolItem deleteInputItem;
@@ -73,6 +75,12 @@ public class BottomFactoryFLUi extends Composite {
 	private ToolItem moveUpOutputItem;
 	private ToolItem moveDownOutputItem;
 	private ToolItem refreshOutputItem;
+	private ToolItem addTagItem;
+	private ToolItem deleteTagItem;
+	private ToolItem copyTagItem;
+	private ToolItem pasteTagItem;
+	private ToolItem moveUpTagItem;
+	private ToolItem moveDownTagItem;
 	public boolean flag = false;
 	private FLView fLView;
 	private Display display;
@@ -194,37 +202,37 @@ public class BottomFactoryFLUi extends Composite {
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
-		ToolItem addTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		addTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		addTagItem.setWidth(27);
 		addTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		addTagItem.setToolTipText("Add");
 		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		deleteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteTagItem.setToolTipText("Delete");
 
 		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem copyTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		copyTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		copyTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
 		copyTagItem.setToolTipText("copy");
 
 		ToolItem toolItem3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem pasteTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		pasteTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		pasteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
 		pasteTagItem.setToolTipText("Paste");
 
 		ToolItem toolItem4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveUpTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		moveUpTagItem.setToolTipText("Move Up");
 
 		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem moveDownTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveDownTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveDownTagItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		moveDownTagItem.setToolTipText("Move Down");
@@ -397,19 +405,19 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Fl_BottomFactoryInput bottomFactoryInput = inputTable.getSelectedInputParemeter();
 				if (inputTable.getSelectedInputParemeter() != null) {
-					toggleDeleteInputButton(true);
+					toggleDeleteButton(true);
 				} else {
-					toggleDeleteInputButton(false);
+					toggleDeleteButton(false);
 				}
 				if (inputTable.getPrevInputParemeter() != null) {
-					toggleMoveupInputButton(true);
+					toggleMoveUpButton(true);
 				} else {
-					toggleMoveupInputButton(false);
+					toggleMoveUpButton(false);
 				}
 				if (inputTable.getNextInputParemeter() != null) {
-					toggleMovedownInputButton(true);
+					toggleMoveDownButton(true);
 				} else {
-					toggleMovedownInputButton(false);
+					toggleMoveDownButton(false);
 				}
 
 			}
@@ -427,19 +435,51 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Fl_BottomFactoryOutput bottomFactoryOutput = outputTable.getSelectedOutputParemeter();
 				if (outputTable.getSelectedOutputParemeter() != null) {
-					toggleDeleteOutputButton(true);
+					toggleDeleteButton(true);
 				} else {
-					toggleDeleteOutputButton(false);
+					toggleDeleteButton(true);
 				}
 				if (outputTable.getPrevOutputParemeter() != null) {
-					toggleMoveupOutputButton(true);
+					toggleMoveUpButton(true);
 				} else {
-					toggleMoveupOutputButton(false);
+					toggleMoveUpButton(false);
 				}
 				if (outputTable.getNextOutputParemeter() != null) {
-					toggleMovedownOutputButton(true);
+					toggleMoveDownButton(true);
 				} else {
-					toggleMovedownOutputButton(false);
+					toggleMoveDownButton(true);
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		tagsTable.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				BottomFactoryTag bottomFactoryTag = tagsTable.getSelectedTagData();
+				if (tagsTable.getSelectedTagData() != null) {
+					toggleDeleteButton(true);
+				} else {
+					toggleDeleteButton(false);
+				}
+
+				if (tagsTable.getPrevTagData() != null) {
+					toggleMoveUpButton(true);
+				} else {
+					toggleMoveUpButton(false);
+				}
+
+				if (tagsTable.getNextTagData() != null) {
+					toggleMoveDownButton(true);
+				} else {
+					toggleMoveDownButton(false);
 				}
 
 			}
@@ -453,33 +493,39 @@ public class BottomFactoryFLUi extends Composite {
 		addButtonListeners();
 	}
 
-	public void toggleMoveupInputButton(boolean status) {
+	public void toggleMoveUpButton(boolean status) {
 		moveUpInputItem.setEnabled(status);
+		moveUpOutputItem.setEnabled(status);
+		moveUpTagItem.setEnabled(status);
 	}
 
-	public void toggleMovedownInputButton(boolean status) {
+	public void toggleMoveDownButton(boolean status) {
 		moveDownInputItem.setEnabled(status);
+		moveDownOutputItem.setEnabled(status);
+		moveDownTagItem.setEnabled(status);
 	}
 
 	public void toggleRefreshInputButton(boolean status) {
 		refreshInputItem.setEnabled(status);
 	}
 
-	public void toggleDeleteInputButton(boolean status) {
+	public void toggleDeleteButton(boolean status) {
 		deleteInputItem.setEnabled(status);
-	}
-
-	public void toggleMoveupOutputButton(boolean status) {
-		moveUpOutputItem.setEnabled(status);
-	}
-
-	public void toggleMovedownOutputButton(boolean status) {
-		moveDownOutputItem.setEnabled(status);
-	}
-
-	public void toggleDeleteOutputButton(boolean status) {
 		deleteOutputItem.setEnabled(status);
+		deleteTagItem.setEnabled(status);
 	}
+
+//	public void toggleMoveupOutputButton(boolean status) {
+//		moveUpOutputItem.setEnabled(status);
+//	}
+//
+//	public void toggleMovedownOutputButton(boolean status) {
+//		moveDownOutputItem.setEnabled(status);
+//	}
+//
+//	public void toggleDeleteOutputButton(boolean status) {
+//		deleteOutputItem.setEnabled(status);
+//	}
 
 	public void toggleFlag(boolean status) {
 		flag = status;
@@ -582,13 +628,13 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				inputTable.deleteBottomFactoryInputData(inputTable.getSelectedInputParemeter());
 				flag = true;
-				try {
-					fLView = new FLView(BottomFactoryFLUi.this, 0);
-					fLView.toggleSaveButton(true);
-				} catch (IOException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+//					fLView = new FLView(BottomFactoryFLUi.this, 0);
+//					fLView.toggleSaveButton(true);
+//				} catch (IOException | SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 
 			}
 
@@ -637,7 +683,7 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				outputTable.deleteBottomFactoryOutputData(outputTable.getSelectedOutputParemeter());
 				flag = true;
-				fLView.toggleSaveButton(true);
+//				fLView.toggleSaveButton(true);
 			}
 
 			@Override
@@ -648,7 +694,6 @@ public class BottomFactoryFLUi extends Composite {
 		});
 
 		refreshOutputItem.addSelectionListener(new SelectionListener() {
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
@@ -675,6 +720,96 @@ public class BottomFactoryFLUi extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		addTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		copyTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		pasteTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveUpTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				tagsTable.moveTagDataUp(tagsTable.getSelectedTagData(), tagsTable.getPrevTagData());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveDownTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				tagsTable.moveTagDataDown(tagsTable.getSelectedTagData(), tagsTable.getNextTagData());
+
 			}
 
 			@Override

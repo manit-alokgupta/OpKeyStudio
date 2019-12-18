@@ -3,6 +3,8 @@ package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,6 +26,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTr
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 
 public class BottomFactoryDataRepoUi extends Composite {
 	private UsedByTable usedByTable;
@@ -36,6 +39,12 @@ public class BottomFactoryDataRepoUi extends Composite {
 //	private Table tagsTable;
 //	private Table backupTable;
 
+	private ToolItem addTagItem;
+	private ToolItem deleteTagItem;
+	private ToolItem copyTagItem;
+	private ToolItem pasteTagItem;
+	private ToolItem moveUpTagItem;
+	private ToolItem moveDownTagItem;
 	private Display display;
 
 	/**
@@ -147,38 +156,38 @@ public class BottomFactoryDataRepoUi extends Composite {
 		ToolBar toolBar_1 = new ToolBar(composite_7, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		ToolItem addTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		addTagItem = new ToolItem(toolBar_1, SWT.NONE);
 //		addTagItem.setWidth(27);
 		addTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		addTagItem.setToolTipText("Add");
 
 		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		deleteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteTagItem.setToolTipText("Delete");
 
 		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem copyTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		copyTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		copyTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
 		copyTagItem.setToolTipText("copy");
 
 		ToolItem toolItem3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem pasteTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		pasteTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		pasteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
 		pasteTagItem.setToolTipText("Paste");
 
 		ToolItem toolItem4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveUpTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		moveUpTagItem.setToolTipText("Move Up");
 
 		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem moveDownTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveDownTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveDownTagItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		moveDownTagItem.setToolTipText("Move Down");
@@ -242,6 +251,143 @@ public class BottomFactoryDataRepoUi extends Composite {
 			}
 		});
 
+		tagsTable.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				BottomFactoryTag bottomFactoryTag = tagsTable.getSelectedTagData();
+				if (tagsTable.getSelectedTagData() != null) {
+					toggleDeleteButton(true);
+				} else {
+					toggleDeleteButton(false);
+				}
+
+				if (tagsTable.getPrevTagData() != null) {
+					toggleMoveUpButton(true);
+				} else {
+					toggleMoveUpButton(false);
+				}
+
+				if (tagsTable.getNextTagData() != null) {
+					toggleMoveDownButton(true);
+				} else {
+					toggleMoveDownButton(false);
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		addButtonListener();
+	}
+
+	public void toggleMoveUpButton(boolean status) {
+		moveUpTagItem.setEnabled(status);
+	}
+
+	public void toggleMoveDownButton(boolean status) {
+		moveDownTagItem.setEnabled(status);
+	}
+
+	public void toggleDeleteButton(boolean status) {
+		deleteTagItem.setEnabled(status);
+	}
+
+	public void addButtonListener() {
+
+		addTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		copyTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		pasteTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveUpTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				tagsTable.moveTagDataUp(tagsTable.getSelectedTagData(), tagsTable.getPrevTagData());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveDownTagItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				tagsTable.moveTagDataDown(tagsTable.getSelectedTagData(), tagsTable.getNextTagData());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	@Override

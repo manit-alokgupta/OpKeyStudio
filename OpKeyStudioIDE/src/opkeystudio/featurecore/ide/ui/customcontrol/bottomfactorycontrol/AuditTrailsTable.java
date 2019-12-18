@@ -1,5 +1,8 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.FocusEvent;
@@ -20,6 +23,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 
 public class AuditTrailsTable extends CustomTable {
 
@@ -29,6 +33,7 @@ public class AuditTrailsTable extends CustomTable {
 	private BottomFactoryORUi parentBottomFactoryORUi;
 	private BottomFactoryDataRepoUi parentBottomFactoryDataRepoUi;
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
+	private BottomFactoryTestSuiteUi parentBottomFactoryTestSuiteUi;
 
 	public AuditTrailsTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUi) {
 		super(parent, style);
@@ -56,6 +61,13 @@ public class AuditTrailsTable extends CustomTable {
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryFLUi(parentView);
+	}
+
+	public AuditTrailsTable(Composite parent, int style, BottomFactoryTestSuiteUi parentView) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryTestSuiteUi(parentView);
 	}
 
 	private void init() {
@@ -167,5 +179,13 @@ public class AuditTrailsTable extends CustomTable {
 
 	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
 		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
+	}
+
+	public BottomFactoryTestSuiteUi getParentBottomFactoryTestSuiteUi() {
+		return parentBottomFactoryTestSuiteUi;
+	}
+
+	public void setParentBottomFactoryTestSuiteUi(BottomFactoryTestSuiteUi parentBottomFactoryTestSuiteUi) {
+		this.parentBottomFactoryTestSuiteUi = parentBottomFactoryTestSuiteUi;
 	}
 }

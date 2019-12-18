@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 
@@ -23,12 +24,20 @@ public class TestCaseDocumentTable extends CustomTable {
 	private boolean paintCalled = false;
 	private TestCaseDocumentTable thisTable = this;
 	private BottomFactoryTestCaseUi parentBottomFactoryUI;
+	private BottomFactoryTestSuiteUi parentBottomFactoryTestSuiteUi;
 
 	public TestCaseDocumentTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUI) {
 		super(parent, style);
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryUI(bottomFactoryUI);
+	}
+
+	public TestCaseDocumentTable(Composite parent, int style, BottomFactoryTestSuiteUi parentView) {
+		super(parent, style);
+		init();
+		thisTable = this;
+		this.setParentBottomFactoryTestSuiteUi(parentView);
 	}
 
 	private void init() {
@@ -116,5 +125,13 @@ public class TestCaseDocumentTable extends CustomTable {
 
 	public void setParentBottomFactoryUI(BottomFactoryTestCaseUi parentBottomFactoryUI) {
 		this.parentBottomFactoryUI = parentBottomFactoryUI;
+	}
+
+	public BottomFactoryTestSuiteUi getParentBottomFactoryTestSuiteUi() {
+		return parentBottomFactoryTestSuiteUi;
+	}
+
+	public void setParentBottomFactoryTestSuiteUi(BottomFactoryTestSuiteUi parentBottomFactoryTestSuiteUi) {
+		this.parentBottomFactoryTestSuiteUi = parentBottomFactoryTestSuiteUi;
 	}
 }

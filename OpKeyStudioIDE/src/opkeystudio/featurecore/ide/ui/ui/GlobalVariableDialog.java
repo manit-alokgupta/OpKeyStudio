@@ -140,6 +140,7 @@ public class GlobalVariableDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				globalVariablesTable.deleteGlobalVariableStep();
 				toggleSaveToolItem(true);
+				toggleDeleteToolItem(false);
 			}
 		});
 

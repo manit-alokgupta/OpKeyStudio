@@ -228,6 +228,14 @@ public class GlobalVariableTable extends CustomTable {
 		}
 	}
 
+	private void selectRow(int index) {
+		if (this.getItemCount() == 0) {
+			return;
+		}
+		this.setSelection(index);
+		this.notifyListeners(SWT.Selection, null);
+	}
+
 	public void addBlankGlobalVariableStep() {
 		int lastPosition = 0;
 		GlobalVariable gv = new GlobalVariable();
@@ -259,6 +267,7 @@ public class GlobalVariableTable extends CustomTable {
 		int selectedIndex = this.getSelectionIndex();
 		getGlobalVariablesData().get(selectedIndex).setDeleted(true);
 		renderGlobalVariables();
+		selectRow(0);
 	}
 
 	public void saveAll() {

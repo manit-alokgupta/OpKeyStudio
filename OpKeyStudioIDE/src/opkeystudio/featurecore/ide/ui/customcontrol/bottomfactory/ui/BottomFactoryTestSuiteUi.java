@@ -31,19 +31,37 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.Executi
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
+
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 
 public class BottomFactoryTestSuiteUi extends Composite {
-	private Table auditTrailsTable;
-	private Table tagsTable;
-	private Table executionStatusTable;
-	private Table testCaseDocTable;
+//	private Table auditTrailsTable;
+//	private Table tagsTable;
+//	private Table executionStatusTable;
+//	private Table testCaseDocTable;
 	private Table table;
 	private Table mailToTable;
 	private Table table_1;
 	private Text textSearch;
+
+	private TagTable tagsTable;
+	private AuditTrailsTable auditTrailsTable;
+	private ExecutionStatusTable executionStatusTable;
+	private TestCaseDocumentTable testCaseDocTable;
+
+	private ToolItem addTagItem;
+	private ToolItem deleteTagItem;
+	private ToolItem copyTagItem;
+	private ToolItem pasteTagItem;
+	private ToolItem moveUpTagItem;
+	private ToolItem moveDownTagItem;
+	private ToolItem addMailToItem;
+	private ToolItem deleteMailToItem;
+	private ToolItem sessionRefreshToolItem;
+	private ToolItem testCaseDocRefreshItem;
 	private Display display;
 
 	/**
@@ -122,8 +140,8 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		exportAuditToolItem.setToolTipText("Export Audit Trails");
 		exportAuditToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
 
-//		auditTrailsTable = new AuditTrailsTable(composite_6, SWT.BORDER | SWT.FULL_SELECTION, this);
-		auditTrailsTable = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
+		auditTrailsTable = new AuditTrailsTable(composite_6, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		auditTrailsTable = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
 		auditTrailsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		auditTrailsTable.setHeaderVisible(true);
 		auditTrailsTable.setLinesVisible(true);
@@ -141,44 +159,44 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
-		ToolItem addTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		addTagItem = new ToolItem(toolBar_1, SWT.NONE);
 //		addToolItem.setWidth(27);
 		addTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		addTagItem.setToolTipText("Add");
 
 		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		deleteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteTagItem.setToolTipText("Delete");
 
 		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem copyTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		copyTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		copyTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
 		copyTagItem.setToolTipText("copy");
 
 		ToolItem toolItem3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem pasteTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		pasteTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		pasteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
 		pasteTagItem.setToolTipText("Paste");
 
 		ToolItem toolItem4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveUpTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		moveUpTagItem.setToolTipText("Move Up");
 
 		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		ToolItem moveDownTagItem = new ToolItem(toolBar_1, SWT.NONE);
+		moveDownTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveDownTagItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		moveDownTagItem.setToolTipText("Move Down");
 
-//		tagsTable = new TagsTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
-		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		tagsTable = new TagTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 		tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tagsTable.setHeaderVisible(true);
 		tagsTable.setLinesVisible(true);
@@ -201,8 +219,8 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		executionStatusrRefreshItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
-//		executionStatusTable = new ExecutionStatusTable(composite_8, SWT.BORDER | SWT.FULL_SELECTION, this);
-		executionStatusTable = new Table(composite_8, SWT.BORDER | SWT.FULL_SELECTION);
+		executionStatusTable = new ExecutionStatusTable(composite_8, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		executionStatusTable = new Table(composite_8, SWT.BORDER | SWT.FULL_SELECTION);
 		executionStatusTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		executionStatusTable.setHeaderVisible(true);
 		executionStatusTable.setLinesVisible(true);
@@ -217,13 +235,13 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		ToolBar mailToToolbar = new ToolBar(composite_5, SWT.FLAT | SWT.RIGHT);
 		mailToToolbar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		ToolItem addMailToItem = new ToolItem(mailToToolbar, SWT.NONE);
+		addMailToItem = new ToolItem(mailToToolbar, SWT.NONE);
 		addMailToItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		addMailToItem.setToolTipText("Add");
 
 		ToolItem toolItem = new ToolItem(mailToToolbar, SWT.SEPARATOR);
 
-		ToolItem deleteMailToItem = new ToolItem(mailToToolbar, SWT.NONE);
+		deleteMailToItem = new ToolItem(mailToToolbar, SWT.NONE);
 		deleteMailToItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteMailToItem.setToolTipText("Delete");
@@ -247,7 +265,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		ToolBar sessionToolbar = new ToolBar(composite_13, SWT.FLAT | SWT.RIGHT);
 		sessionToolbar.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 
-		ToolItem sessionRefreshToolItem = new ToolItem(sessionToolbar, SWT.NONE);
+		sessionRefreshToolItem = new ToolItem(sessionToolbar, SWT.NONE);
 		sessionRefreshToolItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		sessionRefreshToolItem.setToolTipText("Refresh");
@@ -285,13 +303,13 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		toolBar_4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
-		ToolItem testCaseDocRefreshItem = new ToolItem(toolBar_4, SWT.NONE);
+		testCaseDocRefreshItem = new ToolItem(toolBar_4, SWT.NONE);
 		testCaseDocRefreshItem.setToolTipText("Refresh");
 		testCaseDocRefreshItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
-//		testCaseDocTable = new TestCaseDocumentTable(composite_10, SWT.BORDER | SWT.FULL_SELECTION, this);
-		testCaseDocTable = new Table(composite_10, SWT.BORDER | SWT.FULL_SELECTION);
+		testCaseDocTable = new TestCaseDocumentTable(composite_10, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		testCaseDocTable = new Table(composite_10, SWT.BORDER | SWT.FULL_SELECTION);
 		testCaseDocTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		testCaseDocTable.setHeaderVisible(true);
 		testCaseDocTable.setLinesVisible(true);
@@ -330,6 +348,161 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		});
 
 		exportAuditToolItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		expandBar.addListener(SWT.Expand, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				display.asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						System.out.println("Expand: " + expandBar.getSize());
+						parent.layout();
+						System.out.println("Expand: " + expandBar.getSize());
+					}
+				});
+			}
+		});
+
+		executionStatusrRefreshItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		expandBar.addListener(SWT.Collapse, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				display.asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						System.out.println("Collapse: " + expandBar.getSize());
+						parent.layout();
+						System.out.println("Collapse: " + expandBar.getSize());
+					}
+				});
+			}
+		});
+
+		tagsTable.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				BottomFactoryTag bottomFactoryTag = tagsTable.getSelectedTagData();
+				if (tagsTable.getSelectedTagData() != null) {
+					toggleDeleteButton(true);
+				} else {
+					toggleDeleteButton(false);
+				}
+
+				if (tagsTable.getPrevTagData() != null) {
+					toggleMoveUpButton(true);
+				} else {
+					toggleMoveUpButton(false);
+				}
+
+				if (tagsTable.getNextTagData() != null) {
+					toggleMoveDownButton(true);
+				} else {
+					toggleMoveDownButton(false);
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		addButtonListener();
+	}
+
+	public void toggleMoveUpButton(boolean status) {
+		moveUpTagItem.setEnabled(status);
+	}
+
+	public void toggleMoveDownButton(boolean status) {
+		moveDownTagItem.setEnabled(status);
+	}
+
+	public void toggleDeleteButton(boolean status) {
+		deleteTagItem.setEnabled(status);
+	}
+
+	public void addButtonListener() {
+
+		addMailToItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteMailToItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		sessionRefreshToolItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		testCaseDocRefreshItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -408,7 +581,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				tagsTable.moveTagDataUp(tagsTable.getSelectedTagData(), tagsTable.getPrevTagData());
 
 			}
 
@@ -423,7 +596,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				tagsTable.moveTagDataDown(tagsTable.getSelectedTagData(), tagsTable.getNextTagData());
 
 			}
 
@@ -433,114 +606,6 @@ public class BottomFactoryTestSuiteUi extends Composite {
 
 			}
 		});
-
-		expandBar.addListener(SWT.Expand, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				display.asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						System.out.println("Expand: " + expandBar.getSize());
-						parent.layout();
-						System.out.println("Expand: " + expandBar.getSize());
-					}
-				});
-			}
-		});
-
-		executionStatusrRefreshItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		addMailToItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		deleteMailToItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		sessionRefreshToolItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		testCaseDocRefreshItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		expandBar.addListener(SWT.Collapse, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				display.asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						System.out.println("Collapse: " + expandBar.getSize());
-						parent.layout();
-						System.out.println("Collapse: " + expandBar.getSize());
-					}
-				});
-			}
-		});
-
 	}
 
 	@Override
