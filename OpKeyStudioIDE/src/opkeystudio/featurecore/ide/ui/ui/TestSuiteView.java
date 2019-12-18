@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 //import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
@@ -557,11 +558,12 @@ public class TestSuiteView extends Composite {
 				if (!status) {
 					return;
 				}
-				
-				//AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
-				//notification.setDelayClose(1L);
-				//notification.open();
-				
+
+				// AbstractNotificationPopup notification = new
+				// DeleteNotificationPopup(display);
+				// notification.setDelayClose(1L);
+				// notification.open();
+
 				try {
 					testSuiteTable.deleteSuiteStep(testSuiteTable.getSelectedTestSuite());
 				} catch (IOException e1) {
@@ -643,13 +645,14 @@ public class TestSuiteView extends Composite {
 							toggleSaveButton(false);
 
 							testSuiteTable.renderAllTestSuites();
+							bottomFactory.refreshBottomFactory();
 							return;
 						}
-					
-						//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-						//notification.setDelayClose(1L);
-						//notification.open();
-						
+
+						// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+						// notification.setDelayClose(1L);
+						// notification.open();
+
 						new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
 						try {
 							testSuiteTable.renderAllTestSuites();
@@ -664,7 +667,11 @@ public class TestSuiteView extends Composite {
 					toggleMoveUpButton(false);
 					toggleMoveDownButton(false);
 					testSuiteTable.renderAllTestSuites();
+					bottomFactory.refreshBottomFactory();
 				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -691,11 +698,11 @@ public class TestSuiteView extends Composite {
 	}
 
 	public void saving() {
-		
-		//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-		//notification.setDelayClose(1L);
-		//notification.open();
-		
+
+		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+		// notification.setDelayClose(1L);
+		// notification.open();
+
 		new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
 		try {
 			testSuiteTable.renderAllTestSuites();

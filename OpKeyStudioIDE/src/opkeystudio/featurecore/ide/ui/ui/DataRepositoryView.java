@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
@@ -31,7 +33,7 @@ public class DataRepositoryView extends Composite {
 	private int rowCount = 0;
 	private TableColumn newColumn;
 	private DRColumnAttributes drCol;
-	private BottomFactoryORUi bottomFactoryORUi;
+	private BottomFactoryDataRepoUi bottomFactory;
 	// private XSSFWorkbook wb;
 	private OleClientSite site;
 
@@ -148,9 +150,9 @@ public class DataRepositoryView extends Composite {
 		excelTable.setHeaderVisible(true);
 		excelTable.setLinesVisible(true);
 
-		bottomFactoryORUi = new BottomFactoryORUi(composite, SWT.BORDER);
-		bottomFactoryORUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		bottomFactoryORUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		bottomFactory = new BottomFactoryDataRepoUi(composite, SWT.BORDER);
+		bottomFactory.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		colCount = excelTable.getColumnCount();
 		rowCount = excelTable.getItemCount();
@@ -344,7 +346,12 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				try {
+					bottomFactory.refreshBottomFactory();
+				} catch (IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 

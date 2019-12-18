@@ -251,6 +251,7 @@ public class FLView extends Composite {
 		fLArgumentsTabFolder = new TabFolder(fLArgumentsHolder, SWT.NONE);
 		fLArgumentsTabFolder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
 		fLArgumentsTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		fLSashForm.setWeights(new int[] { 4, 3 });
 
 		stepDetailsTabItem = new TabItem(fLArgumentsTabFolder, SWT.NONE);
 		stepDetailsTabItem.setText("Step Details");
@@ -951,7 +952,7 @@ public class FLView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				saving();
+				save();
 			}
 
 			@Override
@@ -971,6 +972,7 @@ public class FLView extends Composite {
 								"Do you want to Save changes?");
 						if (!status) {
 							flowStepTable.renderFLFlowSteps();
+							bottomFactory.refreshBottomFactory();
 							return;
 						}
 						// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
@@ -987,6 +989,7 @@ public class FLView extends Composite {
 					}
 
 					flowStepTable.renderFLFlowSteps();
+					bottomFactory.refreshBottomFactory();
 
 				} catch (SQLException | IOException e1) {
 					e1.printStackTrace();
@@ -1092,14 +1095,14 @@ public class FLView extends Composite {
 
 	}
 
-	public void saving() {
+	public void save() {
 
 		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
 		// notification.setDelayClose(200L);
 		// notification.open();
 
 		new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
-		bottomFactory.saving();
+		bottomFactory.save();
 //		if (bottomFactory.flag == true) {
 //
 //		}

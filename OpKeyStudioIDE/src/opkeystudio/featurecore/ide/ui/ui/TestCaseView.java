@@ -35,6 +35,9 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
@@ -245,7 +248,7 @@ public class TestCaseView extends Composite {
 		testCaseArgumentsTabFolder = new TabFolder(testCaseArgumentsHolder, SWT.NONE);
 		testCaseArgumentsTabFolder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
 		testCaseArgumentsTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
+		testCaseSashForm.setWeights(new int[] { 4, 3 });
 		stepDetailsTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		stepDetailsTabItem.setText("Step Details");
 		stepDetailsTabItem.setToolTipText("Step Details");
@@ -932,7 +935,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				saving();
+				save();
 			}
 
 			@Override
@@ -953,6 +956,7 @@ public class TestCaseView extends Composite {
 								"Do you want to Save changes?");
 						if (!status) {
 							flowStepTable.renderFlowSteps();
+							bottomFactory.refreshBottomFactory();
 							return;
 						}
 
@@ -971,6 +975,7 @@ public class TestCaseView extends Composite {
 					}
 
 					flowStepTable.renderFlowSteps();
+					bottomFactory.refreshBottomFactory();
 
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -1091,7 +1096,7 @@ public class TestCaseView extends Composite {
 
 	}
 
-	public void saving() {
+	public void save() {
 
 		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
 		// notification.setDelayClose(200L);

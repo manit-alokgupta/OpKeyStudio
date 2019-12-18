@@ -1,5 +1,8 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
@@ -21,6 +24,9 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
@@ -174,6 +180,7 @@ public class BottomFactoryTestCaseUi extends Composite {
 		deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		deleteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteTagItem.setToolTipText("Delete");
+		deleteTagItem.setEnabled(false);
 
 		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -192,6 +199,7 @@ public class BottomFactoryTestCaseUi extends Composite {
 		moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveUpTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		moveUpTagItem.setToolTipText("Move Up");
+		moveUpTagItem.setEnabled(false);
 
 		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -199,6 +207,7 @@ public class BottomFactoryTestCaseUi extends Composite {
 		moveDownTagItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		moveDownTagItem.setToolTipText("Move Down");
+		moveDownTagItem.setEnabled(false);
 
 		tagsTable = new TagTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
@@ -450,6 +459,10 @@ public class BottomFactoryTestCaseUi extends Composite {
 
 			}
 		});
+	}
+
+	public void refreshBottomFactory() throws JsonParseException, JsonMappingException, IOException, SQLException {
+		tagsTable.renderAllTagData();
 	}
 
 	@Override

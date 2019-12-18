@@ -212,6 +212,7 @@ public class TagTable extends CustomTable {
 
 	public void deleteTagData(BottomFactoryTag bottomFactoryTag) {
 		bottomFactoryTag.setDeleted(true);
+		refreshAllTagData();
 	}
 
 	public void refreshAllTagData() {

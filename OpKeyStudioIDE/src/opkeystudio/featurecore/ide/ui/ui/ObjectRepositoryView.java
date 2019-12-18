@@ -506,37 +506,47 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (saveObject.isEnabled()) {
+				try {
+					if (saveObject.isEnabled()) {
+
+						toggleDeleteAttributeButton(false);
+						toggleAddAttributeButton(false);
+						boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
+								"Do you want to save changes?");
+						if (!result) {
+							toggleSaveButton(false);
+							objectRepositoryTree.renderObjectRepositories();
+
+							bottomFactoryORUi.refreshBottomFactory();
+
+							return;
+						}
+
+						// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+						// notification.setDelayClose(200L);
+						// notification.open();
+
+						List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
+						try {
+							new ObjectRepositoryApi().saveORObjects(allors);
+							toggleSaveButton(false);
+							objectRepositoryTree.renderObjectRepositories();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+
+						toggleSaveButton(false);
+					}
 
 					toggleDeleteAttributeButton(false);
 					toggleAddAttributeButton(false);
-					boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
-							"Do you want to save changes?");
-					if (!result) {
-						toggleSaveButton(false);
-						objectRepositoryTree.renderObjectRepositories();
-						return;
-					}
-					
-					//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-					//notification.setDelayClose(200L);
-					//notification.open();
-			
-					List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
-					try {
-						new ObjectRepositoryApi().saveORObjects(allors);
-						toggleSaveButton(false);
-						objectRepositoryTree.renderObjectRepositories();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-
-					toggleSaveButton(false);
+					objectRepositoryTree.renderObjectRepositories();
+					bottomFactoryORUi.refreshBottomFactory();
+				} catch (IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 
-				toggleDeleteAttributeButton(false);
-				toggleAddAttributeButton(false);
-				objectRepositoryTree.renderObjectRepositories();
 			}
 
 			@Override
@@ -566,11 +576,12 @@ public class ObjectRepositoryView extends Composite {
 				if (!result) {
 					return;
 				}
-			
-				//AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
-				//notification.setDelayClose(200L);
-				//notification.open();
-				
+
+				// AbstractNotificationPopup notification = new
+				// DeleteNotificationPopup(display);
+				// notification.setDelayClose(200L);
+				// notification.open();
+
 				ObjectAttributeProperty selectedProperty = objectAttributeTable.getSelectedObjectAttributeProperty();
 				System.out.println("Deleting " + selectedProperty.getOr_id());
 				selectedProperty.setDeleted(true);
@@ -746,11 +757,12 @@ public class ObjectRepositoryView extends Composite {
 		if (!result) {
 			return;
 		}
-		
-		//AbstractNotificationPopup notification = new DeleteNotificationPopup(display);
-		//notification.setDelayClose(200L);
-		//notification.open();
-		
+
+		// AbstractNotificationPopup notification = new
+		// DeleteNotificationPopup(display);
+		// notification.setDelayClose(200L);
+		// notification.open();
+
 		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 		obRepo = selectedTreeItem.getObjectRepository();
 		System.out.println("Deleting.. " + obRepo.getObject_id());
@@ -783,10 +795,10 @@ public class ObjectRepositoryView extends Composite {
 	}
 
 	public void saving() {
-		
-		//AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-		//notification.setDelayClose(200L);
-		//notification.open();
+
+		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+		// notification.setDelayClose(200L);
+		// notification.open();
 
 		List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 		try {

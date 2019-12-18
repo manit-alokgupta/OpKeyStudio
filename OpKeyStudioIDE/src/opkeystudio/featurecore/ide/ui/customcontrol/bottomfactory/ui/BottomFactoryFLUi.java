@@ -40,6 +40,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByT
 import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParemeterApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParemeterApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryTagApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
@@ -211,6 +212,7 @@ public class BottomFactoryFLUi extends Composite {
 		deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		deleteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteTagItem.setToolTipText("Delete");
+		deleteTagItem.setEnabled(false);
 
 		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -229,6 +231,7 @@ public class BottomFactoryFLUi extends Composite {
 		moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		moveUpTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 		moveUpTagItem.setToolTipText("Move Up");
+		moveUpTagItem.setEnabled(false);
 
 		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -236,6 +239,7 @@ public class BottomFactoryFLUi extends Composite {
 		moveDownTagItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 		moveDownTagItem.setToolTipText("Move Down");
+		moveDownTagItem.setEnabled(false);
 
 		tagsTable = new TagTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
@@ -622,8 +626,9 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				inputTable.deleteBottomFactoryInputData(inputTable.getSelectedInputParemeter());
 				flag = true;
+
 //				try {
-//					fLView = new FLView(BottomFactoryFLUi.this, 0);
+//					fLView = new FLView(fLView.getParent(), 0);
 //					fLView.toggleSaveButton(true);
 //				} catch (IOException | SQLException e1) {
 //					// TODO Auto-generated catch block
@@ -815,9 +820,17 @@ public class BottomFactoryFLUi extends Composite {
 		});
 	}
 
-	public void saving() {
+	public void refreshBottomFactory() throws JsonParseException, JsonMappingException, IOException, SQLException {
+		tagsTable.renderAllTagData();
+		inputTable.renderAllBottomFactoryInputData();
+		outputTable.renderAllBottomFactoryOutputData();
+	}
+
+	public void save() {
 		new BottomFactoryOutputParemeterApi()
 				.saveAllBottomFactoryOutputParameter(outputTable.getBottomFactoryOutputData());
+		new BottomFactoryInputParemeterApi().saveAllBottomFactoryInputParameter(inputTable.getBottomFactoryInputData());
+		new BottomFactoryTagApi().saveAllBottomFactoryTag(tagsTable.getTagData());
 	}
 
 	@Override
