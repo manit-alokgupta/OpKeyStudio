@@ -91,6 +91,7 @@ public class BottomFactoryFLUi extends Composite {
 	public BottomFactoryFLUi(Composite parent, int style)
 			throws JsonParseException, JsonMappingException, IOException, SQLException {
 		super(parent, style);
+
 		display = getParent().getDisplay();
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -581,7 +582,14 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				inputTable.deleteBottomFactoryInputData(inputTable.getSelectedInputParemeter());
 				flag = true;
-				fLView.toggleSaveButton(flag);
+				try {
+					fLView = new FLView(BottomFactoryFLUi.this, 0);
+					fLView.toggleSaveButton(true);
+				} catch (IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 			}
 
 			@Override
