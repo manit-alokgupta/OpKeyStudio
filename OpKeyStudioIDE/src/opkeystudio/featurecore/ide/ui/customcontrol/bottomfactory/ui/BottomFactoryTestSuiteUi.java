@@ -62,6 +62,8 @@ public class BottomFactoryTestSuiteUi extends Composite {
 	private ToolItem deleteMailToItem;
 	private ToolItem sessionRefreshToolItem;
 	private ToolItem testCaseDocRefreshItem;
+	private ToolItem executionStatusrRefreshItem;
+	private ToolItem exportAuditToolItem;
 	private Display display;
 
 	/**
@@ -135,7 +137,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
-		ToolItem exportAuditToolItem = new ToolItem(toolBar, SWT.NONE);
+		exportAuditToolItem = new ToolItem(toolBar, SWT.NONE);
 		exportAuditToolItem.setWidth(27);
 		exportAuditToolItem.setToolTipText("Export Audit Trails");
 		exportAuditToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
@@ -214,7 +216,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		toolBar_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_2.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
-		ToolItem executionStatusrRefreshItem = new ToolItem(toolBar_2, SWT.NONE);
+		executionStatusrRefreshItem = new ToolItem(toolBar_2, SWT.NONE);
 		executionStatusrRefreshItem.setToolTipText("Refresh");
 		executionStatusrRefreshItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
@@ -347,21 +349,6 @@ public class BottomFactoryTestSuiteUi extends Composite {
 			}
 		});
 
-		exportAuditToolItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 		expandBar.addListener(SWT.Expand, new Listener() {
 
 			@Override
@@ -375,21 +362,6 @@ public class BottomFactoryTestSuiteUi extends Composite {
 						System.out.println("Expand: " + expandBar.getSize());
 					}
 				});
-			}
-		});
-
-		executionStatusrRefreshItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -536,7 +508,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				tagsTable.deleteTagData(tagsTable.getSelectedTagData());
 
 			}
 
@@ -597,6 +569,36 @@ public class BottomFactoryTestSuiteUi extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				tagsTable.moveTagDataDown(tagsTable.getSelectedTagData(), tagsTable.getNextTagData());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		executionStatusrRefreshItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		exportAuditToolItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 

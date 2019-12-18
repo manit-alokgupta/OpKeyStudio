@@ -536,12 +536,6 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				try {
-//					inputTable.renderAllBottomFactoryInputData();
-//				} catch (IOException | SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
 
 			}
 
@@ -748,7 +742,8 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				tagsTable.deleteTagData(tagsTable.getSelectedTagData());
+				flag = true;
 
 			}
 

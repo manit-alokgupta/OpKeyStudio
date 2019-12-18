@@ -380,7 +380,7 @@ public class BottomFactoryTestCaseUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				tagsTable.deleteTagData(tagsTable.getSelectedTagData());
 
 			}
 
