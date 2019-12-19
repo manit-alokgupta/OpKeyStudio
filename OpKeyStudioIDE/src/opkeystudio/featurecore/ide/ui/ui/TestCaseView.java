@@ -549,7 +549,7 @@ public class TestCaseView extends Composite {
 		sourceCodeTabItem.setText("Source Code");
 		sourceCodeTabItem.setToolTipText("Source Code");
 
-		SourceCodeEditor sourceCodeEditor = new SourceCodeEditor(mainTestCaseTabFolder, SWT.NONE);
+		SourceCodeEditor sourceCodeEditor = new SourceCodeEditor(mainTestCaseTabFolder, SWT.NONE, this);
 		sourceCodeTabItem.setControl(sourceCodeEditor);
 
 		cursor.addSelectionListener(new SelectionListener() {

@@ -1,8 +1,15 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -14,9 +21,21 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+
 public class SourceCodeEditor extends Composite {
-	public SourceCodeEditor(Composite parent, int style) {
+	private TestCaseView testCaseView;
+	private TabFolder tabFolder;
+
+	public SourceCodeEditor(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
+		setTestCaseView(testCaseView);
 		init();
 	}
 
@@ -47,20 +66,15 @@ public class SourceCodeEditor extends Composite {
 		gd_sourceCodeTree.widthHint = 275;
 		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
 
-		TabFolder tabFolder = new TabFolder(composite_16, SWT.NONE);
+		tabFolder = new TabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		TabItem sourceCodeTab = new TabItem(tabFolder, SWT.NONE);
-		sourceCodeTab.setText("New Item Neon");
-
 		SourceViewer viewer = new SourceViewer(tabFolder, null, SWT.NONE);
-	//	final HConfiguration sourceConf = new HConfiguration(HContentAssistProcessor.PARAM_PROCESSOR);
-		//viewer.configure(sourceConf);
+		// final HConfiguration sourceConf = new
+		// HConfiguration(HContentAssistProcessor.PARAM_PROCESSOR);
+		// viewer.configure(sourceConf);
 		viewer.setEditable(true);
 		Font font = JFaceResources.getFont(JFaceResources.TEXT_FONT);
 		viewer.getTextWidget().setFont(font);
-		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
-		tabItem.setText("New Item");
 	}
 
 	private void renderTreeItems(Tree tree) {
@@ -69,6 +83,63 @@ public class SourceCodeEditor extends Composite {
 			TreeItem sourceCodeTreeitem_1 = new TreeItem(tree, SWT.NONE);
 			sourceCodeTreeitem_1.setText(item);
 		}
+
+		tree.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				TreeItem item = tree.getSelection()[0];
+				if (item.getItemCount() > 0) {
+					return;
+				}
+				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+				tabItem.setText(item.getText());
+				tabFolder.setSelection(tabItem);
+			}
+		});
+	}
+
+	private void getDatas() throws JsonParseException, JsonMappingException, SQLException, IOException {
+		List<GlobalVariable> globalVariables = new GlobalVariableApi().getAllGlobalVariables();
+		List<FlowStep> flowSteps = getTestCaseView().getFlowStepTable().getFlowStepsData();
+		List<FlowStep> functionLibraries = getFunctionLibraries(flowSteps);
+		List<ORObject> allORObjects = getAllORObjects(flowSteps);
+	}
+
+	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {
+		List<FlowStep> allFunctionLibraries = new ArrayList<FlowStep>();
+		for (FlowStep flowStep : allFlowSteps) {
+			if (flowStep.getComponent_id() != null) {
+				allFunctionLibraries.add(flowStep);
+			}
+		}
+		return allFunctionLibraries;
+	}
+
+	private List<ORObject> getAllORObjects(List<FlowStep> allFlowSteps) {
+		List<ORObject> allORObjects = new ArrayList<ORObject>();
+		for (FlowStep flowStep : allFlowSteps) {
+			allORObjects.addAll(flowStep.getOrObject());
+		}
+		return allORObjects;
+	}
+
+	public TestCaseView getTestCaseView() {
+		return testCaseView;
+	}
+
+	public void setTestCaseView(TestCaseView testCaseView) {
+		this.testCaseView = testCaseView;
 	}
 
 }
