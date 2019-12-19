@@ -94,7 +94,7 @@ public class BottomFactoryOutputParameterApi {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
 		String query = String.format(
-				"insert into component_input_parameters(op_id,component_id,Name,type,componentstep_oa_id,position,description) VALUES('%s','%s','%s','%s','%s','%s','%s')",
+				"insert into component_output_parameters(op_id,component_id,Name,type,componentstep_oa_id,position,description) VALUES('%s','%s','%s','%s','%s','%s','%s')",
 				"");
 	}
 

@@ -330,12 +330,12 @@ public class OutputTable extends CustomTable {
 		bottomFactoryOutput.setType("String");
 		bottomFactoryOutput.setDescription("");
 
-		try {
-			new BottomFactoryOutputParameterApi().insertOutputParameter(bottomFactoryOutput);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			new BottomFactoryOutputParameterApi().insertOutputParameter(bottomFactoryOutput);
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 //		addInputParameter(bottomFactoryInput);
 		try {
 			renderAllBottomFactoryOutputData();
