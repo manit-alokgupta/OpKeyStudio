@@ -1,5 +1,20 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler;
 
-public class Transpiler {
+import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+
+public class Transpiler {
+	private static Transpiler transpiler;
+
+	public static Transpiler getTranspiler() {
+		if (transpiler == null) {
+			transpiler = new Transpiler();
+		}
+		return transpiler;
+	}
+
+	public void transpileGlobalVariables(List<GlobalVariable> globalVariables) {
+
+	}
 }
