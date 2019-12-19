@@ -29,6 +29,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryTagApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
@@ -307,6 +308,34 @@ public class TagTable extends CustomTable {
 			return item.getTagData();
 		}
 		return null;
+	}
+
+	public void addBlankTagData() {
+		try {
+			MPart mpart = Utilities.getInstance().getActivePart();
+			Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+			String artifactId = artifact.getId();
+			int lastPosition = 0;
+			BottomFactoryTag bottomFactoryTag = new BottomFactoryTag();
+			System.out.println(getTagData().size());
+			if ((getTagData().size()) == 0) {
+				lastPosition = (getTagData().size() - 1);
+
+			} else {
+				lastPosition = getTagData().get(getTagData().size() - 1).getPosition();
+			}
+			bottomFactoryTag.setPosition(lastPosition + 1);
+			bottomFactoryTag.setTag_id(Utilities.getInstance().getUniqueUUID(""));
+			bottomFactoryTag.setP_id_denormalized(ServiceRepository.getInstance().getDefaultProject().getP_id());
+			bottomFactoryTag.setId(artifactId);
+			bottomFactoryTag.setKey("NewTag" + getTagData().size());
+			bottomFactoryTag.setValue("value" + getTagData().size());
+			new BottomFactoryTagApi().insertTagData(bottomFactoryTag);
+			renderAllTagData();
+		} catch (IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public BottomFactoryTestCaseUi getParentBottomFactoryUI() {

@@ -326,17 +326,12 @@ public class OutputTable extends CustomTable {
 			lastPosition = getBottomFactoryOutputData().get(getBottomFactoryOutputData().size() - 1).getPosition();
 		}
 		bottomFactoryOutput.setPosition(lastPosition + 1);
-		
 		bottomFactoryOutput.setOp_id(Utilities.getInstance().getUniqueUUID(""));
-	
 		bottomFactoryOutput.setComponent_id(artifactId);
-		
 		bottomFactoryOutput.setName("Default Name" + getBottomFactoryOutputData().size());
-	
 		bottomFactoryOutput.setType("String");
-	
 		bottomFactoryOutput.setDescription("");
-		
+
 		try {
 			new BottomFactoryOutputParameterApi().insertOutputParameter(bottomFactoryOutput);
 		} catch (SQLException e1) {

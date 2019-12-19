@@ -16,6 +16,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryCompon
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
+import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -85,6 +86,24 @@ public class BottomFactoryTagApi {
 			deleteBottomFactoryTag(tag);
 			updateBottomFactoryTag(tag);
 			addBottomFactoryTag(tag);
+		}
+	}
+
+	public void insertTagData(BottomFactoryTag bottomFactoryTag) {
+		try {
+			SQLiteCommunicator sqlComm = new SQLiteCommunicator();
+
+			sqlComm.connect();
+
+			String query = String.format(
+					"insert into main_tags(tag_id,p_id_denormalized,id,key,value,position) VALUES('%s','%s','%s','%s','%s','%s')",
+					bottomFactoryTag.getTag_id(), bottomFactoryTag.getP_id_denormalized(), bottomFactoryTag.getId(),
+					bottomFactoryTag.getKey(), bottomFactoryTag.getValue(), bottomFactoryTag.getPosition());
+			int result = sqlComm.executeUpdate(query);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

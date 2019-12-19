@@ -502,7 +502,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				tagsTable.addBlankTagData();
 
 			}
 
