@@ -358,23 +358,20 @@ public class InputTable extends CustomTable {
 			lastPosition = getBottomFactoryInputData().get(getBottomFactoryInputData().size() - 1).getPosition();
 		}
 		bottomFactoryInput.setPosition(lastPosition + 1);
-		System.out.println("Done1");
+
 		bottomFactoryInput.setIp_id(Utilities.getInstance().getUniqueUUID(""));
-		System.out.println("Done2");
-//		bottomFactoryInput.setComponent_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
+
 		bottomFactoryInput.setComponent_id(artifactId);
 
-		System.out.println("Done3");
 		bottomFactoryInput.setName("Default Name" + getBottomFactoryInputData().size());
-		System.out.println("Done4");
+
 		bottomFactoryInput.setType("String");
-		System.out.println("Done5");
+
 		bottomFactoryInput.setIs_mandatory(true);
-		System.out.println("Done6");
+
 		bottomFactoryInput.setDefault_value("");
-		System.out.println("Done7");
+
 		bottomFactoryInput.setDescription("");
-		System.out.println("Done8");
 
 		try {
 			new BottomFactoryInputParameterApi().insertInputParameter(bottomFactoryInput);
