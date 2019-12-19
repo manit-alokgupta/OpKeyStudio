@@ -4,7 +4,7 @@ import opkeystudio.opkeystudiocore.core.query.DBField;
 
 public class GlobalVariable extends Modified {
 	@DBField
-	private int isdeleted;
+	private boolean isdeleted;
 	@DBField
 	private int position;
 	@DBField
@@ -21,14 +21,6 @@ public class GlobalVariable extends Modified {
 	private String p_id;
 	@DBField
 	private String name;
-
-	public int getIsdeleted() {
-		return isdeleted;
-	}
-
-	public void setIsdeleted(int isdeleted) {
-		this.isdeleted = isdeleted;
-	}
 
 	public int getPosition() {
 		return position;
@@ -92,6 +84,14 @@ public class GlobalVariable extends Modified {
 
 	public void setExternallyupdatable(boolean externallyupdatable) {
 		this.externallyupdatable = externallyupdatable;
+	}
+
+	public boolean isIsdeleted() {
+		return isdeleted;
+	}
+
+	public void setIsdeleted(boolean isdeleted) {
+		this.isdeleted = isdeleted;
 	}
 
 }
