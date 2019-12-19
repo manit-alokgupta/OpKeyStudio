@@ -102,9 +102,6 @@ public class BackupTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				int selectedColumn = cursor.getColumn();
 				CustomText text = new CustomText(cursor, 0);
-				System.out.println("Column number:-" + cursor.getColumn());
-				System.out.println("Row number:-" + cursor.getRow());
-
 				text.addFocusListener(new FocusListener() {
 
 					@Override

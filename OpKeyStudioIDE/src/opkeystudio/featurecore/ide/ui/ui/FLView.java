@@ -842,8 +842,8 @@ public class FLView extends Composite {
 //					flowStep.setFlow_id(Utilities.getInstance().getUniqueUUID(""));
 					flowStep.setShouldrun(true);
 					flowStep.setWantsnapshot(true);
-					keyWord = allDataTreeView.selectedKeyword();
-					System.out.println(allDataTreeView.selectedKeyword().getKeywordname());
+					keyWord = allDataTreeView.getSelectedKeyword();
+					System.out.println(allDataTreeView.getSelectedKeyword().getKeywordname());
 					flowStep.setKeyword(keyWord);
 					flowStep.setKeywordid(keyWord.getKeywordid());
 					flowStep.setIstestcase(true);

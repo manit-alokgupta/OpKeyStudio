@@ -92,9 +92,6 @@ public class InputTable extends CustomTable {
 				int selectedColumn = cursor.getColumn();
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
 				CustomText text = new CustomText(cursor, 0);
-				System.out.println("Column number:-" + cursor.getColumn());
-				System.out.println("Row number:-" + cursor.getRow());
-
 				text.addFocusListener(new FocusListener() {
 
 					@Override
@@ -267,11 +264,6 @@ public class InputTable extends CustomTable {
 		for (Fl_BottomFactoryInput fl_BottomFactoryInput : bottomFactoryInputs) {
 			if (fl_BottomFactoryInput.isDeleted() == false) {
 				InputTableItem inputTableItem = new InputTableItem(this, 0);
-				System.out.println(fl_BottomFactoryInput.getName().toString());
-				System.out.println(fl_BottomFactoryInput.getType());
-				System.out.println(fl_BottomFactoryInput.getDefault_value());
-				System.out.println(fl_BottomFactoryInput.isIs_mandatory());
-				System.out.println(fl_BottomFactoryInput.getDescription());
 				inputTableItem.setText(
 						new String[] { fl_BottomFactoryInput.getName().toString(), fl_BottomFactoryInput.getType(),
 								fl_BottomFactoryInput.getDefault_value(), "", fl_BottomFactoryInput.getDescription() });
