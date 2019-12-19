@@ -237,9 +237,7 @@ public class BottomFactoryDataRepoUi extends Composite {
 
 					@Override
 					public void run() {
-						System.out.println("Expand: " + expandBar.getSize());
 						parent.layout();
-						System.out.println("Expand: " + expandBar.getSize());
 					}
 				});
 			}
@@ -252,9 +250,7 @@ public class BottomFactoryDataRepoUi extends Composite {
 
 					@Override
 					public void run() {
-						System.out.println("Collapse: " + expandBar.getSize());
 						parent.layout();
-						System.out.println("Collapse: " + expandBar.getSize());
 					}
 				});
 			}

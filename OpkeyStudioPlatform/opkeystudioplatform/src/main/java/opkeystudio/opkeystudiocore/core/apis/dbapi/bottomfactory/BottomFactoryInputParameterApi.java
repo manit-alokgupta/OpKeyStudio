@@ -43,7 +43,6 @@ public class BottomFactoryInputParameterApi {
 			throws JsonParseException, JsonMappingException, IOException, SQLException {
 		List<Fl_BottomFactoryInput> bottomFactoryInputs = getBottomFactoryInputParameter(component_id);
 		for (Fl_BottomFactoryInput fl_BottomFactoryInput : bottomFactoryInputs) {
-			System.out.println(fl_BottomFactoryInput.getComponent_id());
 			if (fl_BottomFactoryInput.getComponent_id() != null) {
 				FunctionLibraryComponent flComp = getFunctionLibraryComponent(fl_BottomFactoryInput.getComponent_id());
 				fl_BottomFactoryInput.setFunctionLibraryComponent(flComp);
@@ -54,7 +53,6 @@ public class BottomFactoryInputParameterApi {
 
 	private void deleteBottomFactoryInputParameter(Fl_BottomFactoryInput bottomFactoryInput) {
 		if (bottomFactoryInput.isDeleted()) {
-			System.out.println("" + bottomFactoryInput.getIp_id());
 			String query = String.format("delete from component_input_parameters where ip_id='%s'",
 					bottomFactoryInput.getIp_id());
 			QueryExecutor.getInstance().executeUpdateQuery(query);
@@ -80,10 +78,7 @@ public class BottomFactoryInputParameterApi {
 		for (Fl_BottomFactoryInput inputParameter : inputParameters) {
 			String updateQuery = new QueryMaker().createUpdateQuery(inputParameter, "component_input_parameters",
 					String.format("WHERE component_id='%s'", inputParameter.getComponent_id()));
-			System.out.println("update Query:- " + updateQuery);
 			String addQuery = new QueryMaker().createInsertQuery(inputParameter, "component_input_parameters", null);
-			System.out.println("Add Query:- " + addQuery);
-
 			deleteBottomFactoryInputParameter(inputParameter);
 			updateBottomFactoryInputParameter(inputParameter);
 			addBottomFactoryInputParameter(inputParameter);

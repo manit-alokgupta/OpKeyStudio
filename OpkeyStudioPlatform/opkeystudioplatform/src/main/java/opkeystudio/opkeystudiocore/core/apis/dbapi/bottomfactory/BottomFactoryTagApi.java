@@ -42,7 +42,6 @@ public class BottomFactoryTagApi {
 			throws JsonParseException, JsonMappingException, IOException, SQLException {
 		List<BottomFactoryTag> bottomFactoryTags = getBottomFactoryTag(id);
 		for (BottomFactoryTag bottomFactoryTag : bottomFactoryTags) {
-			System.out.println(bottomFactoryTag.getId());
 			if (bottomFactoryTag.getId() != null) {
 				FunctionLibraryComponent functionLibraryComponent = getFunctionLibraryComponent(
 						bottomFactoryTag.getId());
@@ -54,7 +53,6 @@ public class BottomFactoryTagApi {
 
 	private void deleteBottomFactoryTag(BottomFactoryTag tags) {
 		if (tags.isDeleted()) {
-			System.out.println("" + tags.getId());
 			String query = String.format("delete from main_tags where tag_id='%s'", tags.getTag_id());
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
@@ -79,10 +77,7 @@ public class BottomFactoryTagApi {
 		for (BottomFactoryTag tag : tags) {
 			String updateQuery = new QueryMaker().createUpdateQuery(tag, "main_tags",
 					String.format("WHERE id='%s'", tag.getId()));
-			System.out.println("update Query:- " + updateQuery);
 			String addQuery = new QueryMaker().createInsertQuery(tag, "main_tags", null);
-			System.out.println("Add Query:- " + addQuery);
-
 			deleteBottomFactoryTag(tag);
 			updateBottomFactoryTag(tag);
 			addBottomFactoryTag(tag);

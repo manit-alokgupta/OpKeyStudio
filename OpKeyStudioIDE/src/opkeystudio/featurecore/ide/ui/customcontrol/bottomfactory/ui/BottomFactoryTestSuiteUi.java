@@ -332,7 +332,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 				Text text = (Text) e.getSource();
 				String searchValue = text.getText();
 				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
-					System.out.println(text);
+					
 				}
 			}
 
@@ -366,9 +366,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 
 					@Override
 					public void run() {
-						System.out.println("Expand: " + expandBar.getSize());
 						parent.layout();
-						System.out.println("Expand: " + expandBar.getSize());
 					}
 				});
 			}
@@ -382,9 +380,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 
 					@Override
 					public void run() {
-						System.out.println("Collapse: " + expandBar.getSize());
 						parent.layout();
-						System.out.println("Collapse: " + expandBar.getSize());
 					}
 				});
 			}

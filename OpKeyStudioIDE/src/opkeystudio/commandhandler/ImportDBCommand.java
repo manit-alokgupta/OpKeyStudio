@@ -30,7 +30,6 @@ public class ImportDBCommand {
 		dialog.open();
 		String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 		if (filePath != null) {
-			System.out.println("File Path is " + filePath);
 			File file = new File(filePath);
 			if (!file.exists()) {
 				return;

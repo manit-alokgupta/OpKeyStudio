@@ -31,7 +31,6 @@ public class OpKeyApiCommunicator {
 			String queryData = key + "=" + value;
 			queryString += queryData;
 		}
-		System.out.println(queryString);
 		return queryString;
 	}
 
@@ -58,7 +57,6 @@ public class OpKeyApiCommunicator {
 		}
 
 		if (ServiceRepository.getInstance().getOpKeyHostAuthToken() != null) {
-			System.out.println(ServiceRepository.getInstance().getOpKeyHostAuthToken());
 			con.setRequestProperty("Authorization",
 					"Bearer " + ServiceRepository.getInstance().getOpKeyHostAuthToken());
 		}
@@ -77,8 +75,6 @@ public class OpKeyApiCommunicator {
 			postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
 		}
 
-		// String value=con.getHeaderField("Authorization");
-		// System.out.println(value);
 		byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 		if (requestMethod.toUpperCase().equals("POST")) {
 			con.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
@@ -86,7 +82,6 @@ public class OpKeyApiCommunicator {
 		}
 
 		int responseCode = con.getResponseCode();
-		System.out.println("GET Response Code :: " + responseCode);
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
@@ -94,7 +89,6 @@ public class OpKeyApiCommunicator {
 			response.append(inputLine);
 		}
 		in.close();
-		System.out.println(response.toString());
 		con.disconnect();
 		return response.toString();
 	}

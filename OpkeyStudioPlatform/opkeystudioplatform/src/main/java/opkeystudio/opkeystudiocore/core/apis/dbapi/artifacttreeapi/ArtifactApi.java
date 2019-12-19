@@ -47,19 +47,16 @@ public class ArtifactApi {
 	}
 
 	public void deleteArtifact(Artifact artifact) {
-		System.out.println("Deleting " + artifact.getId());
 		String query = String.format("delete from main_artifact_filesystem where id='%s'", artifact.getId());
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	public void renameArtifact(Artifact artifact) {
-		System.out.println("Renaming " + artifact.getName());
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
 			sqlComm.connect();
 			String updateQuery = new QueryMaker().createUpdateQuery(artifact, "main_artifact_filesystem",
 					String.format("WHERE id='%s'", artifact.getId()));
-			System.out.println(updateQuery);
 			sqlComm.executeUpdate(updateQuery);
 			sqlComm.disconnect();
 		} catch (SQLException e) {
