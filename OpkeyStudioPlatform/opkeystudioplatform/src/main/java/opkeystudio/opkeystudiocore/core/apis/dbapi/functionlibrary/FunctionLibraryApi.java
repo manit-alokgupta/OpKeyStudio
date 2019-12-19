@@ -45,7 +45,6 @@ public class FunctionLibraryApi {
 		String query = String
 				.format("SELECT * FROM component_design_steps where component_id='%s' ORDER BY position asc", flowId);
 		String result = sqlComm.executeQueryString(query);
-		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowStep.class);
 		sqlComm.disconnect();
@@ -57,7 +56,6 @@ public class FunctionLibraryApi {
 		sqlComm.connect();
 		String query = "SELECT * FROM component_step_input_args";
 		String result = sqlComm.executeQueryString(query);
-		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowInputArgument.class);
 		sqlComm.disconnect();
@@ -74,7 +72,6 @@ public class FunctionLibraryApi {
 		sqlComm.connect();
 		String query = "SELECT * FROM component_step_output_arguments";
 		String result = sqlComm.executeQueryString(query);
-		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
 		sqlComm.disconnect();
@@ -165,7 +162,6 @@ public class FunctionLibraryApi {
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
 		for (FlowStep flowStep : flowSteps) {
-			System.out.println(flowStep.getComponent_id());
 			if (flowStep.getKeywordid() != null) {
 				Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);

@@ -25,7 +25,6 @@ public class Utilities {
 
 	public void initializeOpKeyStudioPath() {
 		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio";
-		System.out.println(path);
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
@@ -57,7 +56,6 @@ public class Utilities {
 	}
 
 	public void writeToFile(File file, String data) throws IOException {
-		System.out.println(file.getAbsolutePath());
 		if (!file.exists()) {
 			file.createNewFile();
 		}

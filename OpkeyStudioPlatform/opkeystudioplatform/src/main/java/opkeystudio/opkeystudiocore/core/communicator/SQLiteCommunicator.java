@@ -1,8 +1,5 @@
 package opkeystudio.opkeystudiocore.core.communicator;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,7 +18,6 @@ public class SQLiteCommunicator {
 
 	public SQLiteCommunicator() {
 		this.sqliteDbUrl = "jdbc:sqlite:" + ServiceRepository.getInstance().getExportedDBFilePath();
-		System.out.println(this.sqliteDbUrl);
 	}
 
 	public SQLiteCommunicator(String dbFileUrl) {
@@ -47,7 +43,6 @@ public class SQLiteCommunicator {
 	}
 
 	public String executeQueryString(String query) throws SQLException {
-		// System.out.println(query);
 		ResultSet rs = executeQuery(query);
 		return convertToJSON(rs);
 	}

@@ -52,7 +52,6 @@ public class FunctionLibraryConstruct {
 
 	private void updateComponentStep(FlowStep flowStep) {
 		if (flowStep.isModified()) {
-			System.out.println("Saving flow step " + flowStep.getFlow_stepid());
 			String query = new QueryMaker().createUpdateQuery(flowStep, "component_design_steps",
 					String.format("WHERE flow_stepid ='%s'", flowStep.getFlow_stepid()));
 			QueryExecutor.getInstance().executeUpdateQuery(query);

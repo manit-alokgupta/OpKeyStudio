@@ -56,19 +56,16 @@ public class ObjectRepositoryApi {
 
 	private void deleteOrObject(String objectId) throws SQLException {
 		String query = String.format("delete from or_objects where object_id='%s'", objectId);
-		System.out.println(query);
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	private void deleteObjectProperty(String propertyId) throws SQLException {
 		String query = String.format("delete from or_object_properties where property_id='%s'", propertyId);
-		System.out.println(query);
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
 	public void addORObject(ORObject orObject) throws SQLException {
 		String query = new QueryMaker().createInsertQuery(orObject, "or_objects", "");
-		System.out.println("Saving "+query);
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
@@ -94,7 +91,6 @@ public class ObjectRepositoryApi {
 		for (ORObject orObject : objectRepositories) {
 			saveObjectProperties(orObject.getObjectAttributesProperty());
 			if (orObject.isDeleted()) {
-				System.out.println("Deleting..... ");
 				deleteOrObject(orObject.getObject_id());
 			}
 			if (orObject.isAdded()) {
@@ -110,7 +106,6 @@ public class ObjectRepositoryApi {
 
 		for (ObjectAttributeProperty objectAttributeProperty : objectAttributesProperties) {
 			if (objectAttributeProperty.isDeleted()) {
-				System.out.println("Deleting......");
 				deleteObjectProperty(objectAttributeProperty.getProperty_id());
 			}
 			if (objectAttributeProperty.isAdded()) {

@@ -27,8 +27,6 @@ public class ProjectApi {
 		params.put("projectId", projectPID);
 		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/OpKeyAuth/SelectProject", "POST",
 				params, null, null);
-
-		System.out.println(retdata);
 		return retdata;
 	}
 }

@@ -100,10 +100,4 @@ public class QueryMaker {
 		}
 		return null;
 	}
-
-	public static void main(String[] args) {
-		Artifact arti = new ArtifactMaker().getArtifactObject("1234", "hello_testcase", MODULETYPE.Flow);
-		String query = new QueryMaker().createInsertQuery(arti, "main_artifact_filesystem", "ewdwdw");
-		System.out.println(query);
-	}
 }

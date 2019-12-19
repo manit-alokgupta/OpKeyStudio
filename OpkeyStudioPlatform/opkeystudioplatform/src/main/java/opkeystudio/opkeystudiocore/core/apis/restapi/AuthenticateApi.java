@@ -28,7 +28,6 @@ public class AuthenticateApi {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/OpKeyAuth/Logout", "POST", params, null,
 				null);
-		System.out.println(retdata);
 		return retdata;
 	}
 }
