@@ -28,14 +28,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParameterApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParameterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
@@ -217,6 +214,7 @@ public class OutputTable extends CustomTable {
 						fl_BottomFactoryOutput.getType(), fl_BottomFactoryOutput.getComponentstep_oa_id(),
 						fl_BottomFactoryOutput.getDescription() });
 				outputTableItem.setBottomFactoryOutputData(fl_BottomFactoryOutput);
+				addTableEditor(outputTableItem);
 			}
 		}
 		selectRow(0);
@@ -242,7 +240,7 @@ public class OutputTable extends CustomTable {
 						fl_BottomFactoryOutput.getType(), fl_BottomFactoryOutput.getComponentstep_oa_id(),
 						fl_BottomFactoryOutput.getDescription() });
 				outputTableItem.setBottomFactoryOutputData(fl_BottomFactoryOutput);
-
+				addTableEditor(outputTableItem);
 			}
 		}
 		selectRow(0);

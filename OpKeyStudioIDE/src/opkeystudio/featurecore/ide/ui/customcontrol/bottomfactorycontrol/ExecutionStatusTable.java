@@ -19,6 +19,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 
+@SuppressWarnings("unused")
 public class ExecutionStatusTable extends CustomTable {
 
 	private boolean paintCalled = false;

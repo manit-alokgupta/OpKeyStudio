@@ -23,6 +23,12 @@ import org.eclipse.swt.widgets.TableColumn;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
@@ -30,13 +36,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryTa
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
-import opkeystudio.core.utils.Utilities;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 
+@SuppressWarnings("unused")
 public class TagTable extends CustomTable {
 
 	private boolean paintCalled = false;
@@ -203,6 +204,7 @@ public class TagTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<BottomFactoryTag> getTagData() {
 		return (List<BottomFactoryTag>) super.getControlData();
 	}
@@ -328,8 +330,8 @@ public class TagTable extends CustomTable {
 			bottomFactoryTag.setTag_id(Utilities.getInstance().getUniqueUUID(""));
 			bottomFactoryTag.setP_id_denormalized(ServiceRepository.getInstance().getDefaultProject().getP_id());
 			bottomFactoryTag.setId(artifactId);
-			bottomFactoryTag.setKey("NewTag" + getTagData().size());
-			bottomFactoryTag.setValue("value" + getTagData().size());
+			bottomFactoryTag.setKey("NewTag-" + (getTagData().size() - 1));
+			bottomFactoryTag.setValue("value-" + (getTagData().size() - 1));
 			new BottomFactoryTagApi().insertTagData(bottomFactoryTag);
 			renderAllTagData();
 		} catch (IOException | SQLException e) {
@@ -354,8 +356,8 @@ public class TagTable extends CustomTable {
 		this.parentBottomFactoryORUi = parentBottomFactoryUi;
 	}
 
-	public BottomFactoryORUi getParentBottomFactoryDataRepoUi() {
-		return parentBottomFactoryORUi;
+	public BottomFactoryDataRepoUi getParentBottomFactoryDataRepoUi() {
+		return parentBottomFactoryDataRepoUi;
 	}
 
 	public void setParentBottomFactoryDataRepoUi(BottomFactoryDataRepoUi parentBottomFactoryUi) {

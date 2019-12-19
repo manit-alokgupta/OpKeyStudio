@@ -92,6 +92,7 @@ public class BottomFactoryDataRepoUi extends Composite {
 		TabFolder tabFolder = new TabFolder(grpMenu, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tabFolder.setBounds(0, 0, 120, 43);
+		tabFolder.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
 		TabItem detailsTabItem = new TabItem(tabFolder, SWT.NONE);
 		detailsTabItem.setText("Details");
@@ -161,6 +162,7 @@ public class BottomFactoryDataRepoUi extends Composite {
 
 		ToolBar toolBar_1 = new ToolBar(composite_7, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_1.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
 		addTagItem = new ToolItem(toolBar_1, SWT.NONE);
 //		addTagItem.setWidth(27);

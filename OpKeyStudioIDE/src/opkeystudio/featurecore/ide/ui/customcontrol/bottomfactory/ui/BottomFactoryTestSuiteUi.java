@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -13,16 +12,19 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -32,23 +34,13 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.ExecutionStatusTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Button;
-
 public class BottomFactoryTestSuiteUi extends Composite {
-//	private Table auditTrailsTable;
-//	private Table tagsTable;
-//	private Table executionStatusTable;
-//	private Table testCaseDocTable;
-	private Table table;
+
 	private Table mailToTable;
 	private Table table_1;
 	private Text textSearch;
@@ -332,7 +324,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 				Text text = (Text) e.getSource();
 				String searchValue = text.getText();
 				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
-					
+
 				}
 			}
 

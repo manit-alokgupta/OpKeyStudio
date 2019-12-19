@@ -31,13 +31,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.ExecutionStatusTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
-import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParameterApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParameterApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryTagApi;
@@ -49,20 +46,9 @@ public class BottomFactoryFLUi extends Composite {
 	private UsedByTable usedByTable;
 	private AuditTrailsTable auditTrailsTable;
 	private TagTable tagsTable;
-	private ExecutionStatusTable executionStatusTable;
 	private BackupTable backupTable;
-	private TestCaseDocumentTable testCaseDocTable;
 	private InputTable inputTable;
 	private OutputTable outputTable;
-
-//	private Table usedByTable;
-//	private Table auditTrailsTable;
-//	private Table tagsTable;
-//	private Table executionStatusTable;
-//	private Table backupTable;
-//	private Table testCaseDocTable;
-//	private Table inputTable;
-//	private Table outputTable;
 
 	private TabItem inputTabItem;
 	private ToolItem addInputItem;
@@ -83,7 +69,6 @@ public class BottomFactoryFLUi extends Composite {
 	private ToolItem moveUpTagItem;
 	private ToolItem moveDownTagItem;
 	public boolean flag = false;
-	private FLView fLView;
 	private Display display;
 
 	/**
@@ -131,6 +116,7 @@ public class BottomFactoryFLUi extends Composite {
 		TabFolder tabFolder = new TabFolder(grpMenu, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tabFolder.setBounds(0, 0, 120, 43);
+		tabFolder.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
 		TabItem detailsTabItem = new TabItem(tabFolder, SWT.NONE);
 		detailsTabItem.setText("Details");
@@ -202,6 +188,7 @@ public class BottomFactoryFLUi extends Composite {
 		ToolBar toolBar_1 = new ToolBar(composite_7, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		toolBar_1.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
 		addTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		addTagItem.setWidth(27);
@@ -280,6 +267,7 @@ public class BottomFactoryFLUi extends Composite {
 
 		ToolBar inputTabToolBar = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
 		inputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		inputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
 		addInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
 		addInputItem.setToolTipText("Add");
@@ -330,6 +318,7 @@ public class BottomFactoryFLUi extends Composite {
 
 		ToolBar outputTabToolBar = new ToolBar(composite_12, SWT.FLAT | SWT.RIGHT);
 		outputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		outputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
 		addOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
 		addOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));

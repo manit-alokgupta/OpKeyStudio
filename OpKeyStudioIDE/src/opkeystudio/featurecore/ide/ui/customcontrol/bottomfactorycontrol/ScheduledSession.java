@@ -18,6 +18,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 
+@SuppressWarnings("unused")
 public class ScheduledSession extends CustomTable {
 
 	private boolean paintCalled = false;

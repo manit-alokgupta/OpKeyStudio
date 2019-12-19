@@ -1,8 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.FocusEvent;
@@ -17,14 +14,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 
+@SuppressWarnings("unused")
 public class AuditTrailsTable extends CustomTable {
 
 	private boolean paintCalled = false;
@@ -162,8 +160,8 @@ public class AuditTrailsTable extends CustomTable {
 		this.parentBottomFactoryORUi = parentBottomFactoryUi;
 	}
 
-	public BottomFactoryORUi getParentBottomFactoryDataRepoUi() {
-		return parentBottomFactoryORUi;
+	public BottomFactoryDataRepoUi getParentBottomFactoryDataRepoUi() {
+		return parentBottomFactoryDataRepoUi;
 	}
 
 	public void setParentBottomFactoryDataRepoUi(BottomFactoryDataRepoUi parentBottomFactoryUi) {

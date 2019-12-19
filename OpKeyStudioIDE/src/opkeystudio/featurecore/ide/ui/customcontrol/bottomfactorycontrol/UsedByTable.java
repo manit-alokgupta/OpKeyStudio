@@ -20,7 +20,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.featurecore.ide.ui.ui.FLView;
 
 public class UsedByTable extends CustomTable {
 
@@ -44,7 +43,7 @@ public class UsedByTable extends CustomTable {
 		thisTable = this;
 		this.setParentBottomFactoryORUi(bottomFactoryUi);
 	}
- 
+
 	public UsedByTable(Composite parent, int style, BottomFactoryDataRepoUi bottomFactoryUi) {
 		super(parent, style);
 		init();
@@ -154,8 +153,8 @@ public class UsedByTable extends CustomTable {
 		this.parentBottomFactoryORUi = parentBottomFactoryUi;
 	}
 
-	public BottomFactoryORUi getParentBottomFactoryDataRepoUi() {
-		return parentBottomFactoryORUi;
+	public BottomFactoryDataRepoUi getParentBottomFactoryDataRepoUi() {
+		return parentBottomFactoryDataRepoUi;
 	}
 
 	public void setParentBottomFactoryDataRepoUi(BottomFactoryDataRepoUi parentBottomFactoryUi) {

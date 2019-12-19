@@ -21,6 +21,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 
+@SuppressWarnings("unused")
 public class BackupTable extends CustomTable {
 
 	private boolean paintCalled = false;
