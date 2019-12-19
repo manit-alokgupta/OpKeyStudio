@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
@@ -153,8 +154,11 @@ public class InputTable extends CustomTable {
 		getBottomFactoryInputData().add(bottomFactoryInput);
 	}
 
-	public void deleteBottomFactoryInputData(Fl_BottomFactoryInput bottomFactoryInput) {
-		bottomFactoryInput.setDeleted(true);
+//	public void deleteBottomFactoryInputData(Fl_BottomFactoryInput bottomFactoryInput) {
+	public void deleteBottomFactoryInputData() {
+		int selectedIndex = this.getSelectionIndex();
+		getBottomFactoryInputData().get(selectedIndex).setDeleted(true);
+//		bottomFactoryInput.setDeleted(true);
 		refreshAllBottomFactoryInputData();
 	}
 
@@ -171,6 +175,13 @@ public class InputTable extends CustomTable {
 	private void addTableEditor(InputTableItem inputTableItem) {
 		Fl_BottomFactoryInput bottomFactoryInput = inputTableItem.getBottomFactoryInputData();
 		TableEditor editor1 = getTableEditor();
+		TableEditor editor2 = getTableEditor();
+		CustomCombo combo = new CustomCombo(this, 0);
+		combo.setItems(ServiceRepository.getInstance().getAllVaraiblesType());
+		combo.select(Utilities.getInstance().getIndexOfItem(ServiceRepository.getInstance().getAllVaraiblesType(),
+				bottomFactoryInput.getType()));
+		combo.setControlData(bottomFactoryInput);
+
 		CustomButton isOptional = new CustomButton(this, SWT.CHECK);
 		isOptional.setSelection(bottomFactoryInput.isIs_mandatory());
 		isOptional.setControlData(bottomFactoryInput);
@@ -192,11 +203,42 @@ public class InputTable extends CustomTable {
 
 			}
 		});
+
+		combo.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				thisTable.setSelection(inputTableItem);
+				CustomCombo button = (CustomCombo) e.getSource();
+				Fl_BottomFactoryInput bottomFactoryInput1 = (Fl_BottomFactoryInput) button.getControlData();
+				int selected = combo.getSelectionIndex();
+				String selectedDataType = combo.getItem(selected);
+				bottomFactoryInput1.setModified(true);
+				bottomFactoryInput1.setType(selectedDataType);
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		editor1.setEditor(isOptional, inputTableItem, 3);
+		editor2.setEditor(combo, inputTableItem, 1);
 		allTableEditors.add(editor1.getEditor());
+		allTableEditors.add(editor2.getEditor());
+	}
+
+	private void disposeAllTableEditors() {
+		for (Control editor : allTableEditors) {
+			editor.dispose();
+		}
 	}
 
 	public void refreshAllBottomFactoryInputData() {
+		disposeAllTableEditors();
 		this.removeAll();
 		List<Fl_BottomFactoryInput> bottomFactoryInputs = getBottomFactoryInputData();
 		setBottomFactoryInputData(bottomFactoryInputs);
@@ -206,6 +248,7 @@ public class InputTable extends CustomTable {
 				inputTableItem.setText(new String[] { fl_BottomFactoryInput.getName(), fl_BottomFactoryInput.getType(),
 						fl_BottomFactoryInput.getDefault_value(), "", fl_BottomFactoryInput.getDescription() });
 				inputTableItem.setBottomFactoryInputData(fl_BottomFactoryInput);
+				addTableEditor(inputTableItem);
 			}
 		}
 		selectRow(0);
@@ -213,6 +256,7 @@ public class InputTable extends CustomTable {
 
 	public void renderAllBottomFactoryInputData()
 			throws JsonParseException, JsonMappingException, IOException, SQLException {
+		disposeAllTableEditors();
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
@@ -300,9 +344,13 @@ public class InputTable extends CustomTable {
 	}
 
 	public void addBlankInputPArameter() {
+		MPart mpart = Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		String artifactId = artifact.getId();
 		int lastPosition = 0;
 		Fl_BottomFactoryInput bottomFactoryInput = new Fl_BottomFactoryInput();
 		System.out.println(getBottomFactoryInputData().size());
+
 		if ((getBottomFactoryInputData().size()) == 0) {
 			lastPosition = (getBottomFactoryInputData().size() - 1);
 
@@ -310,15 +358,31 @@ public class InputTable extends CustomTable {
 			lastPosition = getBottomFactoryInputData().get(getBottomFactoryInputData().size() - 1).getPosition();
 		}
 		bottomFactoryInput.setPosition(lastPosition + 1);
+		System.out.println("Done1");
 		bottomFactoryInput.setIp_id(Utilities.getInstance().getUniqueUUID(""));
-		bottomFactoryInput.setComponent_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
-		bottomFactoryInput.setName("");
-		bottomFactoryInput.setType("String");
-		bottomFactoryInput.setIs_mandatory(true);
-		bottomFactoryInput.setDefault_value("");
-		bottomFactoryInput.setDescription("");
+		System.out.println("Done2");
+//		bottomFactoryInput.setComponent_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
+		bottomFactoryInput.setComponent_id(artifactId);
 
-		addInputParameter(bottomFactoryInput);
+		System.out.println("Done3");
+		bottomFactoryInput.setName("Default Name" + getBottomFactoryInputData().size());
+		System.out.println("Done4");
+		bottomFactoryInput.setType("String");
+		System.out.println("Done5");
+		bottomFactoryInput.setIs_mandatory(true);
+		System.out.println("Done6");
+		bottomFactoryInput.setDefault_value("");
+		System.out.println("Done7");
+		bottomFactoryInput.setDescription("");
+		System.out.println("Done8");
+
+		try {
+			new BottomFactoryInputParameterApi().insertInputParameter(bottomFactoryInput);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+//		addInputParameter(bottomFactoryInput);
 		try {
 			renderAllBottomFactoryInputData();
 		} catch (IOException | SQLException e) {

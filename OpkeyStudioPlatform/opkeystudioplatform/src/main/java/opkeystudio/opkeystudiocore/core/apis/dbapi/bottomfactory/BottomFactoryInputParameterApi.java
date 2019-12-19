@@ -94,10 +94,11 @@ public class BottomFactoryInputParameterApi {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		sqlComm.connect();
 		String query = String.format(
-				"insert into component_input_parameters(ip_id,component_id,Name,type,is_mandatory,default_value,position,description) VALUES('%s','%s','%s','%s','%s','%s','%s')",
+				"insert into component_input_parameters(ip_id,component_id,Name,type,ismandatory,defaultvalue,position,description) VALUES('%s','%s','%s','%s','%s','%s','%s','%s')",
 				bottomFactoryInput.getIp_id(), bottomFactoryInput.getComponent_id(), bottomFactoryInput.getName(),
 				bottomFactoryInput.getType(), bottomFactoryInput.isIs_mandatory(),
-				bottomFactoryInput.getDefault_value(), bottomFactoryInput.getDescription());
+				bottomFactoryInput.getDefault_value(), bottomFactoryInput.getPosition(),
+				bottomFactoryInput.getDescription());
 		int result = sqlComm.executeUpdate(query);
 	}
 

@@ -242,13 +242,9 @@ public class GlobalVariableTable extends CustomTable {
 		System.out.println("  " + getGlobalVariablesData().size());
 		if ((getGlobalVariablesData().size()) == 0) {
 			lastPosition = (getGlobalVariablesData().size() - 1);
-
 		} else {
 			lastPosition = getGlobalVariablesData().get(getGlobalVariablesData().size() - 1).getPosition();
-
 		}
-
-//		System.out.println(lastPosition);
 		gv.setPosition(lastPosition + 1);
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
 		gv.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
@@ -260,7 +256,6 @@ public class GlobalVariableTable extends CustomTable {
 		addGlobalVariable(gv);
 		renderGlobalVariables();
 		parentGlobalVariableView.toggleSaveToolItem(true);
-
 	}
 
 	public void deleteGlobalVariableStep() {

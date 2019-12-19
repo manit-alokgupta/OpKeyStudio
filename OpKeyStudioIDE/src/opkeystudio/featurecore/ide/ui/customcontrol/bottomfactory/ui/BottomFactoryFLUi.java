@@ -624,7 +624,9 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				inputTable.deleteBottomFactoryInputData(inputTable.getSelectedInputParemeter());
+//				inputTable.deleteBottomFactoryInputData(inputTable.getSelectedInputParemeter());
+				inputTable.deleteBottomFactoryInputData();
+				toggleDeleteButton(false);
 				flag = true;
 
 //				try {
