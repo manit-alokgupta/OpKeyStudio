@@ -4,10 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.collections.DuoList;
-import opkeystudio.opkeystudiocore.core.dtoMaker.ArtifactMaker;
 
 public class QueryMaker {
 	public enum QUERYTYPE {

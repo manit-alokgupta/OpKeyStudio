@@ -35,9 +35,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
@@ -120,6 +117,8 @@ public class TestCaseView extends Composite {
 	private Display display;
 	@SuppressWarnings("unused")
 	private ArtifactTreeItem artifactTreeItem;
+
+	private SourceCodeEditor sourceCodeEditor;
 
 	/**
 	 * Create the composite.
@@ -549,9 +548,8 @@ public class TestCaseView extends Composite {
 		sourceCodeTabItem.setText("Source Code");
 		sourceCodeTabItem.setToolTipText("Source Code");
 
-		SourceCodeEditor sourceCodeEditor = new SourceCodeEditor(mainTestCaseTabFolder, SWT.NONE, this);
+		sourceCodeEditor = new SourceCodeEditor(mainTestCaseTabFolder, SWT.NONE, this);
 		sourceCodeTabItem.setControl(sourceCodeEditor);
-
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -1122,6 +1120,10 @@ public class TestCaseView extends Composite {
 
 	public void setSelectedFlowStep(FlowStep selectedFlowStep) {
 		this.selectedFlowStep = selectedFlowStep;
+	}
+
+	public SourceCodeEditor getSourceCodeEditor() {
+		return this.sourceCodeEditor;
 	}
 
 	@Override

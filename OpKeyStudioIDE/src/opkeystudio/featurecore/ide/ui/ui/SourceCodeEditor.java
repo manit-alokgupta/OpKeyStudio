@@ -28,10 +28,12 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariable
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 
 public class SourceCodeEditor extends Composite {
 	private TestCaseView testCaseView;
 	private TabFolder tabFolder;
+	private Tree sourceCodeTree;
 
 	public SourceCodeEditor(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
@@ -56,11 +58,22 @@ public class SourceCodeEditor extends Composite {
 		composite_16.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		composite_16.setLayout(new GridLayout(2, false));
 
-		Tree sourceCodeTree = new Tree(composite_16, SWT.BORDER);
+		sourceCodeTree = new Tree(composite_16, SWT.BORDER);
 		sourceCodeTree.setHeaderVisible(true);
 		sourceCodeTree.setLinesVisible(false);
 
-		renderTreeItems(sourceCodeTree);
+		try {
+			renderTreeItems();
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		GridData gd_sourceCodeTree = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_sourceCodeTree.widthHint = 275;
@@ -77,14 +90,15 @@ public class SourceCodeEditor extends Composite {
 		viewer.getTextWidget().setFont(font);
 	}
 
-	private void renderTreeItems(Tree tree) {
+	private void renderTreeItems() throws JsonParseException, JsonMappingException, SQLException, IOException,
+			IllegalArgumentException, IllegalAccessException {
 		String[] items = new String[] { "Global Variables", "TestCases", "Object Repositories", "Function Libraries" };
 		for (String item : items) {
-			TreeItem sourceCodeTreeitem_1 = new TreeItem(tree, SWT.NONE);
+			TreeItem sourceCodeTreeitem_1 = new TreeItem(sourceCodeTree, SWT.NONE);
 			sourceCodeTreeitem_1.setText(item);
 		}
 
-		tree.addMouseListener(new MouseListener() {
+		sourceCodeTree.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -98,7 +112,7 @@ public class SourceCodeEditor extends Composite {
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				TreeItem item = tree.getSelection()[0];
+				TreeItem item = sourceCodeTree.getSelection()[0];
 				if (item.getItemCount() > 0) {
 					return;
 				}
@@ -109,11 +123,25 @@ public class SourceCodeEditor extends Composite {
 		});
 	}
 
-	private void getDatas() throws JsonParseException, JsonMappingException, SQLException, IOException {
-		List<GlobalVariable> globalVariables = new GlobalVariableApi().getAllGlobalVariables();
-		List<FlowStep> flowSteps = getTestCaseView().getFlowStepTable().getFlowStepsData();
-		List<FlowStep> functionLibraries = getFunctionLibraries(flowSteps);
-		List<ORObject> allORObjects = getAllORObjects(flowSteps);
+	public void transpileDatas() {
+		try {
+			List<GlobalVariable> globalVariables = new GlobalVariableApi().getAllGlobalVariables();
+			List<FlowStep> flowSteps = getTestCaseView().getFlowStepTable().getFlowStepsData();
+			List<FlowStep> functionLibraries = getFunctionLibraries(flowSteps);
+			List<ORObject> allORObjects = getAllORObjects(flowSteps);
+
+			Transpiler.getTranspiler().transpileGlobalVariables(globalVariables);
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {
