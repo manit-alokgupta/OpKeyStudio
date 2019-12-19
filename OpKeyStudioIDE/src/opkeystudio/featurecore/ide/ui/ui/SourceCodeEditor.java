@@ -3,7 +3,6 @@ package opkeystudio.featurecore.ide.ui.ui;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
