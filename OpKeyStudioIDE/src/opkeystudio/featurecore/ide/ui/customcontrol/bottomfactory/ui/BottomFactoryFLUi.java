@@ -628,15 +628,6 @@ public class BottomFactoryFLUi extends Composite {
 				inputTable.deleteBottomFactoryInputData();
 				toggleDeleteButton(false);
 				flag = true;
-
-//				try {
-//					fLView = new FLView(fLView.getParent(), 0);
-//					fLView.toggleSaveButton(true);
-//				} catch (IOException | SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-
 			}
 
 			@Override

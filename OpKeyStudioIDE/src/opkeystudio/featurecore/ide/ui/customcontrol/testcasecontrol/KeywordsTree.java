@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
@@ -11,11 +12,13 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TreeItem;
 
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -85,31 +88,33 @@ public class KeywordsTree extends CustomTree {
 
 				Keyword keyWord = (Keyword) selectedKeywordItem.getControlData();
 				System.out.println(keyWord.getKeywordname());
-//				if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.DataRepository) {
-//				FlowStepTable flowStepTableFL = getParentFLView().getFlowStepTable();
-//				if (flowStepTableFL != null) {
-//					FlowStep flowStep = flowStepTableFL.getSelectedFlowStep();
-//					flowStep.setKeyword(keyWord);
-//					flowStep.setKeywordid(keyWord.getKeywordid());
-//					flowStep.setModified(true);
-//					getParentFLView().getFlowStepTable().refreshFLFlowSteps();
-//					getParentFLView().toggleSaveButton(true);
-//
-//				}
-//				}
+				MPart mpart = Utilities.getInstance().getActivePart();
+				Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+				MODULETYPE fileType = artifact.getFile_type_enum();
 
-//				if (flowStep.isIstestcase()) {
-				FlowStepTable flowStepTable = getParentTestCaseView().getFlowStepTable();
-				if (flowStepTable != null) {
-					flowStep = flowStepTable.getSelectedFlowStep();
-					flowStep.setKeyword(keyWord);
-					flowStep.setKeywordid(keyWord.getKeywordid());
-					flowStep.setModified(true);
-					getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
-					getParentTestCaseView().toggleSaveButton(true);
-
+				if (fileType == MODULETYPE.Component) {
+					FlowStepTable flowStepTableFL = getParentFLView().getFlowStepTable();
+					if (flowStepTableFL != null) {
+						FlowStep flowStep = flowStepTableFL.getSelectedFlowStep();
+						flowStep.setKeyword(keyWord);
+						flowStep.setKeywordid(keyWord.getKeywordid());
+						flowStep.setModified(true);
+						getParentFLView().getFlowStepTable().refreshFLFlowSteps();
+						getParentFLView().toggleSaveButton(true);
+					}
 				}
-//				}
+
+				if (fileType == MODULETYPE.Flow) {
+					FlowStepTable flowStepTable = getParentTestCaseView().getFlowStepTable();
+					if (flowStepTable != null) {
+						flowStep = flowStepTable.getSelectedFlowStep();
+						flowStep.setKeyword(keyWord);
+						flowStep.setKeywordid(keyWord.getKeywordid());
+						flowStep.setModified(true);
+						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+						getParentTestCaseView().toggleSaveButton(true);
+					}
+				}
 
 			}
 
