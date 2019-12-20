@@ -1,9 +1,21 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules;
 
 public class MethodCallSnippet {
-	private String START_DATA = "public class %s";
-	private String BODY_DATA = "";
-	private String END_DATA = "}";
+	private String START_DATA = "";
+	private String BODY_DATA = "%s(%s);";
+	private String END_DATA = "";
+
+	@SuppressWarnings("unused")
+	public MethodCallSnippet(String objectRefName, String methodName, String... valueParams) {
+		String values = String.join(",", valueParams);
+		String prefix = "";
+		if (objectRefName != null) {
+			if (!objectRefName.trim().isEmpty()) {
+				prefix += objectRefName + ".";
+			}
+		}
+		setBODY_DATA(prefix + String.format(getBODY_DATA(), methodName, values));
+	}
 
 	public String getSTART_DATA() {
 		return START_DATA;
@@ -27,5 +39,9 @@ public class MethodCallSnippet {
 
 	public void setEND_DATA(String eND_DATA) {
 		END_DATA = eND_DATA;
+	}
+
+	public String toString() {
+		return getSTART_DATA() + System.lineSeparator() + getBODY_DATA() + System.lineSeparator() + getEND_DATA();
 	}
 }

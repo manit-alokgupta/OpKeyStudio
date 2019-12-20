@@ -51,6 +51,13 @@ public class ClassSnippet {
 	}
 
 	public String toString() {
+		String bodyData = "";
+		for (MethodSnippet methodSnippet : getMethodSnippets()) {
+			bodyData += methodSnippet.toString();
+		}
+		if (!bodyData.isEmpty()) {
+			setBODY_DATA(bodyData);
+		}
 		return getSTART_DATA() + System.lineSeparator() + getBODY_DATA() + System.lineSeparator() + getEND_DATA();
 	}
 }

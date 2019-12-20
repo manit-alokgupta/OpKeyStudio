@@ -7,6 +7,10 @@ import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.query.DBField;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.ClassSnippet;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodCallSnippet;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodSnippet;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewObjectSnippet;
 
 public class Transpiler {
 	private static Transpiler transpiler;
@@ -39,19 +43,23 @@ public class Transpiler {
 		return transpiledFields;
 	}
 
-	public void transpileGlobalVariables(List<GlobalVariable> globalVariables)
+	public String transpileGlobalVariables(List<GlobalVariable> globalVariables)
 			throws IllegalArgumentException, IllegalAccessException {
-		for (GlobalVariable globalVariable : globalVariables) {
-			transpileGlobalVariable(globalVariable);
-		}
-	}
+		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 
-	private void transpileGlobalVariable(GlobalVariable globalVariable)
-			throws IllegalArgumentException, IllegalAccessException {
-		System.out.println(">>Transpiling Data");
-		List<TranspiledField> transpiledFields = getTranspiledFields(globalVariable);
-		for (TranspiledField transpiledField : transpiledFields) {
-			System.out.println(transpiledField.getName() + "    " + transpiledField.getValue());
+		ClassSnippet classSnippet = new ClassSnippet("GlobalVariables");
+		classSnippet.addMethodSnippet(methodSnippet);
+		for (GlobalVariable globalVariable : globalVariables) {
+			List<TranspiledField> transpiledFields = getTranspiledFields(globalVariable);
+			NewObjectSnippet newGlobalVariable = new NewObjectSnippet("GlobalVariable",
+					"gv_" + globalVariable.getGv_id());
+			for (TranspiledField transpiledField : transpiledFields) {
+				MethodCallSnippet newMethodCalledSnippet = new MethodCallSnippet("gv_" + globalVariable.getGv_id(),
+						"set" + transpiledField.getName(), transpiledField.getValue().toString());
+				newGlobalVariable.addMethodCallSnippet(newMethodCalledSnippet);
+				methodSnippet.addNewObjectSnippet(newGlobalVariable);
+			}
 		}
+		return classSnippet.toString();
 	}
 }
