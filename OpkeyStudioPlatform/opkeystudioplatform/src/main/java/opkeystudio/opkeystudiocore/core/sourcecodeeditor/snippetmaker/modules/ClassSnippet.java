@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ClassSnippet {
 
-	private String START_DATA = "public class %s";
+	private String START_DATA = "public class %s{";
 	private String BODY_DATA = "";
 	private String END_DATA = "}";
 	private List<MethodSnippet> methodSnippets = new ArrayList<MethodSnippet>();

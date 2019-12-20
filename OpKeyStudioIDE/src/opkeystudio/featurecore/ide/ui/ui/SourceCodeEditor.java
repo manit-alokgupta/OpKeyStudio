@@ -6,16 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.internal.ui.JavaPlugin;
+import org.eclipse.jdt.internal.ui.text.FastJavaPartitionScanner;
+import org.eclipse.jdt.ui.text.IJavaPartitions;
 import org.eclipse.jdt.ui.text.JavaSourceViewerConfiguration;
 import org.eclipse.jdt.ui.text.JavaTextTools;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -121,12 +122,21 @@ public class SourceCodeEditor extends Composite {
 				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 
 				JavaTextTools javatools = JavaPlugin.getDefault().getJavaTextTools();
-				SourceViewer sourceViewer = new SourceViewer(tabFolder, null, SWT.NONE);
 
+				SourceViewer sourceViewer = new SourceViewer(tabFolder, null, SWT.H_SCROLL | SWT.V_SCROLL);
 				JavaSourceViewerConfiguration config = new JavaSourceViewerConfiguration(javatools.getColorManager(),
-						JavaPlugin.getDefault().getCombinedPreferenceStore(), null, null);
+						JavaPlugin.getDefault().getPreferenceStore(), null, null);
+
 				sourceViewer.configure(config);
 				Document document = new Document();
+
+				IDocumentPartitioner partitioner = new FastPartitioner(new FastJavaPartitionScanner(),
+						new String[] { IJavaPartitions.JAVA_DOC, IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
+								IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
+								IJavaPartitions.JAVA_CHARACTER });
+
+				document.setDocumentPartitioner(partitioner);
+				partitioner.connect(document);
 				document.set(scti.getBodyData());
 				sourceViewer.setDocument(document);
 
