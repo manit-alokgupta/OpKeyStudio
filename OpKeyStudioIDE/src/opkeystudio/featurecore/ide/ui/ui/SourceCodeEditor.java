@@ -5,7 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.internal.ui.JavaPlugin;
+import org.eclipse.jdt.ui.text.JavaSourceViewerConfiguration;
+import org.eclipse.jdt.ui.text.JavaTextTools;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -83,13 +87,6 @@ public class SourceCodeEditor extends Composite {
 
 		tabFolder = new TabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		// SourceViewer viewer = new SourceViewer(tabFolder, null, SWT.NONE);
-		// final HConfiguration sourceConf = new
-		// HConfiguration(HContentAssistProcessor.PARAM_PROCESSOR);
-		// viewer.configure(sourceConf);
-		// viewer.setEditable(true);
-		// Font font = JFaceResources.getFont(JFaceResources.TEXT_FONT);
-		// viewer.getTextWidget().setFont(font);
 	}
 
 	private void renderTreeItems() throws JsonParseException, JsonMappingException, SQLException, IOException,
@@ -122,12 +119,18 @@ public class SourceCodeEditor extends Composite {
 				System.out.println(scti.getBodyData());
 
 				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
-				StyledText styledText = new StyledText(tabFolder, SWT.BORDER);
-				styledText.setAlwaysShowScrollBars(true);
-				tabItem.setControl(styledText);
-				styledText.setMouseNavigatorEnabled(true);
-				styledText.setText(scti.getBodyData());
 
+				JavaTextTools javatools = JavaPlugin.getDefault().getJavaTextTools();
+				SourceViewer sourceViewer = new SourceViewer(tabFolder, null, SWT.NONE);
+
+				JavaSourceViewerConfiguration config = new JavaSourceViewerConfiguration(javatools.getColorManager(),
+						JavaPlugin.getDefault().getCombinedPreferenceStore(), null, null);
+				sourceViewer.configure(config);
+				Document document = new Document();
+				document.set(scti.getBodyData());
+				sourceViewer.setDocument(document);
+
+				tabItem.setControl(sourceViewer.getControl());
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
 			}
