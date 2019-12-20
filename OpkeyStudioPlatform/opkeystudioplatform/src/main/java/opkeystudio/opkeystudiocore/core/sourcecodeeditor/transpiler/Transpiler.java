@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.ClassSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodCallSnippet;
@@ -62,4 +64,24 @@ public class Transpiler {
 		}
 		return classSnippet.toString();
 	}
+
+	public String transpileORObjects(List<ORObject> orobjects) throws IllegalArgumentException, IllegalAccessException {
+		ClassSnippet classSnippet = new ClassSnippet("ORObjects");
+		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
+		classSnippet.addMethodSnippet(methodSnippet);
+		for (ORObject orobject : orobjects) {
+			NewObjectSnippet newObjectSnippet = new NewObjectSnippet("ORObject", "or_" + orobject.getObject_id());
+			List<ObjectAttributeProperty> objectAttributeProperties = orobject.getObjectAttributesProperty();
+			for (ObjectAttributeProperty objectAttributeProperty : objectAttributeProperties) {
+				MethodCallSnippet methodCallSnippet = new MethodCallSnippet("or_" + orobject.getObject_id(),
+						"addProperty", "\"" + objectAttributeProperty.getProperty() + "\"",
+						"\"" + objectAttributeProperty.getValue() + "\"");
+				newObjectSnippet.addMethodCallSnippet(methodCallSnippet);
+			}
+			methodSnippet.addNewObjectSnippet(newObjectSnippet);
+		}
+		return classSnippet.toString();
+
+	}
+
 }
