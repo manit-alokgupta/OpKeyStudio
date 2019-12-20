@@ -8,6 +8,7 @@ import java.util.List;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Font;
@@ -82,13 +83,13 @@ public class SourceCodeEditor extends Composite {
 
 		tabFolder = new TabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		SourceViewer viewer = new SourceViewer(tabFolder, null, SWT.NONE);
+		// SourceViewer viewer = new SourceViewer(tabFolder, null, SWT.NONE);
 		// final HConfiguration sourceConf = new
 		// HConfiguration(HContentAssistProcessor.PARAM_PROCESSOR);
 		// viewer.configure(sourceConf);
-		viewer.setEditable(true);
-		Font font = JFaceResources.getFont(JFaceResources.TEXT_FONT);
-		viewer.getTextWidget().setFont(font);
+		// viewer.setEditable(true);
+		// Font font = JFaceResources.getFont(JFaceResources.TEXT_FONT);
+		// viewer.getTextWidget().setFont(font);
 	}
 
 	private void renderTreeItems() throws JsonParseException, JsonMappingException, SQLException, IOException,
@@ -119,7 +120,14 @@ public class SourceCodeEditor extends Composite {
 				}
 				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
 				System.out.println(scti.getBodyData());
+
 				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+				StyledText styledText = new StyledText(tabFolder, SWT.BORDER);
+				styledText.setAlwaysShowScrollBars(true);
+				tabItem.setControl(styledText);
+				styledText.setMouseNavigatorEnabled(true);
+				styledText.setText(scti.getBodyData());
+
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
 			}
