@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -113,9 +114,11 @@ public class SourceCodeEditor extends Composite {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				TreeItem item = sourceCodeTree.getSelection()[0];
-				if (item.getItemCount() > 0) {
+				if (!(item instanceof SourceCodeTreeItem)) {
 					return;
 				}
+				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
+				System.out.println(scti.getBodyData());
 				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
@@ -131,6 +134,23 @@ public class SourceCodeEditor extends Composite {
 			List<ORObject> allORObjects = getAllORObjects(flowSteps);
 
 			String gvtranspiledData = Transpiler.getTranspiler().transpileGlobalVariables(globalVariables);
+			String ortranspiledData = Transpiler.getTranspiler().transpileORObjects(allORObjects);
+			System.out.println(ortranspiledData);
+			TreeItem[] treeItems = sourceCodeTree.getItems();
+			for (TreeItem treeItem : treeItems) {
+				if (treeItem.getText().equals("Global Variables")) {
+					SourceCodeTreeItem gvItem = new SourceCodeTreeItem(treeItem, 0);
+					gvItem.setFileName("GlobalVariable.java");
+					gvItem.setText(gvItem.getFileName());
+					gvItem.setBodyData(gvtranspiledData);
+				}
+				if (treeItem.getText().equals("Object Repositories")) {
+					SourceCodeTreeItem gvItem = new SourceCodeTreeItem(treeItem, 0);
+					gvItem.setFileName("ORObjects.java");
+					gvItem.setText(gvItem.getFileName());
+					gvItem.setBodyData(ortranspiledData);
+				}
+			}
 		} catch (SQLException | IOException | IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
