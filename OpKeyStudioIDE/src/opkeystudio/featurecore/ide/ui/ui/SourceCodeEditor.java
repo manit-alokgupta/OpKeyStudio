@@ -130,15 +130,8 @@ public class SourceCodeEditor extends Composite {
 			List<FlowStep> functionLibraries = getFunctionLibraries(flowSteps);
 			List<ORObject> allORObjects = getAllORObjects(flowSteps);
 
-			Transpiler.getTranspiler().transpileGlobalVariables(globalVariables);
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+			String gvtranspiledData = Transpiler.getTranspiler().transpileGlobalVariables(globalVariables);
+		} catch (SQLException | IOException | IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
 
