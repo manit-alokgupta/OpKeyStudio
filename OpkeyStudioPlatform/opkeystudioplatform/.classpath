@@ -18,6 +18,16 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="target/dependency/animal-sniffer-annotations-1.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/checker-qual-2.5.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/error_prone_annotations-2.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/failureaccess-1.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/guava-27.0.1-jre.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/j2objc-annotations-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/javac-shaded-9+181-r4173-1.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/jsr305-3.0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/google-java-format-1.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/json-20190722.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/accessors-smart-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/android-json-0.0.20131108.vaadin1.jar"/>

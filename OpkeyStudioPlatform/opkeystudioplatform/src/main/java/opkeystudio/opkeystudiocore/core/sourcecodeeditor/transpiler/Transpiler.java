@@ -5,6 +5,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
@@ -62,7 +65,13 @@ public class Transpiler {
 				methodSnippet.addNewObjectSnippet(newGlobalVariable);
 			}
 		}
-		return classSnippet.toString();
+		try {
+			return new Formatter().formatSource(classSnippet.toString());
+		} catch (FormatterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String transpileORObjects(List<ORObject> orobjects) throws IllegalArgumentException, IllegalAccessException {
@@ -80,7 +89,13 @@ public class Transpiler {
 			}
 			methodSnippet.addNewObjectSnippet(newObjectSnippet);
 		}
-		return classSnippet.toString();
+		try {
+			return new Formatter().formatSource(classSnippet.toString());
+		} catch (FormatterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 
