@@ -56,22 +56,15 @@ public class Transpiler {
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (GlobalVariable globalVariable : globalVariables) {
 			List<TranspiledField> transpiledFields = getTranspiledFields(globalVariable);
-			NewObjectSnippet newGlobalVariable = new NewObjectSnippet("GlobalVariable",
-					"gv_" + globalVariable.getGv_id());
+			NewObjectSnippet newGlobalVariable = new NewObjectSnippet("GlobalVariable", "gv_" + "ABC");
 			for (TranspiledField transpiledField : transpiledFields) {
-				MethodCallSnippet newMethodCalledSnippet = new MethodCallSnippet("gv_" + globalVariable.getGv_id(),
-						"set" + transpiledField.getName(), transpiledField.getValue().toString());
+				MethodCallSnippet newMethodCalledSnippet = new MethodCallSnippet("gv_" + "ABC",
+						"set" + transpiledField.getName(), "\"" + transpiledField.getValue().toString() + "\"");
 				newGlobalVariable.addMethodCallSnippet(newMethodCalledSnippet);
 				methodSnippet.addNewObjectSnippet(newGlobalVariable);
 			}
 		}
-		try {
-			return new Formatter().formatSource(classSnippet.toString());
-		} catch (FormatterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return classSnippet.toString();
 	}
 
 	public String transpileORObjects(List<ORObject> orobjects) throws IllegalArgumentException, IllegalAccessException {
@@ -79,24 +72,17 @@ public class Transpiler {
 		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (ORObject orobject : orobjects) {
-			NewObjectSnippet newObjectSnippet = new NewObjectSnippet("ORObject", "or_" + orobject.getObject_id());
+			NewObjectSnippet newObjectSnippet = new NewObjectSnippet("ORObject", "or_" + "abc");
 			List<ObjectAttributeProperty> objectAttributeProperties = orobject.getObjectAttributesProperty();
 			for (ObjectAttributeProperty objectAttributeProperty : objectAttributeProperties) {
-				MethodCallSnippet methodCallSnippet = new MethodCallSnippet("or_" + orobject.getObject_id(),
-						"addProperty", "\"" + objectAttributeProperty.getProperty() + "\"",
+				MethodCallSnippet methodCallSnippet = new MethodCallSnippet("or_" + "abc", "addProperty",
+						"\"" + objectAttributeProperty.getProperty() + "\"",
 						"\"" + objectAttributeProperty.getValue() + "\"");
 				newObjectSnippet.addMethodCallSnippet(methodCallSnippet);
 			}
 			methodSnippet.addNewObjectSnippet(newObjectSnippet);
 		}
-		try {
-			return new Formatter().formatSource(classSnippet.toString());
-		} catch (FormatterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-
+		return classSnippet.toString();
 	}
 
 }

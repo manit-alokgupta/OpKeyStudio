@@ -3,6 +3,9 @@ package opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
+
 public class ClassSnippet {
 
 	private String START_DATA = "public class %s{";
@@ -58,6 +61,13 @@ public class ClassSnippet {
 		if (!bodyData.isEmpty()) {
 			setBODY_DATA(bodyData);
 		}
-		return getSTART_DATA() + System.lineSeparator() + getBODY_DATA() + System.lineSeparator() + getEND_DATA();
+		String data = getSTART_DATA() + System.lineSeparator() + getBODY_DATA() + System.lineSeparator()
+				+ getEND_DATA();
+		try {
+			return new Formatter().formatSource(data);
+		} catch (FormatterException e) {
+			e.printStackTrace();
+			return data;
+		}
 	}
 }
