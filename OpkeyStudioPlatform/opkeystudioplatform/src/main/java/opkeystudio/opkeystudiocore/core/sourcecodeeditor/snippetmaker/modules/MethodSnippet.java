@@ -46,7 +46,7 @@ public class MethodSnippet {
 		if (!bodyData.isEmpty()) {
 			setBODY_DATA(bodyData);
 		}
-		return getSTART_DATA() + System.lineSeparator() + getBODY_DATA() + System.lineSeparator() + getEND_DATA();
+		return getSTART_DATA() + getBODY_DATA() + getEND_DATA();
 	}
 
 	public void addNewObjectSnippet(NewObjectSnippet newObjectSnippet) {

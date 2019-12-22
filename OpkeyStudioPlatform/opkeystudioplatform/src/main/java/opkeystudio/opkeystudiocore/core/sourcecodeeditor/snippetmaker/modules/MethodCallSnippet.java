@@ -42,6 +42,6 @@ public class MethodCallSnippet {
 	}
 
 	public String toString() {
-		return getSTART_DATA() + System.lineSeparator() + getBODY_DATA() + System.lineSeparator() + getEND_DATA();
+		return getSTART_DATA() + getBODY_DATA() + getEND_DATA();
 	}
 }

@@ -17,6 +17,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.Me
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewObjectSnippet;
 
+@SuppressWarnings("unused")
 public class Transpiler {
 	private static Transpiler transpiler;
 
@@ -25,6 +26,10 @@ public class Transpiler {
 			transpiler = new Transpiler();
 		}
 		return transpiler;
+	}
+
+	private String formatVariableName(String varName) {
+		return varName.replaceAll("-", "");
 	}
 
 	private List<TranspiledField> getTranspiledFields(Object object)
@@ -56,10 +61,12 @@ public class Transpiler {
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (GlobalVariable globalVariable : globalVariables) {
 			List<TranspiledField> transpiledFields = getTranspiledFields(globalVariable);
-			NewObjectSnippet newGlobalVariable = new NewObjectSnippet("GlobalVariable", "gv_" + "ABC");
+			NewObjectSnippet newGlobalVariable = new NewObjectSnippet("GlobalVariable",
+					"gv_" + formatVariableName(globalVariable.getGv_id()));
 			for (TranspiledField transpiledField : transpiledFields) {
-				MethodCallSnippet newMethodCalledSnippet = new MethodCallSnippet("gv_" + "ABC",
-						"set" + transpiledField.getName(), "\"" + transpiledField.getValue().toString() + "\"");
+				MethodCallSnippet newMethodCalledSnippet = new MethodCallSnippet(
+						"gv_" + formatVariableName(globalVariable.getGv_id()), "addProperty",
+						"\"" + transpiledField.getName() + "\"", "\"" + transpiledField.getValue() + "\"");
 				newGlobalVariable.addMethodCallSnippet(newMethodCalledSnippet);
 				methodSnippet.addNewObjectSnippet(newGlobalVariable);
 			}
@@ -72,10 +79,12 @@ public class Transpiler {
 		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (ORObject orobject : orobjects) {
-			NewObjectSnippet newObjectSnippet = new NewObjectSnippet("ORObject", "or_" + "abc");
+			NewObjectSnippet newObjectSnippet = new NewObjectSnippet("ORObject",
+					"or_" + formatVariableName(orobject.getObject_id()));
 			List<ObjectAttributeProperty> objectAttributeProperties = orobject.getObjectAttributesProperty();
 			for (ObjectAttributeProperty objectAttributeProperty : objectAttributeProperties) {
-				MethodCallSnippet methodCallSnippet = new MethodCallSnippet("or_" + "abc", "addProperty",
+				MethodCallSnippet methodCallSnippet = new MethodCallSnippet(
+						"or_" + formatVariableName(orobject.getObject_id()), "addProperty",
 						"\"" + objectAttributeProperty.getProperty() + "\"",
 						"\"" + objectAttributeProperty.getValue() + "\"");
 				newObjectSnippet.addMethodCallSnippet(methodCallSnippet);

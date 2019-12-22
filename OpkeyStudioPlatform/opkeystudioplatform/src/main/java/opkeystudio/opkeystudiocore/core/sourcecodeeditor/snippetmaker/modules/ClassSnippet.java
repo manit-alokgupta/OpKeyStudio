@@ -61,8 +61,7 @@ public class ClassSnippet {
 		if (!bodyData.isEmpty()) {
 			setBODY_DATA(bodyData);
 		}
-		String data = getSTART_DATA() + System.lineSeparator() + getBODY_DATA() + System.lineSeparator()
-				+ getEND_DATA();
+		String data = getSTART_DATA() + getBODY_DATA() + getEND_DATA();
 		try {
 			return new Formatter().formatSource(data);
 		} catch (FormatterException e) {

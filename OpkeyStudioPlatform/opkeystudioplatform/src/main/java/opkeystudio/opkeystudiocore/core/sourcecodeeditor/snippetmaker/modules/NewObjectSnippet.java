@@ -42,10 +42,10 @@ public class NewObjectSnippet {
 	}
 
 	public String toString() {
-		String data = getSTART_DATA() + System.lineSeparator() + getBODY_DATA() + System.lineSeparator()
+		String data = System.lineSeparator() + System.lineSeparator() + getSTART_DATA() + getBODY_DATA()
 				+ getEND_DATA();
 		for (MethodCallSnippet methodCallSnippet : getMethodCallSnippets()) {
-			data += System.lineSeparator() + methodCallSnippet.toString();
+			data += methodCallSnippet.toString();
 		}
 		return data;
 	}
