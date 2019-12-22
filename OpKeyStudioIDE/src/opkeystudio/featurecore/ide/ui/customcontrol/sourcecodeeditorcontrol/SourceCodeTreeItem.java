@@ -25,7 +25,7 @@ public class SourceCodeTreeItem extends CustomTreeItem {
 		this.fileName = fileName;
 	}
 
-	public String getBodyData() {
+	public String getCodeData() {
 		return bodyData;
 	}
 

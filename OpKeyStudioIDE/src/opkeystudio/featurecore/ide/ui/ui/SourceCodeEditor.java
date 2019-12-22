@@ -15,8 +15,11 @@ import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -117,34 +120,31 @@ public class SourceCodeEditor extends Composite {
 					return;
 				}
 				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
-				System.out.println(scti.getBodyData());
-
 				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+				StyledText sourceCodeText = new StyledText(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
+				sourceCodeText.setEditable(true);
+				sourceCodeText.setText(scti.getCodeData());
+				styleText(sourceCodeText);
 
-				JavaTextTools javatools = JavaPlugin.getDefault().getJavaTextTools();
-
-				SourceViewer sourceViewer = new SourceViewer(tabFolder, null, SWT.H_SCROLL | SWT.V_SCROLL);
-				JavaSourceViewerConfiguration config = new JavaSourceViewerConfiguration(javatools.getColorManager(),
-						JavaPlugin.getDefault().getPreferenceStore(), null, null);
-
-				sourceViewer.configure(config);
-				Document document = new Document();
-
-				IDocumentPartitioner partitioner = new FastPartitioner(new FastJavaPartitionScanner(),
-						new String[] { IJavaPartitions.JAVA_DOC, IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
-								IJavaPartitions.JAVA_SINGLE_LINE_COMMENT, IJavaPartitions.JAVA_STRING,
-								IJavaPartitions.JAVA_CHARACTER });
-
-				document.setDocumentPartitioner(partitioner);
-				partitioner.connect(document);
-				document.set(scti.getBodyData());
-				sourceViewer.setDocument(document);
-
-				tabItem.setControl(sourceViewer.getControl());
+				tabItem.setControl(sourceCodeText);
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
 			}
 		});
+	}
+
+	private void styleText(StyledText styledTextControl) {
+		String code = styledTextControl.getText();
+		Color orange = new Color(styledTextControl.getDisplay(), 255, 127, 0);
+		Color lime = new Color(styledTextControl.getDisplay(), 127, 255, 127);
+
+		// make "This" bold and orange
+		StyleRange styleRange = new StyleRange();
+		styleRange.start = 0;
+		styleRange.length = 4;
+		styleRange.fontStyle = SWT.BOLD;
+		styleRange.foreground = orange;
+		styledTextControl.setStyleRange(styleRange);
 	}
 
 	public void transpileDatas() {
