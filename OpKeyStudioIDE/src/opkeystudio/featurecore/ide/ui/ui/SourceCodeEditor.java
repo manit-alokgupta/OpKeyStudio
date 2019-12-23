@@ -125,52 +125,56 @@ public class SourceCodeEditor extends Composite {
 					return;
 				}
 				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
+				initiateJavaEditor(scti.getCodeData());
 				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
-				sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
-				sourceCodeText.setDocument(new Document());
-				WordTracker wordTracker = new WordTracker(200);
-				wordTracker.add("new");
-				wordTracker.add("class");
-				ContentAssistant assistant = new ContentAssistant();
-				assistant.setStatusLineVisible(true);
-				assistant.enableColoredLabels(true);
-				assistant.setStatusMessage("");
-				assistant.enableAutoActivation(true);
-				assistant.setEmptyMessage("Nothing Found.");
-				assistant.setContentAssistProcessor(new RecentWordContentAssistProcessor(wordTracker),
-						IDocument.DEFAULT_CONTENT_TYPE);
-				assistant.install(sourceCodeText);
-
-				sourceCodeText.setEditable(true);
-				sourceCodeText.getTextWidget().setText(scti.getCodeData());
-
-				sourceCodeText.getTextWidget().addKeyListener(new KeyListener() {
-
-					@Override
-					public void keyReleased(KeyEvent e) {
-						//assistant.showPossibleCompletions();
-					}
-
-					@Override
-					public void keyPressed(KeyEvent e) {
-						assistant.showPossibleCompletions();
-					}
-				});
-				
-				sourceCodeText.addTextListener(new ITextListener() {
-					public void textChanged(TextEvent e) {
-						if (isWhitespaceString(e.getText())) {
-							wordTracker.add(findMostRecentWord(e.getOffset() - 1));
-						}
-					}
-				});
-
-				styleText(sourceCodeText.getTextWidget());
 				tabItem.setControl(sourceCodeText.getControl());
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
 			}
 		});
+	}
+
+	private void initiateJavaEditor(String sourceCode) {
+		sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
+		sourceCodeText.setDocument(new Document());
+		WordTracker wordTracker = new WordTracker(200);
+		wordTracker.add("new");
+		wordTracker.add("class");
+		ContentAssistant assistant = new ContentAssistant();
+		assistant.setStatusLineVisible(true);
+		assistant.enableColoredLabels(true);
+		assistant.setStatusMessage("");
+		assistant.enableAutoActivation(true);
+		assistant.setEmptyMessage("Nothing Found.");
+		assistant.setContentAssistProcessor(new RecentWordContentAssistProcessor(wordTracker),
+				IDocument.DEFAULT_CONTENT_TYPE);
+		assistant.install(sourceCodeText);
+
+		sourceCodeText.setEditable(true);
+		sourceCodeText.getTextWidget().setText(sourceCode);
+
+		sourceCodeText.getTextWidget().addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// assistant.showPossibleCompletions();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				assistant.showPossibleCompletions();
+			}
+		});
+
+		sourceCodeText.addTextListener(new ITextListener() {
+			public void textChanged(TextEvent e) {
+				if (isWhitespaceString(e.getText())) {
+					wordTracker.add(findMostRecentWord(e.getOffset() - 1));
+				}
+			}
+		});
+
+		styleText(sourceCodeText.getTextWidget());
 	}
 
 	protected String findMostRecentWord(int startSearchOffset) {
