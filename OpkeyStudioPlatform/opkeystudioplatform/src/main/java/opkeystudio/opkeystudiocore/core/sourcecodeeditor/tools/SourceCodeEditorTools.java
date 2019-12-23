@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 public class SourceCodeEditorTools {
@@ -17,10 +18,28 @@ public class SourceCodeEditorTools {
 		String tokenTag = "";
 		int startIndex = -1;
 		for (int i = 0; i < sourcecode.length(); i++) {
+			char tokenChar = sourcecode.charAt(i);
 			if (startIndex == -1) {
 				startIndex = i;
 			}
+
+			if (tokenChar == ' ') {
+				if (ifTokenTagContains(this.defaultTokens, tokenTag)) {
+					
+				}
+			} else {
+				tokenTag += tokenChar;
+			}
 		}
 		return null;
+	}
+
+	private boolean ifTokenTagContains(String[] tokenArray, String tokenTag) {
+		for (String token : tokenArray) {
+			if (token.equals(tokenTag)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
