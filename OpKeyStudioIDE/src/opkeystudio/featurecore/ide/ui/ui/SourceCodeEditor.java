@@ -142,6 +142,9 @@ public class SourceCodeEditor extends Composite {
 				wordTracker.add("new");
 				wordTracker.add("class");
 				ContentAssistant assistant = new ContentAssistant();
+				assistant.setStatusLineVisible(true);
+				assistant.enableColoredLabels(true);
+				assistant.setStatusMessage("");
 				assistant.enableAutoActivation(true);
 				assistant.setEmptyMessage("Nothing Found.");
 				assistant.setContentAssistProcessor(new RecentWordContentAssistProcessor(wordTracker),
