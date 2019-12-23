@@ -14,6 +14,8 @@ import org.eclipse.jface.text.TextEvent;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
@@ -47,7 +49,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 
 public class SourceCodeEditor extends Composite {
 	private TestCaseView testCaseView;
-	private TabFolder tabFolder;
+	private CTabFolder tabFolder;
 	private Tree sourceCodeTree;
 	private TextViewer sourceCodeText;
 
@@ -95,7 +97,7 @@ public class SourceCodeEditor extends Composite {
 		gd_sourceCodeTree.widthHint = 275;
 		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
 
-		tabFolder = new TabFolder(composite_16, SWT.NONE);
+		tabFolder = new CTabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 
@@ -127,7 +129,7 @@ public class SourceCodeEditor extends Composite {
 				}
 				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
 				initiateJavaEditor(scti.getCodeData());
-				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+				CTabItem tabItem = new CTabItem(tabFolder, SWT.CLOSE);
 				tabItem.setControl(sourceCodeText.getControl());
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
