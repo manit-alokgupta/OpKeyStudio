@@ -5,23 +5,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.internal.ui.JavaPlugin;
-import org.eclipse.jdt.internal.ui.text.FastJavaPartitionScanner;
-import org.eclipse.jdt.ui.text.IJavaPartitions;
-import org.eclipse.jdt.ui.text.JavaSourceViewerConfiguration;
-import org.eclipse.jdt.ui.text.JavaTextTools;
-import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.IDocumentPartitioner;
-import org.eclipse.jface.text.rules.FastPartitioner;
-import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.jface.fieldassist.AutoCompleteField;
+import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Caret;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -33,6 +29,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.CodeSuggestion;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
@@ -40,12 +37,14 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 
 public class SourceCodeEditor extends Composite {
 	private TestCaseView testCaseView;
 	private TabFolder tabFolder;
 	private Tree sourceCodeTree;
+	private CodeSuggestion codeSuggestion = null;
 
 	public SourceCodeEditor(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
@@ -126,6 +125,24 @@ public class SourceCodeEditor extends Composite {
 				StyledText sourceCodeText = new StyledText(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
 				sourceCodeText.setEditable(true);
 				sourceCodeText.setText(scti.getCodeData());
+				
+				sourceCodeText.addKeyListener(new KeyListener() {
+
+					@Override
+					public void keyReleased(KeyEvent e) {
+
+					}
+
+					@Override
+					public void keyPressed(KeyEvent e) {
+						System.out.println(">> Key Pressed");
+						Caret caret = sourceCodeText.getCaret();
+						System.out.println(caret.getLocation().x);
+						System.out.println(caret.getLocation().y);
+						styleText(sourceCodeText);
+					}
+				});
+
 				styleText(sourceCodeText);
 
 				tabItem.setControl(sourceCodeText);
@@ -136,19 +153,25 @@ public class SourceCodeEditor extends Composite {
 	}
 
 	private void styleText(StyledText styledTextControl) {
+
+		StyleRange[] styleRanges = styledTextControl.getStyleRanges();
+		for (StyleRange styleRange : styleRanges) {
+			styleRange.foreground = new Color(styledTextControl.getDisplay(), 8, 8, 9);
+		}
 		String code = styledTextControl.getText();
-		Color orange = new Color(styledTextControl.getDisplay(), 255, 127, 0);
-		Color lime = new Color(styledTextControl.getDisplay(), 127, 255, 127);
 		List<Token> allTokens = SourceCodeEditorTools.getInstance().getTokens(code);
 		for (Token token : allTokens) {
-			System.out
-					.println("<" + token.getTokenName() + "> " + token.getTokenStartIndex() + token.getTokenEndIndex());
-
 			StyleRange styleRange = new StyleRange();
 			styleRange.start = token.getTokenStartIndex();
-			styleRange.length = token.getTokenEndIndex()-token.getTokenStartIndex();
+			styleRange.length = token.getTokenEndIndex() - token.getTokenStartIndex();
 			styleRange.fontStyle = SWT.BOLD;
-			styleRange.foreground = orange;
+			if (token.getTokenType() == TOKEN_TYPE.GENERIC) {
+				styleRange.foreground = new Color(styledTextControl.getDisplay(), 159, 54, 54);
+			} else if (token.getTokenType() == TOKEN_TYPE.STRING) {
+				styleRange.foreground = new Color(styledTextControl.getDisplay(), 64, 124, 185);
+			} else {
+				styleRange.foreground = new Color(styledTextControl.getDisplay(), 8, 8, 9);
+			}
 			styledTextControl.setStyleRange(styleRange);
 		}
 	}

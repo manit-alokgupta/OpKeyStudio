@@ -2,7 +2,6 @@ package opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
 
@@ -37,8 +36,7 @@ public class SourceCodeEditorTools {
 				if (prevChar == '"' && nextchar == '"') {
 					Token token = new Token(tokem, index, endindex, TOKEN_TYPE.STRING);
 					tokens.add(token);
-				}
-				else if (nextchar == ' ') {
+				} else {
 					Token token = new Token(tokem, index, endindex, TOKEN_TYPE.GENERIC);
 					tokens.add(token);
 				}
