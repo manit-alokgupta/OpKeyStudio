@@ -4,12 +4,25 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
+import org.eclipse.jface.bindings.keys.KeyStroke;
+import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.fieldassist.AutoCompleteField;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextListener;
+import org.eclipse.jface.text.TextEvent;
+import org.eclipse.jface.text.TextViewer;
+import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -45,6 +58,7 @@ public class SourceCodeEditor extends Composite {
 	private TabFolder tabFolder;
 	private Tree sourceCodeTree;
 	private CodeSuggestion codeSuggestion = null;
+	private TextViewer sourceCodeText;
 
 	public SourceCodeEditor(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
@@ -122,32 +136,71 @@ public class SourceCodeEditor extends Composite {
 				}
 				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
 				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
-				StyledText sourceCodeText = new StyledText(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
-				CodeSuggestion cs=new CodeSuggestion(sourceCodeText, SWT.NONE);
-				cs.forceFocus();
+				sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
+				sourceCodeText.setDocument(new Document());
+				WordTracker wordTracker = new WordTracker(200);
+				wordTracker.add("new");
+				wordTracker.add("class");
+				ContentAssistant assistant = new ContentAssistant();
+				assistant.enableAutoActivation(true);
+				assistant.setEmptyMessage("Nothing Found.");
+				assistant.setContentAssistProcessor(new RecentWordContentAssistProcessor(wordTracker),
+						IDocument.DEFAULT_CONTENT_TYPE);
+				assistant.install(sourceCodeText);
+
 				sourceCodeText.setEditable(true);
-				sourceCodeText.setText(scti.getCodeData());
-				
-				sourceCodeText.addKeyListener(new KeyListener() {
+				sourceCodeText.getTextWidget().setText(scti.getCodeData());
+
+				sourceCodeText.getTextWidget().addKeyListener(new KeyListener() {
 
 					@Override
 					public void keyReleased(KeyEvent e) {
-
+						//assistant.showPossibleCompletions();
 					}
 
 					@Override
 					public void keyPressed(KeyEvent e) {
-						Caret caret = sourceCodeText.getCaret();
-						styleText(sourceCodeText);
+						assistant.showPossibleCompletions();
+					}
+				});
+				
+				sourceCodeText.addTextListener(new ITextListener() {
+					public void textChanged(TextEvent e) {
+						if (isWhitespaceString(e.getText())) {
+							wordTracker.add(findMostRecentWord(e.getOffset() - 1));
+						}
 					}
 				});
 
-				styleText(sourceCodeText);
-				tabItem.setControl(sourceCodeText);
+				styleText(sourceCodeText.getTextWidget());
+				tabItem.setControl(sourceCodeText.getControl());
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
 			}
 		});
+	}
+
+	protected String findMostRecentWord(int startSearchOffset) {
+		int currOffset = startSearchOffset;
+		char currChar;
+		String word = "";
+		try {
+			while (currOffset > 0
+					&& !Character.isWhitespace(currChar = sourceCodeText.getDocument().getChar(currOffset))) {
+				word = currChar + word;
+				currOffset--;
+			}
+			return word;
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	protected boolean isWhitespaceString(String string) {
+		StringTokenizer tokenizer = new StringTokenizer(string);
+		// if there is at least 1 token, this string is not whitespace
+		return !tokenizer.hasMoreTokens();
 	}
 
 	private void styleText(StyledText styledTextControl) {
