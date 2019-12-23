@@ -123,6 +123,8 @@ public class SourceCodeEditor extends Composite {
 				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
 				TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 				StyledText sourceCodeText = new StyledText(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
+				CodeSuggestion cs=new CodeSuggestion(sourceCodeText, SWT.NONE);
+				cs.forceFocus();
 				sourceCodeText.setEditable(true);
 				sourceCodeText.setText(scti.getCodeData());
 				
@@ -135,10 +137,7 @@ public class SourceCodeEditor extends Composite {
 
 					@Override
 					public void keyPressed(KeyEvent e) {
-						System.out.println(">> Key Pressed");
 						Caret caret = sourceCodeText.getCaret();
-						System.out.println(caret.getLocation().x);
-						System.out.println(caret.getLocation().y);
 						styleText(sourceCodeText);
 					}
 				});
