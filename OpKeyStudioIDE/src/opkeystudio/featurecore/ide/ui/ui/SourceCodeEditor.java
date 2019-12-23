@@ -38,6 +38,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariable
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 
 public class SourceCodeEditor extends Composite {
@@ -137,14 +139,18 @@ public class SourceCodeEditor extends Composite {
 		String code = styledTextControl.getText();
 		Color orange = new Color(styledTextControl.getDisplay(), 255, 127, 0);
 		Color lime = new Color(styledTextControl.getDisplay(), 127, 255, 127);
+		List<Token> allTokens = SourceCodeEditorTools.getInstance().getTokens(code);
+		for (Token token : allTokens) {
+			System.out
+					.println("<" + token.getTokenName() + "> " + token.getTokenStartIndex() + token.getTokenEndIndex());
 
-		// make "This" bold and orange
-		StyleRange styleRange = new StyleRange();
-		styleRange.start = 0;
-		styleRange.length = 4;
-		styleRange.fontStyle = SWT.BOLD;
-		styleRange.foreground = orange;
-		styledTextControl.setStyleRange(styleRange);
+			StyleRange styleRange = new StyleRange();
+			styleRange.start = token.getTokenStartIndex();
+			styleRange.length = token.getTokenEndIndex()-token.getTokenStartIndex();
+			styleRange.fontStyle = SWT.BOLD;
+			styleRange.foreground = orange;
+			styledTextControl.setStyleRange(styleRange);
+		}
 	}
 
 	public void transpileDatas() {
