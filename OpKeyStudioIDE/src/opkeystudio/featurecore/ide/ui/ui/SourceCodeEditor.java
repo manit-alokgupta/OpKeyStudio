@@ -151,7 +151,6 @@ public class SourceCodeEditor extends Composite {
 	}
 
 	private void styleText(StyledText styledTextControl) {
-
 		StyleRange[] styleRanges = styledTextControl.getStyleRanges();
 		for (StyleRange styleRange : styleRanges) {
 			styleRange.foreground = new Color(styledTextControl.getDisplay(), 8, 8, 9);
