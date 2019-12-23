@@ -143,7 +143,6 @@ public class SourceCodeEditor extends Composite {
 				});
 
 				styleText(sourceCodeText);
-
 				tabItem.setControl(sourceCodeText);
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
