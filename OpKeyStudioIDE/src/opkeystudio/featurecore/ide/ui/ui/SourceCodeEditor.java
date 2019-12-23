@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
@@ -232,7 +233,8 @@ public class SourceCodeEditor extends Composite {
 
 			String gvtranspiledData = Transpiler.getTranspiler().transpileGlobalVariables(globalVariables);
 			String ortranspiledData = Transpiler.getTranspiler().transpileORObjects(allORObjects);
-			System.out.println(ortranspiledData);
+
+			Artifact artifact = getTestCaseView().getArtifact();
 			TreeItem[] treeItems = sourceCodeTree.getItems();
 			for (TreeItem treeItem : treeItems) {
 				if (treeItem.getText().equals("Global Variables")) {

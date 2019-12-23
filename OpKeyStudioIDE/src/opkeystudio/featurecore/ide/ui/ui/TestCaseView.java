@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 //import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -46,6 +47,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -728,6 +730,12 @@ public class TestCaseView extends Composite {
 			toggleMoveupButton(false);
 			toggleMovedownButton(false);
 		}
+	}
+
+	public Artifact getArtifact() {
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		return artifact;
 	}
 
 	private void populateInputTabData() {
