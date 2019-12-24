@@ -1,4 +1,4 @@
-package opkeystudio.featurecore.ide.ui.ui;
+package opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -40,6 +40,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
+import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;

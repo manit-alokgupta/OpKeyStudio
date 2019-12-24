@@ -1,4 +1,4 @@
-package opkeystudio.featurecore.ide.ui.ui;
+package opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor;
 
 import java.util.Iterator;
 import java.util.List;
