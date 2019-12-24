@@ -14,8 +14,12 @@ import org.eclipse.jface.text.TextEvent;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.Bullet;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.LineStyleEvent;
+import org.eclipse.swt.custom.LineStyleListener;
+import org.eclipse.swt.custom.ST;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
@@ -23,11 +27,10 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GlyphMetrics;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
@@ -204,13 +207,10 @@ public class SourceCodeEditor extends Composite {
 	}
 
 	private void styleText(StyledText styledTextControl) {
-		StyleRange[] styleRanges = styledTextControl.getStyleRanges();
-		for (StyleRange styleRange : styleRanges) {
-			styleRange.foreground = new Color(styledTextControl.getDisplay(), 8, 8, 9);
-		}
 		String code = styledTextControl.getText();
 		List<Token> allTokens = SourceCodeEditorTools.getInstance().getTokens(code);
 		for (Token token : allTokens) {
+			System.out.println(token.getTokenName());
 			StyleRange styleRange = new StyleRange();
 			styleRange.start = token.getTokenStartIndex();
 			styleRange.length = token.getTokenEndIndex() - token.getTokenStartIndex();
@@ -224,6 +224,22 @@ public class SourceCodeEditor extends Composite {
 			}
 			styledTextControl.setStyleRange(styleRange);
 		}
+
+		sourceCodeText.getTextWidget().addLineStyleListener(new LineStyleListener() {
+			public void lineGetStyle(LineStyleEvent e) {
+				// Set the line number
+				e.bulletIndex = sourceCodeText.getTextWidget().getLineAtOffset(e.lineOffset);
+
+				// Set the style, 12 pixles wide for each digit
+				StyleRange style = new StyleRange();
+				style.metrics = new GlyphMetrics(0, 0,
+						Integer.toString(sourceCodeText.getTextWidget().getLineCount() + 1).length() * 12);
+				// style.background=new Color(sourceCodeText.getTextWidget().getDisplay(), 230,
+				// 235, 237);
+				// Create and set the bullet
+				e.bullet = new Bullet(ST.BULLET_NUMBER, style);
+			}
+		});
 	}
 
 	public void transpileDatas() {

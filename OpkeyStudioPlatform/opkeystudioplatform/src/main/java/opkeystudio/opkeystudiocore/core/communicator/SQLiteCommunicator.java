@@ -57,16 +57,14 @@ public class SQLiteCommunicator {
 				try {
 					String columnName = resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase();
 					String columnTypeName = resultSet.getMetaData().getColumnTypeName(i + 1);
-					if (!columnName.toLowerCase().equals("objectimage")) {
-						if (columnTypeName.equals("BLOB")) {
+					if (columnTypeName.equals("BLOB")) {
 
-							byte[] bytes = resultSet.getBytes(i + 1);
-							String data = new String(bytes, StandardCharsets.UTF_8);
-							obj.put(columnName, data);
-						} else {
-							Object columnData = resultSet.getObject(i + 1);
-							obj.put(columnName, columnData);
-						}
+						byte[] bytes = resultSet.getBytes(i + 1);
+						String data = new String(bytes, StandardCharsets.UTF_8);
+						obj.put(columnName, data);
+					} else {
+						Object columnData = resultSet.getObject(i + 1);
+						obj.put(columnName, columnData);
 					}
 				} catch (JSONException | SQLException e) {
 					e.printStackTrace();
