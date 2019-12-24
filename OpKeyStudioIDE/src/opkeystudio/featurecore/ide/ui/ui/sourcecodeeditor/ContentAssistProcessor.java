@@ -13,14 +13,14 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
-class RecentWordContentAssistProcessor implements IContentAssistProcessor {
+class ContentAssistProcessor implements IContentAssistProcessor {
 	private String lastError = null;
 
 	private IContextInformationValidator contextInfoValidator;
 
-	private WordTracker wordTracker;
+	private ContentAssistData wordTracker;
 
-	public RecentWordContentAssistProcessor(WordTracker tracker) {
+	public ContentAssistProcessor(ContentAssistData tracker) {
 		super();
 		contextInfoValidator = new ContextInformationValidator(this);
 		wordTracker = tracker;

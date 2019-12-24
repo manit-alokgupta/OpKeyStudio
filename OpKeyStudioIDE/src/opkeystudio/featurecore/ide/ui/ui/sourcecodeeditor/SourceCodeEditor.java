@@ -144,7 +144,7 @@ public class SourceCodeEditor extends Composite {
 	private void initiateJavaEditor(String sourceCode) {
 		sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
 		sourceCodeText.setDocument(new Document());
-		WordTracker wordTracker = new WordTracker(200);
+		ContentAssistData wordTracker = new ContentAssistData(200);
 		wordTracker.add("new");
 		wordTracker.add("class");
 		ContentAssistant assistant = new ContentAssistant();
@@ -153,7 +153,7 @@ public class SourceCodeEditor extends Composite {
 		assistant.setStatusMessage("");
 		assistant.enableAutoActivation(true);
 		assistant.setEmptyMessage("Nothing Found.");
-		assistant.setContentAssistProcessor(new RecentWordContentAssistProcessor(wordTracker),
+		assistant.setContentAssistProcessor(new ContentAssistProcessor(wordTracker),
 				IDocument.DEFAULT_CONTENT_TYPE);
 		assistant.install(sourceCodeText);
 

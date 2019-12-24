@@ -6,14 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-class WordTracker {
+class ContentAssistData {
 	private int maxQueueSize;
 
 	private List wordBuffer;
 
 	private Map knownWords = new HashMap();
 
-	public WordTracker(int queueSize) {
+	public ContentAssistData(int queueSize) {
 		maxQueueSize = queueSize;
 		wordBuffer = new LinkedList();
 	}
