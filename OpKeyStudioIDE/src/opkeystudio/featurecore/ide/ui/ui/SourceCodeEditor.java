@@ -229,15 +229,11 @@ public class SourceCodeEditor extends Composite {
 			public void lineGetStyle(LineStyleEvent e) {
 				// Set the line number
 				e.bulletIndex = sourceCodeText.getTextWidget().getLineAtOffset(e.lineOffset);
-
-				// Set the style, 12 pixles wide for each digit
 				StyleRange style = new StyleRange();
 				style.metrics = new GlyphMetrics(0, 0,
 						Integer.toString(sourceCodeText.getTextWidget().getLineCount() + 1).length() * 12);
-				// style.background=new Color(sourceCodeText.getTextWidget().getDisplay(), 230,
-				// 235, 237);
-				// Create and set the bullet
 				e.bullet = new Bullet(ST.BULLET_NUMBER, style);
+
 			}
 		});
 	}
