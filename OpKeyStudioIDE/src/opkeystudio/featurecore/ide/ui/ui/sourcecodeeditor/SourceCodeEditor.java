@@ -211,7 +211,6 @@ public class SourceCodeEditor extends Composite {
 		String code = styledTextControl.getText();
 		List<Token> allTokens = SourceCodeEditorTools.getInstance().getTokens(code);
 		for (Token token : allTokens) {
-			System.out.println(token.getTokenName());
 			StyleRange styleRange = new StyleRange();
 			styleRange.start = token.getTokenStartIndex();
 			styleRange.length = token.getTokenEndIndex() - token.getTokenStartIndex();
