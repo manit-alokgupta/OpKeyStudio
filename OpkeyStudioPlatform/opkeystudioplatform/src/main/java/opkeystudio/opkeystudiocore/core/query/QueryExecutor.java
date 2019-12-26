@@ -29,6 +29,7 @@ public class QueryExecutor {
 	}
 
 	public int executeUpdateQuery(String query) {
+		System.out.println(">>Executing Update Query "+query);
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
 			sqlComm.connect();

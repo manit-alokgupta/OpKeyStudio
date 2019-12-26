@@ -64,10 +64,12 @@ public class KeywordsTree extends CustomTree {
 						artifact.getId(), getParentTestCaseView().getFlowStepTable().getFlowStepsData());
 				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+				getParentTestCaseView().toggleSaveButton(true);
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+
 			}
 		});
 

@@ -19,7 +19,9 @@ public class FlowMaker {
 		flowStep.setFlow_id(flow_id);
 		flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
 		flowStep.setKeyword(keyword);
+		flowStep.setKeywordid(keyword.getKeywordid());
 		flowStep.setPosition(selectedFlowStepPosition + 5);
+		flowStep.setShouldrun(true);
 		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
 		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
 		flowStep.setFlowInputArgs(flowInputArguments);
@@ -27,7 +29,7 @@ public class FlowMaker {
 		flowStep.setAdded(true);
 		for (int i = selectedFlowStepIndex + 1; i < flowSteps.size(); i++) {
 			FlowStep iflowStep = flowSteps.get(i);
-			iflowStep.setPosition(iflowStep.getPosition() + 5);
+			iflowStep.setPosition(iflowStep.getPosition() + 10);
 			iflowStep.setModified(true);
 		}
 		return flowStep;
