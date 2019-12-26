@@ -698,13 +698,13 @@ public class TestCaseView extends Composite {
 				inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
 			} else {
 				outputDataTable.setKeyword(null);
-				inputDataTable.setKeyWordInputArgs(null);
+				inputDataTable.setKeyWordInputArgs(new ArrayList<>());
 			}
 			if (flowStep.getFunctionLibraryComponent() != null) {
 				inputDataTable
 						.setComponentInputArgs(flowStep.getFunctionLibraryComponent().getComponentInputArgument());
 			} else {
-				inputDataTable.setComponentInputArgs(null);
+				inputDataTable.setComponentInputArgs(new ArrayList<>());
 			}
 			inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
 			inputDataTable.renderInputTable();

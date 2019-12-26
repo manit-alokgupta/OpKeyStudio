@@ -114,7 +114,9 @@ public class InputDataTable extends CustomTable {
 					editor.setEditor(text);
 					text.setFocus();
 				} else {
-					editor.getEditor().dispose();
+					if (editor != null) {
+						editor.getEditor().dispose();
+					}
 				}
 			}
 
