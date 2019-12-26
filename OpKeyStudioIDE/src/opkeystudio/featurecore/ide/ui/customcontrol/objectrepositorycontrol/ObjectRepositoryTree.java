@@ -59,7 +59,6 @@ public class ObjectRepositoryTree extends CustomTree {
 	private void renderAllArtifactTree(ObjectRepositoryTreeItem rootNode, List<ORObject> allArtifacts) {
 		String artifactId = rootNode.getObjectRepository().getObject_id();
 		for (ORObject artifact : allArtifacts) {
-			System.out.println(artifact.getName());
 			if (artifact.getParent_object_id() != null) {
 				if (artifact.getParent_object_id().equals(artifactId)) {
 					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
@@ -76,7 +75,6 @@ public class ObjectRepositoryTree extends CustomTree {
 		String artifactId = rootNode.getObjectRepository().getObject_id();
 		for (ORObject artifact : allArtifacts) {
 			if (!artifact.isDeleted()) {
-				System.out.println(artifact.getName());
 				if (artifact.getParent_object_id() != null) {
 					if (artifact.getParent_object_id().equals(artifactId)) {
 						ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
