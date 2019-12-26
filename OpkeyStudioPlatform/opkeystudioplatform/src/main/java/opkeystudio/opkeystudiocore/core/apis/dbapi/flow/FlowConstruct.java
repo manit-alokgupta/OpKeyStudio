@@ -13,6 +13,7 @@ import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 
 public class FlowConstruct {
 	public void saveAllFlowSteps(Artifact artifact, List<FlowStep> allFlowSteps) {
+		System.out.println("Saving "+artifact.getFile_type_enum());
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			new FunctionLibraryConstruct().saveAllComponentSteps(allFlowSteps);
 			return;
