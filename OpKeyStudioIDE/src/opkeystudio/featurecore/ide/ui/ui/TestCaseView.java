@@ -147,14 +147,8 @@ public class TestCaseView extends Composite {
 		mainTestCaseTabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 
 		TabItem testCaseTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
-//		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
 		testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase.gif"));
 		testCaseTabItem.setText("TestCase");
-//		}
-//		if (flowStep.isIsfunctionlibrary()) {
-//			testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
-//			testCaseTabItem.setText("Function Library");
-//		}
 
 		Composite testCaseHolder = new Composite(mainTestCaseTabFolder, SWT.NONE);
 		testCaseHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -387,11 +381,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-//				Text text = (Text) e.getSource();
-//				String searchValue = text.getText();
-//				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
-//					allDataTreeView.filterDataInTree(searchValue);
-//				}
 
 			}
 
