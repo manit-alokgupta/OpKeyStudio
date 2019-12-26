@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
-import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
@@ -36,8 +35,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 public class FlowStepTable extends CustomTable {
 	private FlowStepTable thisTable = this;
 	private TestCaseView parentTestCaseView;
-	private FLView parentFLView;
-
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
 		init();
@@ -49,11 +46,6 @@ public class FlowStepTable extends CustomTable {
 		this.setParentTestCaseView(parentView);
 	}
 
-	public FlowStepTable(Composite parent, int style, FLView parentView) {
-		super(parent, style);
-		init();
-		this.setParentFLView(parentView);
-	}
 
 	private void init() {
 		String[] tableHeaders = { "#", "Keyword", "ORObject", "Input", "Output", "Description" };
@@ -139,37 +131,6 @@ public class FlowStepTable extends CustomTable {
 		this.allTableEditors.add(editor1.getEditor());
 	}
 
-	private void addFLTableEditor(FlowStepTableItem item) {
-		FlowStep attrProperty = item.getFlowStepeData();
-		TableEditor editor1 = getTableEditor();
-		CustomButton button = new CustomButton(this, SWT.CHECK);
-		button.setSelection(attrProperty.isShouldrun());
-		button.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				thisTable.deselectAll();
-				getParentFLView().toggleSaveButton(true);
-
-				thisTable.setSelection(new TableItem[] { item });
-				thisTable.notifyListeners(SWT.Selection, null);
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-		editor1.setEditor(button, item, 0);
-		this.allTableEditors.add(editor1.getEditor());
-	}
 
 	private void disposeAllTableEditors() {
 		for (Control controlEditor : this.allTableEditors) {
@@ -223,51 +184,6 @@ public class FlowStepTable extends CustomTable {
 		getParentTestCaseView().getSourceCodeEditor().transpileDatas();
 	}
 
-	public void renderFLFlowSteps() throws JsonParseException, JsonMappingException, SQLException, IOException {
-		disposeAllTableEditors();
-		this.removeAll();
-		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		String artifactId = artifact.getId();
-		List<FlowStep> flowSteps = null;
-		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
-			FlowApi.getInstance().initAllFlowInputArguments();
-			FlowApi.getInstance().initAllFlowOutputArguments();
-			flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
-		}
-		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-			FunctionLibraryApi.getInstance().initAllFlowInputArguments();
-			FunctionLibraryApi.getInstance().initAllFlowOutputArguments();
-			flowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(artifactId);
-		}
-		setFlowStepsData(flowSteps);
-		for (FlowStep flowStep : flowSteps) {
-			if (flowStep.isDeleted() == false) {
-				String orname = "";
-				String keyWordName = "";
-				if (flowStep.getOrObject().size() > 0) {
-					orname = flowStep.getOrObject().get(0).getName();
-				}
-				if (flowStep.getKeyword() != null) {
-					keyWordName = flowStep.getKeyword().getKeywordname();
-					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
-							flowStep.getKeyword().getKeyworddescription() });
-					flowTableItem.setFlowStepData(flowStep);
-					addFLTableEditor(flowTableItem);
-				}
-				if (flowStep.getFunctionLibraryComponent() != null) {
-					keyWordName = flowStep.getFunctionLibraryComponent().getName();
-					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", "" });
-					flowTableItem.setFlowStepData(flowStep);
-					addFLTableEditor(flowTableItem);
-				}
-			}
-		}
-		selectRow(0);
-	}
-
 	public void refreshFlowSteps() {
 		disposeAllTableEditors();
 		this.removeAll();
@@ -295,32 +211,6 @@ public class FlowStepTable extends CustomTable {
 		selectRow(0);
 	}
 
-	public void refreshFLFlowSteps() {
-		disposeAllTableEditors();
-		this.removeAll();
-		List<FlowStep> flowSteps = getFlowStepsData();
-		Collections.sort(flowSteps);
-		for (FlowStep flowStep : flowSteps) {
-			if (flowStep.isDeleted() == false) {
-				if (flowStep.getKeyword() != null) {
-					String orname = "";
-					String keyWordName = "";
-					if (flowStep.getOrObject().size() > 0) {
-						orname = flowStep.getOrObject().get(0).getName();
-					}
-					if (flowStep.getKeyword() != null) {
-						keyWordName = flowStep.getKeyword().getKeywordname();
-					}
-					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
-							flowStep.getKeyword().getKeyworddescription() });
-					flowTableItem.setFlowStepData(flowStep);
-					addFLTableEditor(flowTableItem);
-				}
-			}
-		}
-		selectRow(0);
-	}
 
 	private void selectRow(int index) {
 		if (this.getItemCount() == 0) {
@@ -360,34 +250,6 @@ public class FlowStepTable extends CustomTable {
 
 	}
 
-	public void moveFLStepUp(FlowStep fstep1, FlowStep fstep2) {
-		int selectedIndex = this.getSelectionIndex();
-		int fpos1 = fstep1.getPosition();
-		int fpos2 = fstep2.getPosition();
-
-		fstep1.setPosition(fpos2);
-		fstep2.setPosition(fpos1);
-		refreshFLFlowSteps();
-		selectRow(selectedIndex - 1);
-		fstep1.setModified(true);
-		fstep2.setModified(true);
-		getParentFLView().toggleSaveButton(true);
-	}
-
-	public void moveFLStepDown(FlowStep fstep1, FlowStep fstep2) {
-		int selectedIndex = this.getSelectionIndex();
-		int fpos1 = fstep1.getPosition();
-		int fpos2 = fstep2.getPosition();
-
-		fstep1.setPosition(fpos2);
-		fstep2.setPosition(fpos1);
-		refreshFLFlowSteps();
-		selectRow(selectedIndex + 1);
-		fstep1.setModified(true);
-		fstep2.setModified(true);
-		getParentFLView().toggleSaveButton(true);
-
-	}
 
 	public void deleteStep(FlowStep flowStep)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
@@ -396,12 +258,6 @@ public class FlowStepTable extends CustomTable {
 		getParentTestCaseView().toggleSaveButton(true);
 	}
 
-	public void deleteFLStep(FlowStep flowStep)
-			throws JsonParseException, JsonMappingException, SQLException, IOException {
-		flowStep.setDeleted(true);
-		refreshFLFlowSteps();
-		getParentFLView().toggleSaveButton(true);
-	}
 
 	public FlowStep getSelectedFlowStep() {
 		FlowStepTableItem flowTableItem = (FlowStepTableItem) this.getSelection()[0];
@@ -454,12 +310,5 @@ public class FlowStepTable extends CustomTable {
 		this.parentTestCaseView = parentTestCaseView;
 	}
 
-	public FLView getParentFLView() {
-		return parentFLView;
-	}
-
-	public void setParentFLView(FLView parentFLView) {
-		this.parentFLView = parentFLView;
-	}
 
 }

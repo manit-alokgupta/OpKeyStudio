@@ -16,7 +16,6 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
-import opkeystudio.featurecore.ide.ui.ui.FLView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -27,7 +26,6 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class KeywordsTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
-	private FLView parentFLView;
 	private KeywordsTree thisTable = this;
 	private FlowStep flowStep;
 	private ArtifactTreeItem artifactTreeItem;
@@ -36,13 +34,6 @@ public class KeywordsTree extends CustomTree {
 		super(parent, style);
 		this.setParentTestCaseView(testCaseView);
 		init();
-		initKeywords();
-	}
-
-	public KeywordsTree(Composite parent, int style, FLView parentView) {
-		super(parent, style);
-		init();
-		this.setParentFLView(parentView);
 		initKeywords();
 	}
 
@@ -97,14 +88,14 @@ public class KeywordsTree extends CustomTree {
 				MODULETYPE fileType = artifact.getFile_type_enum();
 
 				if (fileType == MODULETYPE.Component) {
-					FlowStepTable flowStepTableFL = getParentFLView().getFlowStepTable();
+					FlowStepTable flowStepTableFL = getParentTestCaseView().getFlowStepTable();
 					if (flowStepTableFL != null) {
 						FlowStep flowStep = flowStepTableFL.getSelectedFlowStep();
 						flowStep.setKeyword(keyWord);
 						flowStep.setKeywordid(keyWord.getKeywordid());
 						flowStep.setModified(true);
-						getParentFLView().getFlowStepTable().refreshFLFlowSteps();
-						getParentFLView().toggleSaveButton(true);
+						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+						getParentTestCaseView().toggleSaveButton(true);
 					}
 				}
 
@@ -206,13 +197,5 @@ public class KeywordsTree extends CustomTree {
 				keywItem.setControlData(keyword);
 			}
 		}
-	}
-
-	public FLView getParentFLView() {
-		return parentFLView;
-	}
-
-	public void setParentFLView(FLView parentFLView) {
-		this.parentFLView = parentFLView;
 	}
 }
