@@ -55,7 +55,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
-import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FLView extends Composite {
 	private FlowStepTable flowStepTable;
@@ -64,13 +63,6 @@ public class FLView extends Composite {
 	private InputDataTable inputDataTable;
 	private StepDetailsInputData InputDataTable;
 	private ObjectRepositoryTree testObjectTree;
-//	private Table flowStepTable;
-//	private Table outputDataTable;
-//	private Table testObjectTable;
-//	private Table InputDataTable;
-//	private Table inputDataTable;
-//	private Tree testObjectTree;
-
 	private Table mappedTable;
 	private Table propertyTable;
 	private Table dataOutputTable;
