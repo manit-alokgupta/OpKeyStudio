@@ -830,35 +830,6 @@ public class FLView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Add Button pressed");
 
-				FlowStepTable flowStepTable = getFlowStepTable();
-
-				if (flowStepTable != null) {
-					int lastPosition = flowStepTable.addKeyword();
-					System.out.println("Last index " + lastPosition);
-					FlowStep flowStep = new FlowStep();
-					flowStep.setPosition(lastPosition + 1);
-					System.out.println(flowStep.getPosition());
-					flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
-//					flowStep.setFlow_id(Utilities.getInstance().getUniqueUUID(""));
-					flowStep.setShouldrun(true);
-					flowStep.setWantsnapshot(true);
-					keyWord = allDataTreeView.getSelectedKeyword();
-					System.out.println(allDataTreeView.getSelectedKeyword().getKeywordname());
-					flowStep.setKeyword(keyWord);
-					flowStep.setKeywordid(keyWord.getKeywordid());
-					flowStep.setIstestcase(true);
-					flowStep.setOrObject(flowStep.getOrObject());
-					flowStep.setModified(true);
-					flowStepTable.addFlowSteps(flowStep);
-					try {
-						flowStepTable.renderFLFlowSteps();
-					} catch (SQLException | IOException e1) {
-						e1.printStackTrace();
-					}
-//					getFlowStepTable().refreshFlowSteps();
-					toggleSaveButton(true);
-				}
-
 			}
 
 			@Override
