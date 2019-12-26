@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.keywordmanager.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,7 +30,7 @@ public class Keyword extends Modified {
 	private String pluginid;
 	private String deprecation_reason;
 	private String pluginName;
-	private List<KeyWordInputArgument> keywordInputArguments;
+	private List<KeyWordInputArgument> keywordInputArguments = new ArrayList<KeyWordInputArgument>();
 
 	public String getKeywordid() {
 		return keywordid;
