@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.flow;
 
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -9,7 +10,7 @@ import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 
 public class FlowConstruct {
-	public void saveAllFlowSteps(List<FlowStep> allFlowSteps) {
+	public void saveAllFlowSteps(Artifact artifact, List<FlowStep> allFlowSteps) {
 		for (FlowStep flowStep : allFlowSteps) {
 			saveFlowInputArguments(flowStep.getFlowInputArgs());
 			saveFlowOutputArguments(flowStep.getFlowOutputArgs());

@@ -900,7 +900,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				save();
+				saveAll();
 			}
 
 			@Override
@@ -929,7 +929,7 @@ public class TestCaseView extends Composite {
 						// notification.setDelayClose(200L);
 						// notification.open();
 
-						new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
+						new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
 						try {
 							flowStepTable.renderFlowSteps();
 						} catch (SQLException | IOException e1) {
@@ -1061,13 +1061,13 @@ public class TestCaseView extends Composite {
 
 	}
 
-	public void save() {
+	public void saveAll() {
 
 		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
 		// notification.setDelayClose(200L);
 		// notification.open();
 
-		new FlowConstruct().saveAllFlowSteps(flowStepTable.getFlowStepsData());
+		new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
 		try {
 			flowStepTable.renderFlowSteps();
 		} catch (SQLException | IOException e1) {

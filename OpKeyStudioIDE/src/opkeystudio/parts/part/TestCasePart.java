@@ -36,7 +36,7 @@ public class TestCasePart {
 			return;
 		}
 
-		parentTestCaseView.save();
+		parentTestCaseView.saveAll();
 	}
 
 	@Focus
