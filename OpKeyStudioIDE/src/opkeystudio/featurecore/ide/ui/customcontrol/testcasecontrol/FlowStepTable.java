@@ -440,23 +440,6 @@ public class FlowStepTable extends CustomTable {
 		return lastPosition;
 	}
 
-//	public void addKeyword() {
-//
-//		int lastPosition = getFlowStepsData().get(getFlowStepsData().size() - 1).getPosition();
-//		System.out.println(lastPosition);
-//
-//		FlowStep flowStep = new FlowStep();
-//		flowStep.setPosition(lastPosition + 1);
-//		flowStep.setFlow_id(Utilities.getInstance().getUniqueUUID(""));
-//		flowStep.setShouldrun(true);
-//		keyWord = allDataTreeView.selectedKeyword();
-//		System.out.println(allDataTreeView.selectedKeyword().getKeywordname());
-//		flowStep.setKeyword(keyWord);
-////		flowStep.setKeywordid(keyWord.getKeywordid());
-////		flowStep.setModified(true);
-//		flowStep.setOrObject(null);
-//
-//	}
 
 	@Override
 	protected void checkSubclass() {

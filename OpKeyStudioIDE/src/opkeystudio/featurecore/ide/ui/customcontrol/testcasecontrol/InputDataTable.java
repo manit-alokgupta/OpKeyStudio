@@ -163,11 +163,13 @@ public class InputDataTable extends CustomTable {
 			for (int i = 0; i < getKeyWordInputArgs().size(); i++) {
 				KeyWordInputArgument keywordInputArg = getKeyWordInputArgs().get(i);
 				if (!keywordInputArg.getDatatype().equals("ORObject")) {
-					FlowInputArgument flowInputArg = flowInputArgs.get(i);
-					CustomTableItem cti = new CustomTableItem(this, 0);
-					cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
-							flowInputArg.getStaticvalue() });
-					cti.setControlData(flowInputArg);
+					if (getKeyWordInputArgs().size() == flowInputArgs.size()) {
+						FlowInputArgument flowInputArg = flowInputArgs.get(i);
+						CustomTableItem cti = new CustomTableItem(this, 0);
+						cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
+								flowInputArg.getStaticvalue() });
+						cti.setControlData(flowInputArg);
+					}
 				}
 			}
 		}

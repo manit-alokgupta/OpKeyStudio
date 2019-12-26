@@ -58,5 +58,25 @@
             name="New ViewPart">
       </view>
    </extension>
+   <extension
+         id="product1"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.e4.ui.workbench.swt.E4Application"
+            name="OpKeyStudio">
+         <property
+               name="startupForegroundColor"
+               value="000000">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="7,252,445,20">
+         </property>
+         <property
+               name="appName"
+               value="OpKeyStudio">
+         </property>
+      </product>
+   </extension>
 
 </plugin>
