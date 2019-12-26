@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class FileNode {
 	private String fileIdentifier;
 	private String data;
 	private String filePath;
+	private String parentPath;
 	private List<FileNode> filesNodes = new ArrayList<FileNode>();
 
 	public FileNode(String fileName, FILE_TYPE fileType) {
@@ -69,5 +71,18 @@ public class FileNode {
 
 	public void setFilesNodes(List<FileNode> filesNodes) {
 		this.filesNodes = filesNodes;
+	}
+
+	public String getParentPath() {
+		return parentPath;
+	}
+
+	public void setParentPath(String parentPath) {
+		this.parentPath = parentPath;
+		this.setFilePath(getParentPath() + File.separator + getFileName());
+	}
+
+	public void createFile() {
+
 	}
 }
