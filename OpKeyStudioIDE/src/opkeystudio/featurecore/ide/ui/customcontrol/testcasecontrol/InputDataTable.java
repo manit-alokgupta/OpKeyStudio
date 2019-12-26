@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -28,8 +29,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 
 public class InputDataTable extends CustomTable {
-	private List<KeyWordInputArgument> keyWordInputArgs;
-	private List<FlowInputArgument> flowInputArgs;
+	private List<KeyWordInputArgument> keyWordInputArgs = new ArrayList<KeyWordInputArgument>();
+	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
 	private List<ComponentInputArgument> componentInputArgs;
 	private TestCaseView parentTestCaseView;
 	private FLView parentFLView;
@@ -159,11 +160,30 @@ public class InputDataTable extends CustomTable {
 	public void renderInputTable() {
 		this.removeAll();
 		List<FlowInputArgument> flowInputArgs = getFlowInputArgs();
-		if (getKeyWordInputArgs() != null) {
+		if (getKeyWordInputArgs().size() > 0) {
 			for (int i = 0; i < getKeyWordInputArgs().size(); i++) {
 				KeyWordInputArgument keywordInputArg = getKeyWordInputArgs().get(i);
-				if (!keywordInputArg.getDatatype().equals("ORObject")) {
-					if (getKeyWordInputArgs().size() == flowInputArgs.size()) {
+				List<KeyWordInputArgument> filteredKeywordInputArgs = new ArrayList<KeyWordInputArgument>();
+				for (int i1 = 0; i1 < getKeyWordInputArgs().size(); i1++) {
+					KeyWordInputArgument inputArgument = getKeyWordInputArgs().get(i1);
+					if (!inputArgument.getDatatype().equals("ORObject")) {
+						filteredKeywordInputArgs.add(inputArgument);
+					}
+				}
+
+				List<FlowInputArgument> filteredFlowInputArgs = new ArrayList<FlowInputArgument>();
+				for (int i1 = 0; i1 < flowInputArgs.size(); i1++) {
+					FlowInputArgument inputArgument = flowInputArgs.get(i1);
+					if (inputArgument.getStaticobjectid() == null) {
+						filteredFlowInputArgs.add(inputArgument);
+					}
+				}
+
+				System.out.println("KeyInputArgs " + filteredKeywordInputArgs.size() + "    " + "FlowInputArgs "
+						+ filteredFlowInputArgs.size());
+				if (filteredKeywordInputArgs.size() == filteredFlowInputArgs.size()) {
+					if (!keywordInputArg.getDatatype().equals("ORObject")) {
+
 						FlowInputArgument flowInputArg = flowInputArgs.get(i);
 						CustomTableItem cti = new CustomTableItem(this, 0);
 						cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
