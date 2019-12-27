@@ -197,12 +197,28 @@ public class InputDataTable extends CustomTable {
 		// Display FL in TestCase or Function Library
 		if (getComponentInputArgs().size() > 0) {
 			for (int i = 0; i < getComponentInputArgs().size(); i++) {
-				ComponentInputArgument keywordInputArg = getComponentInputArgs().get(i);
-				FlowInputArgument flowInputArg = flowInputArgs.get(i);
-				CustomTableItem cti = new CustomTableItem(this, 0);
-				cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
-						flowInputArg.getStaticvalue() });
-				cti.setControlData(flowInputArg);
+				List<ComponentInputArgument> filteredComponentInputArgs = new ArrayList<ComponentInputArgument>();
+				for (int i1 = 0; i1 < getComponentInputArgs().size(); i1++) {
+					ComponentInputArgument inputArgument = getComponentInputArgs().get(i1);
+					filteredComponentInputArgs.add(inputArgument);
+				}
+
+				List<FlowInputArgument> filteredFlowInputArgs = new ArrayList<FlowInputArgument>();
+				for (int i1 = 0; i1 < flowInputArgs.size(); i1++) {
+					FlowInputArgument inputArgument = flowInputArgs.get(i1);
+					if (inputArgument.getStaticobjectid() == null) {
+						filteredFlowInputArgs.add(inputArgument);
+					}
+				}
+
+				if (filteredComponentInputArgs.size() == filteredFlowInputArgs.size()) {
+					ComponentInputArgument keywordInputArg = getComponentInputArgs().get(i);
+					FlowInputArgument flowInputArg = flowInputArgs.get(i);
+					CustomTableItem cti = new CustomTableItem(this, 0);
+					cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
+							flowInputArg.getStaticvalue() });
+					cti.setControlData(flowInputArg);
+				}
 			}
 		}
 	}

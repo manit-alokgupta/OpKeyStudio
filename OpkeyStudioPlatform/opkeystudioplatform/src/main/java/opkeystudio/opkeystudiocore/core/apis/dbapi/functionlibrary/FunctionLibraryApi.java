@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
-import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
@@ -25,8 +24,8 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FunctionLibraryApi {
-	private List<FlowInputArgument> flowInputArguments;
-	private List<FlowOutputArgument> flowOutputArguments;
+	private List<FlowInputArgument> flowInputArguments = new ArrayList<>();
+	private List<FlowOutputArgument> flowOutputArguments = new ArrayList<>();
 //	private List<ComponentInputArgument> flowInputArguments;
 //	private List<ComponentOutputArgument> flowOutputArguments;
 	private static FunctionLibraryApi flowApi;
@@ -61,9 +60,6 @@ public class FunctionLibraryApi {
 		sqlComm.disconnect();
 		List<FlowInputArgument> flowInputArgs = mapper.readValue(result, type);
 		setFlowInputArguments(flowInputArgs);
-
-//		List<ComponentInputArgument> flowInputArgs = mapper.readValue(result, type);
-//		setComponentInputArguments(flowInputArgs);
 	}
 
 	public void initAllFlowOutputArguments()
@@ -77,9 +73,6 @@ public class FunctionLibraryApi {
 		sqlComm.disconnect();
 		List<FlowOutputArgument> outputArguments = mapper.readValue(result, type);
 		setFlowOutputArguments(outputArguments);
-
-//		List<ComponentOutputArgument> outputArguments = mapper.readValue(result, type);
-//		setComponentOutputArguments(outputArguments);
 	}
 
 	private List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep)
@@ -166,34 +159,18 @@ public class FunctionLibraryApi {
 				Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-//				List<ComponentInputArgument> fis = getFlowStepInputArguments(flowStep);
-//				List<ComponentOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flowStep.setOrObject(allORObject);
 				flowStep.setKeyword(keyword);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
-//				flowStep.setComponentInputArgs(fis);
-//				flowStep.setComponentOutputArgs(fos);
-
 				flowStep.setIstestcase(true);
 			} else if (flowStep.getComponent_id() != null) {
 				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getComponent_id()).get(0);
-				// FunctionLibraryComponent flComp = new
-				// FlowApi().getFunctinLibraryComponent(flowStep.getComponent_id()).get(0);
 				List<ComponentInputArgument> inputArgs = getAllComponentInputArgument(flowStep.getComponent_id());
-				// List<ComponentInputArgument> inputArgs = new
-				// FlowApi().getAllComponentInputArgument(flowStep.getComponent_id());
 				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(flowStep.getComponent_id());
-				// List<ComponentOutputArgument> outputArgs = new
-				// FlowApi().getAllComponentOutputArgument(flowStep.getComponent_id());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-
-//				List<ComponentInputArgument> fis = getFlowStepInputArguments(flowStep);
-//				List<ComponentOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flComp.setComponentInputArgument(inputArgs);
 				flComp.setComponentOutputArgument(outputArgs);
@@ -201,9 +178,6 @@ public class FunctionLibraryApi {
 				flowStep.setFunctionLibraryComponent(flComp);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
-
-//				flowStep.setComponentInputArgs(fis);
-//				flowStep.setComponentOutputArgs(fos);
 				flowStep.setIsfunctionlibrary(true);
 			}
 		}
