@@ -30,7 +30,7 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 public class InputDataTable extends CustomTable {
 	private List<KeyWordInputArgument> keyWordInputArgs = new ArrayList<KeyWordInputArgument>();
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
-	private List<ComponentInputArgument> componentInputArgs;
+	private List<ComponentInputArgument> componentInputArgs = new ArrayList<>();
 	private TestCaseView parentTestCaseView;
 
 	public InputDataTable(Composite parent, int style) {
@@ -188,7 +188,8 @@ public class InputDataTable extends CustomTable {
 			}
 		}
 
-		if (getComponentInputArgs() != null) {
+		//Display FL in TestCase or Function Library
+		if (getComponentInputArgs().size() > 0) {
 			for (int i = 0; i < getComponentInputArgs().size(); i++) {
 				ComponentInputArgument keywordInputArg = getComponentInputArgs().get(i);
 				FlowInputArgument flowInputArg = flowInputArgs.get(i);
