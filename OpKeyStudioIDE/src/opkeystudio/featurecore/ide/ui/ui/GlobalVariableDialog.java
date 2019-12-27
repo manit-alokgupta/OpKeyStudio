@@ -37,7 +37,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 
 public class GlobalVariableDialog extends Dialog {
 
-	String[] tableHeaders = { "Name", "Data Type", "Value", "Externally Updatable" };
+	
 	protected Object result;
 	protected Shell shlGlobalVariable;
 	private GlobalVariableTable globalVariablesTable;
@@ -276,14 +276,7 @@ public class GlobalVariableDialog extends Dialog {
 			}
 		});
 
-		for (String header : tableHeaders) {
-			TableColumn column = new TableColumn(globalVariablesTable, 0);
-			column.setText(header);
-		}
-		globalVariablesTable.pack();
-		for (int i = 0; i < tableHeaders.length; i++) {
-			globalVariablesTable.getColumn(i).pack();
-		}
+
 
 		globalVariablesTable.refreshGlobalVariables();
 

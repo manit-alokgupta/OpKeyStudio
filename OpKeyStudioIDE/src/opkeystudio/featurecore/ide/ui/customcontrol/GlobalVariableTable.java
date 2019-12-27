@@ -13,10 +13,14 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
@@ -24,6 +28,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.GlobalVariableDialog;
+import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -31,11 +36,60 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariableTable extends CustomTable {
 	private GlobalVariableDialog parentGlobalVariableView;
+	private TestCaseView parentTestCaseView;
+	private boolean insideArtifact = false;
+
+	String[] tableHeaders_gv = { "Name", "Data Type", "Value", "Externally Updatable" };
+	String[] tableHeaders_arti = { "Name", "Data Type", "Value" };
 
 	public GlobalVariableTable(Composite parent, int style, GlobalVariableDialog gvDialog) {
-		super(parent, SWT.NONE);
+		super(parent, style);
+		setInsideArtifact(false);
 		setParentGlobalVariableView(gvDialog);
+		initHeaders();
 		init();
+	}
+
+	public GlobalVariableTable(Composite parent, int style, TestCaseView testCaseView) {
+		super(parent, style);
+		setInsideArtifact(true);
+		setParentTestCaseView(testCaseView);
+		initHeaders();
+		refreshGlobalVariables();
+	}
+
+	private void initHeaders() {
+		if (isInsideArtifact()) {
+			for (String header : tableHeaders_arti) {
+				TableColumn column = new TableColumn(this, 0);
+				column.setText(header);
+			}
+			this.pack();
+			for (int i = 0; i < tableHeaders_arti.length; i++) {
+				this.getColumn(i).pack();
+			}
+			
+			this.addPaintListener(new PaintListener() {
+
+				@Override
+				public void paintControl(PaintEvent arg0) {
+					Table table_0 = (Table) arg0.getSource();
+					for (TableColumn column : table_0.getColumns()) {
+						column.setWidth(table_0.getBounds().width / 4);
+					}
+				}
+			});
+			
+		} else {
+			for (String header : tableHeaders_gv) {
+				TableColumn column = new TableColumn(this, 0);
+				column.setText(header);
+			}
+			this.pack();
+			for (int i = 0; i < tableHeaders_gv.length; i++) {
+				this.getColumn(i).pack();
+			}
+		}
 	}
 
 	private void init() {
@@ -201,9 +255,14 @@ public class GlobalVariableTable extends CustomTable {
 				CustomTableItem ti = new CustomTableItem(this, 0);
 				ti.setData(globalvariable);
 				ti.setControlData(globalvariable);
-				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-						globalvariable.getValue(), "" });
-				addTableEditor(ti);
+				if (isInsideArtifact()) {
+					ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+							globalvariable.getValue() });
+				} else {
+					ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+							globalvariable.getValue(), "" });
+					addTableEditor(ti);
+				}
 			}
 			this.setControlData(globalvariables);
 		} catch (SQLException | IOException e) {
@@ -298,6 +357,22 @@ public class GlobalVariableTable extends CustomTable {
 
 	public void setParentGlobalVariableView(GlobalVariableDialog parentGlobalVariableView) {
 		this.parentGlobalVariableView = parentGlobalVariableView;
+	}
+
+	public TestCaseView getParentTestCaseView() {
+		return parentTestCaseView;
+	}
+
+	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
+		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public boolean isInsideArtifact() {
+		return insideArtifact;
+	}
+
+	public void setInsideArtifact(boolean insideArtifact) {
+		this.insideArtifact = insideArtifact;
 	}
 
 }

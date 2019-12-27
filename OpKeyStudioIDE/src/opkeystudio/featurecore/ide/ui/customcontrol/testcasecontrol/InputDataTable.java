@@ -111,6 +111,11 @@ public class InputDataTable extends CustomTable {
 				});
 
 				if (selectedColumn == 2) {
+					String gv_inputData = flowInputArgument.getGlobalvariable_id();
+					if (gv_inputData != null) {
+						text.setEditable(false);
+					}
+
 					editor.setEditor(text);
 					text.setFocus();
 				} else {
@@ -188,7 +193,7 @@ public class InputDataTable extends CustomTable {
 			}
 		}
 
-		//Display FL in TestCase or Function Library
+		// Display FL in TestCase or Function Library
 		if (getComponentInputArgs().size() > 0) {
 			for (int i = 0; i < getComponentInputArgs().size(); i++) {
 				ComponentInputArgument keywordInputArg = getComponentInputArgs().get(i);

@@ -38,6 +38,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
+import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
@@ -64,7 +65,7 @@ public class TestCaseView extends Composite {
 	private Table mappedTable;
 	private Table propertyTable;
 	private Table dataOutputTable;
-	private Table globalVariableTable;
+	private GlobalVariableTable globalVariableTable;
 	private Table autoDataGenTable;
 	private Text searchBox;
 	@SuppressWarnings("unused")
@@ -498,7 +499,7 @@ public class TestCaseView extends Composite {
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
-		globalVariableTable = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
+		globalVariableTable = new GlobalVariableTable(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION, this);
 		globalVariablesTabItem.setControl(globalVariableTable);
 		globalVariableTable.setHeaderVisible(true);
 		globalVariableTable.setLinesVisible(true);
