@@ -85,7 +85,6 @@ public class InputDataTable extends CustomTable {
 				FlowInputArgument flowInputArgument = (FlowInputArgument) row.getControlData();
 				int selectedColumn = cursor.getColumn();
 				Text text = new Text(cursor, 0);
-				text.setText(flowInputArgument.getStaticvalue());
 				text.addFocusListener(new FocusListener() {
 
 					@Override
@@ -111,6 +110,7 @@ public class InputDataTable extends CustomTable {
 				});
 
 				if (selectedColumn == 2) {
+					text.setText(flowInputArgument.getStaticvalue());
 					String gv_inputData = flowInputArgument.getGlobalvariable_id();
 					if (gv_inputData != null) {
 						text.setEditable(false);

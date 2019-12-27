@@ -50,7 +50,8 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private String comments;
 	@DBField
 	private String stepid;
-
+	@DBField
+	private String stepcomponent_id;
 	private boolean istestcase;
 	private boolean isfunctionlibrary;
 	private boolean istestsuites;
@@ -242,5 +243,13 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 
 	public void setIstestsuites(boolean istestsuites) {
 		this.istestsuites = istestsuites;
+	}
+
+	public String getStepcomponent_id() {
+		return stepcomponent_id;
+	}
+
+	public void setStepcomponent_id(String stepcomponent_id) {
+		this.stepcomponent_id = stepcomponent_id;
 	}
 }
