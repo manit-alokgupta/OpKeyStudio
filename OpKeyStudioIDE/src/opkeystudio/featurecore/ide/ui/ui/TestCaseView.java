@@ -40,7 +40,6 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;

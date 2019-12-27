@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
