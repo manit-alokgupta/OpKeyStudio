@@ -27,14 +27,7 @@ public class ObjectRepositoryPart {
 
 	@PreDestroy
 	public void preDestroy() {
-		if (objectRepositoryView.getSaveButton().isEnabled()) {
-			boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
-					"Please save before Quiting");
-			if (!status) {
-				return;
-			}
-			objectRepositoryView.saving();
-		}
+		
 	}
 
 	@Focus

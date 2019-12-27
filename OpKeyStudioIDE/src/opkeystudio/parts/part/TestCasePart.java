@@ -28,14 +28,7 @@ public class TestCasePart {
 
 	@PreDestroy
 	public void preDestroy() {
-		if (parentTestCaseView.getSaveButton().isEnabled()) {
-			boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
-					"Please save before Quiting");
-			if (!status) {
-				return;
-			}
-			parentTestCaseView.saveAll();
-		}
+		
 	}
 
 	@Focus
