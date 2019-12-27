@@ -184,6 +184,7 @@ public class InputDataTable extends CustomTable {
 					if (!keywordInputArg.getDatatype().equals("ORObject")) {
 
 						FlowInputArgument flowInputArg = flowInputArgs.get(i);
+						System.out.println(">>GlobalVariable ID " + flowInputArg.getGlobalvariable_id());
 						CustomTableItem cti = new CustomTableItem(this, 0);
 						cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
 								flowInputArg.getStaticvalue() });
@@ -207,6 +208,9 @@ public class InputDataTable extends CustomTable {
 	}
 
 	public FlowInputArgument getSelectedFlowInputArgument() {
+		if (this.getSelection().length == 0) {
+			return null;
+		}
 		if (this.getSelection()[0] == null) {
 			return null;
 		}

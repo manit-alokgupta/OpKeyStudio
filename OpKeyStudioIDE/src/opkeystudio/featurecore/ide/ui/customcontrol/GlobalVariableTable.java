@@ -31,6 +31,7 @@ import opkeystudio.featurecore.ide.ui.ui.GlobalVariableDialog;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -55,6 +56,7 @@ public class GlobalVariableTable extends CustomTable {
 		setInsideArtifact(true);
 		setParentTestCaseView(testCaseView);
 		initHeaders();
+		initForArtifact();
 		refreshGlobalVariables();
 	}
 
@@ -68,7 +70,7 @@ public class GlobalVariableTable extends CustomTable {
 			for (int i = 0; i < tableHeaders_arti.length; i++) {
 				this.getColumn(i).pack();
 			}
-			
+
 			this.addPaintListener(new PaintListener() {
 
 				@Override
@@ -79,7 +81,7 @@ public class GlobalVariableTable extends CustomTable {
 					}
 				}
 			});
-			
+
 		} else {
 			for (String header : tableHeaders_gv) {
 				TableColumn column = new TableColumn(this, 0);
@@ -90,6 +92,40 @@ public class GlobalVariableTable extends CustomTable {
 				this.getColumn(i).pack();
 			}
 		}
+	}
+
+	private void initForArtifact() {
+		this.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (getSelection() == null) {
+					return;
+				}
+				CustomTableItem selectedTableItem = (CustomTableItem) getSelection()[0];
+				if (selectedTableItem == null) {
+					return;
+				}
+				GlobalVariable globalVariable = (GlobalVariable) selectedTableItem.getControlData();
+				if (globalVariable == null) {
+					return;
+				}
+				FlowInputArgument flowInputArgument = getParentTestCaseView().getInputDataTable()
+						.getSelectedFlowInputArgument();
+				if (flowInputArgument == null) {
+					return;
+				}
+				flowInputArgument.setGlobalvariable_id(globalVariable.getGv_id());
+				getParentTestCaseView().toggleSaveButton(true);
+				getParentTestCaseView().getInputDataTable().renderInputTable();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	private void init() {
