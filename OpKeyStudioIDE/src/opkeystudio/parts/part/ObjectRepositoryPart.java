@@ -27,13 +27,14 @@ public class ObjectRepositoryPart {
 
 	@PreDestroy
 	public void preDestroy() {
-		System.out.println("Console Window Destroyed");
-		boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
-				"Please save before Quiting");
-		if (!status) {
-			return;
+		if (objectRepositoryView.getSaveButton().isEnabled()) {
+			boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
+					"Please save before Quiting");
+			if (!status) {
+				return;
+			}
+			objectRepositoryView.saving();
 		}
-		objectRepositoryView.saving();
 	}
 
 	@Focus

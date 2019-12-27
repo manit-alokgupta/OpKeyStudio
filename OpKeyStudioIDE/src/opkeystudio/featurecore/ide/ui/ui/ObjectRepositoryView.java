@@ -818,6 +818,10 @@ public class ObjectRepositoryView extends Composite {
 		return orId;
 	}
 
+	public ToolItem getSaveButton() {
+		return this.saveObject;
+	}
+
 	public void setOrId(String orId) {
 		this.orId = orId;
 	}

@@ -28,15 +28,14 @@ public class TestCasePart {
 
 	@PreDestroy
 	public void preDestroy() {
-		System.out.println("Console Window Destroyed");
-
-		boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
-				"Please save before Quiting");
-		if (!status) {
-			return;
+		if (parentTestCaseView.getSaveButton().isEnabled()) {
+			boolean status = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "OpKey",
+					"Please save before Quiting");
+			if (!status) {
+				return;
+			}
+			parentTestCaseView.saveAll();
 		}
-
-		parentTestCaseView.saveAll();
 	}
 
 	@Focus

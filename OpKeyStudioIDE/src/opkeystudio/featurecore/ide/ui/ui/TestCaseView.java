@@ -1098,6 +1098,10 @@ public class TestCaseView extends Composite {
 		return this.inputDataTable;
 	}
 
+	public ToolItem getSaveButton() {
+		return this.itemSave;
+	}
+
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
