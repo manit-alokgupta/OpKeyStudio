@@ -1,5 +1,6 @@
 package opkeystudio.core.utils;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
@@ -32,6 +33,10 @@ public class Utilities {
 
 	public MPart getActivePart() {
 		return getEpartService().getActivePart();
+	}
+
+	public Collection<MPart> getAllParts() {
+		return getEpartService().getParts();
 	}
 
 	public void showErrorDialog(Shell shell, String title, String message) {
