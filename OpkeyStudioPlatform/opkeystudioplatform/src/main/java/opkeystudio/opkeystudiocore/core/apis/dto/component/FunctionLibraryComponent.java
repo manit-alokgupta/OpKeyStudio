@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionLibraryComponent extends Artifact {
-	private List<ComponentStepInputArgument> componentInputArgument = new ArrayList<ComponentStepInputArgument>();
-	private List<ComponentStepOutputArgument> componentOutputArgument = new ArrayList<ComponentStepOutputArgument>();
+	private List<ComponentInputArgument> componentInputArgument = new ArrayList<ComponentInputArgument>();
+	private List<ComponentOutputArgument> componentOutputArgument = new ArrayList<ComponentOutputArgument>();
 
 	private List<Fl_BottomFactoryInput> componentInputParameter = new ArrayList<Fl_BottomFactoryInput>();
 	private List<Fl_BottomFactoryOutput> componentOutputParameter = new ArrayList<Fl_BottomFactoryOutput>();
 
-	public List<ComponentStepInputArgument> getComponentInputArgument() {
+	public List<ComponentInputArgument> getComponentInputArgument() {
 		return componentInputArgument;
 	}
 
-	public void setComponentInputArgument(List<ComponentStepInputArgument> componentInputArgument) {
+	public void setComponentInputArgument(List<ComponentInputArgument> componentInputArgument) {
 		this.componentInputArgument = componentInputArgument;
 	}
 
-	public List<ComponentStepOutputArgument> getComponentOutputArgument() {
+	public List<ComponentOutputArgument> getComponentOutputArgument() {
 		return componentOutputArgument;
 	}
 
-	public void setComponentOutputArgument(List<ComponentStepOutputArgument> componentOutputArgument) {
+	public void setComponentOutputArgument(List<ComponentOutputArgument> componentOutputArgument) {
 		this.componentOutputArgument = componentOutputArgument;
 	}
 

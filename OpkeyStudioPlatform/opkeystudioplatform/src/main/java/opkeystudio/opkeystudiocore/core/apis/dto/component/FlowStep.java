@@ -40,9 +40,9 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 
 	private List<FlowOutputArgument> flowOutputArgs = new ArrayList<FlowOutputArgument>();
 
-	private List<ComponentStepInputArgument> componentInputArgs = new ArrayList<ComponentStepInputArgument>();
+	private List<ComponentInputArgument> componentInputArgs = new ArrayList<ComponentInputArgument>();
 
-	private List<ComponentStepOutputArgument> componentOutputArgs = new ArrayList<ComponentStepOutputArgument>();
+	private List<ComponentOutputArgument> componentOutputArgs = new ArrayList<ComponentOutputArgument>();
 
 	@DBField
 	private String component_id;
@@ -152,19 +152,19 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 		this.flowOutputArgs = flowOutputArgs;
 	}
 
-	public List<ComponentStepInputArgument> getComponentInputArgs() {
+	public List<ComponentInputArgument> getComponentInputArgs() {
 		return componentInputArgs;
 	}
 
-	public void setComponentInputArgs(List<ComponentStepInputArgument> componentInputArgs) {
+	public void setComponentInputArgs(List<ComponentInputArgument> componentInputArgs) {
 		this.componentInputArgs = componentInputArgs;
 	}
 
-	public List<ComponentStepOutputArgument> getComponentOutputArgs() {
+	public List<ComponentOutputArgument> getComponentOutputArgs() {
 		return componentOutputArgs;
 	}
 
-	public void setComponentOutputArgs(List<ComponentStepOutputArgument> componentOutputArgs) {
+	public void setComponentOutputArgs(List<ComponentOutputArgument> componentOutputArgs) {
 		this.componentOutputArgs = componentOutputArgs;
 	}
 

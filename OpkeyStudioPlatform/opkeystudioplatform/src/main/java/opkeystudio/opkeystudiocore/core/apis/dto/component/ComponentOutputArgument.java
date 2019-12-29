@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class ComponentStepOutputArgument extends Modified {
+public class ComponentOutputArgument extends Modified {
 
 	private int clustering_key;
 	@DBField

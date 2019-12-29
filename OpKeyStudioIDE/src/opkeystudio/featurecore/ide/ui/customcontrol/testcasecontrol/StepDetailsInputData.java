@@ -16,7 +16,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentStepInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
@@ -25,7 +25,7 @@ public class StepDetailsInputData extends CustomTable {
 
 	private List<KeyWordInputArgument> keyWordInputArgs;
 	private List<FlowInputArgument> flowInputArgs;
-	private List<ComponentStepInputArgument> componentInputArgs;
+	private List<ComponentInputArgument> componentInputArgs;
 	private TestCaseView parentTestCaseView;
 	public StepDetailsInputData(Composite parent, int style) {
 		super(parent, style);
@@ -114,11 +114,11 @@ public class StepDetailsInputData extends CustomTable {
 		this.flowInputArgs = flowInputArgs;
 	}
 
-	public List<ComponentStepInputArgument> getComponentInputArgs() {
+	public List<ComponentInputArgument> getComponentInputArgs() {
 		return componentInputArgs;
 	}
 
-	public void setComponentInputArgs(List<ComponentStepInputArgument> componentInputArguments) {
+	public void setComponentInputArgs(List<ComponentInputArgument> componentInputArguments) {
 		this.componentInputArgs = componentInputArguments;
 	}
 
@@ -140,7 +140,7 @@ public class StepDetailsInputData extends CustomTable {
 
 		if (getComponentInputArgs() != null) {
 			for (int i = 0; i < getComponentInputArgs().size(); i++) {
-				ComponentStepInputArgument keywordInputArg = getComponentInputArgs().get(i);
+				ComponentInputArgument keywordInputArg = getComponentInputArgs().get(i);
 				FlowInputArgument flowInputArg = flowInputArgs.get(i);
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),

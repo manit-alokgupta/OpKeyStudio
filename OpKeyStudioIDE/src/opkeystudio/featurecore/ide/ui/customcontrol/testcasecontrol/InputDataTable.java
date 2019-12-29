@@ -23,14 +23,14 @@ import org.eclipse.swt.widgets.Text;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentStepInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 
 public class InputDataTable extends CustomTable {
 	private List<KeyWordInputArgument> keyWordInputArgs = new ArrayList<KeyWordInputArgument>();
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
-	private List<ComponentStepInputArgument> componentInputArgs = new ArrayList<>();
+	private List<ComponentInputArgument> componentInputArgs = new ArrayList<>();
 	private TestCaseView parentTestCaseView;
 
 	public InputDataTable(Composite parent, int style) {
@@ -197,9 +197,9 @@ public class InputDataTable extends CustomTable {
 		// Display FL in TestCase or Function Library
 		if (getComponentInputArgs().size() > 0) {
 			for (int i = 0; i < getComponentInputArgs().size(); i++) {
-				List<ComponentStepInputArgument> filteredComponentInputArgs = new ArrayList<ComponentStepInputArgument>();
+				List<ComponentInputArgument> filteredComponentInputArgs = new ArrayList<ComponentInputArgument>();
 				for (int i1 = 0; i1 < getComponentInputArgs().size(); i1++) {
-					ComponentStepInputArgument inputArgument = getComponentInputArgs().get(i1);
+					ComponentInputArgument inputArgument = getComponentInputArgs().get(i1);
 					filteredComponentInputArgs.add(inputArgument);
 				}
 
@@ -212,7 +212,7 @@ public class InputDataTable extends CustomTable {
 				}
 
 				if (filteredComponentInputArgs.size() == filteredFlowInputArgs.size()) {
-					ComponentStepInputArgument keywordInputArg = getComponentInputArgs().get(i);
+					ComponentInputArgument keywordInputArg = getComponentInputArgs().get(i);
 					FlowInputArgument flowInputArg = flowInputArgs.get(i);
 					CustomTableItem cti = new CustomTableItem(this, 0);
 					cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
@@ -234,11 +234,11 @@ public class InputDataTable extends CustomTable {
 		return (FlowInputArgument) selectedTableItem.getControlData();
 	}
 
-	public List<ComponentStepInputArgument> getComponentInputArgs() {
+	public List<ComponentInputArgument> getComponentInputArgs() {
 		return componentInputArgs;
 	}
 
-	public void setComponentInputArgs(List<ComponentStepInputArgument> componentInputArgs) {
+	public void setComponentInputArgs(List<ComponentInputArgument> componentInputArgs) {
 		this.componentInputArgs = componentInputArgs;
 	}
 

@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class ComponentStepInputArgument extends Modified {
+public class ComponentInputArgument extends Modified {
 	@DBField
 	private boolean ismandatory;
 	@DBField
