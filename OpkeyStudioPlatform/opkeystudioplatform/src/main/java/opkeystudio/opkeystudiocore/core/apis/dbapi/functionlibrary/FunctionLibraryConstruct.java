@@ -75,7 +75,7 @@ public class FunctionLibraryConstruct {
 
 	private void updateComponentInputArgument(ComponentStepInputArgument flowInputArgument) {
 		if (flowInputArgument.isModified()) {
-			System.out.println("Flow Input Argument Modified "+flowInputArgument.getStep_arg_id());
+			System.out.println("Flow Input Argument Modified " + flowInputArgument.getStep_arg_id());
 			String query = new QueryMaker().createUpdateQuery(flowInputArgument, "component_step_input_args",
 					String.format("WHERE step_arg_id ='%s'", flowInputArgument.getStep_arg_id()));
 			QueryExecutor.getInstance().executeUpdateQuery(query);
