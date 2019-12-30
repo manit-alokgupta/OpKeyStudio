@@ -250,7 +250,6 @@ public class InputDataTable extends CustomTable {
 					if (!keywordInputArg.getDatatype().equals("ORObject")) {
 
 						FlowInputArgument flowInputArg = flowInputArgs.get(i);
-						System.out.println(">>GlobalVariable ID " + flowInputArg.getGlobalvariable_id());
 						CustomTableItem cti = new CustomTableItem(this, 0);
 						cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
 								flowInputArg.getStaticvalue() });

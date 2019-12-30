@@ -29,7 +29,7 @@ public class FlowMaker {
 		flowStep.setKeywordid(keyword.getKeywordid());
 		flowStep.setPosition(selectedFlowStepPosition + 5);
 		flowStep.setShouldrun(true);
-		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
+		List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(flowStep);
 		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
 		flowStep.setFlowInputArgs(flowInputArguments);
 		flowStep.setFlowOutputArgs(flowOutputArguments);
@@ -42,10 +42,18 @@ public class FlowMaker {
 		return flowStep;
 	}
 
-	private List<FlowInputArgument> getFlowStepInputArguments(Keyword keyword) {
+	private List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep) {
 		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
-		List<KeyWordInputArgument> keywordInputArguments = keyword.getKeywordInputArguments();
-
+		List<KeyWordInputArgument> keywordInputArguments = flowStep.getKeyword().getKeywordInputArguments();
+		for (KeyWordInputArgument keywordInputArgument : keywordInputArguments) {
+			FlowInputArgument flowInputArgument = new FlowInputArgument();
+			flowInputArgument.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
+			flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+			flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
+			flowInputArgument.setStaticobjectid(null);
+			flowInputArgument.setAdded(true);
+			flowInputArguments.add(flowInputArgument);
+		}
 		return flowInputArguments;
 	}
 }
