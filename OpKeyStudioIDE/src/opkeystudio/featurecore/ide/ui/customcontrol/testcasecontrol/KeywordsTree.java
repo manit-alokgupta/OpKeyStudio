@@ -51,8 +51,9 @@ public class KeywordsTree extends CustomTree {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = getParentTestCaseView().getArtifact();
 				FlowStep selectedFlowStep = getParentTestCaseView().getFlowStepTable().getSelectedFlowStep();
-				FlowStep flowStep = new FlowMaker().getFlowStepDTO(selectedFlowStep, getSelectedKeyword(),
-						artifact.getId(), getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+				FlowStep flowStep = new FlowMaker().getFlowStepDTO(getParentTestCaseView().getArtifact(),
+						selectedFlowStep, getSelectedKeyword(), artifact.getId(),
+						getParentTestCaseView().getFlowStepTable().getFlowStepsData());
 				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 				getParentTestCaseView().toggleSaveButton(true);

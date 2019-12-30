@@ -3,6 +3,8 @@ package opkeystudio.opkeystudiocore.core.dtoMaker;
 import java.util.ArrayList;
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -11,13 +13,18 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowMaker {
-	public FlowStep getFlowStepDTO(FlowStep selectedFlowStep, Keyword keyword, String flow_id,
+	public FlowStep getFlowStepDTO(Artifact artifact, FlowStep selectedFlowStep, Keyword keyword, String flow_id,
 			List<FlowStep> flowSteps) {
 		int selectedFlowStepIndex = flowSteps.indexOf(selectedFlowStep);
 		int selectedFlowStepPosition = selectedFlowStep.getPosition();
 		FlowStep flowStep = new FlowStep();
-		flowStep.setFlow_id(flow_id);
-		flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
+		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+			flowStep.setComponent_id(flow_id);
+			flowStep.setStepid(Utilities.getInstance().getUniqueUUID(""));
+		} else {
+			flowStep.setFlow_id(flow_id);
+			flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
+		}
 		flowStep.setKeyword(keyword);
 		flowStep.setKeywordid(keyword.getKeywordid());
 		flowStep.setPosition(selectedFlowStepPosition + 5);
