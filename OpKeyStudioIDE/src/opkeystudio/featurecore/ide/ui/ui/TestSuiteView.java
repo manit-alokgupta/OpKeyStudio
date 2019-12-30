@@ -402,6 +402,27 @@ public class TestSuiteView extends Composite {
 
 			}
 		});
+
+		refreshTestCaseTree.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					testCaseTree.renderArtifacts();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		runButton.addSelectionListener(new SelectionListener() {
 
 			@Override
