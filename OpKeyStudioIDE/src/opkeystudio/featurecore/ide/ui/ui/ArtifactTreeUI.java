@@ -98,7 +98,7 @@ public class ArtifactTreeUI extends Composite {
 				Text text = (Text) e.getSource();
 				String searchValue = text.getText();
 				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
-					filterArtifactTree(searchValue);
+					artifactTree.filterArtifactTree(searchValue);
 				}
 
 			}
@@ -987,7 +987,7 @@ public class ArtifactTreeUI extends Composite {
 
 				txtSearch.setText("");
 				String textToSearch = txtSearch.getText();
-				filterArtifactTree(textToSearch);
+				artifactTree.filterArtifactTree(textToSearch);
 			}
 
 			@Override
@@ -1013,20 +1013,6 @@ public class ArtifactTreeUI extends Composite {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	}
-
-	private void filterArtifactTree(String searchValue) {
-		List<Artifact> artifacts = artifactTree.getArtifactsData();
-		for (Artifact artifact : artifacts) {
-			if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
-				if (artifact.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
-					artifact.setVisible(true);
-				} else {
-					artifact.setVisible(false);
-				}
-			}
-		}
-		artifactTree.refereshArtifacts();
 	}
 
 	public void toggleRenameToolbarItem(boolean status) {

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -102,8 +104,7 @@ public class TestSuiteView extends Composite {
 
 		tagVersionRunButton = new ToolItem(toolBar_1, SWT.NONE);
 		tagVersionRunButton.setToolTipText("Run With Tag Version");
-		tagVersionRunButton
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/run_with_tag.png"));
+		tagVersionRunButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/run_with_tag.png"));
 
 		ToolItem toolItem_13 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -121,8 +122,7 @@ public class TestSuiteView extends Composite {
 
 		runOnBrowserButton = new ToolItem(toolBar_1, SWT.NONE);
 		runOnBrowserButton.setToolTipText("Run on Browser Stack");
-		runOnBrowserButton
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/stackbrowser.png"));
+		runOnBrowserButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/stackbrowser.png"));
 
 		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -179,8 +179,7 @@ public class TestSuiteView extends Composite {
 
 		refreshButton = new ToolItem(toolBar_1, SWT.NONE);
 		refreshButton.setToolTipText("Refresh");
-		refreshButton
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
 		ToolItem toolItem_10 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -276,7 +275,8 @@ public class TestSuiteView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		refreshTestCaseTree.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshTestCaseTree
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		sashForm_1.setWeights(new int[] { 4, 1 });
 
 		Composite composite_4 = new Composite(composite_2, SWT.NONE);
@@ -369,6 +369,39 @@ public class TestSuiteView extends Composite {
 
 	private void addButtonListeners() {
 
+		searchTextBox.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				Text text = (Text) e.getSource();
+				String searchValue = text.getText();
+				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
+					testCaseTree.filterArtifactTree(searchValue);
+				}
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		searchTestCaseButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String textToSearch = searchTextBox.getText();
+				testCaseTree.filterArtifactTree(textToSearch);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		runButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -508,8 +541,8 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-						"Do you want to delete '" + testSuiteTable.getSelectedTestSuite().getArtifact().getName() + "'?");
+				boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to delete '"
+						+ testSuiteTable.getSelectedTestSuite().getArtifact().getName() + "'?");
 				if (!status) {
 					return;
 				}
