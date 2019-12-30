@@ -22,7 +22,7 @@ public class FlowInputArgument extends Modified {
 	@DBField
 	private String staticobjectid;
 	@DBField
-	private String arg_datasource;
+	private DataSource arg_datasource;
 	@DBField
 	private String step_arg_id;
 	@DBField
@@ -84,11 +84,11 @@ public class FlowInputArgument extends Modified {
 		this.staticobjectid = staticobjectid;
 	}
 
-	public String getArg_datasource() {
+	public DataSource getArg_datasource() {
 		return arg_datasource;
 	}
 
-	public void setArg_datasource(String arg_datasource) {
+	public void setArg_datasource(DataSource arg_datasource) {
 		this.arg_datasource = arg_datasource;
 	}
 

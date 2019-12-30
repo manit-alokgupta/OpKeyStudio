@@ -57,6 +57,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
@@ -1049,7 +1050,11 @@ public class TestCaseView extends Composite {
 				if (flowInputArgument == null) {
 					return;
 				}
-				flowInputArgument.setDatasource(DataSource.ValueFromGlobalVariable);
+				if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+					flowInputArgument.setArg_datasource(DataSource.ValueFromGlobalVariable);
+				} else {
+					flowInputArgument.setDatasource(DataSource.ValueFromGlobalVariable);
+				}
 				flowInputArgument.setGlobalvariable_id(globalVar.getGv_id());
 				flowInputArgument.setModified(true);
 				toggleSaveButton(true);

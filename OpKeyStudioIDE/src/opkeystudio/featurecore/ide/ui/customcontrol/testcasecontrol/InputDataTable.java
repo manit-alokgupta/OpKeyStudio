@@ -35,6 +35,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariable
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
@@ -113,7 +114,12 @@ public class InputDataTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
-						flowInputArgument.setDatasource(DataSource.StaticValue);
+						if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+							flowInputArgument.setArg_datasource(DataSource.StaticValue);
+						} else {
+							flowInputArgument.setDatasource(DataSource.StaticValue);
+						}
+
 						flowInputArgument.setStaticvalue(text.getText());
 						flowInputArgument.setModified(true);
 						getParentTestCaseView().toggleSaveButton(true);
@@ -148,7 +154,12 @@ public class InputDataTable extends CustomTable {
 	private void addInputTableEditor(CustomTableItem item)
 			throws JsonParseException, JsonMappingException, IOException {
 		FlowInputArgument flowInputArgument = (FlowInputArgument) item.getControlData();
-		DataSource dataSourceType = flowInputArgument.getDatasource();
+		DataSource dataSourceType = null;
+		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+			dataSourceType = flowInputArgument.getArg_datasource();
+		} else {
+			dataSourceType = flowInputArgument.getDatasource();
+		}
 		if (dataSourceType == DataSource.ValueFromGlobalVariable) {
 			String gv_id = flowInputArgument.getGlobalvariable_id();
 			GlobalVariable globalVar = new GlobalVariableApi().getGlobalVariable(gv_id);
