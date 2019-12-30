@@ -27,7 +27,6 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 public class KeywordsTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
 	private KeywordsTree thisTable = this;
-	private FlowStep flowStep;
 	private ArtifactTreeItem artifactTreeItem;
 
 	public KeywordsTree(Composite parent, int style, TestCaseView testCaseView) {
@@ -84,32 +83,14 @@ public class KeywordsTree extends CustomTree {
 
 				Keyword keyWord = (Keyword) selectedKeywordItem.getControlData();
 				System.out.println(keyWord.getKeywordname());
-				MPart mpart = Utilities.getInstance().getActivePart();
-				Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-				MODULETYPE fileType = artifact.getFile_type_enum();
-
-				if (fileType == MODULETYPE.Component) {
-					FlowStepTable flowStepTableFL = getParentTestCaseView().getFlowStepTable();
-					if (flowStepTableFL != null) {
-						FlowStep flowStep = flowStepTableFL.getSelectedFlowStep();
-						flowStep.setKeyword(keyWord);
-						flowStep.setKeywordid(keyWord.getKeywordid());
-						flowStep.setModified(true);
-						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
-						getParentTestCaseView().toggleSaveButton(true);
-					}
-				}
-
-				if (fileType == MODULETYPE.Flow) {
-					FlowStepTable flowStepTable = getParentTestCaseView().getFlowStepTable();
-					if (flowStepTable != null) {
-						flowStep = flowStepTable.getSelectedFlowStep();
-						flowStep.setKeyword(keyWord);
-						flowStep.setKeywordid(keyWord.getKeywordid());
-						flowStep.setModified(true);
-						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
-						getParentTestCaseView().toggleSaveButton(true);
-					}
+				FlowStepTable flowStepTable = getParentTestCaseView().getFlowStepTable();
+				if (flowStepTable != null) {
+					FlowStep flowStep = flowStepTable.getSelectedFlowStep();
+					flowStep.setKeyword(keyWord);
+					flowStep.setKeywordid(keyWord.getKeywordid());
+					flowStep.setModified(true);
+					getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+					getParentTestCaseView().toggleSaveButton(true);
 				}
 
 			}
