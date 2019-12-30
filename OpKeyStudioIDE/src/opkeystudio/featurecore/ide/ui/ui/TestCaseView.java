@@ -124,7 +124,7 @@ public class TestCaseView extends Composite {
 	private Display display;
 	@SuppressWarnings("unused")
 	private ArtifactTreeItem artifactTreeItem;
-
+	private TabFolder datasTabHolder;
 	private SourceCodeEditor sourceCodeEditor;
 
 	/**
@@ -487,33 +487,33 @@ public class TestCaseView extends Composite {
 		Composite composite_14 = new Composite(sashForm_2, SWT.NONE);
 		composite_14.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		TabFolder tabFolder_1 = new TabFolder(composite_14, SWT.NONE);
+		datasTabHolder = new TabFolder(composite_14, SWT.NONE);
 
-		TabItem dataOutputTabItem = new TabItem(tabFolder_1, SWT.NONE);
+		TabItem dataOutputTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		dataOutputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
 		dataOutputTabItem.setText("Data Output");
 		dataOutputTabItem.setToolTipText("Data Output");
-		dataOutputTable = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
+		dataOutputTable = new Table(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION);
 		dataOutputTabItem.setControl(dataOutputTable);
 		dataOutputTable.setHeaderVisible(true);
 		dataOutputTable.setLinesVisible(true);
 
-		TabItem globalVariablesTabItem = new TabItem(tabFolder_1, SWT.NONE);
+		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
-		globalVariableTable = new GlobalVariableTable(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION, this);
+		globalVariableTable = new GlobalVariableTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		globalVariablesTabItem.setControl(globalVariableTable);
 		globalVariableTable.setHeaderVisible(true);
 		globalVariableTable.setLinesVisible(true);
 
-		TabItem autoDataGenTabItem = new TabItem(tabFolder_1, SWT.NONE);
+		TabItem autoDataGenTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		autoDataGenTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/autodata.png"));
 		autoDataGenTabItem.setText("Auto Data Generation");
 		autoDataGenTabItem.setToolTipText("Auto Data Generation");
 
-		autoDataGenTable = new Table(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION);
+		autoDataGenTable = new Table(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION);
 		autoDataGenTabItem.setControl(autoDataGenTable);
 		autoDataGenTable.setHeaderVisible(true);
 
@@ -1121,6 +1121,10 @@ public class TestCaseView extends Composite {
 
 	public ToolItem getSaveButton() {
 		return this.itemSave;
+	}
+
+	public TabFolder getDatasTabHolder() {
+		return this.datasTabHolder;
 	}
 
 	@Override

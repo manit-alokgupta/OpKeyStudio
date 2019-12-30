@@ -12,6 +12,8 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -121,11 +123,6 @@ public class InputDataTable extends CustomTable {
 				if (selectedColumn == 2) {
 					if (flowInputArgument.getStaticvalue() != null) {
 						text.setText(flowInputArgument.getStaticvalue());
-						String gv_inputData = flowInputArgument.getGlobalvariable_id();
-						if (gv_inputData != null) {
-							text.setEditable(false);
-						}
-
 						editor.setEditor(text);
 						text.setFocus();
 					}
@@ -157,6 +154,26 @@ public class InputDataTable extends CustomTable {
 			TableEditor editor1 = getTableEditor();
 			CustomButton button = new CustomButton(this, SWT.NONE);
 			button.setText(globalVar.getName());
+
+			button.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseUp(MouseEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void mouseDown(MouseEvent e) {
+					getParentTestCaseView().getDatasTabHolder().setSelection(1);
+				}
+
+				@Override
+				public void mouseDoubleClick(MouseEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+			});
 			editor1.setEditor(button, item, 2);
 			this.allTableEditors.add(editor1.getEditor());
 		}
