@@ -61,6 +61,9 @@ public class TestSuiteView extends Composite {
 	private MenuItem menuReview;
 	private MenuItem menuApproved;
 	private MenuItem menuPublished;
+	private ToolItem refreshTestCaseTree;
+	private Button searchTestCaseButton;
+	private Button addTestCaseButton;
 	private BottomFactoryTestSuiteUi bottomFactory;
 	@SuppressWarnings("unused")
 	private Display display;
@@ -241,22 +244,22 @@ public class TestSuiteView extends Composite {
 		composite_5.setLayout(new GridLayout(3, false));
 		composite_5.setBounds(0, 0, 64, 64);
 
-		Button btnNewButton = new Button(composite_5, SWT.NONE);
-		btnNewButton.setToolTipText("Add Available Test Cases/Sparkin/Gherkin Features");
-		btnNewButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		btnNewButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		btnNewButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/leftArrow.png"));
+		addTestCaseButton = new Button(composite_5, SWT.NONE);
+		addTestCaseButton.setToolTipText("Add Available Test Cases/Sparkin/Gherkin Features");
+		addTestCaseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		addTestCaseButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		addTestCaseButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/leftArrow.png"));
 
 		searchTextBox = new Text(composite_5, SWT.BORDER);
 		searchTextBox.setToolTipText("Available Test Cases/Sparkin/Gherkin Features");
 		searchTextBox.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		searchTextBox.setMessage("Available Test Cases");
 
-		Button searchBtn = new Button(composite_5, SWT.NONE);
-		searchBtn.setToolTipText("Search");
-		searchBtn.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		searchBtn.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
-		searchBtn.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		searchTestCaseButton = new Button(composite_5, SWT.NONE);
+		searchTestCaseButton.setToolTipText("Search");
+		searchTestCaseButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		searchTestCaseButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
+		searchTestCaseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
 		Composite composite_6 = new Composite(sashForm_1, SWT.NONE);
 		composite_6.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -266,14 +269,14 @@ public class TestSuiteView extends Composite {
 		ToolBar toolBar = new ToolBar(composite_6, SWT.FLAT | SWT.RIGHT);
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
-		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.NONE);
-		tltmNewItem.setToolTipText("Refresh");
-		tltmNewItem.addSelectionListener(new SelectionAdapter() {
+		refreshTestCaseTree = new ToolItem(toolBar, SWT.NONE);
+		refreshTestCaseTree.setToolTipText("Refresh");
+		refreshTestCaseTree.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		tltmNewItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshTestCaseTree.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		sashForm_1.setWeights(new int[] { 4, 1 });
 
 		Composite composite_4 = new Composite(composite_2, SWT.NONE);
