@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class TestSuite extends Modified {
+public class TestSuite extends Modified implements Comparable<TestSuite> {
 	@DBField
 	private String suite_stepid;
 	@DBField
@@ -94,5 +94,10 @@ public class TestSuite extends Modified {
 
 	public void setArtifact(Artifact artifact) {
 		this.artifact = artifact;
+	}
+
+	@Override
+	public int compareTo(TestSuite arg0) {
+		return this.getPosition() - arg0.getPosition();
 	}
 }

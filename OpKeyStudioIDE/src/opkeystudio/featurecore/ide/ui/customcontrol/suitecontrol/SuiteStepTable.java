@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -11,6 +12,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -68,6 +71,39 @@ public class SuiteStepTable extends CustomTable {
 						column.setWidth((table_0.getBounds().width - 100) / 3);
 					}
 				}
+
+			}
+		});
+
+		this.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TestSuite prevTestSuite = getPrevTestSuite();
+				TestSuite selectedTestSuite = getSelectedTestSuite();
+				TestSuite nextTestSuite = getNextTestSuite();
+				if (selectedTestSuite == null) {
+					getParentTestSuiteView().toggleMoveUpButton(false);
+					getParentTestSuiteView().toggleMoveDownButton(false);
+					getParentTestSuiteView().toggleDeleteButton(false);
+					return;
+				}
+				if (prevTestSuite == null) {
+					getParentTestSuiteView().toggleMoveUpButton(false);
+					getParentTestSuiteView().toggleMoveDownButton(true);
+					getParentTestSuiteView().toggleDeleteButton(true);
+				}
+
+				if (nextTestSuite == null) {
+					getParentTestSuiteView().toggleMoveUpButton(true);
+					getParentTestSuiteView().toggleMoveDownButton(false);
+					getParentTestSuiteView().toggleDeleteButton(true);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -178,7 +214,6 @@ public class SuiteStepTable extends CustomTable {
 		for (TestSuite testSuite : testSuites) {
 			SuiteStepTableItem suiteStepTableItem = new SuiteStepTableItem(this, 0);
 			suiteStepTableItem.setText(new String[] { "", "", testSuite.getArtifact().getName(), "", "" });
-			System.out.println(testSuite.getArtifact().getName());
 			suiteStepTableItem.setTestSuiteData(testSuite);
 		}
 	}
@@ -186,6 +221,7 @@ public class SuiteStepTable extends CustomTable {
 	public void refreshAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
 		this.removeAll();
 		List<TestSuite> testSuites = getTestSuiteData();
+		Collections.sort(testSuites);
 		setTestSuiteData(testSuites);
 		for (TestSuite testSuite : testSuites) {
 			if (testSuite.isDeleted() == false) {
@@ -197,6 +233,12 @@ public class SuiteStepTable extends CustomTable {
 	}
 
 	public TestSuite getSelectedTestSuite() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
 		SuiteStepTableItem suiteStepTableItem = (SuiteStepTableItem) this.getSelection()[0];
 		return suiteStepTableItem.getTestSuiteData();
 	}

@@ -39,21 +39,21 @@ public class TestSuiteView extends Composite {
 	private SuiteStepTable testSuiteTable;
 	@SuppressWarnings("unused")
 	private TestSuite testSuite;
-	private ToolItem runtoolitem;
-	private ToolItem tagVersionRunToolItem;
-	private ToolItem debugToolItem;
-	private ToolItem runOnCloudToolItem;
-	private ToolItem runOnBrowserToolItem;
-	private ToolItem runOnSauceLabsToolItem;
-	private ToolItem runOnPcloudyToolItem;
-	private ToolItem toolGenerateDoc;
-	private ToolItem scheduleSuiteToolItem;
-	private ToolItem deleteSuiteStepToolItem;
-	private ToolItem moveUpToolItem;
-	private ToolItem moveDownToolItem;
-	private ToolItem saveToolItem;
-	private ToolItem refreshToolItem;
-	private ToolItem javaExportToolItem;
+	private ToolItem runButton;
+	private ToolItem tagVersionRunButton;
+	private ToolItem debugButton;
+	private ToolItem runOnCloudButton;
+	private ToolItem runOnBrowserButton;
+	private ToolItem runOnSauceLabsButton;
+	private ToolItem runOnPcloudyButton;
+	private ToolItem generateDocButton;
+	private ToolItem scheduleSuiteButton;
+	private ToolItem deleteSuiteStepButton;
+	private ToolItem moveUpButton;
+	private ToolItem moveDownButton;
+	private ToolItem saveButton;
+	private ToolItem refreshButton;
+	private ToolItem javaExportButton;
 	private ToolItem toolDropDown;
 	private ToolBar toolBar_1;
 	private Menu dropDownMenu;
@@ -91,99 +91,99 @@ public class TestSuiteView extends Composite {
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBounds(0, 0, 87, 23);
 
-		runtoolitem = new ToolItem(toolBar_1, SWT.NONE);
-		runtoolitem.setToolTipText("Run Now");
-		runtoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
+		runButton = new ToolItem(toolBar_1, SWT.NONE);
+		runButton.setToolTipText("Run Now");
+		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
 
 		ToolItem toolItem_12 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		tagVersionRunToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		tagVersionRunToolItem.setToolTipText("Run With Tag Version");
-		tagVersionRunToolItem
+		tagVersionRunButton = new ToolItem(toolBar_1, SWT.NONE);
+		tagVersionRunButton.setToolTipText("Run With Tag Version");
+		tagVersionRunButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/run_with_tag.png"));
 
 		ToolItem toolItem_13 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		debugToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		debugToolItem.setToolTipText("Debug Now");
-		debugToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/bug.png"));
+		debugButton = new ToolItem(toolBar_1, SWT.NONE);
+		debugButton.setToolTipText("Debug Now");
+		debugButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/bug.png"));
 
 		ToolItem toolItem_14 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		runOnCloudToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		runOnCloudToolItem.setToolTipText("Run on Cloud");
-		runOnCloudToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/cloud.png"));
+		runOnCloudButton = new ToolItem(toolBar_1, SWT.NONE);
+		runOnCloudButton.setToolTipText("Run on Cloud");
+		runOnCloudButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/cloud.png"));
 
 		ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		runOnBrowserToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		runOnBrowserToolItem.setToolTipText("Run on Browser Stack");
-		runOnBrowserToolItem
+		runOnBrowserButton = new ToolItem(toolBar_1, SWT.NONE);
+		runOnBrowserButton.setToolTipText("Run on Browser Stack");
+		runOnBrowserButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/stackbrowser.png"));
 
 		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		runOnSauceLabsToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		runOnSauceLabsToolItem.setToolTipText("Run on SauceLabs");
-		runOnSauceLabsToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/saucelab.png"));
+		runOnSauceLabsButton = new ToolItem(toolBar_1, SWT.NONE);
+		runOnSauceLabsButton.setToolTipText("Run on SauceLabs");
+		runOnSauceLabsButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/saucelab.png"));
 
 		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		runOnPcloudyToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		runOnPcloudyToolItem.setToolTipText("Run on PCloudy");
-		runOnPcloudyToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/pcloudy.png"));
+		runOnPcloudyButton = new ToolItem(toolBar_1, SWT.NONE);
+		runOnPcloudyButton.setToolTipText("Run on PCloudy");
+		runOnPcloudyButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/pcloudy.png"));
 
 		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		toolGenerateDoc = new ToolItem(toolBar_1, SWT.NONE);
-		toolGenerateDoc.setToolTipText("Generate Document");
-		toolGenerateDoc
+		generateDocButton = new ToolItem(toolBar_1, SWT.NONE);
+		generateDocButton.setToolTipText("Generate Document");
+		generateDocButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/generate document.png"));
 
 		ToolItem toolItem_4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		scheduleSuiteToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		scheduleSuiteToolItem.setToolTipText("Schedule this Suite");
-		scheduleSuiteToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/schedule.png"));
+		scheduleSuiteButton = new ToolItem(toolBar_1, SWT.NONE);
+		scheduleSuiteButton.setToolTipText("Schedule this Suite");
+		scheduleSuiteButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/schedule.png"));
 
 		ToolItem toolItem_5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		deleteSuiteStepToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		deleteSuiteStepToolItem.setToolTipText("Delete Suite Step");
-		deleteSuiteStepToolItem
+		deleteSuiteStepButton = new ToolItem(toolBar_1, SWT.NONE);
+		deleteSuiteStepButton.setToolTipText("Delete Suite Step");
+		deleteSuiteStepButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 
 		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		moveUpToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		moveUpToolItem.setToolTipText("Move UP");
-		moveUpToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
+		moveUpButton = new ToolItem(toolBar_1, SWT.NONE);
+		moveUpButton.setToolTipText("Move UP");
+		moveUpButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 
 		ToolItem toolItem_7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		moveDownToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		moveDownToolItem.setToolTipText("Move Down");
-		moveDownToolItem
+		moveDownButton = new ToolItem(toolBar_1, SWT.NONE);
+		moveDownButton.setToolTipText("Move Down");
+		moveDownButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
 
 		ToolItem toolItem_8 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		saveToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		saveToolItem.setToolTipText("Save");
-		saveToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
+		saveButton = new ToolItem(toolBar_1, SWT.NONE);
+		saveButton.setToolTipText("Save");
+		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
 
 		ToolItem toolItem_9 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		refreshToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		refreshToolItem.setToolTipText("Refresh");
-		refreshToolItem
+		refreshButton = new ToolItem(toolBar_1, SWT.NONE);
+		refreshButton.setToolTipText("Refresh");
+		refreshButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
 		ToolItem toolItem_10 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		javaExportToolItem = new ToolItem(toolBar_1, SWT.NONE);
-		javaExportToolItem.setToolTipText("Java Export");
-		javaExportToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/export.png"));
+		javaExportButton = new ToolItem(toolBar_1, SWT.NONE);
+		javaExportButton.setToolTipText("Java Export");
+		javaExportButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/export.png"));
 
 		ToolItem toolItem_11 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -330,14 +330,14 @@ public class TestSuiteView extends Composite {
 				toggleDeleteButton(true);
 			}
 			if (testSuiteTable.getPrevTestSuite() == null) {
-				moveUpToolItem.setEnabled(false);
+				moveUpButton.setEnabled(false);
 			} else {
-				moveUpToolItem.setEnabled(true);
+				moveUpButton.setEnabled(true);
 			}
 			if (testSuiteTable.getNextTestSuite() == null) {
-				moveDownToolItem.setEnabled(false);
+				moveDownButton.setEnabled(false);
 			} else {
-				moveDownToolItem.setEnabled(true);
+				moveDownButton.setEnabled(true);
 			}
 		} else {
 			toggleSaveButton(false);
@@ -349,24 +349,24 @@ public class TestSuiteView extends Composite {
 	}
 
 	public void toggleSaveButton(boolean status) {
-		saveToolItem.setEnabled(status);
+		saveButton.setEnabled(status);
 	}
 
 	public void toggleMoveUpButton(boolean status) {
-		moveUpToolItem.setEnabled(status);
+		moveUpButton.setEnabled(status);
 	}
 
 	public void toggleMoveDownButton(boolean status) {
-		moveDownToolItem.setEnabled(status);
+		moveDownButton.setEnabled(status);
 	}
 
 	public void toggleDeleteButton(boolean status) {
-		deleteSuiteStepToolItem.setEnabled(status);
+		deleteSuiteStepButton.setEnabled(status);
 	}
 
 	private void addButtonListeners() {
 
-		runtoolitem.addSelectionListener(new SelectionListener() {
+		runButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -381,7 +381,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		tagVersionRunToolItem.addSelectionListener(new SelectionListener() {
+		tagVersionRunButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -396,7 +396,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		debugToolItem.addSelectionListener(new SelectionListener() {
+		debugButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -411,7 +411,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		runOnCloudToolItem.addSelectionListener(new SelectionListener() {
+		runOnCloudButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -426,7 +426,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		runOnBrowserToolItem.addSelectionListener(new SelectionListener() {
+		runOnBrowserButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -441,7 +441,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		runOnSauceLabsToolItem.addSelectionListener(new SelectionListener() {
+		runOnSauceLabsButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -456,7 +456,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		runOnPcloudyToolItem.addSelectionListener(new SelectionListener() {
+		runOnPcloudyButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -471,7 +471,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		toolGenerateDoc.addSelectionListener(new SelectionListener() {
+		generateDocButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -486,7 +486,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		scheduleSuiteToolItem.addSelectionListener(new SelectionListener() {
+		scheduleSuiteButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -501,28 +501,22 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		deleteSuiteStepToolItem.addSelectionListener(new SelectionListener() {
+		deleteSuiteStepButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-						"Do you want to delete '" + testSuiteTable.getSelectedTestSuite().getSuite_id() + "'?");
+						"Do you want to delete '" + testSuiteTable.getSelectedTestSuite().getArtifact().getName() + "'?");
 				if (!status) {
 					return;
 				}
-
-				// AbstractNotificationPopup notification = new
-				// DeleteNotificationPopup(display);
-				// notification.setDelayClose(1L);
-				// notification.open();
-
 				try {
 					testSuiteTable.deleteSuiteStep(testSuiteTable.getSelectedTestSuite());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				saveToolItem.setEnabled(true);
+				saveButton.setEnabled(true);
 			}
 
 			@Override
@@ -532,7 +526,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		moveUpToolItem.addSelectionListener(new SelectionListener() {
+		moveUpButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -542,7 +536,7 @@ public class TestSuiteView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				saveToolItem.setEnabled(true);
+				toggleSaveButton(true);
 			}
 
 			@Override
@@ -552,7 +546,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		moveDownToolItem.addSelectionListener(new SelectionListener() {
+		moveDownButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -563,7 +557,7 @@ public class TestSuiteView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				saveToolItem.setEnabled(true);
+				toggleSaveButton(true);
 			}
 
 			@Override
@@ -572,11 +566,11 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		saveToolItem.addSelectionListener(new SelectionListener() {
+		saveButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				saving();
+				saveSuiteSteps();
 			}
 
 			@Override
@@ -585,12 +579,12 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		refreshToolItem.addSelectionListener(new SelectionListener() {
+		refreshButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					if (saveToolItem.isEnabled()) {
+					if (saveButton.isEnabled()) {
 						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
 								"Do you want to Save changes?");
 						if (!status) {
@@ -612,7 +606,7 @@ public class TestSuiteView extends Composite {
 							e1.printStackTrace();
 						}
 
-						saveToolItem.setEnabled(false);
+						saveButton.setEnabled(false);
 					}
 
 					toggleDeleteButton(false);
@@ -635,7 +629,7 @@ public class TestSuiteView extends Composite {
 			}
 		});
 
-		javaExportToolItem.addSelectionListener(new SelectionListener() {
+		javaExportButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -649,12 +643,7 @@ public class TestSuiteView extends Composite {
 		});
 	}
 
-	public void saving() {
-
-		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-		// notification.setDelayClose(1L);
-		// notification.open();
-
+	public void saveSuiteSteps() {
 		new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
 		try {
 			testSuiteTable.renderAllTestSuites();
@@ -662,7 +651,7 @@ public class TestSuiteView extends Composite {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		saveToolItem.setEnabled(false);
+		saveButton.setEnabled(false);
 	}
 
 	private void setSelectedTEstSuite(TestSuite testSuite) {
