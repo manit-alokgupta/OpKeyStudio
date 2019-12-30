@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
+import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -26,10 +27,19 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class ArtifactTree extends CustomTree {
+	private TestSuiteView parentTestSuiteView;
+	private boolean attachedinTestSuite = false;
+
 	public ArtifactTree(Composite parent, int style) {
 		super(parent, style);
 		init();
 		SystemRepository.getInstance().setArtifactTreeControl(this);
+	}
+
+	public ArtifactTree(Composite parent, int style, TestSuiteView parentTestSuiteView) {
+		super(parent, style);
+		this.setParentTestSuiteView(parentTestSuiteView);
+		this.setAttachedinTestSuite(true);
 	}
 
 	private void init() {
@@ -184,10 +194,20 @@ public class ArtifactTree extends CustomTree {
 		}
 		this.removeAll();
 		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
-		rootNode.setText("Project WorkSpace");
+		if (isAttachedinTestSuite()) {
+
+			rootNode.setText("Gherkin and Test Case");
+		} else {
+			rootNode.setText("Project WorkSpace");
+		}
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
-		List<Artifact> artifacts = new ArtifactApi().getAllArtificates();
+		List<Artifact> artifacts = new ArrayList<>();
+		if (isAttachedinTestSuite()) {
+			artifacts = new ArtifactApi().getAllArtificatesByType("Flow");
+		} else {
+			artifacts = new ArtifactApi().getAllArtificates();
+		}
 		setArtifactsData(artifacts);
 		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
 		for (Artifact artifact : artifacts) {
@@ -197,6 +217,13 @@ public class ArtifactTree extends CustomTree {
 				artitreeitem.setArtifact(artifact);
 				topMostNodes.add(artitreeitem);
 				addIcon(artitreeitem);
+			} else {
+				if (isAttachedinTestSuite()) {
+					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
+					artitreeitem.setText(artifact.getName());
+					artitreeitem.setArtifact(artifact);
+					addIcon(artitreeitem);
+				}
 			}
 		}
 
@@ -249,5 +276,21 @@ public class ArtifactTree extends CustomTree {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public TestSuiteView getParentTestSuiteView() {
+		return parentTestSuiteView;
+	}
+
+	public void setParentTestSuiteView(TestSuiteView parentTestSuiteView) {
+		this.parentTestSuiteView = parentTestSuiteView;
+	}
+
+	public boolean isAttachedinTestSuite() {
+		return attachedinTestSuite;
+	}
+
+	public void setAttachedinTestSuite(boolean attachedinTestSuite) {
+		this.attachedinTestSuite = attachedinTestSuite;
 	}
 }
