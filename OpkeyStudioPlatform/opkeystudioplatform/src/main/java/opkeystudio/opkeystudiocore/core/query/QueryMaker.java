@@ -1,7 +1,6 @@
 package opkeystudio.opkeystudiocore.core.query;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -14,6 +13,7 @@ public class QueryMaker {
 
 	private boolean isFieldCanBeIgnored(String columnName, String... ignoreColumnName) {
 		for (String fieldName : ignoreColumnName) {
+			System.out.println("Neon " + fieldName + ">>" + columnName);
 			if (fieldName.toLowerCase().equals(columnName.toLowerCase())) {
 				return true;
 			}
@@ -65,14 +65,14 @@ public class QueryMaker {
 
 		if (queryType == QUERYTYPE.INSERT) {
 			String queryFormat = "INSERT INTO %s(%s) VALUES(%s)" + conditionString;
-			DuoList<String, String> queryObject = getQueryString(object);
+			DuoList<String, String> queryObject = getQueryString(object, ignoreColumnName);
 			String finalQuery = String.format(queryFormat, tableName, formatString(queryObject.getAllFirstValues()),
 					formatString(queryObject.getAllSecondValues()));
 			return finalQuery;
 		}
 		if (queryType == QUERYTYPE.UPDATE) {
 			String queryFormat = "UPDATE %s SET %s" + conditionString;
-			DuoList<String, String> queryObject = getQueryString(object);
+			DuoList<String, String> queryObject = getQueryString(object, ignoreColumnName);
 			List<String> allFirstValues = queryObject.getAllFirstValues();
 			List<String> allSecondValues = queryObject.getAllSecondValues();
 			String outData = "";

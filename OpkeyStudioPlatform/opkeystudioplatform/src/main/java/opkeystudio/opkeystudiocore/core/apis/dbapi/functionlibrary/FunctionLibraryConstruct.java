@@ -80,7 +80,7 @@ public class FunctionLibraryConstruct {
 
 	private void addComponentStep(FlowStep flowStep) {
 		if (flowStep.isAdded()) {
-			String query = new QueryMaker().createInsertQuery(flowStep, "component_design_steps", "");
+			String query = new QueryMaker().createInsertQuery(flowStep, "component_design_steps", "", "flow_id","flow_stepid");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
