@@ -11,20 +11,26 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 
 public class InputDataTable extends CustomTable {
@@ -110,14 +116,16 @@ public class InputDataTable extends CustomTable {
 				});
 
 				if (selectedColumn == 2) {
-					text.setText(flowInputArgument.getStaticvalue());
-					String gv_inputData = flowInputArgument.getGlobalvariable_id();
-					if (gv_inputData != null) {
-						text.setEditable(false);
-					}
+					if (flowInputArgument.getStaticvalue() != null) {
+						text.setText(flowInputArgument.getStaticvalue());
+						String gv_inputData = flowInputArgument.getGlobalvariable_id();
+						if (gv_inputData != null) {
+							text.setEditable(false);
+						}
 
-					editor.setEditor(text);
-					text.setFocus();
+						editor.setEditor(text);
+						text.setFocus();
+					}
 				} else {
 					if (editor != null) {
 						editor.getEditor().dispose();
@@ -132,12 +140,29 @@ public class InputDataTable extends CustomTable {
 		});
 	}
 
+	private List<Control> allTableEditors = new ArrayList<Control>();
+
+	private void addTestCaseTableEditor(CustomTableItem item) {
+		FlowInputArgument flowInputArgument = (FlowInputArgument) item.getControlData();
+		TableEditor editor1 = getTableEditor();
+		CustomButton button = new CustomButton(this, SWT.CHECK);
+
+		editor1.setEditor(button, item, 0);
+		this.allTableEditors.add(editor1.getEditor());
+	}
+
 	private TableEditor getTableEditor() {
 		TableEditor editor = new TableEditor(this);
 		// editor.horizontalAlignment = SWT.RIGHT;
 		editor.grabHorizontal = true;
 		editor.minimumWidth = 50;
 		return editor;
+	}
+
+	private void disposeAllTableEditors() {
+		for (Control controlEditor : this.allTableEditors) {
+			controlEditor.dispose();
+		}
 	}
 
 	public List<KeyWordInputArgument> getKeyWordInputArgs() {
@@ -157,6 +182,7 @@ public class InputDataTable extends CustomTable {
 	}
 
 	public void renderInputTable() {
+		disposeAllTableEditors();
 		this.removeAll();
 		List<FlowInputArgument> flowInputArgs = getFlowInputArgs();
 		if (getKeyWordInputArgs().size() > 0) {
@@ -189,6 +215,7 @@ public class InputDataTable extends CustomTable {
 						cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
 								flowInputArg.getStaticvalue() });
 						cti.setControlData(flowInputArg);
+						addTestCaseTableEditor(cti);
 					}
 				}
 			}
