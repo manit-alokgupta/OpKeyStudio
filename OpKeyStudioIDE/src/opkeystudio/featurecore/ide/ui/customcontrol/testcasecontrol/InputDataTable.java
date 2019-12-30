@@ -113,6 +113,7 @@ public class InputDataTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
+						flowInputArgument.setDatasource(DataSource.StaticValue);
 						flowInputArgument.setStaticvalue(text.getText());
 						flowInputArgument.setModified(true);
 						getParentTestCaseView().toggleSaveButton(true);
@@ -170,8 +171,7 @@ public class InputDataTable extends CustomTable {
 
 				@Override
 				public void mouseDoubleClick(MouseEvent e) {
-					// TODO Auto-generated method stub
-
+					editor1.getEditor().dispose();
 				}
 			});
 			editor1.setEditor(button, item, 2);
