@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
+import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariableApi {
@@ -23,6 +24,19 @@ public class GlobalVariableApi {
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, GlobalVariable.class);
 		sqlComm.disconnect();
 		return mapper.readValue(result, type);
+	}
+
+	private List<GlobalVariable> getAllGlobalVariable(String gv_id)
+			throws JsonParseException, JsonMappingException, IOException {
+		String query = String.format("SELECT * FROM global_variables WHERE gv_id='%s'", gv_id);
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, GlobalVariable.class);
+		return mapper.readValue(result, type);
+	}
+
+	public GlobalVariable getGlobalVariable(String gv_id) throws JsonParseException, JsonMappingException, IOException {
+		return getAllGlobalVariable(gv_id).get(0);
 	}
 
 	public void deleteGlobalVariable(GlobalVariable gvar) {

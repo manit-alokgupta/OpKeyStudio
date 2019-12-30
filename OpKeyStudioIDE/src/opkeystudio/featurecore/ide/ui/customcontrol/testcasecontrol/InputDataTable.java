@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,6 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -21,17 +20,21 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
+import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class InputDataTable extends CustomTable {
 	private List<KeyWordInputArgument> keyWordInputArgs = new ArrayList<KeyWordInputArgument>();
@@ -128,7 +131,9 @@ public class InputDataTable extends CustomTable {
 					}
 				} else {
 					if (editor != null) {
-						editor.getEditor().dispose();
+						if (editor.getEditor() != null) {
+							editor.getEditor().dispose();
+						}
 					}
 				}
 			}
@@ -142,13 +147,20 @@ public class InputDataTable extends CustomTable {
 
 	private List<Control> allTableEditors = new ArrayList<Control>();
 
-	private void addTestCaseTableEditor(CustomTableItem item) {
+	private void addInputTableEditor(CustomTableItem item)
+			throws JsonParseException, JsonMappingException, IOException {
 		FlowInputArgument flowInputArgument = (FlowInputArgument) item.getControlData();
-		TableEditor editor1 = getTableEditor();
-		CustomButton button = new CustomButton(this, SWT.CHECK);
+		DataSource dataSourceType = flowInputArgument.getDatasource();
+		if (dataSourceType == DataSource.ValueFromGlobalVariable) {
+			String gv_id = flowInputArgument.getGlobalvariable_id();
+			GlobalVariable globalVar = new GlobalVariableApi().getGlobalVariable(gv_id);
+			TableEditor editor1 = getTableEditor();
+			CustomButton button = new CustomButton(this, SWT.NONE);
+			button.setText(globalVar.getName());
+			editor1.setEditor(button, item, 2);
+			this.allTableEditors.add(editor1.getEditor());
+		}
 
-		editor1.setEditor(button, item, 0);
-		this.allTableEditors.add(editor1.getEditor());
 	}
 
 	private TableEditor getTableEditor() {
@@ -181,7 +193,7 @@ public class InputDataTable extends CustomTable {
 		this.flowInputArgs = flowInputArgs;
 	}
 
-	public void renderInputTable() {
+	public void renderInputTable() throws JsonParseException, JsonMappingException, IOException {
 		disposeAllTableEditors();
 		this.removeAll();
 		List<FlowInputArgument> flowInputArgs = getFlowInputArgs();
@@ -215,7 +227,7 @@ public class InputDataTable extends CustomTable {
 						cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
 								flowInputArg.getStaticvalue() });
 						cti.setControlData(flowInputArg);
-						addTestCaseTableEditor(cti);
+						addInputTableEditor(cti);
 					}
 				}
 			}

@@ -2,19 +2,21 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
+import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class FlowInputArgument extends Modified {
+
 	@DBField
 	private String flow_step_ia_id;
 	@DBField
 	private String keyword_ip_id;
 	@DBField
-	private String datasource;
+	private DataSource datasource;
 	@DBField
 	private String staticvalue;
-	
+
 	private int clustering_key;
-	
+
 	@DBField
 	private String flow_stepid;
 	@DBField
@@ -48,14 +50,6 @@ public class FlowInputArgument extends Modified {
 
 	public void setKeyword_ip_id(String keyword_ip_id) {
 		this.keyword_ip_id = keyword_ip_id;
-	}
-
-	public String getDatasource() {
-		return datasource;
-	}
-
-	public void setDatasource(String datasource) {
-		this.datasource = datasource;
 	}
 
 	public String getStaticvalue() {
@@ -144,5 +138,13 @@ public class FlowInputArgument extends Modified {
 
 	public void setComponent_ip_id(String component_ip_id) {
 		this.component_ip_id = component_ip_id;
+	}
+
+	public DataSource getDatasource() {
+		return datasource;
+	}
+
+	public void setDatasource(DataSource datasource) {
+		this.datasource = datasource;
 	}
 }

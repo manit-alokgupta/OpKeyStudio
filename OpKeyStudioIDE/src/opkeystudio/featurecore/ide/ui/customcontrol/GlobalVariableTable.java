@@ -56,7 +56,6 @@ public class GlobalVariableTable extends CustomTable {
 		setInsideArtifact(true);
 		setParentTestCaseView(testCaseView);
 		initHeaders();
-		initForArtifact();
 		refreshGlobalVariables();
 	}
 
@@ -92,40 +91,6 @@ public class GlobalVariableTable extends CustomTable {
 				this.getColumn(i).pack();
 			}
 		}
-	}
-
-	private void initForArtifact() {
-		this.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (getSelection() == null) {
-					return;
-				}
-				CustomTableItem selectedTableItem = (CustomTableItem) getSelection()[0];
-				if (selectedTableItem == null) {
-					return;
-				}
-				GlobalVariable globalVariable = (GlobalVariable) selectedTableItem.getControlData();
-				if (globalVariable == null) {
-					return;
-				}
-				FlowInputArgument flowInputArgument = getParentTestCaseView().getInputDataTable()
-						.getSelectedFlowInputArgument();
-				if (flowInputArgument == null) {
-					return;
-				}
-				flowInputArgument.setGlobalvariable_id(globalVariable.getGv_id());
-				getParentTestCaseView().toggleSaveButton(true);
-				getParentTestCaseView().getInputDataTable().renderInputTable();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	private void init() {
@@ -411,4 +376,19 @@ public class GlobalVariableTable extends CustomTable {
 		this.insideArtifact = insideArtifact;
 	}
 
+	public GlobalVariable getSelectedGlobalVariable() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+
+		CustomTableItem tableItem = (CustomTableItem) this.getSelection()[0];
+		Object controlData = tableItem.getControlData();
+		if (controlData != null) {
+			return (GlobalVariable) controlData;
+		}
+		return null;
+	}
 }

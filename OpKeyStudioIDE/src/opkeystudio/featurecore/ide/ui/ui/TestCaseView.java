@@ -36,6 +36,9 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
@@ -49,6 +52,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsI
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor.SourceCodeEditor;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
+import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -585,7 +589,12 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FlowStep flowStep = flowStepTable.getSelectedFlowStep();
-				populateFlowStepsData(flowStep);
+				try {
+					populateFlowStepsData(flowStep);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override
@@ -680,7 +689,7 @@ public class TestCaseView extends Composite {
 		populateInputTabData();
 	}
 
-	private void populateFlowStepsData(FlowStep flowStep) {
+	private void populateFlowStepsData(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
 		if (flowStep != null) {
 			setSelectedFlowStep(flowStep);
 			if (flowStep.getKeyword() != null) {
@@ -1034,8 +1043,20 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				GlobalVariable globalVar = globalVariableTable.getSelectedGlobalVariable();
+				FlowInputArgument flowInputArgument = getInputDataTable().getSelectedFlowInputArgument();
+				if (flowInputArgument == null) {
+					return;
+				}
+				flowInputArgument.setGlobalvariable_id(globalVar.getGv_id());
+				flowInputArgument.setModified(true);
+				toggleSaveButton(true);
+				try {
+					getInputDataTable().renderInputTable();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override
