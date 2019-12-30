@@ -1,6 +1,7 @@
 package opkeystudio.opkeystudiocore.core.query;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -11,7 +12,16 @@ public class QueryMaker {
 		INSERT, UPDATE
 	};
 
-	private DuoList<String, String> getQueryString(Object object)
+	private boolean isFieldCanBeIgnored(String columnName, String... ignoreColumnName) {
+		for (String fieldName : ignoreColumnName) {
+			if (fieldName.toLowerCase().equals(columnName.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private DuoList<String, String> getQueryString(Object object, String... ignoreColumnName)
 			throws IllegalArgumentException, IllegalAccessException {
 		Class<? extends Object> _class = object.getClass();
 		Field[] fields = _class.getDeclaredFields();
@@ -22,9 +32,11 @@ public class QueryMaker {
 			if (annotation instanceof DBField) {
 				String fieldName = field.getName();
 				Object fieldValue = field.get(object);
-				if (fieldValue != null) {
-					duoList.addFirstValue(fieldName);
-					duoList.addSecondValue("'" + String.valueOf(fieldValue) + "'");
+				if (!isFieldCanBeIgnored(fieldName, ignoreColumnName)) {
+					if (fieldValue != null) {
+						duoList.addFirstValue(fieldName);
+						duoList.addSecondValue("'" + String.valueOf(fieldValue) + "'");
+					}
 				}
 			}
 		}
@@ -42,8 +54,8 @@ public class QueryMaker {
 		return output;
 	}
 
-	private String createQuery(Object object, String tableName, String condition, QUERYTYPE queryType)
-			throws IllegalArgumentException, IllegalAccessException {
+	private String createQuery(Object object, String tableName, String condition, QUERYTYPE queryType,
+			String... ignoreColumnName) throws IllegalArgumentException, IllegalAccessException {
 		String conditionString = "";
 		if (condition != null) {
 			if (!condition.isEmpty()) {
@@ -78,9 +90,10 @@ public class QueryMaker {
 		return null;
 	}
 
-	public String createInsertQuery(Object object, String tableName, String conditionString) {
+	public String createInsertQuery(Object object, String tableName, String conditionString,
+			String... ignoreColumnNames) {
 		try {
-			return createQuery(object, tableName, conditionString, QUERYTYPE.INSERT);
+			return createQuery(object, tableName, conditionString, QUERYTYPE.INSERT, ignoreColumnNames);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,9 +101,10 @@ public class QueryMaker {
 		return null;
 	}
 
-	public String createUpdateQuery(Object object, String tableName, String conditionString) {
+	public String createUpdateQuery(Object object, String tableName, String conditionString,
+			String... ignoreColumnNames) {
 		try {
-			return createQuery(object, tableName, conditionString, QUERYTYPE.UPDATE);
+			return createQuery(object, tableName, conditionString, QUERYTYPE.UPDATE, ignoreColumnNames);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
