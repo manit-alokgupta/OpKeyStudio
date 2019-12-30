@@ -39,9 +39,9 @@ public class FunctionLibraryConstruct {
 
 	private void saveFlowInputArguments(List<FlowInputArgument> flowInputArguments) {
 		for (FlowInputArgument flowInputArgument : flowInputArguments) {
-			deleteComponentInputArgument(flowInputArgument);
-			updateComponentInputArgument(flowInputArgument);
-			addComponentInputArgument(flowInputArgument);
+			deleteFlowInputArgument(flowInputArgument);
+			updateFlowInputArgument(flowInputArgument);
+			addFlowInputArgument(flowInputArgument);
 		}
 	}
 
@@ -55,9 +55,9 @@ public class FunctionLibraryConstruct {
 
 	private void saveFlowOutputArguments(List<FlowOutputArgument> flowOutputArguments) {
 		for (FlowOutputArgument flowOutputArgument : flowOutputArguments) {
-			deleteComponentOutputArgument(flowOutputArgument);
-			updateComponentOutputArgument(flowOutputArgument);
-			addComponentOutputArgument(flowOutputArgument);
+			deleteFlowOutputArgument(flowOutputArgument);
+			updateFlowOutputArgument(flowOutputArgument);
+			addFlowOutputArgument(flowOutputArgument);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void deleteComponentInputArgument(FlowInputArgument flowInputArgument) {
+	private void deleteFlowInputArgument(FlowInputArgument flowInputArgument) {
 		if (flowInputArgument.isDeleted()) {
 			String query = String.format("delete from component_step_input_args where step_arg_id ='%s'",
 					flowInputArgument.getStep_arg_id());
@@ -93,7 +93,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void updateComponentInputArgument(FlowInputArgument flowInputArgument) {
+	private void updateFlowInputArgument(FlowInputArgument flowInputArgument) {
 		if (flowInputArgument.isModified()) {
 			System.out.println("Flow Input Argument Modified " + flowInputArgument.getStep_arg_id());
 			String query = new QueryMaker().createUpdateQuery(flowInputArgument, "component_step_input_args",
@@ -102,7 +102,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void addComponentInputArgument(FlowInputArgument flowInputArgument) {
+	private void addFlowInputArgument(FlowInputArgument flowInputArgument) {
 		if (flowInputArgument.isAdded()) {
 			String query = new QueryMaker().createInsertQuery(flowInputArgument, "component_step_input_args", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
@@ -133,7 +133,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void deleteComponentOutputArgument(FlowOutputArgument flowOutputArgument) {
+	private void deleteFlowOutputArgument(FlowOutputArgument flowOutputArgument) {
 		if (flowOutputArgument.isDeleted()) {
 			String query = String.format("delete from component_step_output_arguments where component_step_oa_id ='%s'",
 					flowOutputArgument.getFlow_step_oa_id());
@@ -141,7 +141,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void updateComponentOutputArgument(FlowOutputArgument flowOutputArgument) {
+	private void updateFlowOutputArgument(FlowOutputArgument flowOutputArgument) {
 		if (flowOutputArgument.isModified()) {
 			String query = new QueryMaker().createUpdateQuery(flowOutputArgument, "component_step_output_arguments",
 					String.format("WHERE component_step_oa_id ='%s'", flowOutputArgument.getFlow_step_oa_id()));
@@ -149,7 +149,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void addComponentOutputArgument(FlowOutputArgument flowOutputArgument) {
+	private void addFlowOutputArgument(FlowOutputArgument flowOutputArgument) {
 		if (flowOutputArgument.isAdded()) {
 			String query = new QueryMaker().createInsertQuery(flowOutputArgument, "component_step_output_arguments",
 					"");
