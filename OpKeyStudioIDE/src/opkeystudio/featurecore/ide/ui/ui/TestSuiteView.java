@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -25,18 +23,18 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteTestCaseTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
 
 public class TestSuiteView extends Composite {
+	private SuiteTestCaseTree testCaseTree;
 	private Text searchTextBox;
 	private SuiteStepTable testSuiteTable;
 	@SuppressWarnings("unused")
@@ -283,15 +281,9 @@ public class TestSuiteView extends Composite {
 		composite_4.setLayout(new GridLayout(1, false));
 		composite_4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		Tree tree = new Tree(composite_4, SWT.BORDER);
-		tree.setLinesVisible(true);
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		TreeItem trtmNewTreeitem = new TreeItem(tree, SWT.NONE);
-		trtmNewTreeitem.setText("New TreeItem");
-
-		TreeItem trtmNewTreeitem_1 = new TreeItem(tree, SWT.NONE);
-		trtmNewTreeitem_1.setText("New TreeItem");
+		testCaseTree = new SuiteTestCaseTree(composite_4, SWT.BORDER, this);
+		testCaseTree.setLinesVisible(true);
+		testCaseTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm.setWeights(new int[] { 2, 1 });
 
 		toolDropDown.addSelectionListener(new SelectionListener() {
@@ -304,46 +296,6 @@ public class TestSuiteView extends Composite {
 				pt = toolBar_1.toDisplay(pt);
 				dropDownMenu.setLocation(pt.x, pt.y);
 				dropDownMenu.setVisible(true);
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		toolBar_1.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-				if (e.button == 3) {
-					System.out.println("Clicked");
-					dropDownMenu.setVisible(false);
-				}
-
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		testSuiteTable.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-//				TestSuite testSuite = testSuiteTable.getSelectedTestSuite();
-//				populateTestSuiteData(testSuite);
 
 			}
 
@@ -720,5 +672,13 @@ public class TestSuiteView extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public SuiteTestCaseTree getTestCaseTree() {
+		return testCaseTree;
+	}
+
+	public void setTestCaseTree(SuiteTestCaseTree testCaseTree) {
+		this.testCaseTree = testCaseTree;
 	}
 }
