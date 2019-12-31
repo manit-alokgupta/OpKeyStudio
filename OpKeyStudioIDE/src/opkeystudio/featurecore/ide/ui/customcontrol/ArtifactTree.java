@@ -115,7 +115,14 @@ public class ArtifactTree extends CustomTree {
 			part.setTooltip(artifactTreeItem.getArtifact().getName());
 			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
 			partService.showPart(part, PartState.ACTIVATE);
-//			flowStep.setIsfunctionlibrary(true);
+		}
+		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.CodedFunction) {
+			EPartService partService = Utilities.getInstance().getEpartService();
+			MPart part = partService.createPart("opkeystudio.partdescriptor.codeFunctionViewer");
+			part.setLabel(artifactTreeItem.getArtifact().getName());
+			part.setTooltip(artifactTreeItem.getArtifact().getName());
+			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
+			partService.showPart(part, PartState.ACTIVATE);
 		}
 	}
 
@@ -142,6 +149,8 @@ public class ArtifactTree extends CustomTree {
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.DataRepository) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Component) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.CodedFunction) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
 		}
 	}

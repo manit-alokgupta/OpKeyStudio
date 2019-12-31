@@ -1,229 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application:Application xmi:version="2.0"
-	xmlns:xmi="http://www.omg.org/XMI"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced"
-	xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application"
-	xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic"
-	xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu"
-	xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui"
-	xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.application"
-	bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
-	<children xsi:type="basic:TrimmedWindow"
-		xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.window.main"
-		selectedElement="_GCisgCYcEeq-PsV5Lg3LVA" label="OpKey Studio "
-		iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/opkeyicon.png"
-		bindingContexts="_6wlLesgZEeSyMNYR5xypkQ" x="0" y="0" width="1024"
-		height="600">
-		<tags>shellMaximized</tags>
-		<children xsi:type="advanced:PerspectiveStack"
-			xmi:id="_GCisgCYcEeq-PsV5Lg3LVA"
-			elementId="opkeystudio.perspectivestack.0"
-			selectedElement="_G81KgCYcEeq-PsV5Lg3LVA">
-			<children xsi:type="advanced:Perspective"
-				xmi:id="_G81KgCYcEeq-PsV5Lg3LVA"
-				elementId="opkeystudio.perspective.opkey"
-				selectedElement="_9ST-ENVrEemLeZBMchgvxw" label="OpKey">
-				<children xsi:type="basic:PartSashContainer"
-					xmi:id="_9ST-ENVrEemLeZBMchgvxw"
-					elementId="opkeystudio.partsashcontainer.0" containerData=""
-					horizontal="true">
-					<children xsi:type="basic:PartStack"
-						xmi:id="_94DvcNVrEemLeZBMchgvxw"
-						elementId="opkeystudio.partstack.explorertreepartstack"
-						containerData="110">
-						<children xsi:type="basic:Part"
-							xmi:id="_IndRYNVsEemLeZBMchgvxw"
-							elementId="opkeystudio.part.explorertreepart" containerData=""
-							contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ProjectExplorerPart"
-							label="Project Explorer"
-							iconURI="platform:/plugin/OpKeyStudio/icons/class_obj.gif">
-							<toolbar xmi:id="_BJErQNqxEem51cXlp-aEQw"
-								elementId="opkeystudio.toolbar.2">
-								<children xsi:type="menu:DirectToolItem"
-									xmi:id="_DMhJsNqxEem51cXlp-aEQw"
-									elementId="opkeystudio.directtoolitem.1"
-									iconURI="platform:/plugin/OpKeyStudio/icons/refresh.png"
-									contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.RefreshArtifactTree" />
-							</toolbar>
-						</children>
-					</children>
-					<children xsi:type="basic:PartSashContainer"
-						xmi:id="_Cu7-0NVsEemLeZBMchgvxw"
-						elementId="opkeystudio.partsashcontainer.1" containerData="600"
-						selectedElement="_EfD4oNVsEemLeZBMchgvxw">
-						<children xsi:type="basic:PartStack"
-							xmi:id="_EfD4oNVsEemLeZBMchgvxw"
-							elementId="opkeystudio.partstack.workbenchpartstack"
-							containerData="600">
-							<tags>workbenchCategory</tags>
-						</children>
-					</children>
-				</children>
-			</children>
-			<children xsi:type="advanced:Perspective"
-				xmi:id="_Ros3UCYcEeq-PsV5Lg3LVA"
-				elementId="opkeystudio.perspective.pcloudy"
-				selectedElement="_TwQZsCYcEeq-PsV5Lg3LVA" label="pCloudy">
-				<children xsi:type="basic:PartSashContainer"
-					xmi:id="_TwQZsCYcEeq-PsV5Lg3LVA"
-					elementId="opkeystudio.partsashcontainer.2">
-					<children xsi:type="basic:Part"
-						xmi:id="_UL1icCYcEeq-PsV5Lg3LVA" elementId="opkeystudio.part.0" />
-					<children xsi:type="basic:Part"
-						xmi:id="_Un7BgCYcEeq-PsV5Lg3LVA" elementId="opkeystudio.part.1" />
-				</children>
-			</children>
-		</children>
-		<mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ"
-			elementId="opkeystudio.menu.mainmenu">
-			<children xsi:type="menu:Menu"
-				xmi:id="_iijzYNVqEemLeZBMchgvxw"
-				elementId="opkeystudio.menu.project" label="Project">
-				<children xsi:type="menu:DirectMenuItem"
-					xmi:id="_X8-2wPsEEemvU7QvzW07xw"
-					elementId="opkeystudio.directmenuitem.importdb" label="Import DB"
-					iconURI="platform:/plugin/OpKeyStudio/icons/import.png"
-					contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand" />
-				<children xsi:type="menu:DirectMenuItem"
-					xmi:id="_ofxYsNVqEemLeZBMchgvxw"
-					elementId="opkeystudio.directmenuitem.exit" label="Exit"
-					iconURI="platform:/plugin/OpKeyStudio/icons/exit.png"
-					contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit" />
-			</children>
-			<children xsi:type="menu:Menu"
-				xmi:id="_oQOH4PV2EemEv-Dsdd6Nxw" elementId="opkeystudio.menu.tools"
-				label="Tools">
-				<children xsi:type="menu:DirectMenuItem"
-					xmi:id="_qu-CQPV2EemEv-Dsdd6Nxw"
-					elementId="opkeystudio.directmenuitem.globalvariable"
-					label="Global Variable"
-					iconURI="platform:/plugin/OpKeyStudio/icons/testcase_icons/global_variable.png"
-					contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.GlobalVariableHandler" />
-			</children>
-			<children xsi:type="menu:Menu"
-				xmi:id="_s3lGcNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.help"
-				label="Help">
-				<children xsi:type="menu:DirectMenuItem"
-					xmi:id="_uVJ3sNVqEemLeZBMchgvxw"
-					elementId="opkeystudio.directmenuitem.about" label="About"
-					iconURI="platform:/plugin/OpKeyStudio/icons/about.png"
-					contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.AboutCommand" />
-			</children>
-		</mainMenu>
-		<trimBars xmi:id="_vz6icNVvEemLeZBMchgvxw"
-			elementId="opkeystudio.trimbar.0">
-			<children xsi:type="menu:ToolBar"
-				xmi:id="_wiuJMNVvEemLeZBMchgvxw"
-				elementId="opkeystudio.toolbar.maintoolbarholder">
-				<children xsi:type="menu:DirectToolItem"
-					xmi:id="_NN8tANqeEem51cXlp-aEQw"
-					elementId="opkeystudio.directtoolitem.open" label="Open"
-					iconURI="platform:/plugin/OpKeyStudio/icons/artifact/datafile.png"
-					tooltip="Open File"
-					contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand">
-					<visibleWhen xsi:type="ui:CoreExpression"
-						xmi:id="_TqbBMNqeEem51cXlp-aEQw" />
-				</children>
-				<children xsi:type="menu:DirectToolItem"
-					xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w"
-					elementId="opkeystudio.directtoolitem.item2" label="Save"
-					iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/save.png"
-					tooltip="Save">
-					<visibleWhen xsi:type="ui:CoreExpression"
-						xmi:id="_UFWaAAXdEeqm4_Ox7Tro1w" />
-				</children>
-			</children>
-		</trimBars>
-		<trimBars xmi:id="_xg_vUNVvEemLeZBMchgvxw"
-			elementId="opkeystudio.trimbar.mainstatusbarholder" side="Bottom">
-			<children xsi:type="menu:ToolBar"
-				xmi:id="_yjP2gNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.1">
-				<children xsi:type="menu:HandledToolItem"
-					xmi:id="_2We3kNVvEemLeZBMchgvxw"
-					elementId="opkeystudio.handledtoolitem.1" iconURI="" />
-			</children>
-		</trimBars>
-	</children>
-	<bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ"
-		elementId="OpKeyStudio.bindingtable"
-		bindingContext="_6wlLecgZEeSyMNYR5xypkQ">
-		<bindings xmi:id="_6wlLf8gZEeSyMNYR5xypkQ"
-			elementId="OpKeyStudio.keybinding.m1q" keySequence="M1+Q" />
-		<bindings xmi:id="_6wlLgsgZEeSyMNYR5xypkQ"
-			elementId="OpKeyStudio.keybinding.m1o" keySequence="M1+O" />
-		<bindings xmi:id="_6wlLhcgZEeSyMNYR5xypkQ"
-			elementId="OpKeyStudio.keybinding.m1s" keySequence="M1+S" />
-		<bindings xmi:id="_6wlLiMgZEeSyMNYR5xypkQ"
-			elementId="OpKeyStudio.keybinding.m1a" keySequence="M1+A" />
-	</bindingTables>
-	<rootContext xmi:id="_6wlLecgZEeSyMNYR5xypkQ"
-		elementId="org.eclipse.ui.contexts.dialogAndWindow"
-		name="In Dialog and Windows">
-		<children xmi:id="_6wlLesgZEeSyMNYR5xypkQ"
-			elementId="org.eclipse.ui.contexts.window" name="In Windows" />
-		<children xmi:id="_6wlLe8gZEeSyMNYR5xypkQ"
-			elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs" />
-	</rootContext>
-	<descriptors xmi:id="_SlOkABWUEeqUwaq8COvPIg"
-		elementId="opkeystudio.partdescriptor.testCaseViewer"
-		iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/fl.png"
-		allowMultiple="true" category="workbenchCategory" closeable="true"
-		contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestCasePart">
-		<toolbar xmi:id="_a3cR0BWUEeqUwaq8COvPIg"
-			elementId="opkeystudio.toolbar.6" />
-	</descriptors>
-	<descriptors xmi:id="_KeW8wOphEemLasQpyDBSag"
-		elementId="opkeystudio.partdescriptor.testCaseViewer"
-		iconURI="platform:/plugin/OpKeyStudio/icons/artifact/testcase.png"
-		allowMultiple="true" category="workbenchCategory" closeable="true"
-		contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestCasePart">
-		<toolbar xmi:id="_bsrp8OphEemLasQpyDBSag"
-			elementId="opkeystudio.toolbar.0" />
-	</descriptors>
-	<descriptors xmi:id="_OBre4PZcEemTN-XqgekRNg"
-		elementId="opkeystudio.partdescriptor.objectRepository"
-		iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/or.png"
-		allowMultiple="true" category="workbenchCategory" closeable="true"
-		contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ObjectRepositoryPart">
-		<toolbar xmi:id="_mWBUsPsLEem7V4aKm4Or8w"
-			elementId="opkeystudio.toolbar.3" />
-	</descriptors>
-	<descriptors xmi:id="_4ZhaAAusEeq3U7L8qMZpow"
-		elementId="opkeystudio.partdescriptor.testSuiteViewer"
-		iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/testsuite.png"
-		allowMultiple="true" category="workbenchCategory" closeable="true"
-		contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestSuitePart">
-		<toolbar xmi:id="_f-S2IBAeEeqP9djnjLYhtA"
-			elementId="opkeystudio.toolbar.4" />
-	</descriptors>
-	<descriptors xmi:id="_Wm_AQBEVEeq3D_1hcyWsSQ"
-		elementId="opkeystudio.partdescriptor.dataRepoViewer"
-		iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/note.png"
-		allowMultiple="true" category="workbenchCategory" closeable="true"
-		contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.DataRepositoryPart">
-		<toolbar xmi:id="_bkajkBEVEeq3D_1hcyWsSQ"
-			elementId="opkeystudio.toolbar.5" />
-	</descriptors>
-	<addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ"
-		elementId="org.eclipse.e4.core.commands.service"
-		contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon" />
-	<addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ"
-		elementId="org.eclipse.e4.ui.contexts.service"
-		contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon" />
-	<addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ"
-		elementId="org.eclipse.e4.ui.bindings.service"
-		contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon" />
-	<addons xmi:id="_6wlLdcgZEeSyMNYR5xypkQ"
-		elementId="org.eclipse.e4.ui.workbench.commands.model"
-		contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon" />
-	<addons xmi:id="_6wlLdsgZEeSyMNYR5xypkQ"
-		elementId="org.eclipse.e4.ui.workbench.handler.model"
-		contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon" />
-	<addons xmi:id="_6wlLd8gZEeSyMNYR5xypkQ"
-		elementId="org.eclipse.e4.ui.workbench.contexts.model"
-		contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon" />
-	<addons xmi:id="_6wlLeMgZEeSyMNYR5xypkQ"
-		elementId="org.eclipse.e4.ui.workbench.bindings.model"
-		contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon" />
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_6wlLccgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.window.main" selectedElement="_GCisgCYcEeq-PsV5Lg3LVA" label="OpKey Studio " iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/opkeyicon.png" bindingContexts="_6wlLesgZEeSyMNYR5xypkQ" x="0" y="0" width="1024" height="600">
+    <tags>shellMaximized</tags>
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_GCisgCYcEeq-PsV5Lg3LVA" elementId="opkeystudio.perspectivestack.0" selectedElement="_G81KgCYcEeq-PsV5Lg3LVA">
+      <children xsi:type="advanced:Perspective" xmi:id="_G81KgCYcEeq-PsV5Lg3LVA" elementId="opkeystudio.perspective.opkey" selectedElement="_9ST-ENVrEemLeZBMchgvxw" label="OpKey">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_9ST-ENVrEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.0" containerData="" horizontal="true">
+          <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.explorertreepartstack" containerData="110">
+            <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.explorertreepart" containerData="" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ProjectExplorerPart" label="Project Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/class_obj.gif">
+              <toolbar xmi:id="_BJErQNqxEem51cXlp-aEQw" elementId="opkeystudio.toolbar.2">
+                <children xsi:type="menu:DirectToolItem" xmi:id="_DMhJsNqxEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.1" iconURI="platform:/plugin/OpKeyStudio/icons/refresh.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.RefreshArtifactTree"/>
+              </toolbar>
+            </children>
+          </children>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600" selectedElement="_EfD4oNVsEemLeZBMchgvxw">
+            <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.workbenchpartstack" containerData="600">
+              <tags>workbenchCategory</tags>
+            </children>
+          </children>
+        </children>
+      </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_Ros3UCYcEeq-PsV5Lg3LVA" elementId="opkeystudio.perspective.pcloudy" selectedElement="_TwQZsCYcEeq-PsV5Lg3LVA" label="pCloudy">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_TwQZsCYcEeq-PsV5Lg3LVA" elementId="opkeystudio.partsashcontainer.2">
+          <children xsi:type="basic:Part" xmi:id="_UL1icCYcEeq-PsV5Lg3LVA" elementId="opkeystudio.part.0"/>
+          <children xsi:type="basic:Part" xmi:id="_Un7BgCYcEeq-PsV5Lg3LVA" elementId="opkeystudio.part.1"/>
+        </children>
+      </children>
+    </children>
+    <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="opkeystudio.menu.mainmenu">
+      <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_X8-2wPsEEemvU7QvzW07xw" elementId="opkeystudio.directmenuitem.importdb" label="Import DB" iconURI="platform:/plugin/OpKeyStudio/icons/import.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" iconURI="platform:/plugin/OpKeyStudio/icons/exit.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_oQOH4PV2EemEv-Dsdd6Nxw" elementId="opkeystudio.menu.tools" label="Tools">
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_qu-CQPV2EemEv-Dsdd6Nxw" elementId="opkeystudio.directmenuitem.globalvariable" label="Global Variable" iconURI="platform:/plugin/OpKeyStudio/icons/testcase_icons/global_variable.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.GlobalVariableHandler"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_s3lGcNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.help" label="Help">
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_uVJ3sNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.about" label="About" iconURI="platform:/plugin/OpKeyStudio/icons/about.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.AboutCommand"/>
+      </children>
+    </mainMenu>
+    <trimBars xmi:id="_vz6icNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.0">
+      <children xsi:type="menu:ToolBar" xmi:id="_wiuJMNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.maintoolbarholder">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.open" label="Open" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/datafile.png" tooltip="Open File" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBCommand">
+          <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
+        </children>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" label="Save" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/save.png" tooltip="Save">
+          <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UFWaAAXdEeqm4_Ox7Tro1w"/>
+        </children>
+      </children>
+    </trimBars>
+    <trimBars xmi:id="_xg_vUNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.mainstatusbarholder" side="Bottom">
+      <children xsi:type="menu:ToolBar" xmi:id="_yjP2gNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.1">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_2We3kNVvEemLeZBMchgvxw" elementId="opkeystudio.handledtoolitem.1" iconURI=""/>
+      </children>
+    </trimBars>
+  </children>
+  <bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.bindingtable" bindingContext="_6wlLecgZEeSyMNYR5xypkQ">
+    <bindings xmi:id="_6wlLf8gZEeSyMNYR5xypkQ" elementId="OpKeyStudio.keybinding.m1q" keySequence="M1+Q"/>
+    <bindings xmi:id="_6wlLgsgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.keybinding.m1o" keySequence="M1+O"/>
+    <bindings xmi:id="_6wlLhcgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.keybinding.m1s" keySequence="M1+S"/>
+    <bindings xmi:id="_6wlLiMgZEeSyMNYR5xypkQ" elementId="OpKeyStudio.keybinding.m1a" keySequence="M1+A"/>
+  </bindingTables>
+  <rootContext xmi:id="_6wlLecgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_6wlLesgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_6wlLe8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <descriptors xmi:id="_SlOkABWUEeqUwaq8COvPIg" elementId="opkeystudio.partdescriptor.testCaseViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/fl.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestCasePart">
+    <toolbar xmi:id="_a3cR0BWUEeqUwaq8COvPIg" elementId="opkeystudio.toolbar.6"/>
+  </descriptors>
+  <descriptors xmi:id="_KeW8wOphEemLasQpyDBSag" elementId="opkeystudio.partdescriptor.testCaseViewer" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/testcase.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestCasePart">
+    <toolbar xmi:id="_bsrp8OphEemLasQpyDBSag" elementId="opkeystudio.toolbar.0"/>
+  </descriptors>
+  <descriptors xmi:id="_OBre4PZcEemTN-XqgekRNg" elementId="opkeystudio.partdescriptor.objectRepository" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/or.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ObjectRepositoryPart">
+    <toolbar xmi:id="_mWBUsPsLEem7V4aKm4Or8w" elementId="opkeystudio.toolbar.3"/>
+  </descriptors>
+  <descriptors xmi:id="_4ZhaAAusEeq3U7L8qMZpow" elementId="opkeystudio.partdescriptor.testSuiteViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/testsuite.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestSuitePart">
+    <toolbar xmi:id="_f-S2IBAeEeqP9djnjLYhtA" elementId="opkeystudio.toolbar.4"/>
+  </descriptors>
+  <descriptors xmi:id="_Wm_AQBEVEeq3D_1hcyWsSQ" elementId="opkeystudio.partdescriptor.dataRepoViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/note.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.DataRepositoryPart">
+    <toolbar xmi:id="_bkajkBEVEeq3D_1hcyWsSQ" elementId="opkeystudio.toolbar.5"/>
+  </descriptors>
+  <descriptors xmi:id="_CKDtECvEEeqGku3IS04kWw" elementId="opkeystudio.partdescriptor.codeFunctionViewer" category="workbenchCategory"/>
+  <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_6wlLdcgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_6wlLdsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <addons xmi:id="_6wlLd8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_6wlLeMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
 </application:Application>
