@@ -86,16 +86,19 @@ public class SuiteStepTable extends CustomTable {
 					getParentTestSuiteView().toggleMoveUpButton(false);
 					getParentTestSuiteView().toggleMoveDownButton(false);
 					getParentTestSuiteView().toggleDeleteButton(false);
-					return;
 				}
 				if (prevTestSuite == null) {
 					getParentTestSuiteView().toggleMoveUpButton(false);
 					getParentTestSuiteView().toggleMoveDownButton(true);
 					getParentTestSuiteView().toggleDeleteButton(true);
 				}
-
 				if (nextTestSuite == null) {
 					getParentTestSuiteView().toggleMoveUpButton(true);
+					getParentTestSuiteView().toggleMoveDownButton(false);
+					getParentTestSuiteView().toggleDeleteButton(true);
+				}
+				if (prevTestSuite == null && nextTestSuite == null) {
+					getParentTestSuiteView().toggleMoveUpButton(false);
 					getParentTestSuiteView().toggleMoveDownButton(false);
 					getParentTestSuiteView().toggleDeleteButton(true);
 				}
