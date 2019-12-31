@@ -47,8 +47,10 @@ public class SuiteTestCaseTree extends ArtifactTree {
 				Artifact artifact = getSelectedArtifact();
 				if (artifact == null) {
 					addTestCaseMenuItem.setEnabled(false);
+					getParentTestSuiteView().getAddTestCaseButton().setEnabled(false);
 				} else {
 					addTestCaseMenuItem.setEnabled(true);
+					getParentTestSuiteView().getAddTestCaseButton().setEnabled(true);
 				}
 			}
 
@@ -63,26 +65,7 @@ public class SuiteTestCaseTree extends ArtifactTree {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = getSelectedArtifact();
-				TestSuiteStep selectedTestSuite = getParentTestSuiteView().getSuiteStepTable().getSelectedTestSuite();
-				List<TestSuiteStep> testSuiteSteps = getParentTestSuiteView().getSuiteStepTable().getTestSuiteData();
-				TestSuiteStep testSuiteStep = new SuiteMaker().createTestSuite(artifact,
-						getParentTestSuiteView().getArtifact(), selectedTestSuite, testSuiteSteps);
-
-				getParentTestSuiteView().getSuiteStepTable().getTestSuiteData().add(testSuiteStep);
-				try {
-					getParentTestSuiteView().getSuiteStepTable().refreshAllTestSuites();
-				} catch (JsonParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (JsonMappingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				getParentTestSuiteView().toggleSaveButton(true);
+				addTestSuite();
 			}
 
 			@Override
@@ -91,6 +74,43 @@ public class SuiteTestCaseTree extends ArtifactTree {
 
 			}
 		});
+
+		getParentTestSuiteView().getAddTestCaseButton().addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				addTestSuite();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	private void addTestSuite() {
+		Artifact artifact = getSelectedArtifact();
+		TestSuiteStep selectedTestSuite = getParentTestSuiteView().getSuiteStepTable().getSelectedTestSuite();
+		List<TestSuiteStep> testSuiteSteps = getParentTestSuiteView().getSuiteStepTable().getTestSuiteData();
+		TestSuiteStep testSuiteStep = new SuiteMaker().createTestSuite(artifact, getParentTestSuiteView().getArtifact(),
+				selectedTestSuite, testSuiteSteps);
+
+		getParentTestSuiteView().getSuiteStepTable().getTestSuiteData().add(testSuiteStep);
+		try {
+			getParentTestSuiteView().getSuiteStepTable().refreshAllTestSuites();
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		getParentTestSuiteView().toggleSaveButton(true);
 	}
 
 	public TestSuiteView getParentTestSuiteView() {

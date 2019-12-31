@@ -250,6 +250,7 @@ public class TestSuiteView extends Composite {
 		addTestCaseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		addTestCaseButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		addTestCaseButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/leftArrow.png"));
+		addTestCaseButton.setEnabled(false);
 
 		searchTextBox = new Text(composite_5, SWT.BORDER);
 		searchTextBox.setToolTipText("Available Test Cases/Sparkin/Gherkin Features");
@@ -738,5 +739,9 @@ public class TestSuiteView extends Composite {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		return artifact;
+	}
+
+	public Button getAddTestCaseButton() {
+		return this.addTestCaseButton;
 	}
 }
