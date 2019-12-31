@@ -14,8 +14,6 @@ import org.eclipse.swt.widgets.Composite;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 
 public class ObjectRepositoryPart {
-	@Inject
-	MPart projectExplorerPart;
 	private ObjectRepositoryView objectRepositoryView;
 
 	@PostConstruct
