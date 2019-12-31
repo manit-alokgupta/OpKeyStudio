@@ -3,6 +3,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 //import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -33,6 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteTestCaseTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 
 public class TestSuiteView extends Composite {
@@ -726,5 +728,15 @@ public class TestSuiteView extends Composite {
 
 	public void setTestCaseTree(SuiteTestCaseTree testCaseTree) {
 		this.testCaseTree = testCaseTree;
+	}
+
+	public SuiteStepTable getSuiteStepTable() {
+		return this.testSuiteTable;
+	}
+
+	public Artifact getArtifact() {
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		return artifact;
 	}
 }

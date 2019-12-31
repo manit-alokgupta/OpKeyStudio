@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -9,9 +10,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
+import opkeystudio.opkeystudiocore.core.dtoMaker.SuiteMaker;
 
 public class SuiteTestCaseTree extends ArtifactTree {
 	private TestSuiteView parentTestSuiteView;
@@ -44,6 +50,39 @@ public class SuiteTestCaseTree extends ArtifactTree {
 				} else {
 					addTestCaseMenuItem.setEnabled(true);
 				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		addTestCaseMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = getSelectedArtifact();
+				TestSuiteStep selectedTestSuite = getParentTestSuiteView().getSuiteStepTable().getSelectedTestSuite();
+				List<TestSuiteStep> testSuiteSteps = getParentTestSuiteView().getSuiteStepTable().getTestSuiteData();
+				TestSuiteStep testSuiteStep = new SuiteMaker().createTestSuite(artifact,
+						getParentTestSuiteView().getArtifact(), selectedTestSuite, testSuiteSteps);
+
+				getParentTestSuiteView().getSuiteStepTable().getTestSuiteData().add(testSuiteStep);
+				try {
+					getParentTestSuiteView().getSuiteStepTable().refreshAllTestSuites();
+				} catch (JsonParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (JsonMappingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				getParentTestSuiteView().toggleSaveButton(true);
 			}
 
 			@Override
