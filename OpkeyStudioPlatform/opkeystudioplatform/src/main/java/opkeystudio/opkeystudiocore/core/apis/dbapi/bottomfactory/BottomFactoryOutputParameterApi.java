@@ -14,7 +14,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgume
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;

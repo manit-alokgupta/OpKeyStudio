@@ -33,14 +33,14 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteTestCaseTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 
 public class TestSuiteView extends Composite {
 	private SuiteTestCaseTree testCaseTree;
 	private Text searchTextBox;
 	private SuiteStepTable testSuiteTable;
 	@SuppressWarnings("unused")
-	private TestSuite testSuite;
+	private TestSuiteStep testSuite;
 	private ToolItem runButton;
 	private ToolItem tagVersionRunButton;
 	private ToolItem debugButton;
@@ -324,7 +324,7 @@ public class TestSuiteView extends Composite {
 
 	}
 
-	public void populateTestSuiteData(TestSuite testSuite) {
+	public void populateTestSuiteData(TestSuiteStep testSuite) {
 		if (testSuite != null) {
 			setSelectedTEstSuite(testSuite);
 			if (testSuiteTable.getSelectedTestSuite() == null) {
@@ -711,7 +711,7 @@ public class TestSuiteView extends Composite {
 		saveButton.setEnabled(false);
 	}
 
-	private void setSelectedTEstSuite(TestSuite testSuite) {
+	private void setSelectedTEstSuite(TestSuiteStep testSuite) {
 		this.testSuite = testSuite;
 	}
 

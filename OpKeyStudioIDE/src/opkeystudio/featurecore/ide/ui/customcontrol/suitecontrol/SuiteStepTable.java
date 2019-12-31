@@ -29,7 +29,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuite;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 
 public class SuiteStepTable extends CustomTable {
 
@@ -79,9 +79,9 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				TestSuite prevTestSuite = getPrevTestSuite();
-				TestSuite selectedTestSuite = getSelectedTestSuite();
-				TestSuite nextTestSuite = getNextTestSuite();
+				TestSuiteStep prevTestSuite = getPrevTestSuite();
+				TestSuiteStep selectedTestSuite = getSelectedTestSuite();
+				TestSuiteStep nextTestSuite = getNextTestSuite();
 				if (selectedTestSuite == null) {
 					getParentTestSuiteView().toggleMoveUpButton(false);
 					getParentTestSuiteView().toggleMoveDownButton(false);
@@ -112,12 +112,12 @@ public class SuiteStepTable extends CustomTable {
 		});
 	}
 
-	public void setTestSuiteData(List<TestSuite> testSuite) {
+	public void setTestSuiteData(List<TestSuiteStep> testSuite) {
 		super.setControlData(testSuite);
 	}
 
-	public List<TestSuite> getTestSuiteData() {
-		return (List<TestSuite>) super.getControlData();
+	public List<TestSuiteStep> getTestSuiteData() {
+		return (List<TestSuiteStep>) super.getControlData();
 	}
 
 	private TableEditor getTableEditor() {
@@ -129,7 +129,7 @@ public class SuiteStepTable extends CustomTable {
 	}
 
 	private void addTableEditor(SuiteStepTableItem item) {
-		TestSuite attrProperty = item.getTestSuiteData();
+		TestSuiteStep attrProperty = item.getTestSuiteData();
 		TableEditor editor1 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
 		button.setSelection(attrProperty.isShouldrun());
@@ -172,7 +172,7 @@ public class SuiteStepTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
-	public void moveStepUp(TestSuite suiteStep1, TestSuite suiteStep2)
+	public void moveStepUp(TestSuiteStep suiteStep1, TestSuiteStep suiteStep2)
 			throws JsonParseException, JsonMappingException, IOException {
 		int selectedIndex = this.getSelectionIndex();
 		int spos1 = suiteStep1.getPosition();
@@ -187,7 +187,7 @@ public class SuiteStepTable extends CustomTable {
 		// getParentTestSuiteView().toggleSaveBtn(true);
 	}
 
-	public void moveStepDown(TestSuite suiteStep1, TestSuite suiteStep2)
+	public void moveStepDown(TestSuiteStep suiteStep1, TestSuiteStep suiteStep2)
 			throws JsonParseException, JsonMappingException, IOException {
 		int selectedIndex = this.getSelectionIndex();
 		int spos1 = suiteStep1.getPosition();
@@ -203,7 +203,7 @@ public class SuiteStepTable extends CustomTable {
 		// getParentTestSuiteView().toggleSaveBtn(true);
 	}
 
-	public void deleteSuiteStep(TestSuite suiteStep) throws JsonParseException, JsonMappingException, IOException {
+	public void deleteSuiteStep(TestSuiteStep suiteStep) throws JsonParseException, JsonMappingException, IOException {
 		suiteStep.setDeleted(true);
 		refreshAllTestSuites();
 	}
@@ -212,9 +212,9 @@ public class SuiteStepTable extends CustomTable {
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		List<TestSuite> testSuites = new TestSuiteApi().getAllTestSuitesStepsWithArtifact(artifact.getId());
+		List<TestSuiteStep> testSuites = new TestSuiteApi().getAllTestSuitesStepsWithArtifact(artifact.getId());
 		setTestSuiteData(testSuites);
-		for (TestSuite testSuite : testSuites) {
+		for (TestSuiteStep testSuite : testSuites) {
 			SuiteStepTableItem suiteStepTableItem = new SuiteStepTableItem(this, 0);
 			suiteStepTableItem.setText(new String[] { "", "", testSuite.getArtifact().getName(), "", "" });
 			suiteStepTableItem.setTestSuiteData(testSuite);
@@ -223,10 +223,10 @@ public class SuiteStepTable extends CustomTable {
 
 	public void refreshAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
 		this.removeAll();
-		List<TestSuite> testSuites = getTestSuiteData();
+		List<TestSuiteStep> testSuites = getTestSuiteData();
 		Collections.sort(testSuites);
 		setTestSuiteData(testSuites);
-		for (TestSuite testSuite : testSuites) {
+		for (TestSuiteStep testSuite : testSuites) {
 			if (testSuite.isDeleted() == false) {
 				SuiteStepTableItem suiteStepTableItem = new SuiteStepTableItem(this, 0);
 				suiteStepTableItem.setText(new String[] { "", "", testSuite.getArtifact().getName(), "", "" });
@@ -235,7 +235,7 @@ public class SuiteStepTable extends CustomTable {
 		}
 	}
 
-	public TestSuite getSelectedTestSuite() {
+	public TestSuiteStep getSelectedTestSuite() {
 		if (this.getSelection() == null) {
 			return null;
 		}
@@ -246,7 +246,7 @@ public class SuiteStepTable extends CustomTable {
 		return suiteStepTableItem.getTestSuiteData();
 	}
 
-	public TestSuite getPrevTestSuite() {
+	public TestSuiteStep getPrevTestSuite() {
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == 0) {
 			return null;
@@ -259,7 +259,7 @@ public class SuiteStepTable extends CustomTable {
 		return null;
 	}
 
-	public TestSuite getNextTestSuite() {
+	public TestSuiteStep getNextTestSuite() {
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == this.getItemCount() - 1) {
 			return null;
