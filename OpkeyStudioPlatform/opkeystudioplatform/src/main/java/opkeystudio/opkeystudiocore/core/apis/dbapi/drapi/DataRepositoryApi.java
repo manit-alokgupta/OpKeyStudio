@@ -10,17 +10,15 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
-import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class DataRepositoryApi {
 
 	@SuppressWarnings("unused")
-	public List<DRColumnAttributes> getAllColumnsValues() throws JsonParseException, JsonMappingException, IOException {
-		String query = String.format("SELECT * FROM dr_columns  ORDER BY position");
+	public List<DRColumnAttributes> getAllColumnsValues(String dr_id)
+			throws JsonParseException, JsonMappingException, IOException {
+		String query = String.format("SELECT * FROM dr_columns where dr_id='%s' ORDER BY position", dr_id);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, DRColumnAttributes.class);
@@ -28,13 +26,23 @@ public class DataRepositoryApi {
 
 	}
 
-	public List<DRCellAttributes> getAllCellValues() throws JsonParseException, JsonMappingException, IOException {
-		String query = String.format("SELECT * FROM dr_cell  ORDER BY position");
-//		String query = String.format(
-//				"SELECT * FROM dr_cell,dr_columns where dr_columns.column_id=dr_cell.Column_ID order by position");
+	public List<DRCellAttributes> getAllCellValues(String dr_id, String column_id)
+			throws JsonParseException, JsonMappingException, IOException {
+		String query = String.format("SELECT * FROM dr_cell where dr_id='%s' and column_id='%s' ORDER BY position",
+				dr_id, column_id);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, DRCellAttributes.class);
 		return mapper.readValue(result, type);
+	}
+
+	public List<DRColumnAttributes> getAllDRDatas(String dr_id)
+			throws JsonParseException, JsonMappingException, IOException {
+		List<DRColumnAttributes> drColumns = getAllColumnsValues(dr_id);
+		for (DRColumnAttributes drcolumn : drColumns) {
+			List<DRCellAttributes> drCellAttributes = getAllCellValues(dr_id, drcolumn.getColumn_id());
+			drcolumn.setDrCellAttributes(drCellAttributes);
+		}
+		return drColumns;
 	}
 }

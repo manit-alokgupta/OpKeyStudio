@@ -1,9 +1,12 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class DRColumnAttributes extends Modified {
+public class DRColumnAttributes extends Modified implements Comparable<DRColumnAttributes> {
 
 	private int clustering_key;
 	@DBField
@@ -16,6 +19,8 @@ public class DRColumnAttributes extends Modified {
 	private String dr_id;
 	@DBField
 	private String name;
+
+	private List<DRCellAttributes> drCellAttributes = new ArrayList<>();
 
 	public int getClustering_key() {
 		return clustering_key;
@@ -63,6 +68,19 @@ public class DRColumnAttributes extends Modified {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<DRCellAttributes> getDrCellAttributes() {
+		return drCellAttributes;
+	}
+
+	public void setDrCellAttributes(List<DRCellAttributes> drCellAttributes) {
+		this.drCellAttributes = drCellAttributes;
+	}
+
+	@Override
+	public int compareTo(DRColumnAttributes arg0) {
+		return this.getPosition() - arg0.getPosition();
 	}
 
 }

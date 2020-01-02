@@ -124,25 +124,6 @@ public class DataRepositoryTable extends CustomTable {
 
 	public void renderAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
 
-		drColumnAtt = new DataRepositoryApi().getAllColumnsValues();
-		drCellAtt = new DataRepositoryApi().getAllCellValues();
-
-		for (DRColumnAttributes drColumnAttributes : drColumnAtt) {
-			DataRepositoryTableItem dataRepositoryTableItem = new DataRepositoryTableItem(this, 0);
-			dataRepositoryTableItem.setDRColumnData(drColumnAttributes);
-
-		}
-	}
-
-	public void renderAllCellDetails() throws JsonParseException, JsonMappingException, IOException {
-		List<DRCellAttributes> drCellAtt = new DataRepositoryApi().getAllCellValues();
-
-		for (DRCellAttributes drCellAttributes : drCellAtt) {
-			DataRepositoryTableItem dataRepositoryTableItem = new DataRepositoryTableItem(this, 0);
-			dataRepositoryTableItem.setDRCellData(drCellAttributes);
-			System.out.println(drCellAttributes.getPosition());
-
-		}
 	}
 
 	public DataRepositoryView getParentDataRepositoryView() {
