@@ -970,7 +970,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				allDataTreeView.initKeywords();
 
 			}
 
@@ -985,8 +985,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				allDataTreeView.initFunctionLibraries();
 			}
 
 			@Override
@@ -1000,8 +999,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				allDataTreeView.initSeriveRepo();
 			}
 
 			@Override
@@ -1015,8 +1013,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				allDataTreeView.initCodedFunction();
 			}
 
 			@Override

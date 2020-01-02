@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,11 +11,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
@@ -144,27 +147,29 @@ public class KeywordsTree extends CustomTree {
 		}
 	}
 
-	private List<TreeItem> getAllItems(TreeItem treeItem) {
-		List<TreeItem> allTreeItems = new ArrayList<TreeItem>();
-		TreeItem[] items = treeItem.getItems();
-		for (TreeItem item : items) {
-			allTreeItems.add(item);
-			allTreeItems.addAll(getAllItems(item));
+	private void addIcon(CustomTreeItem artTreeItem) {
+		Artifact artifact = (Artifact) artTreeItem.getControlData();
+		if (artifact == null) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Folder) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Flow) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.ObjectRepository) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
+		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Suite) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testsuite.png"));
+		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.DataRepository) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
+		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Component) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.CodedFunction) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
 		}
-		return allTreeItems;
-	}
-
-	public void filterDataInTree(String query) {
-		TreeItem[] items = this.getItems();
-		for (TreeItem item : items) {
-			if (item.getText().toLowerCase().contains(query.trim().toLowerCase())) {
-//				 item.
-			}
-		}
-		// List<TreeItem> treeItems = getAllItems(treeItem);
 	}
 
 	public void initKeywords() {
+		this.removeAll();
 		Set<String> groupNames = KeywordManager.getInstance().getAllGroupNames();
 		for (String groupName : groupNames) {
 			CustomTreeItem cti = new CustomTreeItem(this, 0);
@@ -176,5 +181,32 @@ public class KeywordsTree extends CustomTree {
 				keywItem.setControlData(keyword);
 			}
 		}
+	}
+
+	public void initFunctionLibraries() {
+		this.removeAll();
+		try {
+			List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("Component");
+			CustomTreeItem cti = new CustomTreeItem(this, 0);
+			cti.setText("Function Library");
+			cti.setExpanded(true);
+			for (Artifact artifact : artifacts) {
+				CustomTreeItem keywItem = new CustomTreeItem(cti, 0);
+				keywItem.setText(artifact.getName());
+				keywItem.setControlData(artifact);
+				addIcon(keywItem);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void initSeriveRepo() {
+
+	}
+
+	public void initCodedFunction() {
+
 	}
 }
