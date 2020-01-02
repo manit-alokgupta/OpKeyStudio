@@ -44,16 +44,24 @@ public class ObjectRepositoryTree extends CustomTree {
 		return (List<ORObject>) super.getControlData();
 	}
 
-	private void addIcon(ArtifactTreeItem artTreeItem) {
-		if (artTreeItem.getArtifact() == null) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Folder) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Flow) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testcase.png"));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.ObjectRepository) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/object repo.png"));
-		}
+	private void addIcon(ObjectRepositoryTreeItem artTreeItem) {
+		ORObject orObject = artTreeItem.getObjectRepository();
+//		if (artTreeItem.getArtifact() == null) {
+		// artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		// "icons/artifact/folder.png"));
+		// } else if (artTreeItem.getArtifact().getFile_type_enum() ==
+		// Artifact.MODULETYPE.Folder) {
+		// artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		// "icons/artifact/folder.png"));
+		// } else if (artTreeItem.getArtifact().getFile_type_enum() ==
+		// Artifact.MODULETYPE.Flow) {
+		// artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		// "icons/artifact/testcase.png"));
+		// } else if (artTreeItem.getArtifact().getFile_type_enum() ==
+		// Artifact.MODULETYPE.ObjectRepository) {
+		// artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		// "icons/artifact/object repo.png"));
+		// }
 	}
 
 	private void renderAllArtifactTree(ObjectRepositoryTreeItem rootNode, List<ORObject> allArtifacts) {
@@ -64,7 +72,7 @@ public class ObjectRepositoryTree extends CustomTree {
 					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
 					orTreeItem.setText(artifact.getName());
 					orTreeItem.setArtifact(artifact);
-					// addIcon(artitreeitem);
+					addIcon(orTreeItem);
 					renderAllArtifactTree(orTreeItem, allArtifacts);
 				}
 			}
@@ -80,7 +88,7 @@ public class ObjectRepositoryTree extends CustomTree {
 						ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
 						orTreeItem.setText(artifact.getName());
 						orTreeItem.setArtifact(artifact);
-						// addIcon(artitreeitem);
+						addIcon(orTreeItem);
 						refereshAllArtifactTree(orTreeItem, allArtifacts);
 					}
 				}
@@ -117,7 +125,7 @@ public class ObjectRepositoryTree extends CustomTree {
 			ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
 			rootNode.setText(artifact.getName());
 			rootNode.setExpanded(true);
-			// addIcon(rootNode);
+			addIcon(rootNode);
 			List<ORObject> objectRepositories = new ObjectRepositoryApi().getAllObjects(artifact.getId().trim());
 			setObjectRepositoriesData(objectRepositories);
 			List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
@@ -127,7 +135,7 @@ public class ObjectRepositoryTree extends CustomTree {
 					orTreeItem.setText(objectRepository.getName());
 					orTreeItem.setArtifact(objectRepository);
 					topMostNodes.add(orTreeItem);
-					// addIcon(artitreeitem);
+					addIcon(orTreeItem);
 				}
 			}
 
