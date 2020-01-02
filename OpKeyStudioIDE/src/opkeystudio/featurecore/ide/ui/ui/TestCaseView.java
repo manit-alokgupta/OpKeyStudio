@@ -54,10 +54,10 @@ import opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor.SourceCodeEditor;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
@@ -70,7 +70,7 @@ public class TestCaseView extends Composite {
 	private ObjectRepositoryTree testObjectTree;
 	private Table mappedTable;
 	private Table propertyTable;
-	private Table dataOutputTable;
+	private KeywordsTree dataOutputTable;
 	private GlobalVariableTable globalVariableTable;
 	private Table autoDataGenTable;
 	private Text searchBox;
@@ -495,7 +495,7 @@ public class TestCaseView extends Composite {
 		dataOutputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
 		dataOutputTabItem.setText("Data Output");
 		dataOutputTabItem.setToolTipText("Data Output");
-		dataOutputTable = new Table(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION);
+		dataOutputTable = new KeywordsTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION,this);
 		dataOutputTabItem.setControl(dataOutputTable);
 		dataOutputTable.setHeaderVisible(true);
 		dataOutputTable.setLinesVisible(true);

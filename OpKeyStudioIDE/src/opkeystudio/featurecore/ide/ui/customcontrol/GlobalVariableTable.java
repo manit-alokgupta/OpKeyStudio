@@ -111,7 +111,11 @@ public class GlobalVariableTable extends CustomTable {
 					text.setText(globalVariable.getName());
 				}
 				if (selectedColumn == 2) {
-					text.setText(globalVariable.getValue());
+					if (globalVariable.getValue() == null) {
+						text.setText("");
+					} else {
+						text.setText(globalVariable.getValue());
+					}
 				}
 				text.addFocusListener(new FocusListener() {
 

@@ -2,7 +2,6 @@ package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -220,6 +219,10 @@ public class KeywordsTree extends CustomTree {
 	}
 
 	public void initCodedFunction() {
+
+	}
+
+	public void initDataRepositories() {
 
 	}
 }
