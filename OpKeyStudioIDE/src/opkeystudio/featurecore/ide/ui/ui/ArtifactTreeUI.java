@@ -955,9 +955,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-
-				System.out.println("double clicked");
-
 				return;
 			}
 		});

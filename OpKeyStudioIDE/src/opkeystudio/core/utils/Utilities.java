@@ -13,6 +13,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+
 public class Utilities {
 	private static Utilities utils = null;
 
@@ -37,6 +39,22 @@ public class Utilities {
 
 	public Collection<MPart> getAllParts() {
 		return getEpartService().getParts();
+	}
+
+	public MPart getArtifactMPart(Artifact artifact) {
+		Collection<MPart> allParts = getAllParts();
+		for (MPart mpart : allParts) {
+			System.out.println("Mpart Searching");
+			Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+			if (artifact_0 == null) {
+				return null;
+			}
+			System.out.println("ID FOUND "+artifact_0.getId());
+			if (artifact_0.getId().equals(artifact.getId())) {
+				return mpart;
+			}
+		}
+		return null;
 	}
 
 	public void showErrorDialog(Shell shell, String title, String message) {

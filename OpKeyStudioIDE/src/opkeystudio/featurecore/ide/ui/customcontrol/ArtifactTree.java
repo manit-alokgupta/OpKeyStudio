@@ -74,6 +74,14 @@ public class ArtifactTree extends CustomTree {
 		if (artifactTreeItem.getArtifact() == null) {
 			return;
 		}
+		Artifact artifact = artifactTreeItem.getArtifact();
+		MPart mpart = Utilities.getInstance().getArtifactMPart(artifact);
+		if (mpart != null) {
+			System.out.println("MPART Found");
+			EPartService partService = Utilities.getInstance().getEpartService();
+			partService.showPart(mpart, PartState.ACTIVATE);
+			return;
+		}
 		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
 			EPartService partService = Utilities.getInstance().getEpartService();
 			MPart part = partService.createPart("opkeystudio.partdescriptor.objectRepository");
@@ -89,11 +97,10 @@ public class ArtifactTree extends CustomTree {
 			part.setTooltip(artifactTreeItem.getArtifact().getName());
 			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
 			partService.showPart(part, PartState.ACTIVATE);
-//			flowStep.setIstestcase(true);
 		}
 		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			EPartService partService = Utilities.getInstance().getEpartService();
-			MPart part = partService.createPart("opkeystudio.partdescriptor.testCaseViewer");
+			MPart part = partService.createPart("opkeystudio.partdescriptor.functionLibraryViewer");
 			part.setLabel(artifactTreeItem.getArtifact().getName());
 			part.setTooltip(artifactTreeItem.getArtifact().getName());
 			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());

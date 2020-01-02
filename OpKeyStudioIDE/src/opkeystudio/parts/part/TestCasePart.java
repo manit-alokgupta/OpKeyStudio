@@ -9,15 +9,17 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.swt.widgets.Composite;
 
+import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+
 public class TestCasePart {
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
-
+		new TestCaseView(parent, 0);
 	}
 
 	@PreDestroy
 	public void preDestroy() {
-		
+
 	}
 
 	@Focus
