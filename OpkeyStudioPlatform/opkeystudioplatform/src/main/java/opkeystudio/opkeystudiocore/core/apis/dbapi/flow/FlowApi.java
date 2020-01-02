@@ -21,6 +21,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowApi {
@@ -146,14 +147,11 @@ public class FlowApi {
 
 	public List<ComponentInputArgument> getAllComponentInputArgument(String componentId)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
 		String query = String.format(
 				"select * from component_input_parameters where component_id='%s' ORDER BY position asc", componentId);
-		String result = sqlComm.executeQueryString(query);
+		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ComponentInputArgument.class);
-		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
 

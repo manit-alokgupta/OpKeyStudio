@@ -35,7 +35,7 @@ public class QueryMaker {
 				if (!isFieldCanBeIgnored(fieldName, ignoreColumnName)) {
 					if (fieldValue != null) {
 						duoList.addFirstValue(fieldName);
-						duoList.addSecondValue("'" + String.valueOf(fieldValue) + "'");
+						duoList.addSecondValue("\"" + String.valueOf(fieldValue) + "\"");
 					}
 				}
 			}

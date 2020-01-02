@@ -15,6 +15,7 @@ public class QueryExecutor {
 	}
 
 	public String executeQuery(String query) {
+		System.out.println(">>Executing Query "+query);
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
 			sqlComm.connect();
