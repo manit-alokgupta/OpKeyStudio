@@ -24,12 +24,12 @@ import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
-public class KeywordsTree extends CustomTree {
+public class GenericTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
-	private KeywordsTree thisTable = this;
+	private GenericTree thisTable = this;
 	private ArtifactTreeItem artifactTreeItem;
 
-	public KeywordsTree(Composite parent, int style, TestCaseView testCaseView) {
+	public GenericTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
 		this.setParentTestCaseView(testCaseView);
 		init();

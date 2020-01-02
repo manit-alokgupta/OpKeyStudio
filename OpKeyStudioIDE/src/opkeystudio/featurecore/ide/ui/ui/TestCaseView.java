@@ -46,7 +46,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.KeywordsTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
@@ -70,7 +70,7 @@ public class TestCaseView extends Composite {
 	private ObjectRepositoryTree testObjectTree;
 	private Table mappedTable;
 	private Table propertyTable;
-	private KeywordsTree dataOutputTable;
+	private GenericTree dataOutputTable;
 	private GlobalVariableTable globalVariableTable;
 	private Table autoDataGenTable;
 	private Text searchBox;
@@ -106,7 +106,7 @@ public class TestCaseView extends Composite {
 	private ExpandItem expenditemInputData;
 	private ExpandItem expanditemTestObject;
 	private TabItem addStepTabItem;
-	private KeywordsTree allDataTreeView;
+	private GenericTree allDataTreeView;
 //	private Tree allDataTreeView;
 	private Label stepInfoImage;
 	private CLabel stepInfoLabel;
@@ -421,7 +421,7 @@ public class TestCaseView extends Composite {
 			}
 		});
 
-		allDataTreeView = new KeywordsTree(composite_10, SWT.BORDER, this);
+		allDataTreeView = new GenericTree(composite_10, SWT.BORDER, this);
 //		allDataTreeView = new Tree(composite_10, SWT.BORDER);
 		allDataTreeView.setLinesVisible(true);
 		allDataTreeView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -495,7 +495,7 @@ public class TestCaseView extends Composite {
 		dataOutputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
 		dataOutputTabItem.setText("Data Output");
 		dataOutputTabItem.setToolTipText("Data Output");
-		dataOutputTable = new KeywordsTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION,this);
+		dataOutputTable = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION,this);
 		dataOutputTabItem.setControl(dataOutputTable);
 		dataOutputTable.setHeaderVisible(true);
 		dataOutputTable.setLinesVisible(true);
