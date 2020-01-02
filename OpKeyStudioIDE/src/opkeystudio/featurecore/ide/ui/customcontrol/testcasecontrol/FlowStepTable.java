@@ -261,6 +261,15 @@ public class FlowStepTable extends CustomTable {
 	}
 
 	public FlowStep getSelectedFlowStep() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
 		FlowStepTableItem flowTableItem = (FlowStepTableItem) this.getSelection()[0];
 		return flowTableItem.getFlowStepeData();
 	}

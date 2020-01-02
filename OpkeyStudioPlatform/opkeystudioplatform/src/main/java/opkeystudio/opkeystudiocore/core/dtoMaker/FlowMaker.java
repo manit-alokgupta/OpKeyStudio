@@ -25,7 +25,16 @@ public class FlowMaker {
 	public FlowStep getFlowStepDTO(Artifact artifact, FlowStep selectedFlowStep, Keyword keyword, String flow_id,
 			List<FlowStep> flowSteps) {
 		int selectedFlowStepIndex = flowSteps.indexOf(selectedFlowStep);
-		int selectedFlowStepPosition = selectedFlowStep.getPosition();
+		int selectedFlowStepPosition = 0;
+		if (selectedFlowStep != null) {
+			selectedFlowStepPosition = selectedFlowStep.getPosition();
+		} else {
+			if (flowSteps.size() > 0) {
+				FlowStep lastTestSuite = flowSteps.get(flowSteps.size() - 1);
+				selectedFlowStepPosition = lastTestSuite.getPosition();
+			}
+		}
+
 		FlowStep flowStep = new FlowStep();
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			flowStep.setComponent_id(flow_id);
@@ -71,12 +80,12 @@ public class FlowMaker {
 				.getAllComponentOutputArgument(flArtifact.getId());
 		flComp.setComponentInputArgument(inputArgs);
 		flComp.setComponentOutputArgument(outputArgs);
-		
+
 		List<FlowInputArgument> flowInputArguments = new ArrayList<>();
 		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
 		flowStep.setFlowInputArgs(flowInputArguments);
 		flowStep.setFlowOutputArgs(flowOutputArguments);
-		
+
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			flowStep.setStepcomponent_id(flArtifact.getId());
 		} else {

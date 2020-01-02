@@ -23,9 +23,11 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class GenericTree extends CustomTree {
 	public enum TREETYPE {
@@ -274,6 +276,11 @@ public class GenericTree extends CustomTree {
 							.getSelectedFlowInputArgument();
 					if (selectedFlowInputArgument == null) {
 						return;
+					}
+					if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+						selectedFlowInputArgument.setArg_datasource(DataSource.ValueFromDataRepository);
+					} else {
+						selectedFlowInputArgument.setDatasource(DataSource.ValueFromDataRepository);
 					}
 					selectedFlowInputArgument.setDatarepositorycolumnid(drcolumnAttribute.getColumn_id());
 					selectedFlowInputArgument.setModified(true);
