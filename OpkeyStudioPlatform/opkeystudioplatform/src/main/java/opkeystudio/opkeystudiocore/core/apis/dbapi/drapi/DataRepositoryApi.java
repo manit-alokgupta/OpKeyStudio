@@ -44,4 +44,23 @@ public class DataRepositoryApi {
 		}
 		return drColumns;
 	}
+
+	private List<DRColumnAttributes> getAllDrColumns(String columnId)
+			throws JsonParseException, JsonMappingException, IOException {
+		String query = String.format("SELECT * FROM dr_columns where column_id='%s' ORDER BY position ASC", columnId);
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, DRColumnAttributes.class);
+		return mapper.readValue(result, type);
+	}
+
+	public DRColumnAttributes getDRColumn(String columnId) {
+		try {
+			return this.getAllDrColumns(columnId).get(0);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

@@ -33,9 +33,11 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
@@ -166,7 +168,7 @@ public class InputDataTable extends CustomTable {
 			String gv_id = flowInputArgument.getGlobalvariable_id();
 			GlobalVariable globalVar = new GlobalVariableApi().getGlobalVariable(gv_id);
 			TableEditor editor1 = getTableEditor();
-			CustomButton button = new CustomButton(this, SWT.NONE|SWT.NO_BACKGROUND);
+			CustomButton button = new CustomButton(this, SWT.NONE | SWT.NO_BACKGROUND);
 			button.setText(globalVar.getName());
 			button.setToolTipText(globalVar.getName());
 			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
@@ -182,6 +184,37 @@ public class InputDataTable extends CustomTable {
 				@Override
 				public void mouseDown(MouseEvent e) {
 					getParentTestCaseView().getDatasTabHolder().setSelection(1);
+				}
+
+				@Override
+				public void mouseDoubleClick(MouseEvent e) {
+					editor1.getEditor().dispose();
+				}
+			});
+			editor1.setEditor(button, item, 2);
+			this.allTableEditors.add(editor1.getEditor());
+		}
+
+		if (dataSourceType == DataSource.ValueFromDataRepository) {
+			String dataRepositoryColumnId = flowInputArgument.getDatarepositorycolumnid();
+			DRColumnAttributes drColumn = new DataRepositoryApi().getDRColumn(dataRepositoryColumnId);
+			TableEditor editor1 = getTableEditor();
+			CustomButton button = new CustomButton(this, SWT.NONE | SWT.NO_BACKGROUND);
+			button.setText(drColumn.getName());
+			button.setToolTipText(drColumn.getName());
+			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
+			button.setBackground(new Color(button.getDisplay(), 255, 255, 255));
+			button.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseUp(MouseEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void mouseDown(MouseEvent e) {
+					getParentTestCaseView().getDatasTabHolder().setSelection(0);
 				}
 
 				@Override
