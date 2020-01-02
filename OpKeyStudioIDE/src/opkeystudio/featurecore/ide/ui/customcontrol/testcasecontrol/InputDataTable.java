@@ -18,11 +18,13 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -164,9 +166,11 @@ public class InputDataTable extends CustomTable {
 			String gv_id = flowInputArgument.getGlobalvariable_id();
 			GlobalVariable globalVar = new GlobalVariableApi().getGlobalVariable(gv_id);
 			TableEditor editor1 = getTableEditor();
-			CustomButton button = new CustomButton(this, SWT.NONE);
+			CustomButton button = new CustomButton(this, SWT.NONE|SWT.NO_BACKGROUND);
 			button.setText(globalVar.getName());
-
+			button.setToolTipText(globalVar.getName());
+			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
+			button.setBackground(new Color(button.getDisplay(), 255, 255, 255));
 			button.addMouseListener(new MouseListener() {
 
 				@Override
