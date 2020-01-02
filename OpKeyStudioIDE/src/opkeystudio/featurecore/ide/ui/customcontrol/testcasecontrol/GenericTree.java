@@ -18,22 +18,43 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class GenericTree extends CustomTree {
+	public enum TREETYPE {
+		DATAREPOSITORYTREE
+	};
+
 	private TestCaseView parentTestCaseView;
 	private GenericTree thisTable = this;
 	private ArtifactTreeItem artifactTreeItem;
+	private boolean treeExtended = false;
+	private TREETYPE treeType;
 
 	public GenericTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
 		this.setParentTestCaseView(testCaseView);
 		init();
 		initKeywords();
+	}
+
+	public GenericTree(Composite parent, int style, TestCaseView testCaseView, TREETYPE treetype) {
+		super(parent, style);
+		this.setParentTestCaseView(testCaseView);
+		this.setTreeType(treetype);
+		initByTreeType();
+	}
+
+	private void initByTreeType() {
+		if (getTreeType() == TREETYPE.DATAREPOSITORYTREE) {
+			initDataRepositories();
+		}
 	}
 
 	private void init() {
@@ -160,24 +181,39 @@ public class GenericTree extends CustomTree {
 	}
 
 	private void addIcon(CustomTreeItem artTreeItem) {
-		Artifact artifact = (Artifact) artTreeItem.getControlData();
-		if (artifact == null) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
-		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Folder) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
-		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Flow) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
-		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.ObjectRepository) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
-		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Suite) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testsuite.png"));
-		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.DataRepository) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
-		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Component) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
-		} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.CodedFunction) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+		if (artTreeItem.getControlData() instanceof Artifact) {
+			Artifact artifact = (Artifact) artTreeItem.getControlData();
+			if (artifact == null) {
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Folder) {
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Flow) {
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.ObjectRepository) {
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
+			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Suite) {
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testsuite.png"));
+			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.DataRepository) {
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
+			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Component) {
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.CodedFunction) {
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+			}
 		}
+		if (artTreeItem.getControlData() instanceof DRColumnAttributes) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase.gif"));
+		}
+	}
+
+	public void expandAll(CustomTreeItem treeItem) {
+		treeItem.setExpanded(true);
+		TreeItem items[] = treeItem.getItems();
+		for (TreeItem item : items) {
+			item.setExpanded(true);
+			expandAll((CustomTreeItem) item);
+		}
+		this.setRedraw(true);
 	}
 
 	public void initKeywords() {
@@ -199,15 +235,16 @@ public class GenericTree extends CustomTree {
 		this.removeAll();
 		try {
 			List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("Component");
-			CustomTreeItem cti = new CustomTreeItem(this, 0);
-			cti.setText("Function Library");
-			cti.setExpanded(true);
+			CustomTreeItem rootNode = new CustomTreeItem(this, 0);
+			rootNode.setText("Function Library");
+			rootNode.setExpanded(true);
 			for (Artifact artifact : artifacts) {
-				CustomTreeItem keywItem = new CustomTreeItem(cti, 0);
+				CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
 				keywItem.setText(artifact.getName());
 				keywItem.setControlData(artifact);
 				addIcon(keywItem);
 			}
+			expandAll(rootNode);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -223,6 +260,47 @@ public class GenericTree extends CustomTree {
 	}
 
 	public void initDataRepositories() {
+		this.removeAll();
+		try {
+			CustomTreeItem rootNode = new CustomTreeItem(this, 0);
+			rootNode.setText("Data Repositories");
+			rootNode.setExpanded(true);
+			addIcon(rootNode);
+			List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("DataRepository");
+			for (Artifact drArtifact : artifacts) {
+				CustomTreeItem drNode = new CustomTreeItem(rootNode, 0);
+				drNode.setText(drArtifact.getName());
+				drNode.setControlData(drArtifact);
+				addIcon(drNode);
+				List<DRColumnAttributes> drColumnAttributes = new DataRepositoryApi()
+						.getAllColumnsValues(drArtifact.getId());
+				for (DRColumnAttributes drColumn : drColumnAttributes) {
+					CustomTreeItem drColumnNode = new CustomTreeItem(drNode, 0);
+					drColumnNode.setText(drColumn.getName());
+					drColumnNode.setControlData(drColumn);
+					addIcon(drColumnNode);
+				}
+			}
+			expandAll(rootNode);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	public boolean isTreeExtended() {
+		return treeExtended;
+	}
+
+	public void setTreeExtended(boolean treeExtended) {
+		this.treeExtended = treeExtended;
+	}
+
+	public TREETYPE getTreeType() {
+		return treeType;
+	}
+
+	public void setTreeType(TREETYPE treeType) {
+		this.treeType = treeType;
 	}
 }

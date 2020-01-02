@@ -16,9 +16,9 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class DataRepositoryApi {
 
 	@SuppressWarnings("unused")
-	private List<DRColumnAttributes> getAllColumnsValues(String dr_id)
+	public List<DRColumnAttributes> getAllColumnsValues(String dr_id)
 			throws JsonParseException, JsonMappingException, IOException {
-		String query = String.format("SELECT * FROM dr_columns where dr_id='%s' ORDER BY position", dr_id);
+		String query = String.format("SELECT * FROM dr_columns where dr_id='%s' ORDER BY position ASC", dr_id);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, DRColumnAttributes.class);
@@ -27,7 +27,7 @@ public class DataRepositoryApi {
 
 	private List<DRCellAttributes> getAllCellValues(String dr_id, String column_id)
 			throws JsonParseException, JsonMappingException, IOException {
-		String query = String.format("SELECT * FROM dr_cell where dr_id='%s' and column_id='%s' ORDER BY position",
+		String query = String.format("SELECT * FROM dr_cell where dr_id='%s' and column_id='%s' ORDER BY position ASC",
 				dr_id, column_id);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();

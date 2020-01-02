@@ -47,6 +47,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree.TREETYPE;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
@@ -495,7 +496,8 @@ public class TestCaseView extends Composite {
 		dataOutputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
 		dataOutputTabItem.setText("Data Output");
 		dataOutputTabItem.setToolTipText("Data Output");
-		dataOutputTable = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION,this);
+		dataOutputTable = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this,
+				TREETYPE.DATAREPOSITORYTREE);
 		dataOutputTabItem.setControl(dataOutputTable);
 		dataOutputTable.setHeaderVisible(true);
 		dataOutputTable.setLinesVisible(true);
