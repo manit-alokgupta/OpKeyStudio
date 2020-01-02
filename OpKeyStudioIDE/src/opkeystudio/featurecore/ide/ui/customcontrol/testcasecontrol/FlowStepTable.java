@@ -186,8 +186,6 @@ public class FlowStepTable extends CustomTable {
 	public void refreshFlowSteps() {
 		disposeAllTableEditors();
 		this.removeAll();
-		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		List<FlowStep> flowSteps = getFlowStepsData();
 		Collections.sort(flowSteps);
 		for (FlowStep flowStep : flowSteps) {
