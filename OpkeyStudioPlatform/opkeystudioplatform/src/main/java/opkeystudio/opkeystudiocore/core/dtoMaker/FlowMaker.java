@@ -71,6 +71,12 @@ public class FlowMaker {
 				.getAllComponentOutputArgument(flArtifact.getId());
 		flComp.setComponentInputArgument(inputArgs);
 		flComp.setComponentOutputArgument(outputArgs);
+		
+		List<FlowInputArgument> flowInputArguments = new ArrayList<>();
+		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
+		flowStep.setFlowInputArgs(flowInputArguments);
+		flowStep.setFlowOutputArgs(flowOutputArguments);
+		
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			flowStep.setStepcomponent_id(flArtifact.getId());
 		} else {

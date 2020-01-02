@@ -74,7 +74,7 @@ public class FlowApi {
 		setFlowOutputArguments(outputArguments);
 	}
 
-	private List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep)
+	public List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
 		List<FlowInputArgument> inputArguments = getFlowInputArguments();
