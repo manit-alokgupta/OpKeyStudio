@@ -643,6 +643,9 @@ public class TestCaseView extends Composite {
 				FlowStep flowStep = flowStepTable.getSelectedFlowStep();
 				if (flowStep != null) {
 					ORObject orobject = testObjectTree.getSelectedORObject();
+					if (orobject == null) {
+						return;
+					}
 					if (flowStep.getOrObject().size() > 0) {
 						List<ORObject> orobjects = new ArrayList<>();
 						orobjects.add(orobject);
