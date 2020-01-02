@@ -1,6 +1,8 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.swt.custom.ControlEditor;
@@ -9,13 +11,10 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -24,7 +23,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.DataRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
 public class DataRepositoryTable extends CustomTable {
@@ -32,9 +31,8 @@ public class DataRepositoryTable extends CustomTable {
 	private boolean paintCalled = false;
 	private DataRepositoryTable thisTable;
 	private DataRepositoryView parentDataRepositoryView;
-	private DRColumnAttributes drCol;
-	List<DRColumnAttributes> drColumnAtt;
-	List<DRCellAttributes> drCellAtt;
+
+	private List<DRColumnAttributes> drColumnAttributes = new ArrayList<>();
 
 	public DataRepositoryTable(Composite parent, int style, DataRepositoryView parentView)
 			throws JsonParseException, JsonMappingException, IOException {
@@ -57,23 +55,6 @@ public class DataRepositoryTable extends CustomTable {
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
-		for (DRColumnAttributes drColumnAttributes : drColumnAtt) {
-
-			System.out.println(drColumnAttributes.getName());
-			System.out.println(drColumnAttributes.getColumn_id());
-			TableColumn columnNext = new TableColumn(this, 0);
-			columnNext.setText(drColumnAttributes.getName());
-			columnNext.setWidth(100);
-
-//			for (DRCellAttributes drCellAttributes : drCellAtt) {
-//				DataRepositoryTableItem dataRepositoryTableItem = new DataRepositoryTableItem(this, 0);
-//				if (drColumnAttributes.getColumn_id() == drCellAttributes.getColumn_id()) {
-////					cursor.getRow().setText(drCellAttributes.getValue());
-//					dataRepositoryTableItem.setText(new String[] { drCellAttributes.getValue() });
-//
-//				}
-//			}
-		}
 
 		cursor.addSelectionListener(new SelectionListener() {
 
@@ -118,12 +99,12 @@ public class DataRepositoryTable extends CustomTable {
 
 			}
 		});
-
-//		renderAllCellDetails();
 	}
 
 	public void renderAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
-
+		Artifact artifact = getParentDataRepositoryView().getArtifact();
+		List<DRColumnAttributes> drDatas = new DataRepositoryApi().getAllDRDatas(artifact.getId());
+		Collections.sort(drDatas);
 	}
 
 	public DataRepositoryView getParentDataRepositoryView() {
@@ -132,6 +113,14 @@ public class DataRepositoryTable extends CustomTable {
 
 	public void setParentDataRepositoryView(DataRepositoryView parentDataRepositoryView) {
 		this.parentDataRepositoryView = parentDataRepositoryView;
+	}
+
+	public List<DRColumnAttributes> getDrColumnAttributes() {
+		return drColumnAttributes;
+	}
+
+	public void setDrColumnAttributes(List<DRColumnAttributes> drColumnAttributes) {
+		this.drColumnAttributes = drColumnAttributes;
 	}
 
 }

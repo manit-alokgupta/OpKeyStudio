@@ -3,6 +3,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
 public class DataRepositoryView extends Composite {
@@ -331,7 +333,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				saving();
+
 			}
 
 			@Override
@@ -377,77 +379,10 @@ public class DataRepositoryView extends Composite {
 		});
 	}
 
-//	@SuppressWarnings({ "deprecation", "unused" })
-//	private XSSFWorkbook createWorkbookFromTable(TableViewer table) {
-//		// create a workbook
-//		wb = new XSSFWorkbook();
-//
-//		// add a worksheet
-//		XSSFSheet sheet = wb.createSheet("My Table Data");
-//
-//		// shade the background of the header row
-//		XSSFCellStyle headerStyle = wb.createCellStyle();
-//		headerStyle.setFillForegroundColor(IndexedColors.LEMON_CHIFFON.getIndex());
-//
-//		headerStyle.setAlignment(HorizontalAlignment.CENTER);
-//
-//		Table headerRow = table.getTable();
-//		TableColumn[] columns = headerRow.getColumns();
-//		int rowIndex = 0;
-//		int cellIndex = 0;
-//		XSSFRow header = sheet.createRow((short) rowIndex++);
-//		for (TableColumn column : columns) {
-//			String columnName = column.getText();
-//			XSSFCell cell = header.createCell(cellIndex++);
-//			cell.setCellValue(column.getText());
-//			cell.setCellStyle(headerStyle);
-//		}
-//		// add data rows
-//		TableItem[] items = table.getTable().getItems();
-//		for (TableItem item : items) {
-//			// create a new row
-//			XSSFRow row = sheet.createRow((short) rowIndex++);
-//			cellIndex = 0;
-//
-//			for (int i = 0; i < columns.length; i++) {
-//				// create a new cell
-////				String columnName = tableColumnNames[i];
-//				XSSFCell cell = row.createCell(cellIndex++);
-//
-//				// set the horizontal alignment (default to RIGHT)
-//				XSSFCellStyle cellStyle = wb.createCellStyle();
-//				cellStyle.setAlignment(HorizontalAlignment.RIGHT);
-//				cell.setCellStyle(cellStyle);
-//
-//				// set the cell's value
-//				String text = item.getText(i);
-//				cell.setCellValue(text);
-//			}
-//		}
-//
-//		for (int i = 0; i < columns.length; i++) {
-//			sheet.autoSizeColumn((short) i);
-//		}
-//
-//		return wb;
-//	}
-
-	/*
-	 * public void dumpWorkbookToAFile(XSSFWorkbook wb, String filename) { try {
-	 * FileOutputStream fos = new FileOutputStream(filename); wb.write(fos);
-	 * fos.close();
-	 * MessageDialog.openInformation(Display.getCurrent().getActiveShell(),
-	 * "Save Workbook Successful", "Workbook saved to the file:\n\n" + filename);
-	 * 
-	 * } catch (IOException ioe) { ioe.printStackTrace(); String msg =
-	 * ioe.getMessage();
-	 * MessageDialog.openError(Display.getCurrent().getActiveShell(),
-	 * "Save Workbook Failed", "Could not save workbook to the file:\n\n" + msg); }
-	 * }
-	 */
-
-	public void saving() {
-
+	public Artifact getArtifact() {
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		return artifact;
 	}
 
 	@Override
