@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -24,12 +28,10 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.DataRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
 public class DataRepositoryTable extends CustomTable {
-
-	private boolean paintCalled = false;
-	private DataRepositoryTable thisTable;
 	private DataRepositoryView parentDataRepositoryView;
 
 	private List<DRColumnAttributes> drColumnAttributes = new ArrayList<>();
@@ -37,20 +39,13 @@ public class DataRepositoryTable extends CustomTable {
 	public DataRepositoryTable(Composite parent, int style, DataRepositoryView parentView)
 			throws JsonParseException, JsonMappingException, IOException {
 		super(parent, style);
-
-		init();
-		thisTable = this;
 		this.setParentDataRepositoryView(parentView);
+		init();
 	}
 
 	private void init() throws JsonParseException, JsonMappingException, IOException {
 
 		renderAllDRDetails();
-		TableColumn column = new TableColumn(this, 0);
-		column.setText(" ");
-		column.setWidth(40);
-		column.setResizable(false);
-
 		TableCursor cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
@@ -101,10 +96,41 @@ public class DataRepositoryTable extends CustomTable {
 		});
 	}
 
+	private void initializeHeaders(List<DRColumnAttributes> columnAttributes) {
+		this.removeAll();
+		for (DRColumnAttributes header : columnAttributes) {
+			TableColumn column = new TableColumn(this, SWT.LEFT);
+			column.setText(header.getName());
+		}
+		this.pack();
+		for (int i = 0; i < columnAttributes.size(); i++) {
+			this.getColumn(i).pack();
+		}
+
+		this.addPaintListener(new PaintListener() {
+
+			@Override
+			public void paintControl(PaintEvent arg0) {
+				Table table_0 = (Table) arg0.getSource();
+				for (int i = 0; i < table_0.getColumnCount(); i++) {
+					TableColumn column = table_0.getColumn(i);
+					column.setWidth((table_0.getBounds().width - 50) / 5);
+				}
+			}
+		});
+	}
+
 	public void renderAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
 		Artifact artifact = getParentDataRepositoryView().getArtifact();
 		List<DRColumnAttributes> drDatas = new DataRepositoryApi().getAllDRDatas(artifact.getId());
 		Collections.sort(drDatas);
+		initializeHeaders(drDatas);
+		for (int i = 0; i < drDatas.size(); i++) {
+			DRColumnAttributes drColumnAttribute = drDatas.get(i);
+			for (DRCellAttributes drCellAttribute : drColumnAttribute.getDrCellAttributes()) {
+				
+			}
+		}
 	}
 
 	public DataRepositoryView getParentDataRepositoryView() {

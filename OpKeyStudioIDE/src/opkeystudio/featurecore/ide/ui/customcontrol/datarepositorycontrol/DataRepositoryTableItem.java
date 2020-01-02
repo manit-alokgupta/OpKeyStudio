@@ -16,16 +16,8 @@ public class DataRepositoryTableItem extends CustomTableItem {
 		return (DRColumnAttributes) super.getControlData();
 	}
 
-	public DRCellAttributes getDRCellData() {
-		return (DRCellAttributes) super.getControlData();
-	}
-
 	public void setDRColumnData(DRColumnAttributes drColumn) {
 		super.setControlData(drColumn);
-	}
-
-	public void setDRCellData(DRCellAttributes drCell) {
-		super.setControlData(drCell);
 	}
 
 }
