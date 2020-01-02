@@ -21,6 +21,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
@@ -54,6 +55,7 @@ public class GenericTree extends CustomTree {
 	private void initByTreeType() {
 		if (getTreeType() == TREETYPE.DATAREPOSITORYTREE) {
 			initDataRepositories();
+			initDREvents();
 		}
 	}
 
@@ -257,6 +259,35 @@ public class GenericTree extends CustomTree {
 
 	public void initCodedFunction() {
 
+	}
+
+	private void initDREvents() {
+		this.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Object selectedData = getSelectedData();
+				if (selectedData instanceof DRColumnAttributes) {
+					DRColumnAttributes drcolumnAttribute = (DRColumnAttributes) selectedData;
+					System.out.println("DR Column Id " + drcolumnAttribute.getColumn_id());
+					FlowInputArgument selectedFlowInputArgument = getParentTestCaseView().getInputDataTable()
+							.getSelectedFlowInputArgument();
+					if (selectedFlowInputArgument == null) {
+						return;
+					}
+					selectedFlowInputArgument.setDatarepositorycolumnid(drcolumnAttribute.getColumn_id());
+					selectedFlowInputArgument.setModified(true);
+					getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+					getParentTestCaseView().toggleSaveButton(true);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	public void initDataRepositories() {
