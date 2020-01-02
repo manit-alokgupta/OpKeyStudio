@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -50,8 +51,23 @@ public class KeywordsTree extends CustomTree {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = getParentTestCaseView().getArtifact();
 				FlowStep selectedFlowStep = getParentTestCaseView().getFlowStepTable().getSelectedFlowStep();
+				Object selectedData = getSelectedData();
+				if (selectedData instanceof Artifact) {
+					try {
+						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
+								(Artifact) selectedData, artifact.getId(),
+								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+						getParentTestCaseView().toggleSaveButton(true);
+					} catch (SQLException | IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					return;
+				}
 				FlowStep flowStep = new FlowMaker().getFlowStepDTO(getParentTestCaseView().getArtifact(),
-						selectedFlowStep, getSelectedKeyword(), artifact.getId(),
+						selectedFlowStep, (Keyword) getSelectedData(), artifact.getId(),
 						getParentTestCaseView().getFlowStepTable().getFlowStepsData());
 				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
@@ -101,7 +117,7 @@ public class KeywordsTree extends CustomTree {
 		});
 	}
 
-	public Keyword getSelectedKeyword() {
+	public Object getSelectedData() {
 		TreeItem[] selectedItems = getSelection();
 		if (selectedItems == null) {
 			return null;
@@ -116,10 +132,7 @@ public class KeywordsTree extends CustomTree {
 		}
 
 		else {
-
-			Keyword keyWord = (Keyword) selectedKeywordItem.getControlData();
-
-			return keyWord;
+			return selectedKeywordItem.getControlData();
 		}
 	}
 

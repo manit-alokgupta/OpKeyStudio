@@ -35,6 +35,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 public class FlowStepTable extends CustomTable {
 	private FlowStepTable thisTable = this;
 	private TestCaseView parentTestCaseView;
+
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
 		init();
@@ -45,7 +46,6 @@ public class FlowStepTable extends CustomTable {
 		init();
 		this.setParentTestCaseView(parentView);
 	}
-
 
 	private void init() {
 		String[] tableHeaders = { "#", "Keyword", "ORObject", "Input", "Output", "Description" };
@@ -131,7 +131,6 @@ public class FlowStepTable extends CustomTable {
 		this.allTableEditors.add(editor1.getEditor());
 	}
 
-
 	private void disposeAllTableEditors() {
 		for (Control controlEditor : this.allTableEditors) {
 			controlEditor.dispose();
@@ -181,28 +180,35 @@ public class FlowStepTable extends CustomTable {
 			}
 		}
 		selectRow(0);
-		//getParentTestCaseView().getSourceCodeEditor().transpileDatas();
+		// getParentTestCaseView().getSourceCodeEditor().transpileDatas();
 	}
 
 	public void refreshFlowSteps() {
 		disposeAllTableEditors();
 		this.removeAll();
+		MPart mpart = Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		String artifactId = artifact.getId();
 		List<FlowStep> flowSteps = getFlowStepsData();
-		Collections.sort(flowSteps);
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.isDeleted() == false) {
+				String orname = "";
+				String keyWordName = "";
+				if (flowStep.getOrObject().size() > 0) {
+					orname = flowStep.getOrObject().get(0).getName();
+				}
 				if (flowStep.getKeyword() != null) {
-					String orname = "";
-					String keyWordName = "";
-					if (flowStep.getOrObject().size() > 0) {
-						orname = flowStep.getOrObject().get(0).getName();
-					}
-					if (flowStep.getKeyword() != null) {
-						keyWordName = flowStep.getKeyword().getKeywordname();
-					}
+					keyWordName = flowStep.getKeyword().getKeywordname();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
 					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
 							flowStep.getKeyword().getKeyworddescription() });
+					flowTableItem.setFlowStepData(flowStep);
+					addTestCaseTableEditor(flowTableItem);
+				}
+				if (flowStep.getFunctionLibraryComponent() != null) {
+					keyWordName = flowStep.getFunctionLibraryComponent().getName();
+					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", "" });
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
@@ -210,7 +216,6 @@ public class FlowStepTable extends CustomTable {
 		}
 		selectRow(0);
 	}
-
 
 	private void selectRow(int index) {
 		if (this.getItemCount() == 0) {
@@ -250,14 +255,12 @@ public class FlowStepTable extends CustomTable {
 
 	}
 
-
 	public void deleteStep(FlowStep flowStep)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		flowStep.setDeleted(true);
 		refreshFlowSteps();
 		getParentTestCaseView().toggleSaveButton(true);
 	}
-
 
 	public FlowStep getSelectedFlowStep() {
 		FlowStepTableItem flowTableItem = (FlowStepTableItem) this.getSelection()[0];
@@ -296,7 +299,6 @@ public class FlowStepTable extends CustomTable {
 		return lastPosition;
 	}
 
-
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
@@ -309,6 +311,5 @@ public class FlowStepTable extends CustomTable {
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
 	}
-
 
 }
