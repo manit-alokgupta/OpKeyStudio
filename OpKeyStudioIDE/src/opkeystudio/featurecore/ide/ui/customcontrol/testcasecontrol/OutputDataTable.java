@@ -4,6 +4,12 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
+import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -11,6 +17,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
@@ -139,6 +146,70 @@ public class OutputDataTable extends CustomTable {
 				}
 			}
 		});
+		addControlEditor();
+	}
+
+	public void addControlEditor() {
+		TableCursor cursor = new TableCursor(this, 0);
+		ControlEditor editor = new ControlEditor(cursor);
+		editor.grabHorizontal = true;
+		editor.grabVertical = true;
+		cursor.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				CustomTableItem row = (CustomTableItem) cursor.getRow();
+				FlowOutputArgument flowOutputArgument = (FlowOutputArgument) row.getControlData();
+				int selectedColumn = cursor.getColumn();
+				Text text = new Text(cursor, 0);
+				text.addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						text.dispose();
+					}
+
+					@Override
+					public void focusGained(FocusEvent e) {
+
+					}
+				});
+
+				text.addModifyListener(new ModifyListener() {
+
+					@Override
+					public void modifyText(ModifyEvent e) {
+
+						flowOutputArgument.setModified(true);
+						getParentTestCaseView().toggleSaveButton(true);
+						row.setText(selectedColumn, text.getText());
+					}
+				});
+
+				if (selectedColumn == 2) {
+					if (flowOutputArgument.getOutputvariablename() != null) {
+						text.setText(flowOutputArgument.getOutputvariablename());
+						editor.setEditor(text);
+						text.setFocus();
+					} else {
+						text.setText("");
+						editor.setEditor(text);
+						text.setFocus();
+					}
+				} else {
+					if (editor != null) {
+						if (editor.getEditor() != null) {
+							editor.getEditor().dispose();
+						}
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
 	}
 
 	public List<FlowOutputArgument> getFlowOutputArgs() {
@@ -153,7 +224,7 @@ public class OutputDataTable extends CustomTable {
 		this.removeAll();
 		for (FlowOutputArgument flowOutPutArg : getFlowOutputArgs()) {
 			CustomTableItem cti = new CustomTableItem(this, 0);
-			cti.setText(new String[] { keyword.getOutputtype(), "", "" });
+			cti.setText(new String[] { keyword.getOutputtype(), "Output", flowOutPutArg.getOutputvariablename() });
 			cti.setControlData(flowOutPutArg);
 		}
 	}

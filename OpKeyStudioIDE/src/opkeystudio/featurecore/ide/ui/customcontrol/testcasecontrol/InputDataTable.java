@@ -138,6 +138,10 @@ public class InputDataTable extends CustomTable {
 						text.setText(flowInputArgument.getStaticvalue());
 						editor.setEditor(text);
 						text.setFocus();
+					} else {
+						text.setText("");
+						editor.setEditor(text);
+						text.setFocus();
 					}
 				} else {
 					if (editor != null) {
