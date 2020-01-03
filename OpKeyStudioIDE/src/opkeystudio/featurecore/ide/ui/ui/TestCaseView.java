@@ -709,7 +709,7 @@ public class TestCaseView extends Composite {
 			}
 			if (flowStep.getFunctionLibraryComponent() != null) {
 				inputDataTable
-						.setComponentInputArgs(flowStep.getFunctionLibraryComponent().getComponentInputArgument());
+						.setComponentInputArgs(flowStep.getFunctionLibraryComponent().getComponentInputArguments());
 			} else {
 				inputDataTable.setComponentInputArgs(new ArrayList<>());
 			}

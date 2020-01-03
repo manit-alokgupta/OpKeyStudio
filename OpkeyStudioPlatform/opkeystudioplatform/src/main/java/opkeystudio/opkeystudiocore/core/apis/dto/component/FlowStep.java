@@ -154,21 +154,6 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 		this.flowOutputArgs = flowOutputArgs;
 	}
 
-	public List<ComponentInputArgument> getComponentInputArgs() {
-		return componentInputArgs;
-	}
-
-	public void setComponentInputArgs(List<ComponentInputArgument> componentInputArgs) {
-		this.componentInputArgs = componentInputArgs;
-	}
-
-	public List<ComponentOutputArgument> getComponentOutputArgs() {
-		return componentOutputArgs;
-	}
-
-	public void setComponentOutputArgs(List<ComponentOutputArgument> componentOutputArgs) {
-		this.componentOutputArgs = componentOutputArgs;
-	}
 
 	public Keyword getKeyword() {
 		return keyword;

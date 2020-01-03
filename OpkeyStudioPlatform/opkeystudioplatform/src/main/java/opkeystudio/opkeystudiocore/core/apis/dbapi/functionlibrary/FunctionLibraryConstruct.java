@@ -16,8 +16,8 @@ public class FunctionLibraryConstruct {
 		for (FlowStep flowStep : allFlowSteps) {
 			saveFlowInputArguments(flowStep.getFlowInputArgs());
 			saveFlowOutputArguments(flowStep.getFlowOutputArgs());
-			saveComponentInputArguments(flowStep.getComponentInputArgs());
-			saveComponentOutputArguments(flowStep.getComponentOutputArgs());
+			saveComponentInputArguments(flowStep.getFunctionLibraryComponent().getComponentInputArguments());
+			saveComponentOutputArguments(flowStep.getFunctionLibraryComponent().getComponentOutputArguments());
 			saveComponentStep(flowStep);
 		}
 	}

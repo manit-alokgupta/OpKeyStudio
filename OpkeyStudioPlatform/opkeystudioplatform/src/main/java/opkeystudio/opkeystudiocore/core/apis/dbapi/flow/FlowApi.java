@@ -133,8 +133,8 @@ public class FlowApi {
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
-				flComp.setComponentInputArgument(inputArgs);
-				flComp.setComponentOutputArgument(outputArgs);
+				flComp.setComponentInputArguments(inputArgs);
+				flComp.setComponentOutputArguments(outputArgs);
 				flowStep.setOrObject(allORObject);
 				flowStep.setFunctionLibraryComponent(flComp);
 				flowStep.setFlowInputArgs(fis);

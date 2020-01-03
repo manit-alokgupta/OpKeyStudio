@@ -84,11 +84,12 @@ public class FlowMaker {
 		}
 
 		FunctionLibraryComponent flComp = FlowApi.getInstance().getFunctinLibraryComponent(flArtifact.getId()).get(0);
+		flowStep.setFunctionLibraryComponent(flComp);
 		List<ComponentInputArgument> inputArgs = FlowApi.getInstance().getAllComponentInputArgument(flArtifact.getId());
 		List<ComponentOutputArgument> outputArgs = FlowApi.getInstance()
 				.getAllComponentOutputArgument(flArtifact.getId());
-		flComp.setComponentInputArgument(inputArgs);
-		flComp.setComponentOutputArgument(outputArgs);
+		flComp.setComponentInputArguments(inputArgs);
+		flComp.setComponentOutputArguments(outputArgs);
 
 		List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(flowStep);
 		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
@@ -100,7 +101,7 @@ public class FlowMaker {
 		} else {
 			flowStep.setComponent_id(flArtifact.getId());
 		}
-		flowStep.setFunctionLibraryComponent(flComp);
+		
 		flowStep.setPosition(selectedFlowStepPosition + 5);
 		flowStep.setShouldrun(true);
 
@@ -130,12 +131,13 @@ public class FlowMaker {
 			}
 		}
 		if (flowStep.getFunctionLibraryComponent() != null) {
-			List<ComponentInputArgument> componentInputArgs = flowStep.getComponentInputArgs();
+			List<ComponentInputArgument> componentInputArgs = flowStep.getFunctionLibraryComponent().getComponentInputArguments();
 			for (ComponentInputArgument componentInputArgument : componentInputArgs) {
+				System.out.println("Component id " + componentInputArgument.getComponent_id());
 				FlowInputArgument flowInputArgument = new FlowInputArgument();
 				flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
 				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
-			//	flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
+				flowInputArgument.setComponent_ip_id(componentInputArgument.getComponent_id());
 				flowInputArgument.setStaticobjectid(null);
 				flowInputArgument.setAdded(true);
 				flowInputArgument.setDatasource(DataSource.StaticValue);
