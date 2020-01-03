@@ -8,15 +8,17 @@ public class FlowOutputArgument extends Modified {
 	private String flow_step_oa_id;
 	@DBField
 	private String keyword_op_id;
-	
+
 	private int clustering_key;
-	
+
 	@DBField
 	private String flow_stepid;
 	@DBField
 	private String componentstep_id;
 	@DBField
 	private String componentstep_oa_id;
+	@DBField
+	private String outputvariablename;
 
 	public String getFlow_step_oa_id() {
 		return flow_step_oa_id;
@@ -64,5 +66,13 @@ public class FlowOutputArgument extends Modified {
 
 	public void setComponentstep_oa_id(String componentstep_oa_id) {
 		this.componentstep_oa_id = componentstep_oa_id;
+	}
+
+	public String getOutputvariablename() {
+		return outputvariablename;
+	}
+
+	public void setOutputvariablename(String outputvariablename) {
+		this.outputvariablename = outputvariablename;
 	}
 }

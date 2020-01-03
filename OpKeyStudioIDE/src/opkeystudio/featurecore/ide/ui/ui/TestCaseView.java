@@ -506,7 +506,7 @@ public class TestCaseView extends Composite {
 		dataOutPutTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
 		dataOutPutTabItem.setText("Data Output");
 		dataOutPutTabItem.setToolTipText("Data Output");
-		outputDataTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION);
+		outputDataTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		dataOutPutTabItem.setControl(outputDataTable);
 		outputDataTable.setHeaderVisible(true);
 		outputDataTable.setLinesVisible(true);
@@ -731,7 +731,7 @@ public class TestCaseView extends Composite {
 			inputDataTable.renderInputTable();
 
 			outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
-			outputDataTable.renderOutPutTable();
+			outputDataTable.renderOutPutTableFlowStep();
 			renderTestObjectTable(flowStep, true);
 
 			toggleDeleteButton(true);

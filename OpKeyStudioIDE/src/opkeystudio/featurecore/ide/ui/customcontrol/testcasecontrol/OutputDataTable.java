@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
@@ -19,12 +20,12 @@ public class OutputDataTable extends CustomTable {
 	private Keyword keyword;
 	private List<FlowOutputArgument> flowOutputArgs;
 	private TestCaseView parentTestCaseView;
+
 	public OutputDataTable(Composite parent, int style, TestCaseView parentView) {
 		super(parent, style);
 		init();
 		this.setParentTestCaseView(parentView);
 	}
-
 
 	public OutputDataTable(Composite parent, int style) {
 		super(parent, style);
@@ -62,11 +63,22 @@ public class OutputDataTable extends CustomTable {
 		this.flowOutputArgs = flowOutputArgs;
 	}
 
-	public void renderOutPutTable() {
+	public void renderOutPutTableFlowStep() {
 		this.removeAll();
 		for (FlowOutputArgument flowOutPutArg : getFlowOutputArgs()) {
 			CustomTableItem cti = new CustomTableItem(this, 0);
 			cti.setText(new String[] { keyword.getOutputtype(), "", "" });
+			cti.setControlData(flowOutPutArg);
+		}
+	}
+
+	public void renderOutPutTableAll() {
+		this.removeAll();
+		List<FlowOutputArgument> flowOutPutArgs = new FlowApi().fetchFlowStepOutputArguments(
+				getParentTestCaseView().getFlowStepTable().getSelectedFlowStep().getFlow_stepid());
+		for (FlowOutputArgument flowOutPutArg : flowOutPutArgs) {
+			CustomTableItem cti = new CustomTableItem(this, 0);
+			cti.setText(new String[] { keyword.getOutputtype(), flowOutPutArg.getOutputvariablename(), "" });
 		}
 	}
 

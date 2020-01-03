@@ -113,8 +113,6 @@ public class FlowApi {
 
 	}
 
-
-
 	public List<FlowStep> getAllFlowSteps(String flowId)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
@@ -183,6 +181,20 @@ public class FlowApi {
 				FunctionLibraryComponent.class);
 		sqlComm.disconnect();
 		return mapper.readValue(result, type);
+	}
+
+	public List<FlowOutputArgument> fetchFlowStepOutputArguments(String flowStepId) {
+		String query = String.format("SELECT * FROM flow_step_output_arguments where flow_stepID!='%s'", flowStepId);
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<FlowOutputArgument>();
 	}
 
 	public List<FlowInputArgument> getFlowInputArguments() {
