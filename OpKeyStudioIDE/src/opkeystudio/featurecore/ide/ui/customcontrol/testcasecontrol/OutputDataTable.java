@@ -78,7 +78,7 @@ public class OutputDataTable extends CustomTable {
 				getParentTestCaseView().getFlowStepTable().getSelectedFlowStep().getFlow_stepid());
 		for (FlowOutputArgument flowOutPutArg : flowOutPutArgs) {
 			CustomTableItem cti = new CustomTableItem(this, 0);
-			cti.setText(new String[] { keyword.getOutputtype(), flowOutPutArg.getOutputvariablename(), "" });
+			cti.setText(new String[] { "", flowOutPutArg.getOutputvariablename(), "" });
 		}
 	}
 

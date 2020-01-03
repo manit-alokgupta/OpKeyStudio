@@ -66,6 +66,7 @@ import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 public class TestCaseView extends Composite {
 	private FlowStepTable flowStepTable;
 	private OutputDataTable outputDataTable;
+	private OutputDataTable outputVariableTable;
 	private TestObjectTable testObjectTable;
 	private InputDataTable inputDataTable;
 	private StepDetailsInputData InputDataTable;
@@ -506,10 +507,10 @@ public class TestCaseView extends Composite {
 		dataOutPutTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
 		dataOutPutTabItem.setText("Data Output");
 		dataOutPutTabItem.setToolTipText("Data Output");
-		outputDataTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
-		dataOutPutTabItem.setControl(outputDataTable);
-		outputDataTable.setHeaderVisible(true);
-		outputDataTable.setLinesVisible(true);
+		outputVariableTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
+		dataOutPutTabItem.setControl(outputVariableTable);
+		outputVariableTable.setHeaderVisible(true);
+		outputVariableTable.setLinesVisible(true);
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
@@ -732,6 +733,7 @@ public class TestCaseView extends Composite {
 
 			outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
 			outputDataTable.renderOutPutTableFlowStep();
+			outputVariableTable.renderOutPutTableAll();
 			renderTestObjectTable(flowStep, true);
 
 			toggleDeleteButton(true);
