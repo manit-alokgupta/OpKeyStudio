@@ -82,6 +82,9 @@ public class FlowStepTable extends CustomTable {
 
 	@SuppressWarnings("unchecked")
 	public List<FlowStep> getFlowStepsData() {
+		if (super.getControlData() == null) {
+			return new ArrayList<>();
+		}
 		return (List<FlowStep>) super.getControlData();
 	}
 
@@ -162,18 +165,23 @@ public class FlowStepTable extends CustomTable {
 				if (flowStep.getOrObject().size() > 0) {
 					orname = flowStep.getOrObject().get(0).getName();
 				}
+				String keywordDescription = "";
+				if (flowStep.getComment() != null) {
+					keywordDescription = flowStep.getComment();
+				} else if (flowStep.getComments() != null) {
+					keywordDescription = flowStep.getComments();
+				}
 				if (flowStep.getKeyword() != null) {
 					keyWordName = flowStep.getKeyword().getKeywordname();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
-							flowStep.getKeyword().getKeyworddescription() });
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", keywordDescription });
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
 				if (flowStep.getFunctionLibraryComponent() != null) {
 					keyWordName = flowStep.getFunctionLibraryComponent().getName();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", "" });
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", keywordDescription });
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
