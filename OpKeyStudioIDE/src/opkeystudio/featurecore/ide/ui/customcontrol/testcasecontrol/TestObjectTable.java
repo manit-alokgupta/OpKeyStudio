@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -9,10 +10,11 @@ import org.eclipse.swt.widgets.TableColumn;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class TestObjectTable extends CustomTable {
-	private List<ORObject> orobject;
+	private List<ORObject> orobject = new ArrayList<ORObject>();
 	private TestCaseView parentTestCaseView;
 
 	public TestObjectTable(Composite parent, int style) {
@@ -46,11 +48,20 @@ public class TestObjectTable extends CustomTable {
 		this.orobject = orobject;
 	}
 
-	public void renderORObjectTable() {
+	public void renderORObjectTable(FlowStep flowStep) {
 		this.removeAll();
-		for (ORObject orobject : getOrobject()) {
-			CustomTableItem cti = new CustomTableItem(this, 0);
-			cti.setText(new String[] { "Object", orobject.getName(), "", "" });
+		if (getOrobject().size() > 0) {
+			for (ORObject orobject : getOrobject()) {
+				CustomTableItem cti = new CustomTableItem(this, 0);
+				cti.setText(new String[] { "Object", orobject.getName(), "", "" });
+			}
+			return;
+		}
+		if (flowStep.getKeyword() != null) {
+			if (flowStep.getKeyword().isKeywordContainsORObject()) {
+				CustomTableItem cti = new CustomTableItem(this, 0);
+				cti.setText(new String[] { "Object", "", "", "" });
+			}
 		}
 	}
 

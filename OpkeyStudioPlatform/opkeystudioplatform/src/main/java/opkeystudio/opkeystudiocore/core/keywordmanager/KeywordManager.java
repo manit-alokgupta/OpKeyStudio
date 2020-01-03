@@ -28,6 +28,15 @@ public class KeywordManager {
 		return manager;
 	}
 
+	private void keywordContainsORObject(Keyword keyword) {
+		for (KeyWordInputArgument kinarg : keyword.getKeywordInputArguments()) {
+			if (kinarg.getDatatype().equals("ORObject")) {
+				keyword.setKeywordContainsORObject(true);
+				break;
+			}
+		}
+	}
+
 	public void loadAllKeywords() {
 		String keywordDirPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "GenericDB";
 		File keywordDirFolder = new File(keywordDirPath);
@@ -45,6 +54,7 @@ public class KeywordManager {
 				}
 				keyword.setPluginName(keywordsDBFile.getName().replaceAll(".db", ""));
 				keyword.setKeywordInputArguments(keywordInputArguments);
+				keywordContainsORObject(keyword);
 			}
 			addAllKeyWords(allKeywords);
 			addAllKeywordsInGroup(allKeywords);

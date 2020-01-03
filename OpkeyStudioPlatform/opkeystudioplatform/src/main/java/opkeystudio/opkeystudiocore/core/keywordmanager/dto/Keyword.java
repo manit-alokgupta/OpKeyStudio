@@ -30,6 +30,7 @@ public class Keyword extends Modified {
 	private String pluginid;
 	private String deprecation_reason;
 	private String pluginName;
+	private boolean KeywordContainsORObject = false;
 	private List<KeyWordInputArgument> keywordInputArguments = new ArrayList<KeyWordInputArgument>();
 
 	public String getKeywordid() {
@@ -206,5 +207,13 @@ public class Keyword extends Modified {
 
 	public void setPluginName(String pluginName) {
 		this.pluginName = pluginName;
+	}
+
+	public boolean isKeywordContainsORObject() {
+		return KeywordContainsORObject;
+	}
+
+	public void setKeywordContainsORObject(boolean keywordContainsORObject) {
+		KeywordContainsORObject = keywordContainsORObject;
 	}
 }

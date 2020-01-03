@@ -57,7 +57,6 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private boolean istestsuites;
 
 	private boolean NullKeyword = false;
-
 	public String getKeywordid() {
 		return keywordid;
 	}

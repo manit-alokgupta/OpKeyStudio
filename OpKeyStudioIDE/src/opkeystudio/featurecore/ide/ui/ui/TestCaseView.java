@@ -649,11 +649,17 @@ public class TestCaseView extends Composite {
 					if (orobject == null) {
 						return;
 					}
-					if (flowStep.getOrObject().size() > 0) {
+					boolean keywordHasORObject = false;
+					if (flowStep.getKeyword() != null) {
+						if (flowStep.getKeyword().isKeywordContainsORObject()) {
+							keywordHasORObject = true;
+						}
+					}
+					if (flowStep.getOrObject().size() > 0 || keywordHasORObject) {
 						List<ORObject> orobjects = new ArrayList<>();
 						orobjects.add(orobject);
 						flowStep.setOrObject(orobjects);
-						flowStep.isModified();
+						flowStep.setModified(true);
 						List<FlowInputArgument> finpargs = flowStep.getFlowInputArgs();
 						for (FlowInputArgument finparg : finpargs) {
 							finparg.setModified(true);
@@ -715,7 +721,7 @@ public class TestCaseView extends Composite {
 			}
 			inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
 			inputDataTable.renderInputTable();
-			
+
 			outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
 			outputDataTable.renderOutPutTable();
 			renderTestObjectTable(flowStep, true);
@@ -766,10 +772,14 @@ public class TestCaseView extends Composite {
 
 	private void renderTestObjectTable(FlowStep flowStep, boolean renderTreeAlso) {
 		testObjectTable.setOrobject(flowStep.getOrObject());
-		testObjectTable.renderORObjectTable();
+		testObjectTable.renderORObjectTable(flowStep);
 		if (renderTreeAlso) {
 			if (flowStep.getOrObject().size() > 0) {
 				testObjectTree.fetchAndRenderORTree();
+			} else if (flowStep.getKeyword() != null) {
+				if (flowStep.getKeyword().isKeywordContainsORObject()) {
+					testObjectTree.fetchAndRenderORTree();
+				}
 			}
 		}
 	}
