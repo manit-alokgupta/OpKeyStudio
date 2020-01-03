@@ -113,7 +113,7 @@ public class FlowMaker {
 		return flowStep;
 	}
 
-	private List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep) {
+	public List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep) {
 		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
 		List<KeyWordInputArgument> keywordInputArguments = flowStep.getKeyword().getKeywordInputArguments();
 		for (KeyWordInputArgument keywordInputArgument : keywordInputArguments) {
