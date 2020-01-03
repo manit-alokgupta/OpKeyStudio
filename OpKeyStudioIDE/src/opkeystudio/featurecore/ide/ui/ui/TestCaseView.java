@@ -56,6 +56,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -811,7 +812,13 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Add Button pressed");
-
+				Artifact artifact = getArtifact();
+				FlowStep selectedFlowStep = getFlowStepTable().getSelectedFlowStep();
+				FlowStep flowStep = new FlowMaker().getFlowStepDTO(getArtifact(), selectedFlowStep, null,
+						artifact.getId(), getFlowStepTable().getFlowStepsData());
+				getFlowStepTable().getFlowStepsData().add(flowStep);
+				getFlowStepTable().refreshFlowSteps();
+				toggleSaveButton(true);
 			}
 
 			@Override

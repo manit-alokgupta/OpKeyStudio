@@ -56,6 +56,8 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private boolean isfunctionlibrary;
 	private boolean istestsuites;
 
+	private boolean NullKeyword = false;
+
 	public String getKeywordid() {
 		return keywordid;
 	}
@@ -251,5 +253,13 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 
 	public void setStepcomponent_id(String stepcomponent_id) {
 		this.stepcomponent_id = stepcomponent_id;
+	}
+
+	public boolean isNullKeyword() {
+		return NullKeyword;
+	}
+
+	public void setNullKeyword(boolean nullKeyword) {
+		NullKeyword = nullKeyword;
 	}
 }

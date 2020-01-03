@@ -179,7 +179,7 @@ public class FlowStepTable extends CustomTable {
 				}
 			}
 		}
-		selectRow(0);
+		selectDefaultRow();
 		// getParentTestCaseView().getSourceCodeEditor().transpileDatas();
 	}
 
@@ -210,9 +210,18 @@ public class FlowStepTable extends CustomTable {
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
+				if (flowStep.getKeyword() == null && flowStep.getFunctionLibraryComponent() == null) {
+					if (flowStep.isNullKeyword()) {
+						keyWordName = "";
+						FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
+						flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", "" });
+						flowTableItem.setFlowStepData(flowStep);
+						addTestCaseTableEditor(flowTableItem);
+					}
+				}
 			}
 		}
-		selectRow(0);
+		selectDefaultRow();
 	}
 
 	private void selectRow(int index) {
@@ -220,6 +229,14 @@ public class FlowStepTable extends CustomTable {
 			return;
 		}
 		this.setSelection(index);
+		this.notifyListeners(SWT.Selection, null);
+	}
+
+	private void selectDefaultRow() {
+		if (this.getItemCount() == 0) {
+			return;
+		}
+		this.setSelection(this.getSelectedRowIndex());
 		this.notifyListeners(SWT.Selection, null);
 	}
 

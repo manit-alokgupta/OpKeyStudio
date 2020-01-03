@@ -36,6 +36,9 @@ public class FlowMaker {
 		}
 
 		FlowStep flowStep = new FlowStep();
+		if (keyword == null) {
+			flowStep.setNullKeyword(true);
+		}
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			flowStep.setComponent_id(flow_id);
 			flowStep.setStepid(Utilities.getInstance().getUniqueUUID(""));
@@ -43,14 +46,19 @@ public class FlowMaker {
 			flowStep.setFlow_id(flow_id);
 			flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
 		}
-		flowStep.setKeyword(keyword);
-		flowStep.setKeywordid(keyword.getKeywordid());
+		if (keyword != null) {
+			flowStep.setKeyword(keyword);
+			flowStep.setKeywordid(keyword.getKeywordid());
+		}
 		flowStep.setPosition(selectedFlowStepPosition + 5);
 		flowStep.setShouldrun(true);
-		List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(flowStep);
-		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
-		flowStep.setFlowInputArgs(flowInputArguments);
-		flowStep.setFlowOutputArgs(flowOutputArguments);
+
+		if (keyword != null) {
+			List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(flowStep);
+			List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
+			flowStep.setFlowInputArgs(flowInputArguments);
+			flowStep.setFlowOutputArgs(flowOutputArguments);
+		}
 		flowStep.setAdded(true);
 		for (int i = selectedFlowStepIndex + 1; i < flowSteps.size(); i++) {
 			FlowStep iflowStep = flowSteps.get(i);
