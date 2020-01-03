@@ -49,6 +49,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTab
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree.TREETYPE;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor.SourceCodeEditor;
@@ -507,7 +508,8 @@ public class TestCaseView extends Composite {
 		dataOutPutTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
 		dataOutPutTabItem.setText("Data Output");
 		dataOutPutTabItem.setToolTipText("Data Output");
-		outputVariableTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
+		outputVariableTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this,
+				TABLE_TYPE.SELECTIONTABLE);
 		dataOutPutTabItem.setControl(outputVariableTable);
 		outputVariableTable.setHeaderVisible(true);
 		outputVariableTable.setLinesVisible(true);
@@ -543,7 +545,8 @@ public class TestCaseView extends Composite {
 		outputDataTabItem.setControl(composite_4);
 		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		outputDataTable = new OutputDataTable(composite_4, SWT.BORDER | SWT.FULL_SELECTION, this);
+		outputDataTable = new OutputDataTable(composite_4, SWT.BORDER | SWT.FULL_SELECTION, this,
+				TABLE_TYPE.INPUTTABLE);
 //		outputDataTable = new Table(composite_4, SWT.BORDER | SWT.FULL_SELECTION);
 		outputDataTable.setHeaderVisible(true);
 		outputDataTable.setLinesVisible(true);

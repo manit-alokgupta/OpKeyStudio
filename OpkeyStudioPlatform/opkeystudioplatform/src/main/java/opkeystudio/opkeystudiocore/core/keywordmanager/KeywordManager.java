@@ -43,7 +43,7 @@ public class KeywordManager {
 		File[] keywordsDBFiles = keywordDirFolder.listFiles();
 		for (File keywordsDBFile : keywordsDBFiles) {
 			List<KeyWordInputArgument> allKeywordInputArguments = new KeywordLoader()
-					.loadAllKeywordArguments(keywordsDBFile.getAbsolutePath());
+					.loadAllKeywordInputArguments(keywordsDBFile.getAbsolutePath());
 			List<Keyword> allKeywords = new KeywordLoader().loadKeywords(keywordsDBFile.getAbsolutePath());
 			for (Keyword keyword : allKeywords) {
 				List<KeyWordInputArgument> keywordInputArguments = new ArrayList<KeyWordInputArgument>();

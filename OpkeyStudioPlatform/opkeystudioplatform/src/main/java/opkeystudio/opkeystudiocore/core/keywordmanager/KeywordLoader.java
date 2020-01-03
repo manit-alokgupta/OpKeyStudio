@@ -43,7 +43,7 @@ public class KeywordLoader {
 		return new ArrayList<Keyword>();
 	}
 
-	public List<KeyWordInputArgument> loadAllKeywordArguments(String dbPath) {
+	public List<KeyWordInputArgument> loadAllKeywordInputArguments(String dbPath) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator(dbPath);
 		try {
 			sqlComm.connect();

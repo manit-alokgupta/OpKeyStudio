@@ -17,14 +17,20 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class OutputDataTable extends CustomTable {
+	public enum TABLE_TYPE {
+		SELECTIONTABLE, INPUTTABLE
+	};
+
 	private Keyword keyword;
 	private List<FlowOutputArgument> flowOutputArgs;
 	private TestCaseView parentTestCaseView;
+	private TABLE_TYPE tableType;
 
-	public OutputDataTable(Composite parent, int style, TestCaseView parentView) {
+	public OutputDataTable(Composite parent, int style, TestCaseView parentView, TABLE_TYPE tableType) {
 		super(parent, style);
-		init();
 		this.setParentTestCaseView(parentView);
+		setTableType(tableType);
+		init();
 	}
 
 	public OutputDataTable(Composite parent, int style) {
@@ -32,7 +38,34 @@ public class OutputDataTable extends CustomTable {
 		init();
 	}
 
+	private void initForSelectionTable() {
+		String[] tableHeaders = { "Output Variable Name", "Description" };
+		for (String header : tableHeaders) {
+			TableColumn column = new TableColumn(this, SWT.LEFT);
+			column.setText(header);
+		}
+		this.pack();
+		for (int i = 0; i < tableHeaders.length; i++) {
+			this.getColumn(i).pack();
+		}
+		this.addPaintListener(new PaintListener() {
+
+			@Override
+			public void paintControl(PaintEvent arg0) {
+				Table table_0 = (Table) arg0.getSource();
+				for (int i = 0; i < table_0.getColumnCount(); i++) {
+					TableColumn column = table_0.getColumn(i);
+					column.setWidth((table_0.getBounds().width) / 2);
+				}
+			}
+		});
+	}
+
 	private void init() {
+		if (getTableType() == TABLE_TYPE.SELECTIONTABLE) {
+			initForSelectionTable();
+			return;
+		}
 		String[] tableHeaders = { "Type", "Parameter Name", "Output Variable" };
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, SWT.LEFT);
@@ -79,7 +112,7 @@ public class OutputDataTable extends CustomTable {
 		for (FlowOutputArgument flowOutPutArg : flowOutPutArgs) {
 			if (flowOutPutArg.getOutputvariablename() != null) {
 				CustomTableItem cti = new CustomTableItem(this, 0);
-				cti.setText(new String[] { "", flowOutPutArg.getOutputvariablename(), "" });
+				cti.setText(new String[] { flowOutPutArg.getOutputvariablename(), "" });
 			}
 		}
 	}
@@ -98,5 +131,13 @@ public class OutputDataTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public TABLE_TYPE getTableType() {
+		return tableType;
+	}
+
+	public void setTableType(TABLE_TYPE tableType) {
+		this.tableType = tableType;
 	}
 }
