@@ -16,8 +16,10 @@ public class FunctionLibraryConstruct {
 		for (FlowStep flowStep : allFlowSteps) {
 			saveFlowInputArguments(flowStep.getFlowInputArgs());
 			saveFlowOutputArguments(flowStep.getFlowOutputArgs());
-			saveComponentInputArguments(flowStep.getFunctionLibraryComponent().getComponentInputArguments());
-			saveComponentOutputArguments(flowStep.getFunctionLibraryComponent().getComponentOutputArguments());
+			if (flowStep.getFunctionLibraryComponent() != null) {
+				saveComponentInputArguments(flowStep.getFunctionLibraryComponent().getComponentInputArguments());
+				saveComponentOutputArguments(flowStep.getFunctionLibraryComponent().getComponentOutputArguments());
+			}
 			saveComponentStep(flowStep);
 		}
 	}
@@ -80,7 +82,8 @@ public class FunctionLibraryConstruct {
 
 	private void addComponentStep(FlowStep flowStep) {
 		if (flowStep.isAdded()) {
-			String query = new QueryMaker().createInsertQuery(flowStep, "component_design_steps", "", "flow_id","flow_stepid");
+			String query = new QueryMaker().createInsertQuery(flowStep, "component_design_steps", "", "flow_id",
+					"flow_stepid");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}

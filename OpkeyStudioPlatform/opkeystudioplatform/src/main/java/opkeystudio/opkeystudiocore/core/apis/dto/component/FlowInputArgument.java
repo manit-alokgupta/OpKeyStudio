@@ -41,6 +41,9 @@ public class FlowInputArgument extends Modified {
 	@DBField
 	private String datarepositorycolumnid;
 
+	@DBField
+	private String componentstep_oa_id;
+
 	public String getFlow_step_ia_id() {
 		return flow_step_ia_id;
 	}
@@ -167,5 +170,13 @@ public class FlowInputArgument extends Modified {
 
 	public void setFlow_step_oa_id(String flow_step_oa_id) {
 		this.flow_step_oa_id = flow_step_oa_id;
+	}
+
+	public String getComponentstep_oa_id() {
+		return componentstep_oa_id;
+	}
+
+	public void setComponentstep_oa_id(String componentstep_oa_id) {
+		this.componentstep_oa_id = componentstep_oa_id;
 	}
 }

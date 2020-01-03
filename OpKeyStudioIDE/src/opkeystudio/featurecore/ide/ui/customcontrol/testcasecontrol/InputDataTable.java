@@ -229,7 +229,12 @@ public class InputDataTable extends CustomTable {
 		}
 
 		if (dataSourceType == DataSource.ValueFromOutputArgument) {
-			String flow_step_oa_id = flowInputArgument.getFlow_step_oa_id();
+			String flow_step_oa_id = null;
+			if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+				flow_step_oa_id = flowInputArgument.getComponentstep_oa_id();
+			} else {
+				flow_step_oa_id = flowInputArgument.getFlow_step_oa_id();
+			}
 			if (flow_step_oa_id == null) {
 				return;
 			}

@@ -494,14 +494,18 @@ public class TestCaseView extends Composite {
 
 		datasTabHolder = new TabFolder(composite_14, SWT.NONE);
 
-		TabItem drVariableTabItem = new TabItem(datasTabHolder, SWT.NONE);
-		drVariableTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
-		drVariableTabItem.setText("Global DR");
-		drVariableTabItem.setToolTipText("Global DR");
-		drTree = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this, TREETYPE.DATAREPOSITORYTREE);
-		drVariableTabItem.setControl(drTree);
-		drTree.setHeaderVisible(true);
-		drTree.setLinesVisible(true);
+		if (getArtifact().getFile_type_enum() != MODULETYPE.Component) {
+			TabItem drVariableTabItem = new TabItem(datasTabHolder, SWT.NONE);
+			drVariableTabItem
+					.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
+			drVariableTabItem.setText("Global DR");
+			drVariableTabItem.setToolTipText("Global DR");
+			drTree = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this,
+					TREETYPE.DATAREPOSITORYTREE);
+			drVariableTabItem.setControl(drTree);
+			drTree.setHeaderVisible(true);
+			drTree.setLinesVisible(true);
+		}
 
 		TabItem dataOutPutTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		dataOutPutTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
@@ -1049,21 +1053,6 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				allDataTreeView.initCodedFunction();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		drTree.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override

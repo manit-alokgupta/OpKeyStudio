@@ -268,7 +268,6 @@ public class GenericTree extends CustomTree {
 				Object selectedData = getSelectedData();
 				if (selectedData instanceof DRColumnAttributes) {
 					DRColumnAttributes drcolumnAttribute = (DRColumnAttributes) selectedData;
-					System.out.println("DR Column Id " + drcolumnAttribute.getColumn_id());
 					FlowInputArgument selectedFlowInputArgument = getParentTestCaseView().getInputDataTable()
 							.getSelectedFlowInputArgument();
 					if (selectedFlowInputArgument == null) {
