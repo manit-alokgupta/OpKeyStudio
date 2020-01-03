@@ -13,12 +13,12 @@ import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 
 public class FlowConstruct {
 	public void saveAllFlowSteps(Artifact artifact, List<FlowStep> allFlowSteps) {
-		System.out.println("Saving "+artifact.getFile_type_enum());
+		System.out.println("Saving " + artifact.getFile_type_enum());
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			new FunctionLibraryConstruct().saveAllComponentSteps(allFlowSteps);
 			return;
 		}
-		
+
 		for (FlowStep flowStep : allFlowSteps) {
 			saveFlowInputArguments(flowStep.getFlowInputArgs());
 			saveFlowOutputArguments(flowStep.getFlowOutputArgs());
@@ -35,16 +35,16 @@ public class FlowConstruct {
 	private void saveFlowInputArguments(List<FlowInputArgument> flowInputArguments) {
 		for (FlowInputArgument flowInputArgument : flowInputArguments) {
 			deleteFlowInputArgument(flowInputArgument);
-			updateFlowInputArgument(flowInputArgument);
 			addFlowInputArgument(flowInputArgument);
+			updateFlowInputArgument(flowInputArgument);
 		}
 	}
 
 	private void saveFlowOutputArguments(List<FlowOutputArgument> flowOutputArguments) {
 		for (FlowOutputArgument flowOutputArgument : flowOutputArguments) {
 			deleteFlowOutputArgument(flowOutputArgument);
-			updateFlowOutputArgument(flowOutputArgument);
 			addFlowOutputArgument(flowOutputArgument);
+			updateFlowOutputArgument(flowOutputArgument);
 		}
 	}
 

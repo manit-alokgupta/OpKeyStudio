@@ -137,7 +137,7 @@ public class FlowMaker {
 				FlowInputArgument flowInputArgument = new FlowInputArgument();
 				flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
 				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
-				flowInputArgument.setComponent_ip_id(componentInputArgument.getComponent_id());
+				flowInputArgument.setComponent_ip_id(componentInputArgument.getIp_id());
 				flowInputArgument.setStaticobjectid(null);
 				flowInputArgument.setAdded(true);
 				flowInputArgument.setDatasource(DataSource.StaticValue);
