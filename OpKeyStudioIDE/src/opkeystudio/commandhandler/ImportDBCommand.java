@@ -1,17 +1,12 @@
 package opkeystudio.commandhandler;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.project.ProjectDataApi;
@@ -24,7 +19,7 @@ public class ImportDBCommand {
 	String[] filterExt = { "*.db;*.sql" };
 
 	@Execute
-	public void execute(Shell shell) throws JsonParseException, JsonMappingException, SQLException, IOException {
+	public void execute(Shell shell) {
 		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
 		dialog.setFilterExtensions(filterExt);
 		dialog.open();

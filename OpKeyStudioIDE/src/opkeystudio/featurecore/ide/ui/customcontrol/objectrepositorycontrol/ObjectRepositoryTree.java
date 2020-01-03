@@ -182,19 +182,13 @@ public class ObjectRepositoryTree extends CustomTree {
 
 	public void fetchAndRenderORTree() {
 		this.removeAll();
-		try {
-			ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
-			rootNode.setText("ObjectRepository");
-			rootNode.setExpanded(true);
-			addIcon(rootNode);
-			List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("ObjectRepository");
-			for (Artifact artifact : artifacts) {
-				renderObjectRepositories(rootNode, artifact.getName(), artifact.getId());
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
+		rootNode.setText("ObjectRepository");
+		rootNode.setExpanded(true);
+		addIcon(rootNode);
+		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("ObjectRepository");
+		for (Artifact artifact : artifacts) {
+			renderObjectRepositories(rootNode, artifact.getName(), artifact.getId());
 		}
 	}
 

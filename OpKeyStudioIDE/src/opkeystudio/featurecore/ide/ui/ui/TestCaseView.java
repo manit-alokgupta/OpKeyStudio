@@ -715,9 +715,9 @@ public class TestCaseView extends Composite {
 			}
 			inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
 			inputDataTable.renderInputTable();
-
+			
 			outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
-
+			outputDataTable.renderOutPutTable();
 			renderTestObjectTable(flowStep, true);
 
 			toggleDeleteButton(true);

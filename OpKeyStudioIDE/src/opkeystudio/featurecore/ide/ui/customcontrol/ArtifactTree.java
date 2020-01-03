@@ -1,7 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +11,6 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
@@ -204,7 +199,7 @@ public class ArtifactTree extends CustomTree {
 		this.setRedraw(true);
 	}
 
-	public void renderArtifacts() throws JsonParseException, JsonMappingException, SQLException, IOException {
+	public void renderArtifacts() {
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}

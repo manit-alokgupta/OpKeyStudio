@@ -28,7 +28,7 @@ public class KeywordManager {
 		return manager;
 	}
 
-	public void loadAllKeywords() throws JsonParseException, JsonMappingException, SQLException, IOException {
+	public void loadAllKeywords() {
 		String keywordDirPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "GenericDB";
 		File keywordDirFolder = new File(keywordDirPath);
 		File[] keywordsDBFiles = keywordDirFolder.listFiles();

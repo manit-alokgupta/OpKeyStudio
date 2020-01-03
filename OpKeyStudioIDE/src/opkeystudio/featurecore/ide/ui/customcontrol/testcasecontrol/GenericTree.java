@@ -237,22 +237,17 @@ public class GenericTree extends CustomTree {
 
 	public void initFunctionLibraries() {
 		this.removeAll();
-		try {
-			List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("Component");
-			CustomTreeItem rootNode = new CustomTreeItem(this, 0);
-			rootNode.setText("Function Library");
-			rootNode.setExpanded(true);
-			for (Artifact artifact : artifacts) {
-				CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
-				keywItem.setText(artifact.getName());
-				keywItem.setControlData(artifact);
-				addIcon(keywItem);
-			}
-			expandAll(rootNode);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("Component");
+		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
+		rootNode.setText("Function Library");
+		rootNode.setExpanded(true);
+		for (Artifact artifact : artifacts) {
+			CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
+			keywItem.setText(artifact.getName());
+			keywItem.setControlData(artifact);
+			addIcon(keywItem);
 		}
+		expandAll(rootNode);
 	}
 
 	public void initSeriveRepo() {

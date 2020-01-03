@@ -410,12 +410,7 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					testCaseTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				testCaseTree.renderArtifacts();
 
 			}
 

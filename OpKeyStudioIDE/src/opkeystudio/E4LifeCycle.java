@@ -1,8 +1,5 @@
 package opkeystudio;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
@@ -30,12 +27,7 @@ public class E4LifeCycle {
 //		ldialog.open();
 
 		Utilities.getInstance().initializeOpKeyStudioPath();
-		try {
-			KeywordManager.getInstance().loadAllKeywords();
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace(); 
-		}
+		KeywordManager.getInstance().loadAllKeywords();
 	}
 
 	@PreSave

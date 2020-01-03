@@ -412,12 +412,7 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 				new ArtifactApi().deleteArtifact(artifact);
-				try {
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				artifactTree.renderArtifacts();
 			}
 
 			@Override
@@ -449,13 +444,8 @@ public class ArtifactTreeUI extends Composite {
 				}
 				artifact.setName(renamedText);
 				new ArtifactApi().renameArtifact(artifact);
-				try {
-					artifactTree.renderArtifacts();
-					renameMenuItem.setEnabled(false);
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				artifactTree.renderArtifacts();
+				renameMenuItem.setEnabled(false);
 				renameMenuItem.setEnabled(false);
 			}
 
@@ -558,17 +548,11 @@ public class ArtifactTreeUI extends Composite {
 				}
 				artifact.setName(renamedText);
 				new ArtifactApi().renameArtifact(artifact);
-				try {
-					toggleRenameToolbarItem(false);
-					toogleDeleteToolbarItem(false);
-					toogleNewToolbarMenuItem(false);
-					toogleNewToolbarItem(false);
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-//				toolbarRename.setEnabled(false);
+				toggleRenameToolbarItem(false);
+				toogleDeleteToolbarItem(false);
+				toogleNewToolbarMenuItem(false);
+				toogleNewToolbarItem(false);
+				artifactTree.renderArtifacts();
 
 			}
 
@@ -590,16 +574,11 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 				new ArtifactApi().deleteArtifact(artifact);
-				try {
-					toggleRenameToolbarItem(false);
-					toogleDeleteToolbarItem(false);
-					toogleNewToolbarMenuItem(false);
-					toogleNewToolbarItem(false);
-					artifactTree.renderArtifacts();
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				toggleRenameToolbarItem(false);
+				toogleDeleteToolbarItem(false);
+				toogleNewToolbarMenuItem(false);
+				toogleNewToolbarItem(false);
+				artifactTree.renderArtifacts();
 
 			}
 
@@ -959,21 +938,7 @@ public class ArtifactTreeUI extends Composite {
 			}
 		});
 
-		try {
-			artifactTree.renderArtifacts();
-		} catch (JsonParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (JsonMappingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		artifactTree.renderArtifacts();
 
 //		  Search button listener
 
@@ -1004,12 +969,7 @@ public class ArtifactTreeUI extends Composite {
 			}
 		}
 		new ArtifactApi().createArtifact(artifactId, artifactName, moduleType);
-		try {
-			artifactTree.renderArtifacts();
-		} catch (SQLException | IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		artifactTree.renderArtifacts();
 	}
 
 	public void toggleRenameToolbarItem(boolean status) {

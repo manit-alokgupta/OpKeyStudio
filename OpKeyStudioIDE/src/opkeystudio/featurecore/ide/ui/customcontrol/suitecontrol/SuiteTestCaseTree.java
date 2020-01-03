@@ -27,12 +27,7 @@ public class SuiteTestCaseTree extends ArtifactTree {
 		super(parent, style, parentTestSuiteView);
 		this.setParentTestSuiteView(parentTestSuiteView);
 		init();
-		try {
-			super.renderArtifacts();
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		super.renderArtifacts();
 	}
 
 	private void init() {
