@@ -197,16 +197,28 @@ public class FlowStepTable extends CustomTable {
 				}
 				if (flowStep.getKeyword() != null) {
 					keyWordName = flowStep.getKeyword().getKeywordname();
+					String keywordDescription = "";
+					if (flowStep.getComment() != null) {
+						keywordDescription = flowStep.getComment();
+					} else if (flowStep.getComments() != null) {
+						keywordDescription = flowStep.getComments();
+					}
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
 					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "",
-							flowStep.getKeyword().getKeyworddescription() });
+							keywordDescription});
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
 				if (flowStep.getFunctionLibraryComponent() != null) {
+					String keywordDescription = "";
+					if (flowStep.getComment() != null) {
+						keywordDescription = flowStep.getComment();
+					} else if (flowStep.getComments() != null) {
+						keywordDescription = flowStep.getComments();
+					}
 					keyWordName = flowStep.getFunctionLibraryComponent().getName();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", "" });
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", keywordDescription});
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
