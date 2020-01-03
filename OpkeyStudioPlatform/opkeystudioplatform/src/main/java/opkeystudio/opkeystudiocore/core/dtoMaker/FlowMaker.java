@@ -19,6 +19,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowMaker {
@@ -117,11 +118,13 @@ public class FlowMaker {
 		List<KeyWordInputArgument> keywordInputArguments = flowStep.getKeyword().getKeywordInputArguments();
 		for (KeyWordInputArgument keywordInputArgument : keywordInputArguments) {
 			FlowInputArgument flowInputArgument = new FlowInputArgument();
-			flowInputArgument.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
+			flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
 			flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
 			flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
 			flowInputArgument.setStaticobjectid(null);
 			flowInputArgument.setAdded(true);
+			flowInputArgument.setDatasource(DataSource.StaticValue);
+
 			flowInputArguments.add(flowInputArgument);
 		}
 		return flowInputArguments;
