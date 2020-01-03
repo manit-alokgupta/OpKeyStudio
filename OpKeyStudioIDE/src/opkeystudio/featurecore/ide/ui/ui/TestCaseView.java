@@ -774,6 +774,7 @@ public class TestCaseView extends Composite {
 		testObjectTable.setOrobject(flowStep.getOrObject());
 		testObjectTable.renderORObjectTable(flowStep);
 		if (renderTreeAlso) {
+			testObjectTree.removeAll();
 			if (flowStep.getOrObject().size() > 0) {
 				testObjectTree.fetchAndRenderORTree();
 			} else if (flowStep.getKeyword() != null) {
