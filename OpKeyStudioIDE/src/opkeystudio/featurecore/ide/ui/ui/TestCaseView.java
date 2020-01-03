@@ -122,7 +122,6 @@ public class TestCaseView extends Composite {
 	private MenuItem testObjectMenu2;
 	private MenuItem testObjectMenu3;
 	private MenuItem testObjectMenu4;
-	private Keyword keyWord;
 	private BottomFactoryTestCaseUi bottomFactory;
 	@SuppressWarnings("unused")
 	private FlowStep flowStep;
