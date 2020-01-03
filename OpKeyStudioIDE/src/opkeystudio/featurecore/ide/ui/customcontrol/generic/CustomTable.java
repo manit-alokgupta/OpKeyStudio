@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.generic;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
@@ -46,6 +47,14 @@ public class CustomTable extends Table {
 	public void setSelectedRowIndex(int selectedRowIndex) {
 		System.out.println("Selected Row No " + selectedRowIndex);
 		this.selectedRowIndex = selectedRowIndex;
+	}
+
+	public void selectDefaultRow() {
+		if (this.getItemCount() == 0) {
+			return;
+		}
+		this.setSelection(this.getSelectedRowIndex());
+		this.notifyListeners(SWT.Selection, null);
 	}
 
 }

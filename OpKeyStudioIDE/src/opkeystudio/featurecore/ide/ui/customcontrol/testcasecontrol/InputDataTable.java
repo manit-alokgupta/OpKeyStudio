@@ -324,6 +324,7 @@ public class InputDataTable extends CustomTable {
 				}
 			}
 		}
+		selectDefaultRow();
 	}
 
 	public FlowInputArgument getSelectedFlowInputArgument() {

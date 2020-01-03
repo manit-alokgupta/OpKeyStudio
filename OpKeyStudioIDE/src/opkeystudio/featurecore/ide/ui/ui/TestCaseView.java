@@ -144,7 +144,7 @@ public class TestCaseView extends Composite {
 		toggleMovedownButton(false);
 		toggleMoveupButton(false);
 		toggleDeleteButton(false);
-		toggleAddButton(false);
+		toggleAddButton(true);
 
 	}
 
@@ -556,7 +556,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				flowStepTable.deselectAll();
-				toggleAddButton(false);
+				toggleAddButton(true);
 				flowStepTable.setSelection(new TableItem[] { cursor.getRow() });
 				int selectedColumn = cursor.getColumn();
 				System.out.println("Column " + selectedColumn);
