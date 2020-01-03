@@ -90,7 +90,7 @@ public class FlowMaker {
 		flComp.setComponentInputArgument(inputArgs);
 		flComp.setComponentOutputArgument(outputArgs);
 
-		List<FlowInputArgument> flowInputArguments = new ArrayList<>();
+		List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(flowStep);
 		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
 		flowStep.setFlowInputArgs(flowInputArguments);
 		flowStep.setFlowOutputArgs(flowOutputArguments);
@@ -115,17 +115,33 @@ public class FlowMaker {
 
 	public List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep) {
 		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
-		List<KeyWordInputArgument> keywordInputArguments = flowStep.getKeyword().getKeywordInputArguments();
-		for (KeyWordInputArgument keywordInputArgument : keywordInputArguments) {
-			FlowInputArgument flowInputArgument = new FlowInputArgument();
-			flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
-			flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
-			flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
-			flowInputArgument.setStaticobjectid(null);
-			flowInputArgument.setAdded(true);
-			flowInputArgument.setDatasource(DataSource.StaticValue);
+		if (flowStep.getKeyword() != null) {
+			List<KeyWordInputArgument> keywordInputArguments = flowStep.getKeyword().getKeywordInputArguments();
+			for (KeyWordInputArgument keywordInputArgument : keywordInputArguments) {
+				FlowInputArgument flowInputArgument = new FlowInputArgument();
+				flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+				flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
+				flowInputArgument.setStaticobjectid(null);
+				flowInputArgument.setAdded(true);
+				flowInputArgument.setDatasource(DataSource.StaticValue);
 
-			flowInputArguments.add(flowInputArgument);
+				flowInputArguments.add(flowInputArgument);
+			}
+		}
+		if (flowStep.getFunctionLibraryComponent() != null) {
+			List<ComponentInputArgument> componentInputArgs = flowStep.getComponentInputArgs();
+			for (ComponentInputArgument componentInputArgument : componentInputArgs) {
+				FlowInputArgument flowInputArgument = new FlowInputArgument();
+				flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+			//	flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
+				flowInputArgument.setStaticobjectid(null);
+				flowInputArgument.setAdded(true);
+				flowInputArgument.setDatasource(DataSource.StaticValue);
+
+				flowInputArguments.add(flowInputArgument);
+			}
 		}
 		return flowInputArguments;
 	}
