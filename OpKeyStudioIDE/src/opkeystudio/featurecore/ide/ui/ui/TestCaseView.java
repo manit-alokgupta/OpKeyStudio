@@ -252,7 +252,7 @@ public class TestCaseView extends Composite {
 		testCaseArgumentsTabFolder = new TabFolder(testCaseArgumentsHolder, SWT.NONE);
 		testCaseArgumentsTabFolder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
 		testCaseArgumentsTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		testCaseSashForm.setWeights(new int[] { 4, 3 });
+		testCaseSashForm.setWeights(new int[] { 7, 3 });
 		stepDetailsTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		stepDetailsTabItem.setText("Step Details");
 		stepDetailsTabItem.setToolTipText("Step Details");
