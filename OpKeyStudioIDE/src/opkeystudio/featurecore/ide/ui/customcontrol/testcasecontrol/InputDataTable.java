@@ -268,17 +268,17 @@ public class InputDataTable extends CustomTable {
 				List<KeyWordInputArgument> filteredKeywordInputArgs = new ArrayList<KeyWordInputArgument>();
 				for (int i1 = 0; i1 < getKeyWordInputArgs().size(); i1++) {
 					KeyWordInputArgument inputArgument = getKeyWordInputArgs().get(i1);
-				//	if (!inputArgument.getDatatype().equals("ORObject")) {
-						filteredKeywordInputArgs.add(inputArgument);
-				//	}
+					// if (!inputArgument.getDatatype().equals("ORObject")) {
+					filteredKeywordInputArgs.add(inputArgument);
+					// }
 				}
 
 				List<FlowInputArgument> filteredFlowInputArgs = new ArrayList<FlowInputArgument>();
 				for (int i1 = 0; i1 < flowInputArgs.size(); i1++) {
 					FlowInputArgument inputArgument = flowInputArgs.get(i1);
-				//	if (inputArgument.getStaticobjectid() == null) {
-						filteredFlowInputArgs.add(inputArgument);
-				//	}
+					// if (inputArgument.getStaticobjectid() == null) {
+					filteredFlowInputArgs.add(inputArgument);
+					// }
 				}
 
 				System.out.println("KeyInputArgs " + filteredKeywordInputArgs.size() + "    " + "FlowInputArgs "
@@ -309,9 +309,9 @@ public class InputDataTable extends CustomTable {
 				List<FlowInputArgument> filteredFlowInputArgs = new ArrayList<FlowInputArgument>();
 				for (int i1 = 0; i1 < flowInputArgs.size(); i1++) {
 					FlowInputArgument inputArgument = flowInputArgs.get(i1);
-				//	if (inputArgument.getStaticobjectid() == null) {
-						filteredFlowInputArgs.add(inputArgument);
-				//	}
+					// if (inputArgument.getStaticobjectid() == null) {
+					filteredFlowInputArgs.add(inputArgument);
+					// }
 				}
 
 				if (filteredComponentInputArgs.size() == filteredFlowInputArgs.size()) {

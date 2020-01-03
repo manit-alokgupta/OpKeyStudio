@@ -108,30 +108,32 @@ public class GenericTree extends CustomTree {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				TreeItem[] selectedItems = getSelection();
-				if (selectedItems == null) {
+				Artifact artifact = getParentTestCaseView().getArtifact();
+				FlowStep selectedFlowStep = getParentTestCaseView().getFlowStepTable().getSelectedFlowStep();
+				if (selectedFlowStep != null) {
+					selectedFlowStep.setDeleted(true);
+				}
+				Object selectedData = getSelectedData();
+				if (selectedData instanceof Artifact) {
+					try {
+						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
+								(Artifact) selectedData, artifact.getId(),
+								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+						getParentTestCaseView().toggleSaveButton(true);
+					} catch (SQLException | IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					return;
 				}
-				if (selectedItems.length == 0) {
-					return;
-				}
-
-				CustomTreeItem selectedKeywordItem = (CustomTreeItem) getSelection()[0];
-				if (selectedKeywordItem == null) {
-					return;
-				}
-
-				Keyword keyWord = (Keyword) selectedKeywordItem.getControlData();
-				System.out.println(keyWord.getKeywordname());
-				FlowStepTable flowStepTable = getParentTestCaseView().getFlowStepTable();
-				if (flowStepTable != null) {
-					FlowStep flowStep = flowStepTable.getSelectedFlowStep();
-					flowStep.setKeyword(keyWord);
-					flowStep.setKeywordid(keyWord.getKeywordid());
-					flowStep.setModified(true);
-					getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
-					getParentTestCaseView().toggleSaveButton(true);
-				}
+				FlowStep flowStep = new FlowMaker().getFlowStepDTO(getParentTestCaseView().getArtifact(),
+						selectedFlowStep, (Keyword) getSelectedData(), artifact.getId(),
+						getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+				getParentTestCaseView().toggleSaveButton(true);
 
 			}
 
