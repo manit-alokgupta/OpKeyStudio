@@ -113,6 +113,7 @@ public class OutputDataTable extends CustomTable {
 			if (flowOutPutArg.getOutputvariablename() != null) {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { flowOutPutArg.getOutputvariablename(), "" });
+				cti.setControlData(flowOutPutArg);
 			}
 		}
 	}

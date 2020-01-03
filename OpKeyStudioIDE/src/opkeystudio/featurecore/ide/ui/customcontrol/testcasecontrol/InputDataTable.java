@@ -34,11 +34,13 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -183,7 +185,7 @@ public class InputDataTable extends CustomTable {
 
 				@Override
 				public void mouseDown(MouseEvent e) {
-					getParentTestCaseView().getDatasTabHolder().setSelection(1);
+					getParentTestCaseView().getDatasTabHolder().setSelection(2);
 				}
 
 				@Override
@@ -215,6 +217,45 @@ public class InputDataTable extends CustomTable {
 				@Override
 				public void mouseDown(MouseEvent e) {
 					getParentTestCaseView().getDatasTabHolder().setSelection(0);
+				}
+
+				@Override
+				public void mouseDoubleClick(MouseEvent e) {
+					editor1.getEditor().dispose();
+				}
+			});
+			editor1.setEditor(button, item, 2);
+			this.allTableEditors.add(editor1.getEditor());
+		}
+
+		if (dataSourceType == DataSource.ValueFromOutputArgument) {
+			String flow_step_oa_id = flowInputArgument.getFlow_step_oa_id();
+			if (flow_step_oa_id == null) {
+				return;
+			}
+			List<FlowOutputArgument> flowOutPutArguments = new FlowApiUtilities()
+					.getAllFlowOutPutArgument(flow_step_oa_id);
+			if (flowOutPutArguments.size() == 0) {
+				return;
+			}
+			FlowOutputArgument flowOutputArgument = flowOutPutArguments.get(0);
+			TableEditor editor1 = getTableEditor();
+			CustomButton button = new CustomButton(this, SWT.NONE);
+			button.setText(flowOutputArgument.getOutputvariablename());
+			button.setToolTipText(flowOutputArgument.getOutputvariablename());
+			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
+			button.setBackground(new Color(button.getDisplay(), 255, 255, 112));
+			button.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseUp(MouseEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void mouseDown(MouseEvent e) {
+					getParentTestCaseView().getDatasTabHolder().setSelection(1);
 				}
 
 				@Override

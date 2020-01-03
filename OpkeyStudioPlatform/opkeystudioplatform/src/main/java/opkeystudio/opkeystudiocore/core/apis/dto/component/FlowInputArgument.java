@@ -9,6 +9,8 @@ public class FlowInputArgument extends Modified {
 	@DBField
 	private String flow_step_ia_id;
 	@DBField
+	private String flow_step_oa_id;
+	@DBField
 	private String keyword_ip_id;
 	@DBField
 	private DataSource datasource;
@@ -157,5 +159,13 @@ public class FlowInputArgument extends Modified {
 
 	public void setDatarepositorycolumnid(String datarepositorycolumnid) {
 		this.datarepositorycolumnid = datarepositorycolumnid;
+	}
+
+	public String getFlow_step_oa_id() {
+		return flow_step_oa_id;
+	}
+
+	public void setFlow_step_oa_id(String flow_step_oa_id) {
+		this.flow_step_oa_id = flow_step_oa_id;
 	}
 }
