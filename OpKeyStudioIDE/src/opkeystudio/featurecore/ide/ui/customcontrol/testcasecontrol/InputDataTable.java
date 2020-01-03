@@ -199,7 +199,7 @@ public class InputDataTable extends CustomTable {
 			String dataRepositoryColumnId = flowInputArgument.getDatarepositorycolumnid();
 			DRColumnAttributes drColumn = new DataRepositoryApi().getDRColumn(dataRepositoryColumnId);
 			TableEditor editor1 = getTableEditor();
-			CustomButton button = new CustomButton(this, SWT.NONE | SWT.NO_BACKGROUND);
+			CustomButton button = new CustomButton(this, SWT.NONE);
 			button.setText(drColumn.getName());
 			button.setToolTipText(drColumn.getName());
 			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
@@ -321,6 +321,7 @@ public class InputDataTable extends CustomTable {
 					cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
 							flowInputArg.getStaticvalue() });
 					cti.setControlData(flowInputArg);
+					addInputTableEditor(cti);
 				}
 			}
 		}
