@@ -72,7 +72,7 @@ public class TestCaseView extends Composite {
 	private ObjectRepositoryTree testObjectTree;
 	private Table mappedTable;
 	private Table propertyTable;
-	private GenericTree dataOutputTable;
+	private GenericTree drTree;
 	private GlobalVariableTable globalVariableTable;
 	private Table autoDataGenTable;
 	private Text searchBox;
@@ -493,15 +493,23 @@ public class TestCaseView extends Composite {
 
 		datasTabHolder = new TabFolder(composite_14, SWT.NONE);
 
-		TabItem dataOutputTabItem = new TabItem(datasTabHolder, SWT.NONE);
-		dataOutputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
-		dataOutputTabItem.setText("Data Output");
-		dataOutputTabItem.setToolTipText("Data Output");
-		dataOutputTable = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this,
-				TREETYPE.DATAREPOSITORYTREE);
-		dataOutputTabItem.setControl(dataOutputTable);
-		dataOutputTable.setHeaderVisible(true);
-		dataOutputTable.setLinesVisible(true);
+		TabItem drVariableTabItem = new TabItem(datasTabHolder, SWT.NONE);
+		drVariableTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
+		drVariableTabItem.setText("Global DR");
+		drVariableTabItem.setToolTipText("Global DR");
+		drTree = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this, TREETYPE.DATAREPOSITORYTREE);
+		drVariableTabItem.setControl(drTree);
+		drTree.setHeaderVisible(true);
+		drTree.setLinesVisible(true);
+
+		TabItem dataOutPutTabItem = new TabItem(datasTabHolder, SWT.NONE);
+		dataOutPutTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
+		dataOutPutTabItem.setText("Data Output");
+		dataOutPutTabItem.setToolTipText("Data Output");
+		outputDataTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION);
+		dataOutPutTabItem.setControl(outputDataTable);
+		outputDataTable.setHeaderVisible(true);
+		outputDataTable.setLinesVisible(true);
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
@@ -1046,7 +1054,7 @@ public class TestCaseView extends Composite {
 			}
 		});
 
-		dataOutputTable.addSelectionListener(new SelectionListener() {
+		drTree.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
