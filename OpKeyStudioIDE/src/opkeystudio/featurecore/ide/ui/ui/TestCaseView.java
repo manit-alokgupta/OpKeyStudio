@@ -118,7 +118,7 @@ public class TestCaseView extends Composite {
 	@SuppressWarnings("unused")
 	private String code;
 	private MenuItem openORObjectInNewTabMenuItem;
-	private BottomFactoryTestCaseUi bottomFactory;
+	private Composite bottomFactory;
 	@SuppressWarnings("unused")
 	private FlowStep flowStep;
 	@SuppressWarnings("unused")
@@ -944,7 +944,6 @@ public class TestCaseView extends Composite {
 								"Do you want to Save changes?");
 						if (!status) {
 							flowStepTable.renderFlowSteps();
-							bottomFactory.refreshBottomFactory();
 							return;
 						}
 
@@ -963,7 +962,6 @@ public class TestCaseView extends Composite {
 					}
 
 					flowStepTable.renderFlowSteps();
-					bottomFactory.refreshBottomFactory();
 
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
