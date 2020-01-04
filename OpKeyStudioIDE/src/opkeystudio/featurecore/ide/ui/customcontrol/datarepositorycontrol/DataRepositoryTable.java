@@ -19,6 +19,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -125,10 +126,14 @@ public class DataRepositoryTable extends CustomTable {
 		List<DRColumnAttributes> drDatas = new DataRepositoryApi().getAllDRDatas(artifact.getId());
 		Collections.sort(drDatas);
 		initializeHeaders(drDatas);
+
 		for (int i = 0; i < drDatas.size(); i++) {
 			DRColumnAttributes drColumnAttribute = drDatas.get(i);
-			for (DRCellAttributes drCellAttribute : drColumnAttribute.getDrCellAttributes()) {
-				
+			List<DRCellAttributes> drCellAttributes = drColumnAttribute.getDrCellAttributes();
+			DataRepositoryTableItem drti = new DataRepositoryTableItem(this, SWT.NONE);
+			for (DRCellAttributes drCellAttribute : drCellAttributes) {
+				System.out.println("Seeting DR Cell on "+i);
+				drti.setText(i, String.valueOf(i));
 			}
 		}
 	}
