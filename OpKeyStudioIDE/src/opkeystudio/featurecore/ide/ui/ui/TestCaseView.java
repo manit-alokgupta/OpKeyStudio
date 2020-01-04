@@ -117,7 +117,7 @@ public class TestCaseView extends Composite {
 
 	@SuppressWarnings("unused")
 	private String code;
-	private MenuItem testObjectMenu1;
+	private MenuItem openORObjectInNewTabMenuItem;
 	private BottomFactoryTestCaseUi bottomFactory;
 	@SuppressWarnings("unused")
 	private FlowStep flowStep;
@@ -447,9 +447,9 @@ public class TestCaseView extends Composite {
 		Menu menu = new Menu(testObjectTable);
 		testObjectTable.setMenu(menu);
 
-		testObjectMenu1 = new MenuItem(menu, SWT.NONE);
-		testObjectMenu1.setText("Open in New Tab");
-		testObjectMenu1.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/open.png"));
+		openORObjectInNewTabMenuItem = new MenuItem(menu, SWT.NONE);
+		openORObjectInNewTabMenuItem.setText("Open in New Tab");
+		openORObjectInNewTabMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/open.png"));
 
 		testObjectTree = new ObjectRepositoryTree(sashForm_1, SWT.BORDER, this);
 //		testObjectTree = new Tree(sashForm_1, SWT.BORDER);
@@ -611,7 +611,7 @@ public class TestCaseView extends Composite {
 			}
 		});
 
-		testObjectMenu1.addSelectionListener(new SelectionListener() {
+		openORObjectInNewTabMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
