@@ -8,8 +8,6 @@ import java.util.List;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -33,7 +31,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 
 public class SuiteStepTable extends CustomTable {
 
-	private SuiteStepTable thisTable = this;
 	private TestSuiteView parentTestSuiteView;
 	private List<Control> allTableEditors = new ArrayList<Control>();
 
@@ -133,23 +130,22 @@ public class SuiteStepTable extends CustomTable {
 		TableEditor editor1 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
 		button.setSelection(attrProperty.isShouldrun());
-		button.addMouseListener(new MouseListener() {
+		button.addSelectionListener(new SelectionListener() {
 
 			@Override
-			public void mouseUp(MouseEvent e) {
-
+			public void widgetSelected(SelectionEvent e) {
+				attrProperty.setShouldrun(button.getSelection());
+				attrProperty.setModified(true);
+				deselectAll();
+				setSelection(new TableItem[] { item });
+				notifyListeners(SWT.Selection, null);
+				getParentTestSuiteView().toggleSaveButton(true);
+				getParentTestSuiteView().getSuiteStepTable().refreshAllTestSuites();
 			}
 
 			@Override
-			public void mouseDown(MouseEvent e) {
-				thisTable.deselectAll();
-				thisTable.setSelection(new TableItem[] { item });
-				thisTable.notifyListeners(SWT.Selection, null);
-
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -221,9 +217,10 @@ public class SuiteStepTable extends CustomTable {
 			suiteStepTableItem.setTestSuiteData(testSuite);
 			addTableEditor(suiteStepTableItem);
 		}
+		selectDefaultRow();
 	}
 
-	public void refreshAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
+	public void refreshAllTestSuites() {
 		disposeAllTableEditors();
 		this.removeAll();
 		List<TestSuiteStep> testSuites = getTestSuiteData();
@@ -237,6 +234,7 @@ public class SuiteStepTable extends CustomTable {
 				addTableEditor(suiteStepTableItem);
 			}
 		}
+		selectDefaultRow();
 	}
 
 	public TestSuiteStep getSelectedTestSuite() {
