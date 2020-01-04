@@ -154,7 +154,7 @@ public class SuiteStepTable extends CustomTable {
 			}
 		});
 
-		editor1.setEditor(button, item, 0);
+		editor1.setEditor(button, item, 1);
 		this.allTableEditors.add(editor1.getEditor());
 	}
 
@@ -209,6 +209,7 @@ public class SuiteStepTable extends CustomTable {
 	}
 
 	public void renderAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
+		disposeAllTableEditors();
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
@@ -218,10 +219,12 @@ public class SuiteStepTable extends CustomTable {
 			SuiteStepTableItem suiteStepTableItem = new SuiteStepTableItem(this, 0);
 			suiteStepTableItem.setText(new String[] { "", "", testSuite.getArtifact().getName(), "", "" });
 			suiteStepTableItem.setTestSuiteData(testSuite);
+			addTableEditor(suiteStepTableItem);
 		}
 	}
 
 	public void refreshAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
+		disposeAllTableEditors();
 		this.removeAll();
 		List<TestSuiteStep> testSuites = getTestSuiteData();
 		Collections.sort(testSuites);
@@ -231,6 +234,7 @@ public class SuiteStepTable extends CustomTable {
 				SuiteStepTableItem suiteStepTableItem = new SuiteStepTableItem(this, 0);
 				suiteStepTableItem.setText(new String[] { "", "", testSuite.getArtifact().getName(), "", "" });
 				suiteStepTableItem.setTestSuiteData(testSuite);
+				addTableEditor(suiteStepTableItem);
 			}
 		}
 	}
