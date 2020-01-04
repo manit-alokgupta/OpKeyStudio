@@ -43,4 +43,14 @@ public class FlowApiUtilities {
 		return outData;
 	}
 
+	public String getFlowInputArgumentsString(FlowStep flowStep) {
+		String outData = "";
+		for (FlowInputArgument flowInputArgument : flowStep.getFlowInputArgs()) {
+			if (flowInputArgument.getStaticvalue() != null) {
+				outData += flowInputArgument.getStaticvalue();
+			}
+		}
+		return outData;
+	}
+
 }
