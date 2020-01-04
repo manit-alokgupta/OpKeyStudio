@@ -12,11 +12,14 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.wb.swt.ResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -27,6 +30,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 
 public class SuiteStepTable extends CustomTable {
@@ -126,16 +130,19 @@ public class SuiteStepTable extends CustomTable {
 	}
 
 	private void addTableEditor(SuiteStepTableItem item) {
-		TestSuiteStep attrProperty = item.getTestSuiteData();
+		TestSuiteStep testSuiteStep = item.getTestSuiteData();
 		TableEditor editor1 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
-		button.setSelection(attrProperty.isShouldrun());
+		if (testSuiteStep.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
+			item.setImage(2, ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+		}
+		button.setSelection(testSuiteStep.isShouldrun());
 		button.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				attrProperty.setShouldrun(button.getSelection());
-				attrProperty.setModified(true);
+				testSuiteStep.setShouldrun(button.getSelection());
+				testSuiteStep.setModified(true);
 				deselectAll();
 				setSelection(new TableItem[] { item });
 				notifyListeners(SWT.Selection, null);
