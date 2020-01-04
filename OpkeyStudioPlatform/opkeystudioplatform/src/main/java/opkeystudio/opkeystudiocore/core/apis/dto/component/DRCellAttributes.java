@@ -16,6 +16,10 @@ public class DRCellAttributes extends Modified {
 	@DBField
 	private String value;
 
+	private DRColumnAttributes drColumnAttribute;
+	private int rowNo;
+	private int columnNo;
+
 	public int getClustering_key() {
 		return clustering_key;
 	}
@@ -63,4 +67,29 @@ public class DRCellAttributes extends Modified {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
+	public DRColumnAttributes getDrColumnAttribute() {
+		return drColumnAttribute;
+	}
+
+	public void setDrColumnAttribute(DRColumnAttributes drColumnAttribute) {
+		this.drColumnAttribute = drColumnAttribute;
+	}
+
+	public int getRowNo() {
+		return rowNo;
+	}
+
+	public void setRowNo(int rowNo) {
+		this.rowNo = rowNo;
+	}
+
+	public int getColumnNo() {
+		return columnNo;
+	}
+
+	public void setColumnNo(int columnNo) {
+		this.columnNo = columnNo;
+	}
+
 }

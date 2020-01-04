@@ -20,6 +20,7 @@ public class DRColumnAttributes extends Modified implements Comparable<DRColumnA
 	@DBField
 	private String name;
 
+
 	private List<DRCellAttributes> drCellAttributes = new ArrayList<>();
 
 	public int getClustering_key() {
