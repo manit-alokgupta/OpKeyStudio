@@ -13,6 +13,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -34,7 +36,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class FlowStepTable extends CustomTable {
-	private FlowStepTable thisTable = this;
 	private TestCaseView parentTestCaseView;
 
 	public FlowStepTable(Composite parent, int style) {
@@ -108,27 +109,23 @@ public class FlowStepTable extends CustomTable {
 		TableEditor editor1 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
 		button.setSelection(attrProperty.isShouldrun());
-		button.addMouseListener(new MouseListener() {
-
+		button.addSelectionListener(new SelectionListener() {
+			
 			@Override
-			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				thisTable.deselectAll();
+			public void widgetSelected(SelectionEvent e) {
+				deselectAll();
+				System.out.println("Selection "+button.getSelection());
+				attrProperty.setShouldrun(button.getSelection());
+				attrProperty.setModified(true);
 				getParentTestCaseView().toggleSaveButton(true);
-
-				thisTable.setSelection(new TableItem[] { item });
-				thisTable.notifyListeners(SWT.Selection, null);
+				setSelection(new TableItem[] { item });
+				notifyListeners(SWT.Selection, null);
 			}
-
+			
 			@Override
-			public void mouseDoubleClick(MouseEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
 		});
 		editor1.setEditor(button, item, 0);
