@@ -7,7 +7,9 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -25,6 +27,20 @@ public class FlowApiUtilities {
 			e.printStackTrace();
 		}
 		return new ArrayList<FlowOutputArgument>();
+	}
+
+	public String getFlowOutPutArgumentsString(FlowStep flowStep) {
+		String outData = "";
+		List<FlowOutputArgument> flowStepOutputargs = flowStep.getFlowOutputArgs();
+		for (FlowOutputArgument flowOutputArgument : flowStepOutputargs) {
+			if (flowOutputArgument.getOutputvariablename() != null) {
+				outData += flowOutputArgument.getOutputvariablename();
+			}
+		}
+		if (!outData.isEmpty()) {
+			return "Output: " + outData;
+		}
+		return outData;
 	}
 
 }

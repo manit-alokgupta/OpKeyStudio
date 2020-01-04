@@ -27,6 +27,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -174,14 +175,16 @@ public class FlowStepTable extends CustomTable {
 				if (flowStep.getKeyword() != null) {
 					keyWordName = flowStep.getKeyword().getKeywordname();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", keywordDescription });
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "",
+							new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), keywordDescription });
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
 				if (flowStep.getFunctionLibraryComponent() != null) {
 					keyWordName = flowStep.getFunctionLibraryComponent().getName();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", keywordDescription });
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "",
+							new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), keywordDescription });
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
@@ -225,7 +228,8 @@ public class FlowStepTable extends CustomTable {
 					}
 					keyWordName = flowStep.getFunctionLibraryComponent().getName();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", keywordDescription });
+					flowTableItem.setText(new String[] { "", keyWordName, orname, "",
+							new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), keywordDescription });
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
@@ -233,7 +237,8 @@ public class FlowStepTable extends CustomTable {
 					if (flowStep.isNullKeyword()) {
 						keyWordName = "";
 						FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-						flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", "" });
+						flowTableItem.setText(new String[] { "", keyWordName, orname, "",
+								new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), "" });
 						flowTableItem.setFlowStepData(flowStep);
 						addTestCaseTableEditor(flowTableItem);
 					}
