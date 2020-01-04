@@ -106,8 +106,14 @@ public class FlowStepTable extends CustomTable {
 	private List<Control> allTableEditors = new ArrayList<Control>();
 
 	private void addStepIcons(FlowStepTableItem flowStepTableItem) {
-		flowStepTableItem.setImage(1,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/stepdetails.png"));
+		FlowStep flowStep = flowStepTableItem.getFlowStepeData();
+		if (flowStep.getKeyword() != null) {
+			flowStepTableItem.setImage(1,
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/keword.png"));
+		} else if (flowStep.getFunctionLibraryComponent() != null) {
+			flowStepTableItem.setImage(1,
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/functionlibrary.png"));
+		}
 		flowStepTableItem.setImage(2, ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/object.png"));
 		flowStepTableItem.setImage(3,
 				ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/inputdata.png"));
