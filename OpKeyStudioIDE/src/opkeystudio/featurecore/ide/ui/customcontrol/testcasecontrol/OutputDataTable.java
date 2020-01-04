@@ -179,7 +179,7 @@ public class OutputDataTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
-
+						flowOutputArgument.setOutputvariablename(text.getText());
 						flowOutputArgument.setModified(true);
 						getParentTestCaseView().toggleSaveButton(true);
 						row.setText(selectedColumn, text.getText());

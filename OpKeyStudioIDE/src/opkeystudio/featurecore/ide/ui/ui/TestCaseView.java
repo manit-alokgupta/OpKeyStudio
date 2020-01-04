@@ -45,9 +45,9 @@ import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree.TREETYPE;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
@@ -57,11 +57,10 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
-import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
-import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class TestCaseView extends Composite {
@@ -119,9 +118,6 @@ public class TestCaseView extends Composite {
 	@SuppressWarnings("unused")
 	private String code;
 	private MenuItem testObjectMenu1;
-	private MenuItem testObjectMenu2;
-	private MenuItem testObjectMenu3;
-	private MenuItem testObjectMenu4;
 	private BottomFactoryTestCaseUi bottomFactory;
 	@SuppressWarnings("unused")
 	private FlowStep flowStep;
@@ -455,15 +451,6 @@ public class TestCaseView extends Composite {
 		testObjectMenu1.setText("Open in New Tab");
 		testObjectMenu1.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/open.png"));
 
-		testObjectMenu2 = new MenuItem(menu, SWT.NONE);
-		testObjectMenu2.setText("Menu New Item2");
-
-		testObjectMenu3 = new MenuItem(menu, SWT.NONE);
-		testObjectMenu3.setText("Menu New Item3");
-
-		testObjectMenu4 = new MenuItem(menu, SWT.NONE);
-		testObjectMenu4.setText("Menu New Item4");
-
 		testObjectTree = new ObjectRepositoryTree(sashForm_1, SWT.BORDER, this);
 //		testObjectTree = new Tree(sashForm_1, SWT.BORDER);
 		testObjectTree.setLinesVisible(true);
@@ -625,21 +612,6 @@ public class TestCaseView extends Composite {
 		});
 
 		testObjectMenu1.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		testObjectMenu2.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
