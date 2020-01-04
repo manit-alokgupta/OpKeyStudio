@@ -134,7 +134,7 @@ public class SuiteStepTable extends CustomTable {
 		TableEditor editor1 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
 		if (testSuiteStep.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
-			item.setImage(2, ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+			item.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
 		}
 		button.setSelection(testSuiteStep.isShouldrun());
 		button.addSelectionListener(new SelectionListener() {

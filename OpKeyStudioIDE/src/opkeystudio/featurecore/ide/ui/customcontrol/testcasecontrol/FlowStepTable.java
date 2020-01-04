@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.wb.swt.ResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -104,28 +105,40 @@ public class FlowStepTable extends CustomTable {
 
 	private List<Control> allTableEditors = new ArrayList<Control>();
 
+	private void addStepIcons(FlowStepTableItem flowStepTableItem) {
+		flowStepTableItem.setImage(1,
+				ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/stepdetails.png"));
+		flowStepTableItem.setImage(2, ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/object.png"));
+		flowStepTableItem.setImage(3,
+				ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/inputdata.png"));
+		flowStepTableItem.setImage(4,
+				ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/outputdata.png"));
+		flowStepTableItem.setImage(5, ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/about.png"));
+	}
+
 	private void addTestCaseTableEditor(FlowStepTableItem item) {
+		addStepIcons(item);
 		FlowStep attrProperty = item.getFlowStepeData();
 		TableEditor editor1 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
 		button.setSelection(attrProperty.isShouldrun());
 		button.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				deselectAll();
-				System.out.println("Selection "+button.getSelection());
+				System.out.println("Selection " + button.getSelection());
 				attrProperty.setShouldrun(button.getSelection());
 				attrProperty.setModified(true);
 				getParentTestCaseView().toggleSaveButton(true);
 				setSelection(new TableItem[] { item });
 				notifyListeners(SWT.Selection, null);
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		editor1.setEditor(button, item, 0);
