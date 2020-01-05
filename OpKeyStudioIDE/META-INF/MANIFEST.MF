@@ -36,4 +36,21 @@ Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
  javax.inject;version="1.0.0",
  org.eclipse.ui.views.contentoutline
 Bundle-ActivationPolicy: lazy
+Export-Package: opkeystudio,
+ opkeystudio.commandhandler,
+ opkeystudio.core.utils,
+ opkeystudio.featurecore.ide.ui.customcontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui,
+ opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.generic,
+ opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol,
+ opkeystudio.featurecore.ide.ui.ui,
+ opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor,
+ opkeystudio.notification,
+ opkeystudio.parts.part,
+ opkeystudio.splashHandlers
 

@@ -21,11 +21,6 @@ public class E4LifeCycle {
 
 	@PostContextCreate
 	void postContextCreate(IEclipseContext workbenchContext) {
-
-//		final Shell shell = new Shell(Display.getCurrent().getActiveShell(), SWT.CENTER|SWT.DIALOG_TRIM|SWT.APPLICATION_MODAL);
-//		LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER);
-//		ldialog.open();
-
 		Utilities.getInstance().initializeOpKeyStudioPath();
 		KeywordManager.getInstance().loadAllKeywords();
 	}
