@@ -32,12 +32,14 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 
 public class GlobalVariableDialog extends Dialog {
 
-	
 	protected Object result;
 	protected Shell shlGlobalVariable;
 	private GlobalVariableTable globalVariablesTable;
@@ -138,6 +140,13 @@ public class GlobalVariableDialog extends Dialog {
 		deletetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				int selectedIndex = globalVariablesTable.getSelectionIndex();
+				GlobalVariable globalVar = globalVariablesTable.getGlobalVariablesData().get(selectedIndex);
+				boolean isused = new GlobalVariableApiUtilities().isGlobalVariableUsed(globalVar);
+				if (true) {
+					new MessageDialogs().openInformationDialog("Can't delete Global Variable", "");
+					return;
+				}
 				globalVariablesTable.deleteGlobalVariableStep();
 				toggleSaveToolItem(true);
 				toggleDeleteToolItem(false);
@@ -275,8 +284,6 @@ public class GlobalVariableDialog extends Dialog {
 
 			}
 		});
-
-
 
 		globalVariablesTable.refreshGlobalVariables();
 

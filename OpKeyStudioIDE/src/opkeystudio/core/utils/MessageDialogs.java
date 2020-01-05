@@ -20,4 +20,8 @@ public class MessageDialogs {
 		boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), title, message);
 		return result;
 	}
+
+	public void openInformationDialog(String title, String message) {
+		MessageDialog.openInformation(Display.getCurrent().getActiveShell(), title, message);
+	}
 }
