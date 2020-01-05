@@ -207,7 +207,7 @@ public class GlobalVariableDialog extends Dialog {
 				Text text = (Text) e.getSource();
 				String searchValue = text.getText();
 				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
-					filterGlobalVariable(searchValue);
+					globalVariablesTable.filterGlobalVariableTable(searchValue);
 				}
 
 			}
@@ -229,7 +229,7 @@ public class GlobalVariableDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				txtSearch.setText("");
 				String textToSearch = txtSearch.getText();
-				filterGlobalVariable(textToSearch);
+				globalVariablesTable.filterGlobalVariableTable(textToSearch);
 
 			}
 
@@ -286,16 +286,5 @@ public class GlobalVariableDialog extends Dialog {
 
 		globalVariablesTable.refreshGlobalVariables();
 
-	}
-
-	private void filterGlobalVariable(String searchValue) {
-		List<GlobalVariable> globalvariables = globalVariablesTable.getGlobalVariablesData();
-		for (GlobalVariable globalVariable : globalvariables) {
-			if (globalVariable.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
-				globalVariable.setVisible(true);
-			} else {
-				globalVariable.setVisible(false);
-			}
-		}
 	}
 }

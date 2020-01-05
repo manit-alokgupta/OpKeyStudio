@@ -31,6 +31,8 @@ import opkeystudio.featurecore.ide.ui.ui.GlobalVariableDialog;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -256,19 +258,19 @@ public class GlobalVariableTable extends CustomTable {
 		try {
 			List<GlobalVariable> globalvariables = new GlobalVariableApi().getAllGlobalVariables();
 			for (GlobalVariable globalvariable : globalvariables) {
-				if (globalvariable.isVisible()) {
-					CustomTableItem ti = new CustomTableItem(this, 0);
-					ti.setData(globalvariable);
-					ti.setControlData(globalvariable);
-					if (isInsideArtifact()) {
-						ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-								globalvariable.getValue() });
-					} else {
-						ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-								globalvariable.getValue(), "" });
-						addTableEditor(ti);
-					}
+
+				CustomTableItem ti = new CustomTableItem(this, 0);
+				ti.setData(globalvariable);
+				ti.setControlData(globalvariable);
+				if (isInsideArtifact()) {
+					ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+							globalvariable.getValue() });
+				} else {
+					ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+							globalvariable.getValue(), "" });
+					addTableEditor(ti);
 				}
+
 			}
 			this.setControlData(globalvariables);
 		} catch (SQLException | IOException e) {
@@ -277,18 +279,32 @@ public class GlobalVariableTable extends CustomTable {
 		}
 	}
 
+	public void filterGlobalVariableTable(String searchValue) {
+		List<GlobalVariable> globalVariables = this.getGlobalVariablesData();
+		for (GlobalVariable globalVariable : globalVariables) {
+			if (globalVariable.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
+				globalVariable.setVisible(true);
+			} else {
+				globalVariable.setVisible(false);
+			}
+		}
+		this.renderGlobalVariables();
+	}
+
 	private void renderGlobalVariables() {
 		disposeAllTableEditors();
 		this.removeAll();
 		List<GlobalVariable> globalvariables = this.getGlobalVariablesData();
 		for (GlobalVariable globalvariable : globalvariables) {
-			if (globalvariable.isDeleted() == false) {
-				CustomTableItem ti = new CustomTableItem(this, 0);
-				ti.setData(globalvariable);
-				ti.setControlData(globalvariable);
-				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-						globalvariable.getValue(), "" });
-				addTableEditor(ti);
+			if (globalvariable.isVisible()) {
+				if (globalvariable.isDeleted() == false) {
+					CustomTableItem ti = new CustomTableItem(this, 0);
+					ti.setData(globalvariable);
+					ti.setControlData(globalvariable);
+					ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+							globalvariable.getValue(), "" });
+					addTableEditor(ti);
+				}
 			}
 		}
 	}
