@@ -101,7 +101,7 @@ public class GlobalVariableDialog extends Dialog {
 	@SuppressWarnings("unused")
 	private void createContents() {
 		shlGlobalVariable = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
-		shlGlobalVariable.setSize(546, 443);
+		shlGlobalVariable.setSize(800, 600);
 		shlGlobalVariable.setText("Global Variable");
 		shlGlobalVariable.setLayout(new FillLayout(SWT.HORIZONTAL));
 
