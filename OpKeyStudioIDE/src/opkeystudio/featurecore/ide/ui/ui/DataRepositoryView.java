@@ -10,7 +10,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.ole.win32.OleClientSite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -35,8 +34,20 @@ public class DataRepositoryView extends Composite {
 	private TableColumn newColumn;
 	private DRColumnAttributes drCol;
 	private BottomFactoryDataRepoUi bottomFactory;
-	// private XSSFWorkbook wb;
-	private OleClientSite site;
+	private ToolItem refreshToolItm;
+	private ToolItem addColmToolItm;
+	private ToolItem deleteColmToolItm;
+	private ToolItem moveColmLeftToolItm;
+	private ToolItem moveColmRightToolItm;
+	private ToolItem renameColmToolItm;
+	private ToolItem addRowToolItm;
+	private ToolItem deleteRowToolItm;
+	private ToolItem moveRowUpToolItm;
+	private ToolItem moveRowDownToolItm;
+	private ToolItem exportExcelDataToolItm;
+	private ToolItem inportExcelDataToolItm;
+	private ToolItem saveToolItm;
+	private ToolItem createBackupToolItm;
 
 	/**
 	 * Create the composite.
@@ -61,85 +72,85 @@ public class DataRepositoryView extends Composite {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar.setBounds(0, 0, 87, 23);
 
-		ToolItem addColmToolItm = new ToolItem(toolBar, SWT.NONE);
+		addColmToolItm = new ToolItem(toolBar, SWT.NONE);
 		addColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/add_column.png"));
 		addColmToolItm.setToolTipText("Add Column");
 
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem deleteColmToolItm = new ToolItem(toolBar, SWT.NONE);
+		deleteColmToolItm = new ToolItem(toolBar, SWT.NONE);
 		deleteColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/delete_column.png"));
 		deleteColmToolItm.setToolTipText("Delete Column");
 
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem moveColmLeftToolItm = new ToolItem(toolBar, SWT.NONE);
+		moveColmLeftToolItm = new ToolItem(toolBar, SWT.NONE);
 		moveColmLeftToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/move_col_left.png"));
 		moveColmLeftToolItm.setToolTipText("Move Column Left");
 
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem moveColmRightToolItm = new ToolItem(toolBar, SWT.NONE);
+		moveColmRightToolItm = new ToolItem(toolBar, SWT.NONE);
 		moveColmRightToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/move_col_right.png"));
 		moveColmRightToolItm.setToolTipText("Move Column Right");
 
 		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem renameColmToolItm = new ToolItem(toolBar, SWT.NONE);
+		renameColmToolItm = new ToolItem(toolBar, SWT.NONE);
 		renameColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
 		renameColmToolItm.setToolTipText("Rename Column ");
 
 		ToolItem toolItem_4 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem addRowToolItm = new ToolItem(toolBar, SWT.NONE);
+		addRowToolItm = new ToolItem(toolBar, SWT.NONE);
 		addRowToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/add_row.png"));
 		addRowToolItm.setToolTipText("Add Row");
 
 		ToolItem toolItem_5 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem deleteRowToolItm = new ToolItem(toolBar, SWT.NONE);
+		deleteRowToolItm = new ToolItem(toolBar, SWT.NONE);
 		deleteRowToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/delete_row.png"));
 		deleteRowToolItm.setToolTipText("Delete Row");
 
 		ToolItem toolItem_6 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem moveRowUpToolItm = new ToolItem(toolBar, SWT.NONE);
+		moveRowUpToolItm = new ToolItem(toolBar, SWT.NONE);
 		moveRowUpToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/move_row_up.png"));
 		moveRowUpToolItm.setToolTipText("Move Row Up");
 
 		ToolItem toolItem_7 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem moveRowDownToolItm = new ToolItem(toolBar, SWT.NONE);
+		moveRowDownToolItm = new ToolItem(toolBar, SWT.NONE);
 		moveRowDownToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/move_row_down.png"));
 		moveRowDownToolItm.setToolTipText("Move Row Down");
 
 		ToolItem toolItem_8 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem exportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
+		exportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
 		exportExcelDataToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/import.png"));
 		exportExcelDataToolItm.setToolTipText("Export Data From Excel");
 
 		ToolItem toolItem_9 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem inportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
+		inportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
 		inportExcelDataToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
 		inportExcelDataToolItm.setToolTipText("Import Data In Excel");
 
 		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem saveToolItm = new ToolItem(toolBar, SWT.NONE);
+		saveToolItm = new ToolItem(toolBar, SWT.NONE);
 		saveToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
 		saveToolItm.setToolTipText("Save");
 
 		ToolItem toolItem_12 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem refreshToolItm = new ToolItem(toolBar, SWT.NONE);
+		refreshToolItm = new ToolItem(toolBar, SWT.NONE);
 		refreshToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		refreshToolItm.setToolTipText("Refresh");
 
 		ToolItem toolItem_11 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		ToolItem createBackupToolItm = new ToolItem(toolBar, SWT.NONE);
+		createBackupToolItm = new ToolItem(toolBar, SWT.NONE);
 		createBackupToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/backup_create.png"));
 		createBackupToolItm.setToolTipText("Create New Backup");
 
@@ -157,16 +168,19 @@ public class DataRepositoryView extends Composite {
 
 		colCount = excelTable.getColumnCount();
 		rowCount = excelTable.getItemCount();
+		init();
+		addButtonListner();
+	}
 
+	private void init() {
+
+	}
+
+	private void addButtonListner() {
 		addColmToolItm.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				newColumn = new TableColumn(excelTable, SWT.NONE);
-				newColumn.setWidth(100);
-				newColumn.setText("Column " + colCount);
-				colCount += 1;
 
 			}
 
@@ -348,8 +362,8 @@ public class DataRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					bottomFactory.refreshBottomFactory();
-				} catch (IOException | SQLException e1) {
+					excelTable.renderAllDRDetails();
+				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -383,6 +397,62 @@ public class DataRepositoryView extends Composite {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		return artifact;
+	}
+
+	public void toggleRefreshButton(boolean status) {
+		this.refreshToolItm.setEnabled(status);
+	}
+
+	public void toggleAddColumnButton(boolean status) {
+		this.addColmToolItm.setEnabled(status);
+	}
+
+	public void toggleDeleteColumnButton(boolean status) {
+		this.deleteColmToolItm.setEnabled(status);
+	}
+
+	public void toggleMoveColumnLeftButton(boolean status) {
+		this.moveColmLeftToolItm.setEnabled(status);
+	}
+
+	public void toggleMoveColumnRightButton(boolean status) {
+		this.moveColmRightToolItm.setEnabled(status);
+	}
+
+	public void toggleRenameColumnButton(boolean status) {
+		this.renameColmToolItm.setEnabled(status);
+	}
+
+	public void toggleAddRowButton(boolean status) {
+		this.addRowToolItm.setEnabled(status);
+	}
+
+	public void toggleDeleteRowButton(boolean status) {
+		this.deleteRowToolItm.setEnabled(status);
+	}
+
+	public void toggleMoveRowUpButton(boolean status) {
+		this.moveRowUpToolItm.setEnabled(status);
+	}
+
+	public void toggleMoveRowDownButton(boolean status) {
+		this.moveRowDownToolItm.setEnabled(status);
+	}
+
+	public void toggleExportDataButton(boolean status) {
+		this.exportExcelDataToolItm.setEnabled(status);
+	}
+
+	public void toggleImportDataButton(boolean status) {
+		this.inportExcelDataToolItm.setEnabled(status);
+	}
+
+	public void toggleSaveButton(boolean status) {
+		this.saveToolItm.setEnabled(status);
+	}
+
+	public void toggleCreateBackupButton(boolean status) {
+		this.createBackupToolItm.setEnabled(status);
 	}
 
 	@Override

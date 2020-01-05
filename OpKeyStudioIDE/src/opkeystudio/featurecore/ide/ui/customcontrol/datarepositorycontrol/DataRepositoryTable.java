@@ -33,8 +33,10 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
 public class DataRepositoryTable extends CustomTable {
 	private DataRepositoryView parentDataRepositoryView;
-
 	private List<DRColumnAttributes> drColumnAttributes = new ArrayList<>();
+
+	private DRColumnAttributes selectedDRColumnAttribute;
+	private DRCellAttributes selectedDRCEllAttribute;
 
 	public DataRepositoryTable(Composite parent, int style, DataRepositoryView parentView)
 			throws JsonParseException, JsonMappingException, IOException {
@@ -55,13 +57,21 @@ public class DataRepositoryTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				int selectedColumn = cursor.getColumn();
 				CustomText text = new CustomText(cursor, 0);
 				int selectedColNo = cursor.getColumn();
-				int selectedRowNo = getSelectedRowIndex();
-				System.out.println("Column number:" + selectedColNo);
-				System.out.println("Row number:" + selectedRowNo);
+				int selectedRowNo = getSelectionIndices()[0];
 
+				List<DRColumnAttributes> drColumnAttributes = getDrColumnAttributes();
+				DRColumnAttributes drColumnAttreibute = drColumnAttributes.get(selectedColNo);
+				DRCellAttributes drCellAttribute = drColumnAttreibute.getDrCellAttributes().get(selectedRowNo);
+				setSelectedDRColumnAttribute(drColumnAttreibute);
+				setSelectedDRCEllAttribute(drCellAttribute);
+
+				if (getSelectedDRCEllAttribute().getValue() == null) {
+					text.setText("");
+				} else {
+					text.setText(getSelectedDRCEllAttribute().getValue());
+				}
 				text.addFocusListener(new FocusListener() {
 
 					@Override
@@ -81,8 +91,9 @@ public class DataRepositoryTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
-						cursor.getRow().setText(selectedColumn, text.getText());
-
+						cursor.getRow().setText(selectedColNo, text.getText());
+						getSelectedDRCEllAttribute().setValue(text.getText());
+						getSelectedDRCEllAttribute().setModified(true);
 					}
 				});
 
@@ -122,9 +133,7 @@ public class DataRepositoryTable extends CustomTable {
 		});
 	}
 
-	public void renderAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
-		Artifact artifact = getParentDataRepositoryView().getArtifact();
-		List<DRColumnAttributes> drDatas = new DataRepositoryApi().getAllDRDatas(artifact.getId());
+	private void renderDRDatas(List<DRColumnAttributes> drDatas) {
 		Collections.sort(drDatas);
 		initializeHeaders(drDatas);
 		setDrColumnAttributes(drDatas);
@@ -133,10 +142,16 @@ public class DataRepositoryTable extends CustomTable {
 		List<DRCellAttributes> allDrCellAttributes = new ArrayList<DRCellAttributes>();
 		for (int columnNo = 0; columnNo < drDatas.size(); columnNo++) {
 			DRColumnAttributes drColumnAttribute = drDatas.get(columnNo);
+			if (drColumnAttribute.isDeleted()) {
+				continue;
+			}
 			List<DRCellAttributes> drCellAttributes = drColumnAttribute.getDrCellAttributes();
 			rowCount = drCellAttributes.size();
 			for (int rowNo = 0; rowNo < drCellAttributes.size(); rowNo++) {
 				DRCellAttributes drCellAttribute = drCellAttributes.get(rowNo);
+				if (drCellAttribute.isDeleted()) {
+					continue;
+				}
 				drCellAttribute.setDrColumnAttribute(drColumnAttribute);
 				drCellAttribute.setRowNo(rowNo);
 				drCellAttribute.setColumnNo(columnNo);
@@ -165,6 +180,23 @@ public class DataRepositoryTable extends CustomTable {
 		}
 	}
 
+	public void renderAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
+		this.removeAll();
+		Artifact artifact = getParentDataRepositoryView().getArtifact();
+		List<DRColumnAttributes> drDatas = new DataRepositoryApi().getAllDRDatas(artifact.getId());
+		renderDRDatas(drDatas);
+	}
+
+	public void refreshAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
+		this.removeAll();
+		List<DRColumnAttributes> drDatas = getDrColumnAttributes();
+		renderDRDatas(drDatas);
+	}
+
+	public void deleteDRColumn() {
+		getSelectedDRColumnAttribute().setDeleted(true);
+	}
+
 	public DataRepositoryView getParentDataRepositoryView() {
 		return parentDataRepositoryView;
 	}
@@ -179,6 +211,22 @@ public class DataRepositoryTable extends CustomTable {
 
 	public void setDrColumnAttributes(List<DRColumnAttributes> drColumnAttributes) {
 		this.drColumnAttributes = drColumnAttributes;
+	}
+
+	public DRColumnAttributes getSelectedDRColumnAttribute() {
+		return selectedDRColumnAttribute;
+	}
+
+	public void setSelectedDRColumnAttribute(DRColumnAttributes selectedDRColumnAttribute) {
+		this.selectedDRColumnAttribute = selectedDRColumnAttribute;
+	}
+
+	public DRCellAttributes getSelectedDRCEllAttribute() {
+		return selectedDRCEllAttribute;
+	}
+
+	public void setSelectedDRCEllAttribute(DRCellAttributes selectedDRCEllAttribute) {
+		this.selectedDRCEllAttribute = selectedDRCEllAttribute;
 	}
 
 }
