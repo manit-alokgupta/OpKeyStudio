@@ -34,7 +34,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 

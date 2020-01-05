@@ -256,16 +256,18 @@ public class GlobalVariableTable extends CustomTable {
 		try {
 			List<GlobalVariable> globalvariables = new GlobalVariableApi().getAllGlobalVariables();
 			for (GlobalVariable globalvariable : globalvariables) {
-				CustomTableItem ti = new CustomTableItem(this, 0);
-				ti.setData(globalvariable);
-				ti.setControlData(globalvariable);
-				if (isInsideArtifact()) {
-					ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-							globalvariable.getValue() });
-				} else {
-					ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-							globalvariable.getValue(), "" });
-					addTableEditor(ti);
+				if (globalvariable.isVisible()) {
+					CustomTableItem ti = new CustomTableItem(this, 0);
+					ti.setData(globalvariable);
+					ti.setControlData(globalvariable);
+					if (isInsideArtifact()) {
+						ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+								globalvariable.getValue() });
+					} else {
+						ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+								globalvariable.getValue(), "" });
+						addTableEditor(ti);
+					}
 				}
 			}
 			this.setControlData(globalvariables);
