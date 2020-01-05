@@ -57,8 +57,10 @@ public class DataRepositoryTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				int selectedColumn = cursor.getColumn();
 				CustomText text = new CustomText(cursor, 0);
-				System.out.println("Column number:-" + cursor.getColumn());
-				System.out.println("Row number:-" + cursor.getRow());
+				int selectedColNo = cursor.getColumn();
+				int selectedRowNo = getSelectedRowIndex();
+				System.out.println("Column number:" + selectedColNo);
+				System.out.println("Row number:" + selectedRowNo);
 
 				text.addFocusListener(new FocusListener() {
 
@@ -126,7 +128,7 @@ public class DataRepositoryTable extends CustomTable {
 		Collections.sort(drDatas);
 		initializeHeaders(drDatas);
 		setDrColumnAttributes(drDatas);
-		
+
 		int rowCount = 0;
 		List<DRCellAttributes> allDrCellAttributes = new ArrayList<DRCellAttributes>();
 		for (int columnNo = 0; columnNo < drDatas.size(); columnNo++) {
@@ -151,6 +153,7 @@ public class DataRepositoryTable extends CustomTable {
 			}
 
 			DataRepositoryTableItem dti = new DataRepositoryTableItem(this, 0);
+			dti.setDrCellAttributes(allRowDrCellAttributes);
 			for (int i = 0; i < allRowDrCellAttributes.size(); i++) {
 				DRCellAttributes drCellAttribute = allRowDrCellAttributes.get(i);
 				if (drCellAttribute.getValue() == null) {
