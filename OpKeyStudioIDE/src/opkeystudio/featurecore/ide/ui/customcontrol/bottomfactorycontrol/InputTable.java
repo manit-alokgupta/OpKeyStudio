@@ -44,15 +44,14 @@ public class InputTable extends CustomTable {
 	private InputTable thisTable = this;
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
 
-	public InputTable(Composite parent, int style, BottomFactoryFLUi parentView)
-			throws JsonParseException, JsonMappingException, IOException, SQLException {
+	public InputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryFLUi(parentView);
 	}
 
-	private void init() throws JsonParseException, JsonMappingException, IOException, SQLException {
+	private void init() {
 		String[] tableHeaders = { "Name", "Data Type", "Default Value", "Optional", "Description" };
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
@@ -251,8 +250,7 @@ public class InputTable extends CustomTable {
 		selectRow(0);
 	}
 
-	public void renderAllBottomFactoryInputData()
-			throws JsonParseException, JsonMappingException, IOException, SQLException {
+	public void renderAllBottomFactoryInputData() {
 		disposeAllTableEditors();
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
@@ -364,13 +362,7 @@ public class InputTable extends CustomTable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-//		addInputParameter(bottomFactoryInput);
-		try {
-			renderAllBottomFactoryInputData();
-		} catch (IOException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		renderAllBottomFactoryInputData();
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {

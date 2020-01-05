@@ -82,8 +82,7 @@ public class BottomFactoryFLUi extends Composite {
 	 * @throws JsonParseException
 	 */
 	@SuppressWarnings("unused")
-	public BottomFactoryFLUi(Composite parent, int style)
-			throws JsonParseException, JsonMappingException, IOException, SQLException {
+	public BottomFactoryFLUi(Composite parent, int style) {
 		super(parent, style);
 
 		display = getParent().getDisplay();
@@ -539,31 +538,21 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					if (flag == true) {
-						toggleFlag(false);
+				if (flag == true) {
+					toggleFlag(false);
 
-						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-								"Do you want to Save changes?");
-						if (!status) {
-							inputTable.renderAllBottomFactoryInputData();
-							return;
-						}
-						new BottomFactoryInputParameterApi()
-								.saveAllBottomFactoryInputParameter(inputTable.getBottomFactoryInputData());
-						try {
-							inputTable.renderAllBottomFactoryInputData();
-						} catch (IOException | SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+					boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+							"Do you want to Save changes?");
+					if (!status) {
+						inputTable.renderAllBottomFactoryInputData();
+						return;
 					}
-
-					outputTable.renderAllBottomFactoryOutputData();
-				} catch (IOException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					new BottomFactoryInputParameterApi()
+							.saveAllBottomFactoryInputParameter(inputTable.getBottomFactoryInputData());
+					inputTable.renderAllBottomFactoryInputData();
 				}
+
+				outputTable.renderAllBottomFactoryOutputData();
 			}
 
 			@Override
@@ -673,30 +662,20 @@ public class BottomFactoryFLUi extends Composite {
 		refreshOutputItem.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					if (flag == true) {
-						toggleFlag(false);
-						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-								"Do you want to Save changes?");
-						if (!status) {
-							outputTable.renderAllBottomFactoryOutputData();
-							return;
-						}
-						new BottomFactoryOutputParameterApi()
-								.saveAllBottomFactoryOutputParameter(outputTable.getBottomFactoryOutputData());
-						try {
-							outputTable.renderAllBottomFactoryOutputData();
-						} catch (IOException | SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+				if (flag == true) {
+					toggleFlag(false);
+					boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+							"Do you want to Save changes?");
+					if (!status) {
+						outputTable.renderAllBottomFactoryOutputData();
+						return;
 					}
-
+					new BottomFactoryOutputParameterApi()
+							.saveAllBottomFactoryOutputParameter(outputTable.getBottomFactoryOutputData());
 					outputTable.renderAllBottomFactoryOutputData();
-				} catch (IOException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
+
+				outputTable.renderAllBottomFactoryOutputData();
 			}
 
 			@Override

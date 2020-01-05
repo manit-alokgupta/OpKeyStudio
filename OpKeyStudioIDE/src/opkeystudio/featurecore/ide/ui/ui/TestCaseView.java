@@ -42,6 +42,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
@@ -543,10 +544,12 @@ public class TestCaseView extends Composite {
 
 		TableCursor cursor = new TableCursor(flowStepTable, 0);
 
-		bottomFactory = new BottomFactoryTestCaseUi(testCaseStepsHolder, SWT.NONE);
-		bottomFactory.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
+		if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+			bottomFactory = new BottomFactoryFLUi(testCaseStepsHolder, SWT.NONE);
+			bottomFactory.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+			bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		}
+		
 		TabItem sourceCodeTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
 		sourceCodeTabItem.setText("Source Code");
 		sourceCodeTabItem.setToolTipText("Source Code");

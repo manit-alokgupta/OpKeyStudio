@@ -42,15 +42,14 @@ public class OutputTable extends CustomTable {
 
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
 
-	public OutputTable(Composite parent, int style, BottomFactoryFLUi parentView)
-			throws JsonParseException, JsonMappingException, IOException, SQLException {
+	public OutputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
 		init();
 		thisTable = this;
 		this.setParentBottomFactoryFLUi(parentView);
 	}
 
-	private void init() throws JsonParseException, JsonMappingException, IOException, SQLException {
+	private void init() {
 		String[] tableHeaders = { "Name", "Data Type", "Associated Step Output", "Description" };
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(this, 0);
@@ -220,8 +219,7 @@ public class OutputTable extends CustomTable {
 		selectRow(0);
 	}
 
-	public void renderAllBottomFactoryOutputData()
-			throws JsonParseException, JsonMappingException, IOException, SQLException {
+	public void renderAllBottomFactoryOutputData() {
 		disposeAllTableEditors();
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
@@ -330,19 +328,7 @@ public class OutputTable extends CustomTable {
 		bottomFactoryOutput.setType("String");
 		bottomFactoryOutput.setDescription("");
 
-//		try {
-//			new BottomFactoryOutputParameterApi().insertOutputParameter(bottomFactoryOutput);
-//		} catch (SQLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		addInputParameter(bottomFactoryInput);
-		try {
-			renderAllBottomFactoryOutputData();
-		} catch (IOException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		renderAllBottomFactoryOutputData();
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {
