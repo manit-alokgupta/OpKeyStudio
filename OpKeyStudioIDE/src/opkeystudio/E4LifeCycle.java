@@ -16,7 +16,6 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
  * <em>org.eclipse.core.runtime.products' extension point</em>) that references
  * this class.
  **/
-@SuppressWarnings("restriction")
 public class E4LifeCycle {
 
 	@PostContextCreate
