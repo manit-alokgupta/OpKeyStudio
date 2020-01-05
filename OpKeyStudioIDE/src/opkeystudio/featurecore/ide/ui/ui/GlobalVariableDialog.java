@@ -143,7 +143,7 @@ public class GlobalVariableDialog extends Dialog {
 				int selectedIndex = globalVariablesTable.getSelectionIndex();
 				GlobalVariable globalVar = globalVariablesTable.getGlobalVariablesData().get(selectedIndex);
 				boolean isused = new GlobalVariableApiUtilities().isGlobalVariableUsed(globalVar);
-				if (true) {
+				if (isused) {
 					new MessageDialogs().openInformationDialog("Can't delete Global Variable", "");
 					return;
 				}

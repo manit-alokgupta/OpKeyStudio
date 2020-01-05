@@ -9,6 +9,62 @@
             application="org.eclipse.e4.ui.workbench.swt.E4Application"
             name="OpKeyStudio">
          <property
+               name="lifeCycleURI"
+               value="bundleclass://OpKeyStudio/opkeystudio.E4LifeCycle">
+         </property>
+         <property
+               name="appName"
+               value="OpKeyStudio">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="7,252,445,20">
+         </property>
+            <property
+                  name="startupForegroundColor"
+                  value="000000">
+            </property>
+            <property
+                  name="preferenceCustomization"
+                  value="plugin_customization.ini">
+            </property>
+      </product>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.splashHandlers">
+      <splashHandler
+            class="opkeystudio.splashHandlers.ExtensibleSplashHandler"
+            id="opkeystudio.splashHandlers.extensible">
+      </splashHandler>
+      <splashHandler
+            class="opkeystudio.splashHandlers.InteractiveSplashHandler"
+            id="opkeystudio.splashHandlers.interactive">
+      </splashHandler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="opkeystudio.featurecore.project.ui.TestEditor"
+            id="opkeystudio.featurecore.project.ui.TestEditor"
+            name="New EditorPart">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="opkeystudio.featurecore.ide.ui.ui.dede"
+            id="opkeystudio.featurecore.ide.ui.ui.dede"
+            name="New ViewPart">
+      </view>
+   </extension>
+   <extension
+         id="product1"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.e4.ui.workbench.swt.E4Application"
+            name="OpKeyStudio">
+         <property
                name="startupForegroundColor"
                value="000000">
          </property>
@@ -22,6 +78,5 @@
          </property>
       </product>
    </extension>
-
 
 </plugin>

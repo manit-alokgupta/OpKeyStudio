@@ -7,7 +7,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.e4.ui.workbench.swt.E4Application"
-            name="opkeystudioagent">
+            name="OpKeyStudioAgent">
          <property
                name="lifeCycleURI"
                value="bundleclass://OpKeyStudioAgent/opkeystudioagent.E4LifeCycle">
@@ -15,6 +15,10 @@
          <property
                name="applicationCSS"
                value="platform:/plugin/OpKeyStudioAgent/css/default.css">
+         </property>
+         <property
+               name="appName"
+               value="OpKeyStudioAgent">
          </property>
       </product>
    </extension>
