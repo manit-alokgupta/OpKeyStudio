@@ -157,7 +157,7 @@ public class FlowStepTable extends CustomTable {
 		}
 	}
 
-	public void renderFlowSteps() throws JsonParseException, JsonMappingException, SQLException, IOException {
+	public void renderFlowSteps() throws SQLException, IOException {
 		disposeAllTableEditors();
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
