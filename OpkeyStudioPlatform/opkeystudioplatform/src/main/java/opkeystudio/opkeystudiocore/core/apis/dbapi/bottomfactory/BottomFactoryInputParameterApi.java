@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -24,23 +25,26 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 @SuppressWarnings("unused")
 public class BottomFactoryInputParameterApi {
-	public List<Fl_BottomFactoryInput> getBottomFactoryInputParameter(String component_id)
-			throws JsonParseException, JsonMappingException, IOException {
+	public List<Fl_BottomFactoryInput> getBottomFactoryInputParameter(String component_id) {
 		String query = String.format(
 				"SELECT * FROM component_input_parameters where component_id='%s' ORDER BY position", component_id);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, Fl_BottomFactoryInput.class);
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<Fl_BottomFactoryInput>();
 	}
 
-	private FunctionLibraryComponent getFunctionLibraryComponent(String id)
-			throws JsonParseException, JsonMappingException, IOException, SQLException {
+	private FunctionLibraryComponent getFunctionLibraryComponent(String id) {
 		return new FunctionLibraryApi().getFunctinLibraryComponent(id).get(0);
 	}
 
-	public List<Fl_BottomFactoryInput> getAllBottomFactoryInputParameter(String component_id)
-			throws JsonParseException, JsonMappingException, IOException, SQLException {
+	public List<Fl_BottomFactoryInput> getAllBottomFactoryInputParameter(String component_id) {
 		List<Fl_BottomFactoryInput> bottomFactoryInputs = getBottomFactoryInputParameter(component_id);
 		for (Fl_BottomFactoryInput fl_BottomFactoryInput : bottomFactoryInputs) {
 			if (fl_BottomFactoryInput.getComponent_id() != null) {

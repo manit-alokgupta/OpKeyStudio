@@ -21,6 +21,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FunctionLibraryApi {
@@ -128,7 +129,8 @@ public class FunctionLibraryApi {
 			} else if (flowStep.getStepcomponent_id() != null) {
 				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getStepcomponent_id()).get(0);
 				List<ComponentInputArgument> inputArgs = getAllComponentInputArgument(flowStep.getStepcomponent_id());
-				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(flowStep.getStepcomponent_id());
+				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(
+						flowStep.getStepcomponent_id());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
@@ -171,17 +173,19 @@ public class FunctionLibraryApi {
 		return mapper.readValue(result, type);
 	}
 
-	public List<FunctionLibraryComponent> getFunctinLibraryComponent(String componentId)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
+	public List<FunctionLibraryComponent> getFunctinLibraryComponent(String componentId) {
 		String query = String.format("select * from main_artifact_filesystem where id='%s'", componentId);
-		String result = sqlComm.executeQueryString(query);
+		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
 				FunctionLibraryComponent.class);
-		sqlComm.disconnect();
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<FunctionLibraryComponent>();
 	}
 
 	public List<FlowInputArgument> getFlowInputArguments() {

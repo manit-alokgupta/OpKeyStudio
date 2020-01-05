@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -23,23 +24,26 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 @SuppressWarnings("unused")
 public class BottomFactoryOutputParameterApi {
 
-	private List<Fl_BottomFactoryOutput> getBottomFactoryOutputParameter(String component_id)
-			throws JsonParseException, JsonMappingException, IOException {
+	private List<Fl_BottomFactoryOutput> getBottomFactoryOutputParameter(String component_id) {
 		String query = String.format(
 				"SELECT * FROM component_output_parameters where component_id='%s' ORDER BY position", component_id);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, Fl_BottomFactoryOutput.class);
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<Fl_BottomFactoryOutput>();
 	}
 
-	private FunctionLibraryComponent getFunctionLibraryComponent(String id)
-			throws JsonParseException, JsonMappingException, IOException, SQLException {
+	private FunctionLibraryComponent getFunctionLibraryComponent(String id) {
 		return new FunctionLibraryApi().getFunctinLibraryComponent(id).get(0);
 	}
 
-	public List<Fl_BottomFactoryOutput> getAllBottomFactoryOutputParameter(String component_id)
-			throws JsonParseException, JsonMappingException, IOException, SQLException {
+	public List<Fl_BottomFactoryOutput> getAllBottomFactoryOutputParameter(String component_id) {
 		List<Fl_BottomFactoryOutput> bottomFactoryOutputs = getBottomFactoryOutputParameter(component_id);
 		for (Fl_BottomFactoryOutput fl_BottomFactoryOutput : bottomFactoryOutputs) {
 			System.out.println(fl_BottomFactoryOutput.getComponent_id());
