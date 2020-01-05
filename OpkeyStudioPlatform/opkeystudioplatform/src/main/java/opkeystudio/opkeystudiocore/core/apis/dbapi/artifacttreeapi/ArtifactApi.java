@@ -33,12 +33,18 @@ public class ArtifactApi {
 		return new ArrayList<Artifact>();
 	}
 
-	public List<Artifact> getArtifact(String artifactId) throws JsonParseException, JsonMappingException, IOException {
+	public List<Artifact> getArtifact(String artifactId) {
 		String query = String.format("select * from main_artifact_filesystem where id='%s'", artifactId);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, Artifact.class);
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<Artifact>();
 	}
 
 	public List<Artifact> getAllArtificatesByType(String artifactType) {

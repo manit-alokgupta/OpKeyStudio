@@ -37,28 +37,33 @@ public class FlowApi {
 		return flowApi;
 	}
 
-	private List<FlowStep> getAllSteps(String flowId)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
+	private List<FlowStep> getAllSteps(String flowId) {
 		String query = String.format("SELECT * FROM flow_design_steps where flow_id='%s' ORDER BY position asc",
 				flowId);
-		String result = sqlComm.executeQueryString(query);
+		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowStep.class);
-		sqlComm.disconnect();
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<FlowStep>();
 	}
 
-	public void initAllFlowInputArguments() throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
+	public void initAllFlowInputArguments() {
 		String query = "SELECT * FROM flow_step_input_arguments";
-		String result = sqlComm.executeQueryString(query);
+		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowInputArgument.class);
-		sqlComm.disconnect();
-		List<FlowInputArgument> flowInputArgs = mapper.readValue(result, type);
+		List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
+		try {
+			flowInputArgs = mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setFlowInputArguments(flowInputArgs);
 	}
 

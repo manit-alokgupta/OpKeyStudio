@@ -295,31 +295,26 @@ public class GenericTree extends CustomTree {
 
 	public void initDataRepositories() {
 		this.removeAll();
-		try {
-			CustomTreeItem rootNode = new CustomTreeItem(this, 0);
-			rootNode.setText("Data Repositories");
-			rootNode.setExpanded(true);
-			addIcon(rootNode);
-			List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("DataRepository");
-			for (Artifact drArtifact : artifacts) {
-				CustomTreeItem drNode = new CustomTreeItem(rootNode, 0);
-				drNode.setText(drArtifact.getName());
-				drNode.setControlData(drArtifact);
-				addIcon(drNode);
-				List<DRColumnAttributes> drColumnAttributes = new DataRepositoryApi()
-						.getAllColumnsValues(drArtifact.getId());
-				for (DRColumnAttributes drColumn : drColumnAttributes) {
-					CustomTreeItem drColumnNode = new CustomTreeItem(drNode, 0);
-					drColumnNode.setText(drColumn.getName());
-					drColumnNode.setControlData(drColumn);
-					addIcon(drColumnNode);
-				}
+		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
+		rootNode.setText("Data Repositories");
+		rootNode.setExpanded(true);
+		addIcon(rootNode);
+		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("DataRepository");
+		for (Artifact drArtifact : artifacts) {
+			CustomTreeItem drNode = new CustomTreeItem(rootNode, 0);
+			drNode.setText(drArtifact.getName());
+			drNode.setControlData(drArtifact);
+			addIcon(drNode);
+			List<DRColumnAttributes> drColumnAttributes = new DataRepositoryApi()
+					.getAllColumnsValues(drArtifact.getId());
+			for (DRColumnAttributes drColumn : drColumnAttributes) {
+				CustomTreeItem drColumnNode = new CustomTreeItem(drNode, 0);
+				drColumnNode.setText(drColumn.getName());
+				drColumnNode.setControlData(drColumn);
+				addIcon(drColumnNode);
 			}
-			expandAll(rootNode);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		expandAll(rootNode);
 	}
 
 	public boolean isTreeExtended() {
