@@ -36,12 +36,8 @@ public class QueryMaker {
 						duoList.addFirstValue(fieldName);
 
 						if (fieldValue instanceof Boolean) {
-							String fieldValueString = String.valueOf((int) fieldValue);
-							if (fieldValueString.contains("'")) {
-								duoList.addSecondValue("\"" + String.valueOf(fieldValue) + "\"");
-							} else {
-								duoList.addSecondValue("'" + String.valueOf(fieldValue) + "'");
-							}
+							int val = ((boolean) fieldValue) ? 1 : 0;
+							duoList.addSecondValue("'" + String.valueOf(val) + "'");
 						} else {
 							String fieldValueString = String.valueOf(fieldValue);
 							if (fieldValueString.contains("'")) {
