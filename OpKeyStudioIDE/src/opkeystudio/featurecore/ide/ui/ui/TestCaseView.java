@@ -10,6 +10,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -24,8 +25,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
@@ -43,7 +42,6 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestCaseUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree;
@@ -113,7 +111,7 @@ public class TestCaseView extends Composite {
 	private GenericTree allDataTreeView;
 //	private Tree allDataTreeView;
 	private Label stepInfoImage;
-	private CLabel stepInfoLabel;
+	private StyledText stepInfoLabel;
 	private FlowStep selectedFlowStep;
 
 	@SuppressWarnings("unused")
@@ -269,68 +267,71 @@ public class TestCaseView extends Composite {
 		expanditemStepIno = new ExpandItem(expandBar, SWT.NONE);
 		expanditemStepIno.setExpanded(true);
 		expanditemStepIno.setText("Step Information");
-		expanditemStepIno.setHeight(150);
+		expanditemStepIno.setHeight(500);
 
 		Composite composite_5 = new Composite(expandBar, SWT.NONE);
 		expanditemStepIno.setControl(composite_5);
 		expanditemStepIno.setHeight(expanditemStepIno.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		composite_5.setLayout(new GridLayout(2, false));
-
-		stepInfoLabel = new CLabel(composite_5, SWT.NONE);
+		composite_5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		stepInfoLabel = new StyledText(composite_5, SWT.V_SCROLL);
 		stepInfoLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		stepInfoLabel.setText("New Label");
-
+		stepInfoLabel.setText("");
+		stepInfoLabel.setEditable(false);
+		
 		stepInfoImage = new Label(composite_5, SWT.NONE);
 		stepInfoImage.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/sample.png"));
 		GridData gd_stepInfoImage = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_stepInfoImage.widthHint = 88;
 		stepInfoImage.setLayoutData(gd_stepInfoImage);
 
-		expanditemTestObject = new ExpandItem(expandBar, SWT.NONE);
-		expanditemTestObject.setExpanded(true);
-		expanditemTestObject.setText("Test Object");
-		expanditemTestObject.setHeight(150);
-		Composite composite_6 = new Composite(expandBar, SWT.NONE);
-		expanditemTestObject.setControl(composite_6);
-		expanditemTestObject.setHeight(expanditemTestObject.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-		composite_6.setLayout(new FillLayout(SWT.HORIZONTAL));
+		// expanditemTestObject = new ExpandItem(expandBar, SWT.NONE);
+		// expanditemTestObject.setExpanded(true);
+		// expanditemTestObject.setText("Test Object");
+		// expanditemTestObject.setHeight(150);
+		// Composite composite_6 = new Composite(expandBar, SWT.NONE);
+		// expanditemTestObject.setControl(composite_6);
+		// expanditemTestObject.setHeight(expanditemTestObject.getControl().computeSize(SWT.DEFAULT,
+		// SWT.DEFAULT).y);
 
-		SashForm sashForm = new SashForm(composite_6, SWT.NONE);
-		sashForm.setSashWidth(1);
+		// composite_6.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		Composite composite_8 = new Composite(sashForm, SWT.NONE);
-		composite_8.setLayout(new FillLayout(SWT.HORIZONTAL));
+		// SashForm sashForm = new SashForm(composite_6, SWT.NONE);
+		// sashForm.setSashWidth(1);
 
-		mappedTable = new Table(composite_8, SWT.BORDER | SWT.FULL_SELECTION);
-		mappedTable.setHeaderVisible(true);
-		mappedTable.setLinesVisible(true);
+		// Composite composite_8 = new Composite(sashForm, SWT.NONE);
+		// composite_8.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		TableCursor tableCursor = new TableCursor(mappedTable, SWT.NONE);
+//		mappedTable = new Table(composite_8, SWT.BORDER | SWT.FULL_SELECTION);
+//		mappedTable.setHeaderVisible(true);
+		// mappedTable.setLinesVisible(true);
 
-		Composite composite_9 = new Composite(sashForm, SWT.NONE);
-		composite_9.setLayout(new FillLayout(SWT.HORIZONTAL));
+//		TableCursor tableCursor = new TableCursor(mappedTable, SWT.NONE);
 
-		propertyTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
-		propertyTable.setHeaderVisible(true);
-		propertyTable.setLinesVisible(true);
+		// Composite composite_9 = new Composite(sashForm, SWT.NONE);
+		// composite_9.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		TableCursor tableCursor_1 = new TableCursor(propertyTable, SWT.NONE);
-		sashForm.setWeights(new int[] { 1, 2 });
+		// propertyTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
+//		propertyTable.setHeaderVisible(true);
+		// propertyTable.setLinesVisible(true);
 
-		expenditemInputData = new ExpandItem(expandBar, SWT.NONE);
-		expenditemInputData.setExpanded(true);
-		expenditemInputData.setText("Input Data");
-		expenditemInputData.setHeight(150);
+		// TableCursor tableCursor_1 = new TableCursor(propertyTable, SWT.NONE);
+//		sashForm.setWeights(new int[] { 1, 2 });
 
-		Composite composite_7 = new Composite(expandBar, SWT.NONE);
-		expenditemInputData.setControl(composite_7);
-		expenditemInputData.setHeight(expenditemInputData.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-		composite_7.setLayout(new FillLayout(SWT.HORIZONTAL));
+		// expenditemInputData = new ExpandItem(expandBar, SWT.NONE);
+		// expenditemInputData.setExpanded(true);
+		// expenditemInputData.setText("Input Data");
+		// expenditemInputData.setHeight(150);
 
-		InputDataTable = new StepDetailsInputData(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		InputDataTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
-		InputDataTable.setHeaderVisible(true);
-		InputDataTable.setLinesVisible(true);
+//		Composite composite_7 = new Composite(expandBar, SWT.NONE);
+//		expenditemInputData.setControl(composite_7);
+//		expenditemInputData.setHeight(expenditemInputData.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+//		composite_7.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+//		InputDataTable = new StepDetailsInputData(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		InputDataTable.setHeaderVisible(true);
+//		InputDataTable.setLinesVisible(true);
 
 		addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/addstep.png"));
@@ -568,18 +569,19 @@ public class TestCaseView extends Composite {
 						allDataTreeView.selectKeyword(flowStep.getKeyword());
 					}
 				} else if (selectedColumn == 2) {
-					toggleAddButton(false);
+					toggleAddButton(true);
 					testCaseArgumentsTabFolder.setSelection(2);
 				} else if (selectedColumn == 3) {
-					toggleAddButton(false);
+					toggleAddButton(true);
 					testCaseArgumentsTabFolder.setSelection(3);
 				} else if (selectedColumn == 4) {
-					toggleAddButton(false);
+					toggleAddButton(true);
 					testCaseArgumentsTabFolder.setSelection(4);
 				} else {
-					toggleAddButton(false);
+					toggleAddButton(true);
 					testCaseArgumentsTabFolder.setSelection(0);
 				}
+
 			}
 
 			@Override
@@ -676,6 +678,13 @@ public class TestCaseView extends Composite {
 	private void populateFlowStepsData(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
 		if (flowStep != null) {
 			setSelectedFlowStep(flowStep);
+			String stepDetails = "";
+			if (flowStep.getComment() != null) {
+				stepDetails = flowStep.getComment();
+			} else if (flowStep.getComments() != null) {
+				stepDetails = flowStep.getComments();
+			}
+			getStepDetailLabel().setText(stepDetails);
 			if (flowStep.getKeyword() != null) {
 				outputDataTable.setKeyword(flowStep.getKeyword());
 				inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
@@ -1114,5 +1123,9 @@ public class TestCaseView extends Composite {
 
 	public void setArtifact(Artifact artifact) {
 		this.artifact = artifact;
+	}
+
+	public StyledText getStepDetailLabel() {
+		return this.stepInfoLabel;
 	}
 }

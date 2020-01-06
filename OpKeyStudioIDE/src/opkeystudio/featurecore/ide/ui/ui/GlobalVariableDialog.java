@@ -137,6 +137,13 @@ public class GlobalVariableDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				int selectedIndex = globalVariablesTable.getSelectionIndex();
 				GlobalVariable globalVar = globalVariablesTable.getGlobalVariablesData().get(selectedIndex);
+				boolean canDelete = new MessageDialogs().openConfirmDialog("Delete Global Variable",
+						"Do you want to delete " + globalVar.getName() + "?");
+
+				if (!canDelete) {
+					return;
+				}
+				
 				boolean isused = new GlobalVariableApiUtilities().isGlobalVariableUsed(globalVar);
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Can't delete Global Variable",
