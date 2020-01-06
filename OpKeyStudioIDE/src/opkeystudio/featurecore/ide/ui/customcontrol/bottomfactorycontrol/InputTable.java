@@ -201,7 +201,7 @@ public class InputTable extends CustomTable {
 		ComponentInputArgument bottomFactoryInput = inputTableItem.getBottomFactoryInputData();
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
-		CustomCombo combo = new CustomCombo(this, 0);
+		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
 		combo.setItems(ServiceRepository.getInstance().getAllVaraiblesType());
 		combo.select(Utilities.getInstance().getIndexOfItem(ServiceRepository.getInstance().getAllVaraiblesType(),
 				bottomFactoryInput.getType()));
@@ -216,7 +216,8 @@ public class InputTable extends CustomTable {
 				setSelection(inputTableItem);
 				bottomFactoryInput.setModified(true);
 				bottomFactoryInput.setIsmandatory(isOptional.getSelection());
-
+				saveAllComponentInputArguments();
+				renderAllBottomFactoryInputData();
 			}
 
 			@Override
@@ -230,14 +231,12 @@ public class InputTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				String selectedData = combo.getText();
 				setSelection(inputTableItem);
-				CustomCombo button = (CustomCombo) e.getSource();
-				ComponentInputArgument bottomFactoryInput1 = (ComponentInputArgument) button.getControlData();
-				int selected = combo.getSelectionIndex();
-				String selectedDataType = combo.getItem(selected);
-				bottomFactoryInput1.setModified(true);
-				bottomFactoryInput1.setType(selectedDataType);
-
+				bottomFactoryInput.setModified(true);
+				bottomFactoryInput.setType(selectedData);
+				saveAllComponentInputArguments();
+				renderAllBottomFactoryInputData();
 			}
 
 			@Override

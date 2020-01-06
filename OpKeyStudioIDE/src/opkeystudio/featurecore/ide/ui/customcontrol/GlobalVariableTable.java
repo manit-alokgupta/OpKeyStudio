@@ -191,7 +191,7 @@ public class GlobalVariableTable extends CustomTable {
 		GlobalVariable globalVariable = (GlobalVariable) item.getControlData();
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
-		CustomCombo combo = new CustomCombo(this, 0);
+		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
 		combo.setItems(ServiceRepository.getInstance().getAllVaraiblesType());
 		combo.select(Utilities.getInstance().getIndexOfItem(ServiceRepository.getInstance().getAllVaraiblesType(),
 				globalVariable.getDatatype()));
