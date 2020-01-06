@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +22,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
@@ -35,6 +31,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParameterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
@@ -137,16 +134,16 @@ public class InputTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
-	public void setBottomFactoryInputData(List<Fl_BottomFactoryInput> bottomFactoryInputs) {
+	public void setBottomFactoryInputData(List<ComponentInputArgument> bottomFactoryInputs) {
 		super.setControlData(bottomFactoryInputs);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Fl_BottomFactoryInput> getBottomFactoryInputData() {
-		return (List<Fl_BottomFactoryInput>) super.getControlData();
+	public List<ComponentInputArgument> getBottomFactoryInputData() {
+		return (List<ComponentInputArgument>) super.getControlData();
 	}
 
-	public void addInputParameter(Fl_BottomFactoryInput bottomFactoryInput) {
+	public void addInputParameter(ComponentInputArgument bottomFactoryInput) {
 		getBottomFactoryInputData().add(bottomFactoryInput);
 	}
 
@@ -169,7 +166,7 @@ public class InputTable extends CustomTable {
 	}
 
 	private void addTableEditor(InputTableItem inputTableItem) {
-		Fl_BottomFactoryInput bottomFactoryInput = inputTableItem.getBottomFactoryInputData();
+		ComponentInputArgument bottomFactoryInput = inputTableItem.getBottomFactoryInputData();
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
 		CustomCombo combo = new CustomCombo(this, 0);
@@ -179,7 +176,7 @@ public class InputTable extends CustomTable {
 		combo.setControlData(bottomFactoryInput);
 
 		CustomButton isOptional = new CustomButton(this, SWT.CHECK);
-		isOptional.setSelection(bottomFactoryInput.isIs_mandatory());
+		isOptional.setSelection(bottomFactoryInput.isIsmandatory());
 		isOptional.setControlData(bottomFactoryInput);
 		isOptional.addSelectionListener(new SelectionListener() {
 
@@ -187,9 +184,9 @@ public class InputTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				thisTable.setSelection(inputTableItem);
 				CustomButton button = (CustomButton) e.getSource();
-				Fl_BottomFactoryInput bottomFactoryInput1 = (Fl_BottomFactoryInput) button.getControlData();
+				ComponentInputArgument bottomFactoryInput1 = (ComponentInputArgument) button.getControlData();
 				bottomFactoryInput1.setModified(true);
-				bottomFactoryInput1.setIs_mandatory(button.getSelection());
+				bottomFactoryInput1.setIsmandatory(button.getSelection());
 
 			}
 
@@ -206,7 +203,7 @@ public class InputTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				thisTable.setSelection(inputTableItem);
 				CustomCombo button = (CustomCombo) e.getSource();
-				Fl_BottomFactoryInput bottomFactoryInput1 = (Fl_BottomFactoryInput) button.getControlData();
+				ComponentInputArgument bottomFactoryInput1 = (ComponentInputArgument) button.getControlData();
 				int selected = combo.getSelectionIndex();
 				String selectedDataType = combo.getItem(selected);
 				bottomFactoryInput1.setModified(true);
@@ -236,13 +233,13 @@ public class InputTable extends CustomTable {
 	public void refreshAllBottomFactoryInputData() {
 		disposeAllTableEditors();
 		this.removeAll();
-		List<Fl_BottomFactoryInput> bottomFactoryInputs = getBottomFactoryInputData();
+		List<ComponentInputArgument> bottomFactoryInputs = getBottomFactoryInputData();
 		setBottomFactoryInputData(bottomFactoryInputs);
-		for (Fl_BottomFactoryInput fl_BottomFactoryInput : bottomFactoryInputs) {
+		for (ComponentInputArgument fl_BottomFactoryInput : bottomFactoryInputs) {
 			if (fl_BottomFactoryInput.isDeleted() == false) {
 				InputTableItem inputTableItem = new InputTableItem(this, 0);
 				inputTableItem.setText(new String[] { fl_BottomFactoryInput.getName(), fl_BottomFactoryInput.getType(),
-						fl_BottomFactoryInput.getDefault_value(), "", fl_BottomFactoryInput.getDescription() });
+						fl_BottomFactoryInput.getDeault_value(), "", fl_BottomFactoryInput.getDescription() });
 				inputTableItem.setBottomFactoryInputData(fl_BottomFactoryInput);
 				addTableEditor(inputTableItem);
 			}
@@ -256,10 +253,10 @@ public class InputTable extends CustomTable {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
-		List<Fl_BottomFactoryInput> bottomFactoryInputs = new BottomFactoryInputParameterApi()
+		List<ComponentInputArgument> bottomFactoryInputs = new BottomFactoryInputParameterApi()
 				.getAllBottomFactoryInputParameter(artifactId);
 		setBottomFactoryInputData(bottomFactoryInputs);
-		for (Fl_BottomFactoryInput fl_BottomFactoryInput : bottomFactoryInputs) {
+		for (ComponentInputArgument fl_BottomFactoryInput : bottomFactoryInputs) {
 			if (fl_BottomFactoryInput.isDeleted() == false) {
 				InputTableItem inputTableItem = new InputTableItem(this, 0);
 				inputTableItem.setText(
@@ -272,8 +269,8 @@ public class InputTable extends CustomTable {
 		selectRow(0);
 	}
 
-	public void moveFl_BottomFactoryInputUp(Fl_BottomFactoryInput bottomFactoryInput1,
-			Fl_BottomFactoryInput bottomFactoryInput2) {
+	public void moveFl_BottomFactoryInputUp(ComponentInputArgument bottomFactoryInput1,
+			ComponentInputArgument bottomFactoryInput2) {
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = bottomFactoryInput1.getPosition();
 		int fpos2 = bottomFactoryInput2.getPosition();
@@ -287,8 +284,8 @@ public class InputTable extends CustomTable {
 
 	}
 
-	public void moveFl_BottomFactoryInputDown(Fl_BottomFactoryInput bottomFactoryInput1,
-			Fl_BottomFactoryInput bottomFactoryInput2) {
+	public void moveFl_BottomFactoryInputDown(ComponentInputArgument bottomFactoryInput1,
+			ComponentInputArgument bottomFactoryInput2) {
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = bottomFactoryInput1.getPosition();
 		int fpos2 = bottomFactoryInput2.getPosition();
@@ -302,12 +299,12 @@ public class InputTable extends CustomTable {
 
 	}
 
-	public Fl_BottomFactoryInput getSelectedInputParemeter() {
+	public ComponentInputArgument getSelectedInputParemeter() {
 		InputTableItem inputTableItem = (InputTableItem) this.getSelection()[0];
 		return inputTableItem.getBottomFactoryInputData();
 	}
 
-	public Fl_BottomFactoryInput getPrevInputParemeter() {
+	public ComponentInputArgument getPrevInputParemeter() {
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == 0) {
 			return null;
@@ -320,7 +317,7 @@ public class InputTable extends CustomTable {
 		return null;
 	}
 
-	public Fl_BottomFactoryInput getNextInputParemeter() {
+	public ComponentInputArgument getNextInputParemeter() {
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == this.getItemCount() - 1) {
 			return null;
@@ -338,7 +335,7 @@ public class InputTable extends CustomTable {
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
 		int lastPosition = 0;
-		Fl_BottomFactoryInput bottomFactoryInput = new Fl_BottomFactoryInput();
+		ComponentInputArgument bottomFactoryInput = new ComponentInputArgument();
 		System.out.println(getBottomFactoryInputData().size());
 
 		if ((getBottomFactoryInputData().size()) == 0) {
