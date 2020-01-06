@@ -50,7 +50,14 @@ public class DataRepositoryTable extends CustomTable {
 		getParentDataRepositoryView().toggleMoveColumnRightButton(false);
 		getParentDataRepositoryView().toggleMoveRowDownButton(false);
 		getParentDataRepositoryView().toggleMoveRowUpButton(false);
-		
+		getParentDataRepositoryView().toggleAddColumnButton(false);
+		getParentDataRepositoryView().toggleCreateBackupButton(false);
+		getParentDataRepositoryView().toggleAddRowButton(false);
+		getParentDataRepositoryView().toggleDeleteColumnButton(false);
+		getParentDataRepositoryView().toggleDeleteRowButton(false);
+		getParentDataRepositoryView().toggleRenameColumnButton(false);
+		getParentDataRepositoryView().toggleSaveButton(false);
+
 		renderAllDRDetails();
 		TableCursor cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
@@ -132,18 +139,42 @@ public class DataRepositoryTable extends CustomTable {
 				}
 			}
 		});
-		
+
 		this.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+				DataRepositoryTableItem selectedDrti = getSelectedDataRepositoryItem();
+				DataRepositoryTableItem previousDrti = getPreviousDataRepositoryItem();
+				DataRepositoryTableItem nextDrti = getNextDataRepositoryItem();
+				if (previousDrti == null) {
+					getParentDataRepositoryView().toggleMoveRowDownButton(true);
+					getParentDataRepositoryView().toggleMoveRowUpButton(false);
+				}
+				if (nextDrti == null) {
+					getParentDataRepositoryView().toggleMoveRowDownButton(false);
+					getParentDataRepositoryView().toggleMoveRowUpButton(true);
+				}
+				if (previousDrti == null && nextDrti == null) {
+					getParentDataRepositoryView().toggleMoveRowDownButton(false);
+					getParentDataRepositoryView().toggleMoveRowUpButton(false);
+				}
+				if (previousDrti != null && nextDrti != null) {
+					getParentDataRepositoryView().toggleMoveRowDownButton(true);
+					getParentDataRepositoryView().toggleMoveRowUpButton(true);
+				}
+				if (selectedDrti == null) {
+					getParentDataRepositoryView().toggleMoveColumnLeftButton(false);
+					getParentDataRepositoryView().toggleMoveColumnRightButton(false);
+					getParentDataRepositoryView().toggleMoveRowDownButton(false);
+					getParentDataRepositoryView().toggleMoveRowUpButton(false);
+				}
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
@@ -249,6 +280,39 @@ public class DataRepositoryTable extends CustomTable {
 	}
 
 	public List<DRCellAttributes> getSelectedRowDRCells() {
+		DataRepositoryTableItem tableItem = getSelectedDataRepositoryItem();
+		if (tableItem == null) {
+			return null;
+		}
+		if (tableItem.getDrCellAttributes() == null) {
+			return null;
+		}
+		return tableItem.getDrCellAttributes();
+	}
+
+	public List<DRCellAttributes> getPreviousRowDRCells() {
+		DataRepositoryTableItem tableItem = getPreviousDataRepositoryItem();
+		if (tableItem == null) {
+			return null;
+		}
+		if (tableItem.getDrCellAttributes() == null) {
+			return null;
+		}
+		return tableItem.getDrCellAttributes();
+	}
+
+	public List<DRCellAttributes> getNextRowDRCells() {
+		DataRepositoryTableItem tableItem = getNextDataRepositoryItem();
+		if (tableItem == null) {
+			return null;
+		}
+		if (tableItem.getDrCellAttributes() == null) {
+			return null;
+		}
+		return tableItem.getDrCellAttributes();
+	}
+
+	public DataRepositoryTableItem getSelectedDataRepositoryItem() {
 		if (this.getSelection() == null) {
 			return null;
 		}
@@ -259,13 +323,29 @@ public class DataRepositoryTable extends CustomTable {
 			return null;
 		}
 		DataRepositoryTableItem tableItem = (DataRepositoryTableItem) this.getSelection()[0];
-		if (tableItem == null) {
+		return tableItem;
+	}
+
+	public DataRepositoryTableItem getPreviousDataRepositoryItem() {
+		int selectedIndex = this.getSelectionIndex();
+		if (selectedIndex == -1) {
 			return null;
 		}
-		if (tableItem.getDrCellAttributes() == null) {
+		if (selectedIndex == 0) {
 			return null;
 		}
-		return tableItem.getDrCellAttributes();
+		return (DataRepositoryTableItem) this.getItem(selectedIndex - 1);
+	}
+
+	public DataRepositoryTableItem getNextDataRepositoryItem() {
+		int selectedIndex = this.getSelectionIndex();
+		if (selectedIndex == -1) {
+			return null;
+		}
+		if (selectedIndex == this.getItemCount() - 1) {
+			return null;
+		}
+		return (DataRepositoryTableItem) this.getItem(selectedIndex + 1);
 	}
 
 	public DataRepositoryView getParentDataRepositoryView() {
