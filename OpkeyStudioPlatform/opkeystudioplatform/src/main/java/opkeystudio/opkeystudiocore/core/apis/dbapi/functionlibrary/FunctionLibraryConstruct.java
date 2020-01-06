@@ -34,8 +34,8 @@ public class FunctionLibraryConstruct {
 	public void saveComponentInputArguments(List<ComponentInputArgument> flowInputArguments) {
 		for (ComponentInputArgument flowInputArgument : flowInputArguments) {
 			deleteComponentInputArgument(flowInputArgument);
-			updateComponentInputArgument(flowInputArgument);
 			addComponentInputArgument(flowInputArgument);
+			updateComponentInputArgument(flowInputArgument);
 		}
 	}
 

@@ -33,6 +33,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibra
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class InputTable extends CustomTable {
@@ -366,26 +367,11 @@ public class InputTable extends CustomTable {
 	public void addBlankInputPArameter() {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		String artifactId = artifact.getId();
-		int lastPosition = 0;
-		ComponentInputArgument bottomFactoryInput = new ComponentInputArgument();
-		System.out.println(getComponentInputData().size());
-
-		if ((getComponentInputData().size()) == 0) {
-			lastPosition = (getComponentInputData().size() - 1);
-
-		} else {
-			lastPosition = getComponentInputData().get(getComponentInputData().size() - 1).getPosition();
-		}
-		bottomFactoryInput.setPosition(lastPosition + 1);
-		bottomFactoryInput.setIp_id(Utilities.getInstance().getUniqueUUID(""));
-		bottomFactoryInput.setComponent_id(artifactId);
-		bottomFactoryInput.setName("Default Name" + getComponentInputData().size());
-		bottomFactoryInput.setType("String");
-		bottomFactoryInput.setIsmandatory(true);
-		bottomFactoryInput.setDefaultvalue(null);
-		bottomFactoryInput.setDescription(null);
-
+		ComponentInputArgument componentInputArgument = new FunctionLibraryMaker().createComponentInputParameterDTO(
+				artifact, getSelectedComponentInputArgument(), getComponentInputData());
+		getComponentInputData().add(componentInputArgument);
+		Collections.sort(getComponentInputData());
+		saveAllComponentInputArguments();
 		renderAllBottomFactoryInputData();
 	}
 
@@ -416,7 +402,7 @@ public class InputTable extends CustomTable {
 	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
 		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
 	}
-	
+
 	private void saveAllComponentInputArguments() {
 		new FunctionLibraryConstruct().saveComponentInputArguments(getComponentInputData());
 	}
