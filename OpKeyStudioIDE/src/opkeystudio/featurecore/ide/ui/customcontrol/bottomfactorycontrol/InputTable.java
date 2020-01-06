@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
@@ -43,8 +42,8 @@ public class InputTable extends CustomTable {
 
 	public InputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
-		init();
 		this.setParentBottomFactoryFLUi(parentView);
+		init();
 	}
 
 	private void init() {
@@ -281,8 +280,7 @@ public class InputTable extends CustomTable {
 	public void renderAllBottomFactoryInputData() {
 		disposeAllTableEditors();
 		this.removeAll();
-		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
 		String artifactId = artifact.getId();
 		List<ComponentInputArgument> bottomFactoryInputs = new FunctionLibraryApi()
 				.getAllComponentInputArgument(artifactId);
@@ -365,8 +363,7 @@ public class InputTable extends CustomTable {
 	}
 
 	public void addBlankInputPArameter() {
-		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
 		ComponentInputArgument componentInputArgument = new FunctionLibraryMaker().createComponentInputParameterDTO(
 				artifact, getSelectedComponentInputArgument(), getComponentInputData());
 		getComponentInputData().add(componentInputArgument);

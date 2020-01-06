@@ -128,6 +128,7 @@ public class TestCaseView extends Composite {
 	private ArtifactTreeItem artifactTreeItem;
 	private TabFolder datasTabHolder;
 	private SourceCodeEditor sourceCodeEditor;
+	private Artifact artifact;
 
 	/**
 	 * Create the composite.
@@ -137,7 +138,9 @@ public class TestCaseView extends Composite {
 	 */
 	public TestCaseView(Composite parent, int style) {
 		super(parent, style);
-
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		this.setArtifact(artifact);
 		TestCaseUI();
 		toggleMovedownButton(false);
 		toggleMoveupButton(false);
@@ -545,11 +548,11 @@ public class TestCaseView extends Composite {
 		TableCursor cursor = new TableCursor(flowStepTable, 0);
 
 		if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-			bottomFactory = new BottomFactoryFLUi(testCaseStepsHolder, SWT.NONE);
+			bottomFactory = new BottomFactoryFLUi(testCaseStepsHolder, SWT.NONE, this);
 			bottomFactory.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 			bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		}
-		
+
 		TabItem sourceCodeTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
 		sourceCodeTabItem.setText("Source Code");
 		sourceCodeTabItem.setToolTipText("Source Code");
@@ -737,9 +740,8 @@ public class TestCaseView extends Composite {
 	}
 
 	public Artifact getArtifact() {
-		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		return artifact;
+
+		return this.artifact;
 	}
 
 	private void populateInputTabData() {
@@ -1131,5 +1133,9 @@ public class TestCaseView extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public void setArtifact(Artifact artifact) {
+		this.artifact = artifact;
 	}
 }

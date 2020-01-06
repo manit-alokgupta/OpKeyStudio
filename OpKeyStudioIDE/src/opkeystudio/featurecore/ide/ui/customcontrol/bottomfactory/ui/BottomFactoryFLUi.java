@@ -34,6 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTa
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
+import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 
@@ -64,7 +65,8 @@ public class BottomFactoryFLUi extends Composite {
 	private ToolItem moveUpTagItem;
 	private ToolItem moveDownTagItem;
 	private Display display;
-
+	
+	private TestCaseView parentTestCaseView;
 	/**
 	 * Create the composite.
 	 * 
@@ -76,9 +78,9 @@ public class BottomFactoryFLUi extends Composite {
 	 * @throws JsonParseException
 	 */
 	@SuppressWarnings("unused")
-	public BottomFactoryFLUi(Composite parent, int style) {
+	public BottomFactoryFLUi(Composite parent, int style,TestCaseView parentTestCaseView) {
 		super(parent, style);
-
+		setParentTestCaseView(parentTestCaseView);
 		display = getParent().getDisplay();
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -86,13 +88,7 @@ public class BottomFactoryFLUi extends Composite {
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite.setLayout(new GridLayout(1, false));
-
-//		Composite composite_1 = new Composite(composite, SWT.NONE);
-//		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-//		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-//		gd_composite_1.heightHint = 54;
-//		composite_1.setLayoutData(gd_composite_1);
-
+		
 		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
 		expandBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
@@ -702,5 +698,13 @@ public class BottomFactoryFLUi extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public TestCaseView getParentTestCaseView() {
+		return parentTestCaseView;
+	}
+
+	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
+		this.parentTestCaseView = parentTestCaseView;
 	}
 }
