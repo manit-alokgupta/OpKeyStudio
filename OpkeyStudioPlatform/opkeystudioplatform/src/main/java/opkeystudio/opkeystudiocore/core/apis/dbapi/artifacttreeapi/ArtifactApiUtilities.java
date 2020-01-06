@@ -25,7 +25,7 @@ public class ArtifactApiUtilities {
 	private List<FlowStep> getAssociatedFlowDesignSteps(Artifact artifact) {
 		String query = String.format(
 				"SELECT * FROM flow_design_steps where component_id='%s' or codedfunction_id='%s' or soapmethod_id='%s' or restmethod_id='%s'",
-				artifact.getId());
+				artifact.getId(), artifact.getId(), artifact.getId(), artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowStep.class);
@@ -41,7 +41,7 @@ public class ArtifactApiUtilities {
 	private List<FlowStep> getAssociatedComponentDesignSteps(Artifact artifact) {
 		String query = String.format(
 				"SELECT * FROM component_design_steps where stepcomponent_id='%s' or stepcodedfunction_id='%s' or soapmethod_id='%s' or restmethod_id='%s'",
-				artifact.getId());
+				artifact.getId(), artifact.getId(), artifact.getId(), artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowStep.class);

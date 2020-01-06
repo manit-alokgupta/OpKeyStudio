@@ -27,6 +27,7 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -402,6 +403,13 @@ public class ArtifactTreeUI extends Composite {
 				boolean status = new MessageDialogs().openConfirmDialog("Delete",
 						"Do you want to delete " + artifact.getName() + "?");
 				if (!status) {
+					return;
+				}
+				boolean isused = new ArtifactApiUtilities().isArtifactIsUsed(artifact);
+				if (isused) {
+					new MessageDialogs().openInformationDialog("Unable to delete " + artifact.getFile_type_enum(),
+							"Unable to delete " + artifact.getFile_type_enum() + " '" + artifact.getName()
+									+ "' as it is being used:");
 					return;
 				}
 				new ArtifactApi().deleteArtifact(artifact);
