@@ -256,8 +256,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				dataRepositoryTable.moveColumnLeft();
 			}
 
 			@Override
@@ -271,8 +270,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				dataRepositoryTable.moveColumnRight();
 			}
 
 			@Override

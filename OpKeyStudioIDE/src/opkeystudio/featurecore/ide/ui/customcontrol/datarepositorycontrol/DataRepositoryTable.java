@@ -335,6 +335,46 @@ public class DataRepositoryTable extends CustomTable {
 		}
 	}
 
+	public void moveColumnRight() {
+		DRColumnAttributes selectedDRColumn = getSelectedDRColumnAttribute();
+		DRColumnAttributes nextDRColumn = getNextDRColumnAttribute();
+
+		int selectedDRColumnPosition = selectedDRColumn.getPosition();
+		int nextDRColumnPosition = nextDRColumn.getPosition();
+
+		selectedDRColumn.setPosition(nextDRColumnPosition);
+		nextDRColumn.setPosition(selectedDRColumnPosition);
+
+		selectedDRColumn.setModified(true);
+		nextDRColumn.setModified(true);
+		try {
+			refreshAllDRDetails();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void moveColumnLeft() {
+		DRColumnAttributes selectedDRColumn = getSelectedDRColumnAttribute();
+		DRColumnAttributes previousDRColumn = getPreviousDRColumnAttribute();
+
+		int selectedDRColumnPosition = selectedDRColumn.getPosition();
+		int previousDRColumnPosition = previousDRColumn.getPosition();
+
+		selectedDRColumn.setPosition(previousDRColumnPosition);
+		previousDRColumn.setPosition(selectedDRColumnPosition);
+
+		selectedDRColumn.setModified(true);
+		previousDRColumn.setModified(true);
+		try {
+			refreshAllDRDetails();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public List<DRCellAttributes> getSelectedRowDRCells() {
 		DataRepositoryTableItem tableItem = getSelectedDataRepositoryItem();
 		if (tableItem == null) {
@@ -437,7 +477,7 @@ public class DataRepositoryTable extends CustomTable {
 		if (selectedIndex == filteredDRColumnAttributes.size() - 1) {
 			return null;
 		}
-		return filteredDRColumnAttributes.get(selectedIndex - 1);
+		return filteredDRColumnAttributes.get(selectedIndex + 1);
 	}
 
 	public DataRepositoryView getParentDataRepositoryView() {
