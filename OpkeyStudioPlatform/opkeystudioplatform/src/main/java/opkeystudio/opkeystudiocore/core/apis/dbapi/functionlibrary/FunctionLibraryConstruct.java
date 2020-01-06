@@ -31,7 +31,7 @@ public class FunctionLibraryConstruct {
 		addComponentStep(flowStep);
 	}
 
-	private void saveComponentInputArguments(List<ComponentInputArgument> flowInputArguments) {
+	public void saveComponentInputArguments(List<ComponentInputArgument> flowInputArguments) {
 		for (ComponentInputArgument flowInputArgument : flowInputArguments) {
 			deleteComponentInputArgument(flowInputArgument);
 			updateComponentInputArgument(flowInputArgument);
@@ -47,7 +47,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void saveComponentOutputArguments(List<ComponentOutputArgument> flowOutputArguments) {
+	public void saveComponentOutputArguments(List<ComponentOutputArgument> flowOutputArguments) {
 		for (ComponentOutputArgument flowOutputArgument : flowOutputArguments) {
 			deleteComponentOutputArgument(flowOutputArgument);
 			updateComponentOutputArgument(flowOutputArgument);
@@ -114,8 +114,8 @@ public class FunctionLibraryConstruct {
 
 	private void deleteComponentInputArgument(ComponentInputArgument flowInputArgument) {
 		if (flowInputArgument.isDeleted()) {
-			String query = String.format("delete from component_step_input_args where step_arg_id ='%s'",
-					flowInputArgument.getStep_arg_id());
+			String query = String.format("delete from component_input_parameters where ip_id ='%s'",
+					flowInputArgument.getIp_id());
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
@@ -123,15 +123,15 @@ public class FunctionLibraryConstruct {
 	private void updateComponentInputArgument(ComponentInputArgument flowInputArgument) {
 		if (flowInputArgument.isModified()) {
 			System.out.println("Flow Input Argument Modified " + flowInputArgument.getStep_arg_id());
-			String query = new QueryMaker().createUpdateQuery(flowInputArgument, "component_step_input_args",
-					String.format("WHERE step_arg_id ='%s'", flowInputArgument.getStep_arg_id()));
+			String query = new QueryMaker().createUpdateQuery(flowInputArgument, "component_input_parameters",
+					String.format("WHERE ip_id ='%s'", flowInputArgument.getIp_id()));
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void addComponentInputArgument(ComponentInputArgument flowInputArgument) {
 		if (flowInputArgument.isAdded()) {
-			String query = new QueryMaker().createInsertQuery(flowInputArgument, "component_step_input_args", "");
+			String query = new QueryMaker().createInsertQuery(flowInputArgument, "component_input_parameters", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}

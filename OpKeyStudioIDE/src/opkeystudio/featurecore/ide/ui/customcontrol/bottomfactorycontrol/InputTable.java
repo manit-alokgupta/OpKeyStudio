@@ -30,6 +30,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -92,7 +93,8 @@ public class InputTable extends CustomTable {
 					@Override
 					public void focusLost(FocusEvent e) {
 						text.dispose();
-
+						saveAllComponentInputArguments();
+						renderAllBottomFactoryInputData();
 					}
 
 					@Override
@@ -165,23 +167,24 @@ public class InputTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
-	public void setBottomFactoryInputData(List<ComponentInputArgument> bottomFactoryInputs) {
+	public void setComponentInputData(List<ComponentInputArgument> bottomFactoryInputs) {
 		super.setControlData(bottomFactoryInputs);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ComponentInputArgument> getBottomFactoryInputData() {
+	public List<ComponentInputArgument> getComponentInputData() {
 		return (List<ComponentInputArgument>) super.getControlData();
 	}
 
 	public void addInputParameter(ComponentInputArgument bottomFactoryInput) {
-		getBottomFactoryInputData().add(bottomFactoryInput);
+		getComponentInputData().add(bottomFactoryInput);
 	}
 
 	public void deleteBottomFactoryInputData() {
 		ComponentInputArgument componentInputArgument = getSelectedComponentInputArgument();
 		componentInputArgument.setDeleted(true);
-		refreshAllBottomFactoryInputData();
+		saveAllComponentInputArguments();
+		renderAllBottomFactoryInputData();
 	}
 
 	private List<Control> allTableEditors = new ArrayList<Control>();
@@ -259,9 +262,9 @@ public class InputTable extends CustomTable {
 	public void refreshAllBottomFactoryInputData() {
 		disposeAllTableEditors();
 		this.removeAll();
-		List<ComponentInputArgument> bottomFactoryInputs = getBottomFactoryInputData();
+		List<ComponentInputArgument> bottomFactoryInputs = getComponentInputData();
 		Collections.sort(bottomFactoryInputs);
-		setBottomFactoryInputData(bottomFactoryInputs);
+		setComponentInputData(bottomFactoryInputs);
 		for (ComponentInputArgument fl_BottomFactoryInput : bottomFactoryInputs) {
 			if (fl_BottomFactoryInput.isDeleted() == false) {
 				InputTableItem inputTableItem = new InputTableItem(this, 0);
@@ -282,7 +285,7 @@ public class InputTable extends CustomTable {
 		String artifactId = artifact.getId();
 		List<ComponentInputArgument> bottomFactoryInputs = new FunctionLibraryApi()
 				.getAllComponentInputArgument(artifactId);
-		setBottomFactoryInputData(bottomFactoryInputs);
+		setComponentInputData(bottomFactoryInputs);
 		for (ComponentInputArgument fl_BottomFactoryInput : bottomFactoryInputs) {
 			if (fl_BottomFactoryInput.isDeleted() == false) {
 				InputTableItem inputTableItem = new InputTableItem(this, 0);
@@ -308,7 +311,8 @@ public class InputTable extends CustomTable {
 		selectRow(selectedIndex - 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
-		refreshAllBottomFactoryInputData();
+		saveAllComponentInputArguments();
+		renderAllBottomFactoryInputData();
 
 	}
 
@@ -324,7 +328,8 @@ public class InputTable extends CustomTable {
 		selectRow(selectedIndex + 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
-		refreshAllBottomFactoryInputData();
+		saveAllComponentInputArguments();
+		renderAllBottomFactoryInputData();
 	}
 
 	public ComponentInputArgument getSelectedInputParemeter() {
@@ -364,18 +369,18 @@ public class InputTable extends CustomTable {
 		String artifactId = artifact.getId();
 		int lastPosition = 0;
 		ComponentInputArgument bottomFactoryInput = new ComponentInputArgument();
-		System.out.println(getBottomFactoryInputData().size());
+		System.out.println(getComponentInputData().size());
 
-		if ((getBottomFactoryInputData().size()) == 0) {
-			lastPosition = (getBottomFactoryInputData().size() - 1);
+		if ((getComponentInputData().size()) == 0) {
+			lastPosition = (getComponentInputData().size() - 1);
 
 		} else {
-			lastPosition = getBottomFactoryInputData().get(getBottomFactoryInputData().size() - 1).getPosition();
+			lastPosition = getComponentInputData().get(getComponentInputData().size() - 1).getPosition();
 		}
 		bottomFactoryInput.setPosition(lastPosition + 1);
 		bottomFactoryInput.setIp_id(Utilities.getInstance().getUniqueUUID(""));
 		bottomFactoryInput.setComponent_id(artifactId);
-		bottomFactoryInput.setName("Default Name" + getBottomFactoryInputData().size());
+		bottomFactoryInput.setName("Default Name" + getComponentInputData().size());
 		bottomFactoryInput.setType("String");
 		bottomFactoryInput.setIsmandatory(true);
 		bottomFactoryInput.setDefaultvalue(null);
@@ -410,6 +415,10 @@ public class InputTable extends CustomTable {
 
 	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
 		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
+	}
+	
+	private void saveAllComponentInputArguments() {
+		new FunctionLibraryConstruct().saveComponentInputArguments(getComponentInputData());
 	}
 
 }
