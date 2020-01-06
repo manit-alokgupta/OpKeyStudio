@@ -9,8 +9,6 @@ import java.util.List;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -47,9 +45,13 @@ public class FlowStepTable extends CustomTable {
 	public FlowStepTable(Composite parent, int style, TestCaseView parentView) {
 		super(parent, style);
 		init();
+		initContextMenu();
 		this.setParentTestCaseView(parentView);
 	}
-
+	
+	private void initContextMenu() {
+		
+	}
 	private void init() {
 		String[] tableHeaders = { "#", "Keyword", "ORObject", "Input", "Output", "Description" };
 		for (String header : tableHeaders) {

@@ -52,6 +52,7 @@ public class ArtifactTreeUI extends Composite {
 	private MenuItem functionLibraryMenuItem;
 	private MenuItem testSuiteMenuItem;
 	private MenuItem drMenuItem;
+	private MenuItem openMenuItem;
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
 	private MenuItem refreshMenuItem;
@@ -226,6 +227,11 @@ public class ArtifactTreeUI extends Composite {
 		drMenuItem.setText("DR");
 		drMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
 
+		openMenuItem = new MenuItem(menu, SWT.NONE);
+		openMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/open.png"));
+		openMenuItem.setText("Open");
+		openMenuItem.setEnabled(false);
+		
 		renameMenuItem = new MenuItem(menu, SWT.NONE);
 		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
 		renameMenuItem.setText("Rename");
@@ -393,7 +399,20 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
-
+		
+		openMenuItem.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				artifactTree.openSelectedArtifact();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		deleteMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -860,6 +879,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(false);
 					toogleDeleteToolbarItem(false);
+					openMenuItem.setEnabled(false);
 					deleteMenuItem.setEnabled(false);
 					renameMenuItem.setEnabled(false);
 					toggleRefreshMenuItem(false);
@@ -871,6 +891,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleNewToolbarItem(true);
 					toggleRenameToolbarItem(false);
 					toogleDeleteToolbarItem(false);
+					openMenuItem.setEnabled(false);
 					deleteMenuItem.setEnabled(false);
 					renameMenuItem.setEnabled(false);
 					toggleRefreshMenuItem(true);
@@ -881,6 +902,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleNewToolbarItem(true);
 					toggleRenameToolbarItem(true);
 					toogleDeleteToolbarItem(true);
+					openMenuItem.setEnabled(false);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 					toggleRefreshMenuItem(true);
@@ -891,6 +913,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(true);
 					toogleDeleteToolbarItem(true);
+					openMenuItem.setEnabled(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 					toggleRefreshMenuItem(true);
@@ -901,6 +924,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(true);
 					toogleDeleteToolbarItem(true);
+					openMenuItem.setEnabled(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 					toggleRefreshMenuItem(true);
@@ -911,6 +935,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(true);
 					toogleDeleteToolbarItem(true);
+					openMenuItem.setEnabled(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 					toggleRefreshMenuItem(true);
@@ -921,6 +946,7 @@ public class ArtifactTreeUI extends Composite {
 					toogleNewToolbarItem(false);
 					toggleRenameToolbarItem(true);
 					toogleDeleteToolbarItem(true);
+					openMenuItem.setEnabled(true);
 					deleteMenuItem.setEnabled(true);
 					renameMenuItem.setEnabled(true);
 					toggleRefreshMenuItem(true);

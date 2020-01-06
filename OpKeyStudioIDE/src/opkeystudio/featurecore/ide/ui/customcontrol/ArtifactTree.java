@@ -51,15 +51,16 @@ public class ArtifactTree extends CustomTree {
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-
-				ArtifactTree tree = (ArtifactTree) e.getSource();
-				ArtifactTreeItem selectedTreeItem = (ArtifactTreeItem) tree.getSelection()[0];
-				System.out.println("selectedTreeItem");
-				populateArtifact(selectedTreeItem);
-
+				openSelectedArtifact();
 			}
 
 		});
+	}
+
+	public void openSelectedArtifact() {
+		ArtifactTreeItem selectedTreeItem = (ArtifactTreeItem) this.getSelection()[0];
+		System.out.println("selectedTreeItem");
+		populateArtifact(selectedTreeItem);
 	}
 
 	private void populateArtifact(ArtifactTreeItem artifactTreeItem) {
