@@ -50,6 +50,7 @@ public class FlowMaker {
 		if (keyword != null) {
 			flowStep.setKeyword(keyword);
 			flowStep.setKeywordid(keyword.getKeywordid());
+			flowStep.setComment(flowStep.getKeyword().getKeyworddescription());
 		}
 		flowStep.setPosition(selectedFlowStepPosition + 5);
 		flowStep.setShouldrun(true);
