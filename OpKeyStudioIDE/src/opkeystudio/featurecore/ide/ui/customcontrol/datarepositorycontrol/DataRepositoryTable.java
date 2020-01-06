@@ -46,7 +46,11 @@ public class DataRepositoryTable extends CustomTable {
 	}
 
 	private void init() throws JsonParseException, JsonMappingException, IOException {
-
+		getParentDataRepositoryView().toggleMoveColumnLeftButton(false);
+		getParentDataRepositoryView().toggleMoveColumnRightButton(false);
+		getParentDataRepositoryView().toggleMoveRowDownButton(false);
+		getParentDataRepositoryView().toggleMoveRowUpButton(false);
+		
 		renderAllDRDetails();
 		TableCursor cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
@@ -60,8 +64,7 @@ public class DataRepositoryTable extends CustomTable {
 				CustomText text = new CustomText(cursor, 0);
 				int selectedColNo = cursor.getColumn();
 				int selectedRowNo = getSelectionIndices()[0];
-				
-				List<DRCellAttributes> drCellAttribtes=getSelectedRowDRCells();
+				List<DRCellAttributes> drCellAttribtes = getSelectedRowDRCells();
 				DRCellAttributes drCellAttribute = drCellAttribtes.get(selectedColNo);
 				DRColumnAttributes drColumnAttreibute = drCellAttribute.getDrColumnAttribute();
 				setSelectedDRColumnAttribute(drColumnAttreibute);
@@ -97,6 +100,16 @@ public class DataRepositoryTable extends CustomTable {
 					}
 				});
 
+				if (selectedColNo == 0) {
+					getParentDataRepositoryView().toggleMoveColumnLeftButton(false);
+					getParentDataRepositoryView().toggleMoveColumnRightButton(true);
+				} else if (selectedColNo == getColumnCount() - 1) {
+					getParentDataRepositoryView().toggleMoveColumnLeftButton(true);
+					getParentDataRepositoryView().toggleMoveColumnRightButton(false);
+				} else {
+					getParentDataRepositoryView().toggleMoveColumnLeftButton(true);
+					getParentDataRepositoryView().toggleMoveColumnRightButton(true);
+				}
 				controlEditor.setEditor(text);
 
 			}
@@ -117,6 +130,20 @@ public class DataRepositoryTable extends CustomTable {
 					TableColumn column = table_0.getColumn(i);
 					column.setWidth((table_0.getBounds().width - 50) / 5);
 				}
+			}
+		});
+		
+		this.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 	}
