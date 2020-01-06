@@ -168,6 +168,15 @@ public class DataRepositoryTable extends CustomTable {
 					getParentDataRepositoryView().toggleMoveColumnRightButton(false);
 					getParentDataRepositoryView().toggleMoveRowDownButton(false);
 					getParentDataRepositoryView().toggleMoveRowUpButton(false);
+					getParentDataRepositoryView().toggleAddColumnButton(false);
+					getParentDataRepositoryView().toggleAddRowButton(false);
+				}
+
+				if (selectedDrti != null) {
+					getParentDataRepositoryView().toggleDeleteColumnButton(true);
+					getParentDataRepositoryView().toggleDeleteRowButton(true);
+					getParentDataRepositoryView().toggleAddColumnButton(true);
+					getParentDataRepositoryView().toggleAddRowButton(true);
 				}
 			}
 
