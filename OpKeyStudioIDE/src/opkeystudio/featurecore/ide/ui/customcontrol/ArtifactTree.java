@@ -77,55 +77,7 @@ public class ArtifactTree extends CustomTree {
 			partService.showPart(mpart, PartState.ACTIVATE);
 			return;
 		}
-		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
-			EPartService partService = Utilities.getInstance().getEpartService();
-			MPart part = partService.createPart("opkeystudio.partdescriptor.objectRepository");
-			part.setLabel(artifactTreeItem.getArtifact().getName());
-			part.setTooltip(artifactTreeItem.getArtifact().getName());
-			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
-			partService.showPart(part, PartState.ACTIVATE);
-		}
-		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
-			EPartService partService = Utilities.getInstance().getEpartService();
-			MPart part = partService.createPart("opkeystudio.partdescriptor.testCaseViewer");
-			part.setLabel(artifactTreeItem.getArtifact().getName());
-			part.setTooltip(artifactTreeItem.getArtifact().getName());
-			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
-			partService.showPart(part, PartState.ACTIVATE);
-		}
-		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-			EPartService partService = Utilities.getInstance().getEpartService();
-			MPart part = partService.createPart("opkeystudio.partdescriptor.functionLibraryViewer");
-			part.setLabel(artifactTreeItem.getArtifact().getName());
-			part.setTooltip(artifactTreeItem.getArtifact().getName());
-			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
-			partService.showPart(part, PartState.ACTIVATE);
-		}
-		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Suite) {
-			EPartService partService = Utilities.getInstance().getEpartService();
-			MPart part = partService.createPart("opkeystudio.partdescriptor.testSuiteViewer");
-			part.setLabel(artifactTreeItem.getArtifact().getName());
-			part.setTooltip(artifactTreeItem.getArtifact().getName());
-			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
-			partService.showPart(part, PartState.ACTIVATE);
-		}
-
-		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.DataRepository) {
-			EPartService partService = Utilities.getInstance().getEpartService();
-			MPart part = partService.createPart("opkeystudio.partdescriptor.dataRepoViewer");
-			part.setLabel(artifactTreeItem.getArtifact().getName());
-			part.setTooltip(artifactTreeItem.getArtifact().getName());
-			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
-			partService.showPart(part, PartState.ACTIVATE);
-		}
-		if (artifactTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.CodedFunction) {
-			EPartService partService = Utilities.getInstance().getEpartService();
-			MPart part = partService.createPart("opkeystudio.partdescriptor.codeFunctionViewer");
-			part.setLabel(artifactTreeItem.getArtifact().getName());
-			part.setTooltip(artifactTreeItem.getArtifact().getName());
-			part.getTransientData().put("opkeystudio.artifactData", artifactTreeItem.getArtifact());
-			partService.showPart(part, PartState.ACTIVATE);
-		}
+		Utilities.getInstance().openArtifacts(artifact);
 	}
 
 	public void setArtifactsData(List<Artifact> artifacts) {

@@ -118,7 +118,6 @@ public class TestCaseView extends Composite {
 
 	@SuppressWarnings("unused")
 	private String code;
-	private MenuItem openORObjectInNewTabMenuItem;
 	private Composite bottomFactory;
 	@SuppressWarnings("unused")
 	private FlowStep flowStep;
@@ -448,13 +447,6 @@ public class TestCaseView extends Composite {
 		testObjectTable.setLinesVisible(true);
 		testObjectTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		Menu menu = new Menu(testObjectTable);
-		testObjectTable.setMenu(menu);
-
-		openORObjectInNewTabMenuItem = new MenuItem(menu, SWT.NONE);
-		openORObjectInNewTabMenuItem.setText("Open in New Tab");
-		openORObjectInNewTabMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/open.png"));
-
 		testObjectTree = new ObjectRepositoryTree(sashForm_1, SWT.BORDER, this);
 //		testObjectTree = new Tree(sashForm_1, SWT.BORDER);
 		testObjectTree.setLinesVisible(true);
@@ -608,21 +600,6 @@ public class TestCaseView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		openORObjectInNewTabMenuItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override

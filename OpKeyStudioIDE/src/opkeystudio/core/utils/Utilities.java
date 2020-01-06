@@ -7,6 +7,7 @@ import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.Bundle;
@@ -14,6 +15,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 
 public class Utilities {
 	private static Utilities utils = null;
@@ -72,5 +74,57 @@ public class Utilities {
 			}
 		}
 		return -1;
+	}
+	
+	public void openArtifacts(Artifact artifact) {
+		if (artifact.getFile_type_enum() == MODULETYPE.ObjectRepository) {
+			EPartService partService = Utilities.getInstance().getEpartService();
+			MPart part = partService.createPart("opkeystudio.partdescriptor.objectRepository");
+			part.setLabel(artifact.getName());
+			part.setTooltip(artifact.getName());
+			part.getTransientData().put("opkeystudio.artifactData", artifact);
+			partService.showPart(part, PartState.ACTIVATE);
+		}
+		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
+			EPartService partService = Utilities.getInstance().getEpartService();
+			MPart part = partService.createPart("opkeystudio.partdescriptor.testCaseViewer");
+			part.setLabel(artifact.getName());
+			part.setTooltip(artifact.getName());
+			part.getTransientData().put("opkeystudio.artifactData", artifact);
+			partService.showPart(part, PartState.ACTIVATE);
+		}
+		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+			EPartService partService = Utilities.getInstance().getEpartService();
+			MPart part = partService.createPart("opkeystudio.partdescriptor.functionLibraryViewer");
+			part.setLabel(artifact.getName());
+			part.setTooltip(artifact.getName());
+			part.getTransientData().put("opkeystudio.artifactData", artifact);
+			partService.showPart(part, PartState.ACTIVATE);
+		}
+		if (artifact.getFile_type_enum() == MODULETYPE.Suite) {
+			EPartService partService = Utilities.getInstance().getEpartService();
+			MPart part = partService.createPart("opkeystudio.partdescriptor.testSuiteViewer");
+			part.setLabel(artifact.getName());
+			part.setTooltip(artifact.getName());
+			part.getTransientData().put("opkeystudio.artifactData", artifact);
+			partService.showPart(part, PartState.ACTIVATE);
+		}
+
+		if (artifact.getFile_type_enum() == MODULETYPE.DataRepository) {
+			EPartService partService = Utilities.getInstance().getEpartService();
+			MPart part = partService.createPart("opkeystudio.partdescriptor.dataRepoViewer");
+			part.setLabel(artifact.getName());
+			part.setTooltip(artifact.getName());
+			part.getTransientData().put("opkeystudio.artifactData", artifact);
+			partService.showPart(part, PartState.ACTIVATE);
+		}
+		if (artifact.getFile_type_enum() == MODULETYPE.CodedFunction) {
+			EPartService partService = Utilities.getInstance().getEpartService();
+			MPart part = partService.createPart("opkeystudio.partdescriptor.codeFunctionViewer");
+			part.setLabel(artifact.getName());
+			part.setTooltip(artifact.getName());
+			part.getTransientData().put("opkeystudio.artifactData", artifact);
+			partService.showPart(part, PartState.ACTIVATE);
+		}
 	}
 }
