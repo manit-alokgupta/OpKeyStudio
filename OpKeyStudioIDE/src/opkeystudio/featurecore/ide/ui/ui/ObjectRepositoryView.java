@@ -27,18 +27,21 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryORUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
@@ -505,46 +508,37 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					if (saveObject.isEnabled()) {
-
-						toggleDeleteAttributeButton(false);
-						toggleAddAttributeButton(false);
-						boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
-								"Do you want to save changes?");
-						if (!result) {
-							toggleSaveButton(false);
-							objectRepositoryTree.renderObjectRepositories();
-
-							bottomFactoryORUi.refreshBottomFactory();
-
-							return;
-						}
-
-						// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-						// notification.setDelayClose(200L);
-						// notification.open();
-
-						List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
-						try {
-							new ObjectRepositoryApi().saveORObjects(allors);
-							toggleSaveButton(false);
-							objectRepositoryTree.renderObjectRepositories();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-
-						toggleSaveButton(false);
-					}
+				if (saveObject.isEnabled()) {
 
 					toggleDeleteAttributeButton(false);
 					toggleAddAttributeButton(false);
-					objectRepositoryTree.renderObjectRepositories();
-					bottomFactoryORUi.refreshBottomFactory();
-				} catch (IOException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
+							"Do you want to save changes?");
+					if (!result) {
+						toggleSaveButton(false);
+						objectRepositoryTree.renderObjectRepositories();
+						return;
+					}
+
+					// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
+					// notification.setDelayClose(200L);
+					// notification.open();
+
+					List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
+					try {
+						new ObjectRepositoryApi().saveORObjects(allors);
+						toggleSaveButton(false);
+						objectRepositoryTree.renderObjectRepositories();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+
+					toggleSaveButton(false);
 				}
+
+				toggleDeleteAttributeButton(false);
+				toggleAddAttributeButton(false);
+				objectRepositoryTree.renderObjectRepositories();
 
 			}
 
@@ -757,13 +751,27 @@ public class ObjectRepositoryView extends Composite {
 			return;
 		}
 
-		// AbstractNotificationPopup notification = new
-		// DeleteNotificationPopup(display);
-		// notification.setDelayClose(200L);
-		// notification.open();
-
 		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 		obRepo = selectedTreeItem.getObjectRepository();
+		boolean isUsed = new ObjectRepositoryApiUtilities().isORObjectUsed(obRepo);
+		if (isUsed) {
+			new MessageDialogs().openInformationDialog("Can't delete ORObject",
+					"Unable to delete " + obRepo.getName() + " as it is being used in some higher components");
+			return;
+		}
+		if (obRepo.getParent_object_id() == null) {
+			TreeItem[] treeItems = selectedTreeItem.getItems();
+			for (TreeItem treeItem : treeItems) {
+				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) treeItem;
+				ORObject orobject = item.getObjectRepository();
+				boolean isused = new ObjectRepositoryApiUtilities().isORObjectUsed(orobject);
+				if (isused) {
+					new MessageDialogs().openInformationDialog("Can't delete ORObject",
+							"Unable to delete " + obRepo.getName() + " as it is being used in some higher components");
+					return;
+				}
+			}
+		}
 		System.out.println("Deleting.. " + obRepo.getObject_id());
 		obRepo.setDeleted(true);
 		toggleSaveButton(true);

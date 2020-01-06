@@ -13,7 +13,6 @@ public class QueryMaker {
 
 	private boolean isFieldCanBeIgnored(String columnName, String... ignoreColumnName) {
 		for (String fieldName : ignoreColumnName) {
-			System.out.println("Neon " + fieldName + ">>" + columnName);
 			if (fieldName.toLowerCase().equals(columnName.toLowerCase())) {
 				return true;
 			}
