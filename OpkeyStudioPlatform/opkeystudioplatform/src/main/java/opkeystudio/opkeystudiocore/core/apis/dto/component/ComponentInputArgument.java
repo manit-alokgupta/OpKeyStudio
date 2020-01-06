@@ -25,6 +25,10 @@ public class ComponentInputArgument extends Modified {
 	private String type;
 	@DBField
 	private String step_arg_id;
+	@DBField
+	private String defaultvalue;
+	@DBField
+	private String description;
 
 	public String getStep_arg_id() {
 		return step_arg_id;
@@ -104,5 +108,21 @@ public class ComponentInputArgument extends Modified {
 
 	public void setStepid(String stepid) {
 		this.stepid = stepid;
+	}
+
+	public String getDefaultvalue() {
+		return defaultvalue;
+	}
+
+	public void setDefaultvalue(String defaultvalue) {
+		this.defaultvalue = defaultvalue;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

@@ -32,7 +32,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParameterApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class InputTable extends CustomTable {
@@ -239,7 +238,7 @@ public class InputTable extends CustomTable {
 			if (fl_BottomFactoryInput.isDeleted() == false) {
 				InputTableItem inputTableItem = new InputTableItem(this, 0);
 				inputTableItem.setText(new String[] { fl_BottomFactoryInput.getName(), fl_BottomFactoryInput.getType(),
-						fl_BottomFactoryInput.getDeault_value(), "", fl_BottomFactoryInput.getDescription() });
+						fl_BottomFactoryInput.getDefaultvalue(), "", fl_BottomFactoryInput.getDescription() });
 				inputTableItem.setBottomFactoryInputData(fl_BottomFactoryInput);
 				addTableEditor(inputTableItem);
 			}
@@ -261,7 +260,7 @@ public class InputTable extends CustomTable {
 				InputTableItem inputTableItem = new InputTableItem(this, 0);
 				inputTableItem.setText(
 						new String[] { fl_BottomFactoryInput.getName().toString(), fl_BottomFactoryInput.getType(),
-								fl_BottomFactoryInput.getDefault_value(), "", fl_BottomFactoryInput.getDescription() });
+								fl_BottomFactoryInput.getDefaultvalue(), "", fl_BottomFactoryInput.getDescription() });
 				inputTableItem.setBottomFactoryInputData(fl_BottomFactoryInput);
 				addTableEditor(inputTableItem);
 			}
@@ -349,9 +348,9 @@ public class InputTable extends CustomTable {
 		bottomFactoryInput.setComponent_id(artifactId);
 		bottomFactoryInput.setName("Default Name" + getBottomFactoryInputData().size());
 		bottomFactoryInput.setType("String");
-		bottomFactoryInput.setIs_mandatory(true);
-		bottomFactoryInput.setDefault_value("");
-		bottomFactoryInput.setDescription("");
+		bottomFactoryInput.setIsmandatory(true);
+		bottomFactoryInput.setDefaultvalue(null);
+		bottomFactoryInput.setDescription(null);
 
 		try {
 			new BottomFactoryInputParameterApi().insertInputParameter(bottomFactoryInput);
