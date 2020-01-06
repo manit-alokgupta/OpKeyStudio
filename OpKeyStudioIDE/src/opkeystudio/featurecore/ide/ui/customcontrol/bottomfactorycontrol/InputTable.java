@@ -179,8 +179,8 @@ public class InputTable extends CustomTable {
 	}
 
 	public void deleteBottomFactoryInputData() {
-		int selectedIndex = this.getSelectionIndex();
-		getBottomFactoryInputData().get(selectedIndex).setDeleted(true);
+		ComponentInputArgument componentInputArgument = getSelectedComponentInputArgument();
+		componentInputArgument.setDeleted(true);
 		refreshAllBottomFactoryInputData();
 	}
 
@@ -382,6 +382,26 @@ public class InputTable extends CustomTable {
 		bottomFactoryInput.setDescription(null);
 
 		renderAllBottomFactoryInputData();
+	}
+
+	public ComponentInputArgument getSelectedComponentInputArgument() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+		CustomTableItem cti = (CustomTableItem) this.getSelection()[0];
+		if (cti == null) {
+			return null;
+		}
+		if (cti.getControlData() == null) {
+			return null;
+		}
+		return (ComponentInputArgument) cti.getControlData();
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {

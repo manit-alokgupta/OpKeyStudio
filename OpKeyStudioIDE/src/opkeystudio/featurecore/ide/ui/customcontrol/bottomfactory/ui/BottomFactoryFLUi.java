@@ -63,7 +63,6 @@ public class BottomFactoryFLUi extends Composite {
 	private ToolItem pasteTagItem;
 	private ToolItem moveUpTagItem;
 	private ToolItem moveDownTagItem;
-	public boolean flag = false;
 	private Display display;
 
 	/**
@@ -468,22 +467,6 @@ public class BottomFactoryFLUi extends Composite {
 		deleteTagItem.setEnabled(status);
 	}
 
-//	public void toggleMoveupOutputButton(boolean status) {
-//		moveUpOutputItem.setEnabled(status);
-//	}
-//
-//	public void toggleMovedownOutputButton(boolean status) {
-//		moveDownOutputItem.setEnabled(status);
-//	}
-//
-//	public void toggleDeleteOutputButton(boolean status) {
-//		deleteOutputItem.setEnabled(status);
-//	}
-
-	public void toggleFlag(boolean status) {
-		flag = status;
-	}
-
 	public void addButtonListeners() {
 		addInputItem.addSelectionListener(new SelectionListener() {
 
@@ -535,10 +518,8 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				inputTable.deleteBottomFactoryInputData(inputTable.getSelectedInputParemeter());
 				inputTable.deleteBottomFactoryInputData();
 				toggleDeleteButton(false);
-				flag = true;
 			}
 
 			@Override
@@ -552,7 +533,6 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
 
 			}
 
@@ -581,7 +561,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 			}
 
 			@Override
@@ -624,7 +604,6 @@ public class BottomFactoryFLUi extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				tagsTable.deleteTagData(tagsTable.getSelectedTagData());
-				flag = true;
 
 			}
 
@@ -694,6 +673,20 @@ public class BottomFactoryFLUi extends Composite {
 
 			}
 		});
+
+		refreshInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.renderAllBottomFactoryInputData();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	public void refreshBottomFactory() throws JsonParseException, JsonMappingException, IOException, SQLException {
@@ -703,7 +696,7 @@ public class BottomFactoryFLUi extends Composite {
 	}
 
 	public void save() {
-		
+
 	}
 
 	@Override
