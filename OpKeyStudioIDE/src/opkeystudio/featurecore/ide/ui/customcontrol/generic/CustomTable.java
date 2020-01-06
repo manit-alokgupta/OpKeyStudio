@@ -16,6 +16,7 @@ public class CustomTable extends Table {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Selection ");
 				setSelectedRowIndex(getSelectionIndex());
 			}
 
@@ -45,7 +46,6 @@ public class CustomTable extends Table {
 	}
 
 	public void setSelectedRowIndex(int selectedRowIndex) {
-		System.out.println("Selected Row No " + selectedRowIndex);
 		this.selectedRowIndex = selectedRowIndex;
 	}
 

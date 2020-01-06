@@ -301,6 +301,7 @@ public class DataRepositoryTable extends CustomTable {
 
 			selectedDRCell.setModified(true);
 			nextDRCell.setModified(true);
+			this.setSelectedRowIndex(this.getSelectionIndex() + 1);
 		}
 
 		try {
@@ -326,6 +327,7 @@ public class DataRepositoryTable extends CustomTable {
 
 			selectedDRCell.setModified(true);
 			previousDRCell.setModified(true);
+			this.setSelectedRowIndex(this.getSelectionIndex() - 1);
 		}
 		try {
 			refreshAllDRDetails();
