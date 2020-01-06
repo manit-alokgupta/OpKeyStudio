@@ -28,7 +28,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
 public class DataRepositoryView extends Composite {
-	private DataRepositoryTable excelTable;
+	private DataRepositoryTable dataRepositoryTable;
 	private int colCount = 0;
 	private int rowCount = 0;
 	private TableColumn newColumn;
@@ -157,17 +157,17 @@ public class DataRepositoryView extends Composite {
 //		OleFrame frame = new OleFrame(parent, SWT.NONE);
 //		site = new OleClientSite(frame, SWT.NONE, "Excel.Sheet");
 
-		excelTable = new DataRepositoryTable(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI, this);
-		excelTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		excelTable.setHeaderVisible(true);
-		excelTable.setLinesVisible(true);
+		dataRepositoryTable = new DataRepositoryTable(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI, this);
+		dataRepositoryTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		dataRepositoryTable.setHeaderVisible(true);
+		dataRepositoryTable.setLinesVisible(true);
 
 		bottomFactory = new BottomFactoryDataRepoUi(composite, SWT.BORDER);
 		bottomFactory.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		colCount = excelTable.getColumnCount();
-		rowCount = excelTable.getItemCount();
+		colCount = dataRepositoryTable.getColumnCount();
+		rowCount = dataRepositoryTable.getItemCount();
 		init();
 		addButtonListner();
 	}
@@ -195,7 +195,7 @@ public class DataRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				rowCount += 1;
-				new TableItem(excelTable, SWT.NONE).setText("" + rowCount);
+				new TableItem(dataRepositoryTable, SWT.NONE).setText("" + rowCount);
 
 			}
 
@@ -362,7 +362,7 @@ public class DataRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					excelTable.renderAllDRDetails();
+					dataRepositoryTable.renderAllDRDetails();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

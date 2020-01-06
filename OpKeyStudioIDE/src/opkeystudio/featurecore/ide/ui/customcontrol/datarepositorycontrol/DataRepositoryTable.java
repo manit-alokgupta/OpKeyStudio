@@ -107,18 +107,6 @@ public class DataRepositoryTable extends CustomTable {
 
 			}
 		});
-	}
-
-	private void initializeHeaders(List<DRColumnAttributes> columnAttributes) {
-		this.removeAll();
-		for (DRColumnAttributes header : columnAttributes) {
-			TableColumn column = new TableColumn(this, SWT.LEFT);
-			column.setText(header.getName());
-		}
-		this.pack();
-		for (int i = 0; i < columnAttributes.size(); i++) {
-			this.getColumn(i).pack();
-		}
 
 		this.addPaintListener(new PaintListener() {
 
@@ -131,6 +119,21 @@ public class DataRepositoryTable extends CustomTable {
 				}
 			}
 		});
+	}
+
+	private void initializeHeaders(List<DRColumnAttributes> columnAttributes) {
+		this.removeAll();
+		for (TableColumn column : this.getColumns()) {
+			column.dispose();
+		}
+		for (DRColumnAttributes header : columnAttributes) {
+			TableColumn column = new TableColumn(this, SWT.LEFT);
+			column.setText(header.getName());
+		}
+		for (int i = 0; i < columnAttributes.size(); i++) {
+			this.getColumn(i).pack();
+		}
+
 	}
 
 	private void renderDRDatas(List<DRColumnAttributes> drDatas) {
@@ -181,14 +184,12 @@ public class DataRepositoryTable extends CustomTable {
 	}
 
 	public void renderAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
-		this.removeAll();
 		Artifact artifact = getParentDataRepositoryView().getArtifact();
 		List<DRColumnAttributes> drDatas = new DataRepositoryApi().getAllDRDatas(artifact.getId());
 		renderDRDatas(drDatas);
 	}
 
 	public void refreshAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
-		this.removeAll();
 		List<DRColumnAttributes> drDatas = getDrColumnAttributes();
 		renderDRDatas(drDatas);
 	}
