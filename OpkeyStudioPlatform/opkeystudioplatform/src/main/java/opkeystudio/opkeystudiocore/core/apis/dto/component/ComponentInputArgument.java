@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class ComponentInputArgument extends Modified {
+public class ComponentInputArgument extends Modified implements Comparable<ComponentInputArgument> {
 	@DBField
 	private boolean ismandatory;
 	@DBField
@@ -124,5 +124,10 @@ public class ComponentInputArgument extends Modified {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public int compareTo(ComponentInputArgument arg0) {
+		return this.getPosition() - arg0.getPosition();
 	}
 }

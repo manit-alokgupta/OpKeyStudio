@@ -32,7 +32,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryTagApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -238,21 +237,6 @@ public class TagTable extends CustomTable {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
-		List<BottomFactoryTag> bottomFactoryTags = new BottomFactoryTagApi().getAllBottomFactoryTag(artifactId);
-		setTagData(bottomFactoryTags);
-		for (BottomFactoryTag bottomFactoryTag : bottomFactoryTags) {
-			if (bottomFactoryTag.isDeleted() == false) {
-				System.out.println(bottomFactoryTag.getKey().toString());
-				System.out.println(bottomFactoryTag.getValue().toString());
-				System.out.println(bottomFactoryTag.getTag_id());
-				System.out.println(bottomFactoryTag.getId());
-				TagTableItem item = new TagTableItem(this, 0);
-				item.setText(
-						new String[] { bottomFactoryTag.getKey().toString(), bottomFactoryTag.getValue().toString() });
-				item.setTagData(bottomFactoryTag);
-			}
-		}
-		selectRow(0);
 	}
 
 	public void moveTagDataUp(BottomFactoryTag bottomFactoryTag1, BottomFactoryTag bottomFactoryTag2) {
@@ -332,7 +316,6 @@ public class TagTable extends CustomTable {
 			bottomFactoryTag.setId(artifactId);
 			bottomFactoryTag.setKey("NewTag-" + (getTagData().size() - 1));
 			bottomFactoryTag.setValue("value-" + (getTagData().size() - 1));
-			new BottomFactoryTagApi().insertTagData(bottomFactoryTag);
 			renderAllTagData();
 		} catch (IOException | SQLException e) {
 			// TODO Auto-generated catch block

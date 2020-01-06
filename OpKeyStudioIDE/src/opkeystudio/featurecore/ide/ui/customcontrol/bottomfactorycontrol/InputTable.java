@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -36,13 +37,11 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 public class InputTable extends CustomTable {
 
 	private boolean paintCalled = false;
-	private InputTable thisTable = this;
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
 
 	public InputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
 		init();
-		thisTable = this;
 		this.setParentBottomFactoryFLUi(parentView);
 	}
 
@@ -85,6 +84,8 @@ public class InputTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				int selectedColumn = cursor.getColumn();
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
+				ComponentInputArgument componentInputAargument = (ComponentInputArgument) selectedTableItem
+						.getControlData();
 				CustomText text = new CustomText(cursor, 0);
 				text.addFocusListener(new FocusListener() {
 
@@ -105,12 +106,44 @@ public class InputTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
-						selectedTableItem.setText(selectedColumn, text.getText());
+						if (selectedColumn == 0) {
+							componentInputAargument.setName(text.getText());
+							componentInputAargument.setModified(true);
+						}
+						if (selectedColumn == 2) {
+							componentInputAargument.setDefaultvalue(text.getText());
+							componentInputAargument.setModified(true);
+						}
+						if (selectedColumn == 4) {
+							componentInputAargument.setDescription(text.getText());
+							componentInputAargument.setModified(true);
+						}
 						cursor.getRow().setText(selectedColumn, text.getText());
-
 					}
 				});
 
+				System.out.println("SELECTED COLUMN " + selectedColumn);
+				if (selectedColumn == 0) {
+					if (componentInputAargument.getName() != null) {
+						text.setText(componentInputAargument.getName());
+					} else {
+						text.setText("");
+					}
+				}
+				if (selectedColumn == 2) {
+					if (componentInputAargument.getDefaultvalue() != null) {
+						text.setText(componentInputAargument.getDefaultvalue());
+					} else {
+						text.setText("");
+					}
+				}
+				if (selectedColumn == 4) {
+					if (componentInputAargument.getDescription() != null) {
+						text.setText(componentInputAargument.getDescription());
+					} else {
+						text.setText("");
+					}
+				}
 				controlEditor.setEditor(text);
 
 			}
@@ -145,11 +178,9 @@ public class InputTable extends CustomTable {
 		getBottomFactoryInputData().add(bottomFactoryInput);
 	}
 
-//	public void deleteBottomFactoryInputData(Fl_BottomFactoryInput bottomFactoryInput) {
 	public void deleteBottomFactoryInputData() {
 		int selectedIndex = this.getSelectionIndex();
 		getBottomFactoryInputData().get(selectedIndex).setDeleted(true);
-//		bottomFactoryInput.setDeleted(true);
 		refreshAllBottomFactoryInputData();
 	}
 
@@ -175,16 +206,13 @@ public class InputTable extends CustomTable {
 
 		CustomButton isOptional = new CustomButton(this, SWT.CHECK);
 		isOptional.setSelection(bottomFactoryInput.isIsmandatory());
-		isOptional.setControlData(bottomFactoryInput);
 		isOptional.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				thisTable.setSelection(inputTableItem);
-				CustomButton button = (CustomButton) e.getSource();
-				ComponentInputArgument bottomFactoryInput1 = (ComponentInputArgument) button.getControlData();
-				bottomFactoryInput1.setModified(true);
-				bottomFactoryInput1.setIsmandatory(button.getSelection());
+				setSelection(inputTableItem);
+				bottomFactoryInput.setModified(true);
+				bottomFactoryInput.setIsmandatory(isOptional.getSelection());
 
 			}
 
@@ -199,7 +227,7 @@ public class InputTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				thisTable.setSelection(inputTableItem);
+				setSelection(inputTableItem);
 				CustomCombo button = (CustomCombo) e.getSource();
 				ComponentInputArgument bottomFactoryInput1 = (ComponentInputArgument) button.getControlData();
 				int selected = combo.getSelectionIndex();
@@ -232,6 +260,7 @@ public class InputTable extends CustomTable {
 		disposeAllTableEditors();
 		this.removeAll();
 		List<ComponentInputArgument> bottomFactoryInputs = getBottomFactoryInputData();
+		Collections.sort(bottomFactoryInputs);
 		setBottomFactoryInputData(bottomFactoryInputs);
 		for (ComponentInputArgument fl_BottomFactoryInput : bottomFactoryInputs) {
 			if (fl_BottomFactoryInput.isDeleted() == false) {
@@ -242,7 +271,7 @@ public class InputTable extends CustomTable {
 				addTableEditor(inputTableItem);
 			}
 		}
-		selectRow(0);
+		selectDefaultRow();
 	}
 
 	public void renderAllBottomFactoryInputData() {
@@ -264,7 +293,7 @@ public class InputTable extends CustomTable {
 				addTableEditor(inputTableItem);
 			}
 		}
-		selectRow(0);
+		selectDefaultRow();
 	}
 
 	public void moveFl_BottomFactoryInputUp(ComponentInputArgument bottomFactoryInput1,
@@ -279,6 +308,7 @@ public class InputTable extends CustomTable {
 		selectRow(selectedIndex - 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
+		refreshAllBottomFactoryInputData();
 
 	}
 
@@ -294,7 +324,7 @@ public class InputTable extends CustomTable {
 		selectRow(selectedIndex + 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
-
+		refreshAllBottomFactoryInputData();
 	}
 
 	public ComponentInputArgument getSelectedInputParemeter() {
@@ -350,7 +380,7 @@ public class InputTable extends CustomTable {
 		bottomFactoryInput.setIsmandatory(true);
 		bottomFactoryInput.setDefaultvalue(null);
 		bottomFactoryInput.setDescription(null);
-		
+
 		renderAllBottomFactoryInputData();
 	}
 
