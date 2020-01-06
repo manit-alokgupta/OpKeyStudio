@@ -127,7 +127,7 @@ public class DataRepositoryTable extends CustomTable {
 			column.dispose();
 		}
 		for (DRColumnAttributes header : columnAttributes) {
-			TableColumn column = new TableColumn(this, SWT.LEFT);
+			TableColumn column = new TableColumn(this, SWT.LEFT | SWT.FULL_SELECTION);
 			column.setText(header.getName());
 		}
 		for (int i = 0; i < columnAttributes.size(); i++) {
