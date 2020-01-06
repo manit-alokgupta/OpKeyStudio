@@ -60,10 +60,10 @@ public class DataRepositoryTable extends CustomTable {
 				CustomText text = new CustomText(cursor, 0);
 				int selectedColNo = cursor.getColumn();
 				int selectedRowNo = getSelectionIndices()[0];
-
-				List<DRColumnAttributes> drColumnAttributes = getDrColumnAttributes();
-				DRColumnAttributes drColumnAttreibute = drColumnAttributes.get(selectedColNo);
-				DRCellAttributes drCellAttribute = drColumnAttreibute.getDrCellAttributes().get(selectedRowNo);
+				
+				List<DRCellAttributes> drCellAttribtes=getSelectedRowDRCells();
+				DRCellAttributes drCellAttribute = drCellAttribtes.get(selectedColNo);
+				DRColumnAttributes drColumnAttreibute = drCellAttribute.getDrColumnAttribute();
 				setSelectedDRColumnAttribute(drColumnAttreibute);
 				setSelectedDRCEllAttribute(drCellAttribute);
 
@@ -127,10 +127,12 @@ public class DataRepositoryTable extends CustomTable {
 			column.dispose();
 		}
 		for (DRColumnAttributes header : columnAttributes) {
-			TableColumn column = new TableColumn(this, SWT.LEFT | SWT.FULL_SELECTION);
-			column.setText(header.getName());
+			if (header.isDeleted() == false) {
+				TableColumn column = new TableColumn(this, SWT.LEFT | SWT.FULL_SELECTION);
+				column.setText(header.getName());
+			}
 		}
-		for (int i = 0; i < columnAttributes.size(); i++) {
+		for (int i = 0; i < this.getColumns().length; i++) {
 			this.getColumn(i).pack();
 		}
 
@@ -152,9 +154,7 @@ public class DataRepositoryTable extends CustomTable {
 			rowCount = drCellAttributes.size();
 			for (int rowNo = 0; rowNo < drCellAttributes.size(); rowNo++) {
 				DRCellAttributes drCellAttribute = drCellAttributes.get(rowNo);
-				if (drCellAttribute.isDeleted()) {
-					continue;
-				}
+
 				drCellAttribute.setDrColumnAttribute(drColumnAttribute);
 				drCellAttribute.setRowNo(rowNo);
 				drCellAttribute.setColumnNo(columnNo);
@@ -174,6 +174,10 @@ public class DataRepositoryTable extends CustomTable {
 			dti.setDrCellAttributes(allRowDrCellAttributes);
 			for (int i = 0; i < allRowDrCellAttributes.size(); i++) {
 				DRCellAttributes drCellAttribute = allRowDrCellAttributes.get(i);
+				if (drCellAttribute.isDeleted()) {
+					dti.dispose();
+					continue;
+				}
 				if (drCellAttribute.getValue() == null) {
 					dti.setText(i, "");
 				} else {
@@ -196,6 +200,45 @@ public class DataRepositoryTable extends CustomTable {
 
 	public void deleteDRColumn() {
 		getSelectedDRColumnAttribute().setDeleted(true);
+		try {
+			this.refreshAllDRDetails();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	public void deleteDRRow() {
+		List<DRCellAttributes> drcellattributes = getSelectedRowDRCells();
+		for (DRCellAttributes drCellAttribute : drcellattributes) {
+			drCellAttribute.setDeleted(true);
+		}
+		try {
+			this.refreshAllDRDetails();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	public List<DRCellAttributes> getSelectedRowDRCells() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
+		DataRepositoryTableItem tableItem = (DataRepositoryTableItem) this.getSelection()[0];
+		if (tableItem == null) {
+			return null;
+		}
+		if (tableItem.getDrCellAttributes() == null) {
+			return null;
+		}
+		return tableItem.getDrCellAttributes();
 	}
 
 	public DataRepositoryView getParentDataRepositoryView() {
