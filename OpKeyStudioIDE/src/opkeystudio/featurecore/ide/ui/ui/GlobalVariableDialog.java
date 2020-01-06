@@ -143,7 +143,9 @@ public class GlobalVariableDialog extends Dialog {
 				GlobalVariable globalVar = globalVariablesTable.getGlobalVariablesData().get(selectedIndex);
 				boolean isused = new GlobalVariableApiUtilities().isGlobalVariableUsed(globalVar);
 				if (isused) {
-					new MessageDialogs().openInformationDialog("Can't delete Global Variable", "");
+					new MessageDialogs().openInformationDialog("Can't delete Global Variable",
+							"Unable to delete GlobalVariable " + globalVar.getName()
+									+ " as it is being used in some higher components.");
 					return;
 				}
 				globalVariablesTable.deleteGlobalVariableStep();
@@ -259,7 +261,7 @@ public class GlobalVariableDialog extends Dialog {
 		editor.grabHorizontal = true;
 		editor.minimumWidth = 50;
 		globalVariablesTable.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int selectedIndex = globalVariablesTable.getSelectionIndex();
@@ -276,11 +278,11 @@ public class GlobalVariableDialog extends Dialog {
 					toggleDeleteToolItem(false);
 				}
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
