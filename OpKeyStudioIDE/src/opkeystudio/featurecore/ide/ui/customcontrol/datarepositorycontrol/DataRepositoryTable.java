@@ -249,11 +249,13 @@ public class DataRepositoryTable extends CustomTable {
 		Artifact artifact = getParentDataRepositoryView().getArtifact();
 		List<DRColumnAttributes> drDatas = new DataRepositoryApi().getAllDRDatas(artifact.getId());
 		renderDRDatas(drDatas);
+		selectDefaultRow();
 	}
 
 	public void refreshAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
 		List<DRColumnAttributes> drDatas = getDrColumnAttributes();
 		renderDRDatas(drDatas);
+		selectDefaultRow();
 	}
 
 	public void deleteDRColumn() {
@@ -346,6 +348,42 @@ public class DataRepositoryTable extends CustomTable {
 			return null;
 		}
 		return (DataRepositoryTableItem) this.getItem(selectedIndex + 1);
+	}
+
+	public DRColumnAttributes getPreviousDRColumnAttribute() {
+		DRColumnAttributes selectedDRColumnAttribute = getSelectedDRColumnAttribute();
+		if (selectedDRColumnAttribute == null) {
+			return null;
+		}
+		List<DRColumnAttributes> filteredDRColumnAttributes = new ArrayList<DRColumnAttributes>();
+		for (DRColumnAttributes drColumnAttribute : getDrColumnAttributes()) {
+			if (drColumnAttribute.isDeleted() == false) {
+				filteredDRColumnAttributes.add(drColumnAttribute);
+			}
+		}
+		int selectedIndex = filteredDRColumnAttributes.indexOf(selectedDRColumnAttribute);
+		if (selectedIndex == 0) {
+			return null;
+		}
+		return filteredDRColumnAttributes.get(selectedIndex - 1);
+	}
+
+	public DRColumnAttributes getNextDRColumnAttribute() {
+		DRColumnAttributes selectedDRColumnAttribute = getSelectedDRColumnAttribute();
+		if (selectedDRColumnAttribute == null) {
+			return null;
+		}
+		List<DRColumnAttributes> filteredDRColumnAttributes = new ArrayList<DRColumnAttributes>();
+		for (DRColumnAttributes drColumnAttribute : getDrColumnAttributes()) {
+			if (drColumnAttribute.isDeleted() == false) {
+				filteredDRColumnAttributes.add(drColumnAttribute);
+			}
+		}
+		int selectedIndex = filteredDRColumnAttributes.indexOf(selectedDRColumnAttribute);
+		if (selectedIndex == filteredDRColumnAttributes.size() - 1) {
+			return null;
+		}
+		return filteredDRColumnAttributes.get(selectedIndex - 1);
 	}
 
 	public DataRepositoryView getParentDataRepositoryView() {
