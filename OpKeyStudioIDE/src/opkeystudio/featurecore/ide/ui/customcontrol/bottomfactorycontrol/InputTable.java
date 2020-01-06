@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParameterApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -252,8 +251,8 @@ public class InputTable extends CustomTable {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
-		List<ComponentInputArgument> bottomFactoryInputs = new BottomFactoryInputParameterApi()
-				.getAllBottomFactoryInputParameter(artifactId);
+		List<ComponentInputArgument> bottomFactoryInputs = new FunctionLibraryApi()
+				.getAllComponentInputArgument(artifactId);
 		setBottomFactoryInputData(bottomFactoryInputs);
 		for (ComponentInputArgument fl_BottomFactoryInput : bottomFactoryInputs) {
 			if (fl_BottomFactoryInput.isDeleted() == false) {
@@ -351,13 +350,7 @@ public class InputTable extends CustomTable {
 		bottomFactoryInput.setIsmandatory(true);
 		bottomFactoryInput.setDefaultvalue(null);
 		bottomFactoryInput.setDescription(null);
-
-		try {
-			new BottomFactoryInputParameterApi().insertInputParameter(bottomFactoryInput);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 		renderAllBottomFactoryInputData();
 	}
 

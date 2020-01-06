@@ -146,31 +146,35 @@ public class FunctionLibraryApi {
 		return flowSteps;
 	}
 
-	public List<ComponentInputArgument> getAllComponentInputArgument(String componentId)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
+	public List<ComponentInputArgument> getAllComponentInputArgument(String componentId) {
 		String query = String.format(
 				"select * from component_input_parameters where component_id='%s' ORDER BY position asc", componentId);
-		String result = sqlComm.executeQueryString(query);
+		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ComponentInputArgument.class);
-		sqlComm.disconnect();
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<ComponentInputArgument>();
 	}
 
-	public List<ComponentOutputArgument> getAllComponentOutputArgument(String componentId)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
+	public List<ComponentOutputArgument> getAllComponentOutputArgument(String componentId) {
 		String query = String.format(
 				"select * from component_output_parameters where component_id='%s' ORDER BY position asc", componentId);
-		String result = sqlComm.executeQueryString(query);
+		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
 				ComponentOutputArgument.class);
-		sqlComm.disconnect();
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<ComponentOutputArgument>();
 	}
 
 	public List<FunctionLibraryComponent> getFunctinLibraryComponent(String componentId) {

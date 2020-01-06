@@ -28,19 +28,14 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryInputParameterApi;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParameterApi;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryTagApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryInput;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 
 public class BottomFactoryFLUi extends Composite {
 	private UsedByTable usedByTable;
@@ -391,7 +386,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Fl_BottomFactoryInput bottomFactoryInput = inputTable.getSelectedInputParemeter();
+				ComponentInputArgument bottomFactoryInput = inputTable.getSelectedInputParemeter();
 				if (inputTable.getSelectedInputParemeter() != null) {
 					toggleDeleteButton(true);
 				} else {
@@ -406,36 +401,6 @@ public class BottomFactoryFLUi extends Composite {
 					toggleMoveDownButton(true);
 				} else {
 					toggleMoveDownButton(false);
-				}
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		outputTable.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				Fl_BottomFactoryOutput bottomFactoryOutput = outputTable.getSelectedOutputParemeter();
-				if (outputTable.getSelectedOutputParemeter() != null) {
-					toggleDeleteButton(true);
-				} else {
-					toggleDeleteButton(true);
-				}
-				if (outputTable.getPrevOutputParemeter() != null) {
-					toggleMoveUpButton(true);
-				} else {
-					toggleMoveUpButton(false);
-				}
-				if (outputTable.getNextOutputParemeter() != null) {
-					toggleMoveDownButton(true);
-				} else {
-					toggleMoveDownButton(true);
 				}
 
 			}
@@ -534,34 +499,6 @@ public class BottomFactoryFLUi extends Composite {
 			}
 		});
 
-		refreshInputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (flag == true) {
-					toggleFlag(false);
-
-					boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-							"Do you want to Save changes?");
-					if (!status) {
-						inputTable.renderAllBottomFactoryInputData();
-						return;
-					}
-					new BottomFactoryInputParameterApi()
-							.saveAllBottomFactoryInputParameter(inputTable.getBottomFactoryInputData());
-					inputTable.renderAllBottomFactoryInputData();
-				}
-
-				outputTable.renderAllBottomFactoryOutputData();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 		moveUpInputItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -615,8 +552,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				outputTable.moveFl_BottomFactoryOutputUp(outputTable.getSelectedOutputParemeter(),
-						outputTable.getPrevOutputParemeter());
+
 
 			}
 
@@ -631,8 +567,6 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				outputTable.moveFl_BottomFactoryOutputDown(outputTable.getSelectedOutputParemeter(),
-						outputTable.getNextOutputParemeter());
 
 			}
 
@@ -647,9 +581,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				outputTable.deleteBottomFactoryOutputData(outputTable.getSelectedOutputParemeter());
-				flag = true;
-//				fLView.toggleSaveButton(true);
+				
 			}
 
 			@Override
@@ -662,20 +594,7 @@ public class BottomFactoryFLUi extends Composite {
 		refreshOutputItem.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (flag == true) {
-					toggleFlag(false);
-					boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-							"Do you want to Save changes?");
-					if (!status) {
-						outputTable.renderAllBottomFactoryOutputData();
-						return;
-					}
-					new BottomFactoryOutputParameterApi()
-							.saveAllBottomFactoryOutputParameter(outputTable.getBottomFactoryOutputData());
-					outputTable.renderAllBottomFactoryOutputData();
-				}
 
-				outputTable.renderAllBottomFactoryOutputData();
 			}
 
 			@Override
@@ -784,10 +703,7 @@ public class BottomFactoryFLUi extends Composite {
 	}
 
 	public void save() {
-		new BottomFactoryOutputParameterApi()
-				.saveAllBottomFactoryOutputParameter(outputTable.getBottomFactoryOutputData());
-		new BottomFactoryInputParameterApi().saveAllBottomFactoryInputParameter(inputTable.getBottomFactoryInputData());
-		new BottomFactoryTagApi().saveAllBottomFactoryTag(tagsTable.getTagData());
+		
 	}
 
 	@Override

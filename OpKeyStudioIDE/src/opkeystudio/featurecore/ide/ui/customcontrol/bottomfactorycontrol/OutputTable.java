@@ -1,7 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +21,14 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.bottomfactory.BottomFactoryOutputParameterApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Fl_BottomFactoryOutput;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class OutputTable extends CustomTable {
@@ -136,18 +131,13 @@ public class OutputTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
-	public void setBottomFactoryOutputData(List<Fl_BottomFactoryOutput> bottomFactoryOutputs) {
+	public void setBottomFactoryOutputData(List<ComponentOutputArgument> bottomFactoryOutputs) {
 		super.setControlData(bottomFactoryOutputs);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Fl_BottomFactoryOutput> getBottomFactoryOutputData() {
-		return (List<Fl_BottomFactoryOutput>) super.getControlData();
-	}
-
-	public void deleteBottomFactoryOutputData(Fl_BottomFactoryOutput bottomFactoryOutput) {
-		bottomFactoryOutput.setDeleted(true);
-		refreshAllBottomFactoryOutputData();
+	public List<ComponentOutputArgument> getBottomFactoryOutputData() {
+		return (List<ComponentOutputArgument>) super.getControlData();
 	}
 
 	private List<Control> allTableEditors = new ArrayList<Control>();
@@ -161,7 +151,7 @@ public class OutputTable extends CustomTable {
 	}
 
 	private void addTableEditor(OutputTableItem outputTableItem) {
-		Fl_BottomFactoryOutput bottomFactoryOutput = outputTableItem.getBottomFactoryOutputData();
+		ComponentOutputArgument bottomFactoryOutput = outputTableItem.getBottomFactoryOutputData();
 		TableEditor editor1 = getTableEditor();
 
 		CustomCombo combo = new CustomCombo(this, 0);
@@ -176,7 +166,7 @@ public class OutputTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				thisTable.setSelection(outputTableItem);
 				CustomCombo button = (CustomCombo) e.getSource();
-				Fl_BottomFactoryOutput bottomFactoryOutput = (Fl_BottomFactoryOutput) button.getControlData();
+				ComponentOutputArgument bottomFactoryOutput = (ComponentOutputArgument) button.getControlData();
 				int selected = combo.getSelectionIndex();
 				String selectedDataType = combo.getItem(selected);
 				bottomFactoryOutput.setModified(true);
@@ -204,9 +194,9 @@ public class OutputTable extends CustomTable {
 	public void refreshAllBottomFactoryOutputData() {
 		disposeAllTableEditors();
 		this.removeAll();
-		List<Fl_BottomFactoryOutput> bottomFactoryOutputs = getBottomFactoryOutputData();
+		List<ComponentOutputArgument> bottomFactoryOutputs = getBottomFactoryOutputData();
 		setBottomFactoryOutputData(bottomFactoryOutputs);
-		for (Fl_BottomFactoryOutput fl_BottomFactoryOutput : bottomFactoryOutputs) {
+		for (ComponentOutputArgument fl_BottomFactoryOutput : bottomFactoryOutputs) {
 			if (fl_BottomFactoryOutput.isDeleted() == false) {
 				OutputTableItem outputTableItem = new OutputTableItem(this, 0);
 				outputTableItem.setText(new String[] { fl_BottomFactoryOutput.getName(),
@@ -225,10 +215,10 @@ public class OutputTable extends CustomTable {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
-		List<Fl_BottomFactoryOutput> bottomFactoryOutputs = new BottomFactoryOutputParameterApi()
-				.getAllBottomFactoryOutputParameter(artifactId);
+		List<ComponentOutputArgument> bottomFactoryOutputs = new FunctionLibraryApi()
+				.getAllComponentOutputArgument(artifactId);
 		setBottomFactoryOutputData(bottomFactoryOutputs);
-		for (Fl_BottomFactoryOutput fl_BottomFactoryOutput : bottomFactoryOutputs) {
+		for (ComponentOutputArgument fl_BottomFactoryOutput : bottomFactoryOutputs) {
 			if (fl_BottomFactoryOutput.isDeleted() == false) {
 				OutputTableItem outputTableItem = new OutputTableItem(this, 0);
 				System.out.println(fl_BottomFactoryOutput.getName().toString());
@@ -244,8 +234,8 @@ public class OutputTable extends CustomTable {
 		selectRow(0);
 	}
 
-	public void moveFl_BottomFactoryOutputUp(Fl_BottomFactoryOutput bottomFactoryOutput1,
-			Fl_BottomFactoryOutput bottomFactoryOutput2) {
+	public void moveFl_BottomFactoryOutputUp(ComponentOutputArgument bottomFactoryOutput1,
+			ComponentOutputArgument bottomFactoryOutput2) {
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = bottomFactoryOutput1.getPosition();
 		int fpos2 = bottomFactoryOutput2.getPosition();
@@ -259,8 +249,8 @@ public class OutputTable extends CustomTable {
 
 	}
 
-	public void moveFl_BottomFactoryOutputDown(Fl_BottomFactoryOutput bottomFactoryOutput1,
-			Fl_BottomFactoryOutput bottomFactoryOutput2) {
+	public void moveFl_BottomFactoryOutputDown(ComponentOutputArgument bottomFactoryOutput1,
+			ComponentOutputArgument bottomFactoryOutput2) {
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = bottomFactoryOutput1.getPosition();
 		int fpos2 = bottomFactoryOutput2.getPosition();
@@ -274,12 +264,12 @@ public class OutputTable extends CustomTable {
 
 	}
 
-	public Fl_BottomFactoryOutput getSelectedOutputParemeter() {
+	public ComponentOutputArgument getSelectedOutputParemeter() {
 		OutputTableItem OutputTableItem = (OutputTableItem) this.getSelection()[0];
 		return OutputTableItem.getBottomFactoryOutputData();
 	}
 
-	public Fl_BottomFactoryOutput getPrevOutputParemeter() {
+	public ComponentOutputArgument getPrevOutputParemeter() {
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == 0) {
 			return null;
@@ -293,7 +283,7 @@ public class OutputTable extends CustomTable {
 		return null;
 	}
 
-	public Fl_BottomFactoryOutput getNextOutputParemeter() {
+	public ComponentOutputArgument getNextOutputParemeter() {
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == this.getItemCount() - 1) {
 			return null;
@@ -312,7 +302,7 @@ public class OutputTable extends CustomTable {
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
 		int lastPosition = 0;
-		Fl_BottomFactoryOutput bottomFactoryOutput = new Fl_BottomFactoryOutput();
+		ComponentOutputArgument bottomFactoryOutput = new ComponentOutputArgument();
 		System.out.println(getBottomFactoryOutputData().size());
 
 		if ((getBottomFactoryOutputData().size()) == 0) {
