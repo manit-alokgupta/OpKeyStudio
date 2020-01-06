@@ -24,6 +24,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
@@ -231,7 +232,7 @@ public class ArtifactTreeUI extends Composite {
 		openMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/open.png"));
 		openMenuItem.setText("Open");
 		openMenuItem.setEnabled(false);
-		
+
 		renameMenuItem = new MenuItem(menu, SWT.NONE);
 		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
 		renameMenuItem.setText("Rename");
@@ -399,18 +400,18 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
-		
+
 		openMenuItem.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				artifactTree.openSelectedArtifact();
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		deleteMenuItem.addSelectionListener(new SelectionListener() {
@@ -432,6 +433,7 @@ public class ArtifactTreeUI extends Composite {
 					return;
 				}
 				new ArtifactApi().deleteArtifact(artifact);
+				Utilities.getInstance().closeArtifactPart(artifact);
 				artifactTree.renderArtifacts();
 			}
 
@@ -464,6 +466,7 @@ public class ArtifactTreeUI extends Composite {
 				}
 				artifact.setName(renamedText);
 				new ArtifactApi().renameArtifact(artifact);
+				Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
 				artifactTree.renderArtifacts();
 				renameMenuItem.setEnabled(false);
 				renameMenuItem.setEnabled(false);

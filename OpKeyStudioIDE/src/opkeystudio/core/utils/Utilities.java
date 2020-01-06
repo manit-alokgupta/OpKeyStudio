@@ -137,4 +137,22 @@ public class Utilities {
 			partService.showPart(part, PartState.ACTIVATE);
 		}
 	}
+
+	public void closeArtifactPart(Artifact artifact) {
+		MPart mpart = getArtifactMPart(artifact);
+		if (mpart == null) {
+			return;
+		}
+		EPartService partService = Utilities.getInstance().getEpartService();
+		partService.hidePart(mpart, true);
+	}
+
+	public void renameArtifactLabel(Artifact artifact, String renamedData) {
+		MPart mpart = getArtifactMPart(artifact);
+		if (mpart == null) {
+			return;
+		}
+		mpart.setLabel(renamedData);
+		mpart.setTooltip(renamedData);
+	}
 }
