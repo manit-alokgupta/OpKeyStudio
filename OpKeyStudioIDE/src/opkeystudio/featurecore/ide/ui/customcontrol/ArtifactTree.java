@@ -71,13 +71,6 @@ public class ArtifactTree extends CustomTree {
 			return;
 		}
 		Artifact artifact = artifactTreeItem.getArtifact();
-		MPart mpart = Utilities.getInstance().getArtifactMPart(artifact);
-		if (mpart != null) {
-			System.out.println("MPART Found");
-			EPartService partService = Utilities.getInstance().getEpartService();
-			partService.showPart(mpart, PartState.ACTIVATE);
-			return;
-		}
 		Utilities.getInstance().openArtifacts(artifact);
 	}
 

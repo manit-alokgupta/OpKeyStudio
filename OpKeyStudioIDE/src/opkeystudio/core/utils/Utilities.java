@@ -1,5 +1,7 @@
 package opkeystudio.core.utils;
 
+import static org.hamcrest.Matchers.contains;
+
 import java.util.Collection;
 import java.util.UUID;
 
@@ -45,13 +47,14 @@ public class Utilities {
 
 	public MPart getArtifactMPart(Artifact artifact) {
 		Collection<MPart> allParts = getAllParts();
+		System.out.println("All Parts " + allParts.size());
 		for (MPart mpart : allParts) {
 			System.out.println("Mpart Searching");
 			Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 			if (artifact_0 == null) {
-				return null;
+				continue;
 			}
-			System.out.println("ID FOUND "+artifact_0.getId());
+			System.out.println("ID FOUND " + artifact_0.getId());
 			if (artifact_0.getId().equals(artifact.getId())) {
 				return mpart;
 			}
@@ -75,8 +78,15 @@ public class Utilities {
 		}
 		return -1;
 	}
-	
+
 	public void openArtifacts(Artifact artifact) {
+		MPart mpart = Utilities.getInstance().getArtifactMPart(artifact);
+		if (mpart != null) {
+			System.out.println("MPART Found");
+			EPartService partService = Utilities.getInstance().getEpartService();
+			partService.showPart(mpart, PartState.ACTIVATE);
+			return;
+		}
 		if (artifact.getFile_type_enum() == MODULETYPE.ObjectRepository) {
 			EPartService partService = Utilities.getInstance().getEpartService();
 			MPart part = partService.createPart("opkeystudio.partdescriptor.objectRepository");
