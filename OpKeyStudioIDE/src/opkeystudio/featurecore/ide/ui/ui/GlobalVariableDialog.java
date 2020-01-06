@@ -258,10 +258,10 @@ public class GlobalVariableDialog extends Dialog {
 		editor.horizontalAlignment = SWT.LEFT;
 		editor.grabHorizontal = true;
 		editor.minimumWidth = 50;
-		globalVariablesTable.addMouseListener(new MouseListener() {
-
+		globalVariablesTable.addSelectionListener(new SelectionListener() {
+			
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				int selectedIndex = globalVariablesTable.getSelectionIndex();
 				if (selectedIndex == -1) {
 					toggleDeleteToolItem(false);
@@ -269,18 +269,18 @@ public class GlobalVariableDialog extends Dialog {
 				} else {
 					toggleDeleteToolItem(true);
 				}
+				GlobalVariable globalVariable = globalVariablesTable.getGlobalVariablesData().get(selectedIndex);
+				System.out.println(globalVariable.getName());
+				if (globalVariable.getName().equals("Default Browser")
+						|| globalVariable.getName().equals("Default Mobile Device")) {
+					toggleDeleteToolItem(false);
+				}
 			}
-
+			
 			@Override
-			public void mouseDown(MouseEvent e) {
+			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
