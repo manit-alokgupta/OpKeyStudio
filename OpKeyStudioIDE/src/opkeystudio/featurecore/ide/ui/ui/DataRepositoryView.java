@@ -300,8 +300,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				dataRepositoryTable.moveRowUp();
 			}
 
 			@Override
@@ -315,8 +314,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				dataRepositoryTable.moveRowDown();
 			}
 
 			@Override

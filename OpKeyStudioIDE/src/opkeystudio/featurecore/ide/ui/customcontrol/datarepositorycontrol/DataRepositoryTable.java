@@ -209,6 +209,7 @@ public class DataRepositoryTable extends CustomTable {
 				continue;
 			}
 			List<DRCellAttributes> drCellAttributes = drColumnAttribute.getDrCellAttributes();
+			Collections.sort(drCellAttributes);
 			rowCount = drCellAttributes.size();
 			for (int rowNo = 0; rowNo < drCellAttributes.size(); rowNo++) {
 				DRCellAttributes drCellAttribute = drCellAttributes.get(rowNo);
@@ -288,11 +289,50 @@ public class DataRepositoryTable extends CustomTable {
 	public void moveRowDown() {
 		List<DRCellAttributes> selectedDRCells = getSelectedRowDRCells();
 		List<DRCellAttributes> nextDRCells = getNextRowDRCells();
+
+		for (int i = 0; i < selectedDRCells.size(); i++) {
+			DRCellAttributes selectedDRCell = selectedDRCells.get(i);
+			DRCellAttributes nextDRCell = nextDRCells.get(i);
+			int selectedDRCellPosition = selectedDRCell.getPosition();
+			int nextDRCellPosition = nextDRCell.getPosition();
+
+			selectedDRCell.setPosition(nextDRCellPosition);
+			nextDRCell.setPosition(selectedDRCellPosition);
+
+			selectedDRCell.setModified(true);
+			nextDRCell.setModified(true);
+		}
+
+		try {
+			refreshAllDRDetails();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void moveRowUp() {
 		List<DRCellAttributes> selectedDRCells = getSelectedRowDRCells();
 		List<DRCellAttributes> previousDRCells = getPreviousRowDRCells();
+
+		for (int i = 0; i < selectedDRCells.size(); i++) {
+			DRCellAttributes selectedDRCell = selectedDRCells.get(i);
+			DRCellAttributes previousDRCell = previousDRCells.get(i);
+			int selectedDRCellPosition = selectedDRCell.getPosition();
+			int nextDRCellPosition = previousDRCell.getPosition();
+
+			selectedDRCell.setPosition(nextDRCellPosition);
+			previousDRCell.setPosition(selectedDRCellPosition);
+
+			selectedDRCell.setModified(true);
+			previousDRCell.setModified(true);
+		}
+		try {
+			refreshAllDRDetails();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public List<DRCellAttributes> getSelectedRowDRCells() {

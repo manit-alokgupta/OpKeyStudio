@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class DRCellAttributes extends Modified {
+public class DRCellAttributes extends Modified implements Comparable<DRCellAttributes> {
 	private int clustering_key;
 	@DBField
 	private String column_id;
@@ -90,6 +90,11 @@ public class DRCellAttributes extends Modified {
 
 	public void setColumnNo(int columnNo) {
 		this.columnNo = columnNo;
+	}
+
+	@Override
+	public int compareTo(DRCellAttributes arg0) {
+		return this.getPosition() - arg0.getPosition();
 	}
 
 }
