@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Base64;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +59,6 @@ public class SQLiteCommunicator {
 					String columnName = resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase();
 					String columnTypeName = resultSet.getMetaData().getColumnTypeName(i + 1);
 					if (columnTypeName.equals("BLOB")) {
-
 						byte[] bytes = resultSet.getBytes(i + 1);
 						String data = new String(bytes, StandardCharsets.UTF_8);
 						obj.put(columnName, data);
