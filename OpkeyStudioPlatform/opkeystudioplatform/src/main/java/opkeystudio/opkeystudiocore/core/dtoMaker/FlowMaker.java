@@ -50,7 +50,11 @@ public class FlowMaker {
 		if (keyword != null) {
 			flowStep.setKeyword(keyword);
 			flowStep.setKeywordid(keyword.getKeywordid());
-			flowStep.setComment(flowStep.getKeyword().getKeyworddescription());
+			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+				flowStep.setComments(flowStep.getKeyword().getKeyworddescription());
+			} else {
+				flowStep.setComment(flowStep.getKeyword().getKeyworddescription());
+			}
 		}
 		flowStep.setPosition(selectedFlowStepPosition + 5);
 		flowStep.setShouldrun(true);
@@ -102,7 +106,7 @@ public class FlowMaker {
 		} else {
 			flowStep.setComponent_id(flArtifact.getId());
 		}
-		
+
 		flowStep.setPosition(selectedFlowStepPosition + 5);
 		flowStep.setShouldrun(true);
 
@@ -132,7 +136,8 @@ public class FlowMaker {
 			}
 		}
 		if (flowStep.getFunctionLibraryComponent() != null) {
-			List<ComponentInputArgument> componentInputArgs = flowStep.getFunctionLibraryComponent().getComponentInputArguments();
+			List<ComponentInputArgument> componentInputArgs = flowStep.getFunctionLibraryComponent()
+					.getComponentInputArguments();
 			for (ComponentInputArgument componentInputArgument : componentInputArgs) {
 				System.out.println("Component id " + componentInputArgument.getComponent_id());
 				FlowInputArgument flowInputArgument = new FlowInputArgument();
