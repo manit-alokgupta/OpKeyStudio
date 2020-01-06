@@ -260,6 +260,10 @@ public class DataRepositoryTable extends CustomTable {
 
 	public void deleteDRColumn() {
 		getSelectedDRColumnAttribute().setDeleted(true);
+		List<DRCellAttributes> drCellAttributes = getSelectedDRColumnAttribute().getDrCellAttributes();
+		for (DRCellAttributes drCellAttribute : drCellAttributes) {
+			drCellAttribute.setDeleted(true);
+		}
 		try {
 			this.refreshAllDRDetails();
 		} catch (IOException e1) {
@@ -279,6 +283,16 @@ public class DataRepositoryTable extends CustomTable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+
+	public void moveRowDown() {
+		List<DRCellAttributes> selectedDRCells = getSelectedRowDRCells();
+		List<DRCellAttributes> nextDRCells = getNextRowDRCells();
+	}
+
+	public void moveRowUp() {
+		List<DRCellAttributes> selectedDRCells = getSelectedRowDRCells();
+		List<DRCellAttributes> previousDRCells = getPreviousRowDRCells();
 	}
 
 	public List<DRCellAttributes> getSelectedRowDRCells() {
