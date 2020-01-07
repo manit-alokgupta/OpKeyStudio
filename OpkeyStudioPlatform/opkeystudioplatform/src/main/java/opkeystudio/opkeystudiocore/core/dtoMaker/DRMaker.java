@@ -34,7 +34,7 @@ public class DRMaker {
 			drCellAttribute.setAdded(true);
 			drCellAttributes.add(drCellAttribute);
 		}
-
+		drColumnAttribute.setDrCellAttributes(drCellAttributes);
 		for (int i = selectedFlowStepIndex + 1; i < allDRColumnttributes.size(); i++) {
 			DRColumnAttributes iflowStep = allDRColumnttributes.get(i);
 			iflowStep.setPosition(iflowStep.getPosition() + 10);

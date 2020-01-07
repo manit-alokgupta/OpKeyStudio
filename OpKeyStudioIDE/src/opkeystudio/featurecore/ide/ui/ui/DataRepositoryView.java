@@ -181,7 +181,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				dataRepositoryTable.addDRColumn();
 			}
 
 			@Override

@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.DataRepositoryView;
@@ -30,6 +31,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
+import opkeystudio.opkeystudiocore.core.dtoMaker.DRMaker;
 
 public class DataRepositoryTable extends CustomTable {
 	private DataRepositoryView parentDataRepositoryView;
@@ -266,6 +268,26 @@ public class DataRepositoryTable extends CustomTable {
 		List<DRColumnAttributes> drDatas = getDrColumnAttributes();
 		renderDRDatas(drDatas);
 		selectDefaultRow();
+	}
+
+	public void addDRColumn() {
+		String data = new MessageDialogs().openInputDialogAandGetValue("Enter ColumnName", "Enter the DR Column Name",
+				"");
+
+		if (data.trim().isEmpty()) {
+			return;
+		}
+		DRColumnAttributes drColumn = new DRMaker().createDRColumnWithCells(getParentDataRepositoryView().getArtifact(),
+				getSelectedDRColumnAttribute(), getItemCount(), getDrColumnAttributes());
+		drColumn.setName(data);
+		System.out.println("DR Cell Size " + drColumn.getDrCellAttributes().size());
+		getDrColumnAttributes().add(drColumn);
+		try {
+			refreshAllDRDetails();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void deleteDRColumn() {
