@@ -109,6 +109,7 @@ public class FlowMaker {
 			FlowInputArgument inputArgument = inputArg.clone();
 			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 				inputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
+				inputArgument.setStepid(flowStep.getStepid());
 			} else {
 				inputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
 				inputArgument.setFlow_stepid(flowStep.getFlow_stepid());
@@ -123,6 +124,7 @@ public class FlowMaker {
 			FlowOutputArgument outputarg = outputArg.clone();
 			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 				outputArg.setComponentstep_oa_id(Utilities.getInstance().getUniqueUUID(""));
+				outputArg.setComponentstep_id(flowStep.getStepid());
 			} else {
 				outputArg.setFlow_step_oa_id(Utilities.getInstance().getUniqueUUID(""));
 			}
