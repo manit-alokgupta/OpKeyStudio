@@ -38,7 +38,8 @@ public class ORObject extends Modified implements Cloneable {
 	private int position;
 	@DBField
 	private String parent_object_id;
-
+	
+	private String variableName;
 	private List<ObjectAttributeProperty> objectAttributesProperty = new ArrayList<>();
 
 	public String getOr_id() {
@@ -177,6 +178,15 @@ public class ORObject extends Modified implements Cloneable {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public String getVariableName() {
+		setVariableName("orobject"+getClustering_key());
+		return variableName;
+	}
+
+	public void setVariableName(String variableName) {
+		this.variableName = variableName;
 	}
 
 }

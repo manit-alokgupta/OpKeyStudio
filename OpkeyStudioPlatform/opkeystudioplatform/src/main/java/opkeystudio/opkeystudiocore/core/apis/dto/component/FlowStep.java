@@ -57,7 +57,8 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 	private boolean istestsuites;
 
 	private boolean NullKeyword = false;
-
+	
+	private String variableName;
 	public String getKeywordid() {
 		return keywordid;
 	}
@@ -255,5 +256,14 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public String getVariableName() {
+		setVariableName("step"+getClustering_key());
+		return variableName;
+	}
+
+	public void setVariableName(String variableName) {
+		this.variableName = variableName;
 	}
 }

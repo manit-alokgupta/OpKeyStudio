@@ -62,11 +62,11 @@ public class TranspilerUtilities {
 		for (GlobalVariable globalVariable : globalVariables) {
 			List<TranspiledField> transpiledFields = getTranspiledFields(globalVariable);
 			NewObjectSnippet newGlobalVariable = new NewObjectSnippet("GlobalVariable",
-					"gv_" + formatVariableName(globalVariable.getGv_id()));
+					globalVariable.getVariableName());
 			for (TranspiledField transpiledField : transpiledFields) {
-				MethodCallSnippet newMethodCalledSnippet = new MethodCallSnippet(
-						"gv_" + formatVariableName(globalVariable.getGv_id()), "addProperty",
-						"\"" + transpiledField.getName() + "\"", "\"" + transpiledField.getValue() + "\"");
+				MethodCallSnippet newMethodCalledSnippet = new MethodCallSnippet(globalVariable.getVariableName(),
+						"addProperty", "\"" + transpiledField.getName() + "\"",
+						"\"" + transpiledField.getValue() + "\"");
 				newGlobalVariable.addMethodCallSnippet(newMethodCalledSnippet);
 				methodSnippet.addNewObjectSnippet(newGlobalVariable);
 			}
@@ -74,17 +74,19 @@ public class TranspilerUtilities {
 		return classSnippet.toString();
 	}
 
-	public String transpileORObjects(List<ORObject> orobjects) throws IllegalArgumentException, IllegalAccessException {
+	public String transpileORObjects(List<ORObject> orobjects) {
 		ClassSnippet classSnippet = new ClassSnippet("ORObjects");
 		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (ORObject orobject : orobjects) {
-			NewObjectSnippet newObjectSnippet = new NewObjectSnippet("ORObject",
-					"or_" + formatVariableName(orobject.getObject_id()));
+			NewObjectSnippet newObjectSnippet = new NewObjectSnippet("ORObject", orobject.getVariableName());
 			List<ObjectAttributeProperty> objectAttributeProperties = orobject.getObjectAttributesProperty();
 			for (ObjectAttributeProperty objectAttributeProperty : objectAttributeProperties) {
-				MethodCallSnippet methodCallSnippet = new MethodCallSnippet(
-						"or_" + formatVariableName(orobject.getObject_id()), "addProperty",
+				if (objectAttributeProperty.getProperty().toLowerCase().equals("objectimage")
+						|| objectAttributeProperty.getProperty().toLowerCase().equals("image")) {
+					continue;
+				}
+				MethodCallSnippet methodCallSnippet = new MethodCallSnippet(orobject.getVariableName(), "addProperty",
 						"\"" + objectAttributeProperty.getProperty() + "\"",
 						"\"" + objectAttributeProperty.getValue() + "\"");
 				newObjectSnippet.addMethodCallSnippet(methodCallSnippet);

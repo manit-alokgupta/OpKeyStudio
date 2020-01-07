@@ -19,18 +19,14 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 public class Transpiler {
 	public void transpileDatas(TranspileObject transpileObject) {
 		Artifact artifact = transpileObject.getArtifact();
-
 		List<GlobalVariable> globalVariables = transpileObject.getGlobalVaribales();
 		List<FlowStep> flowSteps = transpileObject.getFlowSteps();
-		for (FlowStep flowStep : flowSteps) {
-			if (flowStep.getKeyword() != null) {
-				System.out.println(flowStep.getKeyword().getKeywordname() + "    "
-						+ flowStep.getFlowInputArgs().get(0).getKeywordInputArgument().getDatatype());
-			}
-		}
 		List<FlowStep> functionLibaries = getFunctionLibraries(flowSteps);
 		List<ORObject> orobjects = getAllORObjects(flowSteps);
 		Set<String> orids = getAllObjectRepositoryIds(flowSteps);
+
+		String data = new TranspilerUtilities().transpileORObjects(orobjects);
+		System.out.println(data);
 	}
 
 	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {

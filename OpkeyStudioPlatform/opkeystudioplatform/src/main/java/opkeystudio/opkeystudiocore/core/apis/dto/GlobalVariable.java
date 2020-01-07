@@ -9,7 +9,7 @@ public class GlobalVariable extends Modified {
 	private int position;
 	@DBField
 	private String value;
-	
+
 	private int clustering_key;
 	@DBField
 	private String datatype;
@@ -21,6 +21,8 @@ public class GlobalVariable extends Modified {
 	private String p_id;
 	@DBField
 	private String name;
+
+	private String variableName;
 
 	public int getPosition() {
 		return position;
@@ -92,6 +94,15 @@ public class GlobalVariable extends Modified {
 
 	public void setIsdeleted(boolean isdeleted) {
 		this.isdeleted = isdeleted;
+	}
+
+	public String getVariableName() {
+		setVariableName("gv" + getClustering_key());
+		return variableName;
+	}
+
+	public void setVariableName(String variableName) {
+		this.variableName = variableName;
 	}
 
 }
