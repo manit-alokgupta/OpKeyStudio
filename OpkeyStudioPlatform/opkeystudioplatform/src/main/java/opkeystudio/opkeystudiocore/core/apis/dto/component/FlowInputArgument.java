@@ -182,7 +182,7 @@ public class FlowInputArgument extends Modified implements Cloneable {
 
 	public FlowInputArgument clone() {
 		try {
-			super.clone();
+			return (FlowInputArgument) super.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

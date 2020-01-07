@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class FlowOutputArgument extends Modified {
+public class FlowOutputArgument extends Modified implements Cloneable {
 	@DBField
 	private String flow_step_oa_id;
 	@DBField
@@ -78,7 +78,7 @@ public class FlowOutputArgument extends Modified {
 
 	public FlowOutputArgument clone() {
 		try {
-			super.clone();
+			return (FlowOutputArgument) super.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -96,23 +96,38 @@ public class FlowMaker {
 			flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
 		}
 		flowStep.setPosition(selectedFlowStepPosition + 5);
-		List<ORObject> orObjects = flowStep.getOrObject();
+		List<ORObject> orObjects = pasteFlowStep.getOrObject();
 		List<ORObject> allORObjects = new ArrayList<ORObject>();
 		for (ORObject orobject : orObjects) {
 			allORObjects.add(orobject.clone());
 		}
 		flowStep.setOrObject(allORObjects);
 
-		List<FlowInputArgument> inputArgs = flowStep.getFlowInputArgs();
+		List<FlowInputArgument> inputArgs = pasteFlowStep.getFlowInputArgs();
 		List<FlowInputArgument> allInputArgs = new ArrayList<FlowInputArgument>();
 		for (FlowInputArgument inputArg : inputArgs) {
-			allInputArgs.add(inputArg.clone());
+			FlowInputArgument inputArgument = inputArg.clone();
+			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+				inputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
+			} else {
+				inputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+				inputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+			}
+			inputArgument.setAdded(true);
+			allInputArgs.add(inputArgument);
 		}
 		flowStep.setFlowInputArgs(allInputArgs);
-		List<FlowOutputArgument> outputArgs = flowStep.getFlowOutputArgs();
+		List<FlowOutputArgument> outputArgs = pasteFlowStep.getFlowOutputArgs();
 		List<FlowOutputArgument> allOutputArgs = new ArrayList<FlowOutputArgument>();
 		for (FlowOutputArgument outputArg : outputArgs) {
-			allOutputArgs.add(outputArg.clone());
+			FlowOutputArgument outputarg = outputArg.clone();
+			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+				outputArg.setComponentstep_oa_id(Utilities.getInstance().getUniqueUUID(""));
+			} else {
+				outputArg.setFlow_step_oa_id(Utilities.getInstance().getUniqueUUID(""));
+			}
+			outputarg.setAdded(true);
+			allOutputArgs.add(outputarg);
 		}
 		flowStep.setFlowOutputArgs(allOutputArgs);
 		flowStep.setAdded(true);
