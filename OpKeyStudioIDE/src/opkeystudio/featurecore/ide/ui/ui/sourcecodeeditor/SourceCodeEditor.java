@@ -28,12 +28,14 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GlyphMetrics;
+import org.eclipse.swt.graphics.Resource;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.swt.widgets.TreeItem;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -50,7 +52,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.TranspilerUtilities;
 
 public class SourceCodeEditor extends Composite {
 	private TestCaseView testCaseView;
@@ -111,6 +113,7 @@ public class SourceCodeEditor extends Composite {
 		String[] items = new String[] { "Global Variables", "TestCases", "Object Repositories", "Function Libraries" };
 		for (String item : items) {
 			TreeItem sourceCodeTreeitem_1 = new TreeItem(sourceCodeTree, SWT.NONE);
+			sourceCodeTreeitem_1.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
 			sourceCodeTreeitem_1.setText(item);
 		}
 
@@ -245,8 +248,8 @@ public class SourceCodeEditor extends Composite {
 			List<FlowStep> functionLibraries = getFunctionLibraries(flowSteps);
 			List<ORObject> allORObjects = getAllORObjects(flowSteps);
 
-			String gvtranspiledData = Transpiler.getTranspiler().transpileGlobalVariables(globalVariables);
-			String ortranspiledData = Transpiler.getTranspiler().transpileORObjects(allORObjects);
+			String gvtranspiledData = TranspilerUtilities.getTranspiler().transpileGlobalVariables(globalVariables);
+			String ortranspiledData = TranspilerUtilities.getTranspiler().transpileORObjects(allORObjects);
 
 			Artifact artifact = getTestCaseView().getArtifact();
 			TreeItem[] treeItems = sourceCodeTree.getItems();

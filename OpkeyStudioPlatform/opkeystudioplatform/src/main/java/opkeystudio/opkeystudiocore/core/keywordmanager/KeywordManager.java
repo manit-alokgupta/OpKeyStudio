@@ -1,5 +1,7 @@
 package opkeystudio.opkeystudiocore.core.keywordmanager;
 
+import static org.hamcrest.Matchers.contains;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

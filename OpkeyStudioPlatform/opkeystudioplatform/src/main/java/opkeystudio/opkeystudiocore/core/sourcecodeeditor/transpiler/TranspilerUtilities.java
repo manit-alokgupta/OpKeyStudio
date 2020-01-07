@@ -18,12 +18,12 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.Me
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewObjectSnippet;
 
 @SuppressWarnings("unused")
-public class Transpiler {
-	private static Transpiler transpiler;
+public class TranspilerUtilities {
+	private static TranspilerUtilities transpiler;
 
-	public static Transpiler getTranspiler() {
+	public static TranspilerUtilities getTranspiler() {
 		if (transpiler == null) {
-			transpiler = new Transpiler();
+			transpiler = new TranspilerUtilities();
 		}
 		return transpiler;
 	}
