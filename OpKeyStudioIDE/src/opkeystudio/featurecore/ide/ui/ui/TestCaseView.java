@@ -52,6 +52,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor.SourceCodeEditor;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -274,12 +275,12 @@ public class TestCaseView extends Composite {
 		expanditemStepIno.setHeight(expanditemStepIno.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 		composite_5.setLayout(new GridLayout(2, false));
 		composite_5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
+
 		stepInfoLabel = new StyledText(composite_5, SWT.V_SCROLL);
 		stepInfoLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		stepInfoLabel.setText("");
 		stepInfoLabel.setEditable(false);
-		
+
 		stepInfoImage = new Label(composite_5, SWT.NONE);
 		stepInfoImage.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/sample.png"));
 		GridData gd_stepInfoImage = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
@@ -1032,13 +1033,8 @@ public class TestCaseView extends Composite {
 				if (flowInputArgument == null) {
 					return;
 				}
-				if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-					flowInputArgument.setArg_datasource(DataSource.ValueFromGlobalVariable);
-				} else {
-					flowInputArgument.setDatasource(DataSource.ValueFromGlobalVariable);
-				}
-				flowInputArgument.setGlobalvariable_id(globalVar.getGv_id());
-				flowInputArgument.setModified(true);
+				new FlowApiUtilities().setFlowInputData(getArtifact(), flowInputArgument, globalVar.getGv_id(),
+						DataSource.ValueFromGlobalVariable);
 				toggleSaveButton(true);
 				try {
 					getInputDataTable().renderInputTable();

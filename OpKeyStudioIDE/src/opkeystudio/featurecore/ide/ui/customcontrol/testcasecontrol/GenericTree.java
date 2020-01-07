@@ -19,6 +19,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -273,12 +274,9 @@ public class GenericTree extends CustomTree {
 					if (selectedFlowInputArgument == null) {
 						return;
 					}
-					if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-						selectedFlowInputArgument.setArg_datasource(DataSource.ValueFromDataRepository);
-					} else {
-						selectedFlowInputArgument.setDatasource(DataSource.ValueFromDataRepository);
-					}
-					selectedFlowInputArgument.setDatarepositorycolumnid(drcolumnAttribute.getColumn_id());
+					new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
+							selectedFlowInputArgument, drcolumnAttribute.getColumn_id(),
+							DataSource.ValueFromDataRepository);
 					selectedFlowInputArgument.setModified(true);
 					getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 					getParentTestCaseView().toggleSaveButton(true);

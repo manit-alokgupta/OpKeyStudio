@@ -23,6 +23,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -95,13 +96,10 @@ public class OutputDataTable extends CustomTable {
 				if (selectedFlowInputArgument == null) {
 					return;
 				}
-				if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-					selectedFlowInputArgument.setArg_datasource(DataSource.ValueFromOutputArgument);
-					selectedFlowInputArgument.setComponentstep_oa_id(flowOutPitArgument.getFlow_step_oa_id());
-				} else {
-					selectedFlowInputArgument.setDatasource(DataSource.ValueFromOutputArgument);
-					selectedFlowInputArgument.setFlow_step_oa_id(flowOutPitArgument.getFlow_step_oa_id());
-				}
+				new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
+						selectedFlowInputArgument, flowOutPitArgument.getFlow_step_oa_id(),
+						DataSource.ValueFromOutputArgument);
+
 				selectedFlowInputArgument.setModified(true);
 				try {
 					getParentTestCaseView().getInputDataTable().renderInputTable();

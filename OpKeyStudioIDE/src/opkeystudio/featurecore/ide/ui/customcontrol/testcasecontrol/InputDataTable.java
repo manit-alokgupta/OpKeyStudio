@@ -120,14 +120,8 @@ public class InputDataTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
-						if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-							flowInputArgument.setArg_datasource(DataSource.StaticValue);
-						} else {
-							flowInputArgument.setDatasource(DataSource.StaticValue);
-						}
-
-						flowInputArgument.setStaticvalue(text.getText());
-						flowInputArgument.setModified(true);
+						new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
+								flowInputArgument, text.getText(), DataSource.StaticValue);
 						getParentTestCaseView().toggleSaveButton(true);
 						row.setText(selectedColumn, text.getText());
 					}
