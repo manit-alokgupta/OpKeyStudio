@@ -25,6 +25,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
@@ -34,6 +35,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class FlowStepTable extends CustomTable {
@@ -77,6 +79,107 @@ public class FlowStepTable extends CustomTable {
 		movedownMenuItem.setText("Move Down");
 		setToRunMenuItem.setText("Set to Run");
 		skipfromRunMenuItem.setText("Skip from Run");
+
+		skipfromRunMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FlowStep flowStep = getSelectedFlowStep();
+				if (flowStep == null) {
+					return;
+				}
+				flowStep.setShouldrun(false);
+				flowStep.setModified(true);
+				refreshFlowSteps();
+				getParentTestCaseView().toggleSaveButton(true);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		setToRunMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FlowStep flowStep = getSelectedFlowStep();
+				if (flowStep == null) {
+					return;
+				}
+				flowStep.setShouldrun(true);
+				flowStep.setModified(true);
+				refreshFlowSteps();
+				getParentTestCaseView().toggleSaveButton(true);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		movedownMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				moveStepDown();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		addStepMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				addStep();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					deleteStep();
+				} catch (SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveupMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				moveStepUp();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		this.setMenu(menu);
 	}
 
@@ -302,7 +405,9 @@ public class FlowStepTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
-	public void moveStepUp(FlowStep fstep1, FlowStep fstep2) {
+	public void moveStepUp() {
+		FlowStep fstep1 = getSelectedFlowStep();
+		FlowStep fstep2 = getPrevFlowStep();
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = fstep1.getPosition();
 		int fpos2 = fstep2.getPosition();
@@ -317,7 +422,9 @@ public class FlowStepTable extends CustomTable {
 
 	}
 
-	public void moveStepDown(FlowStep fstep1, FlowStep fstep2) {
+	public void moveStepDown() {
+		FlowStep fstep1 = getSelectedFlowStep();
+		FlowStep fstep2 = getNextFlowStep();
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = fstep1.getPosition();
 		int fpos2 = fstep2.getPosition();
@@ -332,8 +439,23 @@ public class FlowStepTable extends CustomTable {
 
 	}
 
-	public void deleteStep(FlowStep flowStep)
-			throws JsonParseException, JsonMappingException, SQLException, IOException {
+	public void addStep() {
+		Artifact artifact = getParentTestCaseView().getArtifact();
+		FlowStep selectedFlowStep = this.getSelectedFlowStep();
+		FlowStep flowStep = new FlowMaker().getFlowStepDTO(artifact, selectedFlowStep, null, artifact.getId(),
+				this.getFlowStepsData());
+		this.getFlowStepsData().add(flowStep);
+		this.refreshFlowSteps();
+		getParentTestCaseView().toggleSaveButton(true);
+	}
+
+	public void deleteStep() throws JsonParseException, JsonMappingException, SQLException, IOException {
+		boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+				"Do you want to delete '" + this.getSelectedFlowStep().getKeyword().getKeywordname() + "'?");
+		if (!status) {
+			return;
+		}
+		FlowStep flowStep = getSelectedFlowStep();
 		flowStep.setDeleted(true);
 		refreshFlowSteps();
 		getParentTestCaseView().toggleSaveButton(true);

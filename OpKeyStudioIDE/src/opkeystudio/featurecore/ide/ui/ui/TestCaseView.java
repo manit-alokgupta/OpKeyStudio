@@ -803,13 +803,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Add Button pressed");
-				Artifact artifact = getArtifact();
-				FlowStep selectedFlowStep = getFlowStepTable().getSelectedFlowStep();
-				FlowStep flowStep = new FlowMaker().getFlowStepDTO(getArtifact(), selectedFlowStep, null,
-						artifact.getId(), getFlowStepTable().getFlowStepsData());
-				getFlowStepTable().getFlowStepsData().add(flowStep);
-				getFlowStepTable().refreshFlowSteps();
-				toggleSaveButton(true);
+				flowStepTable.addStep();
 			}
 
 			@Override
@@ -853,8 +847,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				flowStepTable.moveStepUp(flowStepTable.getSelectedFlowStep(), flowStepTable.getPrevFlowStep());
-				toggleSaveButton(true);
+				flowStepTable.moveStepUp();
 
 			}
 
@@ -868,7 +861,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				flowStepTable.moveStepDown(flowStepTable.getSelectedFlowStep(), flowStepTable.getNextFlowStep());
+				flowStepTable.moveStepDown();
 				toggleSaveButton(true);
 			}
 
@@ -883,20 +876,9 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-						"Do you want to delete '" + flowStepTable.getSelectedFlowStep().getKeyword() + "'?");
-				if (!status) {
-					return;
-				}
-
-				// AbstractNotificationPopup notification = new
-				// DeleteNotificationPopup(display);
-				// notification.setDelayClose(200L);
-				// notification.open();
-
 				try {
 					toggleSaveButton(true);
-					flowStepTable.deleteStep(flowStepTable.getSelectedFlowStep());
+					flowStepTable.deleteStep();
 				} catch (SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
