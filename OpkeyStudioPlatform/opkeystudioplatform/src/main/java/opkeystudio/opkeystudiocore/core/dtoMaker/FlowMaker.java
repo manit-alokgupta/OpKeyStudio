@@ -17,6 +17,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -95,7 +96,25 @@ public class FlowMaker {
 			flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
 		}
 		flowStep.setPosition(selectedFlowStepPosition + 5);
+		List<ORObject> orObjects = flowStep.getOrObject();
+		List<ORObject> allORObjects = new ArrayList<ORObject>();
+		for (ORObject orobject : orObjects) {
+			allORObjects.add(orobject.clone());
+		}
+		flowStep.setOrObject(allORObjects);
 
+		List<FlowInputArgument> inputArgs = flowStep.getFlowInputArgs();
+		List<FlowInputArgument> allInputArgs = new ArrayList<FlowInputArgument>();
+		for (FlowInputArgument inputArg : inputArgs) {
+			allInputArgs.add(inputArg.clone());
+		}
+		flowStep.setFlowInputArgs(allInputArgs);
+		List<FlowOutputArgument> outputArgs = flowStep.getFlowOutputArgs();
+		List<FlowOutputArgument> allOutputArgs = new ArrayList<FlowOutputArgument>();
+		for (FlowOutputArgument outputArg : outputArgs) {
+			allOutputArgs.add(outputArg.clone());
+		}
+		flowStep.setFlowOutputArgs(allOutputArgs);
 		flowStep.setAdded(true);
 		for (int i = selectedFlowStepIndex + 1; i < flowSteps.size(); i++) {
 			FlowStep iflowStep = flowSteps.get(i);

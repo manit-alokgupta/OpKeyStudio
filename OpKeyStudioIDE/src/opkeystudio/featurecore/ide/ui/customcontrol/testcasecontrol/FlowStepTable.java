@@ -25,6 +25,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.CopyPasteOperation;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
@@ -137,6 +138,7 @@ public class FlowStepTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 
 				FlowStep flowStep = getSelectedFlowStep();
+				CopyPasteOperation.getInstance().setFlowStep(flowStep);
 				toggleCopyMenuItem(false);
 				togglePasteMenuItem(true);
 			}
@@ -152,6 +154,14 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				FlowStep flowStep = CopyPasteOperation.getInstance().getFlowStep();
+				if (flowStep != null) {
+					FlowStep replicaFlowStep = new FlowMaker().createFlowStepReplica(
+							getParentTestCaseView().getArtifact(), getSelectedFlowStep(), flowStep, getFlowStepsData());
+					getFlowStepsData().add(replicaFlowStep);
+					refreshFlowSteps();
+					getParentTestCaseView().toggleSaveButton(true);
+				}
 				toggleCopyMenuItem(true);
 				togglePasteMenuItem(false);
 			}

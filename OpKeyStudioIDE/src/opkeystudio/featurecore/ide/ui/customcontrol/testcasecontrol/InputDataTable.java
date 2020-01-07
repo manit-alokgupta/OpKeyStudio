@@ -332,8 +332,12 @@ public class InputDataTable extends CustomTable {
 
 						FlowInputArgument flowInputArg = flowInputArgs.get(i);
 						CustomTableItem cti = new CustomTableItem(this, 0);
-						cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
-								flowInputArg.getStaticvalue() });
+						String valueData = flowInputArg.getStaticvalue();
+						if (valueData == null) {
+							valueData = "";
+						}
+						cti.setText(
+								new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(), valueData });
 						cti.setControlData(flowInputArg);
 						addInputTableEditor(cti);
 					}
