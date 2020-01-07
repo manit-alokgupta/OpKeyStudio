@@ -15,6 +15,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import opkeystudio.opkeystudiocore.core.utils.DataType.OpKeyDataType;
 
 public class FlowApiUtilities {
 	public List<FlowOutputArgument> getAllFlowOutPutArgument(String flow_step_oa_id) {
@@ -56,9 +57,20 @@ public class FlowApiUtilities {
 		return outData;
 	}
 
+	private void removeAllInputValues(Artifact artifact, FlowInputArgument flowInputArgument) {
+		flowInputArgument.setStaticvalue(OpKeyDataType.NULLDATA.toString());
+		flowInputArgument.setGlobalvariable_id(OpKeyDataType.NULLDATA.toString());
+		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+			flowInputArgument.setComponentstep_oa_id(OpKeyDataType.NULLDATA.toString());
+		} else {
+			flowInputArgument.setFlow_step_oa_id(OpKeyDataType.NULLDATA.toString());
+			flowInputArgument.setDatarepositorycolumnid(OpKeyDataType.NULLDATA.toString());
+		}
+	}
+
 	public void setFlowInputData(Artifact artifact, FlowInputArgument flowInputArgument, String data,
 			DataSource sourceType) {
-
+		removeAllInputValues(artifact, flowInputArgument);
 		if (sourceType == DataSource.StaticValue) {
 			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 				flowInputArgument.setArg_datasource(DataSource.StaticValue);

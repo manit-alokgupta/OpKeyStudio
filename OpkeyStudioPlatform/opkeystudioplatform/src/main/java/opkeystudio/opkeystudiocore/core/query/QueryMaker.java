@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.collections.DuoList;
+import opkeystudio.opkeystudiocore.core.utils.DataType.OpKeyDataType;
 
 public class QueryMaker {
 	public enum QUERYTYPE {
@@ -34,18 +35,22 @@ public class QueryMaker {
 				if (!isFieldCanBeIgnored(fieldName, ignoreColumnName)) {
 					if (fieldValue != null) {
 						duoList.addFirstValue(fieldName);
-
-						if (fieldValue instanceof Boolean) {
-							int val = ((boolean) fieldValue) ? 1 : 0;
-							duoList.addSecondValue("'" + String.valueOf(val) + "'");
+						if (String.valueOf(fieldValue).equals(OpKeyDataType.NULLDATA.toString())) {
+							duoList.addSecondValue(null);
 						} else {
-							String fieldValueString = String.valueOf(fieldValue);
-							if (fieldValueString.contains("'")) {
-								duoList.addSecondValue("\"" + String.valueOf(fieldValue) + "\"");
+							if (fieldValue instanceof Boolean) {
+								int val = ((boolean) fieldValue) ? 1 : 0;
+								duoList.addSecondValue("'" + String.valueOf(val) + "'");
 							} else {
-								duoList.addSecondValue("'" + String.valueOf(fieldValue) + "'");
+								String fieldValueString = String.valueOf(fieldValue);
+								if (fieldValueString.contains("'")) {
+									duoList.addSecondValue("\"" + String.valueOf(fieldValue) + "\"");
+								} else {
+									duoList.addSecondValue("'" + String.valueOf(fieldValue) + "'");
+								}
 							}
 						}
+
 					}
 				}
 			}
