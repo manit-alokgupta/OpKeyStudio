@@ -275,34 +275,7 @@ public class SourceCodeEditor extends Composite {
 		}
 	}
 
-	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {
-		List<FlowStep> allFunctionLibraries = new ArrayList<FlowStep>();
-		for (FlowStep flowStep : allFlowSteps) {
-			if (flowStep.getFunctionLibraryComponent() != null) {
-				allFunctionLibraries.add(flowStep);
-				try {
-					List<FlowStep> flowSteps = new FunctionLibraryApi()
-							.getAllFlowSteps(flowStep.getFunctionLibraryComponent().getId());
-					getFunctionLibraries(flowSteps);
-				} catch (JsonParseException | JsonMappingException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		return allFunctionLibraries;
-	}
 
-	private List<ORObject> getAllORObjects(List<FlowStep> allFlowSteps) {
-		List<ORObject> allORObjects = new ArrayList<ORObject>();
-		for (FlowStep flowStep : allFlowSteps) {
-			allORObjects.addAll(flowStep.getOrObject());
-		}
-		return allORObjects;
-	}
 
 	public TestCaseView getTestCaseView() {
 		return testCaseView;
