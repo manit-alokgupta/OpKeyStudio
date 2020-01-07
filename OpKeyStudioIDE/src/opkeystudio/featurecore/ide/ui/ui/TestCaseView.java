@@ -766,6 +766,7 @@ public class TestCaseView extends Composite {
 	}
 
 	public void toggleAddButton(boolean status) {
+		flowStepTable.toggleAddStepMenuItem(status);
 		itemAdd.setEnabled(status);
 	}
 
@@ -778,10 +779,12 @@ public class TestCaseView extends Composite {
 	}
 
 	public void toggleMoveupButton(boolean status) {
+		flowStepTable.toggleMoveUpMenuItem(status);
 		itemMoveup.setEnabled(status);
 	}
 
 	public void toggleMovedownButton(boolean status) {
+		flowStepTable.toggleMoveDownMenuItem(status);
 		itemMovedown.setEnabled(status);
 	}
 
@@ -794,6 +797,7 @@ public class TestCaseView extends Composite {
 	}
 
 	public void toggleDeleteButton(boolean status) {
+		flowStepTable.toggleDeleteMenuItem(status);
 		itemDelete.setEnabled(status);
 	}
 

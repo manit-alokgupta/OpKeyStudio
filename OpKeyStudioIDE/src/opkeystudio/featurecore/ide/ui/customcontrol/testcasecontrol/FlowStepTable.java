@@ -40,6 +40,14 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class FlowStepTable extends CustomTable {
 	private TestCaseView parentTestCaseView;
+	private MenuItem copyMenuItem;
+	private MenuItem pasteMenuItem;
+	private MenuItem addStepMenuItem;
+	private MenuItem deleteMenuItem;
+	private MenuItem moveupMenuItem;
+	private MenuItem movedownMenuItem;
+	private MenuItem setToRunMenuItem;
+	private MenuItem skipfromRunMenuItem;
 
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
@@ -53,23 +61,66 @@ public class FlowStepTable extends CustomTable {
 		this.setParentTestCaseView(parentView);
 	}
 
+	private void disableMenuItem() {
+		copyMenuItem.setEnabled(false);
+		pasteMenuItem.setEnabled(false);
+		addStepMenuItem.setEnabled(false);
+		deleteMenuItem.setEnabled(false);
+		moveupMenuItem.setEnabled(false);
+		movedownMenuItem.setEnabled(false);
+		setToRunMenuItem.setEnabled(false);
+		skipfromRunMenuItem.setEnabled(false);
+	}
+
+	public void toggleCopyMenuItem(boolean status) {
+		this.copyMenuItem.setEnabled(status);
+	}
+
+	public void togglePasteMenuItem(boolean status) {
+		this.pasteMenuItem.setEnabled(status);
+	}
+
+	public void toggleAddStepMenuItem(boolean status) {
+		this.addStepMenuItem.setEnabled(status);
+	}
+
+	public void toggleDeleteMenuItem(boolean status) {
+		this.deleteMenuItem.setEnabled(status);
+	}
+
+	public void toggleMoveUpMenuItem(boolean status) {
+		this.moveupMenuItem.setEnabled(status);
+	}
+
+	public void toggleMoveDownMenuItem(boolean status) {
+		this.movedownMenuItem.setEnabled(status);
+	}
+
+	public void toggleSetToRunMenuItem(boolean status) {
+		this.setToRunMenuItem.setEnabled(status);
+	}
+
+	public void toggleSkipFromRunMenuItem(boolean status) {
+		this.skipfromRunMenuItem.setEnabled(status);
+	}
+
 	private void initContextMenu() {
 		Menu menu = new Menu(this);
-		MenuItem copyMenuItem = new MenuItem(menu, 0);
+		copyMenuItem = new MenuItem(menu, 0);
 		MenuItem separator1 = new MenuItem(menu, SWT.SEPARATOR);
-		MenuItem pasteMenuItem = new MenuItem(menu, 0);
+		pasteMenuItem = new MenuItem(menu, 0);
 		MenuItem separator2 = new MenuItem(menu, SWT.SEPARATOR);
-		MenuItem addStepMenuItem = new MenuItem(menu, 0);
+		addStepMenuItem = new MenuItem(menu, 0);
 		MenuItem separator3 = new MenuItem(menu, SWT.SEPARATOR);
-		MenuItem deleteMenuItem = new MenuItem(menu, 0);
+		deleteMenuItem = new MenuItem(menu, 0);
 		MenuItem separator4 = new MenuItem(menu, SWT.SEPARATOR);
-		MenuItem moveupMenuItem = new MenuItem(menu, 0);
+		moveupMenuItem = new MenuItem(menu, 0);
 		MenuItem separator5 = new MenuItem(menu, SWT.SEPARATOR);
-		MenuItem movedownMenuItem = new MenuItem(menu, 0);
+		movedownMenuItem = new MenuItem(menu, 0);
 		MenuItem separator6 = new MenuItem(menu, SWT.SEPARATOR);
-		MenuItem setToRunMenuItem = new MenuItem(menu, 0);
+		setToRunMenuItem = new MenuItem(menu, 0);
 		MenuItem separator7 = new MenuItem(menu, SWT.SEPARATOR);
-		MenuItem skipfromRunMenuItem = new MenuItem(menu, 0);
+		skipfromRunMenuItem = new MenuItem(menu, 0);
 
 		copyMenuItem.setText("Copy");
 		pasteMenuItem.setText("Paste");
@@ -181,6 +232,22 @@ public class FlowStepTable extends CustomTable {
 			}
 		});
 		this.setMenu(menu);
+		this.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FlowStep flowStep = getSelectedFlowStep();
+				if (flowStep == null) {
+					disableMenuItem();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	private void init() {
@@ -450,8 +517,13 @@ public class FlowStepTable extends CustomTable {
 	}
 
 	public void deleteStep() throws JsonParseException, JsonMappingException, SQLException, IOException {
-		boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-				"Do you want to delete '" + this.getSelectedFlowStep().getKeyword().getKeywordname() + "'?");
+		String name = "";
+		if (this.getSelectedFlowStep().getKeyword() != null) {
+			name = this.getSelectedFlowStep().getKeyword().getKeywordname();
+		} else if (this.getSelectedFlowStep().getFunctionLibraryComponent() != null) {
+			name = this.getSelectedFlowStep().getFunctionLibraryComponent().getName();
+		}
+		boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to delete '" + name + "'?");
 		if (!status) {
 			return;
 		}
