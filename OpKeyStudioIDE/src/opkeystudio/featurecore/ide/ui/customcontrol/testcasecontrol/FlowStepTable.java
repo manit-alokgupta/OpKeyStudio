@@ -15,6 +15,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -48,10 +50,36 @@ public class FlowStepTable extends CustomTable {
 		initContextMenu();
 		this.setParentTestCaseView(parentView);
 	}
-	
+
 	private void initContextMenu() {
-		
+		Menu menu = new Menu(this);
+		MenuItem copyMenuItem = new MenuItem(menu, 0);
+		MenuItem separator1 = new MenuItem(menu, SWT.SEPARATOR);
+		MenuItem pasteMenuItem = new MenuItem(menu, 0);
+		MenuItem separator2 = new MenuItem(menu, SWT.SEPARATOR);
+		MenuItem addStepMenuItem = new MenuItem(menu, 0);
+		MenuItem separator3 = new MenuItem(menu, SWT.SEPARATOR);
+		MenuItem deleteMenuItem = new MenuItem(menu, 0);
+		MenuItem separator4 = new MenuItem(menu, SWT.SEPARATOR);
+		MenuItem moveupMenuItem = new MenuItem(menu, 0);
+		MenuItem separator5 = new MenuItem(menu, SWT.SEPARATOR);
+		MenuItem movedownMenuItem = new MenuItem(menu, 0);
+		MenuItem separator6 = new MenuItem(menu, SWT.SEPARATOR);
+		MenuItem setToRunMenuItem = new MenuItem(menu, 0);
+		MenuItem separator7 = new MenuItem(menu, SWT.SEPARATOR);
+		MenuItem skipfromRunMenuItem = new MenuItem(menu, 0);
+
+		copyMenuItem.setText("Copy");
+		pasteMenuItem.setText("Paste");
+		addStepMenuItem.setText("Add Step");
+		deleteMenuItem.setText("Delete");
+		moveupMenuItem.setText("Move Up");
+		movedownMenuItem.setText("Move Down");
+		setToRunMenuItem.setText("Set to Run");
+		skipfromRunMenuItem.setText("Skip from Run");
+		this.setMenu(menu);
 	}
+
 	private void init() {
 		String[] tableHeaders = { "#", "Keyword", "ORObject", "Input", "Output", "Description" };
 		for (String header : tableHeaders) {

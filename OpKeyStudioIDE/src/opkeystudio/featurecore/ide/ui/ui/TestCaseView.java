@@ -553,6 +553,7 @@ public class TestCaseView extends Composite {
 
 		sourceCodeEditor = new SourceCodeEditor(mainTestCaseTabFolder, SWT.NONE, this);
 		sourceCodeTabItem.setControl(sourceCodeEditor);
+		cursor.setMenu(flowStepTable.getMenu());
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
