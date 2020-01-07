@@ -223,7 +223,7 @@ public class TestSuiteView extends Composite {
 		testSuiteTable.setLinesVisible(true);
 
 		TableCursor tableCursor = new TableCursor(testSuiteTable, SWT.NONE);
-
+		tableCursor.setMenu(testSuiteTable.getMenu());
 		bottomFactory = new BottomFactoryTestSuiteUi(composite_1, SWT.NONE);
 		bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
@@ -359,14 +359,17 @@ public class TestSuiteView extends Composite {
 	}
 
 	public void toggleMoveUpButton(boolean status) {
+		testSuiteTable.toggleMoveUpMenuItem(status);
 		moveUpButton.setEnabled(status);
 	}
 
 	public void toggleMoveDownButton(boolean status) {
+		testSuiteTable.toggleMoveDownMenuItem(status);
 		moveDownButton.setEnabled(status);
 	}
 
 	public void toggleDeleteButton(boolean status) {
+		testSuiteTable.toggleDeleteMenuItem(status);
 		deleteSuiteStepButton.setEnabled(status);
 	}
 
@@ -560,18 +563,13 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to delete '"
-						+ testSuiteTable.getSelectedTestSuite().getArtifact().getName() + "'?");
-				if (!status) {
-					return;
-				}
+
 				try {
-					testSuiteTable.deleteSuiteStep(testSuiteTable.getSelectedTestSuite());
+					testSuiteTable.deleteSuiteStep();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				saveButton.setEnabled(true);
 			}
 
 			@Override
@@ -585,13 +583,7 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					testSuiteTable.moveStepUp(testSuiteTable.getSelectedTestSuite(), testSuiteTable.getPrevTestSuite());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				toggleSaveButton(true);
+				testSuiteTable.moveStepUp();
 			}
 
 			@Override
@@ -605,13 +597,7 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					testSuiteTable.moveStepDown(testSuiteTable.getSelectedTestSuite(),
-							testSuiteTable.getNextTestSuite());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				testSuiteTable.moveStepDown();
 				toggleSaveButton(true);
 			}
 
