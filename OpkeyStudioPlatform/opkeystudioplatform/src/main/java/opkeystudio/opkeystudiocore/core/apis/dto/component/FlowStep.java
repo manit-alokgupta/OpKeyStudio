@@ -7,7 +7,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class FlowStep extends Modified implements Comparable<FlowStep> {
+public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneable {
 	@DBField
 	private String keywordid;
 	@DBField
@@ -57,6 +57,7 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 	private boolean istestsuites;
 
 	private boolean NullKeyword = false;
+
 	public String getKeywordid() {
 		return keywordid;
 	}
@@ -153,7 +154,6 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 		this.flowOutputArgs = flowOutputArgs;
 	}
 
-
 	public Keyword getKeyword() {
 		return keyword;
 	}
@@ -245,5 +245,15 @@ public class FlowStep extends Modified implements Comparable<FlowStep> {
 
 	public void setNullKeyword(boolean nullKeyword) {
 		NullKeyword = nullKeyword;
+	}
+
+	public FlowStep clone() {
+		try {
+			return (FlowStep) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

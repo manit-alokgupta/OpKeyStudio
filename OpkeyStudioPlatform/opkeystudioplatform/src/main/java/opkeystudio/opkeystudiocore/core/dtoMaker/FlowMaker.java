@@ -74,6 +74,37 @@ public class FlowMaker {
 		return flowStep;
 	}
 
+	public FlowStep createFlowStepReplica(Artifact artifact, FlowStep selectedFlowStep, FlowStep pasteFlowStep,
+			List<FlowStep> flowSteps) {
+		int selectedFlowStepIndex = flowSteps.indexOf(selectedFlowStep);
+		int selectedFlowStepPosition = 0;
+		if (selectedFlowStep != null) {
+			selectedFlowStepPosition = selectedFlowStep.getPosition();
+			System.out.println("Position " + selectedFlowStepPosition);
+		} else {
+			if (flowSteps.size() > 0) {
+				FlowStep lastFlowStep = flowSteps.get(flowSteps.size() - 1);
+				selectedFlowStepPosition = lastFlowStep.getPosition();
+			}
+		}
+
+		FlowStep flowStep = pasteFlowStep.clone();
+		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+			flowStep.setStepid(Utilities.getInstance().getUniqueUUID(""));
+		} else {
+			flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
+		}
+		flowStep.setPosition(selectedFlowStepPosition + 5);
+
+		flowStep.setAdded(true);
+		for (int i = selectedFlowStepIndex + 1; i < flowSteps.size(); i++) {
+			FlowStep iflowStep = flowSteps.get(i);
+			iflowStep.setPosition(iflowStep.getPosition() + 10);
+			iflowStep.setModified(true);
+		}
+		return flowStep;
+	}
+
 	public FlowStep getFlowStepDTOWithFunctionLibray(Artifact artifact, FlowStep selectedFlowStep, Artifact flArtifact,
 			String flow_id, List<FlowStep> flowSteps)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {

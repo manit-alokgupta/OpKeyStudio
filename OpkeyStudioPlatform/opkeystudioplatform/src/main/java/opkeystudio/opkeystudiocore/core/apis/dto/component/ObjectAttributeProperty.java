@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class ObjectAttributeProperty extends Modified {
+public class ObjectAttributeProperty extends Modified implements Cloneable {
 	@DBField
 	private boolean isencrypted;
 	@DBField
@@ -147,5 +147,15 @@ public class ObjectAttributeProperty extends Modified {
 
 	public void setIsencrypted(boolean isencrypted) {
 		this.isencrypted = isencrypted;
+	}
+
+	public ObjectAttributeProperty clone() {
+		try {
+			return (ObjectAttributeProperty) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class TestSuiteStep extends Modified implements Comparable<TestSuiteStep> {
+public class TestSuiteStep extends Modified implements Comparable<TestSuiteStep>, Cloneable {
 	@DBField
 	private String suite_stepid;
 	@DBField
@@ -99,5 +99,15 @@ public class TestSuiteStep extends Modified implements Comparable<TestSuiteStep>
 	@Override
 	public int compareTo(TestSuiteStep arg0) {
 		return this.getPosition() - arg0.getPosition();
+	}
+
+	public TestSuiteStep clone() {
+		try {
+			return (TestSuiteStep) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

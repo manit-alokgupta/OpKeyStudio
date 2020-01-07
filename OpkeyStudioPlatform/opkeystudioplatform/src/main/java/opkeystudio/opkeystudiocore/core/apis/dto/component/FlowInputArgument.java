@@ -4,7 +4,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
-public class FlowInputArgument extends Modified {
+public class FlowInputArgument extends Modified implements Cloneable {
 
 	@DBField
 	private String flow_step_ia_id;
@@ -178,5 +178,15 @@ public class FlowInputArgument extends Modified {
 
 	public void setComponentstep_oa_id(String componentstep_oa_id) {
 		this.componentstep_oa_id = componentstep_oa_id;
+	}
+
+	public FlowInputArgument clone() {
+		try {
+			super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

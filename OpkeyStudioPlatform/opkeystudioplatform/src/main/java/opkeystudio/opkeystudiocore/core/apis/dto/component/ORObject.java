@@ -6,14 +6,14 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class ORObject extends Modified {
+public class ORObject extends Modified implements Cloneable {
 	@DBField
 	private boolean usesmartidentification;
 	@DBField
 	private String or_id;
 
 	private int clustering_key;
-	
+
 	@DBField
 	private String object_id;
 	@DBField
@@ -167,6 +167,16 @@ public class ORObject extends Modified {
 
 	public void setObjectAttributesProperty(List<ObjectAttributeProperty> objectAttributesProperty) {
 		this.objectAttributesProperty = objectAttributesProperty;
+	}
+
+	public ORObject clone() {
+		try {
+			return (ORObject) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

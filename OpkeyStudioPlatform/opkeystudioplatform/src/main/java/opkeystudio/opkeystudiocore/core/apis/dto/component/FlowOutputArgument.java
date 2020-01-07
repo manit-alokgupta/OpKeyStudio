@@ -75,4 +75,14 @@ public class FlowOutputArgument extends Modified {
 	public void setOutputvariablename(String outputvariablename) {
 		this.outputvariablename = outputvariablename;
 	}
+
+	public FlowOutputArgument clone() {
+		try {
+			super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
