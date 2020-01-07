@@ -17,13 +17,17 @@ public class DRMaker {
 		drColumnAttribute.setName("");
 		drColumnAttribute.setPosition(0);
 		drColumnAttribute.setIsencrypted(false);
-
+		drColumnAttribute.setAdded(true);
 		List<DRCellAttributes> drCellAttributes = new ArrayList<DRCellAttributes>();
 		for (int i = 0; i < noOfCells; i++) {
 			DRCellAttributes drCellAttribute = new DRCellAttributes();
+			drCellAttribute.setDr_cellid(Utilities.getInstance().getUniqueUUID(""));
+			drCellAttribute.setDr_id(drColumnAttribute.getDr_id());
+			drCellAttribute.setColumn_id(drColumnAttribute.getColumn_id());
 			drCellAttribute.setPosition((i + 1) * 10);
+			drCellAttribute.setAdded(true);
 			drCellAttributes.add(drCellAttribute);
 		}
-		return null;
+		return drColumnAttribute;
 	}
 }
