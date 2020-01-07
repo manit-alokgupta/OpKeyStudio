@@ -1,6 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
@@ -43,6 +44,8 @@ public class FlowInputArgument extends Modified implements Cloneable {
 
 	@DBField
 	private String componentstep_oa_id;
+
+	private KeyWordInputArgument keywordInputArgument;
 
 	public String getFlow_step_ia_id() {
 		return flow_step_ia_id;
@@ -188,5 +191,13 @@ public class FlowInputArgument extends Modified implements Cloneable {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public KeyWordInputArgument getKeywordInputArgument() {
+		return keywordInputArgument;
+	}
+
+	public void setKeywordInputArgument(KeyWordInputArgument keywordInputArgument) {
+		this.keywordInputArgument = keywordInputArgument;
 	}
 }

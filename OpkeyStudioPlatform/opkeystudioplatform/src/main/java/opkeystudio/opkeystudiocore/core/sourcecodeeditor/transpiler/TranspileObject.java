@@ -6,7 +6,6 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class TranspileObject {
 	private Artifact artifact;

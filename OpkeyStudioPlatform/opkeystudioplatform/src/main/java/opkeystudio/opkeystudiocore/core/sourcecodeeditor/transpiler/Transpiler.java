@@ -3,7 +3,9 @@ package opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -17,14 +19,19 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 public class Transpiler {
 	public void transpileDatas(TranspileObject transpileObject) {
 		Artifact artifact = transpileObject.getArtifact();
+		
 		List<GlobalVariable> globalVariables = transpileObject.getGlobalVaribales();
 		List<FlowStep> flowSteps = transpileObject.getFlowSteps();
-		List<FlowStep> functionLibaries = getFunctionLibraries(flowSteps);
-		for (FlowStep functionLibrary : functionLibaries) {
-			if (functionLibrary.getFunctionLibraryComponent() != null) {
-				System.out.println(functionLibrary.getFunctionLibraryComponent().getName());
+		for(FlowStep flowStep:flowSteps)
+		{
+			if(flowStep.getKeyword()!=null)
+			{
+				System.out.println(flowStep.getKeyword().getKeywordname()+"    "+flowStep.getFlowInputArgs().size());
 			}
 		}
+		List<FlowStep> functionLibaries = getFunctionLibraries(flowSteps);
+		List<ORObject> orobjects = getAllORObjects(flowSteps);
+		Set<String> orids = getAllObjectRepositoryIds(flowSteps);
 	}
 
 	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {
@@ -54,5 +61,16 @@ public class Transpiler {
 			allORObjects.addAll(flowStep.getOrObject());
 		}
 		return allORObjects;
+	}
+
+	private Set<String> getAllObjectRepositoryIds(List<FlowStep> allFlowSteps) {
+		Set<String> objectRepoId = new HashSet<String>();
+		for (FlowStep flowStep : allFlowSteps) {
+			List<ORObject> orobjects = flowStep.getOrObject();
+			for (ORObject orobject : orobjects) {
+				objectRepoId.add(orobject.getOr_id());
+			}
+		}
+		return objectRepoId;
 	}
 }
