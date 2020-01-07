@@ -52,6 +52,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.TranspileObject;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.TranspilerUtilities;
 
 public class SourceCodeEditor extends Composite {
@@ -245,29 +247,30 @@ public class SourceCodeEditor extends Composite {
 		try {
 			List<GlobalVariable> globalVariables = new GlobalVariableApi().getAllGlobalVariables();
 			List<FlowStep> flowSteps = getTestCaseView().getFlowStepTable().getFlowStepsData();
-			List<FlowStep> functionLibraries = getFunctionLibraries(flowSteps);
-			List<ORObject> allORObjects = getAllORObjects(flowSteps);
-
-			String gvtranspiledData = TranspilerUtilities.getTranspiler().transpileGlobalVariables(globalVariables);
-			String ortranspiledData = TranspilerUtilities.getTranspiler().transpileORObjects(allORObjects);
-
 			Artifact artifact = getTestCaseView().getArtifact();
+			TranspileObject transpileObject = new TranspileObject();
+			transpileObject.setArtifact(artifact);
+			transpileObject.setGlobalVaribales(globalVariables);
+			transpileObject.setFlowSteps(flowSteps);
+
+			new Transpiler().transpileDatas(transpileObject);
+
 			TreeItem[] treeItems = sourceCodeTree.getItems();
 			for (TreeItem treeItem : treeItems) {
 				if (treeItem.getText().equals("Global Variables")) {
 					SourceCodeTreeItem gvItem = new SourceCodeTreeItem(treeItem, 0);
 					gvItem.setFileName("GlobalVariable.java");
 					gvItem.setText(gvItem.getFileName());
-					gvItem.setBodyData(gvtranspiledData);
+					gvItem.setBodyData("");
 				}
 				if (treeItem.getText().equals("Object Repositories")) {
 					SourceCodeTreeItem gvItem = new SourceCodeTreeItem(treeItem, 0);
 					gvItem.setFileName("ORObjects.java");
 					gvItem.setText(gvItem.getFileName());
-					gvItem.setBodyData(ortranspiledData);
+					gvItem.setBodyData("");
 				}
 			}
-		} catch (SQLException | IOException | IllegalArgumentException | IllegalAccessException e) {
+		} catch (SQLException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}
