@@ -32,8 +32,7 @@ public class TranspilerUtilities {
 		return varName.replaceAll("-", "");
 	}
 
-	private List<TranspiledField> getTranspiledFields(Object object)
-			throws IllegalArgumentException, IllegalAccessException {
+	private List<TranspiledField> getTranspiledFields(Object object) {
 		Class<? extends Object> _class = object.getClass();
 		Field[] fields = _class.getDeclaredFields();
 		List<TranspiledField> transpiledFields = new ArrayList<TranspiledField>();
@@ -42,7 +41,13 @@ public class TranspilerUtilities {
 			Annotation annotation = field.getAnnotation(DBField.class);
 			if (annotation instanceof DBField) {
 				String fieldName = field.getName();
-				Object fieldValue = field.get(object);
+				Object fieldValue = null;
+				try {
+					fieldValue = field.get(object);
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				TranspiledField transField = new TranspiledField();
 				transField.setField(field);
 				transField.setName(fieldName);
@@ -53,8 +58,7 @@ public class TranspilerUtilities {
 		return transpiledFields;
 	}
 
-	public String transpileGlobalVariables(List<GlobalVariable> globalVariables)
-			throws IllegalArgumentException, IllegalAccessException {
+	public String transpileGlobalVariables(List<GlobalVariable> globalVariables) {
 		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 
 		ClassSnippet classSnippet = new ClassSnippet("GlobalVariables");

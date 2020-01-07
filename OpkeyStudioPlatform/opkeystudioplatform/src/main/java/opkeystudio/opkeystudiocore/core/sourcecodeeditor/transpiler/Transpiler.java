@@ -15,9 +15,11 @@ import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Transpiler {
 	public void transpileDatas(TranspileObject transpileObject) {
+		String path = Utilities.getInstance().getDefaultSourceCodeDirPath();
 		Artifact artifact = transpileObject.getArtifact();
 		List<GlobalVariable> globalVariables = transpileObject.getGlobalVaribales();
 		List<FlowStep> flowSteps = transpileObject.getFlowSteps();
@@ -26,7 +28,8 @@ public class Transpiler {
 		Set<String> orids = getAllObjectRepositoryIds(flowSteps);
 
 		String data = new TranspilerUtilities().transpileORObjects(orobjects);
-		System.out.println(data);
+		String gvdata = new TranspilerUtilities().transpileGlobalVariables(globalVariables);
+		System.out.println(gvdata);
 	}
 
 	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {

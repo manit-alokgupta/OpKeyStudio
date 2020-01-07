@@ -58,6 +58,7 @@ public class FileNode {
 	}
 
 	public String getFilePath() {
+		setFilePath(getParentPath() + File.separator + getFileName());
 		return filePath;
 	}
 
