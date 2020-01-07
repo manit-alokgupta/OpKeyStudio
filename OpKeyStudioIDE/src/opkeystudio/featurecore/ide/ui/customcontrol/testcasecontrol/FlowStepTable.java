@@ -451,7 +451,7 @@ public class FlowStepTable extends CustomTable {
 			}
 		}
 		selectDefaultRow();
-		// getParentTestCaseView().getSourceCodeEditor().transpileDatas();
+		 getParentTestCaseView().getSourceCodeEditor().transpileDatas();
 	}
 
 	public void refreshFlowSteps() {

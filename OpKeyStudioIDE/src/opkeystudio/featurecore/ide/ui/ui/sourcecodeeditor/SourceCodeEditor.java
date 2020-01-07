@@ -41,6 +41,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -153,8 +154,7 @@ public class SourceCodeEditor extends Composite {
 		assistant.setStatusMessage("");
 		assistant.enableAutoActivation(true);
 		assistant.setEmptyMessage("Nothing Found.");
-		assistant.setContentAssistProcessor(new ContentAssistProcessor(wordTracker),
-				IDocument.DEFAULT_CONTENT_TYPE);
+		assistant.setContentAssistProcessor(new ContentAssistProcessor(wordTracker), IDocument.DEFAULT_CONTENT_TYPE);
 		assistant.install(sourceCodeText);
 
 		sourceCodeText.setEditable(true);
@@ -267,14 +267,24 @@ public class SourceCodeEditor extends Composite {
 		} catch (SQLException | IOException | IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {
 		List<FlowStep> allFunctionLibraries = new ArrayList<FlowStep>();
 		for (FlowStep flowStep : allFlowSteps) {
-			if (flowStep.getComponent_id() != null) {
+			if (flowStep.getFunctionLibraryComponent() != null) {
 				allFunctionLibraries.add(flowStep);
+				try {
+					List<FlowStep> flowSteps = new FunctionLibraryApi()
+							.getAllFlowSteps(flowStep.getFunctionLibraryComponent().getId());
+					getFunctionLibraries(flowSteps);
+				} catch (JsonParseException | JsonMappingException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return allFunctionLibraries;
