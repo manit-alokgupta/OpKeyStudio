@@ -20,6 +20,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryCompon
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -117,6 +118,19 @@ public class FlowApi {
 
 	}
 
+	public void insertKeywordInputArgument(Keyword keyword, List<FlowInputArgument> flowInputArguments) {
+		if (keyword == null) {
+			return;
+		}
+		if (flowInputArguments.size() == keyword.getKeywordInputArguments().size()) {
+			for (int i = 0; i < flowInputArguments.size(); i++) {
+				FlowInputArgument flowInp = flowInputArguments.get(i);
+				KeyWordInputArgument keyInp = keyword.getKeywordInputArguments().get(i);
+				flowInp.setKeywordInputArgument(keyInp);
+			}
+		}
+	}
+
 	public List<FlowStep> getAllFlowSteps(String flowId)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
@@ -124,6 +138,7 @@ public class FlowApi {
 			if (flowStep.getKeywordid() != null) {
 				Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
+				insertKeywordInputArgument(keyword, fis);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flowStep.setOrObject(allORObject);

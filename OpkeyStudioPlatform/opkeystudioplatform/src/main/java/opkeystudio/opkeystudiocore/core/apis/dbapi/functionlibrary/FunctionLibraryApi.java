@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
@@ -119,6 +120,7 @@ public class FunctionLibraryApi {
 			if (flowStep.getKeywordid() != null) {
 				Keyword keyword = KeywordManager.getInstance().getKeyword(flowStep.getKeywordid());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
+				new FlowApi().insertKeywordInputArgument(keyword, fis);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flowStep.setOrObject(allORObject);
