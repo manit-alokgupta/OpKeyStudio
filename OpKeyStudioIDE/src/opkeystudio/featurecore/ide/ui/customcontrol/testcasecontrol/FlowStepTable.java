@@ -131,6 +131,37 @@ public class FlowStepTable extends CustomTable {
 		setToRunMenuItem.setText("Set to Run");
 		skipfromRunMenuItem.setText("Skip from Run");
 
+		copyMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				FlowStep flowStep = getSelectedFlowStep();
+				toggleCopyMenuItem(false);
+				togglePasteMenuItem(true);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		pasteMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				toggleCopyMenuItem(true);
+				togglePasteMenuItem(false);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		skipfromRunMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -232,6 +263,7 @@ public class FlowStepTable extends CustomTable {
 			}
 		});
 		this.setMenu(menu);
+		disableMenuItem();
 		this.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -239,6 +271,8 @@ public class FlowStepTable extends CustomTable {
 				FlowStep flowStep = getSelectedFlowStep();
 				if (flowStep == null) {
 					disableMenuItem();
+				} else {
+					toggleCopyMenuItem(true);
 				}
 			}
 
