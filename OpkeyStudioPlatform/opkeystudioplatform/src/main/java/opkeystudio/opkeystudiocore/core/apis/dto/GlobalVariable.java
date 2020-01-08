@@ -97,7 +97,7 @@ public class GlobalVariable extends Modified {
 	}
 
 	public String getVariableName() {
-		setVariableName("gv" + getClustering_key());
+		setVariableName("gv_" + this.getName().replaceAll(" ", "") + getClustering_key());
 		return variableName;
 	}
 
