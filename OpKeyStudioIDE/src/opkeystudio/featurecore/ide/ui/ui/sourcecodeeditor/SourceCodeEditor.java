@@ -54,6 +54,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
@@ -108,6 +109,13 @@ public class SourceCodeEditor extends Composite {
 			SourceCodeTreeItem scti = new SourceCodeTreeItem(treeItemNode, 0);
 			scti.setFileNode(fileNode);
 			scti.setText(fileNode.getFileName());
+			if (fileNode.getFileType() == FILE_TYPE.FOLDER || fileNode.getFileType() == FILE_TYPE.PROJECTFOLDER
+					|| fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER) {
+				scti.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+			}
+			if (fileNode.getFileType() == FILE_TYPE.SOURCEFILE) {
+				scti.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/javafile.png"));
+			}
 			renderTreeItemsNode(scti, fileNode);
 		}
 	}
@@ -119,6 +127,10 @@ public class SourceCodeEditor extends Composite {
 			SourceCodeTreeItem scti = new SourceCodeTreeItem(sourceCodeTree, 0);
 			scti.setFileNode(fileNode);
 			scti.setText(fileNode.getFileName());
+			if (fileNode.getFileType() == FILE_TYPE.FOLDER || fileNode.getFileType() == FILE_TYPE.PROJECTFOLDER
+					|| fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER) {
+				scti.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+			}
 			renderTreeItemsNode(scti, fileNode);
 		}
 		sourceCodeTree.addMouseListener(new MouseListener() {
