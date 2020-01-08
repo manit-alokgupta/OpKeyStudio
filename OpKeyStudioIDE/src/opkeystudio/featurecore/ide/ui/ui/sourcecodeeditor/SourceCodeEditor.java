@@ -98,8 +98,23 @@ public class SourceCodeEditor extends Composite {
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 
-	private void renderTreeItems(FileNode fileNode) {
+	private void renderTreeItemsNode(SourceCodeTreeItem treeItemNode, FileNode node) {
+		for (FileNode fileNode : node.getFilesNodes()) {
+			SourceCodeTreeItem scti = new SourceCodeTreeItem(treeItemNode, 0);
+			scti.setFileNode(fileNode);
+			scti.setText(fileNode.getFileName());
+			renderTreeItemsNode(scti, fileNode);
+		}
+	}
 
+	private void renderTreeItems(FileNode rootNode) {
+		List<FileNode> fileNodes = rootNode.getFilesNodes();
+		for (FileNode fileNode : fileNodes) {
+			SourceCodeTreeItem scti = new SourceCodeTreeItem(sourceCodeTree, 0);
+			scti.setFileNode(fileNode);
+			scti.setText(fileNode.getFileName());
+			renderTreeItemsNode(scti, fileNode);
+		}
 		sourceCodeTree.addMouseListener(new MouseListener() {
 
 			@Override
@@ -235,6 +250,7 @@ public class SourceCodeEditor extends Composite {
 			transpileObject.setFlowSteps(flowSteps);
 
 			FileNode rootNode = new Transpiler().transpileDatas(transpileObject);
+			renderTreeItems(rootNode);
 		} catch (SQLException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
