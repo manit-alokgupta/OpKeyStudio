@@ -4,11 +4,9 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 
 public class SourceCodeTreeItem extends CustomTreeItem {
-	private String fileName;
-	private String bodyData;
-
 	public SourceCodeTreeItem(Tree parent, int style) {
 		super(parent, style);
 	}
@@ -17,20 +15,14 @@ public class SourceCodeTreeItem extends CustomTreeItem {
 		super(parent, style);
 	}
 
-	public String getFileName() {
-		return fileName;
+	private FileNode fileNode;
+
+	public FileNode getFileNode() {
+		return fileNode;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public String getCodeData() {
-		return bodyData;
-	}
-
-	public void setBodyData(String bodyData) {
-		this.bodyData = bodyData;
+	public void setFileNode(FileNode fileNode) {
+		this.fileNode = fileNode;
 	}
 
 }

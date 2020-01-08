@@ -45,7 +45,7 @@ public class Transpiler {
 		}
 	}
 
-	public void transpileDatas(TranspileObject transpileObject) {
+	public FileNode transpileDatas(TranspileObject transpileObject) {
 		String path = Utilities.getInstance().getDefaultSourceCodeDirPath();
 		Artifact artifact = transpileObject.getArtifact();
 		FileNode rootNode = new FileNode(artifact.getId(), FILE_TYPE.PROJECTFOLDER);
@@ -123,6 +123,7 @@ public class Transpiler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return rootNode;
 	}
 
 	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {

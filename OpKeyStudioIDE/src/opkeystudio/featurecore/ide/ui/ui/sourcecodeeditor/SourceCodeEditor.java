@@ -49,6 +49,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
@@ -89,19 +90,6 @@ public class SourceCodeEditor extends Composite {
 		sourceCodeTree.setHeaderVisible(true);
 		sourceCodeTree.setLinesVisible(false);
 
-		try {
-			renderTreeItems();
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		GridData gd_sourceCodeTree = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_sourceCodeTree.widthHint = 275;
 		sourceCodeTree.setLayoutData(gd_sourceCodeTree);
@@ -110,14 +98,7 @@ public class SourceCodeEditor extends Composite {
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 
-	private void renderTreeItems() throws JsonParseException, JsonMappingException, SQLException, IOException,
-			IllegalArgumentException, IllegalAccessException {
-		String[] items = new String[] { "Global Variables", "TestCases", "Object Repositories", "Function Libraries" };
-		for (String item : items) {
-			TreeItem sourceCodeTreeitem_1 = new TreeItem(sourceCodeTree, SWT.NONE);
-			sourceCodeTreeitem_1.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/folder.png"));
-			sourceCodeTreeitem_1.setText(item);
-		}
+	private void renderTreeItems(FileNode fileNode) {
 
 		sourceCodeTree.addMouseListener(new MouseListener() {
 
@@ -138,7 +119,7 @@ public class SourceCodeEditor extends Composite {
 					return;
 				}
 				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
-				initiateJavaEditor(scti.getCodeData());
+				initiateJavaEditor(scti.getFileNode());
 				CTabItem tabItem = new CTabItem(tabFolder, SWT.CLOSE);
 				tabItem.setControl(sourceCodeText.getControl());
 				tabItem.setText(item.getText());
@@ -147,7 +128,7 @@ public class SourceCodeEditor extends Composite {
 		});
 	}
 
-	private void initiateJavaEditor(String sourceCode) {
+	private void initiateJavaEditor(FileNode fileNode) {
 		sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
 		sourceCodeText.setDocument(new Document());
 		ContentAssistData wordTracker = new ContentAssistData(200);
@@ -163,7 +144,7 @@ public class SourceCodeEditor extends Composite {
 		assistant.install(sourceCodeText);
 
 		sourceCodeText.setEditable(true);
-		sourceCodeText.getTextWidget().setText(sourceCode);
+		sourceCodeText.getTextWidget().setText("");
 
 		sourceCodeText.getTextWidget().addKeyListener(new KeyListener() {
 
@@ -253,29 +234,11 @@ public class SourceCodeEditor extends Composite {
 			transpileObject.setGlobalVaribales(globalVariables);
 			transpileObject.setFlowSteps(flowSteps);
 
-			new Transpiler().transpileDatas(transpileObject);
-
-			TreeItem[] treeItems = sourceCodeTree.getItems();
-			for (TreeItem treeItem : treeItems) {
-				if (treeItem.getText().equals("Global Variables")) {
-					SourceCodeTreeItem gvItem = new SourceCodeTreeItem(treeItem, 0);
-					gvItem.setFileName("GlobalVariable.java");
-					gvItem.setText(gvItem.getFileName());
-					gvItem.setBodyData("");
-				}
-				if (treeItem.getText().equals("Object Repositories")) {
-					SourceCodeTreeItem gvItem = new SourceCodeTreeItem(treeItem, 0);
-					gvItem.setFileName("ORObjects.java");
-					gvItem.setText(gvItem.getFileName());
-					gvItem.setBodyData("");
-				}
-			}
+			FileNode rootNode = new Transpiler().transpileDatas(transpileObject);
 		} catch (SQLException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}
-
-
 
 	public TestCaseView getTestCaseView() {
 		return testCaseView;
