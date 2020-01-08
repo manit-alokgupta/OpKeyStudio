@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -30,29 +29,26 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GlyphMetrics;
-import org.eclipse.swt.graphics.Resource;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.wb.swt.ResourceManager;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
@@ -60,14 +56,16 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.TranspileObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.TranspilerUtilities;
-import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class SourceCodeEditor extends Composite {
 	private TestCaseView testCaseView;
 	private CTabFolder tabFolder;
 	private Tree sourceCodeTree;
 	private TextViewer sourceCodeText;
+	ToolItem runButton;
+	ToolItem compileButton;
+	ToolItem saveAllButton;
+	ToolItem refreshButton;
 
 	public SourceCodeEditor(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
@@ -79,14 +77,17 @@ public class SourceCodeEditor extends Composite {
 		this.setLayout(new GridLayout(1, false));
 		ToolBar sourceCodeToolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		sourceCodeToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		ToolItem sourceCodeToolBarItem = new ToolItem(sourceCodeToolBar, SWT.NONE);
-		sourceCodeToolBarItem.setText("New Item");
-
-		ToolItem seperator = new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
-
-		ToolItem sourceCodeToolBarItem_1 = new ToolItem(sourceCodeToolBar, SWT.NONE);
-		sourceCodeToolBarItem_1.setText("New Item");
+		runButton = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		runButton.setText("Run");
+		ToolItem seperator1 = new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
+		compileButton = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		compileButton.setText("Compile");
+		ToolItem seperator2 = new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
+		saveAllButton = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		saveAllButton.setText("Save All");
+		ToolItem seperator3 = new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
+		refreshButton = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		refreshButton.setText("Refresh");
 
 		Composite composite_16 = new Composite(this, SWT.NONE);
 		composite_16.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -102,6 +103,20 @@ public class SourceCodeEditor extends Composite {
 
 		tabFolder = new CTabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		refreshButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				transpileDatas();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	private void renderTreeItemsNode(SourceCodeTreeItem treeItemNode, FileNode node) {
@@ -120,6 +135,16 @@ public class SourceCodeEditor extends Composite {
 		}
 	}
 
+	private void expandAll(SourceCodeTreeItem treeItem) {
+		treeItem.setExpanded(true);
+		TreeItem items[] = treeItem.getItems();
+		for (TreeItem item : items) {
+			item.setExpanded(true);
+			expandAll((SourceCodeTreeItem) item);
+		}
+		this.setRedraw(true);
+	}
+
 	private void renderTreeItems(FileNode rootNode) {
 		sourceCodeTree.removeAll();
 		List<FileNode> fileNodes = rootNode.getFilesNodes();
@@ -132,6 +157,7 @@ public class SourceCodeEditor extends Composite {
 				scti.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
 			}
 			renderTreeItemsNode(scti, fileNode);
+			expandAll(scti);
 		}
 		sourceCodeTree.addMouseListener(new MouseListener() {
 
@@ -154,6 +180,7 @@ public class SourceCodeEditor extends Composite {
 				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
 				initiateJavaEditor(scti.getFileNode());
 				CTabItem tabItem = new CTabItem(tabFolder, SWT.CLOSE);
+				tabItem.setImage(scti.getImage());
 				tabItem.setControl(sourceCodeText.getControl());
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
@@ -270,6 +297,12 @@ public class SourceCodeEditor extends Composite {
 		sourceCodeText.getTextWidget().addLineStyleListener(new LineStyleListener() {
 			public void lineGetStyle(LineStyleEvent e) {
 				// Set the line number
+				if (sourceCodeText == null) {
+					return;
+				}
+				if (sourceCodeText.getTextWidget() == null) {
+					return;
+				}
 				e.bulletIndex = sourceCodeText.getTextWidget().getLineAtOffset(e.lineOffset);
 				StyleRange style = new StyleRange();
 				style.metrics = new GlyphMetrics(0, 0,

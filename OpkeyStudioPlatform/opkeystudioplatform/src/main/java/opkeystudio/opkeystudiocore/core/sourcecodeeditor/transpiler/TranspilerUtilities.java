@@ -18,6 +18,8 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.Cl
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodCallSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewObjectSnippet;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewStaticObjectDeclarationSnippet;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewStaticObjectSnippet;
 
 @SuppressWarnings("unused")
 public class TranspilerUtilities {
@@ -65,10 +67,14 @@ public class TranspilerUtilities {
 
 		ClassSnippet classSnippet = new ClassSnippet("GlobalVariables");
 		classSnippet.addMethodSnippet(methodSnippet);
+		for (GlobalVariable gv : globalVariables) {
+			NewStaticObjectSnippet nsos = new NewStaticObjectSnippet("public", "GlobalVariable", gv.getVariableName());
+			classSnippet.addStaticObject(nsos);
+		}
 		for (GlobalVariable globalVariable : globalVariables) {
 			List<TranspiledField> transpiledFields = getTranspiledFields(globalVariable);
-			NewObjectSnippet newGlobalVariable = new NewObjectSnippet("GlobalVariable",
-					globalVariable.getVariableName());
+			NewStaticObjectDeclarationSnippet newGlobalVariable = new NewStaticObjectDeclarationSnippet(
+					"GlobalVariable", globalVariable.getVariableName());
 			for (TranspiledField transpiledField : transpiledFields) {
 				MethodCallSnippet newMethodCalledSnippet = new MethodCallSnippet(globalVariable.getVariableName(),
 						"addProperty", "\"" + transpiledField.getName() + "\"",
@@ -86,7 +92,12 @@ public class TranspilerUtilities {
 		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (ORObject orobject : orobjects) {
-			NewObjectSnippet newObjectSnippet = new NewObjectSnippet("ORObject", orobject.getVariableName());
+			NewStaticObjectSnippet nsos = new NewStaticObjectSnippet("public", "ORObject", orobject.getVariableName());
+			classSnippet.addStaticObject(nsos);
+		}
+		for (ORObject orobject : orobjects) {
+			NewStaticObjectDeclarationSnippet newObjectSnippet = new NewStaticObjectDeclarationSnippet("ORObject",
+					orobject.getVariableName());
 			List<ObjectAttributeProperty> objectAttributeProperties = orobject.getObjectAttributesProperty();
 			for (ObjectAttributeProperty objectAttributeProperty : objectAttributeProperties) {
 				if (objectAttributeProperty.getProperty().toLowerCase().equals("objectimage")

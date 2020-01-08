@@ -11,6 +11,7 @@ public class ClassSnippet {
 	private String START_DATA = "public class %s{";
 	private String BODY_DATA = "";
 	private String END_DATA = "}";
+	private List<NewStaticObjectSnippet> staticObject = new ArrayList<NewStaticObjectSnippet>();
 	private List<MethodSnippet> methodSnippets = new ArrayList<MethodSnippet>();
 
 	public ClassSnippet(String className) {
@@ -55,6 +56,9 @@ public class ClassSnippet {
 
 	public String toString() {
 		String bodyData = "";
+		for (NewStaticObjectSnippet staticObject : getStaticObject()) {
+			bodyData += staticObject.toString();
+		}
 		for (MethodSnippet methodSnippet : getMethodSnippets()) {
 			bodyData += methodSnippet.toString();
 		}
@@ -68,5 +72,17 @@ public class ClassSnippet {
 			e.printStackTrace();
 			return data;
 		}
+	}
+
+	public List<NewStaticObjectSnippet> getStaticObject() {
+		return staticObject;
+	}
+
+	public void setStaticObject(List<NewStaticObjectSnippet> staticObject) {
+		this.staticObject = staticObject;
+	}
+
+	public void addStaticObject(NewStaticObjectSnippet staticObject) {
+		this.staticObject.add(staticObject);
 	}
 }

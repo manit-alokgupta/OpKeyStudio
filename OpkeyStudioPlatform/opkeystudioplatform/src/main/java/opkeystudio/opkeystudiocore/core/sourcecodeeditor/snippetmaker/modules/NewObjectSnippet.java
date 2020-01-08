@@ -10,7 +10,9 @@ public class NewObjectSnippet {
 	private String OBJECT_NAME = "";
 	private String OBJECT_REF_NAME = "";
 	private List<MethodCallSnippet> methodCallSnippets = new ArrayList<>();
-
+	public NewObjectSnippet() {
+		
+	}
 	public NewObjectSnippet(String objectName, String objectrefName) {
 		this.OBJECT_NAME = objectName;
 		this.OBJECT_REF_NAME = objectrefName;
