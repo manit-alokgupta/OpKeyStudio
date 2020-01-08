@@ -42,13 +42,13 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
@@ -118,6 +118,34 @@ public class SourceCodeEditor extends Composite {
 
 			}
 		});
+
+		sourceCodeTree.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				TreeItem item = sourceCodeTree.getSelection()[0];
+				if (!(item instanceof SourceCodeTreeItem)) {
+					return;
+				}
+				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
+				initiateJavaEditor(scti.getFileNode());
+				CTabItem tabItem = new CTabItem(tabFolder, SWT.CLOSE);
+				tabItem.setImage(scti.getImage());
+				tabItem.setControl(sourceCodeText.getControl());
+				tabItem.setText(item.getText());
+				tabFolder.setSelection(tabItem);
+			}
+		});
 	}
 
 	private void renderTreeItemsNode(SourceCodeTreeItem treeItemNode, FileNode node) {
@@ -160,33 +188,6 @@ public class SourceCodeEditor extends Composite {
 			renderTreeItemsNode(scti, fileNode);
 			expandAll(scti);
 		}
-		sourceCodeTree.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				TreeItem item = sourceCodeTree.getSelection()[0];
-				if (!(item instanceof SourceCodeTreeItem)) {
-					return;
-				}
-				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
-				initiateJavaEditor(scti.getFileNode());
-				CTabItem tabItem = new CTabItem(tabFolder, SWT.CLOSE);
-				tabItem.setImage(scti.getImage());
-				tabItem.setControl(sourceCodeText.getControl());
-				tabItem.setText(item.getText());
-				tabFolder.setSelection(tabItem);
-			}
-		});
 	}
 
 	private String readSourceCode(File file) {
@@ -211,6 +212,10 @@ public class SourceCodeEditor extends Composite {
 	}
 
 	private void initiateJavaEditor(FileNode fileNode) {
+		List<CompileError> compileErrors = fileNode.getCompileErrors();
+		for (CompileError ce : compileErrors) {
+			System.out.println(ce.getMessage());
+		}
 		sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
 		sourceCodeText.setDocument(new Document());
 		ContentAssistData wordTracker = new ContentAssistData(200);
