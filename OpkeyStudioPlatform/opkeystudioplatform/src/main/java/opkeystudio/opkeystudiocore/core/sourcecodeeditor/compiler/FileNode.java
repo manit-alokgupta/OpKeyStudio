@@ -18,6 +18,7 @@ public class FileNode {
 	private String filePath;
 	private String parentPath;
 	private List<FileNode> filesNodes = new ArrayList<FileNode>();
+	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 
 	public FileNode(String fileName, FILE_TYPE fileType) {
 		setFileName(fileName);
@@ -89,5 +90,17 @@ public class FileNode {
 
 	public File getFile() {
 		return new File(getFilePath());
+	}
+
+	public List<CompileError> getCompileErrors() {
+		return compileErrors;
+	}
+
+	public void addCompileError(CompileError compileError) {
+		this.compileErrors.add(compileError);
+	}
+
+	public void setCompileErrors(List<CompileError> compileErrors) {
+		this.compileErrors = compileErrors;
 	}
 }

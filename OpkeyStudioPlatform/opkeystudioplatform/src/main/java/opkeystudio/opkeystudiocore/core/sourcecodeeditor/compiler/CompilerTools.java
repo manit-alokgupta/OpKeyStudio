@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.tools.Diagnostic;
+import javax.tools.Diagnostic.Kind;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
@@ -27,25 +28,33 @@ public class CompilerTools {
 			files.add(sourceFileNode.getFile());
 		}
 
-		final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		if (compiler == null) {
 			System.out.println("Compiler not found");
 		}
-		final DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
-		try (final StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null)) {
-			final Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(files);
+		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
+		try (StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null)) {
+			Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(files);
 
-			final CompilationTask task = compiler.getTask(null, manager, diagnostics, null, null, sources);
+			CompilationTask task = compiler.getTask(null, manager, diagnostics, null, null, sources);
 			task.call();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		for (final Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
+		for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
+			CompileError compileError = new CompileError();
+			compileError.setCode(diagnostic.getCode());
+			compileError.setColumnNumber(diagnostic.getColumnNumber());
+			compileError.setEndPosition(diagnostic.getEndPosition());
+			compileError.setLineNumber(diagnostic.getLineNumber());
+			compileError.setPosition(diagnostic.getPosition());
+			compileError.setStartPosition(diagnostic.getStartPosition());
+			compileError.setKind(diagnostic.getKind());
+			compileError.setMessage(diagnostic.getMessage(null));
+			compileError.setSource(diagnostic.getSource());
 
-			System.out.format("%s, line %d in %s", diagnostic.getMessage(null), diagnostic.getLineNumber(),
-					diagnostic.getSource().getName());
 		}
 	}
 }
