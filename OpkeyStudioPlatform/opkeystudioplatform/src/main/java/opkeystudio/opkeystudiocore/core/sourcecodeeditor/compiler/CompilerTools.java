@@ -3,11 +3,9 @@ package opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.tools.Diagnostic;
-import javax.tools.Diagnostic.Kind;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
@@ -24,14 +22,10 @@ public class CompilerTools {
 		List<FileNode> filteredFiles = new Tools().getAllFileNodes(allFiles, FILE_TYPE.SOURCEFILE);
 		ArrayList<File> files = new ArrayList<File>();
 		for (FileNode sourceFileNode : filteredFiles) {
-			System.out.println("File Path " + sourceFileNode.getFile().getAbsolutePath());
 			files.add(sourceFileNode.getFile());
 		}
 
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-		if (compiler == null) {
-			System.out.println("Compiler not found");
-		}
 		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
 		try (StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null)) {
 			Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(files);
@@ -55,6 +49,17 @@ public class CompilerTools {
 			compileError.setMessage(diagnostic.getMessage(null));
 			compileError.setSource(diagnostic.getSource());
 
+			FileNode node = getSourceFileNode(filteredFiles, diagnostic.getSource().getName());
+			node.addCompileError(compileError);
 		}
+	}
+
+	public FileNode getSourceFileNode(List<FileNode> filteredNodes, String sourcePath) {
+		for (FileNode filenode : filteredNodes) {
+			if (filenode.getFile().getAbsolutePath().trim().equals(sourcePath)) {
+				return filenode;
+			}
+		}
+		return null;
 	}
 }
