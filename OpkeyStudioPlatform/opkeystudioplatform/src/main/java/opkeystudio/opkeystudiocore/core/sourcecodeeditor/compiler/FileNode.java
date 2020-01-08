@@ -70,6 +70,10 @@ public class FileNode {
 		return filesNodes;
 	}
 
+	public void addFileNodes(FileNode filesNode) {
+		this.filesNodes.add(filesNode);
+	}
+
 	public void setFilesNodes(List<FileNode> filesNodes) {
 		this.filesNodes = filesNodes;
 	}
@@ -83,7 +87,7 @@ public class FileNode {
 		this.setFilePath(getParentPath() + File.separator + getFileName());
 	}
 
-	public void createFile() {
-
+	public File getFile() {
+		return new File(getFilePath());
 	}
 }

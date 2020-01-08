@@ -9,6 +9,8 @@ import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.query.DBField;
@@ -72,8 +74,9 @@ public class TranspilerUtilities {
 						"addProperty", "\"" + transpiledField.getName() + "\"",
 						"\"" + transpiledField.getValue() + "\"");
 				newGlobalVariable.addMethodCallSnippet(newMethodCalledSnippet);
-				methodSnippet.addNewObjectSnippet(newGlobalVariable);
+
 			}
+			methodSnippet.addNewObjectSnippet(newGlobalVariable);
 		}
 		return classSnippet.toString();
 	}
@@ -96,6 +99,20 @@ public class TranspilerUtilities {
 				newObjectSnippet.addMethodCallSnippet(methodCallSnippet);
 			}
 			methodSnippet.addNewObjectSnippet(newObjectSnippet);
+		}
+		return classSnippet.toString();
+	}
+
+	public String transpileTestCaseSteps(Artifact artifact, List<FlowStep> flowSteps) {
+		ClassSnippet classSnippet = new ClassSnippet(artifact.getName());
+		MethodSnippet methodSnippet = new MethodSnippet("void", "execute", "");
+		classSnippet.addMethodSnippet(methodSnippet);
+		for (FlowStep flowStep : flowSteps) {
+			if (flowStep.getKeyword() != null) {
+				MethodCallSnippet methodCallSnippet = new MethodCallSnippet("new OpKeyGenericKeyword()",
+						flowStep.getKeyword().getKeywordname());
+				methodSnippet.addMethodCallSnippet(methodCallSnippet);
+			}
 		}
 		return classSnippet.toString();
 	}

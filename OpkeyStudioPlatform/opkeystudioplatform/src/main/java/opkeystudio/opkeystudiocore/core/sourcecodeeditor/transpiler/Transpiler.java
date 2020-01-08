@@ -1,5 +1,7 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,21 +17,112 @@ import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Transpiler {
+	private void createFileNode(FileNode fileNode) throws IOException {
+		if (fileNode.getFileType() == FILE_TYPE.FOLDER || fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER
+				|| fileNode.getFileType() == FILE_TYPE.PROJECTFOLDER) {
+			if (!fileNode.getFile().exists()) {
+				fileNode.getFile().mkdir();
+			}
+		}
+
+		if (fileNode.getFileType() == FILE_TYPE.SOURCEFILE || fileNode.getFileType() == FILE_TYPE.XML) {
+			if (!fileNode.getFile().exists()) {
+				fileNode.getFile().createNewFile();
+			}
+
+			BufferedWriter bw = new BufferedWriter(new FileWriter(fileNode.getFile()));
+			bw.write(fileNode.getData());
+			bw.flush();
+			bw.close();
+		}
+		for (FileNode fnode : fileNode.getFilesNodes()) {
+			createFileNode(fnode);
+		}
+	}
+
 	public void transpileDatas(TranspileObject transpileObject) {
 		String path = Utilities.getInstance().getDefaultSourceCodeDirPath();
 		Artifact artifact = transpileObject.getArtifact();
+		FileNode rootNode = new FileNode(artifact.getId(), FILE_TYPE.PROJECTFOLDER);
+		rootNode.setParentPath(path);
+
+		FileNode srcnode = new FileNode("src", FILE_TYPE.PACKAGEFOLDER);
+		srcnode.setParentPath(rootNode.getFilePath());
+
+		FileNode gvNode = new FileNode("globalvariables", FILE_TYPE.PACKAGEFOLDER);
+		gvNode.setParentPath(srcnode.getFilePath());
+
+		FileNode tcNode = new FileNode("testcases", FILE_TYPE.PACKAGEFOLDER);
+		tcNode.setParentPath(srcnode.getFilePath());
+
+		FileNode flNode = new FileNode("functionlibraries", FILE_TYPE.PACKAGEFOLDER);
+		flNode.setParentPath(srcnode.getFilePath());
+
+		FileNode orNode = new FileNode("objectrepositories", FILE_TYPE.PACKAGEFOLDER);
+		orNode.setParentPath(srcnode.getFilePath());
+
+		FileNode libNode = new FileNode("libs", FILE_TYPE.PACKAGEFOLDER);
+		libNode.setParentPath(srcnode.getFilePath());
+
+		srcnode.addFileNodes(gvNode);
+		srcnode.addFileNodes(tcNode);
+		srcnode.addFileNodes(flNode);
+		srcnode.addFileNodes(orNode);
+		srcnode.addFileNodes(libNode);
+
+		rootNode.addFileNodes(srcnode);
+
 		List<GlobalVariable> globalVariables = transpileObject.getGlobalVaribales();
 		List<FlowStep> flowSteps = transpileObject.getFlowSteps();
 		List<FlowStep> functionLibaries = getFunctionLibraries(flowSteps);
 		List<ORObject> orobjects = getAllORObjects(flowSteps);
 		Set<String> orids = getAllObjectRepositoryIds(flowSteps);
 
-		String data = new TranspilerUtilities().transpileORObjects(orobjects);
-		String gvdata = new TranspilerUtilities().transpileGlobalVariables(globalVariables);
-		System.out.println(gvdata);
+		String tcDatas = new TranspilerUtilities().transpileTestCaseSteps(artifact, flowSteps);
+		String ordatas = new TranspilerUtilities().transpileORObjects(orobjects);
+		String gvdatas = new TranspilerUtilities().transpileGlobalVariables(globalVariables);
+
+		FileNode gvFile = new FileNode("GlobalVariables.java", FILE_TYPE.SOURCEFILE);
+		gvFile.setData(gvdatas);
+		gvFile.setParentPath(gvNode.getFilePath());
+
+		FileNode orFile = new FileNode("ORObjects.java", FILE_TYPE.SOURCEFILE);
+		orFile.setData(ordatas);
+		orFile.setParentPath(orNode.getFilePath());
+
+		FileNode tcFile = new FileNode(artifact.getName() + ".java", FILE_TYPE.SOURCEFILE);
+		tcFile.setData(tcDatas);
+		tcFile.setParentPath(tcNode.getFilePath());
+
+		for (FlowStep functionLibraryStep : functionLibaries) {
+			Artifact flartifact = functionLibraryStep.getFunctionLibraryComponent();
+			try {
+				List<FlowStep> flflowSteps = new FunctionLibraryApi().getAllFlowSteps(flartifact.getId());
+				String flDatas = new TranspilerUtilities().transpileTestCaseSteps(flartifact, flflowSteps);
+				FileNode flFile = new FileNode(flartifact.getName() + ".java", FILE_TYPE.SOURCEFILE);
+				flFile.setData(flDatas);
+				flFile.setParentPath(flNode.getFilePath());
+				flNode.addFileNodes(flFile);
+			} catch (SQLException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		orNode.addFileNodes(orFile);
+		gvNode.addFileNodes(gvFile);
+		tcNode.addFileNodes(tcFile);
+		try {
+			createFileNode(rootNode);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {

@@ -8,6 +8,7 @@ public class MethodSnippet {
 	private String BODY_DATA = "";
 	private String END_DATA = "}";
 	private List<NewObjectSnippet> newObjectSnippets = new ArrayList<>();
+	private List<MethodCallSnippet> methodCallSnippets = new ArrayList<MethodCallSnippet>();
 
 	public MethodSnippet(String returntype, String methodName, String... parameters) {
 		String params = String.join(",", parameters);
@@ -43,6 +44,10 @@ public class MethodSnippet {
 		for (NewObjectSnippet newObjectSnippet : getNewObjectSnippets()) {
 			bodyData += newObjectSnippet.toString();
 		}
+
+		for (MethodCallSnippet methodcallSnippet : getMethodCallSnippets()) {
+			bodyData += methodcallSnippet.toString();
+		}
 		if (!bodyData.isEmpty()) {
 			setBODY_DATA(bodyData);
 		}
@@ -59,6 +64,18 @@ public class MethodSnippet {
 
 	public void setNewObjectSnippets(List<NewObjectSnippet> newObjectSnippets) {
 		this.newObjectSnippets = newObjectSnippets;
+	}
+
+	public List<MethodCallSnippet> getMethodCallSnippets() {
+		return methodCallSnippets;
+	}
+
+	public void addMethodCallSnippet(MethodCallSnippet methodCallSnippet) {
+		this.methodCallSnippets.add(methodCallSnippet);
+	}
+
+	public void setMethodCallSnippets(List<MethodCallSnippet> methodCallSnippets) {
+		this.methodCallSnippets = methodCallSnippets;
 	}
 
 }
