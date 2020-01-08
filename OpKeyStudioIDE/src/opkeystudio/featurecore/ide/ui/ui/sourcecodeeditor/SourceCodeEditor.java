@@ -1,5 +1,9 @@
 package opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,6 +60,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.TranspileObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.TranspilerUtilities;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class SourceCodeEditor extends Composite {
 	private TestCaseView testCaseView;
@@ -108,6 +113,7 @@ public class SourceCodeEditor extends Composite {
 	}
 
 	private void renderTreeItems(FileNode rootNode) {
+		sourceCodeTree.removeAll();
 		List<FileNode> fileNodes = rootNode.getFilesNodes();
 		for (FileNode fileNode : fileNodes) {
 			SourceCodeTreeItem scti = new SourceCodeTreeItem(sourceCodeTree, 0);
@@ -143,6 +149,27 @@ public class SourceCodeEditor extends Composite {
 		});
 	}
 
+	private String readSourceCode(File file) {
+		BufferedReader br;
+		StringBuffer sb = new StringBuffer();
+		String line = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+			while ((line = br.readLine()) != null) {
+				sb.append(line + System.lineSeparator());
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return sb.toString();
+	}
+
 	private void initiateJavaEditor(FileNode fileNode) {
 		sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
 		sourceCodeText.setDocument(new Document());
@@ -159,7 +186,9 @@ public class SourceCodeEditor extends Composite {
 		assistant.install(sourceCodeText);
 
 		sourceCodeText.setEditable(true);
-		sourceCodeText.getTextWidget().setText("");
+
+		String sourceCode = readSourceCode(fileNode.getFile());
+		sourceCodeText.getTextWidget().setText(sourceCode);
 
 		sourceCodeText.getTextWidget().addKeyListener(new KeyListener() {
 
