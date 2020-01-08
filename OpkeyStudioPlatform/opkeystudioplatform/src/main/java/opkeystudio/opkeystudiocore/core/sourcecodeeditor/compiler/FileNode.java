@@ -4,9 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class FileNode {
+public class FileNode extends Modified {
 	public enum FILE_TYPE {
 		SOURCEFILE, PACKAGEFOLDER, PROJECTFOLDER, FOLDER, LIBRARY, XML
 	};

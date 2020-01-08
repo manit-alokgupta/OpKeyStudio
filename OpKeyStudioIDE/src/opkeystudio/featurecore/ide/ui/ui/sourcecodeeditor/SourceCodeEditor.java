@@ -38,10 +38,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
@@ -61,7 +61,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 public class SourceCodeEditor extends Composite {
 	private TestCaseView testCaseView;
 	private CTabFolder tabFolder;
-	private Tree sourceCodeTree;
+	private SourceCodeTree sourceCodeTree;
 	private TextViewer sourceCodeText;
 	ToolItem runButton;
 	ToolItem compileButton;
@@ -94,7 +94,7 @@ public class SourceCodeEditor extends Composite {
 		composite_16.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		composite_16.setLayout(new GridLayout(2, false));
 
-		sourceCodeTree = new Tree(composite_16, SWT.BORDER);
+		sourceCodeTree = new SourceCodeTree(composite_16, SWT.BORDER);
 		sourceCodeTree.setHeaderVisible(true);
 		sourceCodeTree.setLinesVisible(false);
 
@@ -250,6 +250,9 @@ public class SourceCodeEditor extends Composite {
 
 		sourceCodeText.addTextListener(new ITextListener() {
 			public void textChanged(TextEvent e) {
+				FileNode fileNode = sourceCodeTree.getSelectedFileNode();
+				fileNode.setData(sourceCodeText.getTextWidget().getText());
+				fileNode.setModified(true);
 				if (isWhitespaceString(e.getText())) {
 					wordTracker.add(findMostRecentWord(e.getOffset() - 1));
 				}
