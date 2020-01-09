@@ -16,6 +16,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -173,6 +174,7 @@ public class DataRepositoryTable extends CustomTable {
 					getParentDataRepositoryView().toggleMoveRowUpButton(false);
 					getParentDataRepositoryView().toggleAddColumnButton(false);
 					getParentDataRepositoryView().toggleAddRowButton(false);
+					getParentDataRepositoryView().toggleRenameColumnButton(false);
 				}
 
 				if (selectedDrti != null) {
@@ -180,6 +182,7 @@ public class DataRepositoryTable extends CustomTable {
 					getParentDataRepositoryView().toggleDeleteRowButton(true);
 					getParentDataRepositoryView().toggleAddColumnButton(true);
 					getParentDataRepositoryView().toggleAddRowButton(true);
+					getParentDataRepositoryView().toggleRenameColumnButton(true);
 				}
 			}
 
@@ -271,10 +274,37 @@ public class DataRepositoryTable extends CustomTable {
 		selectDefaultRow();
 	}
 
+	public void renameDRColumn() {
+		DRColumnAttributes drColumn = getSelectedDRColumnAttribute();
+		if (drColumn == null) {
+			getParentDataRepositoryView().toggleRenameColumnButton(false);
+			return;
+		}
+		String data = new MessageDialogs().openInputDialogAandGetValue("Enter New ColumnName",
+				"Enter New DR Column Name", drColumn.getName());
+		if (data == null) {
+			return;
+		}
+		if (data.trim().isEmpty()) {
+			return;
+		}
+		drColumn.setName(data);
+		drColumn.setModified(true);
+		try {
+			refreshAllDRDetails();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		getParentDataRepositoryView().toggleSaveButton(true);
+	}
+
 	public void addDRColumn() {
 		String data = new MessageDialogs().openInputDialogAandGetValue("Enter ColumnName", "Enter the DR Column Name",
 				"");
-
+		if (data == null) {
+			return;
+		}
 		if (data.trim().isEmpty()) {
 			return;
 		}

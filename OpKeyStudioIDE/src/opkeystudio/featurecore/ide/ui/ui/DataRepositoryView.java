@@ -225,11 +225,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-//				String columnName = new MessageDialogs().openInputDialogAandGetValue("File Name",
-//						"Please Enter File Name", "NewFile");
-				System.out.println();
-
+				dataRepositoryTable.renameDRColumn();
 			}
 
 			@Override
