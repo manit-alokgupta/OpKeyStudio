@@ -27,7 +27,7 @@ public class DRMaker {
 		List<DRCellAttributes> drCellAttributes = new ArrayList<DRCellAttributes>();
 		for (int i = 0; i < noOfCells; i++) {
 			DRCellAttributes drCellAttribute = new DRCellAttributes();
-			drCellAttribute.setDr_cellid(Utilities.getInstance().getUniqueUUID(""));
+			drCellAttribute.setDr_cell_id(Utilities.getInstance().getUniqueUUID(""));
 			drCellAttribute.setDr_id(drColumnAttribute.getDr_id());
 			drCellAttribute.setColumn_id(drColumnAttribute.getColumn_id());
 			drCellAttribute.setPosition((i + 1) * 10);

@@ -12,7 +12,7 @@ public class DRCellAttributes extends Modified implements Comparable<DRCellAttri
 	@DBField
 	private String dr_id;
 	@DBField
-	private String dr_cellid;
+	private String dr_cell_id;
 	@DBField
 	private String value;
 
@@ -52,14 +52,6 @@ public class DRCellAttributes extends Modified implements Comparable<DRCellAttri
 		this.dr_id = dr_id;
 	}
 
-	public String getDr_cellid() {
-		return dr_cellid;
-	}
-
-	public void setDr_cellid(String dr_cellid) {
-		this.dr_cellid = dr_cellid;
-	}
-
 	public String getValue() {
 		return value;
 	}
@@ -95,6 +87,14 @@ public class DRCellAttributes extends Modified implements Comparable<DRCellAttri
 	@Override
 	public int compareTo(DRCellAttributes arg0) {
 		return this.getPosition() - arg0.getPosition();
+	}
+
+	public String getDr_cell_id() {
+		return dr_cell_id;
+	}
+
+	public void setDr_cell_id(String dr_cell_id) {
+		this.dr_cell_id = dr_cell_id;
 	}
 
 }
