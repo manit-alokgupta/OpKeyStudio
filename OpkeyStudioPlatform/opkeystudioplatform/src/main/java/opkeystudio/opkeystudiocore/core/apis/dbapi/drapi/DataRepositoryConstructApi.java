@@ -8,6 +8,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 public class DataRepositoryConstructApi {
 	public void saveAllDRColumns(List<DRColumnAttributes> columnAattributes) {
 		for (DRColumnAttributes drColumnAttribute : columnAattributes) {
+			System.out.println("Saving");
 			deleteDRColumn(drColumnAttribute);
 			addDRColumn(drColumnAttribute);
 			updateDRColumn(drColumnAttribute);

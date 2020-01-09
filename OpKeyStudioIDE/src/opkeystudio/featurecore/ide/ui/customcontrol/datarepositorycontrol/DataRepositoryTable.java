@@ -106,6 +106,7 @@ public class DataRepositoryTable extends CustomTable {
 						cursor.getRow().setText(selectedColNo, text.getText());
 						getSelectedDRCEllAttribute().setValue(text.getText());
 						getSelectedDRCEllAttribute().setModified(true);
+						getParentDataRepositoryView().toggleSaveButton(true);
 					}
 				});
 
@@ -288,6 +289,7 @@ public class DataRepositoryTable extends CustomTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
 	public void deleteDRColumn() {
@@ -302,6 +304,7 @@ public class DataRepositoryTable extends CustomTable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
 	public void deleteDRRow() {
@@ -315,6 +318,7 @@ public class DataRepositoryTable extends CustomTable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
 	public void moveRowDown() {
@@ -341,6 +345,7 @@ public class DataRepositoryTable extends CustomTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
 	public void moveRowUp() {
@@ -366,6 +371,7 @@ public class DataRepositoryTable extends CustomTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
 	public void moveColumnRight() {
@@ -386,6 +392,7 @@ public class DataRepositoryTable extends CustomTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
 	public void moveColumnLeft() {
@@ -406,6 +413,7 @@ public class DataRepositoryTable extends CustomTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
 	public List<DRCellAttributes> getSelectedRowDRCells() {
