@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
@@ -24,6 +25,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
@@ -341,7 +344,8 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				List<DRColumnAttributes> drColumns = dataRepositoryTable.getDrColumnAttributes();
+				new DataRepositoryConstructApi().saveAllDRColumns(drColumns);
 			}
 
 			@Override

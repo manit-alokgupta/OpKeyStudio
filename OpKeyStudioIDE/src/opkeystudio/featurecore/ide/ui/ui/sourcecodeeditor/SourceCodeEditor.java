@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import io.lettuce.core.dynamic.annotation.Key;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -317,7 +318,6 @@ public class SourceCodeEditor extends Composite {
 				style.metrics = new GlyphMetrics(0, 0,
 						Integer.toString(sourceCodeText.getTextWidget().getLineCount() + 1).length() * 12);
 				e.bullet = new Bullet(ST.BULLET_NUMBER, style);
-
 			}
 		});
 	}

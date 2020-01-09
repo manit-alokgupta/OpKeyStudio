@@ -5,7 +5,7 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
-public class DataRepositoryConstruct {
+public class DataRepositoryConstructApi {
 	public void saveAllDRColumns(List<DRColumnAttributes> columnAattributes) {
 		for (DRColumnAttributes drColumnAttribute : columnAattributes) {
 			deleteDRColumn(drColumnAttribute);
