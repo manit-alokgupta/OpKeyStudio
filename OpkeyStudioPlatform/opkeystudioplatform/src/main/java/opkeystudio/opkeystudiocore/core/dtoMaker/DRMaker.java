@@ -6,7 +6,6 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class DRMaker {
@@ -41,5 +40,12 @@ public class DRMaker {
 			iflowStep.setModified(true);
 		}
 		return drColumnAttribute;
+	}
+
+	public void addDRRow(int selectedRowNo, List<DRColumnAttributes> columnAttributes) {
+		for (DRColumnAttributes columnAttribute : columnAttributes) {
+			DRCellAttributes selectedDRCell = columnAttribute.getDrCellAttributes().get(selectedRowNo);
+
+		}
 	}
 }
