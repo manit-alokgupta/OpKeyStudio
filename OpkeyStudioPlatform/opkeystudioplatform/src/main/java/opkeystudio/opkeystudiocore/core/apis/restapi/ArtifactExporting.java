@@ -7,6 +7,7 @@ import java.util.Map;
 import opkeystudio.opkeystudiocore.core.communicator.OpKeyApiCommunicator;
 
 public class ArtifactExporting {
+	@SuppressWarnings("unused")
 	public void getFolderDetails(String folderId) throws IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("nodeID", folderId);
@@ -14,6 +15,7 @@ public class ArtifactExporting {
 				params, null, null);
 	}
 
+	@SuppressWarnings("unused")
 	public void checkForSecuredData(String nodeid,String portalType) throws IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("strNodeIDs", nodeid);
@@ -22,6 +24,7 @@ public class ArtifactExporting {
 				params, null, null);
 	}
 
+	@SuppressWarnings("unused")
 	public void getSecureDataStatus(String sessionId) throws IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("sessionId", sessionId);
@@ -29,6 +32,7 @@ public class ArtifactExporting {
 				params, null, null);
 	}
 
+	@SuppressWarnings("unused")
 	public void exportArtificate(String strNodeIDs, String jobType, String sessionID, String SourceLabelID, String SourceProjectPasword) throws IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("strNodeIDs", strNodeIDs);
@@ -40,6 +44,7 @@ public class ArtifactExporting {
 				params, null, null);
 	}
 
+	@SuppressWarnings("unused")
 	public void getArtifactActionLogs(String sessionId, String jobType, String processtype) throws IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("sessionId", sessionId);
@@ -49,6 +54,7 @@ public class ArtifactExporting {
 				params, null, null);
 	}
 
+	@SuppressWarnings("unused")
 	public void downloadExportedZip(String sessionId) throws IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("sessionId", sessionId);

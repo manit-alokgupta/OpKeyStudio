@@ -137,6 +137,7 @@ public class ObjectAttributeProperty extends Modified implements Cloneable {
 		return clustering_key;
 	}
 
+	@SuppressWarnings("unused")
 	private void setClustering_key(int clustering_key) {
 		this.clustering_key = clustering_key;
 	}

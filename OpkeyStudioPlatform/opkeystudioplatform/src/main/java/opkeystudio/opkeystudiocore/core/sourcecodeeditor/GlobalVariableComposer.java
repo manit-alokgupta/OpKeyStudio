@@ -8,6 +8,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 public class GlobalVariableComposer implements CodeComposer {
 	private List<GlobalVariable> globalVariables = new ArrayList<GlobalVariable>();
 
+	@SuppressWarnings("unused")
 	@Override
 	public void compose() {
 		List<GlobalVariable> gvars = getGlobalVariables();

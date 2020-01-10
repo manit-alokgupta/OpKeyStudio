@@ -14,7 +14,6 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class DataRepositoryApi {
 
-	@SuppressWarnings("unused")
 	public List<DRColumnAttributes> getAllColumnsValues(String dr_id) {
 		String query = String.format("SELECT * FROM dr_columns where dr_id='%s' ORDER BY position ASC", dr_id);
 		String result = QueryExecutor.getInstance().executeQuery(query);

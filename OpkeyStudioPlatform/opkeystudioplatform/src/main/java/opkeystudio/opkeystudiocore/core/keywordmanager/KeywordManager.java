@@ -101,6 +101,7 @@ public class KeywordManager {
 		return allGroupedKeywords;
 	}
 
+	@SuppressWarnings("unused")
 	private void setAllGroupedKeywords(Map<String, List<Keyword>> allGroupedKeywords) {
 		this.allGroupedKeywords = allGroupedKeywords;
 	}

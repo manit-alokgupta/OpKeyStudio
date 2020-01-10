@@ -39,6 +39,7 @@ public class GlobalVariableApi {
 		return getAllGlobalVariable(gv_id).get(0);
 	}
 
+	@SuppressWarnings("unused")
 	public void deleteGlobalVariable(GlobalVariable gvar) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
@@ -51,6 +52,7 @@ public class GlobalVariableApi {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void updateGlobalVariable(GlobalVariable gvar) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
@@ -65,6 +67,7 @@ public class GlobalVariableApi {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void insertGlobalVaribale(GlobalVariable gvar) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {

@@ -34,6 +34,7 @@ public class OpKeyApiCommunicator {
 		return queryString;
 	}
 
+	@SuppressWarnings("unused")
 	public String sendDataToOpKeyServer(String apiurl, String requestMethod, Map<String, Object> params,
 			String username, String password) throws IOException {
 		if (requestMethod.toUpperCase().equals("POST")) {

@@ -7,12 +7,16 @@ public class NewObjectSnippet {
 	private String START_DATA = "%s %s = new %s();";
 	private String BODY_DATA = "";
 	private String END_DATA = "";
+	@SuppressWarnings("unused")
 	private String OBJECT_NAME = "";
+	@SuppressWarnings("unused")
 	private String OBJECT_REF_NAME = "";
 	private List<MethodCallSnippet> methodCallSnippets = new ArrayList<>();
+
 	public NewObjectSnippet() {
-		
+
 	}
+
 	public NewObjectSnippet(String objectName, String objectrefName) {
 		this.OBJECT_NAME = objectName;
 		this.OBJECT_REF_NAME = objectrefName;

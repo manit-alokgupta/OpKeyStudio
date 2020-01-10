@@ -7,7 +7,9 @@ public class NewStaticObjectDeclarationSnippet extends NewObjectSnippet {
 	private String START_DATA = "%s = new %s();";
 	private String BODY_DATA = "";
 	private String END_DATA = "";
+	@SuppressWarnings("unused")
 	private String OBJECT_NAME = "";
+	@SuppressWarnings("unused")
 	private String OBJECT_REF_NAME = "";
 	private List<MethodCallSnippet> methodCallSnippets = new ArrayList<>();
 

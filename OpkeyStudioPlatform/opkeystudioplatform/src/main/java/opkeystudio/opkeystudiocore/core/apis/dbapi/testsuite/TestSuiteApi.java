@@ -27,7 +27,7 @@ public class TestSuiteApi {
 	}
 
 	private Artifact getArtifact(String id) throws JsonParseException, JsonMappingException, IOException {
-		
+
 		return new ArtifactApi().getArtifact(id).get(0);
 	}
 
@@ -64,6 +64,7 @@ public class TestSuiteApi {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void saveAllTestSuite(List<TestSuiteStep> testSuites) {
 		for (TestSuiteStep testSuite : testSuites) {
 			String updateQuery = new QueryMaker().createUpdateQuery(testSuite, "suite_design_steps",

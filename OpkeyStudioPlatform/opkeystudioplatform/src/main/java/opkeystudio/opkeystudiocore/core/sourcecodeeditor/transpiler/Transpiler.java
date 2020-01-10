@@ -45,6 +45,7 @@ public class Transpiler {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public FileNode transpileDatas(TranspileObject transpileObject) {
 		String path = Utilities.getInstance().getDefaultSourceCodeDirPath();
 		Artifact artifact = transpileObject.getArtifact();

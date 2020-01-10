@@ -52,5 +52,5 @@ Export-Package: opkeystudio,
  opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor,
  opkeystudio.notification,
  opkeystudio.parts.part,
- opkeystudio.splashHandlers
-
+ opkeystudio.splashHandlers,
+ org.eclipse.wb.swt
