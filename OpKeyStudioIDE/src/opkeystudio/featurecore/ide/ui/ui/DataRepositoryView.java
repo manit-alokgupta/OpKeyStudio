@@ -195,8 +195,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				rowCount += 1;
-				new TableItem(dataRepositoryTable, SWT.NONE).setText("" + rowCount);
+				dataRepositoryTable.addDRRow();
 
 			}
 

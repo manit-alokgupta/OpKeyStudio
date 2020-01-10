@@ -42,10 +42,26 @@ public class DRMaker {
 		return drColumnAttribute;
 	}
 
-	public void addDRRow(int selectedRowNo, List<DRColumnAttributes> columnAttributes) {
+	public void addDRRow(Artifact artifact, int selectedRowNo, List<DRColumnAttributes> columnAttributes) {
 		for (DRColumnAttributes columnAttribute : columnAttributes) {
+			if (columnAttribute.getDrCellAttributes().size() == 0) {
+				System.out.println("NO DR CELL FOUND " + columnAttribute.getName());
+				continue;
+			}
 			DRCellAttributes selectedDRCell = columnAttribute.getDrCellAttributes().get(selectedRowNo);
-
+			int nextRowNo = selectedRowNo + 1;
+			for (int i = nextRowNo; i < columnAttribute.getDrCellAttributes().size(); i++) {
+				DRCellAttributes drCellAttribute = columnAttribute.getDrCellAttributes().get(i);
+				drCellAttribute.setPosition(drCellAttribute.getPosition() + 50);
+				drCellAttribute.setModified(true);
+			}
+			DRCellAttributes newDrCellAttribute = new DRCellAttributes();
+			newDrCellAttribute.setPosition(selectedDRCell.getPosition() + 5);
+			newDrCellAttribute.setDr_id(artifact.getId());
+			newDrCellAttribute.setColumn_id(columnAttribute.getColumn_id());
+			newDrCellAttribute.setDr_cell_id(Utilities.getInstance().getUniqueUUID(""));
+			newDrCellAttribute.setAdded(true);
+			columnAttribute.getDrCellAttributes().add(newDrCellAttribute);
 		}
 	}
 }

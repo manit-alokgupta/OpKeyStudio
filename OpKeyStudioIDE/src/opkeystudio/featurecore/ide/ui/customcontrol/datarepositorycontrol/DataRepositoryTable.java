@@ -40,6 +40,7 @@ public class DataRepositoryTable extends CustomTable {
 
 	private DRColumnAttributes selectedDRColumnAttribute;
 	private DRCellAttributes selectedDRCEllAttribute;
+	private int selectedDRRow;
 
 	public DataRepositoryTable(Composite parent, int style, DataRepositoryView parentView)
 			throws JsonParseException, JsonMappingException, IOException {
@@ -74,6 +75,7 @@ public class DataRepositoryTable extends CustomTable {
 				CustomText text = new CustomText(cursor, 0);
 				int selectedColNo = cursor.getColumn();
 				int selectedRowNo = getSelectionIndices()[0];
+				setSelectedDRRow(selectedRowNo);
 				List<DRCellAttributes> drCellAttribtes = getSelectedRowDRCells();
 				DRCellAttributes drCellAttribute = drCellAttribtes.get(selectedColNo);
 				DRColumnAttributes drColumnAttreibute = drCellAttribute.getDrColumnAttribute();
@@ -272,6 +274,17 @@ public class DataRepositoryTable extends CustomTable {
 		List<DRColumnAttributes> drDatas = getDrColumnAttributes();
 		renderDRDatas(drDatas);
 		selectDefaultRow();
+	}
+
+	public void addDRRow() {
+		new DRMaker().addDRRow(getParentDataRepositoryView().getArtifact(), this.getSelectedDRRow(),
+				getDrColumnAttributes());
+		try {
+			refreshAllDRDetails();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void renameDRColumn() {
@@ -581,6 +594,14 @@ public class DataRepositoryTable extends CustomTable {
 
 	public void setSelectedDRCEllAttribute(DRCellAttributes selectedDRCEllAttribute) {
 		this.selectedDRCEllAttribute = selectedDRCEllAttribute;
+	}
+
+	public int getSelectedDRRow() {
+		return selectedDRRow;
+	}
+
+	public void setSelectedDRRow(int selectedDRRow) {
+		this.selectedDRRow = selectedDRRow;
 	}
 
 }
