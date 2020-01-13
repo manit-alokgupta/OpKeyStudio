@@ -22,6 +22,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.Me
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewObjectSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewStaticObjectDeclarationSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewStaticObjectSnippet;
+import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 @SuppressWarnings("unused")
 public class TranspilerUtilities {
@@ -116,22 +117,6 @@ public class TranspilerUtilities {
 		return classSnippet.toString();
 	}
 
-	private String getFlowStepInputDatas(FlowStep flowStep) {
-		ArrayList<String> outData = new ArrayList<String>();
-		List<FlowInputArgument> flowInputArgs = flowStep.getFlowInputArgs();
-		for (FlowInputArgument flowInputArgument : flowInputArgs) {
-			if (flowInputArgument.getKeywordInputArgument() != null) {
-				KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
-				if (flowInputArgument.getStaticvalue() != null) {
-					outData.add(flowInputArgument.getStaticvalue());
-				}
-			}
-		}
-		String[] strOutArray = new String[0];
-		strOutArray = outData.toArray(strOutArray);
-		return String.join(",", strOutArray);
-	}
-
 	public String transpileTestCaseSteps(Artifact artifact, List<FlowStep> flowSteps) {
 		ClassSnippet classSnippet = new ClassSnippet(artifact.getName());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "execute", "");
@@ -139,7 +124,8 @@ public class TranspilerUtilities {
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.getKeyword() != null) {
 				MethodCallSnippet methodCallSnippet = new MethodCallSnippet("new OpKeyGenericKeyword()",
-						flowStep.getKeyword().getKeywordname(), getFlowStepInputDatas(flowStep));
+						flowStep.getKeyword().getKeywordname(),
+						new TranspileProcessingUtilities().getFlowStepInputDatas(flowStep));
 				methodSnippet.addMethodCallSnippet(methodCallSnippet);
 			}
 		}
