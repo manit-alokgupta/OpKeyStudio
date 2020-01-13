@@ -61,7 +61,7 @@ public class FlowMaker {
 		flowStep.setShouldrun(true);
 
 		if (keyword != null) {
-			List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(flowStep);
+			List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(artifact, flowStep);
 			List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
 			flowStep.setFlowInputArgs(flowInputArguments);
 			flowStep.setFlowOutputArgs(flowOutputArguments);
@@ -163,7 +163,7 @@ public class FlowMaker {
 		flComp.setComponentInputArguments(inputArgs);
 		flComp.setComponentOutputArguments(outputArgs);
 
-		List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(flowStep);
+		List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(artifact, flowStep);
 		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
 		flowStep.setFlowInputArgs(flowInputArguments);
 		flowStep.setFlowOutputArgs(flowOutputArguments);
@@ -186,13 +186,18 @@ public class FlowMaker {
 		return flowStep;
 	}
 
-	public List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep) {
+	public List<FlowInputArgument> getFlowStepInputArguments(Artifact artifact, FlowStep flowStep) {
 		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
 		if (flowStep.getKeyword() != null) {
 			List<KeyWordInputArgument> keywordInputArguments = flowStep.getKeyword().getKeywordInputArguments();
 			for (KeyWordInputArgument keywordInputArgument : keywordInputArguments) {
 				FlowInputArgument flowInputArgument = new FlowInputArgument();
-				flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+					flowInputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
+				} else {
+					flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+				}
+
 				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
 				flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
 				flowInputArgument.setStaticobjectid(null);
@@ -202,13 +207,17 @@ public class FlowMaker {
 				flowInputArguments.add(flowInputArgument);
 			}
 		}
+		
 		if (flowStep.getFunctionLibraryComponent() != null) {
 			List<ComponentInputArgument> componentInputArgs = flowStep.getFunctionLibraryComponent()
 					.getComponentInputArguments();
 			for (ComponentInputArgument componentInputArgument : componentInputArgs) {
-				System.out.println("Component id " + componentInputArgument.getComponent_id());
 				FlowInputArgument flowInputArgument = new FlowInputArgument();
-				flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+					flowInputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
+				} else {
+					flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+				}
 				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
 				flowInputArgument.setComponent_ip_id(componentInputArgument.getIp_id());
 				flowInputArgument.setStaticobjectid(null);

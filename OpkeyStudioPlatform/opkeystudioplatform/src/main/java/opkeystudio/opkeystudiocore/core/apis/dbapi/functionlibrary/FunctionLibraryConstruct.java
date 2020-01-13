@@ -27,8 +27,8 @@ public class FunctionLibraryConstruct {
 	private void saveComponentStep(FlowStep flowStep) {
 
 		deleteComponentStep(flowStep);
-		updateComponentStep(flowStep);
 		addComponentStep(flowStep);
+		updateComponentStep(flowStep);
 	}
 
 	public void saveComponentInputArguments(List<ComponentInputArgument> flowInputArguments) {
@@ -42,24 +42,24 @@ public class FunctionLibraryConstruct {
 	private void saveFlowInputArguments(List<FlowInputArgument> flowInputArguments) {
 		for (FlowInputArgument flowInputArgument : flowInputArguments) {
 			deleteFlowInputArgument(flowInputArgument);
-			updateFlowInputArgument(flowInputArgument);
 			addFlowInputArgument(flowInputArgument);
+			updateFlowInputArgument(flowInputArgument);
 		}
 	}
 
 	public void saveComponentOutputArguments(List<ComponentOutputArgument> flowOutputArguments) {
 		for (ComponentOutputArgument flowOutputArgument : flowOutputArguments) {
 			deleteComponentOutputArgument(flowOutputArgument);
-			updateComponentOutputArgument(flowOutputArgument);
 			addComponentOutputArgument(flowOutputArgument);
+			updateComponentOutputArgument(flowOutputArgument);
 		}
 	}
 
 	private void saveFlowOutputArguments(List<FlowOutputArgument> flowOutputArguments) {
 		for (FlowOutputArgument flowOutputArgument : flowOutputArguments) {
 			deleteFlowOutputArgument(flowOutputArgument);
-			updateFlowOutputArgument(flowOutputArgument);
 			addFlowOutputArgument(flowOutputArgument);
+			updateFlowOutputArgument(flowOutputArgument);
 		}
 	}
 
@@ -100,14 +100,16 @@ public class FunctionLibraryConstruct {
 		if (flowInputArgument.isModified()) {
 			System.out.println("Flow Input Argument Modified " + flowInputArgument.getStep_arg_id());
 			String query = new QueryMaker().createUpdateQuery(flowInputArgument, "component_step_input_args",
-					String.format("WHERE step_arg_id ='%s'", flowInputArgument.getStep_arg_id()));
+					String.format("WHERE step_arg_id ='%s'", flowInputArgument.getStep_arg_id()), "flow_step_ia_id",
+					"keyword_ip_id", "datasource");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void addFlowInputArgument(FlowInputArgument flowInputArgument) {
 		if (flowInputArgument.isAdded()) {
-			String query = new QueryMaker().createInsertQuery(flowInputArgument, "component_step_input_args", "");
+			String query = new QueryMaker().createInsertQuery(flowInputArgument, "component_step_input_args", "",
+					"flow_step_ia_id", "keyword_ip_id", "datasource");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}

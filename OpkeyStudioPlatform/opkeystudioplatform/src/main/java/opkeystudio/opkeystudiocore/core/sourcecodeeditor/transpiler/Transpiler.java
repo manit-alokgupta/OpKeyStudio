@@ -87,6 +87,7 @@ public class Transpiler {
 		List<ORObject> orobjects = getAllORObjects(flowSteps);
 		Set<String> orids = getAllObjectRepositoryIds(flowSteps);
 
+		transpileObject.setOrObjects(orobjects);
 		String tcDatas = new TranspilerUtilities(this).transpileTestCaseSteps(artifact, flowSteps);
 		String ordatas = new TranspilerUtilities(this).transpileORObjects(orobjects);
 		String gvdatas = new TranspilerUtilities(this).transpileGlobalVariables(globalVariables);
