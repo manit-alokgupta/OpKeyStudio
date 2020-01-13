@@ -10,6 +10,7 @@ import com.google.googlejavaformat.java.FormatterException;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
@@ -114,6 +115,17 @@ public class TranspilerUtilities {
 		return classSnippet.toString();
 	}
 
+	private String getFlowStepInputArgs(FlowStep flowStep) {
+		ArrayList<String> outData = new ArrayList<String>();
+		List<FlowInputArgument> flowInputArgs = flowStep.getFlowInputArgs();
+		for (FlowInputArgument flowInputArgument : flowInputArgs) {
+			if (flowInputArgument.getKeywordInputArgument() != null) {
+
+			}
+		}
+		return "Neon,Sinha";
+	}
+
 	public String transpileTestCaseSteps(Artifact artifact, List<FlowStep> flowSteps) {
 		ClassSnippet classSnippet = new ClassSnippet(artifact.getName());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "execute", "");
@@ -121,7 +133,7 @@ public class TranspilerUtilities {
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.getKeyword() != null) {
 				MethodCallSnippet methodCallSnippet = new MethodCallSnippet("new OpKeyGenericKeyword()",
-						flowStep.getKeyword().getKeywordname());
+						flowStep.getKeyword().getKeywordname(), getFlowStepInputArgs(flowStep));
 				methodSnippet.addMethodCallSnippet(methodCallSnippet);
 			}
 		}
