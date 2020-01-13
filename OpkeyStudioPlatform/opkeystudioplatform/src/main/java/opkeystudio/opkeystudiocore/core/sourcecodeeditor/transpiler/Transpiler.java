@@ -22,6 +22,8 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Transpiler {
+	private TranspileObject transpileObject;
+
 	private void createFileNode(FileNode fileNode) throws IOException {
 		if (fileNode.getFileType() == FILE_TYPE.FOLDER || fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER
 				|| fileNode.getFileType() == FILE_TYPE.PROJECTFOLDER) {
@@ -47,6 +49,7 @@ public class Transpiler {
 
 	@SuppressWarnings("unused")
 	public FileNode transpileDatas(TranspileObject transpileObject) {
+		this.setTranspileObject(transpileObject);
 		String path = Utilities.getInstance().getDefaultSourceCodeDirPath();
 		Artifact artifact = transpileObject.getArtifact();
 		FileNode rootNode = new FileNode(artifact.getId(), FILE_TYPE.PROJECTFOLDER);
@@ -84,9 +87,9 @@ public class Transpiler {
 		List<ORObject> orobjects = getAllORObjects(flowSteps);
 		Set<String> orids = getAllObjectRepositoryIds(flowSteps);
 
-		String tcDatas = new TranspilerUtilities().transpileTestCaseSteps(artifact, flowSteps);
-		String ordatas = new TranspilerUtilities().transpileORObjects(orobjects);
-		String gvdatas = new TranspilerUtilities().transpileGlobalVariables(globalVariables);
+		String tcDatas = new TranspilerUtilities(this).transpileTestCaseSteps(artifact, flowSteps);
+		String ordatas = new TranspilerUtilities(this).transpileORObjects(orobjects);
+		String gvdatas = new TranspilerUtilities(this).transpileGlobalVariables(globalVariables);
 
 		FileNode gvFile = new FileNode("GlobalVariables.java", FILE_TYPE.SOURCEFILE);
 		gvFile.setData(gvdatas);
@@ -104,7 +107,7 @@ public class Transpiler {
 			Artifact flartifact = functionLibraryStep.getFunctionLibraryComponent();
 			try {
 				List<FlowStep> flflowSteps = new FunctionLibraryApi().getAllFlowSteps(flartifact.getId());
-				String flDatas = new TranspilerUtilities().transpileTestCaseSteps(flartifact, flflowSteps);
+				String flDatas = new TranspilerUtilities(this).transpileTestCaseSteps(flartifact, flflowSteps);
 				FileNode flFile = new FileNode(flartifact.getName() + ".java", FILE_TYPE.SOURCEFILE);
 				flFile.setData(flDatas);
 				flFile.setParentPath(flNode.getFilePath());
@@ -165,5 +168,13 @@ public class Transpiler {
 			}
 		}
 		return objectRepoId;
+	}
+
+	public TranspileObject getTranspileObject() {
+		return transpileObject;
+	}
+
+	public void setTranspileObject(TranspileObject transpileObject) {
+		this.transpileObject = transpileObject;
 	}
 }

@@ -26,6 +26,11 @@ import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 @SuppressWarnings("unused")
 public class TranspilerUtilities {
+	private Transpiler transpiler;
+
+	public TranspilerUtilities(Transpiler transpiler) {
+		this.setTranspiler(transpiler);
+	}
 
 	private String formatVariableName(String varName) {
 		return varName.replaceAll("-", "");
@@ -117,11 +122,19 @@ public class TranspilerUtilities {
 			if (flowStep.getKeyword() != null) {
 				MethodCallSnippet methodCallSnippet = new MethodCallSnippet("new OpKeyGenericKeyword()",
 						flowStep.getKeyword().getKeywordname(),
-						new TranspileProcessingUtilities().getFlowStepInputDatas(flowStep));
+						new TranspileProcessingUtilities(getTranspiler()).getFlowStepInputDatas(flowStep));
 				methodSnippet.addMethodCallSnippet(methodCallSnippet);
 			}
 		}
 		return classSnippet.toString();
+	}
+
+	public Transpiler getTranspiler() {
+		return transpiler;
+	}
+
+	public void setTranspiler(Transpiler transpiler) {
+		this.transpiler = transpiler;
 	}
 
 }
