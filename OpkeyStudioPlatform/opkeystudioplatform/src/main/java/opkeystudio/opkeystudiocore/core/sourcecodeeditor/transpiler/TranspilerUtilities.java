@@ -116,7 +116,7 @@ public class TranspilerUtilities {
 		return classSnippet.toString();
 	}
 
-	private String getFlowStepInputArgs(FlowStep flowStep) {
+	private String getFlowStepInputDatas(FlowStep flowStep) {
 		ArrayList<String> outData = new ArrayList<String>();
 		List<FlowInputArgument> flowInputArgs = flowStep.getFlowInputArgs();
 		for (FlowInputArgument flowInputArgument : flowInputArgs) {
@@ -134,7 +134,7 @@ public class TranspilerUtilities {
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.getKeyword() != null) {
 				MethodCallSnippet methodCallSnippet = new MethodCallSnippet("new OpKeyGenericKeyword()",
-						flowStep.getKeyword().getKeywordname(), getFlowStepInputArgs(flowStep));
+						flowStep.getKeyword().getKeywordname(), getFlowStepInputDatas(flowStep));
 				methodSnippet.addMethodCallSnippet(methodCallSnippet);
 			}
 		}
