@@ -313,7 +313,11 @@ public class SourceCodeEditor extends Composite {
 				if (sourceCodeText.getTextWidget() == null) {
 					return;
 				}
-				e.bulletIndex = sourceCodeText.getTextWidget().getLineAtOffset(e.lineOffset);
+				try {
+					e.bulletIndex = sourceCodeText.getTextWidget().getLineAtOffset(e.lineOffset);
+				} catch (Exception exception) {
+					exception.printStackTrace();
+				}
 				StyleRange style = new StyleRange();
 				style.metrics = new GlyphMetrics(0, 0,
 						Integer.toString(sourceCodeText.getTextWidget().getLineCount() + 1).length() * 12);
