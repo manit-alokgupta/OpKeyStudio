@@ -26,14 +26,6 @@ import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 @SuppressWarnings("unused")
 public class TranspilerUtilities {
-	private static TranspilerUtilities transpiler;
-
-	public static TranspilerUtilities getTranspiler() {
-		if (transpiler == null) {
-			transpiler = new TranspilerUtilities();
-		}
-		return transpiler;
-	}
 
 	private String formatVariableName(String varName) {
 		return varName.replaceAll("-", "");
