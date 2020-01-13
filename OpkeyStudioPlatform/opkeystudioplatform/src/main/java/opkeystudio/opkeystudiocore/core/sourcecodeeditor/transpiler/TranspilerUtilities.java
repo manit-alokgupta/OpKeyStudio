@@ -14,6 +14,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.ClassSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodCallSnippet;
@@ -120,7 +121,7 @@ public class TranspilerUtilities {
 		List<FlowInputArgument> flowInputArgs = flowStep.getFlowInputArgs();
 		for (FlowInputArgument flowInputArgument : flowInputArgs) {
 			if (flowInputArgument.getKeywordInputArgument() != null) {
-				
+				KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
 			}
 		}
 		return "Neon,Sinha";
