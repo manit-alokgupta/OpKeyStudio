@@ -46,6 +46,7 @@ public class FlowInputArgument extends Modified implements Cloneable {
 	private String componentstep_oa_id;
 
 	private KeyWordInputArgument keywordInputArgument;
+	private ComponentInputArgument componentInputArgument;
 
 	public String getFlow_step_ia_id() {
 		return flow_step_ia_id;
@@ -199,5 +200,13 @@ public class FlowInputArgument extends Modified implements Cloneable {
 
 	public void setKeywordInputArgument(KeyWordInputArgument keywordInputArgument) {
 		this.keywordInputArgument = keywordInputArgument;
+	}
+
+	public ComponentInputArgument getComponentInputArgument() {
+		return componentInputArgument;
+	}
+
+	public void setComponentInputArgument(ComponentInputArgument componentInputArgument) {
+		this.componentInputArgument = componentInputArgument;
 	}
 }

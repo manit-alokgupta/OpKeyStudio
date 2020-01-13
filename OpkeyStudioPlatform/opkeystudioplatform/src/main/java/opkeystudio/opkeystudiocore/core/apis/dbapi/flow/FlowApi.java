@@ -131,6 +131,20 @@ public class FlowApi {
 		}
 	}
 
+	public void insertComponentInputArgument(FunctionLibraryComponent flcomp,
+			List<FlowInputArgument> flowInputArguments) {
+		if (flcomp == null) {
+			return;
+		}
+		if (flowInputArguments.size() == flcomp.getComponentInputArguments().size()) {
+			for (int i = 0; i < flowInputArguments.size(); i++) {
+				FlowInputArgument flowInp = flowInputArguments.get(i);
+				ComponentInputArgument compoInp = flcomp.getComponentInputArguments().get(i);
+				flowInp.setComponentInputArgument(compoInp);
+			}
+		}
+	}
+
 	public List<FlowStep> getAllFlowSteps(String flowId)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
@@ -155,6 +169,7 @@ public class FlowApi {
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flComp.setComponentInputArguments(inputArgs);
 				flComp.setComponentOutputArguments(outputArgs);
+				insertComponentInputArgument(flComp, fis);
 				flowStep.setOrObject(allORObject);
 				flowStep.setFunctionLibraryComponent(flComp);
 				flowStep.setFlowInputArgs(fis);
