@@ -1,8 +1,11 @@
 package opkeystudio.opkeystudiocore.core.keywordmanager.dto;
 
+import opkeystudio.opkeystudiocore.core.utils.DataType.GenericDataType;
+
 public class KeyWordInputArgument {
+	
 	private String keywordid;
-	private String datatype;
+	private GenericDataType datatype;
 	private String name;
 	private String description;
 	private int position;
@@ -18,11 +21,11 @@ public class KeyWordInputArgument {
 		this.keywordid = keywordid;
 	}
 
-	public String getDatatype() {
+	public GenericDataType getDatatype() {
 		return datatype;
 	}
 
-	public void setDatatype(String datatype) {
+	public void setDatatype(GenericDataType datatype) {
 		this.datatype = datatype;
 	}
 

@@ -10,6 +10,7 @@ import java.util.Set;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import opkeystudio.opkeystudiocore.core.utils.DataType.GenericDataType;
 
 public class KeywordManager {
 	private static KeywordManager manager;
@@ -25,7 +26,7 @@ public class KeywordManager {
 
 	private void keywordContainsORObject(Keyword keyword) {
 		for (KeyWordInputArgument kinarg : keyword.getKeywordInputArguments()) {
-			if (kinarg.getDatatype().equals("ORObject")) {
+			if (kinarg.getDatatype() == GenericDataType.ORObject) {
 				keyword.setKeywordContainsORObject(true);
 				break;
 			}

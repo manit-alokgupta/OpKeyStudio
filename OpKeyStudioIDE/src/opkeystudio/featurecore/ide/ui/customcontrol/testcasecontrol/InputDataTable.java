@@ -43,6 +43,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
+import opkeystudio.opkeystudiocore.core.utils.DataType.GenericDataType;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class InputDataTable extends CustomTable {
@@ -328,7 +329,7 @@ public class InputDataTable extends CustomTable {
 				System.out.println("KeyInputArgs " + filteredKeywordInputArgs.size() + "    " + "FlowInputArgs "
 						+ filteredFlowInputArgs.size());
 				if (filteredKeywordInputArgs.size() == filteredFlowInputArgs.size()) {
-					if (!keywordInputArg.getDatatype().equals("ORObject")) {
+					if (keywordInputArg.getDatatype() != GenericDataType.ORObject) {
 
 						FlowInputArgument flowInputArg = flowInputArgs.get(i);
 						CustomTableItem cti = new CustomTableItem(this, 0);
@@ -336,8 +337,8 @@ public class InputDataTable extends CustomTable {
 						if (valueData == null) {
 							valueData = "";
 						}
-						cti.setText(
-								new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(), valueData });
+						cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getName(),
+								valueData });
 						cti.setControlData(flowInputArg);
 						addInputTableEditor(cti);
 					}

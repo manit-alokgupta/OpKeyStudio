@@ -20,6 +20,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgumen
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
+import opkeystudio.opkeystudiocore.core.utils.DataType.GenericDataType;
 
 public class StepDetailsInputData extends CustomTable {
 
@@ -27,6 +28,7 @@ public class StepDetailsInputData extends CustomTable {
 	private List<FlowInputArgument> flowInputArgs;
 	private List<ComponentInputArgument> componentInputArgs;
 	private TestCaseView parentTestCaseView;
+
 	public StepDetailsInputData(Composite parent, int style) {
 		super(parent, style);
 		init();
@@ -128,10 +130,10 @@ public class StepDetailsInputData extends CustomTable {
 		if (getKeyWordInputArgs() != null) {
 			for (int i = 0; i < getKeyWordInputArgs().size(); i++) {
 				KeyWordInputArgument keywordInputArg = getKeyWordInputArgs().get(i);
-				if (!keywordInputArg.getDatatype().equals("ORObject")) {
+				if (keywordInputArg.getDatatype() != GenericDataType.ORObject) {
 					FlowInputArgument flowInputArg = flowInputArgs.get(i);
 					CustomTableItem cti = new CustomTableItem(this, 0);
-					cti.setText(new String[] { keywordInputArg.getDatatype(), keywordInputArg.getName(),
+					cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getName(),
 							flowInputArg.getStaticvalue() });
 					cti.setControlData(flowInputArg);
 				}
