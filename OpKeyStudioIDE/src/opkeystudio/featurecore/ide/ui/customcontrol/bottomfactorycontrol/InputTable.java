@@ -375,10 +375,10 @@ public class InputTable extends CustomTable {
 		if (this.getSelection() == null) {
 			return null;
 		}
-		if (this.getSelection()[0] == null) {
+		if (this.getSelection().length == 0) {
 			return null;
 		}
-		if (this.getSelection().length == 0) {
+		if (this.getSelection()[0] == null) {
 			return null;
 		}
 		CustomTableItem cti = (CustomTableItem) this.getSelection()[0];
