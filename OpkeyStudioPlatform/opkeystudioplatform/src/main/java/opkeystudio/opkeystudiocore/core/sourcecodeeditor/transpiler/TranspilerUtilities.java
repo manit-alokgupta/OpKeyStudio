@@ -122,9 +122,14 @@ public class TranspilerUtilities {
 		for (FlowInputArgument flowInputArgument : flowInputArgs) {
 			if (flowInputArgument.getKeywordInputArgument() != null) {
 				KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
+				if (flowInputArgument.getStaticvalue() != null) {
+					outData.add(flowInputArgument.getStaticvalue());
+				}
 			}
 		}
-		return "Neon,Sinha";
+		String[] strOutArray = new String[0];
+		strOutArray = outData.toArray(strOutArray);
+		return String.join(",", strOutArray);
 	}
 
 	public String transpileTestCaseSteps(Artifact artifact, List<FlowStep> flowSteps) {

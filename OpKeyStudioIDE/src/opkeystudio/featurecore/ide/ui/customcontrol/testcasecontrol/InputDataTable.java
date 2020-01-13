@@ -329,7 +329,7 @@ public class InputDataTable extends CustomTable {
 				System.out.println("KeyInputArgs " + filteredKeywordInputArgs.size() + "    " + "FlowInputArgs "
 						+ filteredFlowInputArgs.size());
 				if (filteredKeywordInputArgs.size() == filteredFlowInputArgs.size()) {
-					if (keywordInputArg.getDatatype() != GenericDataType.ORObject) {
+					if (!keywordInputArg.getDatatype().equals("ORObject")) {
 
 						FlowInputArgument flowInputArg = flowInputArgs.get(i);
 						CustomTableItem cti = new CustomTableItem(this, 0);

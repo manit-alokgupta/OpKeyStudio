@@ -5,7 +5,7 @@ import opkeystudio.opkeystudiocore.core.utils.DataType.GenericDataType;
 public class KeyWordInputArgument {
 	
 	private String keywordid;
-	private GenericDataType datatype;
+	private String datatype;
 	private String name;
 	private String description;
 	private int position;
@@ -21,11 +21,11 @@ public class KeyWordInputArgument {
 		this.keywordid = keywordid;
 	}
 
-	public GenericDataType getDatatype() {
+	public String getDatatype() {
 		return datatype;
 	}
 
-	public void setDatatype(GenericDataType datatype) {
+	public void setDatatype(String datatype) {
 		this.datatype = datatype;
 	}
 

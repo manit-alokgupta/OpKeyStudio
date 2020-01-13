@@ -26,7 +26,7 @@ public class KeywordManager {
 
 	private void keywordContainsORObject(Keyword keyword) {
 		for (KeyWordInputArgument kinarg : keyword.getKeywordInputArguments()) {
-			if (kinarg.getDatatype() == GenericDataType.ORObject) {
+			if (kinarg.getDatatype().equals("ORObject")) {
 				keyword.setKeywordContainsORObject(true);
 				break;
 			}
