@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -42,22 +44,46 @@ public class TranspileProcessingUtilities {
 	public String getFlowStepInputDatas(FlowStep flowStep) {
 		ArrayList<String> outData = new ArrayList<String>();
 		List<FlowInputArgument> flowInputArgs = flowStep.getFlowInputArgs();
+		Artifact artifact = getTranspiler().getTranspileObject().getArtifact();
 		for (FlowInputArgument flowInputArgument : flowInputArgs) {
-			if (flowInputArgument.getKeywordInputArgument() != null) {
-				if (flowInputArgument.getStaticobjectid() != null) {
-					outData.add(getAssociatedORObject_variableName(flowInputArgument.getStaticobjectid()));
-				} else {
-					if (flowInputArgument.getDatasource() == DataSource.StaticValue) {
-						KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
-						String valueData = flowInputArgument.getStaticvalue();
-						if (keywordInputArgument.getDatatype().equals("String")) {
-							valueData = "\"" + valueData + "\"";
+			if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
+				if (flowInputArgument.getKeywordInputArgument() != null) {
+					if (flowInputArgument.getStaticobjectid() != null) {
+						outData.add(getAssociatedORObject_variableName(flowInputArgument.getStaticobjectid()));
+					} else {
+						if (flowInputArgument.getDatasource() == DataSource.StaticValue) {
+							KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
+							String valueData = flowInputArgument.getStaticvalue();
+							if (keywordInputArgument.getDatatype().equals("String")) {
+								valueData = "\"" + valueData + "\"";
+							}
+							outData.add(valueData);
 						}
-						outData.add(valueData);
-					}
 
-					if (flowInputArgument.getDatasource() == DataSource.ValueFromGlobalVariable) {
-						outData.add(getAssociatedGlobalVariable_variableName(flowInputArgument.getGlobalvariable_id()));
+						if (flowInputArgument.getDatasource() == DataSource.ValueFromGlobalVariable) {
+							outData.add(
+									getAssociatedGlobalVariable_variableName(flowInputArgument.getGlobalvariable_id()));
+						}
+					}
+				}
+			} else if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+				if (flowInputArgument.getKeywordInputArgument() != null) {
+					if (flowInputArgument.getStaticobjectid() != null) {
+						outData.add(getAssociatedORObject_variableName(flowInputArgument.getStaticobjectid()));
+					} else {
+						if (flowInputArgument.getArg_datasource() == DataSource.StaticValue) {
+							KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
+							String valueData = flowInputArgument.getStaticvalue();
+							if (keywordInputArgument.getDatatype().equals("String")) {
+								valueData = "\"" + valueData + "\"";
+							}
+							outData.add(valueData);
+						}
+
+						if (flowInputArgument.getArg_datasource() == DataSource.ValueFromGlobalVariable) {
+							outData.add(
+									getAssociatedGlobalVariable_variableName(flowInputArgument.getGlobalvariable_id()));
+						}
 					}
 				}
 			}
