@@ -1,19 +1,15 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
-import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -43,12 +39,28 @@ public class GlobalLoader {
 				globalLoader.initAllFlowOutputArguments();
 				globalLoader.initAllComponentFlowInputArguments();
 				globalLoader.initAllComponentFlowOutputArguments();
+				globalLoader.initAllORObjects();
 			}
 		});
 		thread.start();
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void initAllORObjects() {
+		String query = "select * from or_objects";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ORObject.class);
+		List<ORObject> orObjects = new ArrayList<ORObject>();
+		try {
+			orObjects = mapper.readValue(result, type);
+			setAllORObjects(orObjects);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -144,5 +156,13 @@ public class GlobalLoader {
 
 	public void setComponentflowOutputArguments(List<FlowOutputArgument> componentflowOutputArguments) {
 		this.componentflowOutputArguments = componentflowOutputArguments;
+	}
+
+	public List<ORObject> getAllORObjects() {
+		return allORObjects;
+	}
+
+	public void setAllORObjects(List<ORObject> allORObjects) {
+		this.allORObjects = allORObjects;
 	}
 }

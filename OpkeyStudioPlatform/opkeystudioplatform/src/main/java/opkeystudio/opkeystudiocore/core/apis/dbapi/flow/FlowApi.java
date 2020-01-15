@@ -79,11 +79,17 @@ public class FlowApi {
 	private List<ORObject> getORObjectsArguments(FlowStep flowStep)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<ORObject> allORObjects = new ArrayList<ORObject>();
-		List<FlowInputArgument> inputArguments = getFlowStepInputArguments(flowStep);
+		List<FlowInputArgument> inputArguments = flowStep.getFlowInputArgs();
 		for (FlowInputArgument inputArgument : inputArguments) {
 			if (inputArgument.getStaticobjectid() != null) {
-				List<ORObject> orobjects = new ObjectRepositoryApi().getORObject(inputArgument.getStaticobjectid());
-				allORObjects.addAll(orobjects);
+				// List<ORObject> orobjects = new
+				// ObjectRepositoryApi().getORObject(inputArgument.getStaticobjectid());
+				List<ORObject> orobjects = GlobalLoader.getInstance().getAllORObjects();
+				for (ORObject orobect : orobjects) {
+					if (orobect.getObject_id().equals(inputArgument.getStaticobjectid())) {
+						allORObjects.add(orobect);
+					}
+				}
 			}
 		}
 		return allORObjects;
@@ -126,11 +132,11 @@ public class FlowApi {
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				insertKeywordInputArgument(keyword, fis);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-				List<ORObject> allORObject = getORObjectsArguments(flowStep);
-				flowStep.setOrObject(allORObject);
 				flowStep.setKeyword(keyword);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
+				List<ORObject> allORObject = getORObjectsArguments(flowStep);
+				flowStep.setOrObject(allORObject);
 				flowStep.setIstestcase(true);
 			} else if (flowStep.getComponent_id() != null) {
 				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getComponent_id()).get(0);
@@ -138,14 +144,14 @@ public class FlowApi {
 				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(flowStep.getComponent_id());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flComp.setComponentInputArguments(inputArgs);
 				flComp.setComponentOutputArguments(outputArgs);
 				insertComponentInputArgument(flComp, fis);
-				flowStep.setOrObject(allORObject);
 				flowStep.setFunctionLibraryComponent(flComp);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
+				List<ORObject> allORObject = getORObjectsArguments(flowStep);
+				flowStep.setOrObject(allORObject);
 				flowStep.setIsfunctionlibrary(true);
 			}
 		}

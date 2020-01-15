@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
@@ -26,8 +27,6 @@ import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FunctionLibraryApi {
-	private List<FlowInputArgument> flowInputArguments = new ArrayList<>();
-	private List<FlowOutputArgument> flowOutputArguments = new ArrayList<>();
 	private static FunctionLibraryApi flowApi;
 
 	public static FunctionLibraryApi getInstance() {
@@ -50,12 +49,10 @@ public class FunctionLibraryApi {
 		return mapper.readValue(result, type);
 	}
 
-
-
 	private List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
-		List<FlowInputArgument> inputArguments = getFlowInputArguments();
+		List<FlowInputArgument> inputArguments = GlobalLoader.getInstance().getComponentflowInputArguments();
 		for (FlowInputArgument flowInputArgument : inputArguments) {
 			if (flowInputArgument.getStepid().equals(flowStep.getStepid())) {
 				flowInputArgs.add(flowInputArgument);
@@ -67,7 +64,7 @@ public class FunctionLibraryApi {
 	private List<FlowOutputArgument> getFlowStepOutputArguments(FlowStep flowStep)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		List<FlowOutputArgument> flowInputArgs = new ArrayList<FlowOutputArgument>();
-		List<FlowOutputArgument> inputArguments = getFlowOutputArguments();
+		List<FlowOutputArgument> inputArguments = GlobalLoader.getInstance().getComponentflowOutputArguments();
 		for (FlowOutputArgument flowInputArgument : inputArguments) {
 			if (flowInputArgument.getComponentstep_id().equals(flowStep.getStepid())) {
 				flowInputArgs.add(flowInputArgument);
@@ -79,11 +76,15 @@ public class FunctionLibraryApi {
 	private List<ORObject> getORObjectsArguments(FlowStep flowStep)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
 		List<ORObject> allORObjects = new ArrayList<ORObject>();
-		List<FlowInputArgument> inputArguments = getFlowStepInputArguments(flowStep);
+		List<FlowInputArgument> inputArguments = flowStep.getFlowInputArgs();
 		for (FlowInputArgument inputArgument : inputArguments) {
 			if (inputArgument.getStaticobjectid() != null) {
-				List<ORObject> orobjects = new ObjectRepositoryApi().getORObject(inputArgument.getStaticobjectid());
-				allORObjects.addAll(orobjects);
+				List<ORObject> orobjects = GlobalLoader.getInstance().getAllORObjects();
+				for (ORObject orobect : orobjects) {
+					if (orobect.getObject_id().equals(inputArgument.getStaticobjectid())) {
+						allORObjects.add(orobect);
+					}
+				}
 			}
 		}
 		return allORObjects;
@@ -99,11 +100,11 @@ public class FunctionLibraryApi {
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				new FlowApi().insertKeywordInputArgument(keyword, fis);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-				List<ORObject> allORObject = getORObjectsArguments(flowStep);
-				flowStep.setOrObject(allORObject);
 				flowStep.setKeyword(keyword);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
+				List<ORObject> allORObject = getORObjectsArguments(flowStep);
+				flowStep.setOrObject(allORObject);
 				flowStep.setIstestcase(true);
 			} else if (flowStep.getStepcomponent_id() != null) {
 				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getStepcomponent_id()).get(0);
@@ -112,13 +113,13 @@ public class FunctionLibraryApi {
 						flowStep.getStepcomponent_id());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flComp.setComponentInputArguments(inputArgs);
 				flComp.setComponentOutputArguments(outputArgs);
-				flowStep.setOrObject(allORObject);
 				flowStep.setFunctionLibraryComponent(flComp);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
+				List<ORObject> allORObject = getORObjectsArguments(flowStep);
+				flowStep.setOrObject(allORObject);
 				flowStep.setIsfunctionlibrary(true);
 			}
 		}
@@ -169,22 +170,6 @@ public class FunctionLibraryApi {
 			e.printStackTrace();
 		}
 		return new ArrayList<FunctionLibraryComponent>();
-	}
-
-	public List<FlowInputArgument> getFlowInputArguments() {
-		return flowInputArguments;
-	}
-
-	private void setFlowInputArguments(List<FlowInputArgument> flowInputArguments) {
-		this.flowInputArguments = flowInputArguments;
-	}
-
-	public List<FlowOutputArgument> getFlowOutputArguments() {
-		return flowOutputArguments;
-	}
-
-	private void setFlowOutputArguments(List<FlowOutputArgument> flowOutputArguments) {
-		this.flowOutputArguments = flowOutputArguments;
 	}
 
 }
