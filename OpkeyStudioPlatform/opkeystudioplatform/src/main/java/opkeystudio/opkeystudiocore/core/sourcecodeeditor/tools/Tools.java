@@ -49,4 +49,8 @@ public class Tools {
 		}
 		return filteredFiles;
 	}
+
+	public String removeSpecialCharacters(String str) {
+		return str.replaceAll("[^a-zA-Z0-9\\s+]", "");
+	}
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Tools;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FileNode extends Modified {
@@ -32,6 +33,7 @@ public class FileNode extends Modified {
 	}
 
 	public void setFileName(String fileName) {
+		fileName = new Tools().removeSpecialCharacters(fileName);
 		this.fileName = fileName;
 	}
 
