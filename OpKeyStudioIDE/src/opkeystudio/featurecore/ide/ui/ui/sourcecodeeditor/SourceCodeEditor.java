@@ -1,9 +1,11 @@
 package opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -126,9 +128,16 @@ public class SourceCodeEditor extends Composite {
 				List<FileNode> fileNodes = sourceCodeTree.getAllFileNodes();
 				for (FileNode fnode : fileNodes) {
 					if (fnode.isModified()) {
-						System.out.println("Modified " + fnode.getFilePath());
+						try {
+							new CompilerTools().saveSourceCodeFile(fnode);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 				}
+				toggleSaveAllButton(false);
+
 			}
 
 			@Override
@@ -164,6 +173,23 @@ public class SourceCodeEditor extends Composite {
 				tabFolder.setSelection(tabItem);
 			}
 		});
+		toggleSaveAllButton(false);
+	}
+
+	public void toggleRunButton(boolean status) {
+		this.runButton.setEnabled(status);
+	}
+
+	public void toggleCompileButton(boolean status) {
+		this.compileButton.setEnabled(status);
+	}
+
+	public void toggleSaveAllButton(boolean status) {
+		this.saveAllButton.setEnabled(status);
+	}
+
+	public void toggleRefreshButton(boolean status) {
+		this.refreshButton.setEnabled(status);
 	}
 
 	private void renderTreeItemsNode(SourceCodeTreeItem treeItemNode, FileNode node) {
@@ -271,6 +297,7 @@ public class SourceCodeEditor extends Composite {
 				FileNode fileNode = sourceCodeTree.getSelectedFileNode();
 				fileNode.setData(sourceCodeText.getTextWidget().getText());
 				fileNode.setModified(true);
+				toggleSaveAllButton(true);
 				if (isWhitespaceString(e.getText())) {
 					wordTracker.add(findMostRecentWord(e.getOffset() - 1));
 				}

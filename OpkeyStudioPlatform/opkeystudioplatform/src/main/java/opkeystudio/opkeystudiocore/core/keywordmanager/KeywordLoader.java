@@ -21,8 +21,7 @@ public class KeywordLoader {
 		try {
 			sqlComm.connect();
 			String results = sqlComm.executeQueryString(
-					"SELECT t1.Name as KeyWordName,t1.Description as KeywordDescription,* FROM main_keywords t1\r\n"
-							+ " INNER JOIN main_keywordarguments t2 USING(KeywordID) \r\n" + " ORDER BY Position ASC");
+					"SELECT t1.Name as KeyWordName,t1.Description as KeywordDescription,* FROM main_keywords t1");
 			ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 			CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, Keyword.class);
 			return mapper.readValue(results, type);

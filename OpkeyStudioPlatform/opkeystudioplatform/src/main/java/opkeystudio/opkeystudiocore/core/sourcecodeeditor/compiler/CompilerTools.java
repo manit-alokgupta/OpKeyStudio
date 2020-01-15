@@ -1,6 +1,8 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +66,13 @@ public class CompilerTools {
 			}
 		}
 		return null;
+	}
+
+	public void saveSourceCodeFile(FileNode fileNode) throws IOException {
+		File file = new File(fileNode.getFilePath());
+		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+		bw.write(fileNode.getData());
+		bw.flush();
+		bw.close();
 	}
 }
