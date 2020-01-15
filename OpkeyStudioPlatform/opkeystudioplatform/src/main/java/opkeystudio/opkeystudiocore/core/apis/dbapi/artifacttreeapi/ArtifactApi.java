@@ -65,15 +65,9 @@ public class ArtifactApi {
 	}
 
 	public void renameArtifact(Artifact artifact) {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		try {
-			String updateQuery = new QueryMaker().createUpdateQuery(artifact, "main_artifact_filesystem",
-					String.format("WHERE id='%s'", artifact.getId()));
-			sqlComm.executeUpdate(updateQuery);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String updateQuery = new QueryMaker().createUpdateQuery(artifact, "main_artifact_filesystem",
+				String.format("WHERE id='%s'", artifact.getId()));
+		QueryExecutor.getInstance().executeUpdateQuery(updateQuery);
 	}
 
 	public void createArtifact(String parentId, String artifactName, MODULETYPE artifactType) {

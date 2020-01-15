@@ -19,6 +19,7 @@ public class KeywordLoader {
 	public List<Keyword> loadKeywords(String dbPath) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator(dbPath);
 		try {
+			sqlComm.connect();
 			String results = sqlComm.executeQueryString(
 					"SELECT t1.Name as KeyWordName,t1.Description as KeywordDescription,* FROM main_keywords t1\r\n"
 							+ " INNER JOIN main_keywordarguments t2 USING(KeywordID) \r\n" + " ORDER BY Position ASC");
@@ -44,8 +45,10 @@ public class KeywordLoader {
 	public List<KeyWordInputArgument> loadAllKeywordInputArguments(String dbPath) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator(dbPath);
 		try {
+			sqlComm.connect();
 			String results = sqlComm
 					.executeQueryString("SELECT * FROM main_keywordarguments \r\n" + "ORDER BY Position asc");
+			sqlComm.disconnect();
 			ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 			CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
 					KeyWordInputArgument.class);

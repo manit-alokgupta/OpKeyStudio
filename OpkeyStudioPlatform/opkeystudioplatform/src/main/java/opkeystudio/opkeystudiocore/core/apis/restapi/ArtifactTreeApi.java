@@ -17,7 +17,7 @@ public class ArtifactTreeApi {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("moduleType", "AllUnified");
 		params.put("parentID", parentID);
-		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/OpKeyStudio/GetJSTreeNodesLazy", "GET",
+		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/ExplorerTreeAPI/GetJSTreeNodesLazy", "GET",
 				params, null, null);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ArtifactTreeNode.class);

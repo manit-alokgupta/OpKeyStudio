@@ -16,25 +16,34 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 public class SQLiteCommunicator {
 	private Connection connection;
 	private String sqliteDbUrl;
+	private static SQLiteCommunicator opkeyDBConnector;
+
+	public static SQLiteCommunicator getOpKeyDBCommunicator() throws SQLException {
+		return opkeyDBConnector;
+	}
+
+	public static void getOpKeyDBCommunicator(SQLiteCommunicator comm) {
+		opkeyDBConnector = comm;
+	}
 
 	public SQLiteCommunicator() {
 		this.sqliteDbUrl = "jdbc:sqlite:" + ServiceRepository.getInstance().getExportedDBFilePath();
-		try {
-			connection = DriverManager.getConnection(this.sqliteDbUrl);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public SQLiteCommunicator(String dbFileUrl) {
 		this.sqliteDbUrl = "jdbc:sqlite:" + dbFileUrl;
-		try {
-			connection = DriverManager.getConnection(this.sqliteDbUrl);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	}
+
+	public void connect() throws SQLException {
+		if (connection != null) {
+			System.out.println("Already Connected");
+			return;
 		}
+		connection = DriverManager.getConnection(this.sqliteDbUrl);
+	}
+
+	public void disconnect() throws SQLException {
+		connection.close();
 	}
 
 	public ResultSet executeQuery(String query) throws SQLException {

@@ -16,8 +16,8 @@ public class QueryExecutor {
 
 	public String executeQuery(String query) {
 		System.out.println(query);
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
+			SQLiteCommunicator sqlComm = SQLiteCommunicator.getOpKeyDBCommunicator();
 			String result = sqlComm.executeQueryString(query);
 			return result;
 		} catch (SQLException e) {
@@ -28,8 +28,8 @@ public class QueryExecutor {
 	}
 
 	public int executeUpdateQuery(String query) {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
+			SQLiteCommunicator sqlComm = SQLiteCommunicator.getOpKeyDBCommunicator();
 			int result = sqlComm.executeUpdate(query);
 			return result;
 		} catch (SQLException e) {
