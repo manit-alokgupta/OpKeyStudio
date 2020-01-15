@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -23,6 +24,8 @@ public class GlobalLoader {
 
 	private List<FlowInputArgument> componentflowInputArguments = new ArrayList<>();
 	private List<FlowOutputArgument> componentflowOutputArguments = new ArrayList<>();
+
+	private List<ORObject> allORObjects = new ArrayList<ORObject>();
 
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
