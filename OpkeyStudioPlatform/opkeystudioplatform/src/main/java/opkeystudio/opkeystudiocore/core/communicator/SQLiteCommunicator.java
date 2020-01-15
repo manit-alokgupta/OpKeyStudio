@@ -19,18 +19,22 @@ public class SQLiteCommunicator {
 
 	public SQLiteCommunicator() {
 		this.sqliteDbUrl = "jdbc:sqlite:" + ServiceRepository.getInstance().getExportedDBFilePath();
+		try {
+			connection = DriverManager.getConnection(this.sqliteDbUrl);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public SQLiteCommunicator(String dbFileUrl) {
 		this.sqliteDbUrl = "jdbc:sqlite:" + dbFileUrl;
-	}
-
-	public void connect() throws SQLException {
-		connection = DriverManager.getConnection(this.sqliteDbUrl);
-	}
-
-	public void disconnect() throws SQLException {
-		connection.close();
+		try {
+			connection = DriverManager.getConnection(this.sqliteDbUrl);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public ResultSet executeQuery(String query) throws SQLException {

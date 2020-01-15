@@ -171,27 +171,23 @@ public class FlowApi {
 	public List<ComponentOutputArgument> getAllComponentOutputArgument(String componentId)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
 		String query = String.format(
 				"select * from component_output_parameters where component_id='%s' ORDER BY position asc", componentId);
 		String result = sqlComm.executeQueryString(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
 				ComponentOutputArgument.class);
-		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
 
 	public List<FunctionLibraryComponent> getFunctinLibraryComponent(String componentId)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
 		String query = String.format("select * from main_artifact_filesystem where id='%s'", componentId);
 		String result = sqlComm.executeQueryString(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
 				FunctionLibraryComponent.class);
-		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
 

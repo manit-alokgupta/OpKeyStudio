@@ -67,11 +67,9 @@ public class ArtifactApi {
 	public void renameArtifact(Artifact artifact) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
-			sqlComm.connect();
 			String updateQuery = new QueryMaker().createUpdateQuery(artifact, "main_artifact_filesystem",
 					String.format("WHERE id='%s'", artifact.getId()));
 			sqlComm.executeUpdate(updateQuery);
-			sqlComm.disconnect();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

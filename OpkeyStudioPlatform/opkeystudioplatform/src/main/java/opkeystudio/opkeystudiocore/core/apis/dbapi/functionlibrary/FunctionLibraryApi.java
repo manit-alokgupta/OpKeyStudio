@@ -39,13 +39,11 @@ public class FunctionLibraryApi {
 	private List<FlowStep> getAllSteps(String flowId)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
 		String query = String
 				.format("SELECT * FROM component_design_steps where component_id='%s' ORDER BY position asc", flowId);
 		String result = sqlComm.executeQueryString(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowStep.class);
-		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
 

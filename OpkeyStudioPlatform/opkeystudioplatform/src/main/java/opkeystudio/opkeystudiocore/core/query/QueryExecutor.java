@@ -18,9 +18,7 @@ public class QueryExecutor {
 		System.out.println(query);
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
-			sqlComm.connect();
 			String result = sqlComm.executeQueryString(query);
-			sqlComm.disconnect();
 			return result;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -32,9 +30,7 @@ public class QueryExecutor {
 	public int executeUpdateQuery(String query) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
-			sqlComm.connect();
 			int result = sqlComm.executeUpdate(query);
-			sqlComm.disconnect();
 			return result;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

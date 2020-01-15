@@ -18,11 +18,9 @@ public class GlobalVariableApi {
 	public List<GlobalVariable> getAllGlobalVariables()
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
 		String result = sqlComm.executeQueryString("select * from global_variables");
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, GlobalVariable.class);
-		sqlComm.disconnect();
 		return mapper.readValue(result, type);
 	}
 
@@ -43,7 +41,6 @@ public class GlobalVariableApi {
 	public void deleteGlobalVariable(GlobalVariable gvar) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
-			sqlComm.connect();
 			int result = sqlComm
 					.executeUpdate(String.format("delete from global_variables where gv_id='%s'", gvar.getGv_id()));
 		} catch (SQLException e) {
@@ -56,7 +53,6 @@ public class GlobalVariableApi {
 	public void updateGlobalVariable(GlobalVariable gvar) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
-			sqlComm.connect();
 			String query = String.format(
 					"update global_variables Set Name='%s',Value='%s',datatype='%s',ExternallyUpdatable='%s' where GV_ID='%s'",
 					gvar.getName(), gvar.getValue(), gvar.getDatatype(), gvar.isExternallyupdatable(), gvar.getGv_id());
@@ -71,7 +67,6 @@ public class GlobalVariableApi {
 	public void insertGlobalVaribale(GlobalVariable gvar) {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
 		try {
-			sqlComm.connect();
 			String query = String.format(
 					"insert into global_variables(p_id,gv_id,Name,value,datatype,ExternallyUpdatable,position) VALUES('%s','%s','%s','%s','%s','%s','%s')",
 					gvar.getP_id(), gvar.getGv_id(), gvar.getName(), gvar.getValue(), gvar.getDatatype(),
