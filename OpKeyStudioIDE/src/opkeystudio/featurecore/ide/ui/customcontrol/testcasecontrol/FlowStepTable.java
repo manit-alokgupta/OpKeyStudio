@@ -449,16 +449,6 @@ public class FlowStepTable extends CustomTable {
 		}
 		String artifactId = artifact.getId();
 		List<FlowStep> flowSteps = null;
-		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
-			FlowApi.getInstance().initAllFlowInputArguments();
-			FlowApi.getInstance().initAllFlowOutputArguments();
-			flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
-		}
-		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-			FunctionLibraryApi.getInstance().initAllFlowInputArguments();
-			FunctionLibraryApi.getInstance().initAllFlowOutputArguments();
-			flowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(artifactId);
-		}
 		setFlowStepsData(flowSteps);
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.isDeleted() == false) {
