@@ -34,6 +34,26 @@ public class GlobalLoader {
 		return globalLoader;
 	}
 
+	public void initAllArguments() {
+		Thread thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				globalLoader.initAllFlowInputArguments();
+				globalLoader.initAllFlowOutputArguments();
+				globalLoader.initAllComponentFlowInputArguments();
+				globalLoader.initAllComponentFlowOutputArguments();
+			}
+		});
+		thread.start();
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public void initAllFlowInputArguments() {
 		String query = "SELECT * FROM flow_step_input_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
@@ -49,43 +69,49 @@ public class GlobalLoader {
 		setFlowInputArguments(flowInputArgs);
 	}
 
-	public void initAllFlowOutputArguments()
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
+	public void initAllFlowOutputArguments() {
 		String query = "SELECT * FROM flow_step_output_arguments";
-		String result = sqlComm.executeQueryString(query);
+		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
-		sqlComm.disconnect();
-		List<FlowOutputArgument> outputArguments = mapper.readValue(result, type);
-		setFlowOutputArguments(outputArguments);
+		List<FlowOutputArgument> outputArguments;
+		try {
+			outputArguments = mapper.readValue(result, type);
+			setFlowOutputArguments(outputArguments);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void initAllComponentFlowInputArguments()
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
+	public void initAllComponentFlowInputArguments() {
 		String query = "SELECT * FROM component_step_input_args";
-		String result = sqlComm.executeQueryString(query);
+		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowInputArgument.class);
-		sqlComm.disconnect();
-		List<FlowInputArgument> flowInputArgs = mapper.readValue(result, type);
-		setComponentflowInputArguments(flowInputArgs);
+		List<FlowInputArgument> flowInputArgs;
+		try {
+			flowInputArgs = mapper.readValue(result, type);
+			setComponentflowInputArguments(flowInputArgs);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void initComponentAllFlowOutputArguments()
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
+	public void initAllComponentFlowOutputArguments() {
 		String query = "SELECT * FROM component_step_output_arguments";
-		String result = sqlComm.executeQueryString(query);
+		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
-		sqlComm.disconnect();
-		List<FlowOutputArgument> outputArguments = mapper.readValue(result, type);
-		setComponentflowOutputArguments(outputArguments);
+		List<FlowOutputArgument> outputArguments;
+		try {
+			outputArguments = mapper.readValue(result, type);
+			setComponentflowOutputArguments(outputArguments);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public List<FlowInputArgument> getFlowInputArguments() {
