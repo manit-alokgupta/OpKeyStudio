@@ -41,7 +41,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import io.lettuce.core.dynamic.annotation.Key;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -120,6 +119,24 @@ public class SourceCodeEditor extends Composite {
 			}
 		});
 
+		saveAllButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				List<FileNode> fileNodes = sourceCodeTree.getAllFileNodes();
+				for (FileNode fnode : fileNodes) {
+					if (fnode.isModified()) {
+						System.out.println("Modified " + fnode.getFilePath());
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		sourceCodeTree.addMouseListener(new MouseListener() {
 
 			@Override
