@@ -15,6 +15,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -186,7 +187,7 @@ public class ObjectRepositoryTree extends CustomTree {
 		rootNode.setText("ObjectRepository");
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
-		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("ObjectRepository");
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
 		for (Artifact artifact : artifacts) {
 			renderObjectRepositories(rootNode, artifact.getName(), artifact.getId());
 		}
@@ -196,29 +197,29 @@ public class ObjectRepositoryTree extends CustomTree {
 		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(mainRootNode, 0);
 		rootNode.setText(name);
 		rootNode.setExpanded(true);
-		try {
-
-			addIcon(rootNode);
-			List<ORObject> objectRepositories = new ObjectRepositoryApi().getAllObjects(or_id.trim());
-			setObjectRepositoriesData(objectRepositories);
-			List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
-			for (ORObject objectRepository : objectRepositories) {
-				if (objectRepository.getParent_object_id() == null) {
-					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
-					orTreeItem.setText(objectRepository.getName());
-					orTreeItem.setArtifact(objectRepository);
-					topMostNodes.add(orTreeItem);
-					addIcon(orTreeItem);
-				}
+		addIcon(rootNode);
+		List<ORObject> objectRepositories = new ArrayList<ORObject>();
+		List<ORObject> allOrObjects = GlobalLoader.getInstance().getAllORObjects();
+		for (ORObject orobject : allOrObjects) {
+			if (orobject.getOr_id().equals(or_id.trim())) {
+				objectRepositories.add(orobject);
 			}
-
-			for (ObjectRepositoryTreeItem topMostNode : topMostNodes) {
-				renderAllArtifactTree(topMostNode, objectRepositories);
-			}
-			expandAll(mainRootNode);
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
 		}
+		List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
+		for (ORObject objectRepository : objectRepositories) {
+			if (objectRepository.getParent_object_id() == null) {
+				ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
+				orTreeItem.setText(objectRepository.getName());
+				orTreeItem.setArtifact(objectRepository);
+				topMostNodes.add(orTreeItem);
+				addIcon(orTreeItem);
+			}
+		}
+
+		for (ObjectRepositoryTreeItem topMostNode : topMostNodes) {
+			renderAllArtifactTree(topMostNode, objectRepositories);
+		}
+		expandAll(mainRootNode);
 	}
 
 	public TestCaseView getParentTestCaseView() {

@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -22,6 +23,7 @@ public class GlobalLoader {
 	private List<FlowOutputArgument> componentflowOutputArguments = new ArrayList<>();
 
 	private List<ORObject> allORObjects = new ArrayList<ORObject>();
+	private List<Artifact> allArtifacts = new ArrayList<Artifact>();
 
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
@@ -164,5 +166,24 @@ public class GlobalLoader {
 
 	public void setAllORObjects(List<ORObject> allORObjects) {
 		this.allORObjects = allORObjects;
+	}
+
+	public List<Artifact> getAllArtifacts() {
+		return allArtifacts;
+	}
+
+	public void setAllArtifacts(List<Artifact> allArtifacts) {
+		this.allArtifacts = allArtifacts;
+	}
+
+	public List<Artifact> getAllArtifactByType(String type) {
+		List<Artifact> typeArtifacts = new ArrayList<Artifact>();
+		List<Artifact> artifacts = getAllArtifacts();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getFile_type_enum().toString().equals(type)) {
+				typeArtifacts.add(artifact);
+			}
+		}
+		return typeArtifacts;
 	}
 }

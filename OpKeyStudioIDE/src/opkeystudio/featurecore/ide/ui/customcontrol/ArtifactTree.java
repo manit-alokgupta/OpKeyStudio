@@ -161,6 +161,7 @@ public class ArtifactTree extends CustomTree {
 			artifacts = new ArtifactApi().getAllArtificatesByType("Flow");
 		} else {
 			artifacts = new ArtifactApi().getAllArtificates();
+			GlobalLoader.getInstance().setAllArtifacts(artifacts);
 		}
 		setArtifactsData(artifacts);
 		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
