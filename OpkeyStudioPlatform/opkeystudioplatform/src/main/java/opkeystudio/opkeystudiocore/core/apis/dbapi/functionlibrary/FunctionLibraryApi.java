@@ -50,30 +50,7 @@ public class FunctionLibraryApi {
 		return mapper.readValue(result, type);
 	}
 
-	public void initAllFlowInputArguments() throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = "SELECT * FROM component_step_input_args";
-		String result = sqlComm.executeQueryString(query);
-		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowInputArgument.class);
-		sqlComm.disconnect();
-		List<FlowInputArgument> flowInputArgs = mapper.readValue(result, type);
-		setFlowInputArguments(flowInputArgs);
-	}
 
-	public void initAllFlowOutputArguments()
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = "SELECT * FROM component_step_output_arguments";
-		String result = sqlComm.executeQueryString(query);
-		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
-		sqlComm.disconnect();
-		List<FlowOutputArgument> outputArguments = mapper.readValue(result, type);
-		setFlowOutputArguments(outputArguments);
-	}
 
 	private List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {

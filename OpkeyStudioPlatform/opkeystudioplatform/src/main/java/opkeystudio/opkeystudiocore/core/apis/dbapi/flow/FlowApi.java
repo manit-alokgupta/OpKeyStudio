@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
@@ -26,8 +27,7 @@ import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowApi {
-	private List<FlowInputArgument> flowInputArguments;
-	private List<FlowOutputArgument> flowOutputArguments;
+
 	private static FlowApi flowApi;
 
 	public static FlowApi getInstance() {
@@ -52,38 +52,10 @@ public class FlowApi {
 		return new ArrayList<FlowStep>();
 	}
 
-	public void initAllFlowInputArguments() {
-		String query = "SELECT * FROM flow_step_input_arguments";
-		String result = QueryExecutor.getInstance().executeQuery(query);
-		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowInputArgument.class);
-		List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
-		try {
-			flowInputArgs = mapper.readValue(result, type);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		setFlowInputArguments(flowInputArgs);
-	}
-
-	public void initAllFlowOutputArguments()
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator();
-		sqlComm.connect();
-		String query = "SELECT * FROM flow_step_output_arguments";
-		String result = sqlComm.executeQueryString(query);
-		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
-		sqlComm.disconnect();
-		List<FlowOutputArgument> outputArguments = mapper.readValue(result, type);
-		setFlowOutputArguments(outputArguments);
-	}
-
 	public List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
-		List<FlowInputArgument> inputArguments = getFlowInputArguments();
+		List<FlowInputArgument> inputArguments = GlobalLoader.getInstance().getFlowInputArguments();
 		for (FlowInputArgument flowInputArgument : inputArguments) {
 			if (flowInputArgument.getFlow_stepid().equals(flowStep.getFlow_stepid())) {
 				flowInputArgs.add(flowInputArgument);
@@ -95,7 +67,7 @@ public class FlowApi {
 	private List<FlowOutputArgument> getFlowStepOutputArguments(FlowStep flowStep)
 			throws SQLException, JsonParseException, JsonMappingException, IOException {
 		List<FlowOutputArgument> flowInputArgs = new ArrayList<FlowOutputArgument>();
-		List<FlowOutputArgument> inputArguments = getFlowOutputArguments();
+		List<FlowOutputArgument> inputArguments = GlobalLoader.getInstance().getFlowOutputArguments();
 		for (FlowOutputArgument flowInputArgument : inputArguments) {
 			if (flowInputArgument.getFlow_stepid().equals(flowStep.getFlow_stepid())) {
 				flowInputArgs.add(flowInputArgument);
@@ -229,21 +201,5 @@ public class FlowApi {
 			e.printStackTrace();
 		}
 		return new ArrayList<FlowOutputArgument>();
-	}
-
-	public List<FlowInputArgument> getFlowInputArguments() {
-		return flowInputArguments;
-	}
-
-	private void setFlowInputArguments(List<FlowInputArgument> flowInputArguments) {
-		this.flowInputArguments = flowInputArguments;
-	}
-
-	public List<FlowOutputArgument> getFlowOutputArguments() {
-		return flowOutputArguments;
-	}
-
-	private void setFlowOutputArguments(List<FlowOutputArgument> flowOutputArguments) {
-		this.flowOutputArguments = flowOutputArguments;
 	}
 }
