@@ -41,6 +41,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class FlowStepTable extends CustomTable {
 	private TestCaseView parentTestCaseView;
+
+	private MenuItem openInNewTabMenuItem;
 	private MenuItem copyMenuItem;
 	private MenuItem pasteMenuItem;
 	private MenuItem addStepMenuItem;
@@ -63,6 +65,7 @@ public class FlowStepTable extends CustomTable {
 	}
 
 	private void disableMenuItem() {
+		openInNewTabMenuItem.setEnabled(false);
 		copyMenuItem.setEnabled(false);
 		pasteMenuItem.setEnabled(false);
 		addStepMenuItem.setEnabled(false);
@@ -105,8 +108,14 @@ public class FlowStepTable extends CustomTable {
 		this.skipfromRunMenuItem.setEnabled(status);
 	}
 
+	public void toggleOpenInNewTabMenuItem(boolean status) {
+		this.openInNewTabMenuItem.setEnabled(status);
+	}
+
 	private void initContextMenu() {
 		Menu menu = new Menu(this);
+		openInNewTabMenuItem = new MenuItem(menu, 0);
+		MenuItem separator0 = new MenuItem(menu, SWT.SEPARATOR);
 		copyMenuItem = new MenuItem(menu, 0);
 		MenuItem separator1 = new MenuItem(menu, SWT.SEPARATOR);
 		pasteMenuItem = new MenuItem(menu, 0);
@@ -123,6 +132,7 @@ public class FlowStepTable extends CustomTable {
 		MenuItem separator7 = new MenuItem(menu, SWT.SEPARATOR);
 		skipfromRunMenuItem = new MenuItem(menu, 0);
 
+		openInNewTabMenuItem.setText("Open In New Tab");
 		copyMenuItem.setText("Copy");
 		pasteMenuItem.setText("Paste");
 		addStepMenuItem.setText("Add Step");
@@ -272,6 +282,27 @@ public class FlowStepTable extends CustomTable {
 
 			}
 		});
+
+		openInNewTabMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FlowStep flowStep = getSelectedFlowStep();
+				if (flowStep == null) {
+					return;
+				}
+				if (flowStep.getFunctionLibraryComponent() == null) {
+					return;
+				}
+				Utilities.getInstance().openArtifacts(flowStep.getFunctionLibraryComponent());
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		this.setMenu(menu);
 		disableMenuItem();
 		this.addSelectionListener(new SelectionListener() {
@@ -283,6 +314,13 @@ public class FlowStepTable extends CustomTable {
 					disableMenuItem();
 				} else {
 					toggleCopyMenuItem(true);
+					toggleSetToRunMenuItem(true);
+					toggleSkipFromRunMenuItem(true);
+					if (flowStep.getFunctionLibraryComponent() != null) {
+						toggleOpenInNewTabMenuItem(true);
+					} else {
+						toggleOpenInNewTabMenuItem(false);
+					}
 				}
 			}
 
@@ -406,6 +444,9 @@ public class FlowStepTable extends CustomTable {
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		if (artifact == null) {
+			return;
+		}
 		String artifactId = artifact.getId();
 		List<FlowStep> flowSteps = null;
 		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
