@@ -987,7 +987,7 @@ public class TestCaseView extends Composite {
 			}
 		});
 
-		serviceRepoButton.addSelectionListener(new SelectionListener() {
+		/*serviceRepoButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -999,9 +999,9 @@ public class TestCaseView extends Composite {
 				// TODO Auto-generated method stub
 
 			}
-		});
+		});*/
 
-		codedFunLibraryButton.addSelectionListener(new SelectionListener() {
+		/*codedFunLibraryButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1013,7 +1013,7 @@ public class TestCaseView extends Composite {
 				// TODO Auto-generated method stub
 
 			}
-		});
+		});*/
 
 		globalVariableTable.addSelectionListener(new SelectionListener() {
 

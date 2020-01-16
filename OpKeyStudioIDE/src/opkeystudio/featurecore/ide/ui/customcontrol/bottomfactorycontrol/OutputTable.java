@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
@@ -31,7 +30,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -85,16 +83,17 @@ public class OutputTable extends CustomTable {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int selectedColumn = cursor.getColumn();
+				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
+				ComponentOutputArgument componentOutputArgument = (ComponentOutputArgument) selectedTableItem
+						.getControlData();
 				CustomText text = new CustomText(cursor, 0);
-				System.out.println("Column number:-" + cursor.getColumn());
-				System.out.println("Row number:-" + cursor.getRow());
-
 				text.addFocusListener(new FocusListener() {
 
 					@Override
 					public void focusLost(FocusEvent e) {
 						text.dispose();
-
+						saveAllComponentOutputArguments();
+						renderAllBottomFactoryOutputData();
 					}
 
 					@Override
@@ -108,8 +107,15 @@ public class OutputTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
+						if (selectedColumn == 0) {
+							componentOutputArgument.setName(text.getText());
+							componentOutputArgument.setModified(true);
+						}
+						if (selectedColumn == 3) {
+							componentOutputArgument.setDescription(text.getText());
+							componentOutputArgument.setModified(true);
+						}
 						cursor.getRow().setText(selectedColumn, text.getText());
-
 					}
 				});
 
@@ -157,7 +163,7 @@ public class OutputTable extends CustomTable {
 		ComponentOutputArgument bottomFactoryOutput = outputTableItem.getBottomFactoryOutputData();
 		TableEditor editor1 = getTableEditor();
 
-		CustomCombo combo = new CustomCombo(this, 0);
+		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
 		combo.setItems(ServiceRepository.getInstance().getAllVaraiblesType());
 		combo.select(Utilities.getInstance().getIndexOfItem(ServiceRepository.getInstance().getAllVaraiblesType(),
 				bottomFactoryOutput.getType()));
@@ -174,7 +180,8 @@ public class OutputTable extends CustomTable {
 				String selectedDataType = combo.getItem(selected);
 				bottomFactoryOutput.setModified(true);
 				bottomFactoryOutput.setType(selectedDataType);
-
+				saveAllComponentOutputArguments();
+				renderAllBottomFactoryOutputData();
 			}
 
 			@Override
