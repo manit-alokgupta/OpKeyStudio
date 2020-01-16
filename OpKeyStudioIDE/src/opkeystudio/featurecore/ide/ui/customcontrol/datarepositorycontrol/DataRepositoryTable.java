@@ -61,7 +61,6 @@ public class DataRepositoryTable extends CustomTable {
 		getParentDataRepositoryView().toggleRenameColumnButton(false);
 		getParentDataRepositoryView().toggleSaveButton(false);
 
-		renderAllDRDetails();
 		TableCursor cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
@@ -136,7 +135,7 @@ public class DataRepositoryTable extends CustomTable {
 
 			}
 		});
-
+		renderAllDRDetails();
 		this.addPaintListener(new PaintListener() {
 
 			@Override
