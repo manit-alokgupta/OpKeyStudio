@@ -37,6 +37,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByT
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 
 public class BottomFactoryFLUi extends Composite {
 	private UsedByTable usedByTable;
@@ -378,6 +379,34 @@ public class BottomFactoryFLUi extends Composite {
 			}
 		});
 
+		outputTable.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ComponentOutputArgument bottomFactoryInput = outputTable.getSelectedOutputParemeter();
+				if (outputTable.getSelectedOutputParemeter() != null) {
+					toggleDeleteButton(true);
+				} else {
+					toggleDeleteButton(false);
+				}
+				if (outputTable.getPrevOutputParemeter() != null) {
+					toggleMoveUpButton(true);
+				} else {
+					toggleMoveUpButton(false);
+				}
+				if (outputTable.getNextOutputParemeter() != null) {
+					toggleMoveDownButton(true);
+				} else {
+					toggleMoveDownButton(false);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		inputTable.addSelectionListener(new SelectionListener() {
 
 			@Override

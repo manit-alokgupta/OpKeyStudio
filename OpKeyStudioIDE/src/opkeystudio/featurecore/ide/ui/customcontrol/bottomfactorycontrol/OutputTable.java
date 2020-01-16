@@ -30,6 +30,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -118,7 +119,20 @@ public class OutputTable extends CustomTable {
 						cursor.getRow().setText(selectedColumn, text.getText());
 					}
 				});
-
+				if (selectedColumn == 0) {
+					if (componentOutputArgument.getName() != null) {
+						text.setText(componentOutputArgument.getName());
+					} else {
+						text.setText("");
+					}
+				}
+				if (selectedColumn == 3) {
+					if (componentOutputArgument.getDescription() != null) {
+						text.setText(componentOutputArgument.getDescription());
+					} else {
+						text.setText("");
+					}
+				}
 				controlEditor.setEditor(text);
 
 			}
@@ -272,11 +286,32 @@ public class OutputTable extends CustomTable {
 	}
 
 	public ComponentOutputArgument getSelectedOutputParemeter() {
-		OutputTableItem OutputTableItem = (OutputTableItem) this.getSelection()[0];
-		return OutputTableItem.getBottomFactoryOutputData();
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
+		CustomTableItem cti = (CustomTableItem) this.getSelection()[0];
+		if (cti == null) {
+			return null;
+		}
+		if (cti.getControlData() == null) {
+			return null;
+		}
+		return (ComponentOutputArgument) cti.getControlData();
 	}
 
 	public ComponentOutputArgument getPrevOutputParemeter() {
+		if (this.getSelectionIndices() == null) {
+			return null;
+		}
+		if (this.getSelectionIndices().length == 0) {
+			return null;
+		}
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == 0) {
 			return null;
@@ -291,6 +326,12 @@ public class OutputTable extends CustomTable {
 	}
 
 	public ComponentOutputArgument getNextOutputParemeter() {
+		if (this.getSelectionIndices() == null) {
+			return null;
+		}
+		if (this.getSelectionIndices().length == 0) {
+			return null;
+		}
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == this.getItemCount() - 1) {
 			return null;
@@ -319,37 +360,6 @@ public class OutputTable extends CustomTable {
 		componentInputArgument.setDeleted(true);
 		saveAllComponentOutputArguments();
 		renderAllBottomFactoryOutputData();
-	}
-
-	public ComponentOutputArgument getSelectedInputParemeter() {
-		OutputTableItem inputTableItem = (OutputTableItem) this.getSelection()[0];
-		return inputTableItem.getBottomFactoryOutputData();
-	}
-
-	public ComponentOutputArgument getPrevInputParemeter() {
-		int selectedIndex = this.getSelectionIndices()[0];
-		if (selectedIndex == 0) {
-			return null;
-		}
-		selectedIndex = selectedIndex - 1;
-		OutputTableItem inputTableItem = (OutputTableItem) this.getItem(selectedIndex);
-		if (inputTableItem != null) {
-			return inputTableItem.getBottomFactoryOutputData();
-		}
-		return null;
-	}
-
-	public ComponentOutputArgument getNextInputParemeter() {
-		int selectedIndex = this.getSelectionIndices()[0];
-		if (selectedIndex == this.getItemCount() - 1) {
-			return null;
-		}
-		selectedIndex = selectedIndex + 1;
-		OutputTableItem inputTableItem = (OutputTableItem) this.getItem(selectedIndex);
-		if (inputTableItem != null) {
-			return inputTableItem.getBottomFactoryOutputData();
-		}
-		return null;
 	}
 
 	public ComponentOutputArgument getSelectedComponentOutputArgument() {
