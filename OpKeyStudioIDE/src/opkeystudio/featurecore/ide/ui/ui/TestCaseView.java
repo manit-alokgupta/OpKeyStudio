@@ -42,6 +42,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.ComponentArgumentInputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree.TREETYPE;
@@ -59,7 +60,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
-import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class TestCaseView extends Composite {
@@ -70,6 +70,7 @@ public class TestCaseView extends Composite {
 	private InputDataTable inputDataTable;
 	private StepDetailsInputData InputDataTable;
 	private ObjectRepositoryTree testObjectTree;
+	private ComponentArgumentInputTable componentArgumentInputTable;
 	private Table mappedTable;
 	private Table propertyTable;
 	private GenericTree drTree;
@@ -494,6 +495,17 @@ public class TestCaseView extends Composite {
 			drVariableTabItem.setControl(drTree);
 			drTree.setHeaderVisible(true);
 			drTree.setLinesVisible(true);
+		} else {
+			TabItem componentArgInputTable = new TabItem(datasTabHolder, SWT.NONE);
+			componentArgInputTable
+					.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
+			componentArgInputTable.setText("Data Input");
+			componentArgInputTable.setToolTipText("Data Input");
+			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder,
+					SWT.BORDER | SWT.FULL_SELECTION, this);
+			componentArgInputTable.setControl(componentArgumentInputTable);
+			componentArgumentInputTable.setHeaderVisible(true);
+			componentArgumentInputTable.setLinesVisible(true);
 		}
 
 		TabItem dataOutPutTabItem = new TabItem(datasTabHolder, SWT.NONE);
@@ -987,33 +999,29 @@ public class TestCaseView extends Composite {
 			}
 		});
 
-		/*serviceRepoButton.addSelectionListener(new SelectionListener() {
+		/*
+		 * serviceRepoButton.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * allDataTreeView.initSeriveRepo(); }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) { // TODO
+		 * Auto-generated method stub
+		 * 
+		 * } });
+		 */
 
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				allDataTreeView.initSeriveRepo();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});*/
-
-		/*codedFunLibraryButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				allDataTreeView.initCodedFunction();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});*/
+		/*
+		 * codedFunLibraryButton.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * allDataTreeView.initCodedFunction(); }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) { // TODO
+		 * Auto-generated method stub
+		 * 
+		 * } });
+		 */
 
 		globalVariableTable.addSelectionListener(new SelectionListener() {
 
