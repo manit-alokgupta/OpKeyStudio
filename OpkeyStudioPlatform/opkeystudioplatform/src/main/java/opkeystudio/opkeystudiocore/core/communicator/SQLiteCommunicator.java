@@ -72,6 +72,9 @@ public class SQLiteCommunicator {
 					String columnTypeName = resultSet.getMetaData().getColumnTypeName(i + 1);
 					if (columnTypeName.equals("BLOB")) {
 						byte[] bytes = resultSet.getBytes(i + 1);
+						if (bytes == null) {
+							continue;
+						}
 						String data = new String(bytes, StandardCharsets.UTF_8);
 						obj.put(columnName, data);
 					} else {
