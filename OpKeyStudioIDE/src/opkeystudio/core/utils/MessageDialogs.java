@@ -24,4 +24,8 @@ public class MessageDialogs {
 	public void openInformationDialog(String title, String message) {
 		MessageDialog.openInformation(Display.getCurrent().getActiveShell(), title, message);
 	}
+
+	public void openErrorDialog(String title, String message) {
+		MessageDialog.openError(Display.getCurrent().getActiveShell(), title, message);
+	}
 }

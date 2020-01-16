@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
@@ -22,6 +23,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
@@ -347,25 +349,26 @@ public class GlobalVariableTable extends CustomTable {
 	}
 
 	public void saveAll() {
-//		boolean status = MessageDialog.openConfirm(this.getShell(), "Global Variable Save",
-//				"Do you want to save global varaible?");
-//		if (!status) {
-//			refreshGlobalVariables();
-//			return;
-//		}
+		boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to save global varaible?");
+		if (!status) {
+			refreshGlobalVariables();
+			return;
+		}
 
 		List<GlobalVariable> allGlobalVariables = getGlobalVariablesData();
 		for (GlobalVariable gv : allGlobalVariables) {
+			if (gv.isDeleted() || gv.isModified() || gv.isAdded()) {
+				if (gv.getName().trim().isEmpty()) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name Should Not Be Blank");
+					return;
+				}
+			}
 			if (gv.isDeleted()) {
 				new GlobalVariableApi().deleteGlobalVariable(gv);
 			}
-		}
-		for (GlobalVariable gv : allGlobalVariables) {
 			if (gv.isModified()) {
 				new GlobalVariableApi().updateGlobalVariable(gv);
 			}
-		}
-		for (GlobalVariable gv : allGlobalVariables) {
 			if (gv.isAdded()) {
 				new GlobalVariableApi().insertGlobalVaribale(gv);
 			}
