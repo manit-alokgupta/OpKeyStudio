@@ -27,6 +27,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -131,12 +132,12 @@ public class OutputTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
-	public void setBottomFactoryOutputData(List<ComponentOutputArgument> bottomFactoryOutputs) {
+	public void setComponentOutputData(List<ComponentOutputArgument> bottomFactoryOutputs) {
 		super.setControlData(bottomFactoryOutputs);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ComponentOutputArgument> getBottomFactoryOutputData() {
+	public List<ComponentOutputArgument> getComponentOutputData() {
 		return (List<ComponentOutputArgument>) super.getControlData();
 	}
 
@@ -194,8 +195,8 @@ public class OutputTable extends CustomTable {
 	public void refreshAllBottomFactoryOutputData() {
 		disposeAllTableEditors();
 		this.removeAll();
-		List<ComponentOutputArgument> bottomFactoryOutputs = getBottomFactoryOutputData();
-		setBottomFactoryOutputData(bottomFactoryOutputs);
+		List<ComponentOutputArgument> bottomFactoryOutputs = getComponentOutputData();
+		setComponentOutputData(bottomFactoryOutputs);
 		for (ComponentOutputArgument fl_BottomFactoryOutput : bottomFactoryOutputs) {
 			if (fl_BottomFactoryOutput.isDeleted() == false) {
 				OutputTableItem outputTableItem = new OutputTableItem(this, 0);
@@ -217,7 +218,7 @@ public class OutputTable extends CustomTable {
 		String artifactId = artifact.getId();
 		List<ComponentOutputArgument> bottomFactoryOutputs = new FunctionLibraryApi()
 				.getAllComponentOutputArgument(artifactId);
-		setBottomFactoryOutputData(bottomFactoryOutputs);
+		setComponentOutputData(bottomFactoryOutputs);
 		for (ComponentOutputArgument fl_BottomFactoryOutput : bottomFactoryOutputs) {
 			if (fl_BottomFactoryOutput.isDeleted() == false) {
 				OutputTableItem outputTableItem = new OutputTableItem(this, 0);
@@ -303,18 +304,18 @@ public class OutputTable extends CustomTable {
 		String artifactId = artifact.getId();
 		int lastPosition = 0;
 		ComponentOutputArgument bottomFactoryOutput = new ComponentOutputArgument();
-		System.out.println(getBottomFactoryOutputData().size());
+		System.out.println(getComponentOutputData().size());
 
-		if ((getBottomFactoryOutputData().size()) == 0) {
-			lastPosition = (getBottomFactoryOutputData().size() - 1);
+		if ((getComponentOutputData().size()) == 0) {
+			lastPosition = (getComponentOutputData().size() - 1);
 
 		} else {
-			lastPosition = getBottomFactoryOutputData().get(getBottomFactoryOutputData().size() - 1).getPosition();
+			lastPosition = getComponentOutputData().get(getComponentOutputData().size() - 1).getPosition();
 		}
 		bottomFactoryOutput.setPosition(lastPosition + 1);
 		bottomFactoryOutput.setOp_id(Utilities.getInstance().getUniqueUUID(""));
 		bottomFactoryOutput.setComponent_id(artifactId);
-		bottomFactoryOutput.setName("Default Name" + getBottomFactoryOutputData().size());
+		bottomFactoryOutput.setName("Default Name" + getComponentOutputData().size());
 		bottomFactoryOutput.setType("String");
 		bottomFactoryOutput.setDescription("");
 
@@ -327,5 +328,9 @@ public class OutputTable extends CustomTable {
 
 	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
 		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
+	}
+
+	private void saveAllComponentOutputArguments() {
+		new FunctionLibraryConstruct().saveComponentOutputArguments(getComponentOutputData());
 	}
 }
