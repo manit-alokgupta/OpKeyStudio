@@ -56,6 +56,12 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public void openSelectedArtifact() {
+		if (this.getSelection() == null) {
+			return;
+		}
+		if (this.getSelection().length == 0) {
+			return;
+		}
 		ArtifactTreeItem selectedTreeItem = (ArtifactTreeItem) this.getSelection()[0];
 		System.out.println("selectedTreeItem");
 		populateArtifact(selectedTreeItem);
