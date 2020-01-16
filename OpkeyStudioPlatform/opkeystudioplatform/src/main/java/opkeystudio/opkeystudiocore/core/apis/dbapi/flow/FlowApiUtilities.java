@@ -62,6 +62,7 @@ public class FlowApiUtilities {
 		flowInputArgument.setGlobalvariable_id(OpKeyDataType.NULLDATA.toString());
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			flowInputArgument.setComponentstep_oa_id(OpKeyDataType.NULLDATA.toString());
+			flowInputArgument.setIp_id(OpKeyDataType.NULLDATA.toString());
 		} else {
 			flowInputArgument.setFlow_step_oa_id(OpKeyDataType.NULLDATA.toString());
 			flowInputArgument.setDatarepositorycolumnid(OpKeyDataType.NULLDATA.toString());
@@ -116,6 +117,11 @@ public class FlowApiUtilities {
 				flowInputArgument.setGlobalvariable_id(data);
 				flowInputArgument.setModified(true);
 			}
+		}
+		if (sourceType == DataSource.ValueFromInputParameter) {
+			flowInputArgument.setArg_datasource(DataSource.ValueFromInputParameter);
+			flowInputArgument.setIp_id(data);
+			flowInputArgument.setModified(true);
 		}
 	}
 

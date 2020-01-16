@@ -45,6 +45,9 @@ public class FlowInputArgument extends Modified implements Cloneable {
 	@DBField
 	private String componentstep_oa_id;
 
+	@DBField
+	private String ip_id;
+
 	private KeyWordInputArgument keywordInputArgument;
 	private ComponentInputArgument componentInputArgument;
 
@@ -208,5 +211,13 @@ public class FlowInputArgument extends Modified implements Cloneable {
 
 	public void setComponentInputArgument(ComponentInputArgument componentInputArgument) {
 		this.componentInputArgument = componentInputArgument;
+	}
+
+	public String getIp_id() {
+		return ip_id;
+	}
+
+	public void setIp_id(String ip_id) {
+		this.ip_id = ip_id;
 	}
 }
