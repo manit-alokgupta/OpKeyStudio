@@ -57,7 +57,6 @@ public class DataRepositoryConstructApi {
 
 	public void addDRCell(DRCellAttributes drCellAttribute) {
 		if (drCellAttribute.isAdded()) {
-			System.out.println("DR Cell AddedDDD");
 			String query = new QueryMaker().createInsertQuery(drCellAttribute, "dr_cell", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
