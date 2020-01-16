@@ -683,14 +683,6 @@ public class ArtifactTreeUI extends Composite {
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
 
-//				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Flow);
-//				try {
-//					artifactTree.renderArtifacts();
-//				} catch (SQLException | IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-
 			}
 
 			@Override
@@ -764,14 +756,6 @@ public class ArtifactTreeUI extends Composite {
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
-
-//				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.ObjectRepository);
-//				try {
-//					artifactTree.renderArtifacts();
-//				} catch (SQLException | IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
 
 			}
 
@@ -988,7 +972,8 @@ public class ArtifactTreeUI extends Composite {
 
 			}
 		});
-
+		LoginDialog ldialog = new LoginDialog(parent.getShell(), SWT.CENTER);
+		ldialog.open();
 	}
 
 	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
