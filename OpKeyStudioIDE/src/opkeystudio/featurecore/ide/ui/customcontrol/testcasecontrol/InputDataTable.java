@@ -35,6 +35,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -270,6 +271,43 @@ public class InputDataTable extends CustomTable {
 			this.allTableEditors.add(editor1.getEditor());
 		}
 
+		if (dataSourceType == DataSource.ValueFromInputParameter) {
+			String ipId = flowInputArgument.getIp_id();
+			List<ComponentInputArgument> compsinp = new FunctionLibraryApi()
+					.getAllComponentInputArgument(getParentTestCaseView().getArtifact().getId());
+			for (ComponentInputArgument cia : compsinp) {
+				if (cia.getIp_id().equals(ipId)) {
+					TableEditor editor1 = getTableEditor();
+					CustomButton button = new CustomButton(this, SWT.NONE);
+					button.setText(cia.getName());
+					button.setToolTipText(cia.getName());
+					button.setImage(
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
+					button.setBackground(new Color(button.getDisplay(), 255, 255, 112));
+					button.addMouseListener(new MouseListener() {
+
+						@Override
+						public void mouseUp(MouseEvent e) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void mouseDown(MouseEvent e) {
+							getParentTestCaseView().getDatasTabHolder().setSelection(1);
+						}
+
+						@Override
+						public void mouseDoubleClick(MouseEvent e) {
+							editor1.getEditor().dispose();
+						}
+					});
+					editor1.setEditor(button, item, 2);
+					this.allTableEditors.add(editor1.getEditor());
+					break;
+				}
+			}
+		}
 	}
 
 	private TableEditor getTableEditor() {
