@@ -367,18 +367,23 @@ public class TestCaseView extends Composite {
 		functionLibraryButton.setToolTipText("Function Library");
 		ToolItem seperator10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		serviceRepoButton = new ToolItem(toolBar, SWT.NONE);
-		serviceRepoButton
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/servicerepo.png"));
-		serviceRepoButton.setText("Service Repository");
-		serviceRepoButton.setToolTipText("Service Repository");
-		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
+		/*
+		 * serviceRepoButton = new ToolItem(toolBar, SWT.NONE); serviceRepoButton
+		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/servicerepo.png"));
+		 * serviceRepoButton.setText("Service Repository");
+		 * serviceRepoButton.setToolTipText("Service Repository");
+		 */
 
-		codedFunLibraryButton = new ToolItem(toolBar, SWT.NONE);
-		codedFunLibraryButton.setImage(
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/coded_functionlibrary.png"));
-		codedFunLibraryButton.setText("Coded Function Library");
-		codedFunLibraryButton.setToolTipText("Coded Function Library");
+		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
+		/*
+		 * codedFunLibraryButton = new ToolItem(toolBar, SWT.NONE);
+		 * codedFunLibraryButton.setImage( ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/coded_functionlibrary.png"));
+		 * codedFunLibraryButton.setText("Coded Function Library");
+		 * codedFunLibraryButton.setToolTipText("Coded Function Library");
+		 */
+
 		Composite composite_12 = new Composite(composite_10, SWT.NONE);
 		composite_12.setLayout(new GridLayout(2, false));
 		composite_12.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
