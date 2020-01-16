@@ -51,6 +51,6 @@ public class Tools {
 	}
 
 	public String removeSpecialCharacters(String str) {
-		return str.replaceAll("[^a-zA-Z0-9\\s+]", "");
+		return str.replaceAll("[^a-zA-Z0-9[.]\\s+]", "");
 	}
 }
