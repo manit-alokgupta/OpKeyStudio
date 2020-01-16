@@ -32,7 +32,8 @@ public class Utilities {
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
-		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"+File.separator+"SourceCodes";
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "SourceCodes";
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
@@ -42,9 +43,10 @@ public class Utilities {
 		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace";
 		return path;
 	}
-	
+
 	public String getDefaultSourceCodeDirPath() {
-		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"+File.separator+"SourceCodes";
+		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "SourceCodes";
 		return path;
 	}
 
@@ -103,5 +105,9 @@ public class Utilities {
 			}
 		}
 		return -1;
+	}
+
+	public String getRandomVariableName(String prefix) {
+		return prefix + String.valueOf(System.nanoTime());
 	}
 }

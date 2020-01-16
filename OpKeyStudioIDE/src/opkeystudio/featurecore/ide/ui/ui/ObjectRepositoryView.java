@@ -46,6 +46,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ObjectRepositoryView extends Composite {
 	private ObjectAttributeTable objectAttributeTable;
@@ -124,8 +125,8 @@ public class ObjectRepositoryView extends Composite {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					ORObject orobject = new ORObjectMaker().getORObjectDTO(getOrId(), null,
-							"New Node " + item.getText(), item.getText());
+					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
+					ORObject orobject = new ORObjectMaker().getORObjectDTO(getOrId(), null, name, item.getText());
 					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
 					toggleSaveButton(true);
 					objectRepositoryTree.refreshObjectRepositories();
@@ -151,10 +152,11 @@ public class ObjectRepositoryView extends Composite {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
 					ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
 					ORObject selectedobject = treeItem.getObjectRepository();
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getOrId(), selectedobject.getObject_id(),
-							"New Node " + item.getText(), item.getText());
+							name, item.getText());
 					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
 					toggleSaveButton(true);
 					objectRepositoryTree.refreshObjectRepositories();
