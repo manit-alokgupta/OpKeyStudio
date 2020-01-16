@@ -34,6 +34,7 @@ import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
@@ -449,6 +450,7 @@ public class FlowStepTable extends CustomTable {
 		}
 		String artifactId = artifact.getId();
 		List<FlowStep> flowSteps = null;
+		GlobalLoader.getInstance().initAllArguments();
 		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 			flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
 		}

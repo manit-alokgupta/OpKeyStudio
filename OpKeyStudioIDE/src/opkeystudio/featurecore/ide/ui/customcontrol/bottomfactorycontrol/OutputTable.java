@@ -297,7 +297,7 @@ public class OutputTable extends CustomTable {
 		return null;
 	}
 
-	public void addBlankInputPArameter() {
+	public void addBlankOutputPrameter() {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();

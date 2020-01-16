@@ -65,8 +65,9 @@ public class BottomFactoryFLUi extends Composite {
 	private ToolItem moveUpTagItem;
 	private ToolItem moveDownTagItem;
 	private Display display;
-	
+
 	private TestCaseView parentTestCaseView;
+
 	/**
 	 * Create the composite.
 	 * 
@@ -78,7 +79,7 @@ public class BottomFactoryFLUi extends Composite {
 	 * @throws JsonParseException
 	 */
 	@SuppressWarnings("unused")
-	public BottomFactoryFLUi(Composite parent, int style,TestCaseView parentTestCaseView) {
+	public BottomFactoryFLUi(Composite parent, int style, TestCaseView parentTestCaseView) {
 		super(parent, style);
 		setParentTestCaseView(parentTestCaseView);
 		display = getParent().getDisplay();
@@ -88,7 +89,7 @@ public class BottomFactoryFLUi extends Composite {
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite.setLayout(new GridLayout(1, false));
-		
+
 		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
 		expandBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
@@ -464,6 +465,21 @@ public class BottomFactoryFLUi extends Composite {
 	}
 
 	public void addButtonListeners() {
+
+		addOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.addBlankOutputPrameter();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		addInputItem.addSelectionListener(new SelectionListener() {
 
 			@Override
