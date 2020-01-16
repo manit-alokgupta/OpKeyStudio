@@ -140,7 +140,7 @@ public class Transpiler {
 				try {
 					List<FlowStep> flowSteps = new FunctionLibraryApi()
 							.getAllFlowSteps(flowStep.getFunctionLibraryComponent().getId());
-					getFunctionLibraries(flowSteps);
+					allFunctionLibraries.addAll(getFunctionLibraries(flowSteps));
 				} catch (JsonParseException | JsonMappingException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
