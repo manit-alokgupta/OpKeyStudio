@@ -12,6 +12,7 @@ import java.util.Set;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -107,7 +108,7 @@ public class Transpiler {
 		for (FlowStep functionLibraryStep : functionLibaries) {
 			Artifact flartifact = functionLibraryStep.getFunctionLibraryComponent();
 			try {
-				List<FlowStep> flflowSteps = new FunctionLibraryApi().getAllFlowSteps(flartifact.getId());
+				List<FlowStep> flflowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(flartifact.getId());
 				String flDatas = new TranspilerUtilities(this).transpileTestCaseSteps(flartifact, flflowSteps);
 				FileNode flFile = new FileNode(flartifact.getName() + ".java", FILE_TYPE.SOURCEFILE);
 				flFile.setData(flDatas);
