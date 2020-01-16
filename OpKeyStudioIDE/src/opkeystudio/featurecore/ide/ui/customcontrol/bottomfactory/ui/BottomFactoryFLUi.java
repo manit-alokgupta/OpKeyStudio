@@ -526,6 +526,19 @@ public class BottomFactoryFLUi extends Composite {
 			}
 		});
 
+		deleteOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.deleteBottomFactoryOutputData();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		deleteInputItem.addSelectionListener(new SelectionListener() {
 
 			@Override
