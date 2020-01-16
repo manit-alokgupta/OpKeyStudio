@@ -277,6 +277,7 @@ public class DataRepositoryTable extends CustomTable {
 	}
 
 	public void addDRRow() {
+		setSelectedRowIndex(getSelectedRowIndex() + 1);
 		new DRMaker().addDRRow(getParentDataRepositoryView().getArtifact(), this.getSelectedDRRow(),
 				getDrColumnAttributes());
 		try {
