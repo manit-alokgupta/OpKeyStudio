@@ -16,7 +16,6 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -67,13 +66,14 @@ public class DataRepositoryTable extends CustomTable {
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
-
+		setTablecursor(cursor);
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				CustomText text = new CustomText(cursor, 0);
 				int selectedColNo = cursor.getColumn();
+				setSelectedColumn(selectedColNo);
 				int selectedRowNo = getSelectionIndices()[0];
 				setSelectedDRRow(selectedRowNo);
 				List<DRCellAttributes> drCellAttribtes = getSelectedRowDRCells();
@@ -106,6 +106,9 @@ public class DataRepositoryTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
+						if (cursor.getRow() == null) {
+							return;
+						}
 						cursor.getRow().setText(selectedColNo, text.getText());
 						getSelectedDRCEllAttribute().setValue(text.getText());
 						getSelectedDRCEllAttribute().setModified(true);
@@ -419,6 +422,7 @@ public class DataRepositoryTable extends CustomTable {
 	}
 
 	public void moveColumnRight() {
+		setSelectedColumn(getSelectedColumn() + 1);
 		DRColumnAttributes selectedDRColumn = getSelectedDRColumnAttribute();
 		DRColumnAttributes nextDRColumn = getNextDRColumnAttribute();
 
@@ -440,6 +444,8 @@ public class DataRepositoryTable extends CustomTable {
 	}
 
 	public void moveColumnLeft() {
+
+		setSelectedColumn(getSelectedColumn() - 1);
 		DRColumnAttributes selectedDRColumn = getSelectedDRColumnAttribute();
 		DRColumnAttributes previousDRColumn = getPreviousDRColumnAttribute();
 

@@ -1,14 +1,17 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.generic;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
 public class CustomTable extends Table {
-	private int selectedRowIndex;
+	private int selectedRowIndex = 0;
 	private Object controlData;
+	private int selectedColumn = 0;
+	private TableCursor tablecursor;
 
 	public CustomTable(Composite parent, int style) {
 		super(parent, style);
@@ -54,7 +57,28 @@ public class CustomTable extends Table {
 			return;
 		}
 		this.setSelection(this.getSelectedRowIndex());
+		if (this.getTablecursor() != null) {
+			int column = this.getSelectedColumn();
+			this.getTablecursor().setSelection(this.getSelectedRowIndex(), column);
+			this.getTablecursor().notifyListeners(SWT.Selection, null);
+		}
 		this.notifyListeners(SWT.Selection, null);
+	}
+
+	public int getSelectedColumn() {
+		return selectedColumn;
+	}
+
+	public void setSelectedColumn(int selectedColumn) {
+		this.selectedColumn = selectedColumn;
+	}
+
+	public TableCursor getTablecursor() {
+		return tablecursor;
+	}
+
+	public void setTablecursor(TableCursor tablecursor) {
+		this.tablecursor = tablecursor;
 	}
 
 }
