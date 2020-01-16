@@ -366,11 +366,11 @@ public class GlobalVariableTable extends CustomTable {
 			if (gv.isDeleted()) {
 				new GlobalVariableApi().deleteGlobalVariable(gv);
 			}
-			if (gv.isModified()) {
-				new GlobalVariableApi().updateGlobalVariable(gv);
-			}
 			if (gv.isAdded()) {
 				new GlobalVariableApi().insertGlobalVaribale(gv);
+			}
+			if (gv.isModified()) {
+				new GlobalVariableApi().updateGlobalVariable(gv);
 			}
 		}
 		refreshGlobalVariables();
