@@ -8,10 +8,15 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ArtifactMaker;
+import opkeystudio.opkeystudiocore.core.dtoMaker.DRMaker;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -74,5 +79,14 @@ public class ArtifactApi {
 		Artifact artifact = new ArtifactMaker().getArtifactObject(parentId, artifactName, artifactType);
 		String query = new QueryMaker().createInsertQuery(artifact, "main_artifact_filesystem", "");
 		QueryExecutor.getInstance().executeUpdateQuery(query);
+		if (artifactType == MODULETYPE.DataRepository) {
+			List<DRColumnAttributes> drColumnAttributes = new DRMaker().getDefaultDRStructure(artifact);
+			for (DRColumnAttributes drColumnAttribute : drColumnAttributes) {
+				new DataRepositoryConstructApi().addDRColumn(drColumnAttribute);
+				for (DRCellAttributes drCellAttribute : drColumnAttribute.getDrCellAttributes()) {
+					new DataRepositoryConstructApi().addDRCell(drCellAttribute);
+				}
+			}
+		}
 	}
 }

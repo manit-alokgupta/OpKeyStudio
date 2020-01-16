@@ -33,7 +33,7 @@ public class DataRepositoryConstructApi {
 
 	}
 
-	private void addDRColumn(DRColumnAttributes columnAttribute) {
+	public void addDRColumn(DRColumnAttributes columnAttribute) {
 		if (columnAttribute.isAdded()) {
 			String query = new QueryMaker().createInsertQuery(columnAttribute, "dr_columns", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
@@ -55,7 +55,7 @@ public class DataRepositoryConstructApi {
 		}
 	}
 
-	private void addDRCell(DRCellAttributes drCellAttribute) {
+	public void addDRCell(DRCellAttributes drCellAttribute) {
 		if (drCellAttribute.isAdded()) {
 			System.out.println("DR Cell AddedDDD");
 			String query = new QueryMaker().createInsertQuery(drCellAttribute, "dr_cell", "");
