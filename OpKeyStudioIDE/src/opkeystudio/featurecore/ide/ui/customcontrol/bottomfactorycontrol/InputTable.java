@@ -331,11 +331,23 @@ public class InputTable extends CustomTable {
 	}
 
 	public ComponentInputArgument getSelectedInputParemeter() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
 		InputTableItem inputTableItem = (InputTableItem) this.getSelection()[0];
 		return inputTableItem.getBottomFactoryInputData();
 	}
 
 	public ComponentInputArgument getPrevInputParemeter() {
+		if (this.getSelectionIndices() == null) {
+			return null;
+		}
+		if (this.getSelectionIndices().length == 0) {
+			return null;
+		}
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == 0) {
 			return null;
@@ -349,6 +361,14 @@ public class InputTable extends CustomTable {
 	}
 
 	public ComponentInputArgument getNextInputParemeter() {
+		if(this.getSelectionIndices()==null)
+		{
+			return null;
+		}
+		if(this.getSelectionIndices().length==0)
+		{
+			return null;
+		}
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == this.getItemCount() - 1) {
 			return null;
