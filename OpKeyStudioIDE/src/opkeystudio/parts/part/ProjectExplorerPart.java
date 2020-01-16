@@ -13,11 +13,12 @@ public class ProjectExplorerPart {
 	@PostConstruct
 	public void postConstruct(Composite parent) {
 		new ArtifactTreeUI(parent, 0);
+
 	}
 
 	@PreDestroy
 	public void preDestroy() {
-		
+
 	}
 
 	@Focus
