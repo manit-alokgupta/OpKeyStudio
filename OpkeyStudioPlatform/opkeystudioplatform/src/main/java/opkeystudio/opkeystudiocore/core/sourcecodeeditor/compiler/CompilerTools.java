@@ -41,7 +41,8 @@ public class CompilerTools {
 	public void compile(FileNode fileNode) {
 		try {
 			List<String> optionList = new ArrayList<String>();
-			optionList.addAll(Arrays.asList("-classpath", getLibrariesClassPath()));
+			optionList.addAll(Arrays.asList("-classpath", getLibrariesClassPath(), "-d",
+					fileNode.getFilePath() + File.separator + "bin"));
 			List<FileNode> allFiles = new Tools().getAllFileNodes(fileNode);
 			List<FileNode> filteredFiles = new Tools().getAllFileNodes(allFiles, FILE_TYPE.JAVASOURCEFILE);
 			ArrayList<File> files = new ArrayList<File>();
@@ -75,12 +76,19 @@ public class CompilerTools {
 				node.addCompileError(compileError);
 			}
 
-			List<FileNode> allNodes = new Tools().getAllFileNodes(fileNode);
-			new Tools().getAllFileNodes(allNodes, FILE_TYPE.JAVASOURCEFILE);
-			System.out.println("Root Path " + fileNode.getFilePath());
+			createBinFolder(fileNode);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+	}
+
+	private void createBinFolder(FileNode rootNode) {
+		String rootPath = rootNode.getFilePath();
+		List<FileNode> allNodes = new Tools().getAllFileNodes(rootNode);
+		List<FileNode> allJavaSourceFiles = new Tools().getAllFileNodes(allNodes, FILE_TYPE.JAVASOURCEFILE);
+		for (FileNode javaSourceFile : allJavaSourceFiles) {
+			System.out.println(javaSourceFile.getClassPath());
 		}
 	}
 

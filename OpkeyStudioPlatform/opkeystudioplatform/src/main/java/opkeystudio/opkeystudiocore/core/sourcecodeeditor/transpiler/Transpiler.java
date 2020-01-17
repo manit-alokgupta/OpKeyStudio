@@ -23,6 +23,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Transpiler {
 	private TranspileObject transpileObject;
+
 	private void createFileNode(FileNode fileNode) throws IOException {
 		if (fileNode.getFileType() == FILE_TYPE.FOLDER || fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER
 				|| fileNode.getFileType() == FILE_TYPE.PROJECTFOLDER) {
@@ -54,6 +55,9 @@ public class Transpiler {
 		FileNode rootNode = new FileNode(artifact.getId(), FILE_TYPE.PROJECTFOLDER);
 		rootNode.setParentPath(path);
 
+		FileNode binNode = new FileNode("bin", FILE_TYPE.PACKAGEFOLDER);
+		binNode.setParentPath(rootNode.getFilePath());
+
 		FileNode srcnode = new FileNode("src", FILE_TYPE.PACKAGEFOLDER);
 		srcnode.setParentPath(rootNode.getFilePath());
 
@@ -78,6 +82,7 @@ public class Transpiler {
 		srcnode.addFileNodes(orNode);
 		srcnode.addFileNodes(libNode);
 
+		rootNode.addFileNodes(binNode);
 		rootNode.addFileNodes(srcnode);
 
 		List<GlobalVariable> globalVariables = transpileObject.getGlobalVaribales();

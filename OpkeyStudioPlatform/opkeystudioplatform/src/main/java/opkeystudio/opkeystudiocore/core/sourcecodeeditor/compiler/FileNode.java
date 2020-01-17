@@ -20,6 +20,7 @@ public class FileNode extends Modified {
 	private String filePath;
 	private String parentPath;
 	private String className;
+	private String classPath;
 	private List<FileNode> filesNodes = new ArrayList<FileNode>();
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 
@@ -67,6 +68,7 @@ public class FileNode extends Modified {
 	}
 
 	public String getFilePath() {
+		setClassPath(getParentPath() + File.separator + getClassName());
 		setFilePath(getParentPath() + File.separator + getFileName());
 		return filePath;
 	}
@@ -118,5 +120,13 @@ public class FileNode extends Modified {
 
 	public void setClassName(String className) {
 		this.className = className;
+	}
+
+	public String getClassPath() {
+		return classPath;
+	}
+
+	public void setClassPath(String classPath) {
+		this.classPath = classPath;
 	}
 }
