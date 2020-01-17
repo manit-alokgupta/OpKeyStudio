@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.tools.Diagnostic;
@@ -19,8 +20,29 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Tools;
 
 public class CompilerTools {
+	private ArrayList<String> getLibrariesPath() {
+		ArrayList<String> librariesPath = new ArrayList<String>();
+		librariesPath.add("");
+		return librariesPath;
+	}
+
+	private String getLibrariesClassPath() {
+		String data = "";
+		ArrayList<String> classPathDatas = getLibrariesPath();
+		for (String classPath : classPathDatas) {
+			if (!data.isEmpty()) {
+				data += ";";
+			}
+			data += classPath;
+		}
+		return data;
+	}
+
 	public void compile(FileNode fileNode) {
+		System.out.println("System Class Path " + System.getProperty("java.class.path"));
 		try {
+			List<String> optionList = new ArrayList<String>();
+			optionList.addAll(Arrays.asList("-classpath", getLibrariesClassPath()));
 			List<FileNode> allFiles = new Tools().getAllFileNodes(fileNode);
 			List<FileNode> filteredFiles = new Tools().getAllFileNodes(allFiles, FILE_TYPE.SOURCEFILE);
 			ArrayList<File> files = new ArrayList<File>();
@@ -33,7 +55,7 @@ public class CompilerTools {
 			try (StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null)) {
 				Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(files);
 
-				CompilationTask task = compiler.getTask(null, manager, diagnostics, null, null, sources);
+				CompilationTask task = compiler.getTask(null, manager, diagnostics, optionList, null, sources);
 				task.call();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
