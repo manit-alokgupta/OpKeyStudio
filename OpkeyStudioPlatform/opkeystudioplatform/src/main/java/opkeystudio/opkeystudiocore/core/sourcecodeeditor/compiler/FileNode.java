@@ -1,5 +1,7 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler;
 
+import static org.hamcrest.Matchers.stringContainsInOrder;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,8 @@ public class FileNode extends Modified {
 	private String parentPath;
 	private String className;
 	private String classPath;
-	private String parentPackageName;
 	private String rootNode;
+	private String importName;
 	private List<FileNode> filesNodes = new ArrayList<FileNode>();
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 
@@ -136,19 +138,19 @@ public class FileNode extends Modified {
 	public String getParentPackageName() {
 		System.out.println(this.getFilePath());
 		System.out.println(this.getRootNode());
-		String rootNodePath = this.getRootNode() + File.separator + "src"+ File.separator;
+		String rootNodePath = this.getRootNode() + File.separator + "src" + File.separator;
 		String filePath = this.getFilePath();
 		rootNodePath = rootNodePath.replaceAll("\\\\", "OPKEY_SLASH");
 		filePath = filePath.replaceAll("\\\\", "OPKEY_SLASH");
 
 		String packageName = filePath.replaceAll(rootNodePath, "");
 		packageName = packageName.replaceAll("OPKEY_SLASH", ".");
+		if (getFileType() == FILE_TYPE.JAVASOURCEFILE) {
+			String importName = packageName.replaceAll(".java", "");
+			setImportName(importName);
+		}
 		packageName = packageName.replaceAll("." + getFileName(), "");
 		return packageName;
-	}
-
-	public void setParentPackageName(String parentPackageName) {
-		this.parentPackageName = parentPackageName;
 	}
 
 	public String getRootNode() {
@@ -157,5 +159,13 @@ public class FileNode extends Modified {
 
 	public void setRootNode(String rootNode) {
 		this.rootNode = rootNode;
+	}
+
+	public String getImportName() {
+		return importName;
+	}
+
+	public void setImportName(String importName) {
+		this.importName = importName;
 	}
 }

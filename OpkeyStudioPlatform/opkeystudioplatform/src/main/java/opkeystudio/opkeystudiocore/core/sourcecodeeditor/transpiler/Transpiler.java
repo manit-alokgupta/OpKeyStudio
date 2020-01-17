@@ -93,15 +93,12 @@ public class Transpiler {
 
 		transpileObject.setOrObjects(orobjects);
 		FileNode gvFile = new FileNode("GlobalVariables",rootPath, FILE_TYPE.JAVASOURCEFILE);
-		gvFile.setParentPackageName(gvNode.getFileName());
 		gvFile.setParentPath(gvNode.getFilePath());
 
 		FileNode orFile = new FileNode("ORObjects",rootPath, FILE_TYPE.JAVASOURCEFILE);
-		orFile.setParentPackageName(orNode.getFileName());
 		orFile.setParentPath(orNode.getFilePath());
 
 		FileNode tcFile = new FileNode(artifact.getName(),rootPath, FILE_TYPE.JAVASOURCEFILE);
-		tcFile.setParentPackageName(tcNode.getFileName());
 		tcFile.setParentPath(tcNode.getFilePath());
 
 		String tcDatas = new TranspilerUtilities(this).transpileTestCaseSteps(artifact, flowSteps, tcFile);
@@ -117,7 +114,6 @@ public class Transpiler {
 			try {
 				List<FlowStep> flflowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(flartifact.getId());
 				FileNode flFile = new FileNode(flartifact.getName(),rootPath, FILE_TYPE.JAVASOURCEFILE);
-				flFile.setParentPackageName(flNode.getFileName());
 				String flDatas = new TranspilerUtilities(this).transpileTestCaseSteps(flartifact, flflowSteps, flFile);
 				flFile.setData(flDatas);
 				flFile.setParentPath(flNode.getFilePath());
