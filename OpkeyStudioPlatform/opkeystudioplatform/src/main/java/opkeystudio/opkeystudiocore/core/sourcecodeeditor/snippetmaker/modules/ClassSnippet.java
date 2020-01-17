@@ -20,17 +20,8 @@ public class ClassSnippet {
 	private List<MethodSnippet> methodSnippets = new ArrayList<MethodSnippet>();
 
 	public ClassSnippet(String className, FileNode fileNode, Transpiler transpiler) {
-		FileNode rootNode = transpiler.getRootNode();
-		String localImports = "";
-		ArrayList<FileNode> sourceFiles = new Tools().getAllFileNodes(rootNode);
-		for (FileNode sf : sourceFiles) {
-			localImports += "import " + sf.getImportName() + ".*";
-			if (!localImports.isEmpty()) {
-				localImports += ";";
-			}
-		}
 		setSTART_DATA("package " + fileNode.getParentPackageName() + ";" + new Tools().getOpKeyRuntimeImportHeaders()
-				+ localImports + " " + String.format(START_DATA, className));
+				+ " " + String.format(START_DATA, className));
 	}
 
 	public String getSTART_DATA() {

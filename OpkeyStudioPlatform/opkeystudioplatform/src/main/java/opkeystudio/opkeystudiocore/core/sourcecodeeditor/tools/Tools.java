@@ -53,13 +53,19 @@ public class Tools {
 	public String removeSpecialCharacters(String str) {
 		return str.replaceAll("[^a-zA-Z0-9[.]\\s+]", "");
 	}
-	
+
 	public String getOpKeyRuntimeImportHeaders() {
 		String importHeadersDatas = "";
 		ArrayList<String> importHeaders = new ArrayList<String>();
 		importHeaders.add("opkeystudio.lib.runtime.GlobalVariable");
 		importHeaders.add("opkeystudio.lib.runtime.ORObject");
 		importHeaders.add("opkeystudio.lib.runtime.OpKeyGenericKeyword");
+
+		importHeaders.add("opkeystudio.lib.runtime.OpKeyGenericKeyword");
+		importHeaders.add("opkeystudio.lib.runtime.OpKeyGenericKeyword");
+		importHeaders.add("globalvariables.*");
+		importHeaders.add("testcases.*");
+		importHeaders.add("objectrepositories.*");
 		for (String importHeader : importHeaders) {
 			importHeadersDatas += "import " + importHeader + ";";
 		}
