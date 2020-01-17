@@ -134,8 +134,6 @@ public class FileNode extends Modified {
 	}
 
 	public String getParentPackageName() {
-		System.out.println(this.getFilePath());
-		System.out.println(this.getRootNode());
 		String rootNodePath = this.getRootNode() + File.separator + "src" + File.separator;
 		String filePath = this.getFilePath();
 		rootNodePath = rootNodePath.replaceAll("\\\\", "OPKEY_SLASH");
@@ -143,10 +141,6 @@ public class FileNode extends Modified {
 
 		String packageName = filePath.replaceAll(rootNodePath, "");
 		packageName = packageName.replaceAll("OPKEY_SLASH", ".");
-		if (getFileType() == FILE_TYPE.JAVASOURCEFILE) {
-			String importName = packageName.replaceAll(".java", "");
-			setImportName(importName);
-		}
 		packageName = packageName.replaceAll("." + getFileName(), "");
 		return packageName;
 	}

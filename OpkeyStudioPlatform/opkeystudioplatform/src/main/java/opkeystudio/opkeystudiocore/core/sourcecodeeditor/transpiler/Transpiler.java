@@ -23,7 +23,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Transpiler {
 	private TranspileObject transpileObject;
-
+	private FileNode rootNode;
 	private void createFileNode(FileNode fileNode) throws IOException {
 		if (fileNode.getFileType() == FILE_TYPE.FOLDER || fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER
 				|| fileNode.getFileType() == FILE_TYPE.PROJECTFOLDER) {
@@ -54,13 +54,14 @@ public class Transpiler {
 		Artifact artifact = transpileObject.getArtifact();
 		FileNode rootNode = new FileNode(artifact.getId(),"", FILE_TYPE.PROJECTFOLDER);
 		rootNode.setParentPath(path);
+
 		String rootPath = rootNode.getFilePath();
 		FileNode binNode = new FileNode("bin",rootPath, FILE_TYPE.PACKAGEFOLDER);
 		binNode.setParentPath(rootNode.getFilePath());
 
 		FileNode srcnode = new FileNode("src", rootPath,FILE_TYPE.PACKAGEFOLDER);
 		srcnode.setParentPath(rootNode.getFilePath());
-
+		setRootNode(srcnode);
 		FileNode gvNode = new FileNode("globalvariables",rootPath, FILE_TYPE.PACKAGEFOLDER);
 		gvNode.setParentPath(srcnode.getFilePath());
 
@@ -182,5 +183,13 @@ public class Transpiler {
 
 	public void setTranspileObject(TranspileObject transpileObject) {
 		this.transpileObject = transpileObject;
+	}
+
+	public FileNode getRootNode() {
+		return rootNode;
+	}
+
+	public void setRootNode(FileNode rootNode) {
+		this.rootNode = rootNode;
 	}
 }

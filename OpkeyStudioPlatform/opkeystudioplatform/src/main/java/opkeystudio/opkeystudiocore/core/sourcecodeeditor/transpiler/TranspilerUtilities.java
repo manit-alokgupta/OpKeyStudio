@@ -66,7 +66,7 @@ public class TranspilerUtilities {
 	public String transpileGlobalVariables(List<GlobalVariable> globalVariables, FileNode fileNode) {
 		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 
-		ClassSnippet classSnippet = new ClassSnippet("GlobalVariables", fileNode.getParentPackageName());
+		ClassSnippet classSnippet = new ClassSnippet("GlobalVariables", fileNode, getTranspiler());
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (GlobalVariable gv : globalVariables) {
 			NewStaticObjectSnippet nsos = new NewStaticObjectSnippet("public", "GlobalVariable", gv.getVariableName());
@@ -89,7 +89,7 @@ public class TranspilerUtilities {
 	}
 
 	public String transpileORObjects(List<ORObject> orobjects, FileNode fileNode) {
-		ClassSnippet classSnippet = new ClassSnippet("ORObjects", fileNode.getParentPackageName());
+		ClassSnippet classSnippet = new ClassSnippet("ORObjects", fileNode, getTranspiler());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (ORObject orobject : orobjects) {
@@ -116,7 +116,7 @@ public class TranspilerUtilities {
 	}
 
 	public String transpileTestCaseSteps(Artifact artifact, List<FlowStep> flowSteps, FileNode fileNode) {
-		ClassSnippet classSnippet = new ClassSnippet(artifact.getName(), fileNode.getParentPackageName());
+		ClassSnippet classSnippet = new ClassSnippet(artifact.getName(), fileNode, getTranspiler());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "execute", "");
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (FlowStep flowStep : flowSteps) {

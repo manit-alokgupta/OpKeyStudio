@@ -6,19 +6,37 @@ import java.util.List;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Tools;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 
 public class ClassSnippet {
 
 	private String START_DATA = "public class %s{";
 	private String BODY_DATA = "";
 	private String END_DATA = "}";
+	private Transpiler transpiler;
 	private List<NewStaticObjectSnippet> staticObject = new ArrayList<NewStaticObjectSnippet>();
 	private List<MethodSnippet> methodSnippets = new ArrayList<MethodSnippet>();
 
-	public ClassSnippet(String className, String packageName) {
-		setSTART_DATA("package " + packageName + ";" + new Tools().getOpKeyRuntimeImportHeaders() + " "
-				+ String.format(START_DATA, className));
+	public ClassSnippet(String className, FileNode fileNode, Transpiler transpiler) {
+		FileNode rootNode = transpiler.getRootNode();
+		System.out.println("Root Node Path " + rootNode.getFilePath());
+		String localImports = "";
+		ArrayList<FileNode> sourceFiles = new Tools().getAllFileNodes(rootNode);
+		System.out.println("Child Size " + sourceFiles.size());
+		for (FileNode sf : sourceFiles) {
+			if (!sf.getFileIdentifier().equals(fileNode.getFileIdentifier())) {
+				if (!localImports.isEmpty()) {
+					localImports += ";";
+				}
+				System.out.println("Import Name " + sf.getImportName());
+				localImports += "import " + sf.getImportName();
+			}
+		}
+		setSTART_DATA("package " + fileNode.getParentPackageName() + ";" + new Tools().getOpKeyRuntimeImportHeaders()
+				+ localImports + " " + String.format(START_DATA, className));
 	}
 
 	public String getSTART_DATA() {
@@ -87,5 +105,13 @@ public class ClassSnippet {
 
 	public void addStaticObject(NewStaticObjectSnippet staticObject) {
 		this.staticObject.add(staticObject);
+	}
+
+	public Transpiler getTranspiler() {
+		return transpiler;
+	}
+
+	public void setTranspiler(Transpiler transpiler) {
+		this.transpiler = transpiler;
 	}
 }
