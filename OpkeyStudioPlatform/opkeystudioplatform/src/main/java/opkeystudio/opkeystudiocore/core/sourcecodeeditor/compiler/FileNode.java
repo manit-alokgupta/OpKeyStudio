@@ -19,7 +19,7 @@ public class FileNode extends Modified {
 	private String data;
 	private String filePath;
 	private String parentPath;
-
+	private String className;
 	private List<FileNode> filesNodes = new ArrayList<FileNode>();
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 
@@ -36,6 +36,7 @@ public class FileNode extends Modified {
 	public void setFileName(String fileName) {
 		fileName = new Tools().removeSpecialCharacters(fileName);
 		if (this.getFileType() == FILE_TYPE.JAVASOURCEFILE) {
+			setClassName(fileName + ".class");
 			fileName += ".java";
 		}
 		this.fileName = fileName;
@@ -109,5 +110,13 @@ public class FileNode extends Modified {
 
 	public void setCompileErrors(List<CompileError> compileErrors) {
 		this.compileErrors = compileErrors;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
 	}
 }
