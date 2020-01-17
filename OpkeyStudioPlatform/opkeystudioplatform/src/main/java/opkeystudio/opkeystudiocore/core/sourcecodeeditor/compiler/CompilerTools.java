@@ -22,7 +22,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Tools;
 public class CompilerTools {
 	private ArrayList<String> getLibrariesPath() {
 		ArrayList<String> librariesPath = new ArrayList<String>();
-		librariesPath.add("");
+		librariesPath.add("E:\\OpKeyEJars\\opkeyeruntimeJar.jar");
 		return librariesPath;
 	}
 
@@ -72,12 +72,13 @@ public class CompilerTools {
 				compileError.setKind(diagnostic.getKind());
 				compileError.setMessage(diagnostic.getMessage(null));
 				compileError.setSource(diagnostic.getSource());
-
+				System.out.println(compileError.getMessage());
 				FileNode node = getSourceFileNode(filteredFiles, diagnostic.getSource().getName());
 				node.addCompileError(compileError);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 

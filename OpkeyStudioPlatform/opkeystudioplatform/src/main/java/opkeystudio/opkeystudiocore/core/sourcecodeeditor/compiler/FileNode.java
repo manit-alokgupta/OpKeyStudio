@@ -33,7 +33,7 @@ public class FileNode extends Modified {
 	}
 
 	public void setFileName(String fileName) {
-		fileName = new Tools().removeSpecialCharacters(fileName);
+	//	fileName = new Tools().removeSpecialCharacters(fileName);
 		this.fileName = fileName;
 	}
 
