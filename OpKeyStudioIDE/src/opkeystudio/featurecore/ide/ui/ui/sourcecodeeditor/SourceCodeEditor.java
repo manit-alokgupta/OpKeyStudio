@@ -50,6 +50,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariable
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.execution.ExecutionEngine;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
@@ -381,10 +382,11 @@ public class SourceCodeEditor extends Composite {
 			transpileObject.setFlowSteps(flowSteps);
 
 			FileNode rootNode = new Transpiler().transpileDatas(transpileObject);
-			
-			//Add code of rereading the structure
+
+			// Add code of rereading the structure
 			renderTreeItems(rootNode);
 			new CompilerTools().compile(rootNode);
+			new ExecutionEngine().execute(rootNode);
 		} catch (SQLException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
