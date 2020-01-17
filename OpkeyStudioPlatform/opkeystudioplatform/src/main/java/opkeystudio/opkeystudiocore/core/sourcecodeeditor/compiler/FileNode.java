@@ -10,7 +10,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FileNode extends Modified {
 	public enum FILE_TYPE {
-		SOURCEFILE, PACKAGEFOLDER, PROJECTFOLDER, FOLDER, LIBRARY, XML
+		JAVASOURCEFILE, PACKAGEFOLDER, PROJECTFOLDER, FOLDER, LIBRARY, XML
 	};
 
 	private String fileName;
@@ -19,6 +19,7 @@ public class FileNode extends Modified {
 	private String data;
 	private String filePath;
 	private String parentPath;
+
 	private List<FileNode> filesNodes = new ArrayList<FileNode>();
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 
@@ -33,7 +34,10 @@ public class FileNode extends Modified {
 	}
 
 	public void setFileName(String fileName) {
-	//	fileName = new Tools().removeSpecialCharacters(fileName);
+		fileName = new Tools().removeSpecialCharacters(fileName);
+		if (this.getFileType() == FILE_TYPE.JAVASOURCEFILE) {
+			fileName += ".java";
+		}
 		this.fileName = fileName;
 	}
 

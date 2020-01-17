@@ -39,12 +39,11 @@ public class CompilerTools {
 	}
 
 	public void compile(FileNode fileNode) {
-		System.out.println("System Class Path " + System.getProperty("java.class.path"));
 		try {
 			List<String> optionList = new ArrayList<String>();
 			optionList.addAll(Arrays.asList("-classpath", getLibrariesClassPath()));
 			List<FileNode> allFiles = new Tools().getAllFileNodes(fileNode);
-			List<FileNode> filteredFiles = new Tools().getAllFileNodes(allFiles, FILE_TYPE.SOURCEFILE);
+			List<FileNode> filteredFiles = new Tools().getAllFileNodes(allFiles, FILE_TYPE.JAVASOURCEFILE);
 			ArrayList<File> files = new ArrayList<File>();
 			for (FileNode sourceFileNode : filteredFiles) {
 				files.add(sourceFileNode.getFile());

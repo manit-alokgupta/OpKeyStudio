@@ -23,7 +23,6 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Transpiler {
 	private TranspileObject transpileObject;
-
 	private void createFileNode(FileNode fileNode) throws IOException {
 		if (fileNode.getFileType() == FILE_TYPE.FOLDER || fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER
 				|| fileNode.getFileType() == FILE_TYPE.PROJECTFOLDER) {
@@ -32,7 +31,7 @@ public class Transpiler {
 			}
 		}
 
-		if (fileNode.getFileType() == FILE_TYPE.SOURCEFILE || fileNode.getFileType() == FILE_TYPE.XML) {
+		if (fileNode.getFileType() == FILE_TYPE.JAVASOURCEFILE || fileNode.getFileType() == FILE_TYPE.XML) {
 			if (!fileNode.getFile().exists()) {
 				fileNode.getFile().createNewFile();
 			}
@@ -92,15 +91,15 @@ public class Transpiler {
 		String ordatas = new TranspilerUtilities(this).transpileORObjects(orobjects);
 		String gvdatas = new TranspilerUtilities(this).transpileGlobalVariables(globalVariables);
 
-		FileNode gvFile = new FileNode("GlobalVariables.java", FILE_TYPE.SOURCEFILE);
+		FileNode gvFile = new FileNode("GlobalVariables", FILE_TYPE.JAVASOURCEFILE);
 		gvFile.setData(gvdatas);
 		gvFile.setParentPath(gvNode.getFilePath());
 
-		FileNode orFile = new FileNode("ORObjects.java", FILE_TYPE.SOURCEFILE);
+		FileNode orFile = new FileNode("ORObjects", FILE_TYPE.JAVASOURCEFILE);
 		orFile.setData(ordatas);
 		orFile.setParentPath(orNode.getFilePath());
 
-		FileNode tcFile = new FileNode(artifact.getName() + ".java", FILE_TYPE.SOURCEFILE);
+		FileNode tcFile = new FileNode(artifact.getName(), FILE_TYPE.JAVASOURCEFILE);
 		tcFile.setData(tcDatas);
 		tcFile.setParentPath(tcNode.getFilePath());
 
@@ -109,7 +108,7 @@ public class Transpiler {
 			try {
 				List<FlowStep> flflowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(flartifact.getId());
 				String flDatas = new TranspilerUtilities(this).transpileTestCaseSteps(flartifact, flflowSteps);
-				FileNode flFile = new FileNode(flartifact.getName() + ".java", FILE_TYPE.SOURCEFILE);
+				FileNode flFile = new FileNode(flartifact.getName(), FILE_TYPE.JAVASOURCEFILE);
 				flFile.setData(flDatas);
 				flFile.setParentPath(flNode.getFilePath());
 				flNode.addFileNodes(flFile);

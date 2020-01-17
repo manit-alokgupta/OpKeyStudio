@@ -59,6 +59,7 @@ public class Tools {
 		ArrayList<String> importHeaders = new ArrayList<String>();
 		importHeaders.add("opkeystudio.lib.runtime.GlobalVariable");
 		importHeaders.add("opkeystudio.lib.runtime.ORObject");
+		importHeaders.add("opkeystudio.lib.runtime.OpKeyGenericKeyword");
 		for (String importHeader : importHeaders) {
 			importHeadersDatas += "import " + importHeader + ";";
 		}

@@ -201,7 +201,7 @@ public class SourceCodeEditor extends Composite {
 					|| fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER) {
 				scti.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
 			}
-			if (fileNode.getFileType() == FILE_TYPE.SOURCEFILE) {
+			if (fileNode.getFileType() == FILE_TYPE.JAVASOURCEFILE) {
 				scti.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/javafile.png"));
 			}
 			renderTreeItemsNode(scti, fileNode);
