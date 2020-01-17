@@ -24,6 +24,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class Transpiler {
 	private TranspileObject transpileObject;
 	private FileNode rootNode;
+
 	private void createFileNode(FileNode fileNode) throws IOException {
 		if (fileNode.getFileType() == FILE_TYPE.FOLDER || fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER
 				|| fileNode.getFileType() == FILE_TYPE.PROJECTFOLDER) {
@@ -52,39 +53,39 @@ public class Transpiler {
 		this.setTranspileObject(transpileObject);
 		String path = Utilities.getInstance().getDefaultSourceCodeDirPath();
 		Artifact artifact = transpileObject.getArtifact();
-		FileNode rootNode = new FileNode(artifact.getId(),"", FILE_TYPE.PROJECTFOLDER);
+		FileNode rootNode = new FileNode(artifact.getId(), "", FILE_TYPE.PROJECTFOLDER);
 		rootNode.setParentPath(path);
 
 		String rootPath = rootNode.getFilePath();
-		FileNode binNode = new FileNode("bin",rootPath, FILE_TYPE.PACKAGEFOLDER);
+		FileNode binNode = new FileNode("bin", rootPath, FILE_TYPE.PACKAGEFOLDER);
 		binNode.setParentPath(rootNode.getFilePath());
 
-		FileNode srcnode = new FileNode("src", rootPath,FILE_TYPE.PACKAGEFOLDER);
+		FileNode srcnode = new FileNode("src", rootPath, FILE_TYPE.PACKAGEFOLDER);
 		srcnode.setParentPath(rootNode.getFilePath());
 		setRootNode(srcnode);
-		FileNode gvNode = new FileNode("globalvariables",rootPath, FILE_TYPE.PACKAGEFOLDER);
+		FileNode gvNode = new FileNode("globalvariables", rootPath, FILE_TYPE.PACKAGEFOLDER);
 		gvNode.setParentPath(srcnode.getFilePath());
 
-		FileNode tcNode = new FileNode("testcases",rootPath, FILE_TYPE.PACKAGEFOLDER);
+		FileNode tcNode = new FileNode("testcases", rootPath, FILE_TYPE.PACKAGEFOLDER);
 		tcNode.setParentPath(srcnode.getFilePath());
 
-		FileNode flNode = new FileNode("functionlibraries",rootPath, FILE_TYPE.PACKAGEFOLDER);
+		FileNode flNode = new FileNode("functionlibraries", rootPath, FILE_TYPE.PACKAGEFOLDER);
 		flNode.setParentPath(srcnode.getFilePath());
 
-		FileNode orNode = new FileNode("objectrepositories",rootPath, FILE_TYPE.PACKAGEFOLDER);
+		FileNode orNode = new FileNode("objectrepositories", rootPath, FILE_TYPE.PACKAGEFOLDER);
 		orNode.setParentPath(srcnode.getFilePath());
 
-		FileNode libNode = new FileNode("libs",rootPath, FILE_TYPE.PACKAGEFOLDER);
-		libNode.setParentPath(srcnode.getFilePath());
+		FileNode libNode = new FileNode("libs", rootPath, FILE_TYPE.PACKAGEFOLDER);
+		libNode.setParentPath(rootNode.getFilePath());
 
 		srcnode.addFileNodes(gvNode);
 		srcnode.addFileNodes(tcNode);
 		srcnode.addFileNodes(flNode);
 		srcnode.addFileNodes(orNode);
-		srcnode.addFileNodes(libNode);
 
 		rootNode.addFileNodes(binNode);
 		rootNode.addFileNodes(srcnode);
+		rootNode.addFileNodes(libNode);
 
 		List<GlobalVariable> globalVariables = transpileObject.getGlobalVaribales();
 		List<FlowStep> flowSteps = transpileObject.getFlowSteps();
@@ -93,13 +94,13 @@ public class Transpiler {
 		Set<String> orids = getAllObjectRepositoryIds(flowSteps);
 
 		transpileObject.setOrObjects(orobjects);
-		FileNode gvFile = new FileNode("GlobalVariables",rootPath, FILE_TYPE.JAVASOURCEFILE);
+		FileNode gvFile = new FileNode("GlobalVariables", rootPath, FILE_TYPE.JAVASOURCEFILE);
 		gvFile.setParentPath(gvNode.getFilePath());
 
-		FileNode orFile = new FileNode("ORObjects",rootPath, FILE_TYPE.JAVASOURCEFILE);
+		FileNode orFile = new FileNode("ORObjects", rootPath, FILE_TYPE.JAVASOURCEFILE);
 		orFile.setParentPath(orNode.getFilePath());
 
-		FileNode tcFile = new FileNode(artifact.getName(),rootPath, FILE_TYPE.JAVASOURCEFILE);
+		FileNode tcFile = new FileNode(artifact.getName(), rootPath, FILE_TYPE.JAVASOURCEFILE);
 		tcFile.setParentPath(tcNode.getFilePath());
 
 		String tcDatas = new TranspilerUtilities(this).transpileTestCaseSteps(artifact, flowSteps, tcFile);
@@ -114,7 +115,7 @@ public class Transpiler {
 			Artifact flartifact = functionLibraryStep.getFunctionLibraryComponent();
 			try {
 				List<FlowStep> flflowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(flartifact.getId());
-				FileNode flFile = new FileNode(flartifact.getName(),rootPath, FILE_TYPE.JAVASOURCEFILE);
+				FileNode flFile = new FileNode(flartifact.getName(), rootPath, FILE_TYPE.JAVASOURCEFILE);
 				String flDatas = new TranspilerUtilities(this).transpileTestCaseSteps(flartifact, flflowSteps, flFile);
 				flFile.setData(flDatas);
 				flFile.setParentPath(flNode.getFilePath());
@@ -128,6 +129,12 @@ public class Transpiler {
 		orNode.addFileNodes(orFile);
 		gvNode.addFileNodes(gvFile);
 		tcNode.addFileNodes(tcFile);
+
+		FileNode mainFileNode = new FileNode("Main", rootPath, FILE_TYPE.JAVASOURCEFILE);
+		mainFileNode.setParentPath(srcnode.getFilePath());
+		mainFileNode.setData("Hello");
+		srcnode.addFileNodes(mainFileNode);
+
 		try {
 			createFileNode(rootNode);
 		} catch (IOException e) {
