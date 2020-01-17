@@ -22,7 +22,6 @@ public class FileNode extends Modified {
 	private String className;
 	private String classPath;
 	private String rootNode;
-	private String importName;
 	private List<FileNode> filesNodes = new ArrayList<FileNode>();
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 
@@ -165,9 +164,5 @@ public class FileNode extends Modified {
 		String packageName = filePath.replaceAll(rootNodePath, "");
 		packageName = packageName.replaceAll("OPKEY_SLASH", ".");
 		return packageName.replaceAll(".java", "");
-	}
-
-	public void setImportName(String importName) {
-		this.importName = importName;
 	}
 }
