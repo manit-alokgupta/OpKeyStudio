@@ -21,13 +21,16 @@ public class FileNode extends Modified {
 	private String parentPath;
 	private String className;
 	private String classPath;
+	private String parentPackageName;
+	private String rootNode;
 	private List<FileNode> filesNodes = new ArrayList<FileNode>();
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 
-	public FileNode(String fileName, FILE_TYPE fileType) {
+	public FileNode(String fileName, String rootNodePath, FILE_TYPE fileType) {
 		setFileIdentifier(Utilities.getInstance().getUniqueUUID(""));
 		setFileType(fileType);
 		setFileName(fileName);
+		setRootNode(rootNodePath);
 	}
 
 	public String getFileName() {
@@ -128,5 +131,31 @@ public class FileNode extends Modified {
 
 	public void setClassPath(String classPath) {
 		this.classPath = classPath;
+	}
+
+	public String getParentPackageName() {
+		System.out.println(this.getFilePath());
+		System.out.println(this.getRootNode());
+		String rootNodePath = this.getRootNode() + File.separator + "src"+ File.separator;
+		String filePath = this.getFilePath();
+		rootNodePath = rootNodePath.replaceAll("\\\\", "OPKEY_SLASH");
+		filePath = filePath.replaceAll("\\\\", "OPKEY_SLASH");
+
+		String packageName = filePath.replaceAll(rootNodePath, "");
+		packageName = packageName.replaceAll("OPKEY_SLASH", ".");
+		packageName = packageName.replaceAll("." + getFileName(), "");
+		return packageName;
+	}
+
+	public void setParentPackageName(String parentPackageName) {
+		this.parentPackageName = parentPackageName;
+	}
+
+	public String getRootNode() {
+		return rootNode;
+	}
+
+	public void setRootNode(String rootNode) {
+		this.rootNode = rootNode;
 	}
 }

@@ -16,8 +16,9 @@ public class ClassSnippet {
 	private List<NewStaticObjectSnippet> staticObject = new ArrayList<NewStaticObjectSnippet>();
 	private List<MethodSnippet> methodSnippets = new ArrayList<MethodSnippet>();
 
-	public ClassSnippet(String className) {
-		setSTART_DATA(new Tools().getOpKeyRuntimeImportHeaders() + " " + String.format(START_DATA, className));
+	public ClassSnippet(String className, String packageName) {
+		setSTART_DATA("package " + packageName + ";" + new Tools().getOpKeyRuntimeImportHeaders() + " "
+				+ String.format(START_DATA, className));
 	}
 
 	public String getSTART_DATA() {

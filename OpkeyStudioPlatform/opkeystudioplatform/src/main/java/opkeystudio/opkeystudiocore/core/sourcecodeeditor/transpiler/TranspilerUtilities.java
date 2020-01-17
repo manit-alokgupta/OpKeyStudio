@@ -16,6 +16,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.query.DBField;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.ClassSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodCallSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodSnippet;
@@ -62,10 +63,10 @@ public class TranspilerUtilities {
 		return transpiledFields;
 	}
 
-	public String transpileGlobalVariables(List<GlobalVariable> globalVariables) {
+	public String transpileGlobalVariables(List<GlobalVariable> globalVariables, FileNode fileNode) {
 		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 
-		ClassSnippet classSnippet = new ClassSnippet("GlobalVariables");
+		ClassSnippet classSnippet = new ClassSnippet("GlobalVariables", fileNode.getParentPackageName());
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (GlobalVariable gv : globalVariables) {
 			NewStaticObjectSnippet nsos = new NewStaticObjectSnippet("public", "GlobalVariable", gv.getVariableName());
@@ -87,8 +88,8 @@ public class TranspilerUtilities {
 		return classSnippet.toString();
 	}
 
-	public String transpileORObjects(List<ORObject> orobjects) {
-		ClassSnippet classSnippet = new ClassSnippet("ORObjects");
+	public String transpileORObjects(List<ORObject> orobjects, FileNode fileNode) {
+		ClassSnippet classSnippet = new ClassSnippet("ORObjects", fileNode.getParentPackageName());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (ORObject orobject : orobjects) {
@@ -114,8 +115,8 @@ public class TranspilerUtilities {
 		return classSnippet.toString();
 	}
 
-	public String transpileTestCaseSteps(Artifact artifact, List<FlowStep> flowSteps) {
-		ClassSnippet classSnippet = new ClassSnippet(artifact.getName());
+	public String transpileTestCaseSteps(Artifact artifact, List<FlowStep> flowSteps, FileNode fileNode) {
+		ClassSnippet classSnippet = new ClassSnippet(artifact.getName(), fileNode.getParentPackageName());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "execute", "");
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (FlowStep flowStep : flowSteps) {
