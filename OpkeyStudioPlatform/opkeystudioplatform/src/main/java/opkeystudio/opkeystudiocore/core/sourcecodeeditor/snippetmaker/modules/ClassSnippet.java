@@ -7,7 +7,6 @@ import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Tools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 
@@ -22,17 +21,12 @@ public class ClassSnippet {
 
 	public ClassSnippet(String className, FileNode fileNode, Transpiler transpiler) {
 		FileNode rootNode = transpiler.getRootNode();
-		System.out.println("Root Node Path " + rootNode.getFilePath());
 		String localImports = "";
 		ArrayList<FileNode> sourceFiles = new Tools().getAllFileNodes(rootNode);
-		System.out.println("Child Size " + sourceFiles.size());
 		for (FileNode sf : sourceFiles) {
-			if (!sf.getFileIdentifier().equals(fileNode.getFileIdentifier())) {
-				if (!localImports.isEmpty()) {
-					localImports += ";";
-				}
-				System.out.println("Import Name " + sf.getImportName());
-				localImports += "import " + sf.getImportName();
+			localImports += "import " + sf.getImportName() + ".*";
+			if (!localImports.isEmpty()) {
+				localImports += ";";
 			}
 		}
 		setSTART_DATA("package " + fileNode.getParentPackageName() + ";" + new Tools().getOpKeyRuntimeImportHeaders()

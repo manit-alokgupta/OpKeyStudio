@@ -154,7 +154,14 @@ public class FileNode extends Modified {
 	}
 
 	public String getImportName() {
-		return importName;
+		String rootNodePath = this.getRootNode() + File.separator + "src" + File.separator;
+		String filePath = this.getFilePath();
+		rootNodePath = rootNodePath.replaceAll("\\\\", "OPKEY_SLASH");
+		filePath = filePath.replaceAll("\\\\", "OPKEY_SLASH");
+
+		String packageName = filePath.replaceAll(rootNodePath, "");
+		packageName = packageName.replaceAll("OPKEY_SLASH", ".");
+		return packageName.replaceAll(".java", "");
 	}
 
 	public void setImportName(String importName) {
