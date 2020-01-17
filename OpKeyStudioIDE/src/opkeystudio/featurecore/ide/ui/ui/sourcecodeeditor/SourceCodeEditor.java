@@ -381,6 +381,8 @@ public class SourceCodeEditor extends Composite {
 			transpileObject.setFlowSteps(flowSteps);
 
 			FileNode rootNode = new Transpiler().transpileDatas(transpileObject);
+			
+			//Add code of rereading the structure
 			renderTreeItems(rootNode);
 			new CompilerTools().compile(rootNode);
 		} catch (SQLException | IOException | IllegalArgumentException e) {

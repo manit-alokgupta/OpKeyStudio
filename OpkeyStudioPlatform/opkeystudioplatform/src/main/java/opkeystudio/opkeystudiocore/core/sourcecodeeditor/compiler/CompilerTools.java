@@ -20,7 +20,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Tools;
 
 public class CompilerTools {
-	private ArrayList<String> getLibrariesPath() {
+	public ArrayList<String> getLibrariesPath() {
 		ArrayList<String> librariesPath = new ArrayList<String>();
 		librariesPath.add("E:\\OpKeyEJars\\opkeyeruntimeJar.jar");
 		return librariesPath;
@@ -71,10 +71,13 @@ public class CompilerTools {
 				compileError.setKind(diagnostic.getKind());
 				compileError.setMessage(diagnostic.getMessage(null));
 				compileError.setSource(diagnostic.getSource());
-				System.out.println(compileError.getMessage());
 				FileNode node = getSourceFileNode(filteredFiles, diagnostic.getSource().getName());
 				node.addCompileError(compileError);
 			}
+
+			List<FileNode> allNodes = new Tools().getAllFileNodes(fileNode);
+			new Tools().getAllFileNodes(allNodes, FILE_TYPE.JAVASOURCEFILE);
+			System.out.println("Root Path " + fileNode.getFilePath());
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

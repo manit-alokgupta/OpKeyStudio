@@ -24,9 +24,9 @@ public class FileNode extends Modified {
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 
 	public FileNode(String fileName, FILE_TYPE fileType) {
-		setFileName(fileName);
-		setFileType(fileType);
 		setFileIdentifier(Utilities.getInstance().getUniqueUUID(""));
+		setFileType(fileType);
+		setFileName(fileName);
 	}
 
 	public String getFileName() {
