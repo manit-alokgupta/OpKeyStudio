@@ -1,7 +1,5 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler;
 
-import static org.hamcrest.Matchers.stringContainsInOrder;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
