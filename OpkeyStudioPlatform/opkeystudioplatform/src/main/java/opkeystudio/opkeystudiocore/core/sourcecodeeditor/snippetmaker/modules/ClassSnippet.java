@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
-import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Tools;
 
 public class ClassSnippet {
 
@@ -17,8 +17,7 @@ public class ClassSnippet {
 	private List<MethodSnippet> methodSnippets = new ArrayList<MethodSnippet>();
 
 	public ClassSnippet(String className) {
-		setSTART_DATA(
-				Utilities.getInstance().getOpKeyRuntimeImportHeaders() + " " + String.format(START_DATA, className));
+		setSTART_DATA(new Tools().getOpKeyRuntimeImportHeaders() + " " + String.format(START_DATA, className));
 	}
 
 	public String getSTART_DATA() {

@@ -111,14 +111,4 @@ public class Utilities {
 	public String getRandomVariableName(String prefix) {
 		return prefix + String.valueOf(System.nanoTime());
 	}
-
-	public String getOpKeyRuntimeImportHeaders() {
-		String importHeadersDatas = "";
-		ArrayList<String> importHeaders = new ArrayList<String>();
-		importHeaders.add("opkeystudio.lib.runtime.GlobalVariable");
-		for (String importHeader : importHeaders) {
-			importHeadersDatas += "import " + importHeader + ";";
-		}
-		return importHeadersDatas;
-	}
 }
