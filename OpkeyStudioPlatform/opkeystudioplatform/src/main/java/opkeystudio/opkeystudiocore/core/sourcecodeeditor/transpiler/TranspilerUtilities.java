@@ -118,6 +118,9 @@ public class TranspilerUtilities {
 	public String transpileTestCaseSteps(Artifact artifact, List<FlowStep> flowSteps, FileNode fileNode) {
 		ClassSnippet classSnippet = new ClassSnippet(artifact.getName(), fileNode, getTranspiler());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "execute", "");
+		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet("new " + artifact.getName() + "()", "execute",
+				"");
+		getTranspiler().addMainTestCaseMethods(callmethodCallSnippet);
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.getKeyword() != null) {
@@ -127,6 +130,14 @@ public class TranspilerUtilities {
 				methodSnippet.addMethodCallSnippet(methodCallSnippet);
 			}
 		}
+		return classSnippet.toString();
+	}
+
+	public String createMainClassBody(FileNode fileNode) {
+		ClassSnippet classSnippet = new ClassSnippet("Main", fileNode, getTranspiler());
+		MethodSnippet methodSnippet = new MethodSnippet("static void", "main", "String[] args");
+		classSnippet.addMethodSnippet(methodSnippet);
+		methodSnippet.setMethodCallSnippets(getTranspiler().getMainTestCaseMethods());
 		return classSnippet.toString();
 	}
 

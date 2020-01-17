@@ -20,8 +20,12 @@ public class ClassSnippet {
 	private List<MethodSnippet> methodSnippets = new ArrayList<MethodSnippet>();
 
 	public ClassSnippet(String className, FileNode fileNode, Transpiler transpiler) {
-		setSTART_DATA("package " + fileNode.getParentPackageName() + ";" + new Tools().getOpKeyRuntimeImportHeaders()
-				+ " " + String.format(START_DATA, className));
+		String packageName = fileNode.getParentPackageName();
+		if (!packageName.trim().isEmpty()) {
+			packageName = "package " + fileNode.getParentPackageName() + ";";
+		}
+		setSTART_DATA(
+				packageName + new Tools().getOpKeyRuntimeImportHeaders() + " " + String.format(START_DATA, className));
 	}
 
 	public String getSTART_DATA() {

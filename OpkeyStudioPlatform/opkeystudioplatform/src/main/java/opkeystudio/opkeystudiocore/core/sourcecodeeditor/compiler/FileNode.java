@@ -142,6 +142,9 @@ public class FileNode extends Modified {
 		String packageName = filePath.replaceAll(rootNodePath, "");
 		packageName = packageName.replaceAll("OPKEY_SLASH", ".");
 		packageName = packageName.replaceAll("." + getFileName(), "");
+		if (packageName.equals(getFileName())) {
+			return "";
+		}
 		return packageName;
 	}
 

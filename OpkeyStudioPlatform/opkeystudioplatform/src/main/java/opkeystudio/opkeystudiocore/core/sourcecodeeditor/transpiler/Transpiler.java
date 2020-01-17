@@ -19,11 +19,13 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodCallSnippet;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Transpiler {
 	private TranspileObject transpileObject;
 	private FileNode rootNode;
+	private List<MethodCallSnippet> mainTestCaseMethods = new ArrayList<MethodCallSnippet>();
 
 	private void createFileNode(FileNode fileNode) throws IOException {
 		if (fileNode.getFileType() == FILE_TYPE.FOLDER || fileNode.getFileType() == FILE_TYPE.PACKAGEFOLDER
@@ -132,7 +134,9 @@ public class Transpiler {
 
 		FileNode mainFileNode = new FileNode("Main", rootPath, FILE_TYPE.JAVASOURCEFILE);
 		mainFileNode.setParentPath(srcnode.getFilePath());
-		mainFileNode.setData("Hello");
+
+		String mainClassBody = new TranspilerUtilities(this).createMainClassBody(mainFileNode);
+		mainFileNode.setData(mainClassBody);
 		srcnode.addFileNodes(mainFileNode);
 
 		try {
@@ -198,5 +202,13 @@ public class Transpiler {
 
 	public void setRootNode(FileNode rootNode) {
 		this.rootNode = rootNode;
+	}
+
+	public List<MethodCallSnippet> getMainTestCaseMethods() {
+		return mainTestCaseMethods;
+	}
+
+	public void addMainTestCaseMethods(MethodCallSnippet mainTestCaseMethods) {
+		this.mainTestCaseMethods.add(mainTestCaseMethods);
 	}
 }
