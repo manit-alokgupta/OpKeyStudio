@@ -10,7 +10,6 @@ import java.util.Set;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
-import opkeystudio.opkeystudiocore.core.utils.DataType.GenericDataType;
 
 public class KeywordManager {
 	private static KeywordManager manager;
