@@ -22,6 +22,8 @@ public class ImportDBCommand {
 
 	@Execute
 	public void execute(Shell shell) {
+		// LoginDialog loginDialog = new LoginDialog(shell, 0);
+		// loginDialog.open();
 		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
 		dialog.setFilterExtensions(filterExt);
 		dialog.open();
