@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,7 +15,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public class Utilities {
 	private static Utilities util;
-
+	private String defaultInstallDir;
 	public static Utilities getInstance() {
 		if (util == null) {
 			util = new Utilities();
@@ -110,5 +109,13 @@ public class Utilities {
 
 	public String getRandomVariableName(String prefix) {
 		return prefix + String.valueOf(System.nanoTime());
+	}
+
+	public String getDefaultInstallDir() {
+		return defaultInstallDir;
+	}
+
+	public void setDefaultInstallDir(String defaultInstallDir) {
+		this.defaultInstallDir = defaultInstallDir;
 	}
 }

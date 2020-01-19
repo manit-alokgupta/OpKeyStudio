@@ -24,8 +24,6 @@ public class E4LifeCycle {
 	void postContextCreate(IEclipseContext workbenchContext) {
 		Utilities.getInstance().initializeOpKeyStudioPath();
 		KeywordManager.getInstance().loadAllKeywords();
-		Location location = Platform.getInstallLocation();
-		System.out.println("Install Location " + location.getURL().getPath().toString());
 	}
 
 	@PreSave
