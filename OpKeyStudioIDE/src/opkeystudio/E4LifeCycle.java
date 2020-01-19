@@ -1,10 +1,12 @@
 package opkeystudio;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
 import org.eclipse.e4.ui.workbench.lifecycle.ProcessAdditions;
 import org.eclipse.e4.ui.workbench.lifecycle.ProcessRemovals;
+import org.eclipse.osgi.service.datalocation.Location;
 
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -22,6 +24,8 @@ public class E4LifeCycle {
 	void postContextCreate(IEclipseContext workbenchContext) {
 		Utilities.getInstance().initializeOpKeyStudioPath();
 		KeywordManager.getInstance().loadAllKeywords();
+		Location location = Platform.getInstallLocation();
+		System.out.println("Install Location " + location.getURL().getPath().toString());
 	}
 
 	@PreSave
@@ -34,6 +38,6 @@ public class E4LifeCycle {
 
 	@ProcessRemovals
 	void processRemovals(IEclipseContext workbenchContext) {
-		
+
 	}
 }
