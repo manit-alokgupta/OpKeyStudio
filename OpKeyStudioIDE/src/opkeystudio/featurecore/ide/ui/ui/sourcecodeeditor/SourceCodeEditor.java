@@ -300,7 +300,7 @@ public class SourceCodeEditor extends Composite {
 				fileNode.setModified(true);
 				toggleSaveAllButton(true);
 				if (isWhitespaceString(e.getText())) {
-					//contentAssistData.add(findMostRecentWord(e.getOffset() - 1));
+					// contentAssistData.add(findMostRecentWord(e.getOffset() - 1));
 				}
 			}
 		});
