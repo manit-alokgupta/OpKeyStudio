@@ -284,12 +284,14 @@ public class SourceCodeEditor extends Composite {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// assistant.showPossibleCompletions();
+				
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				assistant.showPossibleCompletions();
+				if (e.keyCode == 46) {
+					assistant.showPossibleCompletions();
+				}
 			}
 		});
 
