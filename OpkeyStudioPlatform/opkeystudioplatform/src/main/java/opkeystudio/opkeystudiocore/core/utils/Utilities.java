@@ -16,6 +16,8 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 public class Utilities {
 	private static Utilities util;
 	private String defaultInstallDir;
+	private ContentAssistData contentAssistData;
+
 	public static Utilities getInstance() {
 		if (util == null) {
 			util = new Utilities();
@@ -117,5 +119,13 @@ public class Utilities {
 
 	public void setDefaultInstallDir(String defaultInstallDir) {
 		this.defaultInstallDir = defaultInstallDir;
+	}
+
+	public ContentAssistData getContentAssistData() {
+		return contentAssistData;
+	}
+
+	public void setContentAssistData(ContentAssistData contentAssistData) {
+		this.contentAssistData = contentAssistData;
 	}
 }

@@ -54,6 +54,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.TranspileObject;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
+import opkeystudio.opkeystudiocore.core.utils.ContentAssistData;
 
 public class SourceCodeEditor extends Composite {
 	private TestCaseView testCaseView;
@@ -257,11 +258,7 @@ public class SourceCodeEditor extends Composite {
 		}
 		sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
 		sourceCodeText.setDocument(new Document());
-		ContentAssistData contentAssistData = new ContentAssistData(200);
-		Utilities.getInstance().setContentAssistData(contentAssistData);
-		contentAssistData.add("new");
-		contentAssistData.add("class");
-		contentAssistData.add("OpKeyGeneric");
+		ContentAssistData contentAssistData = ContentAssistData.getInstance();
 		ContentAssistant assistant = new ContentAssistant();
 		assistant.setStatusLineVisible(true);
 		assistant.enableColoredLabels(true);

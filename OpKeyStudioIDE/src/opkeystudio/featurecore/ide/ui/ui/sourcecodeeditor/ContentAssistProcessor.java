@@ -13,6 +13,8 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
+import opkeystudio.opkeystudiocore.core.utils.ContentAssistData;
+
 class ContentAssistProcessor implements IContentAssistProcessor {
 	private String lastError = null;
 

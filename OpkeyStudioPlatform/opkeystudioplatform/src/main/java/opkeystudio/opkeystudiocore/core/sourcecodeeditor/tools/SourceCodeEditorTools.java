@@ -21,6 +21,10 @@ public class SourceCodeEditorTools {
 		return sourceCodeEditor;
 	}
 
+	public String[] getDefaultTokens() {
+		return this.defaultTokens;
+	}
+
 	public List<Token> getTokens(String sourcecode) {
 		List<Token> tokens = new ArrayList<Token>();
 		for (String tokem : this.defaultTokens) {
