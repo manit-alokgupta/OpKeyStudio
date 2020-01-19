@@ -284,14 +284,12 @@ public class SourceCodeEditor extends Composite {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+				// assistant.showPossibleCompletions();
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.keyCode == 46) {
-					assistant.showPossibleCompletions();
-				}
+				assistant.showPossibleCompletions();
 			}
 		});
 
@@ -306,7 +304,27 @@ public class SourceCodeEditor extends Composite {
 				}
 			}
 		});
-
+	/*	sourceCodeText.getTextWidget().addLineStyleListener(new LineStyleListener() {
+			public void lineGetStyle(LineStyleEvent e) {
+				System.out.println("Running " + e.lineText);
+				// Set the line number
+				if (sourceCodeText == null) {
+					return;
+				}
+				if (sourceCodeText.getTextWidget() == null) {
+					return;
+				}
+				try {
+					e.bulletIndex = sourceCodeText.getTextWidget().getLineAtOffset(e.lineOffset);
+				} catch (Exception exception) {
+					exception.printStackTrace();
+				}
+				StyleRange style = new StyleRange();
+				style.metrics = new GlyphMetrics(0, 0,
+						Integer.toString(sourceCodeText.getTextWidget().getLineCount() + 1).length() * 12);
+				//e.bullet = new Bullet(ST.BULLET_NUMBER, style);
+			}
+		});*/
 		styleText(sourceCodeText.getTextWidget());
 	}
 
@@ -350,27 +368,6 @@ public class SourceCodeEditor extends Composite {
 			}
 			styledTextControl.setStyleRange(styleRange);
 		}
-
-		sourceCodeText.getTextWidget().addLineStyleListener(new LineStyleListener() {
-			public void lineGetStyle(LineStyleEvent e) {
-				// Set the line number
-				if (sourceCodeText == null) {
-					return;
-				}
-				if (sourceCodeText.getTextWidget() == null) {
-					return;
-				}
-				try {
-					e.bulletIndex = sourceCodeText.getTextWidget().getLineAtOffset(e.lineOffset);
-				} catch (Exception exception) {
-					exception.printStackTrace();
-				}
-				StyleRange style = new StyleRange();
-				style.metrics = new GlyphMetrics(0, 0,
-						Integer.toString(sourceCodeText.getTextWidget().getLineCount() + 1).length() * 12);
-				e.bullet = new Bullet(ST.BULLET_NUMBER, style);
-			}
-		});
 	}
 
 	public void transpileDatas() {

@@ -22,7 +22,6 @@ public class SourceCodeEditorTools {
 	}
 
 	public List<Token> getTokens(String sourcecode) {
-		System.out.println(">>Code Length " + sourcecode.length());
 		List<Token> tokens = new ArrayList<Token>();
 		for (String tokem : this.defaultTokens) {
 			List<Integer> indexes = findWord(sourcecode, tokem);
