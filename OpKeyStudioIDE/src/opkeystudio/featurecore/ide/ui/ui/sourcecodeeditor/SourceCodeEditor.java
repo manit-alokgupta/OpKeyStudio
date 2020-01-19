@@ -261,9 +261,6 @@ public class SourceCodeEditor extends Composite {
 		}
 		sourceCodeText = new SourceViewer(tabFolder, null, SWT.V_SCROLL | SWT.SCROLL_LINE);
 		sourceCodeText.setDocument(new Document());
-		for (FontData fd : sourceCodeText.getTextWidget().getFont().getFontData()) {
-			fd.setHeight(80);
-		}
 		ContentAssistData contentAssistData = ContentAssistData.getInstance();
 		ContentAssistant assistant = new ContentAssistant();
 		assistant.setStatusLineVisible(true);
