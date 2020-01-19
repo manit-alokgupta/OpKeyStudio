@@ -1,11 +1,9 @@
 package opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,12 +17,8 @@ import org.eclipse.jface.text.TextEvent;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.Bullet;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.custom.LineStyleEvent;
-import org.eclipse.swt.custom.LineStyleListener;
-import org.eclipse.swt.custom.ST;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
@@ -34,7 +28,6 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.GlyphMetrics;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -43,6 +36,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -263,16 +257,19 @@ public class SourceCodeEditor extends Composite {
 		}
 		sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
 		sourceCodeText.setDocument(new Document());
-		ContentAssistData wordTracker = new ContentAssistData(200);
-		wordTracker.add("new");
-		wordTracker.add("class");
+		ContentAssistData contentAssistData = new ContentAssistData(200);
+		Utilities.getInstance().setContentAssistData(contentAssistData);
+		contentAssistData.add("new");
+		contentAssistData.add("class");
+		contentAssistData.add("OpKeyGeneric");
 		ContentAssistant assistant = new ContentAssistant();
 		assistant.setStatusLineVisible(true);
 		assistant.enableColoredLabels(true);
 		assistant.setStatusMessage("");
 		assistant.enableAutoActivation(true);
 		assistant.setEmptyMessage("Nothing Found.");
-		assistant.setContentAssistProcessor(new ContentAssistProcessor(wordTracker), IDocument.DEFAULT_CONTENT_TYPE);
+		assistant.setContentAssistProcessor(new ContentAssistProcessor(contentAssistData),
+				IDocument.DEFAULT_CONTENT_TYPE);
 		assistant.install(sourceCodeText);
 
 		sourceCodeText.setEditable(true);
@@ -300,31 +297,21 @@ public class SourceCodeEditor extends Composite {
 				fileNode.setModified(true);
 				toggleSaveAllButton(true);
 				if (isWhitespaceString(e.getText())) {
-					wordTracker.add(findMostRecentWord(e.getOffset() - 1));
+					contentAssistData.add(findMostRecentWord(e.getOffset() - 1));
 				}
 			}
 		});
-	/*	sourceCodeText.getTextWidget().addLineStyleListener(new LineStyleListener() {
-			public void lineGetStyle(LineStyleEvent e) {
-				System.out.println("Running " + e.lineText);
-				// Set the line number
-				if (sourceCodeText == null) {
-					return;
-				}
-				if (sourceCodeText.getTextWidget() == null) {
-					return;
-				}
-				try {
-					e.bulletIndex = sourceCodeText.getTextWidget().getLineAtOffset(e.lineOffset);
-				} catch (Exception exception) {
-					exception.printStackTrace();
-				}
-				StyleRange style = new StyleRange();
-				style.metrics = new GlyphMetrics(0, 0,
-						Integer.toString(sourceCodeText.getTextWidget().getLineCount() + 1).length() * 12);
-				//e.bullet = new Bullet(ST.BULLET_NUMBER, style);
-			}
-		});*/
+		/*
+		 * sourceCodeText.getTextWidget().addLineStyleListener(new LineStyleListener() {
+		 * public void lineGetStyle(LineStyleEvent e) { System.out.println("Running " +
+		 * e.lineText); // Set the line number if (sourceCodeText == null) { return; }
+		 * if (sourceCodeText.getTextWidget() == null) { return; } try { e.bulletIndex =
+		 * sourceCodeText.getTextWidget().getLineAtOffset(e.lineOffset); } catch
+		 * (Exception exception) { exception.printStackTrace(); } StyleRange style = new
+		 * StyleRange(); style.metrics = new GlyphMetrics(0, 0,
+		 * Integer.toString(sourceCodeText.getTextWidget().getLineCount() + 1).length()
+		 * * 12); //e.bullet = new Bullet(ST.BULLET_NUMBER, style); } });
+		 */
 		styleText(sourceCodeText.getTextWidget());
 	}
 

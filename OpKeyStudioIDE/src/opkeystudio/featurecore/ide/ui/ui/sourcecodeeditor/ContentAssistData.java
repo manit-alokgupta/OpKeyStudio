@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-class ContentAssistData {
+public class ContentAssistData {
 	private int maxQueueSize;
 
 	private List wordBuffer;

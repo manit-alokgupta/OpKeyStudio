@@ -1,7 +1,5 @@
 package opkeystudio.core.utils;
 
-import static org.hamcrest.Matchers.contains;
-
 import java.util.Collection;
 import java.util.UUID;
 
@@ -16,11 +14,13 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor.ContentAssistData;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 
 public class Utilities {
 	private static Utilities utils = null;
+	private ContentAssistData contentAssistData;
 
 	public static Utilities getInstance() {
 		if (utils == null) {
@@ -154,5 +154,13 @@ public class Utilities {
 		}
 		mpart.setLabel(renamedData);
 		mpart.setTooltip(renamedData);
+	}
+
+	public ContentAssistData getContentAssistData() {
+		return contentAssistData;
+	}
+
+	public void setContentAssistData(ContentAssistData contentAssistData) {
+		this.contentAssistData = contentAssistData;
 	}
 }
