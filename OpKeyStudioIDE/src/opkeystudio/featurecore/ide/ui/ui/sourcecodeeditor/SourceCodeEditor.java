@@ -16,6 +16,8 @@ import org.eclipse.jface.text.ITextListener;
 import org.eclipse.jface.text.TextEvent;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -28,6 +30,7 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -60,7 +63,7 @@ public class SourceCodeEditor extends Composite {
 	private TestCaseView testCaseView;
 	private CTabFolder tabFolder;
 	private SourceCodeTree sourceCodeTree;
-	private TextViewer sourceCodeText;
+	private ISourceViewer sourceCodeText;
 	ToolItem runButton;
 	ToolItem compileButton;
 	ToolItem saveAllButton;
@@ -164,7 +167,7 @@ public class SourceCodeEditor extends Composite {
 				initiateJavaEditor(scti.getFileNode());
 				CTabItem tabItem = new CTabItem(tabFolder, SWT.CLOSE);
 				tabItem.setImage(scti.getImage());
-				tabItem.setControl(sourceCodeText.getControl());
+				tabItem.setControl(sourceCodeText.getTextWidget());
 				tabItem.setText(item.getText());
 				tabFolder.setSelection(tabItem);
 			}
@@ -256,8 +259,11 @@ public class SourceCodeEditor extends Composite {
 		for (CompileError ce : compileErrors) {
 			System.out.println(ce.getMessage());
 		}
-		sourceCodeText = new TextViewer(tabFolder, SWT.V_SCROLL | SWT.SCROLL_LINE);
+		sourceCodeText = new SourceViewer(tabFolder, null, SWT.V_SCROLL | SWT.SCROLL_LINE);
 		sourceCodeText.setDocument(new Document());
+		for (FontData fd : sourceCodeText.getTextWidget().getFont().getFontData()) {
+			fd.setHeight(80);
+		}
 		ContentAssistData contentAssistData = ContentAssistData.getInstance();
 		ContentAssistant assistant = new ContentAssistant();
 		assistant.setStatusLineVisible(true);
@@ -294,7 +300,7 @@ public class SourceCodeEditor extends Composite {
 				fileNode.setModified(true);
 				toggleSaveAllButton(true);
 				if (isWhitespaceString(e.getText())) {
-					contentAssistData.add(findMostRecentWord(e.getOffset() - 1));
+					//contentAssistData.add(findMostRecentWord(e.getOffset() - 1));
 				}
 			}
 		});

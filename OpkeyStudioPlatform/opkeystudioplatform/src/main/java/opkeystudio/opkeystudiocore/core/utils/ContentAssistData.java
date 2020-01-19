@@ -63,7 +63,7 @@ public class ContentAssistData {
 		List suggestions = new LinkedList();
 		for (Iterator i = wordBuffer.iterator(); i.hasNext();) {
 			String currWord = (String) i.next();
-			if (currWord.startsWith(word)) {
+			if (currWord.toLowerCase().startsWith(word.toLowerCase())) {
 				suggestions.add(currWord);
 			}
 		}
