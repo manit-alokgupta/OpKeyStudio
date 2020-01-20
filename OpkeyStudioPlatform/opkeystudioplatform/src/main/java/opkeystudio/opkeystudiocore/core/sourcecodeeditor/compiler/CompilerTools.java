@@ -23,13 +23,18 @@ import javax.tools.ToolProvider;
 
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Tools;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CompilerTools {
 	public static int BUFFER_SIZE = 10240;
 
 	public ArrayList<String> getLibrariesPath() {
 		ArrayList<String> librariesPath = new ArrayList<String>();
-		librariesPath.add("E:\\OpKeyEJars\\opkeyeruntimeJar.jar");
+		File libraryFolder = new File(Utilities.getInstance().getLibrariesFolder());
+		File[] files = libraryFolder.listFiles();
+		for (File file : files) {
+			librariesPath.add(file.getAbsolutePath());
+		}
 		return librariesPath;
 	}
 
@@ -89,13 +94,8 @@ public class CompilerTools {
 		}
 	}
 
-	private void createBinFolder(FileNode rootNode) {
-		String rootPath = rootNode.getFilePath();
-		List<FileNode> allNodes = new Tools().getAllFileNodes(rootNode);
-		List<FileNode> allJavaSourceFiles = new Tools().getAllFileNodes(allNodes, FILE_TYPE.JAVASOURCEFILE);
-		for (FileNode javaSourceFile : allJavaSourceFiles) {
-			System.out.println(javaSourceFile.getClassPath());
-		}
+	private void copyRuntimeLibraryClasses(FileNode fileNode) {
+
 	}
 
 	public FileNode getSourceFileNode(List<FileNode> filteredNodes, String sourcePath) {

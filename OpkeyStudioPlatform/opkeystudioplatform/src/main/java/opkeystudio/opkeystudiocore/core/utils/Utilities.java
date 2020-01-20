@@ -136,6 +136,10 @@ public class Utilities {
 		this.defaultInstallDir = defaultInstallDir;
 	}
 
+	public String getLibrariesFolder() {
+		return this.getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries";
+	}
+
 	public ContentAssistData getContentAssistData() {
 		return contentAssistData;
 	}
