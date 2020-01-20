@@ -51,15 +51,17 @@ public class IntellisenseTools {
 
 		String rootPath = path.replaceAll("\\\\", "OPKEY_SLASH");
 		for (File file : allFiles) {
-			String filePath = file.getAbsolutePath();
-			filePath = filePath.replaceAll("\\\\", "OPKEY_SLASH");
-			filePath = filePath.replaceAll(rootPath, "");
-			filePath = filePath.replaceAll("OPKEY_SLASH", ".");
-			filePath = filePath.replaceAll(".class", "");
+			if (file.getName().toLowerCase().endsWith(".class")) {
+				String filePath = file.getAbsolutePath();
+				filePath = filePath.replaceAll("\\\\", "OPKEY_SLASH");
+				filePath = filePath.replaceAll(rootPath, "");
+				filePath = filePath.replaceAll("OPKEY_SLASH", ".");
+				filePath = filePath.replaceAll(".class", "");
 
-			String className = filePath;
-			Class _class = urlClass.loadClass(className);
-			buildIntelliSenseData(_class, className);
+				String className = filePath;
+				Class _class = urlClass.loadClass(className);
+				buildIntelliSenseData(_class, className);
+			}
 		}
 	}
 
@@ -80,5 +82,6 @@ public class IntellisenseTools {
 		for (Field field : fields) {
 			System.out.println(field.toGenericString());
 		}
+
 	}
 }
