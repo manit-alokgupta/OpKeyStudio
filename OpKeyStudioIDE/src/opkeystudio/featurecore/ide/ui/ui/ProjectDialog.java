@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -36,6 +37,7 @@ public class ProjectDialog extends TitleAreaDialog {
 	private List<Project> allProjects = new ArrayList<>();
 	private Button goButton;
 	private Button cancelButton;
+	private Project selectedProject;
 
 	/**
 	 * Create the dialog.
@@ -88,6 +90,27 @@ public class ProjectDialog extends TitleAreaDialog {
 				}
 			}
 		});
+
+		table.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem tableItem = table.getSelection()[0];
+				if (tableItem == null) {
+					return;
+				}
+				CustomTableItem cti = (CustomTableItem) tableItem;
+				Project sproject = (Project) cti.getControlData();
+				setSelectedProject(sproject);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		text.addKeyListener(new KeyListener() {
 
 			@Override
@@ -122,35 +145,40 @@ public class ProjectDialog extends TitleAreaDialog {
 		goButton.setText("Go");
 		cancelButton = createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 		cancelButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		
+
 		goButton.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				try {
+					new ProjectApi().selectProject(getSelectedProject().getP_ID());
+					new ProjectArtifactTreeUI(parent.getShell()).open();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		cancelButton.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				close();
-				LoginDialog dialog=new LoginDialog(parent.getShell(),0);
+				LoginDialog dialog = new LoginDialog(parent.getShell(), 0);
 				dialog.open();
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
@@ -207,5 +235,13 @@ public class ProjectDialog extends TitleAreaDialog {
 
 	public void setAllProjects(List<Project> allProjects) {
 		this.allProjects = allProjects;
+	}
+
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
 	}
 }
