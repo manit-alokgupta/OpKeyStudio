@@ -49,11 +49,11 @@ public class ExecutionEngine {
 		for (int i = 0; i < classFiles.size(); i++) {
 			classURLS[i] = classFiles.get(i).toURI().toURL();
 		}
-		URLClassLoader urlClass = new URLClassLoader(classURLS);
+		URLClassLoader urlClass = new URLClassLoader(new URL[] {new File("C:\\Users\\neon.nishant\\OpKeyStudio\\workspace\\SourceCodes\\a1ef08f7e3af436bae0ab7d503ab67b9\\bin").toURI().toURL()});
 
 		for (File classFile : classFiles) {
-			if (classFile.getName().contains("Test")) {
-				Class _class = urlClass.loadClass(classFile.getName().replaceAll(".class", ""));
+			if (classFile.getName().contains("Test.class")) {
+				Class _class = urlClass.loadClass("testcases.Test");
 				Method[] declaredMethods = _class.getDeclaredMethods();
 				for (Method method : declaredMethods) {
 					System.out.println(method.getName());
