@@ -16,10 +16,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
@@ -185,9 +187,23 @@ public class Transpiler {
 	}
 
 	private List<ORObject> getAllORObjects(List<FlowStep> allFlowSteps) {
+		List<String> orObjectsIds = new ArrayList<>();
 		List<ORObject> allORObjects = new ArrayList<ORObject>();
 		for (FlowStep flowStep : allFlowSteps) {
-			allORObjects.addAll(flowStep.getOrObject());
+			List<ORObject> orObjects = flowStep.getOrObject();
+			for (ORObject orObject : orObjects) {
+				if (!orObjectsIds.contains(orObject.getVariableName())) {
+					List<ObjectAttributeProperty> objectAattributeProperties = GlobalLoader.getInstance()
+							.getObjectAttributeProperties();
+					for (ObjectAttributeProperty attrPropety : objectAattributeProperties) {
+						if (attrPropety.getObject_id().equals(orObject.getObject_id())) {
+							orObject.getObjectAttributesProperty().add(attrPropety);
+						}
+					}
+					orObjectsIds.add(orObject.getVariableName());
+					allORObjects.add(orObject);
+				}
+			}
 		}
 		return allORObjects;
 	}

@@ -11,6 +11,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -24,6 +25,7 @@ public class GlobalLoader {
 
 	private List<ORObject> allORObjects = new ArrayList<ORObject>();
 	private List<Artifact> allArtifacts = new ArrayList<Artifact>();
+	private List<ObjectAttributeProperty> objectAttributeProperties = new ArrayList<>();
 
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
@@ -42,6 +44,7 @@ public class GlobalLoader {
 				globalLoader.initAllComponentFlowInputArguments();
 				globalLoader.initAllComponentFlowOutputArguments();
 				globalLoader.initAllORObjects();
+				globalLoader.initAllORObjectsObjectProperties();
 			}
 		});
 		thread.start();
@@ -62,6 +65,22 @@ public class GlobalLoader {
 		try {
 			orObjects = mapper.readValue(result, type);
 			setAllORObjects(orObjects);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void initAllORObjectsObjectProperties() {
+		String query = "select * from or_object_properties";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
+				ObjectAttributeProperty.class);
+		List<ObjectAttributeProperty> objectProperties = new ArrayList<ObjectAttributeProperty>();
+		try {
+			objectProperties = mapper.readValue(result, type);
+			setObjectAttributeProperties(objectProperties);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,5 +204,13 @@ public class GlobalLoader {
 			}
 		}
 		return typeArtifacts;
+	}
+
+	public List<ObjectAttributeProperty> getObjectAttributeProperties() {
+		return objectAttributeProperties;
+	}
+
+	public void setObjectAttributeProperties(List<ObjectAttributeProperty> objectAttributeProperties) {
+		this.objectAttributeProperties = objectAttributeProperties;
 	}
 }
