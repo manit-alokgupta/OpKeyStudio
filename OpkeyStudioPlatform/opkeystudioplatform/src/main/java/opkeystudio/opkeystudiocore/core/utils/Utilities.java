@@ -137,7 +137,11 @@ public class Utilities {
 	}
 
 	public String getLibrariesFolder() {
-		return this.getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries";
+		String path = this.getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries";
+		if (!new File(path).exists()) {
+			return "E:\\OpKeyEJars";
+		}
+		return path;
 	}
 
 	public ContentAssistData getContentAssistData() {

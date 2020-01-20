@@ -1,6 +1,7 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.io.FileUtils;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -17,6 +20,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.MethodCallSnippet;
@@ -141,11 +145,22 @@ public class Transpiler {
 
 		try {
 			createFileNode(rootNode);
+			copyAllLibs(rootNode);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return rootNode;
+	}
+
+	private void copyAllLibs(FileNode rootNode) throws IOException {
+		File libFolder = new File(rootNode.getFilePath() + File.separator + "libs");
+		ArrayList<String> librariesPath = new CompilerTools().getLibrariesPath();
+		for (String libraryPath : librariesPath) {
+			File libraryFile = new File(libraryPath);
+			FileUtils.copyFile(libraryFile, new File(
+					rootNode.getFilePath() + File.separator + "libs" + File.separator + libraryFile.getName()));
+		}
 	}
 
 	private List<FlowStep> getFunctionLibraries(List<FlowStep> allFlowSteps) {

@@ -41,6 +41,10 @@ public class IntellisenseTools {
 	}
 
 	private void fetchClassInformation(FileNode rootNode) throws MalformedURLException, ClassNotFoundException {
+		ArrayList<String> libPaths = new CompilerTools().getLibrariesPath();
+		for (String path : libPaths) {
+			System.out.println("Library Path " + path);
+		}
 		String path = rootNode.getFilePath() + File.separator + "bin" + File.separator;
 		URLClassLoader urlClass = new URLClassLoader(new URL[] { new File(path).toURI().toURL() });
 		List<File> allFiles = getAllFiles(new File(path));
