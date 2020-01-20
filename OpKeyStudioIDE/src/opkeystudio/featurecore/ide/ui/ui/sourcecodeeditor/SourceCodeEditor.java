@@ -51,6 +51,7 @@ import opkeystudio.opkeystudiocore.core.execution.ExecutionEngine;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.IntellisenseTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
@@ -372,7 +373,7 @@ public class SourceCodeEditor extends Composite {
 			// Add code of rereading the structure
 			renderTreeItems(rootNode);
 			new CompilerTools().compile(rootNode);
-			new ExecutionEngine().execute(rootNode);
+			new IntellisenseTools().execute(rootNode);
 		} catch (SQLException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
