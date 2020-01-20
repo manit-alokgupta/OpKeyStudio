@@ -7,7 +7,7 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-vm jre/bin/java.exe
+      <programArgs>-vm jdk/bin/javaw.exe
 -clearPersistedState
       </programArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts

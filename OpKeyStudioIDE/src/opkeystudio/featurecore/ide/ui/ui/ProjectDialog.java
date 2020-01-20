@@ -6,6 +6,8 @@ import java.util.List;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -13,15 +15,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.Project;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ProjectApi;
+import org.eclipse.swt.layout.GridLayout;
 
 public class ProjectDialog extends TitleAreaDialog {
 	private Text text;
 	private Table table;
+	private String[] tableHeaders = { "Mode", "Project" };
 
 	/**
 	 * Create the dialog.
@@ -45,20 +51,36 @@ public class ProjectDialog extends TitleAreaDialog {
 		setTitle("Choose Project");
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
+		container.setLayout(new GridLayout(1, false));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		text = new Text(container, SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		text.setToolTipText("Enter Project Name");
-		text.setBounds(10, 10, 424, 17);
 
 		table = new Table(container, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setBounds(10, 27, 424, 115);
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		for (String header : headers) {
-
+		for (String header : tableHeaders) {
+			TableColumn column = new TableColumn(table, 0);
+			column.setText(header);
+		}
+		table.pack();
+		for (int i = 0; i < tableHeaders.length; i++) {
+			table.getColumn(i).pack();
 		}
 
+		table.addPaintListener(new PaintListener() {
+
+			@Override
+			public void paintControl(PaintEvent arg0) {
+				Table table_0 = (Table) arg0.getSource();
+				for (TableColumn column : table_0.getColumns()) {
+					column.setWidth(table_0.getBounds().width / 2);
+				}
+			}
+		});
 		try {
 			renderProjectList();
 		} catch (IOException e) {
@@ -83,9 +105,13 @@ public class ProjectDialog extends TitleAreaDialog {
 	}
 
 	public void renderProjectList() throws IOException {
+		table.removeAll();
 		List<Project> projects = new ProjectApi().getAssignedProjects();
 		for (Project project : projects) {
-			System.out.println(project.getName());
+			CustomTableItem tableItem = new CustomTableItem(table, 0);
+			tableItem.setText(new String[] { project.getProjectMode_ENUM(), project.getName() });
+			tableItem.setControlData(project);
+
 		}
 	}
 
@@ -94,6 +120,6 @@ public class ProjectDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(450, 300);
+		return new Point(600, 400);
 	}
 }
