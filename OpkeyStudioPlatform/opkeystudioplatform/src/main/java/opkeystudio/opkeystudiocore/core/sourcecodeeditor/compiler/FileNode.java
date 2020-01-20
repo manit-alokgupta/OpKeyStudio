@@ -38,6 +38,7 @@ public class FileNode extends Modified {
 
 	public void setFileName(String fileName) {
 		fileName = new Tools().removeSpecialCharacters(fileName);
+		fileName = fileName.replaceAll(" ", "");
 		if (this.getFileType() == FILE_TYPE.JAVASOURCEFILE) {
 			setClassName(fileName + ".class");
 			fileName += ".java";

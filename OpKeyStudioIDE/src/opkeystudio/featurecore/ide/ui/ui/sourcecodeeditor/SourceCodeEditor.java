@@ -14,7 +14,6 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextListener;
 import org.eclipse.jface.text.TextEvent;
-import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewer;
@@ -30,7 +29,6 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -39,7 +37,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -51,8 +48,8 @@ import opkeystudio.opkeystudiocore.core.execution.ExecutionEngine;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.IntellisenseTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.IntellisenseTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
@@ -65,10 +62,12 @@ public class SourceCodeEditor extends Composite {
 	private CTabFolder tabFolder;
 	private SourceCodeTree sourceCodeTree;
 	private ISourceViewer sourceCodeText;
-	ToolItem runButton;
-	ToolItem compileButton;
-	ToolItem saveAllButton;
-	ToolItem refreshButton;
+	private ToolItem runButton;
+	private ToolItem compileButton;
+	private ToolItem saveAllButton;
+	private ToolItem refreshButton;
+
+	private FileNode mainArtifactSourceCodeNode;
 
 	public SourceCodeEditor(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
@@ -107,6 +106,21 @@ public class SourceCodeEditor extends Composite {
 		tabFolder = new CTabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+		runButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				new CompilerTools().compile(getMainArtifactSourceCodeNode());
+				new ExecutionEngine().executeRun(getMainArtifactSourceCodeNode());
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		refreshButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -121,6 +135,19 @@ public class SourceCodeEditor extends Composite {
 			}
 		});
 
+		compileButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				new CompilerTools().compile(getMainArtifactSourceCodeNode());
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		saveAllButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -369,12 +396,11 @@ public class SourceCodeEditor extends Composite {
 			transpileObject.setFlowSteps(flowSteps);
 
 			FileNode rootNode = new Transpiler().transpileDatas(transpileObject);
-
+			setMainArtifactSourceCodeNode(rootNode);
 			// Add code of rereading the structure
 			renderTreeItems(rootNode);
 			new CompilerTools().compile(rootNode);
 			new IntellisenseTools().executeIntelliSense(rootNode);
-			new ExecutionEngine().executeRun(rootNode);
 		} catch (SQLException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
@@ -386,6 +412,14 @@ public class SourceCodeEditor extends Composite {
 
 	public void setTestCaseView(TestCaseView testCaseView) {
 		this.testCaseView = testCaseView;
+	}
+
+	public FileNode getMainArtifactSourceCodeNode() {
+		return mainArtifactSourceCodeNode;
+	}
+
+	public void setMainArtifactSourceCodeNode(FileNode mainArtifactSourceCodeNode) {
+		this.mainArtifactSourceCodeNode = mainArtifactSourceCodeNode;
 	}
 
 }
