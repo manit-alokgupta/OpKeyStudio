@@ -1,5 +1,8 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -13,6 +16,9 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.Project;
+import opkeystudio.opkeystudiocore.core.apis.restapi.ProjectApi;
+
 public class ProjectDialog extends TitleAreaDialog {
 	private Text text;
 	private Table table;
@@ -24,6 +30,7 @@ public class ProjectDialog extends TitleAreaDialog {
 	 */
 	public ProjectDialog(Shell parentShell) {
 		super(parentShell);
+		setShellStyle(SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 	}
 
 	/**
@@ -51,6 +58,13 @@ public class ProjectDialog extends TitleAreaDialog {
 		for (String header : headers) {
 
 		}
+
+		try {
+			renderProjectList();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return area;
 	}
 
@@ -66,6 +80,13 @@ public class ProjectDialog extends TitleAreaDialog {
 		button.setText("Go");
 		Button button_1 = createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 		button_1.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+	}
+
+	public void renderProjectList() throws IOException {
+		List<Project> projects = new ProjectApi().getAssignedProjects();
+		for (Project project : projects) {
+			System.out.println(project.getName());
+		}
 	}
 
 	/**

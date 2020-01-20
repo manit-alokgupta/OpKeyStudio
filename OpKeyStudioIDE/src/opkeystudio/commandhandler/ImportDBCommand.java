@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.ui.LoginDialog;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.project.ProjectDataApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
@@ -22,8 +23,8 @@ public class ImportDBCommand {
 
 	@Execute
 	public void execute(Shell shell) {
-		// LoginDialog loginDialog = new LoginDialog(shell, 0);
-		// loginDialog.open();
+		LoginDialog loginDialog = new LoginDialog(shell, 0);
+		loginDialog.open();
 		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
 		dialog.setFilterExtensions(filterExt);
 		dialog.open();
