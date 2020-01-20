@@ -6,24 +6,30 @@ import java.util.List;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactTreeApi;
 
 public class ProjectArtifactTreeUI extends TitleAreaDialog {
 	private Tree tree;
+	private Button exportButton;
+	private Button cancelButton;
+	private ArtifactTreeNode selectedArtifactTreeNode;
 
 	/**
 	 * Create the dialog.
@@ -51,6 +57,25 @@ public class ProjectArtifactTreeUI extends TitleAreaDialog {
 		tree = new Tree(container, SWT.BORDER);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+		tree.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ArtifactTreeNode atn = getSelectedArtifactNode();
+				if (atn == null) {
+					toggleExportButton(false);
+				} else {
+					toggleExportButton(true);
+					setSelectedArtifactTreeNode(atn);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		try {
 			renderArtifactTree();
 		} catch (IOException e) {
@@ -58,6 +83,25 @@ public class ProjectArtifactTreeUI extends TitleAreaDialog {
 			e.printStackTrace();
 		}
 		return area;
+	}
+
+	private ArtifactTreeNode getSelectedArtifactNode() {
+		if (tree.getSelection() == null) {
+			return null;
+		}
+		if (tree.getSelection().length == 0) {
+			return null;
+		}
+		CustomTreeItem cti = (CustomTreeItem) tree.getSelection()[0];
+		if (cti == null) {
+			return null;
+		}
+		return (ArtifactTreeNode) cti.getControlData();
+
+	}
+
+	private void toggleExportButton(boolean status) {
+		this.exportButton.setEnabled(status);
 	}
 
 	private void addIcon(CustomTreeItem artTreeItem) {
@@ -102,8 +146,40 @@ public class ProjectArtifactTreeUI extends TitleAreaDialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		exportButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+		cancelButton = createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		exportButton.setText("Export");
+		exportButton.setEnabled(false);
+
+		exportButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ArtifactTreeNode selectedArtifact = getSelectedArtifactTreeNode();
+				System.out.println("Selected Artifact " + selectedArtifact.getText());
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		cancelButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	/**
@@ -112,6 +188,14 @@ public class ProjectArtifactTreeUI extends TitleAreaDialog {
 	@Override
 	protected Point getInitialSize() {
 		return new Point(433, 537);
+	}
+
+	public ArtifactTreeNode getSelectedArtifactTreeNode() {
+		return selectedArtifactTreeNode;
+	}
+
+	public void setSelectedArtifactTreeNode(ArtifactTreeNode selectedArtifactTreeNode) {
+		this.selectedArtifactTreeNode = selectedArtifactTreeNode;
 	}
 
 }
