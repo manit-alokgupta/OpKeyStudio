@@ -1,15 +1,19 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -22,12 +26,12 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.Project;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ProjectApi;
-import org.eclipse.swt.layout.GridLayout;
 
 public class ProjectDialog extends TitleAreaDialog {
 	private Text text;
 	private Table table;
 	private String[] tableHeaders = { "Mode", "Project" };
+	private List<Project> allProjects = new ArrayList<>();
 
 	/**
 	 * Create the dialog.
@@ -46,7 +50,6 @@ public class ProjectDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		String[] headers = { "Mode", "Project" };
 		setMessage("Choose the OpKey Project");
 		setTitle("Choose Project");
 		Composite area = (Composite) super.createDialogArea(parent);
@@ -81,6 +84,19 @@ public class ProjectDialog extends TitleAreaDialog {
 				}
 			}
 		});
+		text.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				filterProjectTable(text.getText());
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		try {
 			renderProjectList();
 		} catch (IOException e) {
@@ -107,6 +123,7 @@ public class ProjectDialog extends TitleAreaDialog {
 	public void renderProjectList() throws IOException {
 		table.removeAll();
 		List<Project> projects = new ProjectApi().getAssignedProjects();
+		setAllProjects(projects);
 		for (Project project : projects) {
 			CustomTableItem tableItem = new CustomTableItem(table, 0);
 			tableItem.setText(new String[] { project.getProjectMode_ENUM(), project.getName() });
@@ -115,11 +132,45 @@ public class ProjectDialog extends TitleAreaDialog {
 		}
 	}
 
+	public void refreshProject() {
+		table.removeAll();
+		List<Project> projects = getAllProjects();
+		setAllProjects(projects);
+		for (Project project : projects) {
+			if (project.isVisible()) {
+				CustomTableItem tableItem = new CustomTableItem(table, 0);
+				tableItem.setText(new String[] { project.getProjectMode_ENUM(), project.getName() });
+				tableItem.setControlData(project);
+			}
+
+		}
+	}
+
+	public void filterProjectTable(String searchValue) {
+		List<Project> projects = getAllProjects();
+		for (Project project : projects) {
+			if (project.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
+				project.setVisible(true);
+			} else {
+				project.setVisible(false);
+			}
+		}
+		this.refreshProject();
+	}
+
 	/**
 	 * Return the initial size of the dialog.
 	 */
 	@Override
 	protected Point getInitialSize() {
 		return new Point(600, 400);
+	}
+
+	public List<Project> getAllProjects() {
+		return allProjects;
+	}
+
+	public void setAllProjects(List<Project> allProjects) {
+		this.allProjects = allProjects;
 	}
 }

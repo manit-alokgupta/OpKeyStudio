@@ -2,7 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto;
 
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class Project {
+public class Project extends Modified {
 	@DBField
 	private String name;
 	@DBField

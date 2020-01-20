@@ -16,7 +16,6 @@ public class OpKeyApiCommunicator {
 	String hostUrl;
 
 	public OpKeyApiCommunicator() {
-		ServiceRepository.getInstance().setOpKeyHostUrl("http://localhost:61527");
 		this.hostUrl = ServiceRepository.getInstance().getOpKeyHostUrl();
 	}
 
