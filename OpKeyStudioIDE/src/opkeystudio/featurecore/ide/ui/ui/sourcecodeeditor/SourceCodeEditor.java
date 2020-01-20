@@ -373,7 +373,8 @@ public class SourceCodeEditor extends Composite {
 			// Add code of rereading the structure
 			renderTreeItems(rootNode);
 			new CompilerTools().compile(rootNode);
-			new IntellisenseTools().execute(rootNode);
+			new IntellisenseTools().executeIntelliSense(rootNode);
+			new ExecutionEngine().executeRun(rootNode);
 		} catch (SQLException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}

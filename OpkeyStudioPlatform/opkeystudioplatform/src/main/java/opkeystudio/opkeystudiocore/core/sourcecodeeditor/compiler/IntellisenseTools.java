@@ -26,7 +26,7 @@ public class IntellisenseTools {
 		return allFiles;
 	}
 
-	public void execute(FileNode rootFileNode) {
+	public void executeIntelliSense(FileNode rootFileNode) {
 		String path = rootFileNode.getFilePath() + File.separator + "bin";
 		System.out.println("Executiong " + path);
 		try {
