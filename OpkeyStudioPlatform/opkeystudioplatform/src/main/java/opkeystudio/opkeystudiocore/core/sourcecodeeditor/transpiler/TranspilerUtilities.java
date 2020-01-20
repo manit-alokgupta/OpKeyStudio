@@ -64,26 +64,15 @@ public class TranspilerUtilities {
 	}
 
 	public String transpileGlobalVariables(List<GlobalVariable> globalVariables, FileNode fileNode) {
-		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
-
 		ClassSnippet classSnippet = new ClassSnippet("GlobalVariables", fileNode, getTranspiler());
-		classSnippet.addMethodSnippet(methodSnippet);
 		for (GlobalVariable gv : globalVariables) {
-			NewStaticObjectSnippet nsos = new NewStaticObjectSnippet("public", "GlobalVariable", gv.getVariableName());
-			classSnippet.addStaticObject(nsos);
-		}
-		for (GlobalVariable globalVariable : globalVariables) {
-			List<TranspiledField> transpiledFields = getTranspiledFields(globalVariable);
-			NewStaticObjectDeclarationSnippet newGlobalVariable = new NewStaticObjectDeclarationSnippet(
-					"GlobalVariable", globalVariable.getVariableName());
-			for (TranspiledField transpiledField : transpiledFields) {
-				MethodCallSnippet newMethodCalledSnippet = new MethodCallSnippet(globalVariable.getVariableName(),
-						"addProperty", "\"" + transpiledField.getName() + "\"",
-						"\"" + transpiledField.getValue() + "\"");
-				newGlobalVariable.addMethodCallSnippet(newMethodCalledSnippet);
-
+			String value = gv.getValue();
+			if (value != null) {
+				value = "\"" + value + "\"";
 			}
-			methodSnippet.addNewObjectSnippet(newGlobalVariable);
+			NewStaticObjectSnippet nsos = new NewStaticObjectSnippet("public", "String",
+					gv.getVariableName() + "=" + value);
+			classSnippet.addStaticObject(nsos);
 		}
 		return classSnippet.toString();
 	}
