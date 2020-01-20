@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
@@ -86,8 +88,9 @@ public class ObjectRepositoryApi {
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
-	public void saveORObjects(List<ORObject> objectRepositories) throws SQLException {
-
+	public void saveORObjects(Artifact artifact, List<ORObject> objectRepositories) throws SQLException {
+		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		new ArtifactApi().updateArtifact(artifact);
 		for (ORObject orObject : objectRepositories) {
 			saveObjectProperties(orObject.getObjectAttributesProperty());
 			if (orObject.isDeleted()) {

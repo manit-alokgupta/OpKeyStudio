@@ -65,7 +65,9 @@ public class TestSuiteApi {
 	}
 
 	@SuppressWarnings("unused")
-	public void saveAllTestSuite(List<TestSuiteStep> testSuites) {
+	public void saveAllTestSuite(Artifact artifact, List<TestSuiteStep> testSuites) {
+		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		new ArtifactApi().updateArtifact(artifact);
 		for (TestSuiteStep testSuite : testSuites) {
 			String updateQuery = new QueryMaker().createUpdateQuery(testSuite, "suite_design_steps",
 					String.format("WHERE suite_stepid='%s'", testSuite.getSuite_stepid()));

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 //import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
@@ -42,6 +43,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApiUtilities;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
@@ -528,7 +530,7 @@ public class ObjectRepositoryView extends Composite {
 
 					List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 					try {
-						new ObjectRepositoryApi().saveORObjects(allors);
+						new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
 						toggleSaveButton(false);
 						objectRepositoryTree.renderObjectRepositories();
 					} catch (SQLException e1) {
@@ -811,13 +813,19 @@ public class ObjectRepositoryView extends Composite {
 
 		List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
 		try {
-			new ObjectRepositoryApi().saveORObjects(allors);
+			new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
 			toggleSaveButton(false);
 			objectRepositoryTree.renderObjectRepositories();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 
+	}
+
+	public Artifact getArtifact() {
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		return artifact;
 	}
 
 	@Override

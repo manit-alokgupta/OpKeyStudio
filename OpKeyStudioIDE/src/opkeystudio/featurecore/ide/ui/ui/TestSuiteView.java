@@ -640,7 +640,7 @@ public class TestSuiteView extends Composite {
 						// notification.setDelayClose(1L);
 						// notification.open();
 
-						new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
+						new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
 						try {
 							testSuiteTable.renderAllTestSuites();
 						} catch (IOException e1) {
@@ -685,7 +685,7 @@ public class TestSuiteView extends Composite {
 	}
 
 	public void saveSuiteSteps() {
-		new TestSuiteApi().saveAllTestSuite(testSuiteTable.getTestSuiteData());
+		new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
 		try {
 			testSuiteTable.renderAllTestSuites();
 		} catch (IOException e1) {
