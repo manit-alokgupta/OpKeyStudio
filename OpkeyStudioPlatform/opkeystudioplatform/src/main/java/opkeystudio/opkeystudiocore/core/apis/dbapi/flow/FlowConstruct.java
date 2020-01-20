@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.flow;
 
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -10,9 +11,12 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowConstruct {
 	public void saveAllFlowSteps(Artifact artifact, List<FlowStep> allFlowSteps) {
+		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		new ArtifactApi().updateArtifact(artifact);
 		System.out.println("Saving " + artifact.getFile_type_enum());
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			new FunctionLibraryConstruct().saveAllComponentSteps(allFlowSteps);

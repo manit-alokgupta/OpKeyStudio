@@ -69,7 +69,7 @@ public class ArtifactApi {
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
-	public void renameArtifact(Artifact artifact) {
+	public void updateArtifact(Artifact artifact) {
 		String updateQuery = new QueryMaker().createUpdateQuery(artifact, "main_artifact_filesystem",
 				String.format("WHERE id='%s'", artifact.getId()));
 		QueryExecutor.getInstance().executeUpdateQuery(updateQuery);

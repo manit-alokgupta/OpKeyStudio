@@ -465,7 +465,7 @@ public class ArtifactTreeUI extends Composite {
 					}
 				}
 				artifact.setName(renamedText);
-				new ArtifactApi().renameArtifact(artifact);
+				new ArtifactApi().updateArtifact(artifact);
 				Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
 				artifactTree.renderArtifacts();
 				renameMenuItem.setEnabled(false);
@@ -570,7 +570,7 @@ public class ArtifactTreeUI extends Composite {
 					}
 				}
 				artifact.setName(renamedText);
-				new ArtifactApi().renameArtifact(artifact);
+				new ArtifactApi().updateArtifact(artifact);
 				toggleRenameToolbarItem(false);
 				toogleDeleteToolbarItem(false);
 				toogleNewToolbarMenuItem(false);

@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -93,7 +94,10 @@ public class Utilities {
 	}
 
 	public String getCurrentDateTime() {
-		return new Date().toString();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+		String dateString = format.format(new Date());
+		return dateString;
 	}
 
 	public String getCurrentTimeZone() {
