@@ -1,9 +1,11 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+
 public class ArtifactTreeNode {
 	private String text;
 	private String icon;
-	private String type;
+	private MODULETYPE type;
 	private String id;
 	private String parent;
 	private String data;
@@ -26,14 +28,6 @@ public class ArtifactTreeNode {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String getId() {
@@ -90,5 +84,13 @@ public class ArtifactTreeNode {
 
 	public void setIsrestricted(boolean isrestricted) {
 		this.isrestricted = isrestricted;
+	}
+
+	public MODULETYPE getType() {
+		return type;
+	}
+
+	public void setType(MODULETYPE type) {
+		this.type = type;
 	}
 }

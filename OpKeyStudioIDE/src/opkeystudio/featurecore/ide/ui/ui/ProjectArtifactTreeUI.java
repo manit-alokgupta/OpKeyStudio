@@ -13,10 +13,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactTreeApi;
 
 public class ProjectArtifactTreeUI extends TitleAreaDialog {
@@ -57,6 +60,27 @@ public class ProjectArtifactTreeUI extends TitleAreaDialog {
 		return area;
 	}
 
+	private void addIcon(CustomTreeItem artTreeItem) {
+		ArtifactTreeNode atn = (ArtifactTreeNode) artTreeItem.getControlData();
+		if (atn == null) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+		} else if (atn.getType() == Artifact.MODULETYPE.Folder) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+		} else if (atn.getType() == Artifact.MODULETYPE.Flow) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+		} else if (atn.getType() == Artifact.MODULETYPE.ObjectRepository) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
+		} else if (atn.getType() == Artifact.MODULETYPE.Suite) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testsuite.png"));
+		} else if (atn.getType() == Artifact.MODULETYPE.DataRepository) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
+		} else if (atn.getType() == Artifact.MODULETYPE.Component) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+		} else if (atn.getType() == Artifact.MODULETYPE.CodedFunction) {
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+		}
+	}
+
 	public void renderArtifactTree() throws IOException {
 		List<ArtifactTreeNode> treeNodes = new ArtifactTreeApi().getRootArtificateFolder();
 		for (ArtifactTreeNode atreeNode : treeNodes) {
@@ -65,6 +89,7 @@ public class ProjectArtifactTreeUI extends TitleAreaDialog {
 					CustomTreeItem cti = new CustomTreeItem(tree, 0);
 					cti.setText(atreeNode.getText());
 					cti.setControlData(atreeNode);
+					addIcon(cti);
 				}
 			}
 		}
