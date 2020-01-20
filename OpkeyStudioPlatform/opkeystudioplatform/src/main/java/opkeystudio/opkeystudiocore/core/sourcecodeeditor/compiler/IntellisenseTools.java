@@ -2,12 +2,15 @@ package opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+
+import opkeystudio.opkeystudiocore.core.utils.ContentAssistData;
 
 public class IntellisenseTools {
 	private List<File> getAllFiles(File rootFile) {
@@ -27,37 +30,52 @@ public class IntellisenseTools {
 	public void execute(FileNode rootFileNode) {
 		String path = rootFileNode.getFilePath() + File.separator + "bin";
 		System.out.println("Executiong " + path);
-		List<File> allFiles = getAllFiles(new File(path));
-		for (File file : allFiles) {
-			System.out.println(file.getName());
-		}
 		try {
-			fetchClassInformation(allFiles);
-		} catch (MalformedURLException | ClassNotFoundException e) {
+			fetchClassInformation(rootFileNode);
+		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void fetchClassInformation(List<File> classFiles) throws ClassNotFoundException, IOException {
-		URL[] classURLS = new URL[classFiles.size()];
-		for (int i = 0; i < classFiles.size(); i++) {
-			classURLS[i] = classFiles.get(i).toURI().toURL();
-		}
-		URLClassLoader urlClass = new URLClassLoader(new URL[] {new File("C:\\Users\\neon.nishant\\OpKeyStudio\\workspace\\SourceCodes\\a1ef08f7e3af436bae0ab7d503ab67b9\\bin").toURI().toURL()});
+	private void fetchClassInformation(FileNode rootNode) throws MalformedURLException, ClassNotFoundException {
+		String path = rootNode.getFilePath() + File.separator + "bin" + File.separator;
+		URLClassLoader urlClass = new URLClassLoader(new URL[] { new File(path).toURI().toURL() });
+		List<File> allFiles = getAllFiles(new File(path));
 
-		for (File classFile : classFiles) {
-			if (classFile.getName().contains("Test.class")) {
-				Class _class = urlClass.loadClass("testcases.Test");
-				Method[] declaredMethods = _class.getDeclaredMethods();
-				for (Method method : declaredMethods) {
-					System.out.println(method.getName());
+		String rootPath = path.replaceAll("\\\\", "OPKEY_SLASH");
+		for (File file : allFiles) {
+			String filePath = file.getAbsolutePath();
+			filePath = filePath.replaceAll("\\\\", "OPKEY_SLASH");
+			filePath = filePath.replaceAll(rootPath, "");
+			filePath = filePath.replaceAll("OPKEY_SLASH", ".");
+			filePath = filePath.replaceAll(".class", "");
+
+			String className = filePath;
+			Class _class = urlClass.loadClass(className);
+			buildIntelliSenseData(_class, className);
+		}
+	}
+
+	private void buildIntelliSenseData(Class _class, String className) {
+		Method[] declaredMethods = _class.getDeclaredMethods();
+		for (Method method : declaredMethods) {
+			String genericString = method.toGenericString();
+			if (genericString.contains("public")) {
+				if (!genericString.contains("static")) {
+					ContentAssistData.getInstance().add(className + "()." + method.getName());
+				} else {
+					ContentAssistData.getInstance().add(className + "." + method.getName());
 				}
 			}
 		}
-		urlClass.close();
+
+		Field[] fields = _class.getDeclaredFields();
+		for (Field field : fields) {
+			System.out.println(field.toGenericString());
+		}
 	}
 }
