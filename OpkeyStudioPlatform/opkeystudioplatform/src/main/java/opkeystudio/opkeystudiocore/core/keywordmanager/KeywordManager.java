@@ -33,7 +33,11 @@ public class KeywordManager {
 	}
 
 	public void loadAllKeywords() {
-		String keywordDirPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "GenericDB";
+		String keywordDirPath = Utilities.getInstance().getDefaultInstallDir() + File.separator + "resources"
+				+ File.separator + "GenericDB";
+		if (!new File(keywordDirPath).exists()) {
+			keywordDirPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "GenericDB";
+		}
 		File keywordDirFolder = new File(keywordDirPath);
 		File[] keywordsDBFiles = keywordDirFolder.listFiles();
 		for (File keywordsDBFile : keywordsDBFiles) {
