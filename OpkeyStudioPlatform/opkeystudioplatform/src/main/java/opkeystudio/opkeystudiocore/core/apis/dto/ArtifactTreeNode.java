@@ -1,42 +1,5 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import opkeystudio.opkeystudiocore.core.query.DBField;
-
-class State {
-	@DBField
-	private boolean opened;
-	@DBField
-	private boolean disabled;
-	@DBField
-	private boolean selected;
-
-	public boolean isOpened() {
-		return opened;
-	}
-
-	public void setOpened(boolean opened) {
-		this.opened = opened;
-	}
-
-	public boolean isDisabled() {
-		return disabled;
-	}
-
-	public void setDisabled(boolean disabled) {
-		this.disabled = disabled;
-	}
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
-}
-
 public class ArtifactTreeNode {
 	private String text;
 	private String icon;
@@ -45,13 +8,9 @@ public class ArtifactTreeNode {
 	private String parent;
 	private String data;
 	private String dto;
-	private boolean IsRestricted;
-	private boolean IsFreezed;
-	private boolean IsShared;
-	private String a_attr;
-	
-	@JsonIgnore
-	private State state;
+	private boolean isrestricted;
+	private boolean isfreezed;
+	private boolean isshared;
 
 	public String getText() {
 		return text;
@@ -109,43 +68,27 @@ public class ArtifactTreeNode {
 		this.dto = dto;
 	}
 
-	public boolean isIsRestricted() {
-		return IsRestricted;
+	public boolean isIsshared() {
+		return isshared;
 	}
 
-	public void setIsRestricted(boolean isRestricted) {
-		IsRestricted = isRestricted;
+	public void setIsshared(boolean isshared) {
+		this.isshared = isshared;
 	}
 
-	public boolean isIsFreezed() {
-		return IsFreezed;
+	public boolean isIsfreezed() {
+		return isfreezed;
 	}
 
-	public void setIsFreezed(boolean isFreezed) {
-		IsFreezed = isFreezed;
+	public void setIsfreezed(boolean isfreezed) {
+		this.isfreezed = isfreezed;
 	}
 
-	public boolean isIsShared() {
-		return IsShared;
+	public boolean isIsrestricted() {
+		return isrestricted;
 	}
 
-	public void setIsShared(boolean isShared) {
-		IsShared = isShared;
-	}
-
-	public String getA_attr() {
-		return a_attr;
-	}
-
-	public void setA_attr(String a_attr) {
-		this.a_attr = a_attr;
-	}
-
-	public State getState() {
-		return state;
-	}
-
-	public void setState(State state) {
-		this.state = state;
+	public void setIsrestricted(boolean isrestricted) {
+		this.isrestricted = isrestricted;
 	}
 }
