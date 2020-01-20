@@ -11,6 +11,8 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -32,6 +34,8 @@ public class ProjectDialog extends TitleAreaDialog {
 	private Table table;
 	private String[] tableHeaders = { "Mode", "Project" };
 	private List<Project> allProjects = new ArrayList<>();
+	private Button goButton;
+	private Button cancelButton;
 
 	/**
 	 * Create the dialog.
@@ -113,11 +117,42 @@ public class ProjectDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		Button button = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		button.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		button.setText("Go");
-		Button button_1 = createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-		button_1.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		goButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+		goButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		goButton.setText("Go");
+		cancelButton = createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		cancelButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		
+		goButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		cancelButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				close();
+				LoginDialog dialog=new LoginDialog(parent.getShell(),0);
+				dialog.open();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	public void renderProjectList() throws IOException {
