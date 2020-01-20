@@ -8,11 +8,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 
 public class ExecutionEngine {
-	private static Thread executionThread;
+	private static ExecutorService executionThread;
 
 	private List<File> getAllFiles(File rootFile) {
 		List<File> allFiles = new ArrayList<File>();
@@ -73,7 +75,8 @@ public class ExecutionEngine {
 
 	private void executeMainMethod(Class _class) throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException {
-		executionThread = new Thread(new Runnable() {
+		executionThread = Executors.newSingleThreadExecutor();
+		executionThread.execute(new Runnable() {
 
 			@Override
 			public void run() {
@@ -98,10 +101,9 @@ public class ExecutionEngine {
 				}
 			}
 		});
-		executionThread.start();
 	}
 
-	public static Thread getExecutionThread() {
+	public static ExecutorService getExecutionThread() {
 		return executionThread;
 	}
 }

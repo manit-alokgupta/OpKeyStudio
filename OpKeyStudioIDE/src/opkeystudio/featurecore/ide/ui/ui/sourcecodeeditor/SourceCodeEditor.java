@@ -132,7 +132,7 @@ public class SourceCodeEditor extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ExecutionEngine.getExecutionThread().interrupt();
+				ExecutionEngine.getExecutionThread().shutdownNow();
 				stopExecutionButton.setEnabled(false);
 				runExecutionButton.setEnabled(true);
 			}
