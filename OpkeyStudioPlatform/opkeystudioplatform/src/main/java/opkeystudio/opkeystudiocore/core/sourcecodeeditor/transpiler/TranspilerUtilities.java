@@ -79,7 +79,10 @@ public class TranspilerUtilities {
 
 	public String transpileORObjects(List<ORObject> orobjects, FileNode fileNode) {
 		ClassSnippet classSnippet = new ClassSnippet("ORObjects", fileNode, getTranspiler());
-		MethodSnippet methodSnippet = new MethodSnippet("void", "init", "");
+		MethodSnippet methodSnippet = new MethodSnippet("void", "initORObjects", "");
+		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet("new ORObjects()", "initORObjects",
+				"");
+		getTranspiler().addMainTestCaseMethods(callmethodCallSnippet);
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (ORObject orobject : orobjects) {
 			NewStaticObjectSnippet nsos = new NewStaticObjectSnippet("public", "ORObject", orobject.getVariableName());

@@ -69,7 +69,6 @@ public class IntellisenseTools {
 		Method[] declaredMethods = _class.getDeclaredMethods();
 		for (Method method : declaredMethods) {
 			String genericString = method.toGenericString();
-			System.out.println(genericString);
 			if (genericString.contains("public")) {
 				if (!genericString.contains("static")) {
 					ContentAssistData.getInstance().add(className + "()." + method.getName());
@@ -81,7 +80,7 @@ public class IntellisenseTools {
 
 		Field[] fields = _class.getDeclaredFields();
 		for (Field field : fields) {
-			System.out.println(field.toGenericString());
+			
 		}
 
 	}

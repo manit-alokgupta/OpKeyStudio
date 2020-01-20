@@ -43,7 +43,6 @@ public class ExecutionEngine {
 			e.printStackTrace();
 		}
 	}
-
 	private void getMainClass(FileNode rootNode) throws MalformedURLException, ClassNotFoundException {
 		String path = rootNode.getFilePath() + File.separator + "bin" + File.separator;
 		URLClassLoader urlClass = new URLClassLoader(new URL[] { new File(path).toURI().toURL() });

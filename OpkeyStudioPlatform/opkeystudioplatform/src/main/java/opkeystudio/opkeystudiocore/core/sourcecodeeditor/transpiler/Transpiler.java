@@ -111,10 +111,10 @@ public class Transpiler {
 		FileNode tcFile = new FileNode(artifact.getName(), rootPath, FILE_TYPE.JAVASOURCEFILE);
 		tcFile.setParentPath(tcNode.getFilePath());
 
-		String tcDatas = new TranspilerUtilities(this).transpileTestCaseSteps(artifact, flowSteps, tcFile);
 		String ordatas = new TranspilerUtilities(this).transpileORObjects(orobjects, orFile);
 		String gvdatas = new TranspilerUtilities(this).transpileGlobalVariables(globalVariables, gvFile);
-
+		String tcDatas = new TranspilerUtilities(this).transpileTestCaseSteps(artifact, flowSteps, tcFile);
+		
 		gvFile.setData(gvdatas);
 		orFile.setData(ordatas);
 		tcFile.setData(tcDatas);
