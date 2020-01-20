@@ -16,10 +16,10 @@ import org.osgi.framework.FrameworkUtil;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
-import opkeystudio.opkeystudiocore.core.utils.ContentAssistData;
 
 public class Utilities {
 	private static Utilities utils = null;
+	private Shell defaultShell;
 
 	public static Utilities getInstance() {
 		if (utils == null) {
@@ -153,5 +153,13 @@ public class Utilities {
 		}
 		mpart.setLabel(renamedData);
 		mpart.setTooltip(renamedData);
+	}
+
+	public Shell getDefaultShell() {
+		return defaultShell;
+	}
+
+	public void setDefaultShell(Shell defaultShell) {
+		this.defaultShell = defaultShell;
 	}
 }

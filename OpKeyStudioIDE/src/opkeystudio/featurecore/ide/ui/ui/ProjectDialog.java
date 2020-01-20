@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.Project;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ProjectApi;
@@ -152,7 +153,7 @@ public class ProjectDialog extends TitleAreaDialog {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					new ProjectApi().selectProject(getSelectedProject().getP_ID());
-					new ProjectArtifactTreeUI(parent.getShell()).open();
+					new ProjectArtifactTreeUI(Utilities.getInstance().getDefaultShell()).open();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -171,7 +172,7 @@ public class ProjectDialog extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				close();
-				LoginDialog dialog = new LoginDialog(parent.getShell(), 0);
+				LoginDialog dialog = new LoginDialog(Utilities.getInstance().getDefaultShell(), 0);
 				dialog.open();
 			}
 
