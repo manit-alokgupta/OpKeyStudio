@@ -89,6 +89,7 @@ public class CompilerTools {
 				compileError.setKind(diagnostic.getKind());
 				compileError.setMessage(diagnostic.getMessage(null));
 				compileError.setSource(diagnostic.getSource());
+				System.out.println(compileError.getMessage());
 				FileNode node = getSourceFileNode(filteredFiles, diagnostic.getSource().getName());
 				node.addCompileError(compileError);
 			}
@@ -159,7 +160,10 @@ public class CompilerTools {
 
 	public FileNode getSourceFileNode(List<FileNode> filteredNodes, String sourcePath) {
 		for (FileNode filenode : filteredNodes) {
-			if (filenode.getFile().getAbsolutePath().trim().equals(sourcePath)) {
+			System.out.println("File Path " + filenode.getFile().getAbsolutePath());
+			System.out.println("Source Path " + sourcePath);
+			if (filenode.getFile().getAbsolutePath().trim().equals(sourcePath.trim())) {
+				System.out.println("Returning " + filenode.getFile().getAbsolutePath());
 				return filenode;
 			}
 		}
