@@ -23,6 +23,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactExporting;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactTreeApi;
 
 public class ProjectArtifactTreeUI extends TitleAreaDialog {
@@ -139,6 +140,10 @@ public class ProjectArtifactTreeUI extends TitleAreaDialog {
 		}
 	}
 
+	private void exportArtifact(ArtifactTreeNode artifactTreeNode) throws IOException {
+		new ArtifactExporting().exportArtifactFromOpKey(artifactTreeNode);
+	}
+
 	/**
 	 * Create contents of the button bar.
 	 * 
@@ -156,7 +161,12 @@ public class ProjectArtifactTreeUI extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ArtifactTreeNode selectedArtifact = getSelectedArtifactTreeNode();
-				System.out.println("Selected Artifact " + selectedArtifact.getText());
+				try {
+					exportArtifact(selectedArtifact);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			@Override
