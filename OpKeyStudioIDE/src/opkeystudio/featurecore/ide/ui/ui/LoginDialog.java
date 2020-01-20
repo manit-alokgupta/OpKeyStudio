@@ -52,7 +52,7 @@ public class LoginDialog extends Dialog {
 	 * @return the result
 	 */
 	public Object open() {
-		
+
 		createContents();
 		shlLoginToOpkey.open();
 		shlLoginToOpkey.layout();
@@ -64,8 +64,7 @@ public class LoginDialog extends Dialog {
 		}
 		return result;
 	}
-	
-	
+
 	public static Shell getScreenCentredShell() {
 		Display display = PlatformUI.getWorkbench().getDisplay();
 		Shell centreShell = new Shell(display);
@@ -74,7 +73,7 @@ public class LoginDialog extends Dialog {
 		centreShell.setBounds((screen.width - size.x) / 2, (screen.height - size.y) / 2, size.x, size.y);
 		return centreShell;
 	}
-	
+
 	/**
 	 * Create contents of the dialog.
 	 */
@@ -83,13 +82,13 @@ public class LoginDialog extends Dialog {
 		shlLoginToOpkey.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlLoginToOpkey.setSize(466, 333);
 		shlLoginToOpkey.setText("Login to OpKey");
-		
+
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlLoginToOpkey.getBounds();
-		int locationX = (parentSize.width - shellSize.width)/2+parentSize.x;
-		int locationY = (parentSize.height - shellSize.height)/2+parentSize.y;
+		int locationX = (parentSize.width - shellSize.width) / 2 + parentSize.x;
+		int locationY = (parentSize.height - shellSize.height) / 2 + parentSize.y;
 		shlLoginToOpkey.setLocation(new Point(locationX, locationY));
-		
+
 		Composite composite = new Composite(shlLoginToOpkey, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		composite.setBounds(10, 0, 434, 64);
@@ -105,12 +104,12 @@ public class LoginDialog extends Dialog {
 		lblNewLabel_1.setFont(SWTResourceManager.getFont("Segoe UI", 7, SWT.NORMAL));
 		lblNewLabel_1.setBounds(10, 39, 164, 15);
 		lblNewLabel_1.setText("Provide your OpKey credential to login");
-		
+
 		CLabel lblNewLabel_5 = new CLabel(composite, SWT.NONE);
 		lblNewLabel_5.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		lblNewLabel_5.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/logo.png"));
 		lblNewLabel_5.setBounds(321, 10, 113, 44);
-		
+
 		Button loginButton = new Button(shlLoginToOpkey, SWT.NONE);
 		loginButton.setToolTipText("Login");
 		loginButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
@@ -120,13 +119,13 @@ public class LoginDialog extends Dialog {
 				String url = domainUrl.getText();
 				String user = userName.getText();
 				String passw = passWord.getText();
-				if(url.trim().equalsIgnoreCase("")) {
-					MessageDialog.openInformation(shlLoginToOpkey,"Invalid URL","Please enter Domain URL");
+				if (url.trim().equalsIgnoreCase("")) {
+					MessageDialog.openInformation(shlLoginToOpkey, "Invalid URL", "Please enter Domain URL");
 				}
-				if(user.trim().equalsIgnoreCase("")) {
-					MessageDialog.openInformation(shlLoginToOpkey,"Invalid Username","Please enter Username");
+				if (user.trim().equalsIgnoreCase("")) {
+					MessageDialog.openInformation(shlLoginToOpkey, "Invalid Username", "Please enter Username");
 				}
-				
+
 				ServiceRepository.getInstance().setOpKeyHostUrl(url);
 				try {
 					AuthentcationData authdata = new AuthenticateApi().loginToOpKey(user, passw);
@@ -138,8 +137,8 @@ public class LoginDialog extends Dialog {
 								"Please check your credential");
 					}
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
+							"Please check your credential");
 				}
 			}
 		});
@@ -183,15 +182,15 @@ public class LoginDialog extends Dialog {
 		Label label_2 = new Label(composite_1, SWT.NONE);
 		label_2.setText("Password");
 		label_2.setBounds(43, 113, 105, 18);
-		
+
 		CLabel lblNewLabel_2 = new CLabel(composite_1, SWT.NONE);
 		lblNewLabel_2.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/domain.png"));
 		lblNewLabel_2.setBounds(163, 27, 23, 21);
-		
+
 		CLabel lblNewLabel_3 = new CLabel(composite_1, SWT.NONE);
 		lblNewLabel_3.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/user.png"));
 		lblNewLabel_3.setBounds(163, 71, 23, 21);
-		
+
 		CLabel lblNewLabel_4 = new CLabel(composite_1, SWT.NONE);
 		lblNewLabel_4.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/password.png"));
 		lblNewLabel_4.setBounds(163, 110, 23, 21);

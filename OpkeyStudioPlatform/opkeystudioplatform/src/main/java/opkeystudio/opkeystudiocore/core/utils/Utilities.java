@@ -40,6 +40,17 @@ public class Utilities {
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
+
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "Artifacts";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
+	}
+
+	public String getArtifactsDownloadFolder() {
+		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "Artifacts";
 	}
 
 	public String getDefaultWorkSpacePath() {

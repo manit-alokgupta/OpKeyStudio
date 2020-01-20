@@ -1,19 +1,25 @@
 package opkeystudio.opkeystudiocore.core.apis.restapi;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
+import org.json.JSONObject;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
 import opkeystudio.opkeystudiocore.core.communicator.OpKeyApiCommunicator;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactExporting {
 	@SuppressWarnings("unused")
 	public String getFolderDetails(String folderId) throws IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("nodeID", folderId);
-		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/ExportImportAPI/GetFolderDetails", "GET",
-				params, null, null);
+		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/ExportImportAPI/GetFolderDetails",
+				"GET", params, null, null);
 		return retdata;
 	}
 
@@ -22,8 +28,8 @@ public class ArtifactExporting {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("strNodeIDs", nodeid);
 		params.put("portalType", portalType);
-		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/ExportImportAPI/CheckForSecuredData", "GET",
-				params, null, null);
+		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/ExportImportAPI/CheckForSecuredData",
+				"GET", params, null, null);
 		return retdata;
 	}
 
@@ -69,29 +75,40 @@ public class ArtifactExporting {
 				"GET", params, null, null);
 		return retdata;
 	}
-	
-	public boolean exportArtifactFromOpKey(ArtifactTreeNode artifactTreeNode) throws IOException
-	{
+
+	public boolean exportArtifactFromOpKey(ArtifactTreeNode artifactTreeNode) throws IOException {
 		System.out.println("Selected Artifact " + artifactTreeNode.getText());
 		String folderDetails = new ArtifactExporting().getFolderDetails(artifactTreeNode.getId());
 		if (folderDetails.equals("true")) {
 			String nodeIds = "['" + artifactTreeNode.getId() + "']";
 			String sessionData = new ArtifactExporting().checkForSecuredData(nodeIds, "Opkey");
 			sessionData = sessionData.replaceAll("\"", "");
-			System.out.println("Secured Data " + sessionData);
-
 			String securedDataStatus = new ArtifactExporting().getSecureDataStatus(sessionData);
-			System.out.println("Secured Data Status " + securedDataStatus);
+
 			String exportArtifactId = new ArtifactExporting().exportArtificate(nodeIds, "Opkey", sessionData,
 					"00000000-0000-0000-0000-000000000000", "");
 
-			System.out.println("Export Artifact Data " + exportArtifactId);
 			String downlodedData = new ArtifactExporting().downloadExportedZip(sessionData);
-			System.out.println("Downloaded DATA "+downlodedData);
+			JSONObject jsonObject = new JSONObject(downlodedData);
+			String fileName = jsonObject.getString("Item1");
+			String filePath = jsonObject.getString("Item2");
+			downLoadArtifactFile(fileName, filePath);
 			return true;
 		}
 		return false;
 	}
-	
-	
+
+	private void downLoadArtifactFile(String fileName, String filePath) {
+		String artifactsDownloadFolder = Utilities.getInstance().getArtifactsDownloadFolder();
+		String artifactFilePath = artifactsDownloadFolder + File.separator + Utilities.getInstance().getUniqueUUID("")
+				+ fileName + ".zip";
+		try {
+			// connectionTimeout, readTimeout = 10 seconds
+			FileUtils.copyURLToFile(new URL(filePath), new File(artifactFilePath), 10000, 10000);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

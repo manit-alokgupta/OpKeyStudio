@@ -1526,7 +1526,8 @@ Bundle-ClassPath: target/dependency/accessors-smart-1.2.jar,
  target/dependency/j2objc-annotations-1.1.jar,
  target/dependency/javac-shaded-9+181-r4173-1.jar,
  target/dependency/jsr305-3.0.2.jar,
- target/dependency/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar
+ target/dependency/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,
+ target/dependency/commons-io-2.5.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: opkeystudioplatform
 Bundle-ActivationPolicy: lazy
