@@ -9,10 +9,11 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode;
 
 public class ExecutionEngine {
+	private static Thread executionThread;
+
 	private List<File> getAllFiles(File rootFile) {
 		List<File> allFiles = new ArrayList<File>();
 		File[] files = rootFile.listFiles();
@@ -70,10 +71,37 @@ public class ExecutionEngine {
 		}
 	}
 
-	private void executeMainMethod(Class _class) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		   final Method method = _class.getMethod("main", String[].class);
+	private void executeMainMethod(Class _class) throws IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException {
+		executionThread = new Thread(new Runnable() {
 
-		    final Object[] args = new Object[1];
-		    method.invoke(null, args);
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Method method;
+				try {
+					method = _class.getMethod("main", String[].class);
+					final Object[] args = new Object[1];
+					method.invoke(null, args);
+				} catch (NoSuchMethodException | SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		executionThread.start();
+	}
+
+	public static Thread getExecutionThread() {
+		return executionThread;
 	}
 }

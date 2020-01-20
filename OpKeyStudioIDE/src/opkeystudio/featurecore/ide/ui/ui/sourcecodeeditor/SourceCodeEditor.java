@@ -62,7 +62,8 @@ public class SourceCodeEditor extends Composite {
 	private CTabFolder tabFolder;
 	private SourceCodeTree sourceCodeTree;
 	private ISourceViewer sourceCodeText;
-	private ToolItem runButton;
+	private ToolItem runExecutionButton;
+	private ToolItem stopExecutionButton;
 	private ToolItem compileButton;
 	private ToolItem saveAllButton;
 	private ToolItem refreshButton;
@@ -79,9 +80,13 @@ public class SourceCodeEditor extends Composite {
 		this.setLayout(new GridLayout(1, false));
 		ToolBar sourceCodeToolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		sourceCodeToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		runButton = new ToolItem(sourceCodeToolBar, SWT.NONE);
-		runButton.setText("Run");
+		runExecutionButton = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		runExecutionButton.setText("Run");
 		ToolItem seperator1 = new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
+		stopExecutionButton = new ToolItem(sourceCodeToolBar, SWT.NONE);
+		stopExecutionButton.setText("Stop");
+		stopExecutionButton.setEnabled(false);
+		ToolItem seperator11 = new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
 		compileButton = new ToolItem(sourceCodeToolBar, SWT.NONE);
 		compileButton.setText("Compile");
 		ToolItem seperator2 = new ToolItem(sourceCodeToolBar, SWT.SEPARATOR);
@@ -106,12 +111,14 @@ public class SourceCodeEditor extends Composite {
 		tabFolder = new CTabFolder(composite_16, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		runButton.addSelectionListener(new SelectionListener() {
+		runExecutionButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				new CompilerTools().compile(getMainArtifactSourceCodeNode());
 				new ExecutionEngine().executeRun(getMainArtifactSourceCodeNode());
+				stopExecutionButton.setEnabled(true);
+				runExecutionButton.setEnabled(false);
 			}
 
 			@Override
@@ -121,6 +128,21 @@ public class SourceCodeEditor extends Composite {
 			}
 		});
 
+		stopExecutionButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ExecutionEngine.getExecutionThread().interrupt();
+				stopExecutionButton.setEnabled(false);
+				runExecutionButton.setEnabled(true);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		refreshButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -204,7 +226,7 @@ public class SourceCodeEditor extends Composite {
 	}
 
 	public void toggleRunButton(boolean status) {
-		this.runButton.setEnabled(status);
+		this.runExecutionButton.setEnabled(status);
 	}
 
 	public void toggleCompileButton(boolean status) {
