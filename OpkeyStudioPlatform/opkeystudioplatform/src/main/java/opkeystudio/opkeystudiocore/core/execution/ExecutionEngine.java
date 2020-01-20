@@ -1,6 +1,11 @@
 package opkeystudio.opkeystudiocore.core.execution;
 
 import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +33,33 @@ public class ExecutionEngine {
 		for (File file : allFiles) {
 			System.out.println(file.getName());
 		}
+		try {
+			fetchClassInformation(allFiles);
+		} catch (MalformedURLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void fetchClassInformation(List<File> classFiles) throws ClassNotFoundException, IOException {
+		URL[] classURLS = new URL[classFiles.size()];
+		for (int i = 0; i < classFiles.size(); i++) {
+			classURLS[i] = classFiles.get(i).toURI().toURL();
+		}
+		URLClassLoader urlClass = new URLClassLoader(classURLS);
+
+		for (File classFile : classFiles) {
+			if (classFile.getName().contains("Test")) {
+				Class _class = urlClass.loadClass(classFile.getName().replaceAll(".class", ""));
+				Method[] declaredMethods = _class.getDeclaredMethods();
+				for (Method method : declaredMethods) {
+					System.out.println(method.getName());
+				}
+			}
+		}
+		urlClass.close();
 	}
 }
