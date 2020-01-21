@@ -73,54 +73,59 @@ public class ExecutionEngine {
 		try {
 			File mainClassFile = getMainClass(rootFileNode);
 			String javaExePath = getJavaPath();
-			String classPathString = getLibrariesClassPath(rootFileNode);
 			String mainClassName = mainClassFile.getName().replaceAll(".class", "");
 			String parentDirPath = mainClassFile.getParentFile().getAbsolutePath();
 			System.out.println("Java Path " + javaExePath);
 			System.out.println("Main Class Name " + mainClassName);
-			System.out.println("Class Path " + classPathString);
 			System.out.println("Parent DIR Path " + parentDirPath);
-			classPathString = classPathString + ";" + parentDirPath;
+			final String classPathString = getLibrariesClassPath(rootFileNode)+ ";" + parentDirPath;
 
-			String[] command = new String[] { javaExePath, "-classpath", classPathString, mainClassName };
-			ProcessBuilder pb = new ProcessBuilder(command);
-			pb.directory(new File(parentDirPath));
+			Thread processStartThread = new Thread(new Runnable() {
 
-			try {
-				process = pb.start();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			final Thread ioThread = new Thread() {
 				@Override
 				public void run() {
+					String[] command = new String[] { javaExePath, "-classpath", classPathString, mainClassName };
+					ProcessBuilder pb = new ProcessBuilder(command);
+					pb.directory(new File(parentDirPath));
 					try {
-						final BufferedReader reader = new BufferedReader(
-								new InputStreamReader(process.getInputStream()));
-						String line = null;
-						while ((line = reader.readLine()) != null) {
-							System.out.println(line);
-						}
-						reader.close();
-					} catch (final Exception e) {
+						process = pb.start();
+						readProcessInputStream();
+					} catch (IOException | InterruptedException e) {
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+
 				}
-			};
-			ioThread.start();
-			process.waitFor();
+			});
+			processStartThread.start();
+
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+	}
+
+	private void readProcessInputStream() throws InterruptedException {
+		final Thread ioThread = new Thread() {
+			@Override
+			public void run() {
+				try {
+					final BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+					String line = null;
+					while ((line = reader.readLine()) != null) {
+						System.out.println(line);
+					}
+					reader.close();
+				} catch (final Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		ioThread.start();
+		process.waitFor();
 	}
 
 	private File getMainClass(FileNode rootNode) throws MalformedURLException, ClassNotFoundException {
