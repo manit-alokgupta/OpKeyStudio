@@ -20,6 +20,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class ExecutionEngine {
 	private static ExecutorService executionThread;
 	private static Process executionProcess = null;
+	private static StringBuffer executionLogs = null;
 
 	private List<File> getAllFiles(File rootFile) {
 		List<File> allFiles = new ArrayList<File>();
@@ -78,7 +79,8 @@ public class ExecutionEngine {
 			System.out.println("Main Class Name " + mainClassName);
 			System.out.println("Parent DIR Path " + parentDirPath);
 			final String classPathString = getLibrariesClassPath(rootFileNode) + ";" + parentDirPath;
-
+			System.out.println("Class Path " + classPathString);
+			executionLogs = new StringBuffer();
 			Thread processStartThread = new Thread(new Runnable() {
 
 				@Override
@@ -116,7 +118,7 @@ public class ExecutionEngine {
 							new InputStreamReader(executionProcess.getInputStream()));
 					String line = null;
 					while ((line = reader.readLine()) != null) {
-						System.out.println(line);
+						addExecutionLogStep(line);
 					}
 					reader.close();
 				} catch (final Exception e) {
@@ -126,6 +128,8 @@ public class ExecutionEngine {
 		};
 		ioThread.start();
 		executionProcess.waitFor();
+		String logs = getExecutionLogs();
+		System.out.println("Logs>>" + logs);
 	}
 
 	private File getMainClass(FileNode rootNode) throws MalformedURLException, ClassNotFoundException {
@@ -183,5 +187,13 @@ public class ExecutionEngine {
 
 	public static Process getExecutionProcess() {
 		return executionProcess;
+	}
+
+	private void addExecutionLogStep(String log) {
+		executionLogs.append(log + System.lineSeparator());
+	}
+
+	public static String getExecutionLogs() {
+		return executionLogs.toString();
 	}
 }
