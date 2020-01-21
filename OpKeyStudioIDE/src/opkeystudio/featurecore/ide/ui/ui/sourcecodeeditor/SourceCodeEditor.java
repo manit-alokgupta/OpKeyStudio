@@ -121,6 +121,13 @@ public class SourceCodeEditor extends Composite {
 				executionEngine.executeRun(getMainArtifactSourceCodeNode());
 				stopExecutionButton.setEnabled(true);
 				runExecutionButton.setEnabled(false);
+				StyledText logControl = new StyledText(tabFolder, SWT.V_SCROLL);
+				logControl.setEditable(false);
+
+				CTabItem tabItem = new CTabItem(tabFolder, SWT.CLOSE);
+				tabItem.setText("Logs");
+				tabItem.setControl(logControl);
+				tabFolder.setSelection(tabItem);
 				Thread t1 = new Thread(new Runnable() {
 
 					@Override
@@ -133,6 +140,11 @@ public class SourceCodeEditor extends Composite {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							Display.getDefault().asyncExec(new Runnable() {
+								public void run() {
+									logControl.setText(executionEngine.getExecutionLogs());
+								}
+							});
 							if (executionEngine.isExecutionCompleted()) {
 								Display.getDefault().asyncExec(new Runnable() {
 									public void run() {
