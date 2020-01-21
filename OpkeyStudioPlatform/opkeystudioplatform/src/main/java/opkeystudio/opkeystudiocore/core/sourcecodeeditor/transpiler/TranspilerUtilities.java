@@ -80,8 +80,7 @@ public class TranspilerUtilities {
 	public String transpileORObjects(List<ORObject> orobjects, FileNode fileNode) {
 		ClassSnippet classSnippet = new ClassSnippet("ORObjects", fileNode, getTranspiler());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "initORObjects", "");
-		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet("new ORObjects()", "initORObjects",
-				"");
+		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet("new ORObjects()", "initORObjects", "");
 		getTranspiler().addMainTestCaseMethods(callmethodCallSnippet);
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (ORObject orobject : orobjects) {
@@ -108,9 +107,10 @@ public class TranspilerUtilities {
 	}
 
 	public String transpileTestCaseSteps(Artifact artifact, List<FlowStep> flowSteps, FileNode fileNode) {
-		ClassSnippet classSnippet = new ClassSnippet(artifact.getName(), fileNode, getTranspiler());
+		ClassSnippet classSnippet = new ClassSnippet(fileNode.getFileName().replaceAll(".java", ""), fileNode,
+				getTranspiler());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "execute", "");
-		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet("new " + artifact.getName() + "()", "execute",
+		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet("new " + fileNode.getFileName().replaceAll(".java", "") + "()", "execute",
 				"");
 		getTranspiler().addMainTestCaseMethods(callmethodCallSnippet);
 		classSnippet.addMethodSnippet(methodSnippet);
