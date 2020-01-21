@@ -24,9 +24,6 @@ public class CodedFunctionPart {
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
 		codedFunctionView = new CodedFunctionView(parent, 0);
-		
-		StyledText styledText = new StyledText(codedFunctionView, SWT.BORDER);
-		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 
 	@PreDestroy
