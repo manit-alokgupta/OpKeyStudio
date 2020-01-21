@@ -1,6 +1,8 @@
 package opkeystudio.opkeystudiocore.core.apis.restapi;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -104,11 +106,23 @@ public class ArtifactExporting {
 				+ fileName + ".zip";
 		try {
 			// connectionTimeout, readTimeout = 10 seconds
-			FileUtils.copyURLToFile(new URL(filePath), new File(artifactFilePath), 10000, 10000);
-
+			downloadUsingStream(filePath, artifactFilePath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void downloadUsingStream(String urlStr, String file) throws IOException {
+		URL url = new URL(urlStr);
+		BufferedInputStream bis = new BufferedInputStream(url.openStream());
+		FileOutputStream fis = new FileOutputStream(file);
+		byte[] buffer = new byte[1024];
+		int count = 0;
+		while ((count = bis.read(buffer, 0, 1024)) != -1) {
+			fis.write(buffer, 0, count);
+		}
+		fis.close();
+		bis.close();
 	}
 
 }
