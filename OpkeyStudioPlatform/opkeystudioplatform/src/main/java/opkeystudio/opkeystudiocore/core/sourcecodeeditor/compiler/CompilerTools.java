@@ -93,7 +93,7 @@ public class CompilerTools {
 				FileNode node = getSourceFileNode(filteredFiles, diagnostic.getSource().getName());
 				node.addCompileError(compileError);
 			}
-			copyRuntimeLibraryClasses(fileNode);
+			//copyRuntimeLibraryClasses(fileNode);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

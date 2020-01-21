@@ -67,23 +67,25 @@ public class IntellisenseTools {
 
 	private void buildIntelliSenseData(Class _class, String className) {
 		try {
-		Method[] declaredMethods = _class.getDeclaredMethods();
-		for (Method method : declaredMethods) {
-			String genericString = method.toGenericString();
-			if (genericString.contains("public")) {
-				if (!genericString.contains("static")) {
-					ContentAssistData.getInstance().add(className + "()." + method.getName());
-				} else {
-					ContentAssistData.getInstance().add(className + "." + method.getName());
+			Method[] declaredMethods = _class.getDeclaredMethods();
+			for (Method method : declaredMethods) {
+				String genericString = method.toGenericString();
+				if (genericString.contains("public")) {
+					if (!genericString.contains("static")) {
+						ContentAssistData.getInstance().add(className + "()." + method.getName());
+					} else {
+						ContentAssistData.getInstance().add(className + "." + method.getName());
+					}
 				}
 			}
-		}
 
-		Field[] fields = _class.getDeclaredFields();
-		for (Field field : fields) {
-			
-		}
-		}catch (Exception e) {
+			Field[] fields = _class.getDeclaredFields();
+			for (Field field : fields) {
+
+			}
+		} catch (NoClassDefFoundError e) {
+			// TODO: handle exception
+		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
