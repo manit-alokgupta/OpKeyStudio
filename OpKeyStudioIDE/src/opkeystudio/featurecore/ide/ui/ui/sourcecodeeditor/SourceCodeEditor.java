@@ -45,6 +45,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariable
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.codeIde.IntellisenseTools;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionEngine;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
@@ -470,7 +471,7 @@ public class SourceCodeEditor extends Composite {
 			// Add code of rereading the structure
 			renderTreeItems(rootNode);
 			new CompilerTools().compile(rootNode);
-			new opkeystudio.opkeystudiocore.core.codeIde.IntellisenseTools().executeIntelliSense(rootNode);
+			new IntellisenseTools().executeIntelliSense(rootNode);
 		} catch (SQLException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
