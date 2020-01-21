@@ -3,7 +3,6 @@ package opkeystudio;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.e4.ui.workbench.lifecycle.PreSave;

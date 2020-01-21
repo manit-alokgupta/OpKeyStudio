@@ -9,6 +9,9 @@ import javax.inject.Inject;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
@@ -21,6 +24,9 @@ public class CodedFunctionPart {
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
 		codedFunctionView = new CodedFunctionView(parent, 0);
+		
+		StyledText styledText = new StyledText(codedFunctionView, SWT.BORDER);
+		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 
 	@PreDestroy
