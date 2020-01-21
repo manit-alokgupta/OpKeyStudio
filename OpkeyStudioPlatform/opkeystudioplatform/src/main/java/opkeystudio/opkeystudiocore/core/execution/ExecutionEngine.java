@@ -19,6 +19,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ExecutionEngine {
 	private static ExecutorService executionThread;
+	private static Process executionProcess = null;
 
 	private List<File> getAllFiles(File rootFile) {
 		List<File> allFiles = new ArrayList<File>();
@@ -65,8 +66,6 @@ public class ExecutionEngine {
 
 	}
 
-	static Process process = null;
-
 	public void executeRun(FileNode rootFileNode) {
 		String path = rootFileNode.getFilePath() + File.separator + "bin";
 		System.out.println("Executiong " + path);
@@ -78,7 +77,7 @@ public class ExecutionEngine {
 			System.out.println("Java Path " + javaExePath);
 			System.out.println("Main Class Name " + mainClassName);
 			System.out.println("Parent DIR Path " + parentDirPath);
-			final String classPathString = getLibrariesClassPath(rootFileNode)+ ";" + parentDirPath;
+			final String classPathString = getLibrariesClassPath(rootFileNode) + ";" + parentDirPath;
 
 			Thread processStartThread = new Thread(new Runnable() {
 
@@ -88,7 +87,7 @@ public class ExecutionEngine {
 					ProcessBuilder pb = new ProcessBuilder(command);
 					pb.directory(new File(parentDirPath));
 					try {
-						process = pb.start();
+						executionProcess = pb.start();
 						readProcessInputStream();
 					} catch (IOException | InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -113,7 +112,8 @@ public class ExecutionEngine {
 			@Override
 			public void run() {
 				try {
-					final BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+					final BufferedReader reader = new BufferedReader(
+							new InputStreamReader(executionProcess.getInputStream()));
 					String line = null;
 					while ((line = reader.readLine()) != null) {
 						System.out.println(line);
@@ -125,7 +125,7 @@ public class ExecutionEngine {
 			}
 		};
 		ioThread.start();
-		process.waitFor();
+		executionProcess.waitFor();
 	}
 
 	private File getMainClass(FileNode rootNode) throws MalformedURLException, ClassNotFoundException {
@@ -181,7 +181,7 @@ public class ExecutionEngine {
 		});
 	}
 
-	public static ExecutorService getExecutionThread() {
-		return executionThread;
+	public static Process getExecutionProcess() {
+		return executionProcess;
 	}
 }
