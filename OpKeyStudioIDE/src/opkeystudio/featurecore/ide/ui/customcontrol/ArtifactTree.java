@@ -103,7 +103,7 @@ public class ArtifactTree extends CustomTree {
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Component) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.CodedFunction) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/cfl.png"));
 		}
 	}
 

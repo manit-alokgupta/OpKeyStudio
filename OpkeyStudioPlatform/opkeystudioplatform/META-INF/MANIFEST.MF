@@ -568,6 +568,17 @@ Export-Package: ch.qos.logback.classic,
  org.codehaus.stax2.typed,
  org.codehaus.stax2.util,
  org.codehaus.stax2.validation,
+ org.fife.io,
+ org.fife.print,
+ org.fife.ui.autocomplete,
+ org.fife.ui.rsyntaxtextarea,
+ org.fife.ui.rsyntaxtextarea.focusabletip,
+ org.fife.ui.rsyntaxtextarea.folding,
+ org.fife.ui.rsyntaxtextarea.modes,
+ org.fife.ui.rsyntaxtextarea.parser,
+ org.fife.ui.rsyntaxtextarea.templates,
+ org.fife.ui.rtextarea,
+ org.fife.util,
  org.hamcrest,
  org.hamcrest.beans,
  org.hamcrest.collection,
@@ -1535,7 +1546,8 @@ Bundle-ClassPath: target/dependency/accessors-smart-1.2.jar,
  target/dependency/jsr305-3.0.2.jar,
  target/dependency/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,
  target/dependency/commons-io-2.5.jar,
- target/dependency/rsyntaxtextarea-3.0.8.jar
+ target/dependency/rsyntaxtextarea-3.0.8.jar,
+ target/dependency/autocomplete-3.0.0.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: opkeystudioplatform
 Bundle-ActivationPolicy: lazy

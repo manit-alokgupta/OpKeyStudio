@@ -1,6 +1,11 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Frame;
+
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
@@ -11,6 +16,14 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.fife.ui.autocomplete.AutoCompletion;
+import org.fife.ui.autocomplete.BasicCompletion;
+import org.fife.ui.autocomplete.CompletionProvider;
+import org.fife.ui.autocomplete.DefaultCompletionProvider;
+import org.fife.ui.autocomplete.ShorthandCompletion;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 public class CodedFunctionView extends Composite {
 
@@ -39,7 +52,70 @@ public class CodedFunctionView extends Composite {
 		Composite composite = new Composite(this, SWT.EMBEDDED | SWT.NO_BACKGROUND);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		try {
+			// Set cross-platform Java L&F (also called "Metal")
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (UnsupportedLookAndFeelException e) {
+			// handle exception
+		} catch (ClassNotFoundException e) {
+			// handle exception
+		} catch (InstantiationException e) {
+			// handle exception
+		} catch (IllegalAccessException e) {
+			// handle exception
+		}
+
 		Frame frame = SWT_AWT.new_Frame(composite);
+		JPanel cp = new JPanel(new BorderLayout());
+
+		RSyntaxTextArea textArea = new RSyntaxTextArea(20, 60);
+		textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+		textArea.setCodeFoldingEnabled(true);
+		textArea.setAutoIndentEnabled(true);
+		CompletionProvider provider = createCompletionProvider();
+		AutoCompletion ac = new AutoCompletion(provider);
+		ac.setAutoActivationDelay(200);
+		ac.setShowDescWindow(true);
+		ac.setAutoCompleteSingleChoices(false);
+		ac.setAutoActivationEnabled(true);
+
+		ac.install(textArea);
+		RTextScrollPane sp = new RTextScrollPane(textArea);
+		cp.add(sp);
+		frame.add(cp);
+	}
+
+	private CompletionProvider createCompletionProvider() {
+
+		// A DefaultCompletionProvider is the simplest concrete implementation
+		// of CompletionProvider. This provider has no understanding of
+		// language semantics. It simply checks the text entered up to the
+		// caret position for a match against known completions. This is all
+		// that is needed in the majority of cases.
+		DefaultCompletionProvider provider = new DefaultCompletionProvider();
+
+		// Add completions for all Java keywords. A BasicCompletion is just
+		// a straightforward word completion.
+		provider.addCompletion(new BasicCompletion(provider, "abstract"));
+		provider.addCompletion(new BasicCompletion(provider, "assert"));
+		provider.addCompletion(new BasicCompletion(provider, "break"));
+		provider.addCompletion(new BasicCompletion(provider, "case"));
+		// ... etc ...
+		provider.addCompletion(new BasicCompletion(provider, "transient"));
+		provider.addCompletion(new BasicCompletion(provider, "try"));
+		provider.addCompletion(new BasicCompletion(provider, "void"));
+		provider.addCompletion(new BasicCompletion(provider, "volatile"));
+		provider.addCompletion(new BasicCompletion(provider, "while"));
+
+		// Add a couple of "shorthand" completions. These completions don't
+		// require the input text to be the same thing as the replacement text.
+		provider.addCompletion(
+				new ShorthandCompletion(provider, "sysout", "System.out.println(", "System.out.println("));
+		provider.addCompletion(
+				new ShorthandCompletion(provider, "syserr", "System.err.println(", "System.err.println("));
+
+		return provider;
+
 	}
 
 	@Override
