@@ -257,6 +257,13 @@ public class SourceCodeEditor extends Composite {
 				}
 				SourceCodeTreeItem scti = (SourceCodeTreeItem) item;
 				initiateJavaEditor(scti.getFileNode());
+				CTabItem[] tabItems = tabFolder.getItems();
+				for (CTabItem tabItem : tabItems) {
+					if (tabItem.getText().equals(item.getText())) {
+						tabFolder.setSelection(tabItem);
+						return;
+					}
+				}
 				CTabItem tabItem = new CTabItem(tabFolder, SWT.CLOSE);
 				tabItem.setImage(scti.getImage());
 				tabItem.setControl(sourceCodeText.getTextWidget());
