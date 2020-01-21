@@ -47,7 +47,7 @@ public class Utilities {
 			new File(path).mkdir();
 		}
 	}
-
+	
 	public String getArtifactsDownloadFolder() {
 		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "Artifacts";

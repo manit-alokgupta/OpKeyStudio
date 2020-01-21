@@ -21,6 +21,7 @@ public class ExecutionEngine {
 	private static ExecutorService executionThread;
 	private static Process executionProcess = null;
 	private static StringBuffer executionLogs = null;
+	private boolean executionCompleted = false;
 
 	private List<File> getAllFiles(File rootFile) {
 		List<File> allFiles = new ArrayList<File>();
@@ -130,6 +131,7 @@ public class ExecutionEngine {
 		executionProcess.waitFor();
 		String logs = getExecutionLogs();
 		System.out.println("Logs>>" + logs);
+		setExecutionCompleted(true);
 	}
 
 	private File getMainClass(FileNode rootNode) throws MalformedURLException, ClassNotFoundException {
@@ -195,5 +197,13 @@ public class ExecutionEngine {
 
 	public static String getExecutionLogs() {
 		return executionLogs.toString();
+	}
+
+	public boolean isExecutionCompleted() {
+		return executionCompleted;
+	}
+
+	public void setExecutionCompleted(boolean executionCompleted) {
+		this.executionCompleted = executionCompleted;
 	}
 }

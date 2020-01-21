@@ -32,6 +32,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
@@ -116,9 +117,35 @@ public class SourceCodeEditor extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				new CompilerTools().compile(getMainArtifactSourceCodeNode());
-				new ExecutionEngine().executeRun(getMainArtifactSourceCodeNode());
+				ExecutionEngine executionEngine = new ExecutionEngine();
+				executionEngine.executeRun(getMainArtifactSourceCodeNode());
 				stopExecutionButton.setEnabled(true);
 				runExecutionButton.setEnabled(false);
+				Thread t1 = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						while (true) {
+							System.out.println("Execution Completed " + executionEngine.isExecutionCompleted());
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							if (executionEngine.isExecutionCompleted()) {
+								Display.getDefault().asyncExec(new Runnable() {
+									public void run() {
+										stopExecutionButton.setEnabled(false);
+										runExecutionButton.setEnabled(true);
+									}
+								});
+								break;
+							}
+						}
+					}
+				});
+				t1.start();
 			}
 
 			@Override
