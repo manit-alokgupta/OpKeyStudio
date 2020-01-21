@@ -131,9 +131,10 @@ public class TranspilerUtilities {
 		ClassSnippet classSnippet = new ClassSnippet("Main", fileNode, getTranspiler());
 		MethodSnippet methodSnippet = new MethodSnippet("static void", "main", "String[] args");
 		classSnippet.addMethodSnippet(methodSnippet);
+		String chromeDriverPath = Utilities.getInstance().getSeleniumDriverFolder() + File.separator
+				+ "chromedriver.exe";
 		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet("System", "setProperty",
-				"\"webdriver.chrome.driver\"",
-				"\"" + Utilities.getInstance().getSeleniumDriverFolder() + File.separator + "chromedriver.exe" + "\"");
+				"\"webdriver.chrome.driver\"", "\"" + chromeDriverPath.replace("\\", "\\\\") + "\"");
 		methodSnippet.addMethodCallSnippet(callmethodCallSnippet);
 		for (MethodCallSnippet mcs : getTranspiler().getMainTestCaseMethods()) {
 			methodSnippet.addMethodCallSnippet(mcs);
