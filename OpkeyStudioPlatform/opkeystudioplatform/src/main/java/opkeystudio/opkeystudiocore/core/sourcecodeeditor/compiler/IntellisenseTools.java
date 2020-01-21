@@ -66,6 +66,7 @@ public class IntellisenseTools {
 	}
 
 	private void buildIntelliSenseData(Class _class, String className) {
+		try {
 		Method[] declaredMethods = _class.getDeclaredMethods();
 		for (Method method : declaredMethods) {
 			String genericString = method.toGenericString();
@@ -82,6 +83,8 @@ public class IntellisenseTools {
 		for (Field field : fields) {
 			
 		}
-
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }
