@@ -1,7 +1,9 @@
 package opkeystudio;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
@@ -25,6 +27,15 @@ public class E4LifeCycle {
 		Utilities.getInstance().setDefaultInstallDir(new File("").getAbsolutePath());
 		Utilities.getInstance().initializeOpKeyStudioPath();
 		KeywordManager.getInstance().loadAllKeywords();
+		String inputDriverFolder = Utilities.getInstance().getDefaultInstallDir() + File.separator + "resources"
+				+ File.separator + "drivers";
+		try {
+			org.apache.commons.io.FileUtils.copyDirectory(new File(inputDriverFolder),
+					new File(Utilities.getInstance().getSeleniumDriverFolder()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@PreSave

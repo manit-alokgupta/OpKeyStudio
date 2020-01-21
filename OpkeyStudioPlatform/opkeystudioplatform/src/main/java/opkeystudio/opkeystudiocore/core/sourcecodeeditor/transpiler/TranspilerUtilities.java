@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.Ne
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewStaticObjectDeclarationSnippet;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.snippetmaker.modules.NewStaticObjectSnippet;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 @SuppressWarnings("unused")
 public class TranspilerUtilities {
@@ -110,8 +112,8 @@ public class TranspilerUtilities {
 		ClassSnippet classSnippet = new ClassSnippet(fileNode.getFileName().replaceAll(".java", ""), fileNode,
 				getTranspiler());
 		MethodSnippet methodSnippet = new MethodSnippet("void", "execute", "");
-		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet("new " + fileNode.getFileName().replaceAll(".java", "") + "()", "execute",
-				"");
+		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet(
+				"new " + fileNode.getFileName().replaceAll(".java", "") + "()", "execute", "");
 		getTranspiler().addMainTestCaseMethods(callmethodCallSnippet);
 		classSnippet.addMethodSnippet(methodSnippet);
 		for (FlowStep flowStep : flowSteps) {
@@ -129,7 +131,13 @@ public class TranspilerUtilities {
 		ClassSnippet classSnippet = new ClassSnippet("Main", fileNode, getTranspiler());
 		MethodSnippet methodSnippet = new MethodSnippet("static void", "main", "String[] args");
 		classSnippet.addMethodSnippet(methodSnippet);
-		methodSnippet.setMethodCallSnippets(getTranspiler().getMainTestCaseMethods());
+		MethodCallSnippet callmethodCallSnippet = new MethodCallSnippet("System", "setProperty",
+				"\"webdriver.chrome.driver\"",
+				"\"" + Utilities.getInstance().getSeleniumDriverFolder() + File.separator + "chromedriver.exe" + "\"");
+		methodSnippet.addMethodCallSnippet(callmethodCallSnippet);
+		for (MethodCallSnippet mcs : getTranspiler().getMainTestCaseMethods()) {
+			methodSnippet.addMethodCallSnippet(mcs);
+		}
 		return classSnippet.toString();
 	}
 

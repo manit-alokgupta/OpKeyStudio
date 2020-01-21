@@ -46,8 +46,19 @@ public class Utilities {
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
+
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "Drivers";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
 	}
-	
+
+	public String getSeleniumDriverFolder() {
+		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "Drivers";
+	}
+
 	public String getArtifactsDownloadFolder() {
 		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "Artifacts";
