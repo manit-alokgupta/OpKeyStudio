@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
 import opkeystudio.opkeystudiocore.core.communicator.OpKeyApiCommunicator;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactExporting {
@@ -99,15 +100,28 @@ public class ArtifactExporting {
 		return false;
 	}
 
-	private void downLoadArtifactFile(String fileName, String filePath) {
+	private void downLoadArtifactFile(String fileName, String fileDownloadURL) {
+		String downloadFileId = Utilities.getInstance().getUniqueUUID("");
 		String artifactsDownloadFolder = Utilities.getInstance().getArtifactsDownloadFolder();
-		String artifactFilePath = artifactsDownloadFolder + File.separator + Utilities.getInstance().getUniqueUUID("")
-				+ fileName + ".zip";
+		String artifactFilePath = artifactsDownloadFolder + File.separator + downloadFileId + ".zip";
 		try {
-			// connectionTimeout, readTimeout = 10 seconds
-			downloadUsingStream(filePath, artifactFilePath);
+			downloadUsingStream(fileDownloadURL, artifactFilePath);
+			Utilities.getInstance().extractZipFolder(artifactFilePath,
+					artifactsDownloadFolder + File.separator + downloadFileId);
+
+			File dbFilesFolder = new File(artifactsDownloadFolder + File.separator + downloadFileId);
+			File[] dbFiles = dbFilesFolder.listFiles();
+			for (File dbFile : dbFiles) {
+				if (dbFile.getName().endsWith(".db")) {
+					String dbFileName = dbFile.getAbsolutePath();
+					System.out.println("Downloaded File Path " + dbFileName);
+					ServiceRepository.getInstance().setExortedDBFilePath(dbFileName);
+					break;
+				}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			downLoadArtifactFile(fileName, fileDownloadURL);
 		}
 	}
 
