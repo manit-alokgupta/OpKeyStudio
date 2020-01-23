@@ -4,14 +4,15 @@ import java.io.File;
 import java.io.IOException;
 
 public class ArtifactUpload {
-	public String uploadArtifactFile(String url, String filePath) throws IOException {
+	public String uploadArtifactFile(File file) throws IOException {
+		System.out.println("Artifact Uploading");
 		String charset = "UTF-8";
 
-		MultipartUtility multipart = new MultipartUtility(url, charset);
-		multipart.addFormField("param_name_1", "param_value");
-		multipart.addFormField("param_name_2", "param_value");
-		multipart.addFormField("param_name_3", "param_value");
-		multipart.addFilePart("file_param_1", new File(filePath));
+		MultipartUtility multipart = new MultipartUtility(
+				"/ArtifactSyncReceiver/ImportArtifact?MainProcessType=Import&&JobType=Opkey&&IsImporting=false",
+				charset);
+		multipart.addFormField("IsImporting", "true");
+		multipart.addFilePart("file", file);
 		return multipart.finish(); // response from server.
 	}
 }
