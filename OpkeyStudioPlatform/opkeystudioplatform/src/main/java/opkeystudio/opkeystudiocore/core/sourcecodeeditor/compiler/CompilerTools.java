@@ -3,10 +3,21 @@ package opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
+
+import javax.tools.Diagnostic;
+import javax.tools.DiagnosticCollector;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaCompiler.CompilationTask;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -37,20 +48,52 @@ public class CompilerTools {
 
 	public void compile(File fileNode) {
 		/*
+		 * try { List<String> optionList = new ArrayList<String>();
+		 * optionList.addAll(Arrays.asList("-classpath", getLibrariesClassPath(), "-d",
+		 * fileNode.getAbsolutePath()) + File.separator + "bin"));
+		 * 
+		 * JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+		 * DiagnosticCollector<JavaFileObject> diagnostics = new
+		 * DiagnosticCollector<>(); try (StandardJavaFileManager manager =
+		 * compiler.getStandardFileManager(diagnostics, null, null)) { Iterable<?
+		 * extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(files);
+		 * 
+		 * CompilationTask task = compiler.getTask(null, manager, diagnostics,
+		 * optionList, null, sources); task.call(); } catch (IOException e) { // TODO
+		 * Auto-generated catch block }
+		 * 
+		 * for (Diagnostic<? extends JavaFileObject> diagnostic :
+		 * diagnostics.getDiagnostics()) { CompileError compileError = new
+		 * CompileError(); compileError.setCode(diagnostic.getCode());
+		 * compileError.setColumnNumber(diagnostic.getColumnNumber());
+		 * compileError.setEndPosition(diagnostic.getEndPosition());
+		 * compileError.setLineNumber(diagnostic.getLineNumber());
+		 * compileError.setPosition(diagnostic.getPosition());
+		 * compileError.setStartPosition(diagnostic.getStartPosition());
+		 * compileError.setKind(diagnostic.getKind());
+		 * compileError.setMessage(diagnostic.getMessage(null));
+		 * compileError.setSource(diagnostic.getSource());
+		 * System.out.println(compileError.getMessage()); }
+		 * //copyRuntimeLibraryClasses(fileNode); } catch (Exception e) { // TODO:
+		 * handle exception e.printStackTrace(); }
+		 */
+	}
+
+	public List<CompileError> compileCodeFl(String codeFLpath, String librariesClassPath) {
+
 		try {
 			List<String> optionList = new ArrayList<String>();
-			optionList.addAll(Arrays.asList("-classpath", getLibrariesClassPath(), "-d",
-					fileNode.getAbsolutePath()) + File.separator + "bin"));
-
+			//optionList.addAll(Arrays.asList("-classpath", librariesClassPath, "-d", ""));
+			optionList.addAll(Arrays.asList("-classpath", librariesClassPath));
 			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
 			try (StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null)) {
-				Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(files);
+				Iterable<? extends JavaFileObject> sources = manager.getjava);
 
 				CompilationTask task = compiler.getTask(null, manager, diagnostics, optionList, null, sources);
 				task.call();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 			}
 
 			for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
@@ -66,12 +109,11 @@ public class CompilerTools {
 				compileError.setSource(diagnostic.getSource());
 				System.out.println(compileError.getMessage());
 			}
-			//copyRuntimeLibraryClasses(fileNode);
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
-		*/
+
+		return null;
 	}
 
 	public void createJarArchive(File archiveFile, File[] tobeJared) {
