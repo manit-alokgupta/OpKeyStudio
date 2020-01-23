@@ -80,7 +80,7 @@
   <descriptors xmi:id="_Wm_AQBEVEeq3D_1hcyWsSQ" elementId="opkeystudio.partdescriptor.dataRepoViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/note.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.DataRepositoryPart">
     <toolbar xmi:id="_bkajkBEVEeq3D_1hcyWsSQ" elementId="opkeystudio.toolbar.5"/>
   </descriptors>
-  <descriptors xmi:id="_CKDtECvEEeqGku3IS04kWw" elementId="opkeystudio.partdescriptor.codeFunctionViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/cfl.png" category="workbenchCategory" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.CodedFunctionPart"/>
+  <descriptors xmi:id="_CKDtECvEEeqGku3IS04kWw" elementId="opkeystudio.partdescriptor.codeFunctionViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/cfl.png" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.CodedFunctionPart"/>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
