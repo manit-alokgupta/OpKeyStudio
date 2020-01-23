@@ -33,10 +33,10 @@ public class CodedFunctionApi {
 				+ "//#BeginRegion-ImportSection\r\n" + "\r\n" + "//#EndRegion-ImportSection\r\n"
 				+ "import com.crestech.opkey.plugin.contexts.Context;\r\n"
 				+ "import com.crestech.opkey.plugin.codedfl.KeyValuePair;\r\n" + "import org.openqa.selenium.By;\r\n"
-				+ "import org.openqa.selenium.WebDriver;\r\n" + "\r\n" + "public class " + className
-				+ " implements com.crestech.opkey.plugin.CodedFunctionLibrary {\r\n" + "\r\n"
-				+ "	public void run() throws Exception {" + usercode + "\n		//#EndRegion-UserCode\r\n" + "	}\n"
-				+ "	//#BeginRegion-PrivateFunctions\r\n"
+				+ "import org.openqa.selenium.WebDriver;\r\n" + "\r\n" + "public class "
+				+ className.replaceAll(" ", "_") + " implements com.crestech.opkey.plugin.CodedFunctionLibrary {\r\n"
+				+ "\r\n" + "	public void run() throws Exception {" + usercode + "\n		//#EndRegion-UserCode\r\n"
+				+ "	}\n" + "	//#BeginRegion-PrivateFunctions\r\n"
 				+ "	// #### You may write multiple private functions over here. These functions can be called from this Coded Function.\r\n"
 				+ "	/*" + "\n" + privatefunctioncode + "\n	//#EndRegion-PrivateFunctions\r\n" + "}";
 
