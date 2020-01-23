@@ -33,10 +33,16 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
 import opkeystudio.opkeystudiocore.core.apis.dto.Project;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactExporting;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactTreeApi;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ProjectApi;
 
 public class ArtifactImportDialog extends TitleAreaDialog {
+	public ArtifactImportDialog(Shell parentShell) {
+		super(parentShell);
+		setShellStyle(SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL | SWT.RESIZE);
+	}
+
 	private Text projectSearch;
 	private Table table;
 	private Tree tree;
@@ -52,9 +58,6 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	 * 
 	 * @param parentShell
 	 */
-	public ArtifactImportDialog(Shell parentShell) {
-		super(parentShell);
-	}
 
 	/**
 	 * Create contents of the dialog.
@@ -299,6 +302,10 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 		this.selectedArtifactTreeNode = selectedArtifactTreeNode;
 	}
 
+	private void exportArtifact(ArtifactTreeNode artifactTreeNode) throws IOException {
+		new ArtifactExporting().exportArtifactFromOpKey(artifactTreeNode);
+	}
+
 	/**
 	 * Create contents of the button bar.
 	 * 
@@ -307,6 +314,26 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		exportButton = createButton(parent, IDialogConstants.OK_ID, "Export", true);
+		exportButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ArtifactTreeNode selectedArtifact = getSelectedArtifactTreeNode();
+				try {
+					exportArtifact(selectedArtifact);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		toggleExportButton(false);
 	}
 
 	/**
