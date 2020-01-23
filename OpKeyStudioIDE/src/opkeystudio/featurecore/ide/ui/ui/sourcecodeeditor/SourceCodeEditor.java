@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -41,11 +40,6 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.sourcecodeeditorcontrol.SourceCodeTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
-import opkeystudio.opkeystudiocore.core.codeIde.IntellisenseTools;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionEngine;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
@@ -54,8 +48,6 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.SourceCodeEditorTools;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Token.TOKEN_TYPE;
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.TranspileObject;
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.transpiler.Transpiler;
 import opkeystudio.opkeystudiocore.core.utils.ContentAssistData;
 
 public class SourceCodeEditor extends Composite {
@@ -189,7 +181,7 @@ public class SourceCodeEditor extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				transpileDatas();
+				
 			}
 
 			@Override
@@ -453,27 +445,6 @@ public class SourceCodeEditor extends Composite {
 				styleRange.foreground = new Color(styledTextControl.getDisplay(), 8, 8, 9);
 			}
 			styledTextControl.setStyleRange(styleRange);
-		}
-	}
-
-	public void transpileDatas() {
-		try {
-			List<GlobalVariable> globalVariables = new GlobalVariableApi().getAllGlobalVariables();
-			List<FlowStep> flowSteps = getTestCaseView().getFlowStepTable().getFlowStepsData();
-			Artifact artifact = getTestCaseView().getArtifact();
-			TranspileObject transpileObject = new TranspileObject();
-			transpileObject.setArtifact(artifact);
-			transpileObject.setGlobalVaribales(globalVariables);
-			transpileObject.setFlowSteps(flowSteps);
-
-			FileNode rootNode = new Transpiler().transpileDatas(transpileObject);
-			setMainArtifactSourceCodeNode(rootNode);
-			// Add code of rereading the structure
-			renderTreeItems(rootNode);
-			new CompilerTools().compile(rootNode);
-			new IntellisenseTools().executeIntelliSense(rootNode);
-		} catch (SQLException | IOException | IllegalArgumentException e) {
-			e.printStackTrace();
 		}
 	}
 
