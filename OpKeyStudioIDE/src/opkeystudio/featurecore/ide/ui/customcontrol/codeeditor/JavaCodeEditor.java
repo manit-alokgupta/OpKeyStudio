@@ -82,7 +82,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			public void keyReleased(KeyEvent e) {
 				Token token = getTokenListForLine(getCaretLineNumber());
 				while (token.getNextToken() != null) {
-					System.out.println("Token " + new String(token.getTextArray()));
+					//System.out.println("Token " + new String(token.getTextArray()));
 					token = token.getNextToken();
 				}
 			}
