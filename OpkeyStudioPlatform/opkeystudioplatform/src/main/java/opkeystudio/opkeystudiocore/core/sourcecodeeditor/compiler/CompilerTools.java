@@ -46,49 +46,18 @@ public class CompilerTools {
 		return data;
 	}
 
-	public void compile(File fileNode) {
-		/*
-		 * try { List<String> optionList = new ArrayList<String>();
-		 * optionList.addAll(Arrays.asList("-classpath", getLibrariesClassPath(), "-d",
-		 * fileNode.getAbsolutePath()) + File.separator + "bin"));
-		 * 
-		 * JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-		 * DiagnosticCollector<JavaFileObject> diagnostics = new
-		 * DiagnosticCollector<>(); try (StandardJavaFileManager manager =
-		 * compiler.getStandardFileManager(diagnostics, null, null)) { Iterable<?
-		 * extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(files);
-		 * 
-		 * CompilationTask task = compiler.getTask(null, manager, diagnostics,
-		 * optionList, null, sources); task.call(); } catch (IOException e) { // TODO
-		 * Auto-generated catch block }
-		 * 
-		 * for (Diagnostic<? extends JavaFileObject> diagnostic :
-		 * diagnostics.getDiagnostics()) { CompileError compileError = new
-		 * CompileError(); compileError.setCode(diagnostic.getCode());
-		 * compileError.setColumnNumber(diagnostic.getColumnNumber());
-		 * compileError.setEndPosition(diagnostic.getEndPosition());
-		 * compileError.setLineNumber(diagnostic.getLineNumber());
-		 * compileError.setPosition(diagnostic.getPosition());
-		 * compileError.setStartPosition(diagnostic.getStartPosition());
-		 * compileError.setKind(diagnostic.getKind());
-		 * compileError.setMessage(diagnostic.getMessage(null));
-		 * compileError.setSource(diagnostic.getSource());
-		 * System.out.println(compileError.getMessage()); }
-		 * //copyRuntimeLibraryClasses(fileNode); } catch (Exception e) { // TODO:
-		 * handle exception e.printStackTrace(); }
-		 */
-	}
-
-	public List<CompileError> compileCodeFl(String codeFLpath, String librariesClassPath) {
-
+	public List<CompileError> compileCodeFl(String codedFLpath, String librariesClassPath) {
+		ArrayList<CompileError> compilerErrors = new ArrayList<CompileError>();
 		try {
 			List<String> optionList = new ArrayList<String>();
-			//optionList.addAll(Arrays.asList("-classpath", librariesClassPath, "-d", ""));
+			// optionList.addAll(Arrays.asList("-classpath", librariesClassPath, "-d", ""));
 			optionList.addAll(Arrays.asList("-classpath", librariesClassPath));
 			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+			ArrayList<File> files = new ArrayList<File>();
+			files.add(new File(codedFLpath));
 			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
 			try (StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null)) {
-				Iterable<? extends JavaFileObject> sources = manager.getjava);
+				Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(files);
 
 				CompilationTask task = compiler.getTask(null, manager, diagnostics, optionList, null, sources);
 				task.call();
@@ -108,12 +77,13 @@ public class CompilerTools {
 				compileError.setMessage(diagnostic.getMessage(null));
 				compileError.setSource(diagnostic.getSource());
 				System.out.println(compileError.getMessage());
+				compilerErrors.add(compileError);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return compilerErrors;
 	}
 
 	public void createJarArchive(File archiveFile, File[] tobeJared) {
