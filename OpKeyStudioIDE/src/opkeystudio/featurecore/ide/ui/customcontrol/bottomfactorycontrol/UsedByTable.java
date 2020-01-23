@@ -24,7 +24,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 public class UsedByTable extends CustomTable {
 
 	private boolean paintCalled = false;
-	private UsedByTable thisTable = this;
 	private BottomFactoryTestCaseUi parentBottomFactoryTestCaseUi;
 	private BottomFactoryORUi parentBottomFactoryORUi;
 	private BottomFactoryDataRepoUi parentBottomFactoryDataRepoUi;
@@ -33,28 +32,24 @@ public class UsedByTable extends CustomTable {
 	public UsedByTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUi) {
 		super(parent, style);
 		init();
-		thisTable = this;
 		this.setParentBottomFactoryTestCaseUi(bottomFactoryUi);
 	}
 
 	public UsedByTable(Composite parent, int style, BottomFactoryORUi bottomFactoryUi) {
 		super(parent, style);
 		init();
-		thisTable = this;
 		this.setParentBottomFactoryORUi(bottomFactoryUi);
 	}
 
 	public UsedByTable(Composite parent, int style, BottomFactoryDataRepoUi bottomFactoryUi) {
 		super(parent, style);
 		init();
-		thisTable = this;
 		this.setParentBottomFactoryDataRepoUi(bottomFactoryUi);
 	}
 
 	public UsedByTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
 		init();
-		thisTable = this;
 		this.setParentBottomFactoryFLUi(parentView);
 	}
 

@@ -22,21 +22,18 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 public class TestCaseDocumentTable extends CustomTable {
 
 	private boolean paintCalled = false;
-	private TestCaseDocumentTable thisTable = this;
 	private BottomFactoryTestCaseUi parentBottomFactoryUI;
 	private BottomFactoryTestSuiteUi parentBottomFactoryTestSuiteUi;
 
 	public TestCaseDocumentTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUI) {
 		super(parent, style);
 		init();
-		thisTable = this;
 		this.setParentBottomFactoryUI(bottomFactoryUI);
 	}
 
 	public TestCaseDocumentTable(Composite parent, int style, BottomFactoryTestSuiteUi parentView) {
 		super(parent, style);
 		init();
-		thisTable = this;
 		this.setParentBottomFactoryTestSuiteUi(parentView);
 	}
 

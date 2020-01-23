@@ -116,21 +116,21 @@ public class FlowStepTable extends CustomTable {
 	private void initContextMenu() {
 		Menu menu = new Menu(this);
 		openInNewTabMenuItem = new MenuItem(menu, 0);
-		MenuItem separator0 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		copyMenuItem = new MenuItem(menu, 0);
-		MenuItem separator1 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		pasteMenuItem = new MenuItem(menu, 0);
-		MenuItem separator2 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		addStepMenuItem = new MenuItem(menu, 0);
-		MenuItem separator3 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		deleteMenuItem = new MenuItem(menu, 0);
-		MenuItem separator4 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		moveupMenuItem = new MenuItem(menu, 0);
-		MenuItem separator5 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		movedownMenuItem = new MenuItem(menu, 0);
-		MenuItem separator6 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		setToRunMenuItem = new MenuItem(menu, 0);
-		MenuItem separator7 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		skipfromRunMenuItem = new MenuItem(menu, 0);
 
 		openInNewTabMenuItem.setText("Open In New Tab");
@@ -156,8 +156,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
@@ -179,8 +178,6 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		skipfromRunMenuItem.addSelectionListener(new SelectionListener() {
@@ -199,8 +196,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
@@ -220,8 +216,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 		movedownMenuItem.addSelectionListener(new SelectionListener() {
@@ -233,8 +228,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 		addStepMenuItem.addSelectionListener(new SelectionListener() {
@@ -246,7 +240,6 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -258,14 +251,12 @@ public class FlowStepTable extends CustomTable {
 				try {
 					deleteStep();
 				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -279,7 +270,6 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -300,7 +290,6 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -327,7 +316,6 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -426,8 +414,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 		editor1.setEditor(button, item, 0);
