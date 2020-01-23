@@ -49,6 +49,11 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		init(SWT_AWT.new_Frame(composite));
 	}
 
+	public void setJavaCode(String javaCode) {
+		this.setText(javaCode);
+		this.setAutoIndentEnabled(true);
+	}
+
 	private void init(Frame frame) {
 		JPanel mainEditorPanel = new JPanel(new BorderLayout());
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
