@@ -101,20 +101,20 @@ public class SuiteStepTable extends CustomTable {
 		Menu menu = new Menu(this);
 
 		openInNewTab = new MenuItem(menu, 0);
-		MenuItem separator2 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		copyMenuItem = new MenuItem(menu, 0);
-		MenuItem separator1 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		pasteMenuItem = new MenuItem(menu, 0);
 
-		MenuItem separator3 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		deleteMenuItem = new MenuItem(menu, 0);
-		MenuItem separator4 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		moveupMenuItem = new MenuItem(menu, 0);
-		MenuItem separator5 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		movedownMenuItem = new MenuItem(menu, 0);
-		MenuItem separator6 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		setToRunMenuItem = new MenuItem(menu, 0);
-		MenuItem separator7 = new MenuItem(menu, SWT.SEPARATOR);
+		new MenuItem(menu, SWT.SEPARATOR);
 		skipfromRunMenuItem = new MenuItem(menu, 0);
 
 		openInNewTab.setText("Open In New Tab");
@@ -137,8 +137,7 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
@@ -153,7 +152,6 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -173,7 +171,6 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -194,7 +191,6 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -207,7 +203,6 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -361,6 +356,7 @@ public class SuiteStepTable extends CustomTable {
 		super.setControlData(testSuite);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<TestSuiteStep> getTestSuiteData() {
 		return (List<TestSuiteStep>) super.getControlData();
 	}

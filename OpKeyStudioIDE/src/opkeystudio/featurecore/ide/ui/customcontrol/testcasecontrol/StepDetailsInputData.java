@@ -20,7 +20,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgumen
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
-import opkeystudio.opkeystudiocore.core.utils.DataType.GenericDataType;
 
 public class StepDetailsInputData extends CustomTable {
 

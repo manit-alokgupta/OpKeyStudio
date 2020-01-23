@@ -1,7 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.swt.events.SelectionEvent;
@@ -9,9 +7,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;

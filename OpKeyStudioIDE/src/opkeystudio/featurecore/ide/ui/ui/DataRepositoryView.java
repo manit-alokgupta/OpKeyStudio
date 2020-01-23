@@ -11,8 +11,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -21,7 +19,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
@@ -30,10 +27,10 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
 public class DataRepositoryView extends Composite {
 	private DataRepositoryTable dataRepositoryTable;
+	@SuppressWarnings("unused")
 	private int colCount = 0;
+	@SuppressWarnings("unused")
 	private int rowCount = 0;
-	private TableColumn newColumn;
-	private DRColumnAttributes drCol;
 	private BottomFactoryDataRepoUi bottomFactory;
 	private ToolItem refreshToolItm;
 	private ToolItem addColmToolItm;
@@ -208,9 +205,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String fileName = new MessageDialogs().openInputDialogAandGetValue("File Name",
-						"Please Enter File Name", "NewFile");
-				// dumpWorkbookToAFile(wb, fileName);
+				
 			}
 
 			@Override
