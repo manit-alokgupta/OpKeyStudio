@@ -37,7 +37,7 @@ public class MultipartUtility {
 		// creates a unique boundary based on time stamp
 		boundary = "===" + System.currentTimeMillis() + "===";
 
-		URL url = new URL(requestURL);
+		URL url = new URL(ServiceRepository.getInstance().getOpKeyHostUrl() + requestURL);
 		httpConn = (HttpURLConnection) url.openConnection();
 		httpConn.setUseCaches(false);
 		httpConn.setDoOutput(true); // indicates POST method
