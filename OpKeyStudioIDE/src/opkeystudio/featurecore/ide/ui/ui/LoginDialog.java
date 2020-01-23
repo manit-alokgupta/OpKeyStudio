@@ -171,7 +171,7 @@ public class LoginDialog extends Dialog {
 		userName.setToolTipText("UserName");
 		userName.setBounds(192, 68, 178, 24);
 
-		passWord = new Text(composite_1, SWT.BORDER);
+		passWord = new Text(composite_1, SWT.BORDER | SWT.PASSWORD);
 		passWord.setToolTipText("Password");
 		passWord.setBounds(192, 110, 178, 24);
 
