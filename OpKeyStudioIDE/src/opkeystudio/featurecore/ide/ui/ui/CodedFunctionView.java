@@ -21,6 +21,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
 import opkeystudio.opkeystudiocore.core.codeIde.CodeCompletionProvider;
 
 public class CodedFunctionView extends Composite {
@@ -46,41 +47,8 @@ public class CodedFunctionView extends Composite {
 
 		ToolItem tltmNewItem_2 = new ToolItem(toolBar, SWT.NONE);
 		tltmNewItem_2.setText("New Item");
+		new JavaCodeEditor(this);
 
-		Composite composite = new Composite(this, SWT.EMBEDDED | SWT.NO_BACKGROUND);
-		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		try {
-			// Set cross-platform Java L&F (also called "Metal")
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (UnsupportedLookAndFeelException e) {
-			// handle exception
-		} catch (ClassNotFoundException e) {
-			// handle exception
-		} catch (InstantiationException e) {
-			// handle exception
-		} catch (IllegalAccessException e) {
-			// handle exception
-		}
-
-		Frame frame = SWT_AWT.new_Frame(composite);
-		JPanel cp = new JPanel(new BorderLayout());
-
-		RSyntaxTextArea textArea = new RSyntaxTextArea(20, 60);
-		textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-		textArea.setCodeFoldingEnabled(true);
-		textArea.setAutoIndentEnabled(true);
-		CompletionProvider provider = CodeCompletionProvider.getInstance().getCompletionProvider();
-		AutoCompletion ac = new AutoCompletion(provider);
-		ac.setAutoActivationDelay(10);
-		ac.setShowDescWindow(true);
-		ac.setAutoCompleteSingleChoices(false);
-		ac.setAutoActivationEnabled(true);
-
-		ac.install(textArea);
-		RTextScrollPane sp = new RTextScrollPane(textArea);
-		cp.add(sp);
-		frame.add(cp);
 	}
 
 	@Override
