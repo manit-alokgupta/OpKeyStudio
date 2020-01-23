@@ -5,6 +5,12 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -23,7 +29,11 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.codeIde.CodeCompletionProvider;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class JavaCodeEditor extends RSyntaxTextArea {
 
@@ -31,6 +41,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private List<Object> highlightedLines = new ArrayList<>();
+	private Artifact artifact;
 
 	public JavaCodeEditor(Composite parent) {
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
@@ -53,13 +65,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 	public void setJavaCode(String javaCode) {
 		this.setText(javaCode);
-		this.setAutoIndentEnabled(true);
-		try {
-			this.addLineHighlight(2, Color.RED);
-		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		compileAndCheck();
 	}
 
 	private void init(Frame frame) {
@@ -88,9 +94,10 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
+				compileAndCheck();
 				Token token = getTokenListForLine(getCaretLineNumber());
 				while (token.getNextToken() != null) {
-					//System.out.println("Token " + new String(token.getTextArray()));
+					// System.out.println("Token " + new String(token.getTextArray()));
 					token = token.getNextToken();
 				}
 			}
@@ -101,5 +108,52 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			}
 		});
+	}
+
+	public void compileAndCheck() {
+		for (Object highLightedLines : getHighlightedLines()) {
+			this.removeLineHighlight(highLightedLines);
+		}
+		String codes = this.getText();
+		String sourceCodeDirPath = Utilities.getInstance().getDefaultSourceCodeDirPath();
+		String codeFilePath = sourceCodeDirPath + File.separator + getArtifact().getName().replaceAll(" ", "_")
+				+ ".java";
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter(new File(codeFilePath)));
+			bw.write(codes);
+			bw.flush();
+			bw.close();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		List<CompileError> compileErrors = new CompilerTools().compileCodeFl(codeFilePath, "");
+		for (CompileError compileError : compileErrors) {
+			Object lineHighlightObject;
+			try {
+				lineHighlightObject = this.addLineHighlight((int) compileError.getLineNumber(), Color.RED);
+				addHighlightedLines(lineHighlightObject);
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public Artifact getArtifact() {
+		return artifact;
+	}
+
+	public void setArtifact(Artifact artifact) {
+		this.artifact = artifact;
+	}
+
+	public List<Object> getHighlightedLines() {
+		return highlightedLines;
+	}
+
+	public void addHighlightedLines(Object highlightedLines) {
+		this.highlightedLines.add(highlightedLines);
 	}
 }

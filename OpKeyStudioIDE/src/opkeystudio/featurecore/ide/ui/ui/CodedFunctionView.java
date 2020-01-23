@@ -41,6 +41,7 @@ public class CodedFunctionView extends Composite {
 		ToolItem tltmNewItem_2 = new ToolItem(toolBar, SWT.NONE);
 		tltmNewItem_2.setText("New Item");
 		editor = new JavaCodeEditor(this);
+		editor.setArtifact(getArtifact());
 		renderCFLCode();
 
 	}
