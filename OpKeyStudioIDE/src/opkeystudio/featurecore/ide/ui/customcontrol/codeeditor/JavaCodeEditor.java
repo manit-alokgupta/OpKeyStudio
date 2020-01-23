@@ -2,6 +2,8 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -16,6 +18,7 @@ import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import opkeystudio.opkeystudiocore.core.codeIde.CodeCompletionProvider;
@@ -62,5 +65,28 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
 		frame.add(mainEditorPanel);
+
+		this.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				Token token = getTokenListForLine(getCaretLineNumber());
+				while (token.getNextToken() != null) {
+					System.out.println("Token " + new String(token.getTextArray()));
+					token = token.getNextToken();
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 }

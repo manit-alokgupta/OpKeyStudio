@@ -1,11 +1,15 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Frame;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.text.BadLocationException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
@@ -19,6 +23,7 @@ import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
@@ -47,7 +52,7 @@ public class CodedFunctionView extends Composite {
 
 		ToolItem tltmNewItem_2 = new ToolItem(toolBar, SWT.NONE);
 		tltmNewItem_2.setText("New Item");
-		new JavaCodeEditor(this);
+		JavaCodeEditor editor = new JavaCodeEditor(this);
 
 	}
 
