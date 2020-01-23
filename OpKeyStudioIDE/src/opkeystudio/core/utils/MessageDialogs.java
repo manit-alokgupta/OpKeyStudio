@@ -2,9 +2,12 @@ package opkeystudio.core.utils;
 
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class MessageDialogs {
+	private ProgressMonitorDialog progressDialog;
 
 	public String openInputDialogAandGetValue(String dialogTitle, String dialogContent, String defaultValue) {
 		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), dialogTitle, dialogContent,
@@ -27,5 +30,14 @@ public class MessageDialogs {
 
 	public void openErrorDialog(String title, String message) {
 		MessageDialog.openError(Display.getCurrent().getActiveShell(), title, message);
+	}
+
+	public void openProgressDialog(Shell shell, String message) {
+		progressDialog = new ProgressMonitorDialog(shell);
+		progressDialog.open();
+	}
+
+	public void closeProgressDialog() {
+		this.progressDialog.close();
 	}
 }

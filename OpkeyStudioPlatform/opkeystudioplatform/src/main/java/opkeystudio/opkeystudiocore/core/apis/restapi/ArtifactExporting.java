@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
