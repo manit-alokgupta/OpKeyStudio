@@ -131,7 +131,7 @@ public class LoginDialog extends Dialog {
 					AuthentcationData authdata = new AuthenticateApi().loginToOpKey(user, passw);
 					if (authdata.isStatus()) {
 						shlLoginToOpkey.close();
-						new ProjectDialog(shlLoginToOpkey).open();
+						new ArtifactImportDialog(shlLoginToOpkey).open();
 					} else {
 						Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
 								"Please check your credential");
