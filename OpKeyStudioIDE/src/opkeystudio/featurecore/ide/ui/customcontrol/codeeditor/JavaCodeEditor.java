@@ -132,7 +132,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		for (CompileError compileError : compileErrors) {
 			Object lineHighlightObject;
 			try {
-				lineHighlightObject = this.addLineHighlight((int) compileError.getLineNumber(), Color.RED);
+				lineHighlightObject = this.addLineHighlight(((int) compileError.getLineNumber()) - 1, Color.RED);
 				addHighlightedLines(lineHighlightObject);
 			} catch (BadLocationException e) {
 				// TODO Auto-generated catch block

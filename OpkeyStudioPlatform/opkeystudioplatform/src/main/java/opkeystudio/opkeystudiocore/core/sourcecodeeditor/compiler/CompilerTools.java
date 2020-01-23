@@ -76,7 +76,6 @@ public class CompilerTools {
 				compileError.setKind(diagnostic.getKind());
 				compileError.setMessage(diagnostic.getMessage(null));
 				compileError.setSource(diagnostic.getSource());
-				System.out.println(compileError.getMessage());
 				compilerErrors.add(compileError);
 			}
 		} catch (Exception e) {
