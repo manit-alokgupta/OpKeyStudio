@@ -51,7 +51,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
-import opkeystudio.featurecore.ide.ui.ui.sourcecodeeditor.SourceCodeEditor;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
@@ -126,7 +125,6 @@ public class TestCaseView extends Composite {
 	@SuppressWarnings("unused")
 	private ArtifactTreeItem artifactTreeItem;
 	private TabFolder datasTabHolder;
-	private SourceCodeEditor sourceCodeEditor;
 	private Artifact artifact;
 
 	/**
@@ -228,7 +226,7 @@ public class TestCaseView extends Composite {
 		convertToCode.setEnabled(false);
 		convertToCode.setText("Convert To CodedFL");
 		convertToCode.setToolTipText("Convert To CodedFL");
-		
+
 		seperator6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemSave = new ToolItem(toolBar_1, SWT.NONE);
@@ -573,8 +571,8 @@ public class TestCaseView extends Composite {
 		sourceCodeTabItem.setText("Source Code");
 		sourceCodeTabItem.setToolTipText("Source Code");
 
-		sourceCodeEditor = new SourceCodeEditor(mainTestCaseTabFolder, SWT.NONE, this);
-		sourceCodeTabItem.setControl(sourceCodeEditor);
+		// Source Code Editor Will Be added here
+		// sourceCodeTabItem.setControl(sourceCodeEditor);
 		cursor.setMenu(flowStepTable.getMenu());
 		cursor.addSelectionListener(new SelectionListener() {
 
@@ -1099,10 +1097,6 @@ public class TestCaseView extends Composite {
 
 	public void setSelectedFlowStep(FlowStep selectedFlowStep) {
 		this.selectedFlowStep = selectedFlowStep;
-	}
-
-	public SourceCodeEditor getSourceCodeEditor() {
-		return this.sourceCodeEditor;
 	}
 
 	public InputDataTable getInputDataTable() {
