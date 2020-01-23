@@ -1,33 +1,13 @@
 package opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
-import javax.tools.Diagnostic;
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaCompiler.CompilationTask;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
-
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.FileNode.FILE_TYPE;
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.tools.Tools;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CompilerTools {
@@ -55,17 +35,12 @@ public class CompilerTools {
 		return data;
 	}
 
-	public void compile(FileNode fileNode) {
+	public void compile(File fileNode) {
+		/*
 		try {
 			List<String> optionList = new ArrayList<String>();
 			optionList.addAll(Arrays.asList("-classpath", getLibrariesClassPath(), "-d",
-					fileNode.getFilePath() + File.separator + "bin"));
-			List<FileNode> allFiles = new Tools().getAllFileNodes(fileNode);
-			List<FileNode> filteredFiles = new Tools().getAllFileNodes(allFiles, FILE_TYPE.JAVASOURCEFILE);
-			ArrayList<File> files = new ArrayList<File>();
-			for (FileNode sourceFileNode : filteredFiles) {
-				files.add(sourceFileNode.getFile());
-			}
+					fileNode.getAbsolutePath()) + File.separator + "bin"));
 
 			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
@@ -90,42 +65,13 @@ public class CompilerTools {
 				compileError.setMessage(diagnostic.getMessage(null));
 				compileError.setSource(diagnostic.getSource());
 				System.out.println(compileError.getMessage());
-				FileNode node = getSourceFileNode(filteredFiles, diagnostic.getSource().getName());
-				node.addCompileError(compileError);
 			}
 			//copyRuntimeLibraryClasses(fileNode);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-	}
-
-	private void copyRuntimeLibraryClasses(FileNode fileNode) {
-		File libraryFolder = new File(fileNode.getFilePath() + File.separator + "libs");
-		File[] libsFiles = libraryFolder.listFiles();
-
-	}
-
-
-
-	public FileNode getSourceFileNode(List<FileNode> filteredNodes, String sourcePath) {
-		for (FileNode filenode : filteredNodes) {
-			System.out.println("File Path " + filenode.getFile().getAbsolutePath());
-			System.out.println("Source Path " + sourcePath);
-			if (filenode.getFile().getAbsolutePath().trim().equals(sourcePath.trim())) {
-				System.out.println("Returning " + filenode.getFile().getAbsolutePath());
-				return filenode;
-			}
-		}
-		return null;
-	}
-
-	public void saveSourceCodeFile(FileNode fileNode) throws IOException {
-		File file = new File(fileNode.getFilePath());
-		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-		bw.write(fileNode.getData());
-		bw.flush();
-		bw.close();
+		*/
 	}
 
 	public void createJarArchive(File archiveFile, File[] tobeJared) {
@@ -162,9 +108,5 @@ public class CompilerTools {
 			ex.printStackTrace();
 			System.out.println("Error: " + ex.getMessage());
 		}
-	}
-
-	public static void main(String[] args) {
-
 	}
 }
