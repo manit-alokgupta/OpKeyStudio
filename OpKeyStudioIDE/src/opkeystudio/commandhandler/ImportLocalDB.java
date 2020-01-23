@@ -18,7 +18,7 @@ import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
-public class ImportDBCommand {
+public class ImportLocalDB {
 
 	String[] filterExt = { "*.db;*.sql" };
 
