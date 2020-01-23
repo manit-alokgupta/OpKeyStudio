@@ -94,9 +94,6 @@ public class ArtifactExporting {
 			JSONObject jsonObject = new JSONObject(downlodedData);
 			String fileName = jsonObject.getString("Item1");
 			String filePath = jsonObject.getString("Item2");
-			new UploadFile().executeMultiPartRequest(
-					"https://qa1.stg.smartopkey.com/ArtifactSyncReceiver/ImportArtifact?MainProcessType=Import&&JobType=Opkey&&IsImporting=false",
-					new File("E:\\Data\\ExportedArtifacts.zip"), "ExportedArtifacts.zip", "");
 			downLoadArtifactFile(fileName, filePath);
 			return true;
 		}
