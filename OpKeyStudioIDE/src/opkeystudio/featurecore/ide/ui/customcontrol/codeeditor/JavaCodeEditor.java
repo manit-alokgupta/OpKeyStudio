@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -8,6 +9,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.text.BadLocationException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
@@ -52,6 +54,12 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	public void setJavaCode(String javaCode) {
 		this.setText(javaCode);
 		this.setAutoIndentEnabled(true);
+		try {
+			this.addLineHighlight(2, Color.RED);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void init(Frame frame) {
