@@ -11,7 +11,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
-import opkeystudio.featurecore.ide.ui.ui.LoginDialog;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.project.ProjectDataApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
@@ -25,10 +24,31 @@ public class ImportLocalDB {
 	@Execute
 	public void execute(Shell shell) {
 		Utilities.getInstance().setDefaultShell(shell);
-		LoginDialog loginDialog = new LoginDialog(shell, 0);
-		loginDialog.open();
-		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
-			return;
+		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
+		dialog.setFilterExtensions(filterExt);
+		dialog.open();
+		String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
+		if (filePath != null) {
+			File file = new File(filePath);
+			if (!file.exists()) {
+				return;
+			}
+			if (!file.isFile()) {
+				return;
+			}
+			ServiceRepository.getInstance().setExortedDBFilePath(filePath);
+			SQLiteCommunicator sqlComm = new SQLiteCommunicator(filePath);
+			try {
+				sqlComm.connect();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			SQLiteCommunicator.getOpKeyDBCommunicator(sqlComm);
+			List<Project> projects = new ProjectDataApi().getProjectList();
+			ServiceRepository.getInstance().setDefaultProject(projects.get(0));
+			ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
+			tree.renderArtifacts();
 		}
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator(ServiceRepository.getInstance().getExportedDBFilePath());
 		try {
