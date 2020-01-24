@@ -2,6 +2,8 @@ package opkeystudio.opkeystudiocore.core.codeIde;
 
 import java.util.List;
 
+import javax.swing.JTextArea;
+
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
