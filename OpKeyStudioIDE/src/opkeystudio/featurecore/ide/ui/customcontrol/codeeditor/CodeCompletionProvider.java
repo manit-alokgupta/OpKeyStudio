@@ -7,8 +7,6 @@ import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 
-import opkeystudio.opkeystudiocore.core.codeIde.IntelliSenseTools;
-
 public class CodeCompletionProvider {
 	private static CodeCompletionProvider instance;
 	private static DefaultCompletionProvider provider;
