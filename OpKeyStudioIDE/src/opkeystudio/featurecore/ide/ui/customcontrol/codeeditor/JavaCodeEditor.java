@@ -24,9 +24,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.fife.ui.autocomplete.AutoCompletion;
+import org.fife.ui.autocomplete.AutoCompletionEvent;
+import org.fife.ui.autocomplete.AutoCompletionListener;
 import org.fife.ui.autocomplete.CompletionProvider;
+import org.fife.ui.autocomplete.CompletionProviderBase;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
 import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
@@ -80,9 +84,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		AutoCompletion autoCompletion = new AutoCompletion(provider);
 		autoCompletion.setAutoActivationDelay(10);
 		autoCompletion.setShowDescWindow(true);
-		autoCompletion.setAutoCompleteSingleChoices(false);
+		autoCompletion.setAutoCompleteSingleChoices(true);
 		autoCompletion.setAutoActivationEnabled(true);
-
+		
 		autoCompletion.install(this);
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
@@ -92,6 +96,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
+				System.out.println("Key Typed "+e);
+				autoCompletion.doCompletion();
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						getCodeFunctionView().toggleSaveButton(true);
@@ -126,7 +132,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	}
 
 	public void compileAndCheck() {
-	//	createIntellisenseDataFromCurrentText();
+		// createIntellisenseDataFromCurrentText();
 		for (Object highLightedLines : getHighlightedLines()) {
 			this.removeLineHighlight(highLightedLines);
 		}

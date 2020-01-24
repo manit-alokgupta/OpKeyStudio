@@ -1,9 +1,16 @@
 package opkeystudio.opkeystudiocore.core.codeIde;
 
+import java.util.List;
+
+import javax.swing.text.JTextComponent;
+
 import org.fife.ui.autocomplete.BasicCompletion;
+import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
+import org.fife.ui.autocomplete.ParameterChoicesProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
+import org.fife.ui.autocomplete.ParameterizedCompletion.Parameter;
 
 public class CodeCompletionProvider {
 	private static CodeCompletionProvider instance;
@@ -13,6 +20,16 @@ public class CodeCompletionProvider {
 		if (instance == null) {
 			instance = new CodeCompletionProvider();
 			provider = new DefaultCompletionProvider();
+			Thread thread=new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					List<String> importDatas = IntelliSenseTools.getAllClassNamesFromJar(
+							"C:\\\\Program Files (x86)\\\\Java\\\\jdk1.8.0_231\\\\jre\\\\lib\\\\rt.jar");
+					instance.addImportTypeBasicCompletion(importDatas);
+				}
+			});
+			thread.start();
 		}
 		return instance;
 	}
@@ -39,5 +56,17 @@ public class CodeCompletionProvider {
 	public void addBasicCompletion(String data) {
 		BasicCompletion bc = new BasicCompletion(provider, data);
 		provider.addCompletion(bc);
+	}
+
+	public void addImportTypeBasicCompletion(String data) {
+		BasicCompletion bc = new BasicCompletion(provider, data);
+		provider.addCompletion(bc);
+	}
+
+	public void addImportTypeBasicCompletion(List<String> datas) {
+		for (String data : datas) {
+			BasicCompletion bc = new BasicCompletion(provider, data);
+			provider.addCompletion(bc);
+		}
 	}
 }
