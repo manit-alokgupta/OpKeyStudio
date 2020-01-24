@@ -67,7 +67,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	}
 
 	public void setJavaCode(String javaCode) {
-		String formatedCode=EditorTools.formatJavaSourceCode(javaCode);
+		String formatedCode = EditorTools.formatJavaSourceCode(javaCode);
 		this.setText(formatedCode);
 		compileAndCheck();
 	}
@@ -133,6 +133,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		String sourceCodeDirPath = Utilities.getInstance().getDefaultSourceCodeDirPath();
 		String codeFilePath = sourceCodeDirPath + File.separator + getArtifact().getName().replaceAll(" ", "_")
 				+ ".java";
+		String compiledCodedFLPath = sourceCodeDirPath + File.separator + getArtifact().getName().replaceAll(" ", "_")
+				+ ".class";
 		BufferedWriter bw;
 		try {
 			bw = new BufferedWriter(new FileWriter(new File(codeFilePath)));
@@ -156,6 +158,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				e.printStackTrace();
 			}
 		}
+		EditorTools.executeCodedFl(compiledCodedFLPath, "Web");
 	}
 
 	public Artifact getArtifact() {

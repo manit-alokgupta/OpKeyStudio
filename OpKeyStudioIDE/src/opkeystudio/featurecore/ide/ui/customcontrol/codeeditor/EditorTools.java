@@ -2,6 +2,11 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -40,6 +45,13 @@ public class EditorTools {
 			return new ArrayList<File>();
 		}
 		return getAllFiles(file, ".jar");
+	}
+
+	public static List<File> getAllAssocitedLibraries(String pluginName) {
+		List<File> allFiles = new ArrayList<File>();
+		allFiles.addAll(getPluginBaseLibraries());
+		allFiles.addAll(getPluginsLibraries(pluginName));
+		return allFiles;
 	}
 
 	public static String getClassPathOFAllAssociatedLibs(String pluginName) {
@@ -96,5 +108,33 @@ public class EditorTools {
 		} catch (Exception e) {
 			return javaCode;
 		}
+	}
+
+	public static void executeCodedFl(String codedString, String pluginName) {
+		try {
+			execute(codedString, pluginName);
+		} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
+				| InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void execute(String codedFLFileName, String pluginName)
+			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
+			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		List<File> allLibs = getAllAssocitedLibraries(pluginName);
+		File codedflfile = new File(codedFLFileName);
+		allLibs.add(codedflfile.getParentFile());
+		URL[] allJarsAndClasses = new URL[allLibs.size()];
+		for (int i = 0; i < allLibs.size(); i++) {
+			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
+		}
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses, EditorTools.class.getClassLoader());
+		Class classToLoad = Class.forName(codedflfile.getName().replaceAll(".class", ""), true, child);
+		Object instance = classToLoad.newInstance();
+		Method method = instance.getClass().getDeclaredMethod("run");
+		Object result = method.invoke(instance);
 	}
 }
