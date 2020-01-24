@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -24,6 +26,9 @@ public class CodedFunctionView extends Composite {
 	 * @param style
 	 */
 	private JavaCodeEditor editor;
+	private ToolItem runButton;
+	private ToolItem saveButton;
+	private ToolItem refreshButton;
 
 	public CodedFunctionView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
@@ -32,16 +37,60 @@ public class CodedFunctionView extends Composite {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
-		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.NONE);
-		tltmNewItem.setText("New Item");
+		runButton = new ToolItem(toolBar, SWT.NONE);
+		runButton.setText("Run");
 
-		ToolItem tltmNewItem_1 = new ToolItem(toolBar, SWT.NONE);
-		tltmNewItem_1.setText("New Item");
+		saveButton = new ToolItem(toolBar, SWT.NONE);
+		saveButton.setText("Save");
 
-		ToolItem tltmNewItem_2 = new ToolItem(toolBar, SWT.NONE);
-		tltmNewItem_2.setText("New Item");
+		ToolItem refreshButton = new ToolItem(toolBar, SWT.NONE);
+		refreshButton.setText("Refresh");
 		editor = new JavaCodeEditor(this);
 		editor.setArtifact(getArtifact());
+
+		runButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		saveButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		refreshButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				renderCFLCode();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		renderCFLCode();
 
 	}
