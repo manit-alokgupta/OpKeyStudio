@@ -51,17 +51,20 @@ public class Utilities {
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
-
-		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
-				+ File.separator + "Drivers";
-		if (!new File(path).exists()) {
-			new File(path).mkdir();
-		}
 	}
 
-	public String getSeleniumDriverFolder() {
-		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
-				+ File.separator + "Drivers";
+	public String getDefaultInstallDir() {
+		return defaultInstallDir;
+	}
+
+	public String getDefaultPluginBaseDir() {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
+				+ "PluginBase";
+	}
+
+	public String getDefaultPluginsDir() {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
+				+ "Plugins";
 	}
 
 	public String getArtifactsDownloadFolder() {
@@ -144,10 +147,6 @@ public class Utilities {
 		return prefix + String.valueOf(System.nanoTime());
 	}
 
-	public String getDefaultInstallDir() {
-		return defaultInstallDir;
-	}
-
 	public void setDefaultInstallDir(String defaultInstallDir) {
 		this.defaultInstallDir = defaultInstallDir;
 	}
@@ -159,7 +158,7 @@ public class Utilities {
 		}
 		return path;
 	}
-	
+
 	public void extractZipFolder(String zipFile, String extractFolder) {
 		try {
 			int BUFFER = 2048;
