@@ -2,15 +2,11 @@ package opkeystudio.opkeystudiocore.core.codeIde;
 
 import java.util.List;
 
-import javax.swing.text.JTextComponent;
-
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
-import org.fife.ui.autocomplete.ParameterChoicesProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
-import org.fife.ui.autocomplete.ParameterizedCompletion.Parameter;
 
 public class CodeCompletionProvider {
 	private static CodeCompletionProvider instance;
@@ -20,8 +16,8 @@ public class CodeCompletionProvider {
 		if (instance == null) {
 			instance = new CodeCompletionProvider();
 			provider = new DefaultCompletionProvider();
-			Thread thread=new Thread(new Runnable() {
-				
+			Thread thread = new Thread(new Runnable() {
+
 				@Override
 				public void run() {
 					List<String> importDatas = IntelliSenseTools.getAllClassNamesFromJar(

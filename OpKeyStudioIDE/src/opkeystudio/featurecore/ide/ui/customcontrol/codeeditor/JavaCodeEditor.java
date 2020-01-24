@@ -24,13 +24,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.fife.ui.autocomplete.AutoCompletion;
-import org.fife.ui.autocomplete.AutoCompletionEvent;
-import org.fife.ui.autocomplete.AutoCompletionListener;
+import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.CompletionProvider;
-import org.fife.ui.autocomplete.CompletionProviderBase;
+import org.fife.ui.rsyntaxtextarea.RSyntaxDocument;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
 import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
@@ -52,6 +50,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private CodedFunctionView codeFunctionView;
 
 	public JavaCodeEditor(Composite parent) {
+		super(new RSyntaxDocument(SyntaxConstants.SYNTAX_STYLE_JAVA));
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -86,7 +85,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		autoCompletion.setShowDescWindow(true);
 		autoCompletion.setAutoCompleteSingleChoices(true);
 		autoCompletion.setAutoActivationEnabled(true);
-		
+
 		autoCompletion.install(this);
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
@@ -96,7 +95,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				System.out.println("Key Typed "+e);
+				System.out.println("Key Typed " + e);
 				autoCompletion.doCompletion();
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
