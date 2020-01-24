@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
+import org.jboss.forge.roaster.Roaster;
+
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class EditorTools {
@@ -85,5 +87,14 @@ public class EditorTools {
 
 		}
 		return listofClasses;
+	}
+
+	public static String formatJavaSourceCode(String javaCode) {
+		try {
+			String formattedCode = Roaster.format(javaCode);
+			return formattedCode;
+		} catch (Exception e) {
+			return javaCode;
+		}
 	}
 }

@@ -67,7 +67,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	}
 
 	public void setJavaCode(String javaCode) {
-		this.setText(javaCode);
+		String formatedCode=EditorTools.formatJavaSourceCode(javaCode);
+		this.setText(formatedCode);
 		compileAndCheck();
 	}
 
