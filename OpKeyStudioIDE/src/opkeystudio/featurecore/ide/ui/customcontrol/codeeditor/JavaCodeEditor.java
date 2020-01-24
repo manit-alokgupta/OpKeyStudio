@@ -90,9 +90,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		JavaAutoCompletion autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setAutoActivationDelay(10);
 		autoCompletion.setShowDescWindow(true);
-		autoCompletion.setAutoCompleteSingleChoices(true);
+		autoCompletion.setAutoCompleteSingleChoices(false);
 		autoCompletion.setAutoActivationEnabled(true);
-		autoCompletion.setParameterAssistanceEnabled(true);
 		autoCompletion.install(this);
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
@@ -101,7 +100,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				autoCompletion.doCompletion();
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						getCodeFunctionView().toggleSaveButton(true);

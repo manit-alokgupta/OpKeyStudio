@@ -15,8 +15,11 @@ public class JavaAutoCompletion extends AutoCompletion {
 	@Override
 	public void insertCompletion(Completion c, boolean parametrizedCompletion) {
 		System.out.println("Inserting " + c.getInputText());
-		if (c instanceof BasicCompletion) {
-			BasicCompletion bc = new BasicCompletion(c.getProvider(), "Hello");
+		if (c instanceof JavaBasicCompletion) {
+			JavaBasicCompletion jbc = (JavaBasicCompletion) c;
+			BasicCompletion bc = new BasicCompletion(c.getProvider(), jbc.getTextToEnter());
+			bc.setShortDescription(jbc.getShortDescription());
+			bc.setSummary(jbc.getSummary());
 			super.insertCompletion(bc, parametrizedCompletion);
 			return;
 		}

@@ -59,14 +59,13 @@ public class CodeCompletionProvider {
 
 	public void addImportTypeBasicCompletion(String data) {
 		JavaBasicCompletion bc = new JavaBasicCompletion(provider, data);
+		bc.setTextToEnter("Hello World");
 		provider.addCompletion(bc);
 	}
 
 	public void addImportTypeBasicCompletion(List<String> datas) {
 		for (String data : datas) {
-			JavaBasicCompletion bc = new JavaBasicCompletion(provider, data);
-			bc.setRelevance(100);
-			provider.addCompletion(bc);
+			addImportTypeBasicCompletion(data);
 		}
 	}
 }

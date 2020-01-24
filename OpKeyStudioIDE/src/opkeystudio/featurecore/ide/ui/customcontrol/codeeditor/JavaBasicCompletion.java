@@ -4,6 +4,9 @@ import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 
 public class JavaBasicCompletion extends BasicCompletion {
+
+	private String textToEnter;
+
 	public JavaBasicCompletion(CompletionProvider provider, String replacementText) {
 		super(provider, replacementText);
 	}
@@ -14,5 +17,13 @@ public class JavaBasicCompletion extends BasicCompletion {
 
 	public JavaBasicCompletion(CompletionProvider provider, String replacementText, String shortDesc, String summary) {
 		super(provider, replacementText, shortDesc, summary);
+	}
+
+	public String getTextToEnter() {
+		return textToEnter;
+	}
+
+	public void setTextToEnter(String textToEnter) {
+		this.textToEnter = textToEnter;
 	}
 }
