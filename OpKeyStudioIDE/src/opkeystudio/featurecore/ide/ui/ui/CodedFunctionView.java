@@ -59,6 +59,9 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if (saveButton.getEnabled() == true) {
+					saveCFL(true);
+				}
 				List<CompileError> errors = editor.compileAndCheck();
 				List<CompileError> filteredErrors = EditorTools.filterErrors(errors, Kind.ERROR);
 				if (filteredErrors.size() > 0) {
@@ -80,8 +83,7 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				editor.compileAndCheck();
-				toggleSaveButton(false);
+				saveCFL(false);
 			}
 
 			@Override
@@ -95,6 +97,9 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if (saveButton.getEnabled() == true) {
+					saveCFL(true);
+				}
 				renderCFLCode();
 			}
 
@@ -106,6 +111,18 @@ public class CodedFunctionView extends Composite {
 		});
 		renderCFLCode();
 
+	}
+
+	private void saveCFL(boolean showconfirmation) {
+		if (showconfirmation) {
+			boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+					"Do you want to save " + getArtifact().getName() + "?");
+			if (!status) {
+				return;
+			}
+		}
+		editor.compileAndCheck();
+		toggleSaveButton(false);
 	}
 
 	public void toggleRunButton(boolean status) {
