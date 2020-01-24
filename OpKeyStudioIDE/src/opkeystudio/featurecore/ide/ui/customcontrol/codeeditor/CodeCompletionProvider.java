@@ -2,8 +2,6 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.util.List;
 
-import javax.swing.JTextArea;
-
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
@@ -43,7 +41,6 @@ public class CodeCompletionProvider {
 		provider.addCompletion(new BasicCompletion(provider, "void"));
 		provider.addCompletion(new BasicCompletion(provider, "volatile"));
 		provider.addCompletion(new BasicCompletion(provider, "while"));
-		provider.addCompletion(new BasicCompletion(provider, "OpkeyGeneric().OpenBrowser"));
 		provider.addCompletion(
 				new ShorthandCompletion(provider, "sysout", "System.out.println(", "System.out.println("));
 		provider.addCompletion(
