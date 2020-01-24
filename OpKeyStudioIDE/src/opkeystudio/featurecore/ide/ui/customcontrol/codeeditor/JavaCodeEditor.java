@@ -88,7 +88,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		this.setCodeFoldingEnabled(true);
 		this.setAutoIndentEnabled(true);
 		CompletionProvider provider = CodeCompletionProvider.getInstance().getCompletionProvider();
-		JavaAbstractCompletion autoCompletion = new JavaAbstractCompletion(provider);
+		JavaAutoCompletion autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setAutoActivationDelay(10);
 		autoCompletion.setShowDescWindow(true);
 		autoCompletion.setAutoCompleteSingleChoices(true);

@@ -5,9 +5,9 @@ import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.CompletionProvider;
 
-public class JavaAbstractCompletion extends AutoCompletion {
+public class JavaAutoCompletion extends AutoCompletion {
 
-	public JavaAbstractCompletion(CompletionProvider provider) {
+	public JavaAutoCompletion(CompletionProvider provider) {
 		super(provider);
 		// TODO Auto-generated constructor stub
 	}
