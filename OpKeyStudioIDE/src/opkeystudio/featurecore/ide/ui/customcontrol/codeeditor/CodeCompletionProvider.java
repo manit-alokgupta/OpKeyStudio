@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.codeIde;
+package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
+
+import opkeystudio.opkeystudiocore.core.codeIde.IntelliSenseTools;
 
 public class CodeCompletionProvider {
 	private static CodeCompletionProvider instance;
@@ -51,18 +53,18 @@ public class CodeCompletionProvider {
 	}
 
 	public void addBasicCompletion(String data) {
-		BasicCompletion bc = new BasicCompletion(provider, data);
+		JavaBasicCompletion bc = new JavaBasicCompletion(provider, data);
 		provider.addCompletion(bc);
 	}
 
 	public void addImportTypeBasicCompletion(String data) {
-		BasicCompletion bc = new BasicCompletion(provider, data);
+		JavaBasicCompletion bc = new JavaBasicCompletion(provider, data);
 		provider.addCompletion(bc);
 	}
 
 	public void addImportTypeBasicCompletion(List<String> datas) {
 		for (String data : datas) {
-			BasicCompletion bc = new BasicCompletion(provider, data);
+			JavaBasicCompletion bc = new JavaBasicCompletion(provider, data);
 			bc.setRelevance(100);
 			provider.addCompletion(bc);
 		}
