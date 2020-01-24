@@ -3,7 +3,6 @@ package opkeystudio.opkeystudiocore.core.codeIde;
 import java.util.List;
 
 import org.fife.ui.autocomplete.BasicCompletion;
-import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
@@ -62,6 +61,7 @@ public class CodeCompletionProvider {
 	public void addImportTypeBasicCompletion(List<String> datas) {
 		for (String data : datas) {
 			BasicCompletion bc = new BasicCompletion(provider, data);
+			bc.setRelevance(100);
 			provider.addCompletion(bc);
 		}
 	}
