@@ -142,7 +142,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		List<CompileError> compileErrors = new CompilerTools().compileCodeFl(codeFilePath, "");
+
+		String classPathString = EditorTools.getClassPathOFAllAssociatedLibs("Web");
+		List<CompileError> compileErrors = new CompilerTools().compileCodeFl(codeFilePath, classPathString);
 		for (CompileError compileError : compileErrors) {
 			Object lineHighlightObject;
 			try {

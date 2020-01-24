@@ -40,6 +40,19 @@ public class EditorTools {
 		return getAllFiles(file, ".jar");
 	}
 
+	public static String getClassPathOFAllAssociatedLibs(String pluginName) {
+		String classPath = "";
+		List<File> files = getPluginBaseLibraries();
+		files.addAll(getPluginsLibraries(pluginName));
+		for (File file : files) {
+			if (!classPath.isEmpty()) {
+				classPath += ";";
+			}
+			classPath += file.getAbsolutePath();
+		}
+		return classPath;
+	}
+
 	public static List<String> getAllClassNameFromAassociatedJar() {
 		ArrayList<String> allClases = new ArrayList<String>();
 		List<File> pluginBaseLibs = getPluginBaseLibraries();
