@@ -58,8 +58,11 @@ public class CodeCompletionProvider {
 	}
 
 	public void addImportTypeBasicCompletion(String data) {
-		JavaBasicCompletion bc = new JavaBasicCompletion(provider, data);
-		bc.setTextToEnter("Hello World");
+		String[] dataArray = data.split("\\.");
+		String datatoShow = dataArray[dataArray.length - 1];
+		JavaBasicCompletion bc = new JavaBasicCompletion(provider, datatoShow);
+		bc.setShortDescription(data);
+		bc.setTextToEnter(data);
 		provider.addCompletion(bc);
 	}
 
