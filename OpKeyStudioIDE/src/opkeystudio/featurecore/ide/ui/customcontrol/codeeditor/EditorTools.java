@@ -40,10 +40,20 @@ public class EditorTools {
 		return getAllFiles(file, ".jar");
 	}
 
-	public static List<String> getAllClassNamesFromJar(String crunchifyJarName) {
+	public static List<String> getAllClassNameFromAassociatedJar() {
+		ArrayList<String> allClases = new ArrayList<String>();
+		List<File> pluginBaseLibs = getPluginBaseLibraries();
+		pluginBaseLibs.addAll(getPluginsLibraries("Web"));
+		for (File file : pluginBaseLibs) {
+			allClases.addAll(getAllClassNamesFromJar(file.getAbsolutePath()));
+		}
+		return allClases;
+	}
+
+	public static List<String> getAllClassNamesFromJar(String jarName) {
 		List<String> listofClasses = new ArrayList<String>();
 		try {
-			JarInputStream jarFile = new JarInputStream(new FileInputStream(crunchifyJarName));
+			JarInputStream jarFile = new JarInputStream(new FileInputStream(jarName));
 			JarEntry jarEntry;
 
 			while (true) {

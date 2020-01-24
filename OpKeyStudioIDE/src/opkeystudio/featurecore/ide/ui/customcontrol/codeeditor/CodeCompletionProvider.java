@@ -19,8 +19,7 @@ public class CodeCompletionProvider {
 
 				@Override
 				public void run() {
-					List<String> importDatas = EditorTools.getAllClassNamesFromJar(
-							"C:\\\\Program Files (x86)\\\\Java\\\\jdk1.8.0_231\\\\jre\\\\lib\\\\rt.jar");
+					List<String> importDatas = EditorTools.getAllClassNameFromAassociatedJar();
 					instance.addImportTypeBasicCompletion(importDatas);
 				}
 			});
