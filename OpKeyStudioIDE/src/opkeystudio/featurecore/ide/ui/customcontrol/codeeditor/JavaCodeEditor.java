@@ -131,9 +131,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		}
 		String codes = this.getText();
 		String sourceCodeDirPath = Utilities.getInstance().getDefaultSourceCodeDirPath();
-		String codeFilePath = sourceCodeDirPath + File.separator + getArtifact().getName().replaceAll(" ", "_")
-				+ ".java";
-		String compiledCodedFLPath = sourceCodeDirPath + File.separator + getArtifact().getName().replaceAll(" ", "_")
+		String codeFilePath = sourceCodeDirPath + File.separator + getArtifact().getArtifactVariableName() + ".java";
+		String compiledCodedFLPath = sourceCodeDirPath + File.separator + getArtifact().getArtifactVariableName()
 				+ ".class";
 		BufferedWriter bw;
 		try {

@@ -17,9 +17,9 @@ public class Artifact extends Modified {
 	private String created_on_tz;
 	@DBField
 	private String modified_on_tz;
-	
+
 	private int clustering_key;
-	
+
 	@DBField
 	private String created_by;
 	@DBField
@@ -44,6 +44,8 @@ public class Artifact extends Modified {
 	private String parentid;
 	@DBField
 	private String state_id;
+
+	private String artifactVariableName;
 
 	public String getModified_on() {
 		return modified_on;
@@ -179,5 +181,9 @@ public class Artifact extends Modified {
 
 	public void setIsautocreated(boolean isautocreated) {
 		this.isautocreated = isautocreated;
+	}
+
+	public String getArtifactVariableName() {
+		return getName().replaceAll(" ", "_");
 	}
 }
