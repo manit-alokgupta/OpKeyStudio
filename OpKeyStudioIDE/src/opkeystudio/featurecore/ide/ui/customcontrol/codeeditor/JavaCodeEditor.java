@@ -15,6 +15,8 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
 
 import org.eclipse.swt.SWT;
@@ -156,7 +158,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				e.printStackTrace();
 			}
 		}
-		EditorTools.executeCodedFl(compiledCodedFLPath, "Web");
+		getCodeFunctionView().setCodedFLClassPath(compiledCodedFLPath);
 		return compileErrors;
 	}
 

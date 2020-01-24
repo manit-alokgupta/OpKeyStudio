@@ -2,7 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.util.List;
 
-import javax.swing.text.BadLocationException;
+import javax.tools.Diagnostic.Kind;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
@@ -14,10 +14,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
+import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class CodedFunctionView extends Composite {
 
@@ -31,6 +34,7 @@ public class CodedFunctionView extends Composite {
 	private ToolItem runButton;
 	private ToolItem saveButton;
 	private ToolItem refreshButton;
+	private String codedFLClassPath;
 
 	public CodedFunctionView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
@@ -55,8 +59,14 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				List<CompileError> errors = editor.compileAndCheck();
+				List<CompileError> filteredErrors = EditorTools.filterErrors(errors, Kind.ERROR);
+				if (filteredErrors.size() > 0) {
+					new MessageDialogs().openErrorDialog("Coded FL Compilation Error",
+							"Unable to Execute Coded FL has compilation error");
+					return;
+				}
+				EditorTools.executeCodedFl(getCodedFLClassPath(), "Web");
 			}
 
 			@Override
@@ -129,6 +139,14 @@ public class CodedFunctionView extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public String getCodedFLClassPath() {
+		return codedFLClassPath;
+	}
+
+	public void setCodedFLClassPath(String codedFLClassPath) {
+		this.codedFLClassPath = codedFLClassPath;
 	}
 
 }

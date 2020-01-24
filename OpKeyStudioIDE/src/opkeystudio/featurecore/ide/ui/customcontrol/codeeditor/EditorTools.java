@@ -12,8 +12,11 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
+import javax.tools.Diagnostic.Kind;
+
 import org.jboss.forge.roaster.Roaster;
 
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class EditorTools {
@@ -135,5 +138,15 @@ public class EditorTools {
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("run");
 		Object result = method.invoke(instance);
+	}
+
+	public static List<CompileError> filterErrors(List<CompileError> errors, Kind kind) {
+		List<CompileError> filteredErrors = new ArrayList<CompileError>();
+		for (CompileError ce : errors) {
+			if (ce.getKind() == kind) {
+				filteredErrors.add(ce);
+			}
+		}
+		return filteredErrors;
 	}
 }
