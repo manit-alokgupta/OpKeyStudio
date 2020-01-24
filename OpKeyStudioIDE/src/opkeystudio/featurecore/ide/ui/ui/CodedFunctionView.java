@@ -2,6 +2,8 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.util.List;
 
+import javax.swing.text.BadLocationException;
+
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -43,11 +45,12 @@ public class CodedFunctionView extends Composite {
 		saveButton = new ToolItem(toolBar, SWT.NONE);
 		saveButton.setText("Save");
 
-		ToolItem refreshButton = new ToolItem(toolBar, SWT.NONE);
+		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setText("Refresh");
 		editor = new JavaCodeEditor(this);
 		editor.setArtifact(getArtifact());
-
+		editor.setCodeFunctionView(this);
+		toggleSaveButton(false);
 		runButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -67,8 +70,8 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				editor.compileAndCheck();
+				toggleSaveButton(false);
 			}
 
 			@Override
@@ -93,6 +96,18 @@ public class CodedFunctionView extends Composite {
 		});
 		renderCFLCode();
 
+	}
+
+	public void toggleRunButton(boolean status) {
+		this.runButton.setEnabled(status);
+	}
+
+	public void toggleSaveButton(boolean status) {
+		this.saveButton.setEnabled(status);
+	}
+
+	public void toggleRefreshButton(boolean status) {
+		this.refreshButton.setEnabled(status);
 	}
 
 	public void renderCFLCode() {

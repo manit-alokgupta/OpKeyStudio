@@ -21,6 +21,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
@@ -29,6 +30,7 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
+import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.codeIde.CodeCompletionProvider;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
@@ -43,6 +45,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private static final long serialVersionUID = 1L;
 	private List<Object> highlightedLines = new ArrayList<>();
 	private Artifact artifact;
+	private CodedFunctionView codeFunctionView;
 
 	public JavaCodeEditor(Composite parent) {
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
@@ -89,17 +92,16 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						getCodeFunctionView().toggleSaveButton(true);
+					}
+				});
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				compileAndCheck();
-				Token token = getTokenListForLine(getCaretLineNumber());
-				while (token.getNextToken() != null) {
-					// System.out.println("Token " + new String(token.getTextArray()));
-					token = token.getNextToken();
-				}
+
 			}
 
 			@Override
@@ -110,7 +112,21 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		});
 	}
 
+	private void createIntellisenseDataFromCurrentText() throws BadLocationException {
+		int lineCount = this.getLineCount();
+		for (int i = 0; i < lineCount; i++) {
+			Token token = this.getTokenListFor(i, this.getLineEndOffset(i));
+			while (token.getNextToken() != null) {
+				System.out.println("Token " + new String(token.getTextArray()));
+				String tokenText = new String(token.getTextArray());
+				CodeCompletionProvider.getInstance().addBasicCompletion(tokenText);
+				token = token.getNextToken();
+			}
+		}
+	}
+
 	public void compileAndCheck() {
+	//	createIntellisenseDataFromCurrentText();
 		for (Object highLightedLines : getHighlightedLines()) {
 			this.removeLineHighlight(highLightedLines);
 		}
@@ -155,5 +171,13 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 	public void addHighlightedLines(Object highlightedLines) {
 		this.highlightedLines.add(highlightedLines);
+	}
+
+	public CodedFunctionView getCodeFunctionView() {
+		return codeFunctionView;
+	}
+
+	public void setCodeFunctionView(CodedFunctionView codeFunctionView) {
+		this.codeFunctionView = codeFunctionView;
 	}
 }

@@ -35,4 +35,9 @@ public class CodeCompletionProvider {
 		return provider;
 
 	}
+
+	public void addBasicCompletion(String data) {
+		BasicCompletion bc = new BasicCompletion(provider, data);
+		provider.addCompletion(bc);
+	}
 }
