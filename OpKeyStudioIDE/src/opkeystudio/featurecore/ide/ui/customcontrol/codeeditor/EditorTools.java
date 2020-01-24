@@ -9,17 +9,17 @@ import java.util.jar.JarInputStream;
 
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class IntelliSenseTools {
+public class EditorTools {
 	private static List<File> getAllFiles(File rootFile, String extension) {
 		List<File> allFiles = new ArrayList<File>();
 		File[] files = rootFile.listFiles();
 		for (File file : files) {
-			if (file.isDirectory()) {
-				allFiles.addAll(getAllFiles(file, extension));
-			} else {
+			if (file.isFile()) {
 				if (file.getName().toLowerCase().endsWith(extension.toLowerCase())) {
 					allFiles.add(file);
 				}
+			} else if (file.isDirectory()) {
+				allFiles.addAll(getAllFiles(file, extension));
 			}
 		}
 		return allFiles;
@@ -28,6 +28,15 @@ public class IntelliSenseTools {
 	public static List<File> getPluginBaseLibraries() {
 		String pluginBaseFolder = Utilities.getInstance().getDefaultPluginBaseDir();
 		File file = new File(pluginBaseFolder);
+		return getAllFiles(file, ".jar");
+	}
+
+	public static List<File> getPluginsLibraries(String pluginName) {
+		String pluginBaseFolder = Utilities.getInstance().getDefaultPluginsDir() + File.separator + pluginName;
+		File file = new File(pluginBaseFolder);
+		if (!file.exists()) {
+			return new ArrayList<File>();
+		}
 		return getAllFiles(file, ".jar");
 	}
 
@@ -53,13 +62,5 @@ public class IntelliSenseTools {
 
 		}
 		return listofClasses;
-	}
-
-	public static void main(String[] args) {
-		List<String> allCasses = getAllClassNamesFromJar(
-				"C:\\Program Files (x86)\\Java\\jdk1.8.0_231\\jre\\lib\\rt.jar");
-		for (String className : allCasses) {
-			System.out.println(className);
-		}
 	}
 }
