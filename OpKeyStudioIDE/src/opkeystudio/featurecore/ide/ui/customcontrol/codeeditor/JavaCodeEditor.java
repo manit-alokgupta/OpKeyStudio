@@ -124,8 +124,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		}
 	}
 
-	public void compileAndCheck() {
-		// createIntellisenseDataFromCurrentText();
+	public List<CompileError> compileAndCheck() {
 		for (Object highLightedLines : getHighlightedLines()) {
 			this.removeLineHighlight(highLightedLines);
 		}
@@ -158,6 +157,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			}
 		}
 		EditorTools.executeCodedFl(compiledCodedFLPath, "Web");
+		return compileErrors;
 	}
 
 	public Artifact getArtifact() {
