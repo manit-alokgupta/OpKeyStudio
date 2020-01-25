@@ -56,15 +56,6 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem renameObject;
 	private ToolItem deleteObject;
 	private ToolItem refreshObject;
-	private ToolItem addToOR;
-	private ToolItem createBackup;
-	private ToolItem importOR;
-	private ToolItem toolDropDown;
-	private Menu dropDownMenu;
-	private MenuItem menuDraft;
-	private MenuItem menuReview;
-	private MenuItem menuApproved;
-	private MenuItem menuPublished;
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
 	private MenuItem cutMenuItem;
@@ -269,49 +260,6 @@ public class ObjectRepositoryView extends Composite {
 		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		refreshObject.setToolTipText("Refresh");
 
-		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.SEPARATOR);
-
-		addToOR = new ToolItem(toolBar, SWT.NONE);
-		addToOR.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/add_to_OR.png"));
-		addToOR.setToolTipText("Add to OR");
-
-		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
-
-		createBackup = new ToolItem(toolBar, SWT.NONE);
-		createBackup.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/backup_create.png"));
-		createBackup.setToolTipText("Create NEw Backup");
-
-		ToolItem toolItem_4 = new ToolItem(toolBar, SWT.SEPARATOR);
-
-		importOR = new ToolItem(toolBar, SWT.NONE);
-		importOR.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/import.png"));
-		importOR.setToolTipText("Import OR");
-
-		ToolItem toolItem_7 = new ToolItem(toolBar, SWT.SEPARATOR);
-
-		toolDropDown = new ToolItem(toolBar, SWT.DROP_DOWN);
-		toolDropDown.setText("More");
-		dropDownMenu = new Menu(toolBar);
-		toolBar.setMenu(dropDownMenu);
-
-		menuDraft = new MenuItem(dropDownMenu, SWT.NONE);
-		menuDraft.setText("Draft");
-
-		new MenuItem(dropDownMenu, SWT.SEPARATOR);
-
-		menuReview = new MenuItem(dropDownMenu, SWT.NONE);
-		menuReview.setText("Review");
-
-		new MenuItem(dropDownMenu, SWT.SEPARATOR);
-
-		menuApproved = new MenuItem(dropDownMenu, SWT.NONE);
-		menuApproved.setText("Approved");
-
-		new MenuItem(dropDownMenu, SWT.SEPARATOR);
-
-		menuPublished = new MenuItem(dropDownMenu, SWT.NONE);
-		menuPublished.setText("Published");
-
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
 //		Tree tree = new Tree(composite_3, SWT.BORDER);
 		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -420,33 +368,11 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
-		toolDropDown.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				System.out.println("Arrow Pressed");
-				Rectangle rect = toolDropDown.getBounds();
-				Point pt = new Point(rect.x, rect.y + rect.height);
-				pt = toolBar.toDisplay(pt);
-				dropDownMenu.setLocation(pt.x, pt.y);
-				dropDownMenu.setVisible(true);
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 		toolBar.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
 				if (e.button == 3) {
-					System.out.println("Clicked");
-					dropDownMenu.setVisible(false);
 				}
 
 			}

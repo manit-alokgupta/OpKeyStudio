@@ -98,7 +98,6 @@ public class TestCaseView extends Composite {
 	private ToolItem itemRefresh;
 	private ToolItem itemSave;
 	private ToolItem itemDelete;
-	private ToolItem convertToCode;
 	private ToolItem keywordButton;
 	private ToolItem functionLibraryButton;
 	private ToolItem serviceRepoButton;
@@ -221,12 +220,7 @@ public class TestCaseView extends Composite {
 		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		itemDelete.setText("Delete");
 		itemDelete.setToolTipText(" Delete Test Step");
-
-		convertToCode = new ToolItem(toolBar_1, SWT.NONE);
-		convertToCode.setEnabled(false);
-		convertToCode.setText("Convert To CodedFL");
-		convertToCode.setToolTipText("Convert To CodedFL");
-
+		
 		seperator6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemSave = new ToolItem(toolBar_1, SWT.NONE);
