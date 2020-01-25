@@ -44,20 +44,11 @@ public class TestSuiteView extends Composite {
 	@SuppressWarnings("unused")
 	private TestSuiteStep testSuite;
 	private ToolItem runButton;
-	private ToolItem tagVersionRunButton;
-	private ToolItem debugButton;
-	private ToolItem runOnCloudButton;
-	private ToolItem runOnBrowserButton;
-	private ToolItem runOnSauceLabsButton;
-	private ToolItem runOnPcloudyButton;
-	private ToolItem generateDocButton;
-	private ToolItem scheduleSuiteButton;
 	private ToolItem deleteSuiteStepButton;
 	private ToolItem moveUpButton;
 	private ToolItem moveDownButton;
 	private ToolItem saveButton;
 	private ToolItem refreshButton;
-	private ToolItem javaExportButton;
 	private ToolItem toolDropDown;
 	private ToolBar toolBar_1;
 	private Menu dropDownMenu;
@@ -101,70 +92,20 @@ public class TestSuiteView extends Composite {
 		runButton = new ToolItem(toolBar_1, SWT.NONE);
 		runButton.setToolTipText("Run Now");
 		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
-
-		ToolItem toolItem_12 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		tagVersionRunButton = new ToolItem(toolBar_1, SWT.NONE);
-		tagVersionRunButton.setToolTipText("Run With Tag Version");
-		tagVersionRunButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/run_with_tag.png"));
-
-		ToolItem toolItem_13 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		debugButton = new ToolItem(toolBar_1, SWT.NONE);
-		debugButton.setToolTipText("Debug Now");
-		debugButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/bug.png"));
-
-		ToolItem toolItem_14 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		runOnCloudButton = new ToolItem(toolBar_1, SWT.NONE);
-		runOnCloudButton.setToolTipText("Run on Cloud");
-		runOnCloudButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/cloud.png"));
-
-		ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		runOnBrowserButton = new ToolItem(toolBar_1, SWT.NONE);
-		runOnBrowserButton.setToolTipText("Run on Browser Stack");
-		runOnBrowserButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/stackbrowser.png"));
-
-		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		runOnSauceLabsButton = new ToolItem(toolBar_1, SWT.NONE);
-		runOnSauceLabsButton.setToolTipText("Run on SauceLabs");
-		runOnSauceLabsButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/saucelab.png"));
-
-		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		runOnPcloudyButton = new ToolItem(toolBar_1, SWT.NONE);
-		runOnPcloudyButton.setToolTipText("Run on PCloudy");
-		runOnPcloudyButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/pcloudy.png"));
-
-		ToolItem toolItem_3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		generateDocButton = new ToolItem(toolBar_1, SWT.NONE);
-		generateDocButton.setToolTipText("Generate Document");
-		generateDocButton
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/generate document.png"));
-
-		ToolItem toolItem_4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		scheduleSuiteButton = new ToolItem(toolBar_1, SWT.NONE);
-		scheduleSuiteButton.setToolTipText("Schedule this Suite");
-		scheduleSuiteButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/schedule.png"));
-
-		ToolItem toolItem_5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		deleteSuiteStepButton = new ToolItem(toolBar_1, SWT.NONE);
 		deleteSuiteStepButton.setToolTipText("Delete Suite Step");
 		deleteSuiteStepButton
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 
-		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		moveUpButton = new ToolItem(toolBar_1, SWT.NONE);
 		moveUpButton.setToolTipText("Move UP");
 		moveUpButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
 
-		ToolItem toolItem_7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		moveDownButton = new ToolItem(toolBar_1, SWT.NONE);
 		moveDownButton.setToolTipText("Move Down");
@@ -184,12 +125,6 @@ public class TestSuiteView extends Composite {
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
 		ToolItem toolItem_10 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		javaExportButton = new ToolItem(toolBar_1, SWT.NONE);
-		javaExportButton.setToolTipText("Java Export");
-		javaExportButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testSuite/export.png"));
-
-		ToolItem toolItem_11 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		toolDropDown = new ToolItem(toolBar_1, SWT.DROP_DOWN);
 		toolDropDown.setText("More");
@@ -438,127 +373,6 @@ public class TestSuiteView extends Composite {
 
 			}
 		});
-
-		tagVersionRunButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		debugButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		runOnCloudButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		runOnBrowserButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		runOnSauceLabsButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		runOnPcloudyButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		generateDocButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		scheduleSuiteButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 		deleteSuiteStepButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -661,19 +475,6 @@ public class TestSuiteView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		javaExportButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
 
 			}
 
