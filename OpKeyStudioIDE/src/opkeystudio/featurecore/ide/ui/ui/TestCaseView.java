@@ -532,14 +532,17 @@ public class TestCaseView extends Composite {
 		globalVariableTable.setHeaderVisible(true);
 		globalVariableTable.setLinesVisible(true);
 
-		TabItem autoDataGenTabItem = new TabItem(datasTabHolder, SWT.NONE);
-		autoDataGenTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/autodata.png"));
-		autoDataGenTabItem.setText("Auto Data Generation");
-		autoDataGenTabItem.setToolTipText("Auto Data Generation");
-
-		autoDataGenTable = new Table(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION);
-		autoDataGenTabItem.setControl(autoDataGenTable);
-		autoDataGenTable.setHeaderVisible(true);
+		/*
+		 * TabItem autoDataGenTabItem = new TabItem(datasTabHolder, SWT.NONE);
+		 * autoDataGenTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/autodata.png"));
+		 * autoDataGenTabItem.setText("Auto Data Generation");
+		 * autoDataGenTabItem.setToolTipText("Auto Data Generation");
+		 * 
+		 * autoDataGenTable = new Table(datasTabHolder, SWT.BORDER |
+		 * SWT.FULL_SELECTION); autoDataGenTabItem.setControl(autoDataGenTable);
+		 * autoDataGenTable.setHeaderVisible(true);
+		 */
 
 		sashForm_2.setWeights(new int[] { 1, 1 });
 
@@ -1045,21 +1048,6 @@ public class TestCaseView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		autoDataGenTable.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
