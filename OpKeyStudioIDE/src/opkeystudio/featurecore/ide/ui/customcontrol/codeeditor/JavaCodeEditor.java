@@ -121,10 +121,30 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		for (int i = 0; i < lineCount; i++) {
 			Token token = this.getTokenListForLine(i);
 
+			List<Token> lineTokens = new ArrayList<Token>();
 			while (token.getNextToken() != null) {
 				String tokenText = token.getLexeme();
-				System.out.println(i + "  " + tokenText);
+				if (!tokenText.trim().isEmpty()) {
+					lineTokens.add(token);
+				}
 				token = token.getNextToken();
+			}
+			parseTokens(lineTokens);
+		}
+	}
+
+	private void parseTokens(List<Token> lineTokens) {
+		for (int i = 0; i < lineTokens.size(); i++) {
+			Token token = lineTokens.get(i);
+			if (token.getLexeme().equals("=")) {
+				String varName = lineTokens.get(i - 1).getLexeme();
+				String varClassName = "";
+				if (lineTokens.get(i - 2) != null) {
+					varClassName = lineTokens.get(i - 2).getLexeme();
+				}
+
+				System.out.println("Var Name " + varName + "   ClassName " + varClassName);
+				CodeCompletionProvider.getInstance().addBasicCompletion(varName);
 			}
 		}
 	}

@@ -48,6 +48,7 @@ public class CodeCompletionProvider {
 
 	public void addBasicCompletion(String data) {
 		JavaBasicCompletion bc = new JavaBasicCompletion(provider, data);
+		bc.setTextToEnter(data);
 		provider.addCompletion(bc);
 	}
 
