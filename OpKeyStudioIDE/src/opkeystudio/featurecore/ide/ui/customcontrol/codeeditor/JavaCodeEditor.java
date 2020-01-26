@@ -11,14 +11,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
 
+import org.eclipse.jdt.internal.corext.dom.TokenScanner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.GridData;
@@ -28,8 +28,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxDocument;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaEditorKit;
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaHighlighter;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -81,9 +79,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.setCodeFoldingEnabled(true);
 		this.setAutoIndentEnabled(true);
-		
+
 		this.addParser(new JavaParser());
-		
+
 		CompletionProvider provider = CodeCompletionProvider.getInstance().getCompletionProvider();
 		JavaAutoCompletion autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setAutoActivationDelay(10);
@@ -121,17 +119,23 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private void createIntellisenseDataFromCurrentText() throws BadLocationException {
 		int lineCount = this.getLineCount();
 		for (int i = 0; i < lineCount; i++) {
-			Token token = this.getTokenListFor(i, this.getLineEndOffset(i));
+			Token token = this.getTokenListForLine(i);
+
 			while (token.getNextToken() != null) {
-				System.out.println("Token " + new String(token.getTextArray()));
-				String tokenText = new String(token.getTextArray());
-				CodeCompletionProvider.getInstance().addBasicCompletion(tokenText);
+				String tokenText = token.getLexeme();
+				System.out.println(i + "  " + tokenText);
 				token = token.getNextToken();
 			}
 		}
 	}
 
 	public List<CompileError> compileAndCheck() {
+		try {
+			createIntellisenseDataFromCurrentText();
+		} catch (BadLocationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		for (Object highLightedLines : getHighlightedLines()) {
 			this.removeLineHighlight(highLightedLines);
 		}
