@@ -28,6 +28,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxDocument;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaEditorKit;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaHighlighter;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -79,6 +81,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.setCodeFoldingEnabled(true);
 		this.setAutoIndentEnabled(true);
+		
+		this.addParser(new JavaParser());
+		
 		CompletionProvider provider = CodeCompletionProvider.getInstance().getCompletionProvider();
 		JavaAutoCompletion autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setAutoActivationDelay(10);

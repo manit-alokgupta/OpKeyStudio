@@ -13,8 +13,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.CodedFunctionBottomFactoryUI;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
@@ -34,6 +37,7 @@ public class CodedFunctionView extends Composite {
 	private ToolItem runButton;
 	private ToolItem saveButton;
 	private ToolItem refreshButton;
+	private CodedFunctionBottomFactoryUI bottomFactoryUi;
 	private String codedFLClassPath;
 
 	public CodedFunctionView(Composite parent, int style) {
@@ -55,6 +59,11 @@ public class CodedFunctionView extends Composite {
 		editor.setArtifact(getArtifact());
 		editor.setCodeFunctionView(this);
 		toggleSaveButton(false);
+
+		bottomFactoryUi = new CodedFunctionBottomFactoryUI(this, SWT.NONE, this);
+		bottomFactoryUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		bottomFactoryUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
 		runButton.addSelectionListener(new SelectionListener() {
 
 			@Override
