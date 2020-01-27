@@ -21,7 +21,7 @@ public class ArtifactUpload {
 	}
 
 	public String uploadArtifactFile(File file) throws IOException {
-		System.out.println("Artifact Uploading "+file.getAbsolutePath());
+		System.out.println("Artifact Uploading " + file.getAbsolutePath());
 		String charset = "UTF-8";
 
 		MultipartUtility multipart = new MultipartUtility(
@@ -59,7 +59,7 @@ public class ArtifactUpload {
 	public void writeToZipFile(String path, ZipOutputStream zipStream) throws FileNotFoundException, IOException {
 		File aFile = new File(path);
 		FileInputStream fis = new FileInputStream(aFile);
-		ZipEntry zipEntry = new ZipEntry(path);
+		ZipEntry zipEntry = new ZipEntry(aFile.getName());
 		zipStream.putNextEntry(zipEntry);
 
 		byte[] bytes = new byte[1024];

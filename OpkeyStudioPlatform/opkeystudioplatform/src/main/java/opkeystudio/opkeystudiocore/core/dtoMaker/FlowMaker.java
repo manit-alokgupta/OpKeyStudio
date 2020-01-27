@@ -59,7 +59,7 @@ public class FlowMaker {
 		}
 		flowStep.setPosition(selectedFlowStepPosition + 5);
 		flowStep.setShouldrun(true);
-
+		
 		if (keyword != null) {
 			List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(artifact, flowStep);
 			List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
