@@ -39,7 +39,7 @@ public class MessageDialogs {
 	public void openProgressDialog(Shell shell, String message) {
 		progressDialog = new ProgressMonitorDialog(shell);
 		try {
-			progressDialog.run(true, false, new IRunnableWithProgress() {
+			progressDialog.run(false, false, new IRunnableWithProgress() {
 
 				@Override
 				public void run(IProgressMonitor monitor) {
