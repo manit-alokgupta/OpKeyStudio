@@ -25,22 +25,25 @@ public class ArtifactUpload {
 	public void uploadCurrentUsedArtifact() {
 		String dbPath = ServiceRepository.getInstance().getExportedDBFilePath();
 		try {
-			createZip(new File(dbPath));
+			File outZipFile = createZip(new File(dbPath));
+			System.out.println("File Zipped to " + outZipFile.getAbsolutePath());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void createZip(File inputFile) throws FileNotFoundException, IOException {
+	private File createZip(File inputFile) throws FileNotFoundException, IOException {
 		String exportedZipId = Utilities.getInstance().getUniqueUUID("");
-		FileOutputStream fos = new FileOutputStream(inputFile.getParent() + File.separator + exportedZipId + ".zip");
+		File outZipFile = new File(inputFile.getParent() + File.separator + exportedZipId + ".zip");
+		FileOutputStream fos = new FileOutputStream(outZipFile.getAbsolutePath());
 		ZipOutputStream zipOS = new ZipOutputStream(fos);
 
 		writeToZipFile(inputFile.getAbsolutePath(), zipOS);
 
 		zipOS.close();
 		fos.close();
+		return outZipFile;
 	}
 
 	public void writeToZipFile(String path, ZipOutputStream zipStream) throws FileNotFoundException, IOException {
