@@ -92,6 +92,12 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
+				try {
+					createIntellisenseDataFromCurrentText();
+				} catch (BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						getCodeFunctionView().toggleSaveButton(true);

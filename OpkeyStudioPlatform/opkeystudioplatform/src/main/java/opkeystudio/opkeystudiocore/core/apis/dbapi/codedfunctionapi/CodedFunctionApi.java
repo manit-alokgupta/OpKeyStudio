@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.forge.roaster.Roaster;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -31,9 +34,9 @@ public class CodedFunctionApi {
 		return new ArrayList<CFLCode>();
 	}
 
-	
 	public List<CFLInputParameter> getCodedFLInputParameters(Artifact artifact) {
-		String query = String.format("select * from cf_input_parameters WHERE cf_id='%s' ORDER BY position asc;", artifact.getId());
+		String query = String.format("select * from cf_input_parameters WHERE cf_id='%s' ORDER BY position asc;",
+				artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -46,9 +49,10 @@ public class CodedFunctionApi {
 		}
 		return new ArrayList<CFLInputParameter>();
 	}
-	
+
 	public List<CFLOutputParameter> getCodedFLOutputParameters(Artifact artifact) {
-		String query = String.format("select * from cf_output_parameters WHERE cf_id='%s' ORDER BY position asc;", artifact.getId());
+		String query = String.format("select * from cf_output_parameters WHERE cf_id='%s' ORDER BY position asc;",
+				artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -61,7 +65,7 @@ public class CodedFunctionApi {
 		}
 		return new ArrayList<CFLOutputParameter>();
 	}
-	
+
 	public List<CFLibraryMap> getCodedFLLibrary(Artifact artifact) {
 		String query = String.format("select * from cf_library_map WHERE cf_id='%s'", artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
@@ -76,8 +80,9 @@ public class CodedFunctionApi {
 		}
 		return new ArrayList<CFLibraryMap>();
 	}
-	
+
 	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode) {
+
 		String startCode = "// ### Import packages from your associated Libraries here\r\n"
 				+ "//#BeginRegion-ImportSection\r\n" + "\r\n" + "//#EndRegion-ImportSection\r\n"
 				+ "import com.crestech.opkey.plugin.contexts.Context;\r\n"
