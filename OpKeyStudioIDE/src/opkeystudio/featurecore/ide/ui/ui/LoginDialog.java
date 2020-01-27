@@ -62,6 +62,10 @@ public class LoginDialog extends Dialog {
 				display.sleep();
 			}
 		}
+		
+		ServiceRepository.getInstance().setOpKeyHostAuthToken(null);
+		ServiceRepository.getInstance().setOpKeyHostSessionId(null);
+		ServiceRepository.getInstance().setOpKeyHostUrl(null);
 		return result;
 	}
 
