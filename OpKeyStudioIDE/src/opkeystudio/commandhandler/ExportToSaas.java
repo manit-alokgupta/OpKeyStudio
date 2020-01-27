@@ -3,6 +3,7 @@ package opkeystudio.commandhandler;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.ui.LoginDialog;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactUpload;
@@ -17,7 +18,17 @@ public class ExportToSaas {
 			dialog.open();
 
 		}
-		new ArtifactUpload().uploadCurrentUsedArtifact();
+		MessageDialogs msd = new MessageDialogs();
+		msd.openProgressDialog(shell, "Exporting Artifact to SAAS. Please wait....");
+		String retdata = new ArtifactUpload().uploadCurrentUsedArtifact();
+		msd.closeProgressDialog();
+
+		if (retdata == null) {
+			msd.openErrorDialog("OpKey", "Unable to perform Export to SAAS");
+		}
+		if (retdata.contains("[{")) {
+			msd.openInformationDialog("OpKey", "Export to SAAS Finished");
+		}
 	}
 
 }

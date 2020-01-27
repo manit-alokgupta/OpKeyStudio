@@ -30,17 +30,19 @@ public class ArtifactUpload {
 		return multipart.finish(); // response from server.
 	}
 
-	public void uploadCurrentUsedArtifact() {
+	public String uploadCurrentUsedArtifact() {
 		String dbPath = ServiceRepository.getInstance().getExportedDBFilePath();
 		try {
 			File outZipFile = createZip(new File(dbPath));
 			System.out.println("File Zipped to " + outZipFile.getAbsolutePath());
 			String retData = uploadArtifactFile(outZipFile);
 			System.out.println("Server Data " + retData);
+			return retData;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	private File createZip(File inputFile) throws FileNotFoundException, IOException {
