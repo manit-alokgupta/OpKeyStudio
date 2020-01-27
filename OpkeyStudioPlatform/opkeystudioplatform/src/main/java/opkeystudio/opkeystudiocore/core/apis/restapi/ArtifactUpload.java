@@ -21,7 +21,7 @@ public class ArtifactUpload {
 	}
 
 	public String uploadArtifactFile(File file) throws IOException {
-		System.out.println("Artifact Uploading");
+		System.out.println("Artifact Uploading "+file.getAbsolutePath());
 		String charset = "UTF-8";
 
 		MultipartUtility multipart = new MultipartUtility(
@@ -67,7 +67,7 @@ public class ArtifactUpload {
 		while ((length = fis.read(bytes)) >= 0) {
 			zipStream.write(bytes, 0, length);
 		}
-
+		zipStream.flush();
 		zipStream.closeEntry();
 		fis.close();
 	}

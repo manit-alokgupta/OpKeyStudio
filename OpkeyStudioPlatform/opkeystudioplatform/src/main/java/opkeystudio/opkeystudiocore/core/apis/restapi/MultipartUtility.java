@@ -84,7 +84,7 @@ public class MultipartUtility {
 		writer.append("--" + boundary).append(LINE_FEED);
 		writer.append("Content-Disposition: form-data; name=\"" + fieldName + "\"; filename=\"" + fileName + "\"")
 				.append(LINE_FEED);
-		writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(fileName)).append(LINE_FEED);
+		writer.append("Content-Type: application/x-www-form-urlencoded").append(LINE_FEED);
 		writer.append("Content-Transfer-Encoding: binary").append(LINE_FEED);
 		writer.append(LINE_FEED);
 		writer.flush();
@@ -132,6 +132,11 @@ public class MultipartUtility {
 			httpConn.disconnect();
 		} else {
 			System.out.println("Server returned non-OK status: " + status);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(httpConn.getErrorStream()));
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				response.append(line);
+			}
 			return response.toString();
 		}
 
