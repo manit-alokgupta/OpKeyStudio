@@ -324,7 +324,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog(getParentshell(), "Exporting Artifact Please Wait");
+				msd.openProgressDialog(getParentshell(), "Importing from OpKey SAAS. Please Wait");
 				ArtifactTreeNode selectedArtifact = getSelectedArtifactTreeNode();
 				try {
 					exportArtifact(selectedArtifact);
