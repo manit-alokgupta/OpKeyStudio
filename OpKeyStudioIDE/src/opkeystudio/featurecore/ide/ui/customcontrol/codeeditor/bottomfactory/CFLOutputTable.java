@@ -56,14 +56,14 @@ public class CFLOutputTable extends CustomTable {
 		Artifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifact();
 		List<CFLOutputParameter> outputParameters = new CodedFunctionApi().getCodedFLOutputParameters(artifact);
 		this.setCflOutputParameters(outputParameters);
-		for (CFLOutputParameter cflinputparam : outputParameters) {
-			System.out.println(cflinputparam.getName());
+		for (CFLOutputParameter cfloutputparam : outputParameters) {
 			CustomTableItem cti = new CustomTableItem(this, 0);
-			String description = cflinputparam.getDescription();
+			cti.setControlData(cfloutputparam);
+			String description = cfloutputparam.getDescription();
 			if (description == null) {
 				description = "";
 			}
-			cti.setText(new String[] { cflinputparam.getName(), cflinputparam.getType(), description });
+			cti.setText(new String[] { cfloutputparam.getName(), cfloutputparam.getType(), description });
 		}
 	}
 

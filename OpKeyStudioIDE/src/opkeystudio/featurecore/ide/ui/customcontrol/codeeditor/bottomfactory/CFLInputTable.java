@@ -64,8 +64,8 @@ public class CFLInputTable extends CustomTable {
 		List<CFLInputParameter> cflInputParameters = new CodedFunctionApi().getCodedFLInputParameters(artifact);
 		this.setCflInputParameters(cflInputParameters);
 		for (CFLInputParameter cflinputparam : cflInputParameters) {
-			System.out.println(cflinputparam.getName());
 			CustomTableItem cti = new CustomTableItem(this, 0);
+			cti.setControlData(cflinputparam);
 			String description = cflinputparam.getDescription();
 			if (description == null) {
 				description = "";
