@@ -122,12 +122,14 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			Token token = this.getTokenListForLine(i);
 
 			List<Token> lineTokens = new ArrayList<Token>();
-			while (token.getNextToken() != null) {
-				String tokenText = token.getLexeme();
-				if (!tokenText.trim().isEmpty()) {
-					lineTokens.add(token);
+			if (token != null) {
+				while (token.getNextToken() != null) {
+					String tokenText = token.getLexeme();
+					if (!tokenText.trim().isEmpty()) {
+						lineTokens.add(token);
+					}
+					token = token.getNextToken();
 				}
-				token = token.getNextToken();
 			}
 			parseTokens(lineTokens);
 		}
