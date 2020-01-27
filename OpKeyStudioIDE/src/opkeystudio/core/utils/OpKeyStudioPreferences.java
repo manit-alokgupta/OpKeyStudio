@@ -33,7 +33,7 @@ public class OpKeyStudioPreferences {
 				.getNode("opkeystudio.core.utils.OpKeyStudioPreferences");
 
 		org.osgi.service.prefs.Preferences sub1 = preferences.node("basicSettings");
-		return sub1.get(key, "default");
+		return sub1.get(key, null);
 	}
 	
 }

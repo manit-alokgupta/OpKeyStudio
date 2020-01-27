@@ -11,6 +11,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.AuthentcationData;
 import opkeystudio.opkeystudiocore.core.apis.restapi.AuthenticateApi;
@@ -119,6 +120,9 @@ public class LoginDialog extends Dialog {
 				String url = domainUrl.getText();
 				String user = userName.getText();
 				String passw = passWord.getText();
+				OpKeyStudioPreferences.getPreferences().addBasicSettings("opkey_url", url);
+				OpKeyStudioPreferences.getPreferences().addBasicSettings("opkey_username", user);
+				OpKeyStudioPreferences.getPreferences().addBasicSettings("opkey_password", passw);
 				if (url.trim().equalsIgnoreCase("")) {
 					MessageDialog.openInformation(shlLoginToOpkey, "Invalid URL", "Please enter Domain URL");
 				}
@@ -175,6 +179,21 @@ public class LoginDialog extends Dialog {
 		passWord.setToolTipText("Password");
 		passWord.setBounds(192, 110, 178, 24);
 
+		String domainURL = OpKeyStudioPreferences.getPreferences().getBasicSettings("opkey_url");
+		String username = OpKeyStudioPreferences.getPreferences().getBasicSettings("opkey_username");
+		String password = OpKeyStudioPreferences.getPreferences().getBasicSettings("opkey_password");
+
+		if (domainURL != null) {
+			domainUrl.setText(domainURL);
+		}
+
+		if (username != null) {
+			userName.setText(username);
+		}
+
+		if (password != null) {
+			passWord.setText(password);
+		}
 		Label label_1 = new Label(composite_1, SWT.NONE);
 		label_1.setText("OpKey Domain");
 		label_1.setBounds(41, 27, 119, 21);
