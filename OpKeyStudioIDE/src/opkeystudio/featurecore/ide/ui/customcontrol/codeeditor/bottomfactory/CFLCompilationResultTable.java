@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.CodedFunctionBottomFactoryUI;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
