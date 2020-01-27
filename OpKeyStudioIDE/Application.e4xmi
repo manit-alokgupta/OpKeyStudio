@@ -42,12 +42,13 @@
     </mainMenu>
     <trimBars xmi:id="_vz6icNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.0">
       <children xsi:type="menu:ToolBar" xmi:id="_wiuJMNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.maintoolbarholder">
-        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.open" label="Open" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/datafile.png" tooltip="Open File" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBFromOpKeyCommand">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.open" label="Open" iconURI="platform:/plugin/OpKeyStudio/icons/import.png" tooltip="Import From OpKey SAAS" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBFromOpKeyCommand">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
         </children>
-        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" label="Save" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/save.png" tooltip="Save">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" label="Save" iconURI="platform:/plugin/OpKeyStudio/icons/import.png" tooltip="Import Local DB" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportLocalDB">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UFWaAAXdEeqm4_Ox7Tro1w"/>
         </children>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_VgQNIED2EeqJe4vmkghIxQ" elementId="opkeystudio.directtoolitem.0" iconURI="platform:/plugin/OpKeyStudio/icons/export.png" tooltip="Export To OpKey SAAS" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ExportToSaas"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_xg_vUNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.mainstatusbarholder" side="Bottom">
