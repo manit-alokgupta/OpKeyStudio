@@ -78,8 +78,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		this.setCodeFoldingEnabled(true);
 		this.setAutoIndentEnabled(true);
 
-		this.addParser(new JavaParser());
-
 		CompletionProvider provider = CodeCompletionProvider.getInstance().getCompletionProvider();
 		JavaAutoCompletion autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setAutoActivationDelay(10);
@@ -188,7 +186,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			}
 		}
 		getCodeFunctionView().setCodedFLClassPath(compiledCodedFLPath);
-		
+		getCodeFunctionView().getCodedFunctionBottomFactoryUi().getCompilationResultTable()
+				.renderCompilingError(compileErrors);
 		return compileErrors;
 	}
 

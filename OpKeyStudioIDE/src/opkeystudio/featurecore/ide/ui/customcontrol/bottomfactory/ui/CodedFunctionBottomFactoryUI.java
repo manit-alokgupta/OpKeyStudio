@@ -92,7 +92,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
 		item.setText("Coded FL Arguments");
-		item.setHeight(300);
+		item.setHeight(200);
 
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
