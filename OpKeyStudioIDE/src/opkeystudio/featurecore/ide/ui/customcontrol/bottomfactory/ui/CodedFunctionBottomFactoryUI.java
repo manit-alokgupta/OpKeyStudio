@@ -289,7 +289,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		refreshInputItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
-		inputTable = new CFLInputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
+		inputTable = new CFLInputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		inputTable = new Table(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
 		inputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		inputTable.setHeaderVisible(true);
@@ -342,7 +342,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		refreshOutputItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
-		outputTable = new CFLOutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
+		outputTable = new CFLOutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		outputTable = new Table(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
 		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		outputTable.setHeaderVisible(true);
