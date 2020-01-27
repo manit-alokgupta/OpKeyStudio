@@ -12,6 +12,14 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactUpload {
+
+	public boolean isLoginToSaasRequired() {
+		if (ServiceRepository.getInstance().getOpKeyHostAuthToken() == null) {
+			return true;
+		}
+		return false;
+	}
+
 	public String uploadArtifactFile(File file) throws IOException {
 		System.out.println("Artifact Uploading");
 		String charset = "UTF-8";
@@ -27,6 +35,7 @@ public class ArtifactUpload {
 		try {
 			File outZipFile = createZip(new File(dbPath));
 			System.out.println("File Zipped to " + outZipFile.getAbsolutePath());
+			uploadArtifactFile(outZipFile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
