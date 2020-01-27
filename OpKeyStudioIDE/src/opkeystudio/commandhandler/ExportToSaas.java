@@ -12,7 +12,7 @@ public class ExportToSaas {
 	public void execute(Shell shell) {
 		Utilities.getInstance().setDefaultShell(shell);
 		boolean loginRequired = new ArtifactUpload().isLoginToSaasRequired();
-		if (true) {
+		if (loginRequired) {
 			LoginDialog dialog = new LoginDialog(shell, 0);
 			dialog.open();
 

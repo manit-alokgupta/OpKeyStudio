@@ -26,7 +26,7 @@ public class ArtifactUpload {
 
 		MultipartUtility multipart = new MultipartUtility(
 				"/api/ExportImportAPI/ImportArtifact?MainProcessType=Import&JobType=Opkey&IsImporting=true", charset);
-		multipart.addFilePart("file", file);
+		multipart.addFilePart("MyFile", file);
 		return multipart.finish(); // response from server.
 	}
 
@@ -35,7 +35,8 @@ public class ArtifactUpload {
 		try {
 			File outZipFile = createZip(new File(dbPath));
 			System.out.println("File Zipped to " + outZipFile.getAbsolutePath());
-			uploadArtifactFile(outZipFile);
+			String retData = uploadArtifactFile(outZipFile);
+			System.out.println("Server Data " + retData);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
