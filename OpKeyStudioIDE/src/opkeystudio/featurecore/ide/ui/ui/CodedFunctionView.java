@@ -16,7 +16,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.CodedFunctionBottomFactoryUI;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
@@ -175,4 +174,7 @@ public class CodedFunctionView extends Composite {
 		this.codedFLClassPath = codedFLClassPath;
 	}
 
+	public CodedFunctionBottomFactoryUI getCodedFunctionBottomFactoryUi() {
+		return this.bottomFactoryUi;
+	}
 }

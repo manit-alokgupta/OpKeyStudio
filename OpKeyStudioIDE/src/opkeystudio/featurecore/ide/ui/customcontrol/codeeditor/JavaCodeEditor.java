@@ -11,14 +11,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.BadLocationException;
 
-import org.eclipse.jdt.internal.corext.dom.TokenScanner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.GridData;
@@ -190,6 +188,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			}
 		}
 		getCodeFunctionView().setCodedFLClassPath(compiledCodedFLPath);
+		
 		return compileErrors;
 	}
 

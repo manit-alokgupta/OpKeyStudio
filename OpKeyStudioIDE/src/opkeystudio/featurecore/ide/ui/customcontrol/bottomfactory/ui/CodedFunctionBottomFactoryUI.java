@@ -41,7 +41,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private Table backupTable;
 	private CFLInputTable inputTable;
 	private CFLOutputTable outputTable;
-	private CFLCompilationResultTable compilationResultTable;
 	private TabItem inputTabItem;
 	private ToolItem addInputItem;
 	private ToolItem deleteInputItem;
@@ -63,7 +62,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private Display display;
 
 	private CodedFunctionView parentCodedView;
-	private Table compilationResultsTable;
+	private CFLCompilationResultTable compilationResultsTable;
 
 	/**
 	 * Create the composite.
@@ -355,7 +354,8 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		compilationResultsTabItem.setControl(compilationResultsComposite);
 		compilationResultsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		compilationResultsTable = new Table(compilationResultsComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		compilationResultsTable = new CFLCompilationResultTable(compilationResultsComposite,
+				SWT.BORDER | SWT.FULL_SELECTION, this);
 		compilationResultsTable.setHeaderVisible(true);
 		compilationResultsTable.setLinesVisible(true);
 
@@ -523,7 +523,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -537,7 +536,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -551,7 +549,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -565,7 +562,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -578,7 +574,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -592,7 +587,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -606,8 +600,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
@@ -615,13 +608,11 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -630,13 +621,11 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -650,7 +639,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -701,5 +689,9 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 	public void setParentCodedFunctionView(CodedFunctionView parentTestCaseView) {
 		this.parentCodedView = parentTestCaseView;
+	}
+
+	public CFLCompilationResultTable getCompilationResultTable() {
+		return this.compilationResultsTable;
 	}
 }
