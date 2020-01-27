@@ -9,6 +9,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactUpload {
 	public String uploadArtifactFile(File file) throws IOException {
@@ -23,21 +24,20 @@ public class ArtifactUpload {
 
 	public void uploadCurrentUsedArtifact() {
 		String dbPath = ServiceRepository.getInstance().getExportedDBFilePath();
+		try {
+			createZip(new File(dbPath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void createZip(File inputFile) throws FileNotFoundException, IOException {
-		FileOutputStream fos = new FileOutputStream("sample.zip");
+		String exportedZipId = Utilities.getInstance().getUniqueUUID("");
+		FileOutputStream fos = new FileOutputStream(inputFile.getParent() + File.separator + exportedZipId + ".zip");
 		ZipOutputStream zipOS = new ZipOutputStream(fos);
 
-		String file1 = "names.txt";
-		String file2 = "java7.txt";
-		String file3 = "targetrr/apache.txt";
-		String file4 = "java.txt";
-
-		writeToZipFile(file1, zipOS);
-		writeToZipFile(file2, zipOS);
-		writeToZipFile(file3, zipOS);
-		writeToZipFile(file4, zipOS);
+		writeToZipFile(inputFile.getAbsolutePath(), zipOS);
 
 		zipOS.close();
 		fos.close();
