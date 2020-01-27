@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -61,6 +62,20 @@ public class CodedFunctionApi {
 		return new ArrayList<CFLOutputParameter>();
 	}
 	
+	public List<CFLibraryMap> getCodedFLLibrary(Artifact artifact) {
+		String query = String.format("select * from cf_library_map WHERE cf_id='%s'", artifact.getId());
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		System.out.println(result);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLibraryMap.class);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<CFLibraryMap>();
+	}
 	
 	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode) {
 		String startCode = "// ### Import packages from your associated Libraries here\r\n"
