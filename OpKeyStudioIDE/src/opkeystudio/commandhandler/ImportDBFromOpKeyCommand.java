@@ -17,8 +17,6 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository
 
 public class ImportDBFromOpKeyCommand {
 
-	String[] filterExt = { "*.db;*.sql" };
-
 	@Execute
 	public void execute(Shell shell) {
 		Utilities.getInstance().setDefaultShell(shell);
