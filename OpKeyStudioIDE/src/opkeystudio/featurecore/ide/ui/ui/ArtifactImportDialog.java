@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
@@ -38,9 +39,13 @@ import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactTreeApi;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ProjectApi;
 
 public class ArtifactImportDialog extends TitleAreaDialog {
+
+	private Shell parentshell;
+
 	public ArtifactImportDialog(Shell parentShell) {
 		super(parentShell);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL | SWT.RESIZE);
+		setParentshell(parentShell);
 	}
 
 	private Text projectSearch;
@@ -318,6 +323,8 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				MessageDialogs msd = new MessageDialogs();
+				msd.openProgressDialog(getParentshell(), "Exporting Artifact Please Wait");
 				ArtifactTreeNode selectedArtifact = getSelectedArtifactTreeNode();
 				try {
 					exportArtifact(selectedArtifact);
@@ -325,6 +332,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				msd.closeProgressDialog();
 			}
 
 			@Override
@@ -342,5 +350,13 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	@Override
 	protected Point getInitialSize() {
 		return new Point(644, 504);
+	}
+
+	public Shell getParentshell() {
+		return parentshell;
+	}
+
+	public void setParentshell(Shell parentshell) {
+		this.parentshell = parentshell;
 	}
 }
