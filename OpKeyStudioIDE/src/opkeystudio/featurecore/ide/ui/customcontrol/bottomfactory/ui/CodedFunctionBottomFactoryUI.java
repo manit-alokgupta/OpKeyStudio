@@ -29,6 +29,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CFLCompilationResultTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CFLInputTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CFLOutputTable;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
@@ -36,9 +39,9 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private Table auditTrailsTable;
 	private Table tagsTable;
 	private Table backupTable;
-	private Table inputTable;
-	private Table outputTable;
-	private Table compilationResultTable;
+	private CFLInputTable inputTable;
+	private CFLOutputTable outputTable;
+	private CFLCompilationResultTable compilationResultTable;
 	private TabItem inputTabItem;
 	private ToolItem addInputItem;
 	private ToolItem deleteInputItem;
@@ -286,7 +289,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		refreshInputItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
-		inputTable = new Table(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
+		inputTable = new CFLInputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
 //		inputTable = new Table(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
 		inputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		inputTable.setHeaderVisible(true);
@@ -339,19 +342,19 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		refreshOutputItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 
-		outputTable = new Table(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
+		outputTable = new CFLOutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
 //		outputTable = new Table(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
 		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		outputTable.setHeaderVisible(true);
 		outputTable.setLinesVisible(true);
-		
+
 		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setText("Compilation Results");
-		
+
 		Composite compilationResultsComposite = new Composite(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setControl(compilationResultsComposite);
 		compilationResultsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		compilationResultsTable = new Table(compilationResultsComposite, SWT.BORDER | SWT.FULL_SELECTION);
 		compilationResultsTable.setHeaderVisible(true);
 		compilationResultsTable.setLinesVisible(true);
