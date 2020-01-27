@@ -56,7 +56,6 @@ public class ArtifactUpload {
 	}
 
 	public void writeToZipFile(String path, ZipOutputStream zipStream) throws FileNotFoundException, IOException {
-		System.out.println("Writing file : '" + path + "' to zip file");
 		File aFile = new File(path);
 		FileInputStream fis = new FileInputStream(aFile);
 		ZipEntry zipEntry = new ZipEntry(path);
