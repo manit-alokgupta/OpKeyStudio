@@ -38,7 +38,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private Table backupTable;
 	private Table inputTable;
 	private Table outputTable;
-
+	private Table compilationResultTable;
 	private TabItem inputTabItem;
 	private ToolItem addInputItem;
 	private ToolItem deleteInputItem;
@@ -60,6 +60,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private Display display;
 
 	private CodedFunctionView parentCodedView;
+	private Table compilationResultsTable;
 
 	/**
 	 * Create the composite.
@@ -343,6 +344,17 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		outputTable.setHeaderVisible(true);
 		outputTable.setLinesVisible(true);
+		
+		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
+		compilationResultsTabItem.setText("Compilation Results");
+		
+		Composite compilationResultsComposite = new Composite(tabFolder, SWT.NONE);
+		compilationResultsTabItem.setControl(compilationResultsComposite);
+		compilationResultsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		compilationResultsTable = new Table(compilationResultsComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		compilationResultsTable.setHeaderVisible(true);
+		compilationResultsTable.setLinesVisible(true);
 
 		expandBar.addListener(SWT.Expand, new Listener() {
 
@@ -496,7 +508,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 		deleteInputItem.addSelectionListener(new SelectionListener() {
@@ -649,7 +661,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 
