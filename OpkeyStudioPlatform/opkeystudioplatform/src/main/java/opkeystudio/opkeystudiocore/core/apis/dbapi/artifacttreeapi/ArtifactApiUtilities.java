@@ -53,4 +53,16 @@ public class ArtifactApiUtilities {
 		}
 		return new ArrayList<FlowStep>();
 	}
+
+	public void createMainArtifactClob(Artifact artifact) {
+		String query = String.format(
+				"INSERT INTO main_artifact_clob('id', 'description', 'ExpectedResult') VALUES ('%s', '%s', '%s');",
+				artifact.getId(), "", "");
+		QueryExecutor.getInstance().executeUpdateQuery(query);
+	}
+
+	public void createFlowManualTestCase(Artifact artifact) {
+		String query = String.format("INSERT INTO flow_manual_testcase('flow_id') VALUES ('%s');", artifact.getId());
+		QueryExecutor.getInstance().executeUpdateQuery(query);
+	}
 }
