@@ -72,6 +72,23 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		compileAndCheck();
 	}
 
+	private Token getRecentToken() {
+		int caretLineNumber = getCaretLineNumber();
+		Token tokens = getTokenListFor(caretLineNumber, getCaretPosition());
+		List<Token> alltokens = new ArrayList<Token>();
+		while (tokens.getNextToken() != null) {
+			String tokenData = tokens.getLexeme().trim();
+			if (!tokenData.isEmpty()) {
+				if (!tokenData.equals("(") && !tokenData.equals(")")) {
+					alltokens.add(tokens);
+				}
+			}
+			tokens = tokens.getNextToken();
+		}
+		Token lastToken = alltokens.get(alltokens.size() - 1);
+		return lastToken;
+	}
+
 	private void init(Frame frame) {
 		JPanel mainEditorPanel = new JPanel(new BorderLayout());
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
@@ -95,13 +112,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			public void keyTyped(KeyEvent e) {
 				char keyChar = e.getKeyChar();
 				if (keyChar == '.') {
-					int caretLineNumber = getCaretLineNumber();
-					Token tokens = getTokenListFor(caretLineNumber, getCaretPosition());
-					while (tokens.getNextToken() != null) {
-						System.out.println(tokens.getLexeme());
-						tokens = tokens.getNextToken();
-					}
-					System.out.println("Caret Line Number " + caretLineNumber);
+					Token lastToken = getRecentToken();
+					System.out.println("Current token data " + lastToken.getLexeme());
 				}
 				try {
 					createIntellisenseDataFromCurrentText();
