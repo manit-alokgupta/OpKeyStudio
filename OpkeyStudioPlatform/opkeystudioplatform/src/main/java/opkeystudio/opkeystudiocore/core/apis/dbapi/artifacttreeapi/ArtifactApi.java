@@ -79,6 +79,8 @@ public class ArtifactApi {
 		Artifact artifact = new ArtifactMaker().getArtifactObject(parentId, artifactName, artifactType);
 		String query = new QueryMaker().createInsertQuery(artifact, "main_artifact_filesystem", "");
 		QueryExecutor.getInstance().executeUpdateQuery(query);
+		new ArtifactApiUtilities().createMainArtifactClob(artifact);
+		new ArtifactApiUtilities().createFlowManualTestCase(artifact);
 		if (artifactType == MODULETYPE.DataRepository) {
 			List<DRColumnAttributes> drColumnAttributes = new DRMaker().getDefaultDRStructure(artifact);
 			for (DRColumnAttributes drColumnAttribute : drColumnAttributes) {

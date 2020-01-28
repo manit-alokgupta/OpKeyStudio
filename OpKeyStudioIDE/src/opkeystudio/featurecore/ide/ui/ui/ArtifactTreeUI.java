@@ -998,7 +998,7 @@ public class ArtifactTreeUI extends Composite {
 				artifactId = parentArtifact.getId();
 			}
 		}
-		new ArtifactApi().createArtifact(artifactId, artifactName, moduleType);
+		new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
 		artifactTree.renderArtifacts();
 	}
 
