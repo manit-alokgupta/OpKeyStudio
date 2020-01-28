@@ -1,5 +1,9 @@
 package opkeystudio.opkeystudiocore.core.dtoMaker;
 
+import java.util.List;
+
+import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
+import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactStates;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -19,6 +23,9 @@ public class ArtifactMaker {
 		artifact.setName(artifactName);
 		artifact.setId(Utilities.getInstance().getUniqueUUID(""));
 		artifact.setParentid(parentId.getId());
+
+		List<ArtifactStates> states = new ArtifactApiUtilities().getArtifactsStates("Draft");
+		artifact.setState_id(states.get(0).getState_id());
 		return artifact;
 	}
 }

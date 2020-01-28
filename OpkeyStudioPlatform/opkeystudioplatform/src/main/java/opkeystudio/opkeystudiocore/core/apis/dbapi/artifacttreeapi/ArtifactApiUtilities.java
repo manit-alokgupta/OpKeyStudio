@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactStates;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
@@ -52,6 +53,20 @@ public class ArtifactApiUtilities {
 			e.printStackTrace();
 		}
 		return new ArrayList<FlowStep>();
+	}
+
+	public List<ArtifactStates> getArtifactsStates(String name) {
+		String query = String.format("SELECT * FROM artifact_states where name='%s'", name);
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ArtifactStates.class);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<ArtifactStates>();
 	}
 
 	public void createMainArtifactClob(Artifact artifact) {
