@@ -47,9 +47,11 @@ public class CodeCompletionProvider {
 	}
 
 	public void addBasicCompletion(String data) {
-		JavaBasicCompletion bc = new JavaBasicCompletion(provider, data);
-		bc.setTextToEnter(data);
-		provider.addCompletion(bc);
+		if (provider.getCompletionByInputText(data) == null) {
+			JavaBasicCompletion bc = new JavaBasicCompletion(provider, data);
+			bc.setTextToEnter(data);
+			provider.addCompletion(bc);
+		}
 	}
 
 	public void addImportTypeBasicCompletion(String data) {

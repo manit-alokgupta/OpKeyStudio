@@ -88,10 +88,21 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
 		frame.add(mainEditorPanel);
+
 		this.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
+				char keyChar = e.getKeyChar();
+				if (keyChar == '.') {
+					int caretLineNumber = getCaretLineNumber();
+					Token tokens = getTokenListFor(caretLineNumber, getCaretPosition());
+					while (tokens.getNextToken() != null) {
+						System.out.println(tokens.getLexeme());
+						tokens = tokens.getNextToken();
+					}
+					System.out.println("Caret Line Number " + caretLineNumber);
+				}
 				try {
 					createIntellisenseDataFromCurrentText();
 				} catch (BadLocationException e1) {
