@@ -60,7 +60,7 @@ public class DtoToCodeConverter {
 		String staticBodyData = String.format(staticBody, staticVariableDatas, variabledeclarationdata);
 		String classBodyData = String.format(classBody, artifact.getArtifactVariableName(), staticBodyData);
 		JavaClassSource outClass = (JavaClassSource) Roaster.parse(classBodyData);
-		outClass.addImport("com.neon.ORObject");
+		outClass.addImport("com.opkeystudio.runtime.ORObject");
 		System.out.println(outClass.toString());
 		return outClass;
 	}
