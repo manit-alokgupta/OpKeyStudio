@@ -61,7 +61,6 @@ public class DtoToCodeConverter {
 		String classBodyData = String.format(classBody, artifact.getArtifactVariableName(), staticBodyData);
 		JavaClassSource outClass = (JavaClassSource) Roaster.parse(classBodyData);
 		outClass.addImport("com.opkeystudio.runtime.ORObject");
-		System.out.println(outClass.toString());
 		return outClass;
 	}
 
