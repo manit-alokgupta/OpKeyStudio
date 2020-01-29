@@ -219,7 +219,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			e2.printStackTrace();
 		}
 
-		String classPathString = EditorTools.getClassPathOFAllAssociatedLibs("Web");
+		String classPathString = EditorTools
+				.getClassPathOFAllAssociatedLibs(opkeystudio.core.utils.Utilities.getInstance().getPluginName());
 		List<CompileError> compileErrors = new CompilerTools().compileCodeFl(codeFilePath, classPathString);
 		for (CompileError compileError : compileErrors) {
 			Object lineHighlightObject;

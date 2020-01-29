@@ -7,6 +7,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class DtoToCodeConverter {
 	public JavaClassSource getJavaClassOfGlobalVariables() {
@@ -19,4 +21,11 @@ public class DtoToCodeConverter {
 		}
 		return class1;
 	}
+
+	public JavaClassSource getJavaClassORObjects(Artifact artifact, List<ORObject> orObjects) {
+		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
+		class1.setName(artifact.getArtifactVariableName()).setPublic();
+		return class1;
+	}
+
 }
