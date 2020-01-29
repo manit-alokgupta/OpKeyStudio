@@ -109,6 +109,7 @@ public class CodeCompletionProvider {
 				String dataToEnter = constructor.getName() + "(" + argumentsString + ")";
 				addConstructorTypeBasicCompletion(dataToShow, dataToEnter);
 			}
+			addConstructorTypeBasicCompletion(_class.getName(), _class.getName());
 		} catch (NoClassDefFoundError e) {
 			// TODO: handle exception
 		} catch (IncompatibleClassChangeError e) {

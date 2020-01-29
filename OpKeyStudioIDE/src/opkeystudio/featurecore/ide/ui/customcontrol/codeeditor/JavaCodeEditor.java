@@ -127,8 +127,10 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 					JavaCompletionProvider provider = new JavaCompletionProvider();
 					JavaBasicCompletion completion = new JavaBasicCompletion(provider, "toString()");
 					provider.addCompletion(completion);
+					autoCompletion.setCompletionProvider(provider);
 					autoCompletion.doCompletion();
 				}
+				
 				try {
 					createIntellisenseDataFromCurrentText();
 				} catch (BadLocationException e1) {
