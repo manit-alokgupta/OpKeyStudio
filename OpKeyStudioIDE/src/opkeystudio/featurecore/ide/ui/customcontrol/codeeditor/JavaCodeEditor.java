@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 
 import org.eclipse.swt.SWT;
@@ -96,7 +97,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.setCodeFoldingEnabled(true);
 		this.setAutoIndentEnabled(true);
-
 		CompletionProvider provider = CodeCompletionProvider.getInstance().getCompletionProvider();
 		JavaAutoCompletion autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setAutoActivationDelay(10);
