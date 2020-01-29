@@ -16,17 +16,21 @@ public class CodeCompletionProvider {
 		if (instance == null) {
 			instance = new CodeCompletionProvider();
 			provider = new JavaCompletionProvider();
-			Thread thread = new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-					List<String> importDatas = EditorTools.getAllClassNameFromAassociatedJar();
-					instance.addImportTypeBasicCompletion(importDatas);
-				}
-			});
-			thread.start();
+			initIntellisense();
 		}
 		return instance;
+	}
+
+	public static void initIntellisense() {
+		Thread thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				List<String> importDatas = EditorTools.getAllClassNameFromAassociatedJar();
+				instance.addImportTypeBasicCompletion(importDatas);
+			}
+		});
+		thread.start();
 	}
 
 	public CompletionProvider getCompletionProvider() {

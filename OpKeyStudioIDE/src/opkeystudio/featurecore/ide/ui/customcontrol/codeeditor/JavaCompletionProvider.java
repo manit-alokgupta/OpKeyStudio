@@ -40,7 +40,8 @@ public class JavaCompletionProvider extends DefaultCompletionProvider {
 
 	@Override
 	protected boolean isValidChar(char ch) {
-		// TODO Auto-generated method stub
+		boolean isValidChar = super.isValidChar(ch);
+		System.out.println("Valid Char " + ch + "   " + isValidChar);
 		return super.isValidChar(ch);
 	}
 
@@ -82,7 +83,6 @@ public class JavaCompletionProvider extends DefaultCompletionProvider {
 
 	@Override
 	protected void addWordCompletions(String[] arg0) {
-		// TODO Auto-generated method stub
 		super.addWordCompletions(arg0);
 	}
 

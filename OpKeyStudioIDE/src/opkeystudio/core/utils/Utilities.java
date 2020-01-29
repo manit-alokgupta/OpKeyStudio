@@ -20,6 +20,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 public class Utilities {
 	private static Utilities utils = null;
 	private Shell defaultShell;
+	private String pluginName;
 
 	public static Utilities getInstance() {
 		if (utils == null) {
@@ -161,5 +162,13 @@ public class Utilities {
 
 	public void setDefaultShell(Shell defaultShell) {
 		this.defaultShell = defaultShell;
+	}
+
+	public String getPluginName() {
+		return pluginName;
+	}
+
+	public void setPluginName(String pluginName) {
+		this.pluginName = pluginName;
 	}
 }

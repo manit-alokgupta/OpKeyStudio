@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
@@ -41,6 +42,7 @@ public class CodedFunctionView extends Composite {
 
 	public CodedFunctionView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
+		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
 
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
@@ -77,7 +79,8 @@ public class CodedFunctionView extends Composite {
 							"Unable to Execute Coded FL has compilation error");
 					return;
 				}
-				EditorTools.executeCodedFl(getCodedFLClassPath(), "Web");
+				EditorTools.executeCodedFl(getCodedFLClassPath(),
+						opkeystudio.core.utils.Utilities.getInstance().getPluginName());
 			}
 
 			@Override

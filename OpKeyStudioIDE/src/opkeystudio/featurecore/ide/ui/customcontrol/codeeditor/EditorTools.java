@@ -73,7 +73,7 @@ public class EditorTools {
 	public static List<String> getAllClassNameFromAassociatedJar() {
 		ArrayList<String> allClases = new ArrayList<String>();
 		List<File> pluginBaseLibs = getPluginBaseLibraries();
-		pluginBaseLibs.addAll(getPluginsLibraries("Web"));
+		pluginBaseLibs.addAll(getPluginsLibraries(opkeystudio.core.utils.Utilities.getInstance().getPluginName()));
 		for (File file : pluginBaseLibs) {
 			allClases.addAll(getAllClassNamesFromJar(file.getAbsolutePath()));
 		}
@@ -121,6 +121,16 @@ public class EditorTools {
 				| InvocationTargetException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {
+		List<File> allLibs = getAllAssocitedLibraries(pluginName);
+		URL[] allJarsAndClasses = new URL[allLibs.size()];
+		for (int i = 0; i < allLibs.size(); i++) {
+			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
+		}
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses, EditorTools.class.getClassLoader());
+		return child;
 	}
 
 	private static void execute(String codedFLFileName, String pluginName)

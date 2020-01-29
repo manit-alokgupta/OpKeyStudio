@@ -106,13 +106,13 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		autoCompletion.install(this);
 		autoCompletion.setHideOnNoText(false);
 		autoCompletion.addAutoCompletionListener(new AutoCompletionListener() {
-			
+
 			@Override
 			public void autoCompleteUpdate(AutoCompletionEvent arg0) {
-				System.out.println("AutoComplete Updated "+arg0);
+				System.out.println("AutoComplete Updated " + arg0);
 			}
 		});
-		
+
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
 		frame.add(mainEditorPanel);
@@ -125,7 +125,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
 					System.out.println("Current token data " + lastToken.getLexeme());
-					autoCompletion.refreshPopupWindow();
+					JavaCompletionProvider provider = new JavaCompletionProvider();
+					JavaBasicCompletion completion = new JavaBasicCompletion(provider, "toString()");
+					provider.addCompletion(completion);
 					autoCompletion.doCompletion();
 				}
 				try {
@@ -185,6 +187,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 					varClassName = lineTokens.get(i - 2).getLexeme();
 				}
 
+				AutoCompleteToken atoken = new AutoCompleteToken(varName, varClassName);
+				CodeCompletionProvider.getInstance().addAutoCompleteToken(atoken);
 				System.out.println("Var Name " + varName + "   ClassName " + varClassName);
 				CodeCompletionProvider.getInstance().addBasicCompletion(varName);
 			}
