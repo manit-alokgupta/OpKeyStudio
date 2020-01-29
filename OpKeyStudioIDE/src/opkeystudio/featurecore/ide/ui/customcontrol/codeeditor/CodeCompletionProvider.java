@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.fife.ui.autocomplete.BasicCompletion;
@@ -9,6 +10,7 @@ import org.fife.ui.autocomplete.ShorthandCompletion;
 public class CodeCompletionProvider {
 	private static CodeCompletionProvider instance;
 	private static JavaCompletionProvider provider;
+	private List<AutoCompleteToken> allTokens = new ArrayList<AutoCompleteToken>();
 
 	public static CodeCompletionProvider getInstance() {
 		if (instance == null) {
@@ -66,5 +68,17 @@ public class CodeCompletionProvider {
 		for (String data : datas) {
 			addImportTypeBasicCompletion(data);
 		}
+	}
+
+	public List<AutoCompleteToken> getAllTokens() {
+		return allTokens;
+	}
+
+	public void addAutoCompleteToken(AutoCompleteToken token) {
+		this.allTokens.add(token);
+	}
+
+	public void setAllTokens(List<AutoCompleteToken> allTokens) {
+		this.allTokens = allTokens;
 	}
 }
