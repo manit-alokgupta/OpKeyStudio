@@ -39,7 +39,7 @@ public class CodedFunctionView extends Composite {
 	private ToolItem refreshButton;
 	private CodedFunctionBottomFactoryUI bottomFactoryUi;
 	private String codedFLClassPath;
-
+	private String artifactOpkeyDataLibraryPath;
 	public CodedFunctionView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
 		Utilities.getInstance().setPluginName("Web");
@@ -180,5 +180,13 @@ public class CodedFunctionView extends Composite {
 
 	public CodedFunctionBottomFactoryUI getCodedFunctionBottomFactoryUi() {
 		return this.bottomFactoryUi;
+	}
+
+	public String getArtifactOpkeyDataLibraryPath() {
+		return artifactOpkeyDataLibraryPath;
+	}
+
+	public void setArtifactOpkeyDataLibraryPath(String artifactOpkeyDataLibraryPath) {
+		this.artifactOpkeyDataLibraryPath = artifactOpkeyDataLibraryPath;
 	}
 }

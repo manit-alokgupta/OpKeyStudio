@@ -246,6 +246,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		if (!file.exists()) {
 			file.mkdir();
 		}
+
+		getCodeFunctionView().setArtifactOpkeyDataLibraryPath(file.getAbsolutePath());
 		JavaClassSource gvClassSource = new DtoToCodeConverter().getJavaClassOfGlobalVariables();
 		File gvJavaFile = new File(file.getAbsolutePath() + File.separator + gvClassSource.getName() + ".java");
 		try {
