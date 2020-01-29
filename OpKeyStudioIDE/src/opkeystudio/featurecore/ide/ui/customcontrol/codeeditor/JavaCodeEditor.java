@@ -104,7 +104,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		autoCompletion.setAutoCompleteSingleChoices(false);
 		autoCompletion.setAutoActivationEnabled(true);
 		autoCompletion.install(this);
-		
+		autoCompletion.setHideOnNoText(false);
 		autoCompletion.addAutoCompletionListener(new AutoCompletionListener() {
 			
 			@Override
@@ -125,6 +125,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
 					System.out.println("Current token data " + lastToken.getLexeme());
+					autoCompletion.refreshPopupWindow();
+					autoCompletion.doCompletion();
 				}
 				try {
 					createIntellisenseDataFromCurrentText();
