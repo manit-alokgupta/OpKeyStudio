@@ -2,7 +2,6 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -16,7 +15,6 @@ import java.util.jar.JarInputStream;
 import javax.tools.Diagnostic.Kind;
 
 import org.jboss.forge.roaster.Roaster;
-import org.yaml.snakeyaml.constructor.Construct;
 
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
