@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
@@ -91,6 +92,10 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		return lastToken;
 	}
 
+	public JTextComponent getTextComponent() {
+		return this;
+	}
+
 	private void init(Frame frame) {
 		JPanel mainEditorPanel = new JPanel(new BorderLayout());
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
@@ -104,13 +109,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		autoCompletion.setAutoActivationEnabled(true);
 		autoCompletion.install(this);
 		autoCompletion.setHideOnNoText(false);
-		autoCompletion.addAutoCompletionListener(new AutoCompletionListener() {
-
-			@Override
-			public void autoCompleteUpdate(AutoCompletionEvent arg0) {
-				System.out.println("AutoComplete Updated " + arg0);
-			}
-		});
 
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
@@ -121,6 +119,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char keyChar = e.getKeyChar();
+				String textEntereed = provider.getAlreadyEnteredText(getTextComponent());
+				System.out.println("Intered Text " + textEntereed);
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
 					System.out.println("Current token data " + lastToken.getLexeme());

@@ -40,8 +40,6 @@ public class JavaCompletionProvider extends DefaultCompletionProvider {
 
 	@Override
 	protected boolean isValidChar(char ch) {
-		boolean isValidChar = super.isValidChar(ch);
-		System.out.println("Valid Char " + ch + "   " + isValidChar);
 		return super.isValidChar(ch);
 	}
 
