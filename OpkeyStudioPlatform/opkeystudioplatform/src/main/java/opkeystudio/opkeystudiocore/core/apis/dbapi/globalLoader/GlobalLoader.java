@@ -1,12 +1,15 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
@@ -27,6 +30,8 @@ public class GlobalLoader {
 	private List<Artifact> allArtifacts = new ArrayList<Artifact>();
 	private List<ObjectAttributeProperty> objectAttributeProperties = new ArrayList<>();
 
+	private List<GlobalVariable> globalVaribles = new ArrayList<GlobalVariable>();
+
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
 			globalLoader = new GlobalLoader();
@@ -45,12 +50,22 @@ public class GlobalLoader {
 				globalLoader.initAllComponentFlowOutputArguments();
 				globalLoader.initAllORObjects();
 				globalLoader.initAllORObjectsObjectProperties();
+				globalLoader.initGlobalVariables();
 			}
 		});
 		thread.start();
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void initGlobalVariables() {
+		try {
+			this.globalVaribles = new GlobalVariableApi().getAllGlobalVariables();
+		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -212,5 +227,13 @@ public class GlobalLoader {
 
 	public void setObjectAttributeProperties(List<ObjectAttributeProperty> objectAttributeProperties) {
 		this.objectAttributeProperties = objectAttributeProperties;
+	}
+
+	public List<GlobalVariable> getGlobalVaribles() {
+		return globalVaribles;
+	}
+
+	public void setGlobalVaribles(List<GlobalVariable> globalVaribles) {
+		this.globalVaribles = globalVaribles;
 	}
 }
