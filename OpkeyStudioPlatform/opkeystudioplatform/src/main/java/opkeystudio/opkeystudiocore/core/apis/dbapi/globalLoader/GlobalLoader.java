@@ -236,4 +236,25 @@ public class GlobalLoader {
 	public void setGlobalVaribles(List<GlobalVariable> globalVaribles) {
 		this.globalVaribles = globalVaribles;
 	}
+
+	public List<ORObject> getAllOrObjects(String orid) {
+		List<ORObject> retOrObjects = new ArrayList<ORObject>();
+		List<ORObject> orobjects = GlobalLoader.getInstance().getAllORObjects();
+		for (ORObject object : orobjects) {
+			if (object.getOr_id().equals(orid)) {
+				retOrObjects.add(object);
+			}
+		}
+		return retOrObjects;
+	}
+
+	public List<ObjectAttributeProperty> getORObjectAttributeProperty(String objectId) {
+		List<ObjectAttributeProperty> retObjectAttributes = new ArrayList<ObjectAttributeProperty>();
+		for (ObjectAttributeProperty objectAttrProp : GlobalLoader.getInstance().getObjectAttributeProperties()) {
+			if (objectAttrProp.getObject_id().equals(objectId)) {
+				retObjectAttributes.add(objectAttrProp);
+			}
+		}
+		return retObjectAttributes;
+	}
 }

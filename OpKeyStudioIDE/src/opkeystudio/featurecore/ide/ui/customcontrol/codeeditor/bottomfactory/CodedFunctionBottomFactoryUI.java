@@ -34,8 +34,8 @@ import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 public class CodedFunctionBottomFactoryUI extends Composite {
 	private Table usedByTable;
 	private Table associateLibraries;
-	private Table associateor;
 	private Table associatedr;
+	private CFLOrAssociate associateor;
 	private CFLInputTable inputTable;
 	private CFLOutputTable outputTable;
 	private TabItem inputTabItem;
@@ -211,7 +211,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		moveDownTagItem.setToolTipText("Move Down");
 		moveDownTagItem.setEnabled(false);
 
-		associateor = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		associateor = new CFLOrAssociate(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associateor.setHeaderVisible(true);
@@ -234,15 +234,15 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		compareBackupItem.setToolTipText("Compare With Backup");
 		compareBackupItem.setText("New Item");
 
-		associatedr = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
+		associatedr = new CFLOrAssociate(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
 //		backupTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
 		associatedr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associatedr.setHeaderVisible(true);
 		associatedr.setLinesVisible(true);
 
 		inputTabItem = new TabItem(tabFolder, SWT.NONE);
-		inputTabItem.setText("Associate DR");
-		inputTabItem.setToolTipText("Associate DR");
+		inputTabItem.setText("Input");
+		inputTabItem.setToolTipText("Output");
 
 		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
 		inputTabItem.setControl(composite_11);
@@ -597,7 +597,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 
