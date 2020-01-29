@@ -5,6 +5,7 @@ import java.util.List;
 import javax.tools.Diagnostic.Kind;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -40,6 +41,7 @@ public class CodedFunctionView extends Composite {
 	private CodedFunctionBottomFactoryUI bottomFactoryUi;
 	private String codedFLClassPath;
 	private String artifactOpkeyDataLibraryPath;
+
 	public CodedFunctionView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
 		Utilities.getInstance().setPluginName("Web");
@@ -60,7 +62,7 @@ public class CodedFunctionView extends Composite {
 		editor.setArtifact(getArtifact());
 		editor.setCodeFunctionView(this);
 		toggleSaveButton(false);
-		
+
 		editor.convertOpKeyVariablesToCode();
 		bottomFactoryUi = new CodedFunctionBottomFactoryUI(this, SWT.NONE, this);
 		bottomFactoryUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -123,6 +125,10 @@ public class CodedFunctionView extends Composite {
 		});
 		renderCFLCode();
 
+	}
+
+	public JavaCodeEditor getJavaEditor() {
+		return this.editor;
 	}
 
 	private void saveCFL(boolean showconfirmation) {

@@ -266,6 +266,14 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		bw.close();
 	}
 
+	public List<CompileError> compileAllOpKeyLibs() {
+		String classPathString = EditorTools
+				.getClassPathOFAllAssociatedLibs(opkeystudio.core.utils.Utilities.getInstance().getPluginName());
+		List<File> files = EditorTools.getAllFiles(new File(getCodeFunctionView().getArtifactOpkeyDataLibraryPath()),
+				".java");
+		return new CompilerTools().compileFiles(files, classPathString);
+	}
+
 	public Artifact getArtifact() {
 		return artifact;
 	}

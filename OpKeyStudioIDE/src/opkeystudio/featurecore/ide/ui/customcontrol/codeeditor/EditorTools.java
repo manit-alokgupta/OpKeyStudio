@@ -20,7 +20,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class EditorTools {
-	private static List<File> getAllFiles(File rootFile, String extension) {
+	public static List<File> getAllFiles(File rootFile, String extension) {
 		List<File> allFiles = new ArrayList<File>();
 		File[] files = rootFile.listFiles();
 		for (File file : files) {

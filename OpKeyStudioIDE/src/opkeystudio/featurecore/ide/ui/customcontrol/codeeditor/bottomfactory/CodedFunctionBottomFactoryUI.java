@@ -211,7 +211,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		moveDownTagItem.setToolTipText("Move Down");
 		moveDownTagItem.setEnabled(false);
 
-		associateor = new CFLOrAssociate(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		associateor = new CFLOrAssociate(composite_7, SWT.BORDER | SWT.FULL_SELECTION,this);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associateor.setHeaderVisible(true);
@@ -234,7 +234,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		compareBackupItem.setToolTipText("Compare With Backup");
 		compareBackupItem.setText("New Item");
 
-		associatedr = new CFLOrAssociate(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
+		associatedr = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
 //		backupTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
 		associatedr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associatedr.setHeaderVisible(true);
