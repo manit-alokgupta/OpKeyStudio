@@ -51,11 +51,17 @@ public class Utilities {
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
+
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "Artifacts" + File.separator + "libs";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
 	}
 
 	public String getDefaultInstallDir() {
 		return "E:\\OpKeyEResources";
-		//return defaultInstallDir;
+		// return defaultInstallDir;
 	}
 
 	public String getDefaultPluginBaseDir() {
@@ -81,6 +87,12 @@ public class Utilities {
 	public String getDefaultSourceCodeDirPath() {
 		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "SourceCodes";
+		return path;
+	}
+
+	public String getDefaultSourceCodeLibrariesDirPath() {
+		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "Artifacts" + File.separator + "libs";
 		return path;
 	}
 

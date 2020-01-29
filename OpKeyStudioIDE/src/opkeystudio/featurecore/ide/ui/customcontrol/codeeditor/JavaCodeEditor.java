@@ -24,15 +24,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.fife.ui.autocomplete.AutoCompletionEvent;
-import org.fife.ui.autocomplete.AutoCompletionListener;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxDocument;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import opkeystudio.core.utils.DtoToCodeConverter;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
@@ -130,7 +130,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 					autoCompletion.setCompletionProvider(provider);
 					autoCompletion.doCompletion();
 				}
-				
+
 				try {
 					createIntellisenseDataFromCurrentText();
 				} catch (BadLocationException e1) {
@@ -235,6 +235,32 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		getCodeFunctionView().getCodedFunctionBottomFactoryUi().getCompilationResultTable()
 				.renderCompilingError(compileErrors);
 		return compileErrors;
+	}
+
+	public void convertOpKeyVariablesToCode() {
+		Artifact artifact = getArtifact();
+		String defaultSourceCodeLibsPath = Utilities.getInstance().getDefaultSourceCodeLibrariesDirPath();
+		String defArtifactSourceCodeLibsPath = defaultSourceCodeLibsPath + File.separator
+				+ artifact.getArtifactVariableName();
+		File file = new File(defArtifactSourceCodeLibsPath);
+		if (!file.exists()) {
+			file.mkdir();
+		}
+		JavaClassSource gvClassSource = new DtoToCodeConverter().getJavaClassOfGlobalVariables();
+		File gvJavaFile = new File(file.getAbsolutePath() + File.separator + gvClassSource.getName() + ".java");
+		try {
+			writeToFile(gvJavaFile, gvClassSource.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void writeToFile(File infile, String dataToWrite) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(infile));
+		bw.write(dataToWrite);
+		bw.flush();
+		bw.close();
 	}
 
 	public Artifact getArtifact() {

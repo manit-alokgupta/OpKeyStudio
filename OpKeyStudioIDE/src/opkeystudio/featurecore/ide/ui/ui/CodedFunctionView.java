@@ -60,7 +60,8 @@ public class CodedFunctionView extends Composite {
 		editor.setArtifact(getArtifact());
 		editor.setCodeFunctionView(this);
 		toggleSaveButton(false);
-
+		
+		editor.convertOpKeyVariablesToCode();
 		bottomFactoryUi = new CodedFunctionBottomFactoryUI(this, SWT.NONE, this);
 		bottomFactoryUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		bottomFactoryUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
