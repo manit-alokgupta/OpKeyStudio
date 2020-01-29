@@ -181,8 +181,7 @@ public class ORObject extends Modified implements Cloneable {
 	}
 
 	public String getVariableName() {
-		setVariableName("or_" + getClustering_key());
-		return variableName;
+		return getName().replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
 	}
 
 	public void setVariableName(String variableName) {
