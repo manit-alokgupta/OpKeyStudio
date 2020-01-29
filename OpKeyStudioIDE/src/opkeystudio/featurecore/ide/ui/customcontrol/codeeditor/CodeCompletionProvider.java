@@ -4,17 +4,16 @@ import java.util.List;
 
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
-import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 
 public class CodeCompletionProvider {
 	private static CodeCompletionProvider instance;
-	private static DefaultCompletionProvider provider;
+	private static JavaCompletionProvider provider;
 
 	public static CodeCompletionProvider getInstance() {
 		if (instance == null) {
 			instance = new CodeCompletionProvider();
-			provider = new DefaultCompletionProvider();
+			provider = new JavaCompletionProvider();
 			Thread thread = new Thread(new Runnable() {
 
 				@Override

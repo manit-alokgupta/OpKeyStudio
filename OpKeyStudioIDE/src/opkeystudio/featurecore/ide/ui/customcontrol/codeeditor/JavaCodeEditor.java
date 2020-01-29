@@ -23,6 +23,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.fife.ui.autocomplete.AutoCompletionEvent;
+import org.fife.ui.autocomplete.AutoCompletionListener;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxDocument;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -102,6 +104,15 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		autoCompletion.setAutoCompleteSingleChoices(false);
 		autoCompletion.setAutoActivationEnabled(true);
 		autoCompletion.install(this);
+		
+		autoCompletion.addAutoCompletionListener(new AutoCompletionListener() {
+			
+			@Override
+			public void autoCompleteUpdate(AutoCompletionEvent arg0) {
+				System.out.println("AutoComplete Updated "+arg0);
+			}
+		});
+		
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
 		frame.add(mainEditorPanel);
