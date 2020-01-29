@@ -33,9 +33,9 @@ import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
 	private Table usedByTable;
-	private Table auditTrailsTable;
-	private Table tagsTable;
-	private Table backupTable;
+	private Table associateLibraries;
+	private Table associateor;
+	private Table associatedr;
 	private CFLInputTable inputTable;
 	private CFLOutputTable outputTable;
 	private TabItem inputTabItem;
@@ -153,18 +153,18 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		exportAuditToolItem.setToolTipText("Export Audit Trails");
 		exportAuditToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
 
-		auditTrailsTable = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
+		associateLibraries = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
 //		auditTrailsTable = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
-		auditTrailsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		auditTrailsTable.setHeaderVisible(true);
-		auditTrailsTable.setLinesVisible(true);
+		associateLibraries.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associateLibraries.setHeaderVisible(true);
+		associateLibraries.setLinesVisible(true);
 
-		TabItem tagsTabItem = new TabItem(tabFolder, SWT.NONE);
-		tagsTabItem.setText("Tags");
-		tagsTabItem.setToolTipText("Tags");
+		TabItem associateLibrariesTagItem = new TabItem(tabFolder, SWT.NONE);
+		associateLibrariesTagItem.setText("Associate Libraries");
+		associateLibrariesTagItem.setToolTipText("Associate Libraries");
 
 		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
-		tagsTabItem.setControl(composite_7);
+		associateLibrariesTagItem.setControl(composite_7);
 		composite_7.setLayout(new GridLayout(1, false));
 		composite_7.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
@@ -211,15 +211,15 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		moveDownTagItem.setToolTipText("Move Down");
 		moveDownTagItem.setEnabled(false);
 
-		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		associateor = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
-		tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		tagsTable.setHeaderVisible(true);
-		tagsTable.setLinesVisible(true);
+		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associateor.setHeaderVisible(true);
+		associateor.setLinesVisible(true);
 
 		TabItem backupTabItem = new TabItem(tabFolder, SWT.NONE);
-		backupTabItem.setText("Backup");
-		backupTabItem.setToolTipText("Backup");
+		backupTabItem.setText("Associate OR");
+		backupTabItem.setToolTipText("Associate OR");
 
 		Composite composite_9 = new Composite(tabFolder, SWT.NONE);
 		backupTabItem.setControl(composite_9);
@@ -234,15 +234,15 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		compareBackupItem.setToolTipText("Compare With Backup");
 		compareBackupItem.setText("New Item");
 
-		backupTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
+		associatedr = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
 //		backupTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
-		backupTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		backupTable.setHeaderVisible(true);
-		backupTable.setLinesVisible(true);
+		associatedr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associatedr.setHeaderVisible(true);
+		associatedr.setLinesVisible(true);
 
 		inputTabItem = new TabItem(tabFolder, SWT.NONE);
-		inputTabItem.setText("Input");
-		inputTabItem.setToolTipText("Input");
+		inputTabItem.setText("Associate DR");
+		inputTabItem.setToolTipText("Associate DR");
 
 		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
 		inputTabItem.setControl(composite_11);
@@ -408,7 +408,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			}
 		});
 
-		tagsTable.addSelectionListener(new SelectionListener() {
+		associateor.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
