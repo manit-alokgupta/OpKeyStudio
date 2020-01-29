@@ -1,27 +1,17 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 public class AutoCompleteToken {
-	private String varName;
-	private String importPackageName;
+	private Class tokenClass;
 
-	public AutoCompleteToken(String varName, String importPackageName) {
-		this.setVarName(varName);
-		this.setImportPackageName(importPackageName);
+	public AutoCompleteToken(Class _class) {
+		this.setTokenClass(_class);
 	}
 
-	public String getVarName() {
-		return varName;
+	public Class getTokenClass() {
+		return tokenClass;
 	}
 
-	public void setVarName(String varName) {
-		this.varName = varName;
-	}
-
-	public String getImportPackageName() {
-		return importPackageName;
-	}
-
-	public void setImportPackageName(String importPackageName) {
-		this.importPackageName = importPackageName;
+	public void setTokenClass(Class tokenClass) {
+		this.tokenClass = tokenClass;
 	}
 }

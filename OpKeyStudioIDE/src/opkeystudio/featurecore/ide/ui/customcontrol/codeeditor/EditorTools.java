@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -15,6 +16,7 @@ import java.util.jar.JarInputStream;
 import javax.tools.Diagnostic.Kind;
 
 import org.jboss.forge.roaster.Roaster;
+import org.yaml.snakeyaml.constructor.Construct;
 
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -104,6 +106,37 @@ public class EditorTools {
 		return listofClasses;
 	}
 
+	public static void getClassInformation() {
+		try {
+			System.out.println("Fetching Class Information");
+			URLClassLoader classLoader = getURLClassLoaderOfClasses(
+					opkeystudio.core.utils.Utilities.getInstance().getPluginName());
+			List<String> classNames = getAllClassNameFromAassociatedJar();
+			for (String className : classNames) {
+				try {
+					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
+					parseClass(classToLoad);
+				} catch (NoClassDefFoundError e) {
+					// TODO: handle exception
+				} catch (IncompatibleClassChangeError e) {
+					// TODO: handle exception
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+				} catch (UnsupportedClassVersionError e) {
+					// TODO: handle exception
+				}
+			}
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void parseClass(Class _class) {
+		AutoCompleteToken token = new AutoCompleteToken(_class);
+		CodeCompletionProvider.getInstance().addAutoCompleteToken(token);
+	}
+
 	public static String formatJavaSourceCode(String javaCode) {
 		try {
 			String formattedCode = Roaster.format(javaCode);
@@ -123,7 +156,7 @@ public class EditorTools {
 		}
 	}
 
-	public URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {
+	public static URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {
 		List<File> allLibs = getAllAssocitedLibraries(pluginName);
 		URL[] allJarsAndClasses = new URL[allLibs.size()];
 		for (int i = 0; i < allLibs.size(); i++) {
