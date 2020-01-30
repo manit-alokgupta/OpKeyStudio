@@ -34,8 +34,8 @@ import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 public class CodedFunctionBottomFactoryUI extends Composite {
 	private Table usedByTable;
 	private Table associateLibraries;
-	private Table associatedr;
 	private CFLOrAssociate associateor;
+	private Table associatedr;
 	private CFLInputTable inputTable;
 	private CFLOutputTable outputTable;
 	private TabItem inputTabItem;
@@ -211,11 +211,11 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		moveDownTagItem.setToolTipText("Move Down");
 		moveDownTagItem.setEnabled(false);
 
-		associateor = new CFLOrAssociate(composite_7, SWT.BORDER | SWT.FULL_SELECTION,this);
+		associatedr = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
-		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		associateor.setHeaderVisible(true);
-		associateor.setLinesVisible(true);
+		associatedr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associatedr.setHeaderVisible(true);
+		associatedr.setLinesVisible(true);
 
 		TabItem backupTabItem = new TabItem(tabFolder, SWT.NONE);
 		backupTabItem.setText("Associate OR");
@@ -234,11 +234,10 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		compareBackupItem.setToolTipText("Compare With Backup");
 		compareBackupItem.setText("New Item");
 
-		associatedr = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
-//		backupTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
-		associatedr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		associatedr.setHeaderVisible(true);
-		associatedr.setLinesVisible(true);
+		associateor = new CFLOrAssociate(composite_9, SWT.BORDER | SWT.FULL_SELECTION, this);
+		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associateor.setHeaderVisible(true);
+		associateor.setLinesVisible(true);
 
 		inputTabItem = new TabItem(tabFolder, SWT.NONE);
 		inputTabItem.setText("Input");
@@ -408,7 +407,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			}
 		});
 
-		associateor.addSelectionListener(new SelectionListener() {
+		associatedr.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
