@@ -118,8 +118,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char keyChar = e.getKeyChar();
-				String textEntereed = provider.getAlreadyEnteredText(getTextComponent());
-				System.out.println("Intered Text " + textEntereed);
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
 					System.out.println("Current token data " + lastToken.getLexeme());
