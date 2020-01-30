@@ -123,6 +123,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
 					System.out.println("Current token data " + lastToken.getLexeme());
+					CodeCompletionProvider.getInstance().findAutoCompleteToken(lastToken.getLexeme());
 					JavaCompletionProvider provider = new JavaCompletionProvider();
 					JavaBasicCompletion completion = new JavaBasicCompletion(provider, "toString()");
 					provider.addCompletion(completion);

@@ -123,6 +123,20 @@ public class CodeCompletionProvider {
 		return allTokens;
 	}
 
+	public AutoCompleteToken findAutoCompleteToken(String tokenString) {
+		List<AutoCompleteToken> allTokens = getAllTokens();
+		for (AutoCompleteToken token : allTokens) {
+			@SuppressWarnings("rawtypes")
+			Class tokenClass = token.getTokenClass();
+			String className = tokenClass.getName();
+			if (className.endsWith("." + tokenString)) {
+				System.out.println("ClassName " + tokenClass.getName());
+				return token;
+			}
+		}
+		return null;
+	}
+
 	public void addAutoCompleteToken(AutoCompleteToken token) {
 		this.allTokens.add(token);
 	}
