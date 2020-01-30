@@ -137,6 +137,14 @@ public class CodeCompletionProvider {
 		return null;
 	}
 
+	public JavaCompletionProvider getClassMethodsCompletionProvider(AutoCompleteToken token) {
+		JavaCompletionProvider provider = new JavaCompletionProvider();
+		JavaBasicCompletion jbc = new JavaBasicCompletion(provider, "toNeon()");
+		jbc.setTextToEnter("Neon");
+		provider.addCompletion(jbc);
+		return provider;
+	}
+
 	public void addAutoCompleteToken(AutoCompleteToken token) {
 		this.allTokens.add(token);
 	}
