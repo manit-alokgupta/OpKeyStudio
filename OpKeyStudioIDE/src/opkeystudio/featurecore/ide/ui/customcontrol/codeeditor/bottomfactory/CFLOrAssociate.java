@@ -4,18 +4,23 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.DtoToCodeConverter;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
@@ -61,38 +66,59 @@ public class CFLOrAssociate extends CustomTable {
 				}
 			}
 		});
+		renderORNodes();
+	}
 
-		this.addSelectionListener(new SelectionListener() {
+	private TableEditor getTableEditor() {
+		TableEditor editor = new TableEditor(this);
+		editor.horizontalAlignment = SWT.CENTER;
+		editor.verticalAlignment = SWT.CENTER;
+		editor.grabHorizontal = true;
+		editor.grabVertical = true;
+		return editor;
+	}
+
+	private List<Control> allTableEditors = new ArrayList<Control>();
+
+	private void addTableEditor(CustomTableItem item) {
+		TableEditor editor1 = getTableEditor();
+		CustomButton associateOR = new CustomButton(this, SWT.CHECK | SWT.CENTER);
+		associateOR.setSelection(false);
+		associateOR.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				CustomTableItem selectedTableItem = getSelectedTableItem();
-				Artifact artifact = (Artifact) selectedTableItem.getControlData();
-				List<ORObject> allOrObjects = GlobalLoader.getInstance().getAllOrObjects(artifact.getId());
-				for (ORObject object : allOrObjects) {
-					List<ObjectAttributeProperty> attributeProps = GlobalLoader.getInstance()
-							.getORObjectAttributeProperty(object.getObject_id());
-					object.setObjectAttributesProperty(attributeProps);
-				}
+				setSelection(item);
+				if (associateOR.getSelection() == true) {
+					Artifact artifact = (Artifact) item.getControlData();
+					List<ORObject> allOrObjects = GlobalLoader.getInstance().getAllOrObjects(artifact.getId());
+					for (ORObject object : allOrObjects) {
+						List<ObjectAttributeProperty> attributeProps = GlobalLoader.getInstance()
+								.getORObjectAttributeProperty(object.getObject_id());
+						object.setObjectAttributesProperty(attributeProps);
+					}
 
-				JavaClassSource classSource = new DtoToCodeConverter().getJavaClassORObjects(artifact, allOrObjects);
-				String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
-						.getArtifactOpkeyDataLibraryPath();
-				File file = new File(dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".java");
-				BufferedWriter bw;
-				try {
-					bw = new BufferedWriter(new FileWriter(file));
-					bw.write(classSource.toString());
-					bw.flush();
-					bw.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				List<CompileError> errors = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
-						.compileAllOpKeyLibs();
+					JavaClassSource classSource = new DtoToCodeConverter().getJavaClassORObjects(artifact,
+							allOrObjects);
+					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
+							.getArtifactOpkeyDataLibraryPath();
+					File file = new File(
+							dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".java");
+					BufferedWriter bw;
+					try {
+						bw = new BufferedWriter(new FileWriter(file));
+						bw.write(classSource.toString());
+						bw.flush();
+						bw.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					List<CompileError> errors = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
+							.compileAllOpKeyLibs();
 
-				System.out.println("Errors Found " + errors.size());
+					System.out.println("Errors Found " + errors.size());
+				}
 			}
 
 			@Override
@@ -101,15 +127,25 @@ public class CFLOrAssociate extends CustomTable {
 
 			}
 		});
-		renderORNodes();
+
+		editor1.setEditor(associateOR, item, 0);
+		allTableEditors.add(editor1.getEditor());
+	}
+
+	private void disposeAllTableEditors() {
+		for (Control editor : allTableEditors) {
+			editor.dispose();
+		}
 	}
 
 	private void renderORNodes() {
+		disposeAllTableEditors();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
 		for (Artifact artifact : artifacts) {
 			CustomTableItem item = new CustomTableItem(this, 0);
 			item.setText(new String[] { "", artifact.getArtifactVariableName() });
 			item.setControlData(artifact);
+			addTableEditor(item);
 		}
 	}
 

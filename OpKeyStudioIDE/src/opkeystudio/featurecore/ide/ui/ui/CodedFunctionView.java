@@ -5,7 +5,6 @@ import java.util.List;
 import javax.tools.Diagnostic.Kind;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -104,10 +103,7 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				JavaAutoCompletion completion = editor.getAutoCompletion();
-				completion.setCompletionProvider(CodeCompletionProvider.getInstance().getCompletionProvider());
-				completion.install(editor);
-				saveCFL(false);
+				saveAllCFL();
 			}
 
 			@Override
@@ -135,6 +131,13 @@ public class CodedFunctionView extends Composite {
 		});
 		renderCFLCode();
 
+	}
+
+	public void saveAllCFL() {
+		JavaAutoCompletion completion = editor.getAutoCompletion();
+		completion.setCompletionProvider(CodeCompletionProvider.getInstance().getCompletionProvider());
+		completion.install(editor);
+		saveCFL(false);
 	}
 
 	public JavaCodeEditor getJavaEditor() {
