@@ -5,10 +5,6 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Icon;
-
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
@@ -17,6 +13,7 @@ public class CodeCompletionProvider {
 	private static CodeCompletionProvider instance;
 	private static JavaCompletionProvider provider;
 	private List<AutoCompleteToken> allTokens = new ArrayList<AutoCompleteToken>();
+	private List<VariableToken> allvariabletokens = new ArrayList<VariableToken>();
 
 	public static CodeCompletionProvider getInstance() {
 		if (instance == null) {
@@ -151,5 +148,26 @@ public class CodeCompletionProvider {
 
 	public void setAllTokens(List<AutoCompleteToken> allTokens) {
 		this.allTokens = allTokens;
+	}
+
+	public void addVariableToken(VariableToken token) {
+		this.allvariabletokens.add(token);
+	}
+
+	public List<VariableToken> getAllvariabletokens() {
+		return allvariabletokens;
+	}
+
+	public void setAllvariabletokens(List<VariableToken> allvariabletokens) {
+		this.allvariabletokens = allvariabletokens;
+	}
+
+	public VariableToken findVariableToken(String varName) {
+		for (VariableToken varToken : getAllvariabletokens()) {
+			if (varToken.getVariableName().equals(varName)) {
+				return varToken;
+			}
+		}
+		return null;
 	}
 }

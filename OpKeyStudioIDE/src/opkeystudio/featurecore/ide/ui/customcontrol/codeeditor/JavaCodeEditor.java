@@ -185,6 +185,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				if (lineTokens.get(i - 2) != null) {
 					varClassName = lineTokens.get(i - 2).getLexeme();
 				}
+				VariableToken varToken = new VariableToken(varName, varClassName);
+				CodeCompletionProvider.getInstance().addVariableToken(varToken);
 				System.out.println("Var Name " + varName + "   ClassName " + varClassName);
 				CodeCompletionProvider.getInstance().addBasicCompletion(varName);
 			}
