@@ -128,6 +128,10 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 					Token lastToken = getRecentToken();
 					String tokenData = lastToken.getLexeme();
 					System.out.println("Current token data " + tokenData);
+					VariableToken varToken = CodeCompletionProvider.getInstance().findVariableToken(tokenData);
+					if (varToken != null) {
+						tokenData = varToken.getClassName();
+					}
 					AutoCompleteToken autocompletetoken = CodeCompletionProvider.getInstance()
 							.findAutoCompleteToken(tokenData);
 					JavaCompletionProvider provider = CodeCompletionProvider.getInstance()
