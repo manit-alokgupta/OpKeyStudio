@@ -14,6 +14,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
@@ -52,12 +53,16 @@ public class CodedFunctionView extends Composite {
 
 		runButton = new ToolItem(toolBar, SWT.NONE);
 		runButton.setText("Run");
+		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/play.png"));
 
 		saveButton = new ToolItem(toolBar, SWT.NONE);
 		saveButton.setText("Save");
+		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
 
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setText("Refresh");
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/refresh.png"));
+
 		editor = new JavaCodeEditor(this);
 		editor.setArtifact(getArtifact());
 		editor.setCodeFunctionView(this);

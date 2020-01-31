@@ -6,9 +6,12 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.widgets.Display;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
+
+import opkeystudio.core.utils.MessageDialogs;
 
 public class CodeCompletionProvider {
 	private static CodeCompletionProvider instance;
@@ -26,17 +29,15 @@ public class CodeCompletionProvider {
 	}
 
 	public static void initIntellisense(CodeCompletionProvider provider) {
-		Thread thread = new Thread(new Runnable() {
-
-			@Override
+		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-				// List<String> importDatas = EditorTools.getAllClassNameFromAassociatedJar();
-				// instance.addImportTypeBasicCompletion(importDatas);
+				MessageDialogs msd = new MessageDialogs();
+				msd.openProgressDialog(null, "Please wait initializing Intellisense...");
 				EditorTools.getClassInformation();
 				provider.createIntellisenseData();
+				msd.closeProgressDialog();
 			}
 		});
-		thread.start();
 	}
 
 	public CompletionProvider getCompletionProvider() {

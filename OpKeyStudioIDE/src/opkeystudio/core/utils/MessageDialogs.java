@@ -37,6 +37,9 @@ public class MessageDialogs {
 	}
 
 	public void openProgressDialog(Shell shell, String message) {
+		if (shell == null) {
+			shell = new Shell();
+		}
 		progressDialog = new ProgressMonitorDialog(shell);
 		try {
 			progressDialog.run(false, false, new IRunnableWithProgress() {
