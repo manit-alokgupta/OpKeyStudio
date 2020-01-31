@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
+import javax.management.RuntimeErrorException;
 import javax.tools.Diagnostic.Kind;
 
 import org.jboss.forge.roaster.Roaster;
@@ -91,7 +93,7 @@ public class EditorTools {
 				if (jarEntry == null) {
 					break;
 				}
-				if ((jarEntry.getName().endsWith(".class"))) {
+				if ((jarEntry.getName().toLowerCase().endsWith(".class"))) {
 					String className = jarEntry.getName().replaceAll("/", "\\.");
 					String myClass = className.substring(0, className.lastIndexOf('.'));
 					listofClasses.add(myClass);
@@ -113,7 +115,14 @@ public class EditorTools {
 			for (String className : classNames) {
 				try {
 					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
-					parseClass(classToLoad);
+					String modifiers = Modifier.toString(classToLoad.getModifiers());
+					modifiers = modifiers.toLowerCase();
+					if (modifiers.contains("public")) {
+						if (!modifiers.contains("final") && !modifiers.contains("abstract")) {
+							parseClass(classToLoad);
+						}
+					}
+
 				} catch (NoClassDefFoundError e) {
 					// TODO: handle exception
 				} catch (IncompatibleClassChangeError e) {
@@ -121,6 +130,16 @@ public class EditorTools {
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 				} catch (UnsupportedClassVersionError e) {
+					// TODO: handle exception
+				} catch (RuntimeErrorException e) {
+					// TODO: handle exception
+				} catch (RuntimeException e) {
+					// TODO: handle exception
+				} catch (ExceptionInInitializerError e) {
+					// TODO: handle exception
+				} catch (UnsatisfiedLinkError e) {
+					// TODO: handle exception
+				} catch (Exception e) {
 					// TODO: handle exception
 				}
 			}
