@@ -101,64 +101,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		tabFolder.setBounds(0, 0, 120, 43);
 		tabFolder.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
-		TabItem detailsTabItem = new TabItem(tabFolder, SWT.NONE);
-		detailsTabItem.setText("Details");
-		detailsTabItem.setToolTipText("Details");
-
-		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
-		detailsTabItem.setControl(composite_2);
-		composite_2.setLayout(new FillLayout(SWT.HORIZONTAL));
-		composite_2.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		SashForm sashForm = new SashForm(composite_2, SWT.NONE);
-
-		Composite composite_3 = new Composite(sashForm, SWT.BORDER);
-		composite_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		Composite composite_4 = new Composite(sashForm, SWT.BORDER);
-		composite_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		sashForm.setWeights(new int[] { 1, 1 });
-
-		TabItem usedByTabItem = new TabItem(tabFolder, SWT.NONE);
-		usedByTabItem.setText("Used By");
-		usedByTabItem.setToolTipText("Used By");
-
-		Composite composite_5 = new Composite(tabFolder, SWT.NONE);
-		usedByTabItem.setControl(composite_5);
-		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
-		composite_5.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		usedByTable = new Table(composite_5, SWT.BORDER | SWT.FULL_SELECTION);
-//		usedByTable = new Table(composite_5, SWT.BORDER | SWT.FULL_SELECTION);
-		usedByTable.setHeaderVisible(true);
-		usedByTable.setLinesVisible(true);
-
-		TableCursor tableCursor = new TableCursor(usedByTable, SWT.NONE);
-
-		TabItem auditTrailsTabItem = new TabItem(tabFolder, SWT.NONE);
-		auditTrailsTabItem.setText("Audit Trails");
-		auditTrailsTabItem.setToolTipText("Audit Trails");
-
-		Composite composite_6 = new Composite(tabFolder, SWT.NONE);
-		auditTrailsTabItem.setControl(composite_6);
-		composite_6.setLayout(new GridLayout(1, false));
-		composite_6.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolBar toolBar = new ToolBar(composite_6, SWT.FLAT | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolItem exportAuditToolItem = new ToolItem(toolBar, SWT.NONE);
-		exportAuditToolItem.setWidth(27);
-		exportAuditToolItem.setToolTipText("Export Audit Trails");
-		exportAuditToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
-
-		associateLibraries = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
-//		auditTrailsTable = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
-		associateLibraries.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		associateLibraries.setHeaderVisible(true);
-		associateLibraries.setLinesVisible(true);
-
 		TabItem associateLibrariesTagItem = new TabItem(tabFolder, SWT.NONE);
 		associateLibrariesTagItem.setText("Associate Libraries");
 		associateLibrariesTagItem.setToolTipText("Associate Libraries");
@@ -211,22 +153,22 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		moveDownTagItem.setToolTipText("Move Down");
 		moveDownTagItem.setEnabled(false);
 
-		associatedr = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		associateLibraries = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
-		associatedr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		associatedr.setHeaderVisible(true);
-		associatedr.setLinesVisible(true);
+		associateLibraries.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associateLibraries.setHeaderVisible(true);
+		associateLibraries.setLinesVisible(true);
 
-		TabItem backupTabItem = new TabItem(tabFolder, SWT.NONE);
-		backupTabItem.setText("Associate OR");
-		backupTabItem.setToolTipText("Associate OR");
+		TabItem associateORTabItem = new TabItem(tabFolder, SWT.NONE);
+		associateORTabItem.setText("Associate OR");
+		associateORTabItem.setToolTipText("Associate OR");
 
-		Composite composite_9 = new Composite(tabFolder, SWT.NONE);
-		backupTabItem.setControl(composite_9);
-		composite_9.setLayout(new GridLayout(1, false));
-		composite_9.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		Composite associateORHolder = new Composite(tabFolder, SWT.NONE);
+		associateORTabItem.setControl(associateORHolder);
+		associateORHolder.setLayout(new GridLayout(1, false));
+		associateORHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
-		ToolBar toolBar_3 = new ToolBar(composite_9, SWT.FLAT | SWT.RIGHT);
+		ToolBar toolBar_3 = new ToolBar(associateORHolder, SWT.FLAT | SWT.RIGHT);
 		toolBar_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
@@ -234,7 +176,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		compareBackupItem.setToolTipText("Compare With Backup");
 		compareBackupItem.setText("New Item");
 
-		associateor = new CFLOrAssociate(composite_9, SWT.BORDER | SWT.FULL_SELECTION, this);
+		associateor = new CFLOrAssociate(associateORHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associateor.setHeaderVisible(true);
 		associateor.setLinesVisible(true);
