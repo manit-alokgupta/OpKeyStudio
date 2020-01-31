@@ -134,10 +134,12 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 					}
 					AutoCompleteToken autocompletetoken = CodeCompletionProvider.getInstance()
 							.findAutoCompleteToken(tokenData);
-					JavaCompletionProvider provider = CodeCompletionProvider.getInstance()
-							.getClassMethodsCompletionProvider(autocompletetoken);
-					autoCompletion.setCompletionProvider(provider);
-					autoCompletion.doCompletion();
+					if (autocompletetoken != null) {
+						JavaCompletionProvider provider = CodeCompletionProvider.getInstance()
+								.getClassMethodsCompletionProvider(autocompletetoken);
+						autoCompletion.setCompletionProvider(provider);
+						autoCompletion.doCompletion();
+					}
 				}
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {

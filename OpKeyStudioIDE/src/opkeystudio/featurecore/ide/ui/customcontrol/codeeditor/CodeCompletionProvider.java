@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,13 @@ public class CodeCompletionProvider {
 		provider.addCompletion(bc);
 	}
 
+	public void addMethodTypeBasicCompletion(JavaCompletionProvider provider, String dataToShow, String dataToEnter) {
+		JavaBasicCompletion bc = new JavaBasicCompletion(provider, dataToShow);
+		bc.setShortDescription(dataToShow);
+		bc.setTextToEnter(dataToEnter);
+		provider.addCompletion(bc);
+	}
+
 	public void createIntellisenseData() {
 		List<AutoCompleteToken> allTokens = getAllTokens();
 		for (AutoCompleteToken token : allTokens) {
@@ -136,10 +144,35 @@ public class CodeCompletionProvider {
 
 	public JavaCompletionProvider getClassMethodsCompletionProvider(AutoCompleteToken token) {
 		JavaCompletionProvider provider = new JavaCompletionProvider();
-		JavaBasicCompletion jbc = new JavaBasicCompletion(provider, "toNeon()");
-		jbc.setTextToEnter("Neon");
-		provider.addCompletion(jbc);
+		Class _class = token.getTokenClass();
+		Method[] methods = _class.getMethods();
+		for (Method method : methods) {
+			parseMethod(provider, method);
+		}
 		return provider;
+	}
+
+	private void parseMethod(JavaCompletionProvider provider, Method method) {
+		String name = method.getName();
+		Parameter[] parameters = method.getParameters();
+		String parametersString = "";
+		String argumentsString = "";
+		for (Parameter param : parameters) {
+			if (!parametersString.isEmpty()) {
+				parametersString += ", ";
+			}
+			if (!argumentsString.isEmpty()) {
+				argumentsString += ", ";
+			}
+			String paramType = param.getType().getSimpleName();
+			String argName = param.getName();
+			parametersString += paramType;
+			argumentsString += argName;
+		}
+
+		String dataToShow = method.getName() + "(" + parametersString + ")";
+		String dataToEnter = method.getName() + "(" + argumentsString + ")";
+		addMethodTypeBasicCompletion(provider, dataToShow, dataToEnter);
 	}
 
 	public void addAutoCompleteToken(AutoCompleteToken token) {
