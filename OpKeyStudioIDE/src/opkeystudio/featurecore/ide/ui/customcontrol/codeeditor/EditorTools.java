@@ -129,12 +129,12 @@ public class EditorTools {
 					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
 					String modifiers = Modifier.toString(classToLoad.getModifiers());
 					modifiers = modifiers.toLowerCase();
-					if (modifiers.contains("public") || modifiers.contains("interface")) {
-						if (!modifiers.contains("final") && !modifiers.contains("abstract")) {
+				//	if (modifiers.contains("public") || modifiers.contains("interface")) {
+					//	if (!modifiers.contains("final") && !modifiers.contains("abstract")) {
 							parseClass(classToLoad);
 							alreadyScannedClasses.add(className);
-						}
-					}
+						//}
+					//}
 
 				} catch (NoClassDefFoundError e) {
 					// TODO: handle exception
