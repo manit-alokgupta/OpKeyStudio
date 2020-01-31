@@ -33,8 +33,7 @@ public class CodeCompletionProvider {
 			public void run() {
 				MessageDialogs msd = new MessageDialogs();
 				msd.openProgressDialog(null, "Please wait initializing Intellisense...");
-				EditorTools.getClassInformation();
-				provider.createIntellisenseData();
+				EditorTools.initIntellisense();
 				msd.closeProgressDialog();
 			}
 		});
@@ -90,7 +89,7 @@ public class CodeCompletionProvider {
 		}
 	}
 
-	private void createConstructorIntellisense(Class _class) {
+	public void createConstructorIntellisense(Class _class) {
 		try {
 			Constructor[] _constructors = _class.getConstructors();
 			for (Constructor constructor : _constructors) {

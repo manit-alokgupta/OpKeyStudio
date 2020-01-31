@@ -104,7 +104,7 @@ public class EditorTools {
 		return listofClasses;
 	}
 
-	public static void getClassInformation() {
+	public static void initIntellisense() {
 		try {
 			System.out.println("Fetching Class Information");
 			URLClassLoader classLoader = getURLClassLoaderOfClasses(
@@ -133,6 +133,7 @@ public class EditorTools {
 	private static void parseClass(Class _class) {
 		AutoCompleteToken token = new AutoCompleteToken(_class);
 		CodeCompletionProvider.getInstance().addAutoCompleteToken(token);
+		CodeCompletionProvider.getInstance().createConstructorIntellisense(_class);
 	}
 
 	public static String formatJavaSourceCode(String javaCode) {
