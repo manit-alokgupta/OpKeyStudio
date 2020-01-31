@@ -50,8 +50,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private CodedFunctionView codeFunctionView;
 	private JavaAutoCompletion autoCompletion;
 
-	public JavaCodeEditor(Composite parent) {
+	public JavaCodeEditor(Composite parent, CodedFunctionView parentView) {
 		super(new RSyntaxDocument(SyntaxConstants.SYNTAX_STYLE_JAVA));
+		this.setCodeFunctionView(parentView);
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -133,7 +134,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 					Token lastToken = getRecentToken();
 					String tokenData = lastToken.getLexeme();
 					System.out.println("Current token data " + tokenData);
-					VariableToken varToken = CodeCompletionProvider.getInstance(getCodeFunctionView()).findVariableToken(tokenData);
+					VariableToken varToken = CodeCompletionProvider.getInstance(getCodeFunctionView())
+							.findVariableToken(tokenData);
 					if (varToken != null) {
 						tokenData = varToken.getClassName();
 					}

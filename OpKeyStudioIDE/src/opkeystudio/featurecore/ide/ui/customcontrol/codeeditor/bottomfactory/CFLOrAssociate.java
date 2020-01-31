@@ -120,10 +120,7 @@ public class CFLOrAssociate extends CustomTable {
 							.compileAllOpKeyLibs();
 
 					System.out.println("Errors Found " + errors.size());
-					List<FieldSource<JavaClassSource>> fieldSource = classSource.getFields();
-					for (FieldSource<JavaClassSource> field : fieldSource) {
-						System.out.println(field.getName());
-					}
+					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense();
 				}
 			}
 

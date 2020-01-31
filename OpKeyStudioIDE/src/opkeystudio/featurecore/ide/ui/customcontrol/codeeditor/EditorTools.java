@@ -113,6 +113,8 @@ public class EditorTools {
 		return listofClasses;
 	}
 
+	private static List<String> alreadyScannedClasses = new ArrayList<String>();
+
 	public void initIntellisense() {
 		try {
 			System.out.println("Fetching Class Information");
@@ -120,6 +122,9 @@ public class EditorTools {
 					opkeystudio.core.utils.Utilities.getInstance().getPluginName());
 			List<String> classNames = getAllClassNameFromAassociatedJar();
 			for (String className : classNames) {
+				if (alreadyScannedClasses.contains(className)) {
+					continue;
+				}
 				try {
 					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
 					String modifiers = Modifier.toString(classToLoad.getModifiers());
@@ -127,6 +132,7 @@ public class EditorTools {
 					if (modifiers.contains("public") || modifiers.contains("interface")) {
 						if (!modifiers.contains("final") && !modifiers.contains("abstract")) {
 							parseClass(classToLoad);
+							alreadyScannedClasses.add(className);
 						}
 					}
 
@@ -183,6 +189,9 @@ public class EditorTools {
 
 	public URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {
 		List<File> allLibs = getAllAssocitedLibraries(pluginName);
+		String path = getParentCodedFunctionView().getArtifactOpkeyDataLibraryPath();
+		List<File> opkeyCompiledFiles = getAllFiles(new File(path), ".class");
+		allLibs.addAll(opkeyCompiledFiles);
 		URL[] allJarsAndClasses = new URL[allLibs.size()];
 		for (int i = 0; i < allLibs.size(); i++) {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();

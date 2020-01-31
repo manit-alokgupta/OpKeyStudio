@@ -64,9 +64,8 @@ public class CodedFunctionView extends Composite {
 		refreshButton.setText("Refresh");
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/refresh.png"));
 
-		editor = new JavaCodeEditor(this);
+		editor = new JavaCodeEditor(this, this);
 		editor.setArtifact(getArtifact());
-		editor.setCodeFunctionView(this);
 		toggleSaveButton(false);
 
 		editor.convertOpKeyVariablesToCode();
@@ -131,6 +130,10 @@ public class CodedFunctionView extends Composite {
 		});
 		renderCFLCode();
 
+	}
+
+	public void refreshIntellisense() {
+		new EditorTools(this).initIntellisense();
 	}
 
 	public CodedFunctionView getInstance() {
