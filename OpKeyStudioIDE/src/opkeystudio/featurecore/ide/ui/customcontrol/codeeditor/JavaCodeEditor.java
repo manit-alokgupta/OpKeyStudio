@@ -117,9 +117,16 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
+				try {
+					createIntellisenseDataFromCurrentText();
+				} catch (BadLocationException e1) {
+					e1.printStackTrace();
+				}
+
 				char keyChar = e.getKeyChar();
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
+					String tokenData = lastToken.getLexeme();
 					System.out.println("Current token data " + lastToken.getLexeme());
 					AutoCompleteToken autocompletetoken = CodeCompletionProvider.getInstance()
 							.findAutoCompleteToken(lastToken.getLexeme());
@@ -127,13 +134,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 							.getClassMethodsCompletionProvider(autocompletetoken);
 					autoCompletion.setCompletionProvider(provider);
 					autoCompletion.doCompletion();
-				}
-
-				try {
-					createIntellisenseDataFromCurrentText();
-				} catch (BadLocationException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
