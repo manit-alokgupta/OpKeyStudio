@@ -18,11 +18,18 @@ import javax.tools.Diagnostic.Kind;
 
 import org.jboss.forge.roaster.Roaster;
 
+import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class EditorTools {
-	public static List<File> getAllFiles(File rootFile, String extension) {
+	private CodedFunctionView parentCodedFunctionView;
+
+	public EditorTools(CodedFunctionView codedFuntionView) {
+		this.setParentCodedFunctionView(codedFuntionView);
+	}
+
+	public List<File> getAllFiles(File rootFile, String extension) {
 		List<File> allFiles = new ArrayList<File>();
 		File[] files = rootFile.listFiles();
 		for (File file : files) {
@@ -37,13 +44,13 @@ public class EditorTools {
 		return allFiles;
 	}
 
-	public static List<File> getPluginBaseLibraries() {
+	public List<File> getPluginBaseLibraries() {
 		String pluginBaseFolder = Utilities.getInstance().getDefaultPluginBaseDir();
 		File file = new File(pluginBaseFolder);
 		return getAllFiles(file, ".jar");
 	}
 
-	public static List<File> getPluginsLibraries(String pluginName) {
+	public List<File> getPluginsLibraries(String pluginName) {
 		String pluginBaseFolder = Utilities.getInstance().getDefaultPluginsDir() + File.separator + pluginName;
 		File file = new File(pluginBaseFolder);
 		if (!file.exists()) {
@@ -52,14 +59,14 @@ public class EditorTools {
 		return getAllFiles(file, ".jar");
 	}
 
-	public static List<File> getAllAssocitedLibraries(String pluginName) {
+	public List<File> getAllAssocitedLibraries(String pluginName) {
 		List<File> allFiles = new ArrayList<File>();
 		allFiles.addAll(getPluginBaseLibraries());
 		allFiles.addAll(getPluginsLibraries(pluginName));
 		return allFiles;
 	}
 
-	public static String getClassPathOFAllAssociatedLibs(String pluginName) {
+	public String getClassPathOFAllAssociatedLibs(String pluginName) {
 		String classPath = "";
 		List<File> files = getPluginBaseLibraries();
 		files.addAll(getPluginsLibraries(pluginName));
@@ -72,7 +79,7 @@ public class EditorTools {
 		return classPath;
 	}
 
-	public static List<String> getAllClassNameFromAassociatedJar() {
+	public List<String> getAllClassNameFromAassociatedJar() {
 		ArrayList<String> allClases = new ArrayList<String>();
 		List<File> pluginBaseLibs = getPluginBaseLibraries();
 		pluginBaseLibs.addAll(getPluginsLibraries(opkeystudio.core.utils.Utilities.getInstance().getPluginName()));
@@ -82,7 +89,7 @@ public class EditorTools {
 		return allClases;
 	}
 
-	public static List<String> getAllClassNamesFromJar(String jarName) {
+	public List<String> getAllClassNamesFromJar(String jarName) {
 		List<String> listofClasses = new ArrayList<String>();
 		try {
 			JarInputStream jarFile = new JarInputStream(new FileInputStream(jarName));
@@ -106,7 +113,7 @@ public class EditorTools {
 		return listofClasses;
 	}
 
-	public static void initIntellisense() {
+	public void initIntellisense() {
 		try {
 			System.out.println("Fetching Class Information");
 			URLClassLoader classLoader = getURLClassLoaderOfClasses(
@@ -149,13 +156,13 @@ public class EditorTools {
 		}
 	}
 
-	private static void parseClass(Class _class) {
+	private void parseClass(Class _class) {
 		AutoCompleteToken token = new AutoCompleteToken(_class);
-		CodeCompletionProvider.getInstance().addAutoCompleteToken(token);
-		CodeCompletionProvider.getInstance().createConstructorIntellisense(_class);
+		CodeCompletionProvider.getInstance(getParentCodedFunctionView()).addAutoCompleteToken(token);
+		CodeCompletionProvider.getInstance(getParentCodedFunctionView()).createConstructorIntellisense(_class);
 	}
 
-	public static String formatJavaSourceCode(String javaCode) {
+	public String formatJavaSourceCode(String javaCode) {
 		try {
 			String formattedCode = Roaster.format(javaCode);
 			return formattedCode;
@@ -164,7 +171,7 @@ public class EditorTools {
 		}
 	}
 
-	public static void executeCodedFl(String codedString, String pluginName) {
+	public void executeCodedFl(String codedString, String pluginName) {
 		try {
 			execute(codedString, pluginName);
 		} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
@@ -174,7 +181,7 @@ public class EditorTools {
 		}
 	}
 
-	public static URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {
+	public URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {
 		List<File> allLibs = getAllAssocitedLibraries(pluginName);
 		URL[] allJarsAndClasses = new URL[allLibs.size()];
 		for (int i = 0; i < allLibs.size(); i++) {
@@ -184,7 +191,7 @@ public class EditorTools {
 		return child;
 	}
 
-	private static void execute(String codedFLFileName, String pluginName)
+	private void execute(String codedFLFileName, String pluginName)
 			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		List<File> allLibs = getAllAssocitedLibraries(pluginName);
@@ -201,7 +208,7 @@ public class EditorTools {
 		Object result = method.invoke(instance);
 	}
 
-	public static List<CompileError> filterErrors(List<CompileError> errors, Kind kind) {
+	public List<CompileError> filterErrors(List<CompileError> errors, Kind kind) {
 		List<CompileError> filteredErrors = new ArrayList<CompileError>();
 		for (CompileError ce : errors) {
 			if (ce.getKind() == kind) {
@@ -209,5 +216,13 @@ public class EditorTools {
 			}
 		}
 		return filteredErrors;
+	}
+
+	public CodedFunctionView getParentCodedFunctionView() {
+		return parentCodedFunctionView;
+	}
+
+	public void setParentCodedFunctionView(CodedFunctionView parentCodedFunctionView) {
+		this.parentCodedFunctionView = parentCodedFunctionView;
 	}
 }

@@ -17,6 +17,7 @@ import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 
 public class CodeCompletionProvider {
 	private static CodeCompletionProvider instance;
@@ -24,21 +25,21 @@ public class CodeCompletionProvider {
 	private List<AutoCompleteToken> allTokens = new ArrayList<AutoCompleteToken>();
 	private List<VariableToken> allvariabletokens = new ArrayList<VariableToken>();
 
-	public static CodeCompletionProvider getInstance() {
+	public static CodeCompletionProvider getInstance(CodedFunctionView codedFunctionView) {
 		if (instance == null) {
 			instance = new CodeCompletionProvider();
 			provider = new JavaCompletionProvider();
-			initIntellisense(instance);
+			initIntellisense(instance, codedFunctionView);
 		}
 		return instance;
 	}
 
-	public static void initIntellisense(CodeCompletionProvider provider) {
+	public static void initIntellisense(CodeCompletionProvider provider, CodedFunctionView cview) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				MessageDialogs msd = new MessageDialogs();
 				msd.openProgressDialog(null, "Please wait initializing Intellisense...");
-				EditorTools.initIntellisense();
+				new EditorTools(cview).initIntellisense();
 				msd.closeProgressDialog();
 			}
 		});

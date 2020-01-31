@@ -82,13 +82,13 @@ public class CodedFunctionView extends Composite {
 					saveCFL(true);
 				}
 				List<CompileError> errors = editor.compileAndCheck();
-				List<CompileError> filteredErrors = EditorTools.filterErrors(errors, Kind.ERROR);
+				List<CompileError> filteredErrors = new EditorTools(getInstance()).filterErrors(errors, Kind.ERROR);
 				if (filteredErrors.size() > 0) {
 					new MessageDialogs().openErrorDialog("Coded FL Compilation Error",
 							"Unable to Execute Coded FL has compilation error");
 					return;
 				}
-				EditorTools.executeCodedFl(getCodedFLClassPath(),
+				new EditorTools(getInstance()).executeCodedFl(getCodedFLClassPath(),
 						opkeystudio.core.utils.Utilities.getInstance().getPluginName());
 			}
 
@@ -133,9 +133,13 @@ public class CodedFunctionView extends Composite {
 
 	}
 
+	public CodedFunctionView getInstance() {
+		return this;
+	}
+
 	public void saveAllCFL() {
 		JavaAutoCompletion completion = editor.getAutoCompletion();
-		completion.setCompletionProvider(CodeCompletionProvider.getInstance().getCompletionProvider());
+		completion.setCompletionProvider(CodeCompletionProvider.getInstance(this).getCompletionProvider());
 		completion.install(editor);
 		saveCFL(false);
 	}

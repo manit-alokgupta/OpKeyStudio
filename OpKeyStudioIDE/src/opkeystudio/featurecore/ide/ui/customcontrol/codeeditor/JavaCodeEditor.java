@@ -74,7 +74,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	}
 
 	public void setJavaCode(String javaCode) {
-		String formatedCode = EditorTools.formatJavaSourceCode(javaCode);
+		String formatedCode = new EditorTools(getCodeFunctionView()).formatJavaSourceCode(javaCode);
 		this.setText(formatedCode);
 		compileAndCheck();
 	}
@@ -105,7 +105,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.setCodeFoldingEnabled(true);
 		this.setAutoIndentEnabled(true);
-		CompletionProvider provider = CodeCompletionProvider.getInstance().getCompletionProvider();
+		CompletionProvider provider = CodeCompletionProvider.getInstance(getCodeFunctionView()).getCompletionProvider();
 		autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setAutoActivationDelay(10);
 		autoCompletion.setShowDescWindow(true);
@@ -133,14 +133,14 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 					Token lastToken = getRecentToken();
 					String tokenData = lastToken.getLexeme();
 					System.out.println("Current token data " + tokenData);
-					VariableToken varToken = CodeCompletionProvider.getInstance().findVariableToken(tokenData);
+					VariableToken varToken = CodeCompletionProvider.getInstance(getCodeFunctionView()).findVariableToken(tokenData);
 					if (varToken != null) {
 						tokenData = varToken.getClassName();
 					}
-					AutoCompleteToken autocompletetoken = CodeCompletionProvider.getInstance()
+					AutoCompleteToken autocompletetoken = CodeCompletionProvider.getInstance(getCodeFunctionView())
 							.findAutoCompleteToken(tokenData);
 					if (autocompletetoken != null) {
-						JavaCompletionProvider provider = CodeCompletionProvider.getInstance()
+						JavaCompletionProvider provider = CodeCompletionProvider.getInstance(getCodeFunctionView())
 								.getClassMethodsCompletionProvider(autocompletetoken);
 						autoCompletion.setCompletionProvider(provider);
 						autoCompletion.doCompletion();
@@ -197,9 +197,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 					varClassName = lineTokens.get(i - 2).getLexeme();
 				}
 				VariableToken varToken = new VariableToken(varName, varClassName);
-				CodeCompletionProvider.getInstance().addVariableToken(varToken);
+				CodeCompletionProvider.getInstance(getCodeFunctionView()).addVariableToken(varToken);
 				System.out.println("Var Name " + varName + "   ClassName " + varClassName);
-				CodeCompletionProvider.getInstance().addBasicCompletion(varName);
+				CodeCompletionProvider.getInstance(getCodeFunctionView()).addBasicCompletion(varName);
 			}
 		}
 	}
@@ -230,7 +230,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			e2.printStackTrace();
 		}
 
-		String classPathString = EditorTools
+		String classPathString = new EditorTools(getCodeFunctionView())
 				.getClassPathOFAllAssociatedLibs(opkeystudio.core.utils.Utilities.getInstance().getPluginName());
 		List<CompileError> compileErrors = new CompilerTools().compileCodeFl(codeFilePath, classPathString);
 		for (CompileError compileError : compileErrors) {
@@ -278,11 +278,12 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	}
 
 	public List<CompileError> compileAllOpKeyLibs() {
-		String classPathString = EditorTools
+		String classPathString = new EditorTools(getCodeFunctionView())
 				.getClassPathOFAllAssociatedLibs(opkeystudio.core.utils.Utilities.getInstance().getPluginName());
-		List<File> files = EditorTools.getAllFiles(new File(getCodeFunctionView().getArtifactOpkeyDataLibraryPath()),
-				".java");
-		return new CompilerTools().compileFiles(files, classPathString);
+		List<File> files = new EditorTools(getCodeFunctionView())
+				.getAllFiles(new File(getCodeFunctionView().getArtifactOpkeyDataLibraryPath()), ".java");
+		List<CompileError> compileErrors = new CompilerTools().compileFiles(files, classPathString);
+		return compileErrors;
 	}
 
 	public Artifact getArtifact() {

@@ -17,9 +17,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.DtoToCodeConverter;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.CodeCompletionProvider;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
@@ -118,6 +120,10 @@ public class CFLOrAssociate extends CustomTable {
 							.compileAllOpKeyLibs();
 
 					System.out.println("Errors Found " + errors.size());
+					List<FieldSource<JavaClassSource>> fieldSource = classSource.getFields();
+					for (FieldSource<JavaClassSource> field : fieldSource) {
+						System.out.println(field.getName());
+					}
 				}
 			}
 
