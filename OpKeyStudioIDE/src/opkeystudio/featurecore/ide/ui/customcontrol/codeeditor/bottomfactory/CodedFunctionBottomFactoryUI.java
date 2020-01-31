@@ -348,19 +348,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			}
 		});
-
-		associatedr.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
+		
 		addButtonListeners();
 	}
 
