@@ -127,9 +127,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
 					String tokenData = lastToken.getLexeme();
-					System.out.println("Current token data " + lastToken.getLexeme());
+					System.out.println("Current token data " + tokenData);
 					AutoCompleteToken autocompletetoken = CodeCompletionProvider.getInstance()
-							.findAutoCompleteToken(lastToken.getLexeme());
+							.findAutoCompleteToken(tokenData);
 					JavaCompletionProvider provider = CodeCompletionProvider.getInstance()
 							.getClassMethodsCompletionProvider(autocompletetoken);
 					autoCompletion.setCompletionProvider(provider);
