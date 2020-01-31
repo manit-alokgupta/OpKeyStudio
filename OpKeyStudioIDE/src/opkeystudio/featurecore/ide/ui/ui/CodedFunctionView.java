@@ -19,7 +19,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.CodeCompletionProvider;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaAutoCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
@@ -102,6 +104,9 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				JavaAutoCompletion completion = editor.getAutoCompletion();
+				completion.setCompletionProvider(CodeCompletionProvider.getInstance().getCompletionProvider());
+				completion.install(editor);
 				saveCFL(false);
 			}
 

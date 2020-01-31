@@ -48,6 +48,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private List<Object> highlightedLines = new ArrayList<>();
 	private Artifact artifact;
 	private CodedFunctionView codeFunctionView;
+	private JavaAutoCompletion autoCompletion;
 
 	public JavaCodeEditor(Composite parent) {
 		super(new RSyntaxDocument(SyntaxConstants.SYNTAX_STYLE_JAVA));
@@ -66,6 +67,10 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			// handle exception
 		}
 		init(SWT_AWT.new_Frame(composite));
+	}
+
+	public JavaAutoCompletion getAutoCompletion() {
+		return this.autoCompletion;
 	}
 
 	public void setJavaCode(String javaCode) {
@@ -101,7 +106,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		this.setCodeFoldingEnabled(true);
 		this.setAutoIndentEnabled(true);
 		CompletionProvider provider = CodeCompletionProvider.getInstance().getCompletionProvider();
-		JavaAutoCompletion autoCompletion = new JavaAutoCompletion(provider);
+		autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setAutoActivationDelay(10);
 		autoCompletion.setShowDescWindow(true);
 		autoCompletion.setAutoCompleteSingleChoices(false);
