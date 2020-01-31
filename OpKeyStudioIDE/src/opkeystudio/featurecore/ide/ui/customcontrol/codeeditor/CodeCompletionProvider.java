@@ -6,7 +6,12 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
@@ -71,6 +76,9 @@ public class CodeCompletionProvider {
 		JavaBasicCompletion bc = new JavaBasicCompletion(provider, datatoShow);
 		bc.setShortDescription(dataToShow);
 		bc.setTextToEnter(dataToEnter);
+		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/class.png");
+		Icon icon = new ImageIcon(img.getImageData().data);
+		bc.setIcon(icon);
 		provider.addCompletion(bc);
 	}
 
@@ -78,6 +86,9 @@ public class CodeCompletionProvider {
 		JavaBasicCompletion bc = new JavaBasicCompletion(provider, dataToShow);
 		bc.setShortDescription(dataToShow);
 		bc.setTextToEnter(dataToEnter);
+		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.png");
+		Icon icon = new ImageIcon(img.getImageData().data);
+		bc.setIcon(icon);
 		provider.addCompletion(bc);
 	}
 
