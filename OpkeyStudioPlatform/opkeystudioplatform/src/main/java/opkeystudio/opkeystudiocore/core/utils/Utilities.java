@@ -4,15 +4,19 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -219,5 +223,33 @@ public class Utilities {
 		} catch (Exception e) {
 		}
 
+	}
+
+	public File createZip(List<File> inputFiles) throws FileNotFoundException, IOException {
+		File outZipFile = new File(inputFiles.get(0).getParent() + File.separator + "opkeylibs.jar");
+		FileOutputStream fos = new FileOutputStream(outZipFile.getAbsolutePath());
+		ZipOutputStream zipOS = new ZipOutputStream(fos);
+		for (File inputFile : inputFiles) {
+			writeToZipFile(inputFile.getAbsolutePath(), zipOS);
+		}
+		zipOS.close();
+		fos.close();
+		return outZipFile;
+	}
+
+	private void writeToZipFile(String path, ZipOutputStream zipStream) throws FileNotFoundException, IOException {
+		File aFile = new File(path);
+		FileInputStream fis = new FileInputStream(aFile);
+		ZipEntry zipEntry = new ZipEntry(aFile.getName());
+		zipStream.putNextEntry(zipEntry);
+
+		byte[] bytes = new byte[1024];
+		int length;
+		while ((length = fis.read(bytes)) >= 0) {
+			zipStream.write(bytes, 0, length);
+		}
+		zipStream.flush();
+		zipStream.closeEntry();
+		fis.close();
 	}
 }

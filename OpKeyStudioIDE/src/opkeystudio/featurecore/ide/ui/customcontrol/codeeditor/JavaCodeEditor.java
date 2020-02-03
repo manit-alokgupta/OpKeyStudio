@@ -270,6 +270,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		compileAllOpKeyLibs();
 	}
 
 	private void writeToFile(File infile, String dataToWrite) throws IOException {
@@ -285,6 +286,14 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		List<File> files = new EditorTools(getCodeFunctionView())
 				.getAllFiles(new File(getCodeFunctionView().getArtifactOpkeyDataLibraryPath()), ".java");
 		List<CompileError> compileErrors = new CompilerTools().compileFiles(files, classPathString);
+		List<File> compiledClasses = new EditorTools(getCodeFunctionView())
+				.getAllFiles(new File(getCodeFunctionView().getArtifactOpkeyDataLibraryPath()), ".class");
+		try {
+			Utilities.getInstance().createZip(compiledClasses);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return compileErrors;
 	}
 

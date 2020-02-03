@@ -89,6 +89,7 @@ public class EditorTools {
 	public List<String> getAllClassNameFromAassociatedJar() {
 		ArrayList<String> allClases = new ArrayList<String>();
 		List<File> pluginBaseLibs = getPluginBaseLibraries();
+		pluginBaseLibs.addAll(getAllCFLAssociatedLibs());
 		pluginBaseLibs.addAll(getPluginsLibraries(opkeystudio.core.utils.Utilities.getInstance().getPluginName()));
 		for (File file : pluginBaseLibs) {
 			allClases.addAll(getAllClassNamesFromJar(file.getAbsolutePath()));
