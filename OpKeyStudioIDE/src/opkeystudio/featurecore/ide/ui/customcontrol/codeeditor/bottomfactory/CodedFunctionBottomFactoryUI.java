@@ -30,7 +30,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
-	private Table usedByTable;
 	private Table associateLibraries;
 	private CFLOrAssociate associateor;
 	private Table associatedr;
