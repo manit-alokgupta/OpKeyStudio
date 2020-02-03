@@ -89,18 +89,7 @@ public class CodedFunctionApi {
 		_class.addImport("org.openqa.selenium.By");
 		_class.addImport("org.openqa.selenium.WebDriver");
 		_class.addInterface("com.crestech.opkey.plugin.CodedFunctionLibrary");
-		_class.addMethod().setName("run").setPublic().setBody("");
-		String startCode = "// ### Import packages from your associated Libraries here\r\n"
-				+ "//#BeginRegion-ImportSection\r\n" + "\r\n" + "//#EndRegion-ImportSection\r\n"
-				+ "import com.crestech.opkey.plugin.contexts.Context;\r\n"
-				+ "import com.crestech.opkey.plugin.codedfl.KeyValuePair;\r\n" + "import org.openqa.selenium.By;\r\n"
-				+ "import org.openqa.selenium.WebDriver;\r\n" + "\r\n" + "public class "
-				+ className.replaceAll(" ", "_") + " implements com.crestech.opkey.plugin.CodedFunctionLibrary {\r\n"
-				+ "\r\n" + "	public void run() throws Exception {" + usercode + "\n		//#EndRegion-UserCode\r\n"
-				+ "	}\n" + "	//#BeginRegion-PrivateFunctions\r\n"
-				+ "	// #### You may write multiple private functions over here. These functions can be called from this Coded Function.\r\n"
-				+ "	/*" + "\n" + privatefunctioncode + "\n	//#EndRegion-PrivateFunctions\r\n" + "}";
-
+		_class.addMethod().setName("run").setPublic().setBody(usercode);
 		return _class.toString();
 	}
 }
