@@ -318,7 +318,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		exportButton = createButton(parent, IDialogConstants.OK_ID, "Export", true);
+		exportButton = createButton(parent, IDialogConstants.OK_ID, "Import", true);
 		exportButton.addSelectionListener(new SelectionListener() {
 
 			@Override
