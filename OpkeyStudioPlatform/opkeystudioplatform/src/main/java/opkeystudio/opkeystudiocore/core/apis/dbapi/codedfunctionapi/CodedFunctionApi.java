@@ -82,7 +82,14 @@ public class CodedFunctionApi {
 	}
 
 	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode) {
-
+		JavaClassSource _class = Roaster.create(JavaClassSource.class);
+		_class.setName(className).setPublic();
+		_class.addImport("com.crestech.opkey.plugin.contexts.Context");
+		_class.addImport("com.crestech.opkey.plugin.codedfl.KeyValuePair");
+		_class.addImport("org.openqa.selenium.By");
+		_class.addImport("org.openqa.selenium.WebDriver");
+		_class.addInterface("com.crestech.opkey.plugin.CodedFunctionLibrary");
+		_class.addMethod().setName("run").setPublic().setBody("");
 		String startCode = "// ### Import packages from your associated Libraries here\r\n"
 				+ "//#BeginRegion-ImportSection\r\n" + "\r\n" + "//#EndRegion-ImportSection\r\n"
 				+ "import com.crestech.opkey.plugin.contexts.Context;\r\n"
@@ -94,6 +101,6 @@ public class CodedFunctionApi {
 				+ "	// #### You may write multiple private functions over here. These functions can be called from this Coded Function.\r\n"
 				+ "	/*" + "\n" + privatefunctioncode + "\n	//#EndRegion-PrivateFunctions\r\n" + "}";
 
-		return startCode;
+		return _class.toString();
 	}
 }

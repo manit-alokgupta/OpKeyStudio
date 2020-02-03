@@ -179,8 +179,8 @@ public class CodedFunctionView extends Composite {
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
 		if (cflcodes.size() > 0) {
 			CFLCode cflcode = cflcodes.get(0);
-			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getName(), cflcode.getUsercode(),
-					cflcode.getPrivateuserfunctions());
+			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions());
 			editor.setJavaCode(code);
 		}
 	}
