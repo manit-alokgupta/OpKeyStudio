@@ -145,7 +145,9 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		refreshORTable = new ToolItem(toolBar_3, SWT.NONE);
 		refreshORTable.setToolTipText("Refresh");
 		refreshORTable.setText("Refresh");
-
+		refreshORTable
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		
 		associateor = new CFLOrAssociate(associateORHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associateor.setHeaderVisible(true);
