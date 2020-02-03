@@ -2,7 +2,6 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,9 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.BadLocationException;
