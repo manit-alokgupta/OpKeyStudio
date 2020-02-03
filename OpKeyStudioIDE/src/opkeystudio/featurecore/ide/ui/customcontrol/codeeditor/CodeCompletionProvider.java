@@ -1,7 +1,9 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +95,16 @@ public class CodeCompletionProvider {
 		provider.addCompletion(bc);
 	}
 
+	public void addFieldTypeBasicCompletion(JavaCompletionProvider provider, String dataToShow, String dataToEnter) {
+		JavaBasicCompletion bc = new JavaBasicCompletion(provider, dataToShow);
+		bc.setShortDescription(dataToShow);
+		bc.setTextToEnter(dataToEnter);
+		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.png");
+		Icon icon = new ImageIcon(img.getImageData().data);
+		bc.setIcon(icon);
+		provider.addCompletion(bc);
+	}
+
 	public void createIntellisenseData() {
 		List<AutoCompleteToken> allTokens = getAllTokens();
 		for (AutoCompleteToken token : allTokens) {
@@ -150,6 +162,9 @@ public class CodeCompletionProvider {
 				System.out.println("ClassName " + tokenClass.getName());
 				return token;
 			}
+			if (className.trim().equals(tokenString.trim())) {
+				return token;
+			}
 		}
 		return null;
 	}
@@ -158,10 +173,26 @@ public class CodeCompletionProvider {
 		JavaCompletionProvider provider = new JavaCompletionProvider();
 		Class _class = token.getTokenClass();
 		Method[] methods = _class.getMethods();
+		Field[] fields = _class.getFields();
+		for (Field field : fields) {
+			parseStaticVariables(provider, field);
+		}
 		for (Method method : methods) {
 			parseMethod(provider, method);
 		}
 		return provider;
+	}
+
+	private void parseStaticVariables(JavaCompletionProvider provider, Field field) {
+		String modifier = Modifier.toString(field.getModifiers()).toLowerCase();
+		System.out.println("Adding Field " + field.getName());
+		if (modifier.contains("public")) {
+			if (modifier.contains("static")) {
+				if (!modifier.contains("private")) {
+					addFieldTypeBasicCompletion(provider, field.getName(), field.getName());
+				}
+			}
+		}
 	}
 
 	private void parseMethod(JavaCompletionProvider provider, Method method) {

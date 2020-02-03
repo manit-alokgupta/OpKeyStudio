@@ -133,6 +133,9 @@ public class EditorTools {
 				if (alreadyScannedClasses.contains(className)) {
 					continue;
 				}
+				if (className.contains("$")) {
+					continue;
+				}
 				try {
 					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
 					String modifiers = Modifier.toString(classToLoad.getModifiers());
