@@ -62,13 +62,20 @@ public class EditorTools {
 	public List<File> getAllAssocitedLibraries(String pluginName) {
 		List<File> allFiles = new ArrayList<File>();
 		allFiles.addAll(getPluginBaseLibraries());
+		allFiles.addAll(getAllCFLAssociatedLibs());
 		allFiles.addAll(getPluginsLibraries(pluginName));
 		return allFiles;
+	}
+
+	public List<File> getAllCFLAssociatedLibs() {
+		String path = getParentCodedFunctionView().getArtifactOpkeyDataLibraryPath();
+		return getAllFiles(new File(path), ".jar");
 	}
 
 	public String getClassPathOFAllAssociatedLibs(String pluginName) {
 		String classPath = "";
 		List<File> files = getPluginBaseLibraries();
+		files.addAll(getAllCFLAssociatedLibs());
 		files.addAll(getPluginsLibraries(pluginName));
 		for (File file : files) {
 			if (!classPath.isEmpty()) {
@@ -129,12 +136,12 @@ public class EditorTools {
 					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
 					String modifiers = Modifier.toString(classToLoad.getModifiers());
 					modifiers = modifiers.toLowerCase();
-				//	if (modifiers.contains("public") || modifiers.contains("interface")) {
-					//	if (!modifiers.contains("final") && !modifiers.contains("abstract")) {
-							parseClass(classToLoad);
-							alreadyScannedClasses.add(className);
-						//}
-					//}
+					// if (modifiers.contains("public") || modifiers.contains("interface")) {
+					// if (!modifiers.contains("final") && !modifiers.contains("abstract")) {
+					parseClass(classToLoad);
+					alreadyScannedClasses.add(className);
+					// }
+					// }
 
 				} catch (NoClassDefFoundError e) {
 					// TODO: handle exception
@@ -189,9 +196,6 @@ public class EditorTools {
 
 	public URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {
 		List<File> allLibs = getAllAssocitedLibraries(pluginName);
-		String path = getParentCodedFunctionView().getArtifactOpkeyDataLibraryPath();
-		List<File> opkeyCompiledFiles = getAllFiles(new File(path), ".class");
-		allLibs.addAll(opkeyCompiledFiles);
 		URL[] allJarsAndClasses = new URL[allLibs.size()];
 		for (int i = 0; i < allLibs.size(); i++) {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
