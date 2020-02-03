@@ -24,7 +24,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
+import org.fife.ui.autocomplete.FunctionCompletion;
 import org.fife.ui.autocomplete.ShorthandCompletion;
+import org.fife.ui.autocomplete.VariableCompletion;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
@@ -139,7 +141,7 @@ public class CodeCompletionProvider {
 		bc.setShortDescription(dataToShow);
 		bc.setTextToEnter(dataToEnter);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/class.ico");
-		BufferedImage image=convertToAWT(img.getImageData());
+		BufferedImage image = convertToAWT(img.getImageData());
 		Icon icon = new ImageIcon(image);
 		bc.setIcon(icon);
 		provider.addCompletion(bc);
@@ -161,7 +163,7 @@ public class CodeCompletionProvider {
 		bc.setShortDescription(dataToShow);
 		bc.setTextToEnter(dataToEnter);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.png");
-		BufferedImage image=convertToAWT(img.getImageData());
+		BufferedImage image = convertToAWT(img.getImageData());
 		Icon icon = new ImageIcon(image);
 		bc.setIcon(icon);
 		provider.addCompletion(bc);
