@@ -48,12 +48,9 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private ToolItem moveUpOutputItem;
 	private ToolItem moveDownOutputItem;
 	private ToolItem refreshOutputItem;
+	
 	private ToolItem addTagItem;
 	private ToolItem deleteTagItem;
-	private ToolItem copyTagItem;
-	private ToolItem pasteTagItem;
-	private ToolItem moveUpTagItem;
-	private ToolItem moveDownTagItem;
 	private Display display;
 
 	private CodedFunctionView parentCodedView;
@@ -116,40 +113,13 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		addTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		addTagItem.setWidth(27);
 		addTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		addTagItem.setToolTipText("Add");
+		addTagItem.setToolTipText("Add 2");
 		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
 		deleteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		deleteTagItem.setToolTipText("Delete");
 		deleteTagItem.setEnabled(false);
-
-		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		copyTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		copyTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
-		copyTagItem.setToolTipText("copy");
-
-		ToolItem toolItem3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		pasteTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		pasteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
-		pasteTagItem.setToolTipText("Paste");
-
-		ToolItem toolItem4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		moveUpTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
-		moveUpTagItem.setToolTipText("Move Up");
-		moveUpTagItem.setEnabled(false);
-
-		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		moveDownTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		moveDownTagItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
-		moveDownTagItem.setToolTipText("Move Down");
-		moveDownTagItem.setEnabled(false);
 
 		associateLibraries = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
@@ -353,13 +323,11 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	public void toggleMoveUpButton(boolean status) {
 		moveUpInputItem.setEnabled(status);
 		moveUpOutputItem.setEnabled(status);
-		moveUpTagItem.setEnabled(status);
 	}
 
 	public void toggleMoveDownButton(boolean status) {
 		moveDownInputItem.setEnabled(status);
 		moveDownOutputItem.setEnabled(status);
-		moveDownTagItem.setEnabled(status);
 	}
 
 	public void toggleRefreshInputButton(boolean status) {
@@ -516,58 +484,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		});
 
 		deleteTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		copyTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		pasteTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		moveUpTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		moveDownTagItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
