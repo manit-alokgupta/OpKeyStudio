@@ -27,7 +27,7 @@ import org.fife.ui.autocomplete.MarkupTagCompletion;
 import org.fife.ui.autocomplete.TemplateCompletion;
 import org.fife.ui.autocomplete.VariableCompletion;
 
-public class JavaCellRenderer extends CompletionCellRenderer  {
+public class JavaCellRenderer extends CompletionCellRenderer {
 
 	private BufferedImage convertToAWT(ImageData data) {
 		ColorModel colorModel = null;
@@ -79,7 +79,7 @@ public class JavaCellRenderer extends CompletionCellRenderer  {
 			return bufferedImage;
 		}
 	}
-	
+
 	@Override
 	protected Icon createEmptyIcon() {
 		// TODO Auto-generated method stub
