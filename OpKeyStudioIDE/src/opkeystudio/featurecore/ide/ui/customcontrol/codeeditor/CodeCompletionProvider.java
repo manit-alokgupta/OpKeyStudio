@@ -1,5 +1,10 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.DirectColorModel;
+import java.awt.image.IndexColorModel;
+import java.awt.image.WritableRaster;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -12,6 +17,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.PaletteData;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
@@ -73,14 +81,66 @@ public class CodeCompletionProvider {
 		}
 	}
 
+	private BufferedImage convertToAWT(ImageData data) {
+		ColorModel colorModel = null;
+		PaletteData palette = data.palette;
+		if (palette.isDirect) {
+			colorModel = new DirectColorModel(data.depth, palette.redMask, palette.greenMask, palette.blueMask);
+			BufferedImage bufferedImage = new BufferedImage(colorModel,
+					colorModel.createCompatibleWritableRaster(data.width, data.height), false, null);
+			WritableRaster raster = bufferedImage.getRaster();
+			int[] pixelArray = new int[3];
+			for (int y = 0; y < data.height; y++) {
+				for (int x = 0; x < data.width; x++) {
+					int pixel = data.getPixel(x, y);
+					RGB rgb = palette.getRGB(pixel);
+					pixelArray[0] = rgb.red;
+					pixelArray[1] = rgb.green;
+					pixelArray[2] = rgb.blue;
+					raster.setPixels(x, y, 1, 1, pixelArray);
+				}
+			}
+			return bufferedImage;
+		} else {
+			RGB[] rgbs = palette.getRGBs();
+			byte[] red = new byte[rgbs.length];
+			byte[] green = new byte[rgbs.length];
+			byte[] blue = new byte[rgbs.length];
+			for (int i = 0; i < rgbs.length; i++) {
+				RGB rgb = rgbs[i];
+				red[i] = (byte) rgb.red;
+				green[i] = (byte) rgb.green;
+				blue[i] = (byte) rgb.blue;
+			}
+			if (data.transparentPixel != -1) {
+				colorModel = new IndexColorModel(data.depth, rgbs.length, red, green, blue, data.transparentPixel);
+			} else {
+				colorModel = new IndexColorModel(data.depth, rgbs.length, red, green, blue);
+			}
+			BufferedImage bufferedImage = new BufferedImage(colorModel,
+					colorModel.createCompatibleWritableRaster(data.width, data.height), false, null);
+			WritableRaster raster = bufferedImage.getRaster();
+			int[] pixelArray = new int[1];
+			for (int y = 0; y < data.height; y++) {
+				for (int x = 0; x < data.width; x++) {
+					int pixel = data.getPixel(x, y);
+					pixelArray[0] = pixel;
+					raster.setPixel(x, y, pixelArray);
+				}
+			}
+			return bufferedImage;
+		}
+	}
+
 	public void addConstructorTypeBasicCompletion(String dataToShow, String dataToEnter) {
 		String[] dataArray = dataToShow.split("\\.");
 		String datatoShow = dataArray[dataArray.length - 1];
 		JavaBasicCompletion bc = new JavaBasicCompletion(provider, datatoShow);
 		bc.setShortDescription(dataToShow);
 		bc.setTextToEnter(dataToEnter);
-		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/class.png");
-		Icon icon = new ImageIcon(img.getImageData().data);
+		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/class.ico");
+		BufferedImage image=convertToAWT(img.getImageData());
+		Icon icon = new ImageIcon(image);
 		bc.setIcon(icon);
 		provider.addCompletion(bc);
 	}
@@ -90,7 +150,8 @@ public class CodeCompletionProvider {
 		bc.setShortDescription(dataToShow);
 		bc.setTextToEnter(dataToEnter);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.png");
-		Icon icon = new ImageIcon(img.getImageData().data);
+		BufferedImage image=convertToAWT(img.getImageData());
+		Icon icon = new ImageIcon(image);
 		bc.setIcon(icon);
 		provider.addCompletion(bc);
 	}
@@ -100,7 +161,8 @@ public class CodeCompletionProvider {
 		bc.setShortDescription(dataToShow);
 		bc.setTextToEnter(dataToEnter);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.png");
-		Icon icon = new ImageIcon(img.getImageData().data);
+		BufferedImage image=convertToAWT(img.getImageData());
+		Icon icon = new ImageIcon(image);
 		bc.setIcon(icon);
 		provider.addCompletion(bc);
 	}

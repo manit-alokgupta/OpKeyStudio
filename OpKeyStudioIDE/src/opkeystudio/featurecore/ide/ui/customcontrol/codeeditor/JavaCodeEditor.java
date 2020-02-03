@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,7 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.BadLocationException;
@@ -106,15 +109,21 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.setCodeFoldingEnabled(true);
 		this.setAutoIndentEnabled(true);
+		this.setMarkAllOnOccurrenceSearches(true);
+		this.setMarkOccurrences(true);
+		
+		
 		CompletionProvider provider = CodeCompletionProvider.getInstance(getCodeFunctionView()).getCompletionProvider();
 		autoCompletion = new JavaAutoCompletion(provider);
+		autoCompletion.setListCellRenderer(provider.getListCellRenderer());
+		autoCompletion.setChoicesWindowSize(350, 200);
+		autoCompletion.setDescriptionWindowSize(350, 250);
 		autoCompletion.setAutoActivationDelay(10);
-		autoCompletion.setShowDescWindow(true);
+		// autoCompletion.setShowDescWindow(true);
 		autoCompletion.setAutoCompleteSingleChoices(false);
 		autoCompletion.setAutoActivationEnabled(true);
-		autoCompletion.install(this);
 		autoCompletion.setHideOnNoText(false);
-
+		autoCompletion.install(this);
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
 		frame.add(mainEditorPanel);
@@ -133,7 +142,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
 					String tokenData = lastToken.getLexeme();
-					System.out.println("Current token data " + tokenData);
 					VariableToken varToken = CodeCompletionProvider.getInstance(getCodeFunctionView())
 							.findVariableToken(tokenData);
 					if (varToken != null) {
@@ -200,7 +208,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				}
 				VariableToken varToken = new VariableToken(varName, varClassName);
 				CodeCompletionProvider.getInstance(getCodeFunctionView()).addVariableToken(varToken);
-				System.out.println("Var Name " + varName + "   ClassName " + varClassName);
 				CodeCompletionProvider.getInstance(getCodeFunctionView()).addBasicCompletion(varName);
 			}
 		}
