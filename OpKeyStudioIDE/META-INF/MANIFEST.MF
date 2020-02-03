@@ -48,7 +48,6 @@ Export-Package: opkeystudio,
  opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol,
  opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol,
  opkeystudio.featurecore.ide.ui.ui,
- opkeystudio.notification,
  opkeystudio.parts.part,
  opkeystudio.splashHandlers,
  org.eclipse.wb.swt
