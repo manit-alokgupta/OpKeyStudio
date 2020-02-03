@@ -139,6 +139,10 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 			boolean arg4) {
 		// TODO Auto-generated method stub
 		super.prepareForFunctionCompletion(arg0, arg1, arg2, arg3, arg4);
+		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.ico");
+		BufferedImage image = convertToAWT(img.getImageData());
+		Icon icon = new ImageIcon(image);
+		setIcon(icon);
 	}
 
 	@Override
@@ -169,6 +173,10 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 			boolean hasFocus) {
 		// TODO Auto-generated method stub
 		super.prepareForVariableCompletion(list, vc, index, selected, hasFocus);
+		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/yellow dot.ico");
+		BufferedImage image = convertToAWT(img.getImageData());
+		Icon icon = new ImageIcon(image);
+		setIcon(icon);
 	}
 
 	@Override

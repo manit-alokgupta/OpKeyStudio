@@ -147,25 +147,19 @@ public class CodeCompletionProvider {
 		provider.addCompletion(bc);
 	}
 
-	public void addMethodTypeBasicCompletion(JavaCompletionProvider provider, String dataToShow, String dataToEnter) {
-		JavaBasicCompletion bc = new JavaBasicCompletion(provider, dataToShow);
+	public void addMethodTypeBasicCompletion(JavaCompletionProvider provider, String dataToShow, String dataToEnter,
+			String returnType) {
+		FunctionTypeCompletion bc = new FunctionTypeCompletion(provider, dataToShow, returnType);
 		bc.setShortDescription(dataToShow);
 		bc.setTextToEnter(dataToEnter);
-		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.png");
-		BufferedImage image=convertToAWT(img.getImageData());
-		Icon icon = new ImageIcon(image);
-		bc.setIcon(icon);
 		provider.addCompletion(bc);
 	}
 
-	public void addFieldTypeBasicCompletion(JavaCompletionProvider provider, String dataToShow, String dataToEnter) {
-		JavaBasicCompletion bc = new JavaBasicCompletion(provider, dataToShow);
+	public void addFieldTypeBasicCompletion(JavaCompletionProvider provider, String dataToShow, String dataToEnter,
+			String type) {
+		VariableTypeCompletion bc = new VariableTypeCompletion(provider, dataToShow, type);
 		bc.setShortDescription(dataToShow);
 		bc.setTextToEnter(dataToEnter);
-		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.png");
-		BufferedImage image = convertToAWT(img.getImageData());
-		Icon icon = new ImageIcon(image);
-		bc.setIcon(icon);
 		provider.addCompletion(bc);
 	}
 
@@ -253,7 +247,8 @@ public class CodeCompletionProvider {
 		if (modifier.contains("public")) {
 			if (modifier.contains("static")) {
 				if (!modifier.contains("private")) {
-					addFieldTypeBasicCompletion(provider, field.getName(), field.getName());
+					addFieldTypeBasicCompletion(provider, field.getName(), field.getName(),
+							field.getType().getSimpleName());
 				}
 			}
 		}
@@ -279,7 +274,8 @@ public class CodeCompletionProvider {
 
 		String dataToShow = method.getName() + "(" + parametersString + ")";
 		String dataToEnter = method.getName() + "(" + argumentsString + ")";
-		addMethodTypeBasicCompletion(provider, dataToShow, dataToEnter);
+		String retType = method.getReturnType().getSimpleName();
+		addMethodTypeBasicCompletion(provider, dataToShow, dataToEnter, retType);
 	}
 
 	public void addAutoCompleteToken(AutoCompleteToken token) {
