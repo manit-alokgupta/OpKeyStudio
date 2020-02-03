@@ -37,8 +37,16 @@ public class CFLCompilationResultTable extends CustomTable {
 			@Override
 			public void paintControl(PaintEvent e) {
 				Table table_0 = (Table) e.getSource();
+				int count = 0;
 				for (TableColumn column : table_0.getColumns()) {
-					column.setWidth(table_0.getBounds().width / 3);
+					if (count == 0) {
+						column.setWidth(150);
+					} else if (count == 1) {
+						column.setWidth(150);
+					} else {
+						column.setWidth(table_0.getBounds().width - 300);
+					}
+					count++;
 				}
 			}
 		});

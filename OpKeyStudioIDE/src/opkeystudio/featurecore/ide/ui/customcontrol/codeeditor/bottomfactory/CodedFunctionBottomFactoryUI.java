@@ -49,8 +49,11 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private ToolItem moveDownOutputItem;
 	private ToolItem refreshOutputItem;
 	
-	private ToolItem addTagItem;
-	private ToolItem deleteTagItem;
+	private ToolItem refreshORTable;
+	
+	private ToolItem addLibrary;
+	private ToolItem deleteLibrary;
+	
 	private Display display;
 
 	private CodedFunctionView parentCodedView;
@@ -110,16 +113,16 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		toolBar_1.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
-		addTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		addTagItem.setWidth(27);
-		addTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		addTagItem.setToolTipText("Add 2");
+		addLibrary = new ToolItem(toolBar_1, SWT.NONE);
+		addLibrary.setWidth(27);
+		addLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		addLibrary.setToolTipText("Add 2");
 		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
-		deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		deleteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		deleteTagItem.setToolTipText("Delete");
-		deleteTagItem.setEnabled(false);
+		deleteLibrary = new ToolItem(toolBar_1, SWT.NONE);
+		deleteLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteLibrary.setToolTipText("Delete");
+		deleteLibrary.setEnabled(false);
 
 		associateLibraries = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
@@ -140,9 +143,9 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		toolBar_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
-		ToolItem compareBackupItem = new ToolItem(toolBar_3, SWT.NONE);
-		compareBackupItem.setToolTipText("Compare With Backup");
-		compareBackupItem.setText("New Item");
+		refreshORTable = new ToolItem(toolBar_3, SWT.NONE);
+		refreshORTable.setToolTipText("Refresh");
+		refreshORTable.setText("Refresh");
 
 		associateor = new CFLOrAssociate(associateORHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -316,7 +319,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			}
 		});
-		
+
 		addButtonListeners();
 	}
 
@@ -337,7 +340,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	public void toggleDeleteButton(boolean status) {
 		deleteInputItem.setEnabled(status);
 		deleteOutputItem.setEnabled(status);
-		deleteTagItem.setEnabled(status);
+		deleteLibrary.setEnabled(status);
 	}
 
 	public void addButtonListeners() {
@@ -470,7 +473,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			}
 		});
 
-		addTagItem.addSelectionListener(new SelectionListener() {
+		addLibrary.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -483,7 +486,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			}
 		});
 
-		deleteTagItem.addSelectionListener(new SelectionListener() {
+		deleteLibrary.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
