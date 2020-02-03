@@ -111,11 +111,10 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		this.setAutoIndentEnabled(true);
 		this.setMarkAllOnOccurrenceSearches(true);
 		this.setMarkOccurrences(true);
-		
-		
+
 		CompletionProvider provider = CodeCompletionProvider.getInstance(getCodeFunctionView()).getCompletionProvider();
 		autoCompletion = new JavaAutoCompletion(provider);
-		autoCompletion.setListCellRenderer(provider.getListCellRenderer());
+		autoCompletion.setListCellRenderer(new JavaCellRenderer());
 		autoCompletion.setChoicesWindowSize(350, 200);
 		autoCompletion.setDescriptionWindowSize(350, 250);
 		autoCompletion.setAutoActivationDelay(10);
