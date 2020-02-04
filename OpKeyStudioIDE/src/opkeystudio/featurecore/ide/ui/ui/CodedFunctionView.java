@@ -50,6 +50,8 @@ public class CodedFunctionView extends Composite {
 	private CodedFunctionBottomFactoryUI bottomFactoryUi;
 	private String codedFLClassPath;
 	private String artifactOpkeyDataLibraryPath;
+	
+	private String artifactAssociatedLibraryPath;
 	private Artifact artifact;
 
 	public CodedFunctionView(Composite parent, int style) {
@@ -284,5 +286,13 @@ public class CodedFunctionView extends Composite {
 
 	public void setArtifactOpkeyDataLibraryPath(String artifactOpkeyDataLibraryPath) {
 		this.artifactOpkeyDataLibraryPath = artifactOpkeyDataLibraryPath;
+	}
+
+	public String getArtifactAssociatedLibraryPath() {
+		return artifactAssociatedLibraryPath;
+	}
+
+	public void setArtifactAssociatedLibraryPath(String artifactAssociatedLibraryPath) {
+		this.artifactAssociatedLibraryPath = artifactAssociatedLibraryPath;
 	}
 }

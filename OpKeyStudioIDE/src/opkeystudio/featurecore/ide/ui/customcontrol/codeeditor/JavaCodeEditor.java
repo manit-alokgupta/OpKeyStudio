@@ -135,7 +135,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (saveToggled) {
-					saveToggled=false;
+					saveToggled = false;
 					return;
 				}
 				try {
@@ -283,14 +283,24 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	public void convertOpKeyVariablesToCode() {
 		Artifact artifact = getArtifact();
 		String defaultSourceCodeLibsPath = Utilities.getInstance().getDefaultCodedFLOpKeyLibrariesDirPath();
+		String defaultAssociatedLibsPath = Utilities.getInstance().getDefaultCodedFLAssociatedLibrariesDirPath();
 		String defArtifactSourceCodeLibsPath = defaultSourceCodeLibsPath + File.separator
 				+ artifact.getArtifactVariableName();
+		String defArtifactassolibsPath = defaultAssociatedLibsPath + File.separator
+				+ artifact.getArtifactVariableName();
+
 		File file = new File(defArtifactSourceCodeLibsPath);
 		if (!file.exists()) {
 			file.mkdir();
 		}
 
+		File file1 = new File(defArtifactassolibsPath);
+		if (!file1.exists()) {
+			file1.mkdir();
+		}
+
 		getCodeFunctionView().setArtifactOpkeyDataLibraryPath(file.getAbsolutePath());
+		getCodeFunctionView().setArtifactAssociatedLibraryPath(file1.getAbsolutePath());
 		JavaClassSource gvClassSource = new DtoToCodeConverter().getJavaClassOfGlobalVariables();
 		File gvJavaFile = new File(file.getAbsolutePath() + File.separator + gvClassSource.getName() + ".java");
 		try {
