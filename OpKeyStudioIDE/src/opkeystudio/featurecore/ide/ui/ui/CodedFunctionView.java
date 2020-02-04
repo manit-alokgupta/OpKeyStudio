@@ -165,6 +165,8 @@ public class CodedFunctionView extends Composite {
 				if (saveButton.getEnabled() == true) {
 					saveCFL(true);
 				}
+				editor.convertOpKeyVariablesToCode();
+				refreshIntellisense();
 				renderCFLCode();
 			}
 
