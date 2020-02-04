@@ -143,6 +143,7 @@ public class CFLOrAssociate extends CustomTable {
 
 	public void renderORNodes() {
 		disposeAllTableEditors();
+		this.removeAll();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
 		for (Artifact artifact : artifacts) {
 			CustomTableItem item = new CustomTableItem(this, 0);

@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -10,6 +11,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
@@ -189,12 +192,17 @@ public class EditorTools {
 	}
 
 	public void executeCodedFl(String codedString, String pluginName) {
-		Thread executionThread=new Thread(new Runnable() {
+		
+		ExecutorService executionThread=Executors.newSingleThreadExecutor();
+		executionThread.execute(new Runnable() {
 			
 			@Override
 			public void run() {
+				java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();    
+				System.setOut(new java.io.PrintStream(out));
 				try {
 					execute(codedString, pluginName);
+					System.err.println("Out was: " + out.toString());
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
 						| InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
@@ -202,7 +210,6 @@ public class EditorTools {
 				}
 			}
 		});
-		executionThread.start();
 	}
 
 	public URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {

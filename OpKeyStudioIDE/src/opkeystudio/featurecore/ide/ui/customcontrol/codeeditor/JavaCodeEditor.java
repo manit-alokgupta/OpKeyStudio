@@ -20,12 +20,9 @@ import javax.swing.text.JTextComponent;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxDocument;
@@ -138,6 +135,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (saveToggled) {
+					saveToggled=false;
 					return;
 				}
 				try {
