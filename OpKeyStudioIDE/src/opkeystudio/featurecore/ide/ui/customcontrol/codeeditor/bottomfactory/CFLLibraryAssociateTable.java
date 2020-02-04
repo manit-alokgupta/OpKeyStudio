@@ -39,7 +39,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 					if (count == 0) {
 						column.setWidth(100);
 					} else {
-						column.setWidth(table_0.getBounds().width - 100);
+						column.setWidth((table_0.getBounds().width - 100) / 2);
 					}
 					count++;
 				}
