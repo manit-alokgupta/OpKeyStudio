@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
@@ -30,7 +31,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
-	private Table associateLibraries;
+	private CFLLibraryAssociateTable associateLibraries;
 	private CFLOrAssociate associateor;
 	private Table associatedr;
 	private CFLInputTable inputTable;
@@ -47,12 +48,12 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private ToolItem moveUpOutputItem;
 	private ToolItem moveDownOutputItem;
 	private ToolItem refreshOutputItem;
-	
+
 	private ToolItem refreshORTable;
-	
+
 	private ToolItem addLibrary;
 	private ToolItem deleteLibrary;
-	
+
 	private Display display;
 
 	private CodedFunctionView parentCodedView;
@@ -123,7 +124,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		deleteLibrary.setToolTipText("Delete");
 		deleteLibrary.setEnabled(false);
 
-		associateLibraries = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		associateLibraries = new CFLLibraryAssociateTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
 		associateLibraries.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associateLibraries.setHeaderVisible(true);
@@ -145,9 +146,8 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		refreshORTable = new ToolItem(toolBar_3, SWT.NONE);
 		refreshORTable.setToolTipText("Refresh");
 		refreshORTable.setText("Refresh");
-		refreshORTable
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-		
+		refreshORTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+
 		associateor = new CFLOrAssociate(associateORHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associateor.setHeaderVisible(true);
@@ -478,7 +478,14 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				String[] filterExt = { "*.jar" };
+				FileDialog dialog = new FileDialog(parentCodedView.getShell(), SWT.OPEN);
+				dialog.setFilterExtensions(filterExt);
+				dialog.open();
+				String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
+				if (filePath != null) {
 
+				}
 			}
 
 			@Override
