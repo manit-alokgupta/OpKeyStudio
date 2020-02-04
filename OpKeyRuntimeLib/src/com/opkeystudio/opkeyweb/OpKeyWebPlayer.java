@@ -25,7 +25,7 @@ public class OpKeyWebPlayer {
 		return currentWebDriver;
 	}
 
-	public void initChromeDriver(String driverPath) {
+	public void initChromeDriverExecutablePath(String driverPath) {
 		System.setProperty("webdriver.chrome.driver", driverPath);
 	}
 
