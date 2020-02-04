@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -31,6 +32,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
+	
+	private StyledText consoleLogTextView;
+	
 	private CFLLibraryAssociateTable associateLibraries;
 	private CFLOrAssociate associateor;
 	private Table associatedr;
@@ -273,6 +277,19 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		compilationResultsTable.setHeaderVisible(true);
 		compilationResultsTable.setLinesVisible(true);
 
+		
+		TabItem consoleLogTabItem = new TabItem(tabFolder, SWT.NONE);
+		consoleLogTabItem.setText("Console");
+
+		Composite consoleLogComposite = new Composite(tabFolder, SWT.NONE);
+		consoleLogTabItem.setControl(consoleLogComposite);
+		consoleLogComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		consoleLogTextView = new StyledText(consoleLogComposite,
+				SWT.BORDER | SWT.V_SCROLL);
+		
+		consoleLogTextView.setEditable(false);
+		
 		expandBar.addListener(SWT.Expand, new Listener() {
 
 			@Override
@@ -524,5 +541,13 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 	public CFLCompilationResultTable getCompilationResultTable() {
 		return this.compilationResultsTable;
+	}
+
+	public StyledText getConsoleLogTextView() {
+		return consoleLogTextView;
+	}
+
+	public void setConsoleLogTextView(StyledText consoleLogTextView) {
+		this.consoleLogTextView = consoleLogTextView;
 	}
 }

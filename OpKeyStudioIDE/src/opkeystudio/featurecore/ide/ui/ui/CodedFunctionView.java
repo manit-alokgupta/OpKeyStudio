@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import javax.tools.Diagnostic.Kind;
@@ -11,6 +12,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -95,8 +97,44 @@ public class CodedFunctionView extends Composite {
 							"Unable to Execute Coded FL has compilation error");
 					return;
 				}
-				new EditorTools(getInstance()).executeCodedFl(getCodedFLClassPath(),
+
+				EditorTools tools = new EditorTools(getInstance());
+				tools.executeCodedFl(getCodedFLClassPath(),
 						opkeystudio.core.utils.Utilities.getInstance().getPluginName());
+				Display.getDefault().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						toggleRunButton(false);
+						MessageDialogs msd = new MessageDialogs();
+						msd.openProgressDialog(parent.getShell(), "Please Wait Execution is on Progress...");
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						while (true) {
+							ByteArrayOutputStream errorOutPut = tools.getStandardErrorOutput();
+							ByteArrayOutputStream standardOutPut = tools.getStandardOutput();
+							String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
+									+ errorOutPut.toString();
+							getCodedFunctionBottomFactoryUi().getConsoleLogTextView().setText(consoleOutPut);
+							boolean executionCompleted = tools.isExecutionCompleted();
+							if (executionCompleted) {
+								break;
+							}
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						msd.closeProgressDialog();
+						toggleRunButton(true);
+					}
+				});
 			}
 
 			@Override

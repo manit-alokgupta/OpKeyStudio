@@ -1,8 +1,8 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -26,7 +26,10 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class EditorTools {
+	private ByteArrayOutputStream standardOutput;
+	private ByteArrayOutputStream standardErrorOutput;
 	private CodedFunctionView parentCodedFunctionView;
+	private boolean executionCompleted = false;
 
 	public EditorTools(CodedFunctionView codedFuntionView) {
 		this.setParentCodedFunctionView(codedFuntionView);
@@ -192,24 +195,29 @@ public class EditorTools {
 	}
 
 	public void executeCodedFl(String codedString, String pluginName) {
-		
-		ExecutorService executionThread=Executors.newSingleThreadExecutor();
-		executionThread.execute(new Runnable() {
-			
+
+		Thread executionThread = new Thread(new Runnable() {
+
 			@Override
 			public void run() {
-				java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();    
-				System.setOut(new java.io.PrintStream(out));
+				setExecutionCompleted(false);
+				java.io.ByteArrayOutputStream standrdout = new java.io.ByteArrayOutputStream();
+				java.io.ByteArrayOutputStream errorout = new java.io.ByteArrayOutputStream();
+				System.setOut(new java.io.PrintStream(standrdout));
+				System.setErr(new java.io.PrintStream(errorout));
+				setStandardOutput(standrdout);
+				setStandardErrorOutput(errorout);
 				try {
 					execute(codedString, pluginName);
-					System.err.println("Out was: " + out.toString());
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
 						| InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
 					e.printStackTrace();
 				}
+				setExecutionCompleted(true);
 			}
 		});
+		executionThread.start();
 	}
 
 	public URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {
@@ -255,5 +263,29 @@ public class EditorTools {
 
 	public void setParentCodedFunctionView(CodedFunctionView parentCodedFunctionView) {
 		this.parentCodedFunctionView = parentCodedFunctionView;
+	}
+
+	public ByteArrayOutputStream getStandardErrorOutput() {
+		return standardErrorOutput;
+	}
+
+	public void setStandardErrorOutput(ByteArrayOutputStream standardErrorOutput) {
+		this.standardErrorOutput = standardErrorOutput;
+	}
+
+	public ByteArrayOutputStream getStandardOutput() {
+		return standardOutput;
+	}
+
+	public void setStandardOutput(ByteArrayOutputStream standardOutput) {
+		this.standardOutput = standardOutput;
+	}
+
+	public boolean isExecutionCompleted() {
+		return executionCompleted;
+	}
+
+	public void setExecutionCompleted(boolean executionCompleted) {
+		this.executionCompleted = executionCompleted;
 	}
 }
