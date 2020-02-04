@@ -42,7 +42,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 
 	private void init() {
 
-		String[] headers = new String[] {"FileName", "Type" };
+		String[] headers = new String[] { "FileName", "Type" };
 		for (String header : headers) {
 			TableColumn column = new TableColumn(this, 0);
 			column.setText(header);
@@ -120,12 +120,25 @@ public class CFLLibraryAssociateTable extends CustomTable {
 			String fileName = file.getName();
 			String[] fileSplit = fileName.split("\\.");
 			fileName = fileSplit[0];
-			String extension = fileSplit[1];
+			String extension = fileSplit[fileSplit.length - 1];
 
 			CustomTableItem cti = new CustomTableItem(this, 0);
-			cti.setText(new String[] {fileName, extension });
+			cti.setText(new String[] { fileName, extension });
 			cti.setControlData(file);
 		}
+	}
+
+	public CustomTableItem getSelectedLibrary() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
+		return (CustomTableItem) this.getSelection()[0];
 	}
 
 	public CodedFunctionBottomFactoryUI getParentBottomFactoryUI() {

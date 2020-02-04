@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.apache.commons.io.FileUtils;
+import org.assertj.core.util.Files;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
@@ -31,6 +32,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
@@ -522,6 +524,46 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
+		associateLibraries.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				CustomTableItem item = associateLibraries.getSelectedLibrary();
+				if (item != null) {
+					deleteLibrary.setEnabled(true);
+				} else {
+					deleteLibrary.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteLibrary.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				CustomTableItem item = associateLibraries.getSelectedLibrary();
+				if (item != null) {
+					File file = (File) item.getControlData();
+					if (file.exists()) {
+						Files.delete(file);
+						associateLibraries.renderAssociatedLibraries();
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
