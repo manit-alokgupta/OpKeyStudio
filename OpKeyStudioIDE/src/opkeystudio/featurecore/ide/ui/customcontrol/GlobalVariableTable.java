@@ -30,6 +30,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.GlobalVariableDialog;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -254,28 +255,23 @@ public class GlobalVariableTable extends CustomTable {
 	public void refreshGlobalVariables() {
 		disposeAllTableEditors();
 		this.removeAll();
-		try {
-			List<GlobalVariable> globalvariables = new GlobalVariableApi().getAllGlobalVariables();
-			for (GlobalVariable globalvariable : globalvariables) {
+		List<GlobalVariable> globalvariables = GlobalLoader.getInstance().getGlobalVaribles();
+		for (GlobalVariable globalvariable : globalvariables) {
 
-				CustomTableItem ti = new CustomTableItem(this, 0);
-				ti.setData(globalvariable);
-				ti.setControlData(globalvariable);
-				if (isInsideArtifact()) {
-					ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-							globalvariable.getValue() });
-				} else {
-					ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
-							globalvariable.getValue(), "" });
-					addTableEditor(ti);
-				}
-
+			CustomTableItem ti = new CustomTableItem(this, 0);
+			ti.setData(globalvariable);
+			ti.setControlData(globalvariable);
+			if (isInsideArtifact()) {
+				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+						globalvariable.getValue() });
+			} else {
+				ti.setText(new String[] { globalvariable.getName(), globalvariable.getDatatype(),
+						globalvariable.getValue(), "" });
+				addTableEditor(ti);
 			}
-			this.setControlData(globalvariables);
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
+		this.setControlData(globalvariables);
 	}
 
 	public void filterGlobalVariableTable(String searchValue) {
@@ -370,6 +366,7 @@ public class GlobalVariableTable extends CustomTable {
 				new GlobalVariableApi().updateGlobalVariable(gv);
 			}
 		}
+		GlobalLoader.getInstance().initGlobalVariables();
 		refreshGlobalVariables();
 	}
 
