@@ -1,20 +1,18 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
-import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
-import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ArtifactMaker;
 import opkeystudio.opkeystudiocore.core.dtoMaker.DRMaker;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
@@ -67,12 +65,14 @@ public class ArtifactApi {
 	public void deleteArtifact(Artifact artifact) {
 		String query = String.format("delete from main_artifact_filesystem where id='%s'", artifact.getId());
 		QueryExecutor.getInstance().executeUpdateQuery(query);
+		GlobalLoader.getInstance().setAllArtifacts(getAllArtificates());
 	}
 
 	public void updateArtifact(Artifact artifact) {
 		String updateQuery = new QueryMaker().createUpdateQuery(artifact, "main_artifact_filesystem",
 				String.format("WHERE id='%s'", artifact.getId()));
 		QueryExecutor.getInstance().executeUpdateQuery(updateQuery);
+		GlobalLoader.getInstance().setAllArtifacts(getAllArtificates());
 	}
 
 	public void createArtifact(Artifact parentId, String artifactName, MODULETYPE artifactType) {
@@ -90,5 +90,6 @@ public class ArtifactApi {
 				}
 			}
 		}
+		GlobalLoader.getInstance().setAllArtifacts(getAllArtificates());
 	}
 }
