@@ -15,6 +15,10 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.jboss.forge.roaster.Roaster;
+import org.jboss.forge.roaster.model.JavaType;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.MethodSource;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
@@ -36,6 +40,7 @@ public class CodedFunctionView extends Composite {
 	 * @param parent
 	 * @param style
 	 */
+
 	private JavaCodeEditor editor;
 	private ToolItem runButton;
 	private ToolItem saveButton;
@@ -160,6 +165,18 @@ public class CodedFunctionView extends Composite {
 			}
 		}
 		editor.compileAndCheck();
+
+		String code = editor.getText();
+		JavaClassSource classSource = Roaster.parse(JavaClassSource.class, code);
+		MethodSource<JavaClassSource> methodSource = classSource.getMethod("run");
+		if (methodSource != null) {
+			if (methodSource.getBody() != null) {
+				editor.getCflCode().setUsercode(methodSource.getBody());
+				editor.getCflCode().setModified(true);
+				new CodedFunctionApi().saveCFLCode(editor.getCflCode());
+				renderCFLCode();
+			}
+		}
 		toggleSaveButton(false);
 	}
 
@@ -182,6 +199,7 @@ public class CodedFunctionView extends Composite {
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
 					cflcode.getUsercode(), cflcode.getPrivateuserfunctions());
 			editor.setJavaCode(code);
+			editor.setCflCode(cflcode);
 		}
 	}
 

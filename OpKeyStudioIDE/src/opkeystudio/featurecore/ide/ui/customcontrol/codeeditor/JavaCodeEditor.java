@@ -34,6 +34,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.DtoToCodeConverter;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
@@ -44,6 +45,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	/**
 	 * 
 	 */
+
+	private CFLCode cflCode;
 	private static final long serialVersionUID = 1L;
 	private List<Object> highlightedLines = new ArrayList<>();
 	private Artifact artifact;
@@ -173,23 +176,29 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	}
 
 	private void createIntellisenseDataFromCurrentText() throws BadLocationException {
-		int lineCount = this.getLineCount();
-		for (int i = 0; i < lineCount; i++) {
-			Token token = this.getTokenListForLine(i);
+		try {
+			int lineCount = this.getLineCount();
+			for (int i = 0; i < lineCount; i++) {
+				Token token = this.getTokenListForLine(i);
 
-			List<Token> lineTokens = new ArrayList<Token>();
-			if (token != null) {
-				while (token.getNextToken() != null) {
-					String tokenText = token.getLexeme();
-					if (tokenText != null) {
-						if (!tokenText.trim().isEmpty()) {
-							lineTokens.add(token);
+				List<Token> lineTokens = new ArrayList<Token>();
+				if (token != null) {
+					while (token.getNextToken() != null) {
+						String tokenText = token.getLexeme();
+						if (tokenText != null) {
+							if (!tokenText.trim().isEmpty()) {
+								lineTokens.add(token);
+							}
 						}
+						token = token.getNextToken();
 					}
-					token = token.getNextToken();
 				}
+				parseTokens(lineTokens);
 			}
-			parseTokens(lineTokens);
+		} catch (Error e) {
+			// TODO: handle exception
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
@@ -322,5 +331,13 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 	public void setCodeFunctionView(CodedFunctionView codeFunctionView) {
 		this.codeFunctionView = codeFunctionView;
+	}
+
+	public CFLCode getCflCode() {
+		return cflCode;
+	}
+
+	public void setCflCode(CFLCode cflCode) {
+		this.cflCode = cflCode;
 	}
 }

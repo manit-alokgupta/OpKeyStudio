@@ -16,9 +16,23 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
+import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CodedFunctionApi {
+
+	public void saveCFLCode(CFLCode cflcode) {
+		String query = "";
+		if (cflcode.isAdded()) {
+			query = new QueryMaker().createInsertQuery(cflcode, "cf_code", "");
+		}
+		if (cflcode.isModified()) {
+			query = new QueryMaker().createUpdateQuery(cflcode, "cf_code",
+					String.format("Where CF_ID='%s'", cflcode.getCf_id()));
+		}
+		QueryExecutor.getInstance().executeUpdateQuery(query);
+	}
+
 	public List<CFLCode> getCodedFLCodeData(Artifact artifact) {
 		String query = String.format("SELECT * FROM cf_code WHERE cf_id='%s'", artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
