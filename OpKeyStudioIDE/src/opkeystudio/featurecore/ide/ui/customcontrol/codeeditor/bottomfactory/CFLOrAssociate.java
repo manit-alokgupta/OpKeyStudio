@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +18,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.DtoToCodeConverter;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.CodeCompletionProvider;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
@@ -83,16 +83,30 @@ public class CFLOrAssociate extends CustomTable {
 	private List<Control> allTableEditors = new ArrayList<Control>();
 
 	private void addTableEditor(CustomTableItem item) {
+		String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
+				.getArtifactOpkeyDataLibraryPath();
+		List<File> files = new EditorTools(getParentBottomFactoryUI().getParentCodedFunctionView())
+				.getAllFiles(new File(dataLibraryPath), ".class");
+		boolean flag = false;
+		Artifact artifact = (Artifact) item.getControlData();
+		String artifactVariableName = artifact.getArtifactVariableName() + ".class";
+		for (File file : files) {
+			System.out.println(file.getName() + "     " + artifactVariableName);
+			if (file.getName().equals(artifactVariableName)) {
+				flag = true;
+				break;
+			}
+		}
 		TableEditor editor1 = getTableEditor();
 		CustomButton associateOR = new CustomButton(this, SWT.CHECK | SWT.CENTER);
-		associateOR.setSelection(false);
+		associateOR.setSelection(flag);
 		associateOR.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				setSelection(item);
+				Artifact artifact = (Artifact) item.getControlData();
 				if (associateOR.getSelection() == true) {
-					Artifact artifact = (Artifact) item.getControlData();
 					List<ORObject> allOrObjects = GlobalLoader.getInstance().getAllOrObjects(artifact.getId());
 					for (ORObject object : allOrObjects) {
 						List<ObjectAttributeProperty> attributeProps = GlobalLoader.getInstance()
@@ -115,6 +129,34 @@ public class CFLOrAssociate extends CustomTable {
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					}
+					List<CompileError> errors = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
+							.compileAllOpKeyLibs();
+
+					System.out.println("Errors Found " + errors.size());
+					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense();
+				}
+				if (associateOR.getSelection() == false) {
+					File file1 = new File(
+							dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".class");
+					File file2 = new File(
+							dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".java");
+					if (file1.exists()) {
+						try {
+							Files.delete(file1.toPath());
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+
+					if (file2.exists()) {
+						try {
+							Files.delete(file2.toPath());
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 					List<CompileError> errors = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
 							.compileAllOpKeyLibs();
