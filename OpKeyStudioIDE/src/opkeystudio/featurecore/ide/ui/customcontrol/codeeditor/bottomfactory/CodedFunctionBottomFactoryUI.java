@@ -42,6 +42,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private ToolItem moveUpInputItem;
 	private ToolItem moveDownInputItem;
 	private ToolItem refreshInputItem;
+
 	private TabItem outputTabItem;
 	private ToolItem addOutputItem;
 	private ToolItem deleteOutputItem;
@@ -152,111 +153,114 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associateor.setHeaderVisible(true);
 		associateor.setLinesVisible(true);
+		/*
+		 * inputTabItem = new TabItem(tabFolder, SWT.NONE);
+		 * inputTabItem.setText("Input"); inputTabItem.setToolTipText("Output");
+		 * 
+		 * Composite composite_11 = new Composite(tabFolder, SWT.NONE);
+		 * inputTabItem.setControl(composite_11); composite_11.setLayout(new
+		 * GridLayout(1, false));
+		 * 
+		 * ToolBar inputTabToolBar = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
+		 * inputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+		 * 1, 1));
+		 * inputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		 * 
+		 * addInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		 * addInputItem.setToolTipText("Add");
+		 * addInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/add_icon.png"));
+		 * 
+		 * ToolItem toolItem = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+		 * 
+		 * deleteInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		 * deleteInputItem.setToolTipText("Delete");
+		 * deleteInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/delete_icon.png")); deleteInputItem.setEnabled(false);
+		 * 
+		 * ToolItem toolItem_1 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+		 * 
+		 * moveUpInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		 * moveUpInputItem.setToolTipText("Move Up");
+		 * moveUpInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/moveup_icon.png")); moveUpInputItem.setEnabled(false);
+		 * 
+		 * ToolItem toolItem_2 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+		 * 
+		 * moveDownInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		 * moveDownInputItem.setToolTipText("Move Down"); moveDownInputItem
+		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/movedown_icon.png"));
+		 * moveDownInputItem.setEnabled(false);
+		 * 
+		 * ToolItem toolItem_3 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+		 * 
+		 * refreshInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		 * refreshInputItem.setToolTipText("Refresh"); refreshInputItem
+		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/refresh_icon.png"));
+		 * 
+		 * inputTable = new CFLInputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION,
+		 * this); // inputTable = new Table(composite_11, SWT.BORDER |
+		 * SWT.FULL_SELECTION); inputTable.setLayoutData(new GridData(SWT.FILL,
+		 * SWT.FILL, true, true, 1, 1)); inputTable.setHeaderVisible(true);
+		 * inputTable.setLinesVisible(true);
+		 */
 
-		inputTabItem = new TabItem(tabFolder, SWT.NONE);
-		inputTabItem.setText("Input");
-		inputTabItem.setToolTipText("Output");
-
-		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
-		inputTabItem.setControl(composite_11);
-		composite_11.setLayout(new GridLayout(1, false));
-
-		ToolBar inputTabToolBar = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
-		inputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		inputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-
-		addInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		addInputItem.setToolTipText("Add");
-		addInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-
-		ToolItem toolItem = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-
-		deleteInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		deleteInputItem.setToolTipText("Delete");
-		deleteInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		deleteInputItem.setEnabled(false);
-
-		ToolItem toolItem_1 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-
-		moveUpInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		moveUpInputItem.setToolTipText("Move Up");
-		moveUpInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
-		moveUpInputItem.setEnabled(false);
-
-		ToolItem toolItem_2 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-
-		moveDownInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		moveDownInputItem.setToolTipText("Move Down");
-		moveDownInputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
-		moveDownInputItem.setEnabled(false);
-
-		ToolItem toolItem_3 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-
-		refreshInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		refreshInputItem.setToolTipText("Refresh");
-		refreshInputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-
-		inputTable = new CFLInputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		inputTable = new Table(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
-		inputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		inputTable.setHeaderVisible(true);
-		inputTable.setLinesVisible(true);
-
-		outputTabItem = new TabItem(tabFolder, SWT.NONE);
-		outputTabItem.setText("Output");
-		outputTabItem.setToolTipText("Output");
-
-		Composite composite_12 = new Composite(tabFolder, SWT.NONE);
-		outputTabItem.setControl(composite_12);
-		composite_12.setLayout(new GridLayout(1, false));
-
-		ToolBar outputTabToolBar = new ToolBar(composite_12, SWT.FLAT | SWT.RIGHT);
-		outputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		outputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-
-		addOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		addOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		addOutputItem.setToolTipText("Add");
-
-		ToolItem toolItem_4 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-
-		deleteOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		deleteOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		deleteOutputItem.setToolTipText("Delete");
-		deleteOutputItem.setEnabled(false);
-
-		ToolItem toolItem_5 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-
-		moveUpOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		moveUpOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
-		moveUpOutputItem.setToolTipText("Move Up");
-		moveUpOutputItem.setEnabled(false);
-
-		ToolItem toolItem_6 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-
-		moveDownOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		moveDownOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
-		moveDownOutputItem.setToolTipText("Move Down");
-		moveDownOutputItem.setEnabled(false);
-
-		ToolItem toolItem_7 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-
-		refreshOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		refreshOutputItem.setToolTipText("Refresh");
-		refreshOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-
-		outputTable = new CFLOutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		outputTable = new Table(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
-		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		outputTable.setHeaderVisible(true);
-		outputTable.setLinesVisible(true);
-
+		/*
+		 * outputTabItem = new TabItem(tabFolder, SWT.NONE);
+		 * outputTabItem.setText("Output"); outputTabItem.setToolTipText("Output");
+		 * 
+		 * Composite composite_12 = new Composite(tabFolder, SWT.NONE);
+		 * outputTabItem.setControl(composite_12); composite_12.setLayout(new
+		 * GridLayout(1, false));
+		 * 
+		 * ToolBar outputTabToolBar = new ToolBar(composite_12, SWT.FLAT | SWT.RIGHT);
+		 * outputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+		 * 1, 1));
+		 * outputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		 * 
+		 * addOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		 * addOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/add_icon.png")); addOutputItem.setToolTipText("Add");
+		 * 
+		 * ToolItem toolItem_4 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+		 * 
+		 * deleteOutputItem = new ToolItem(outputTabToolBar, SWT.NONE); deleteOutputItem
+		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/delete_icon.png"));
+		 * deleteOutputItem.setToolTipText("Delete");
+		 * deleteOutputItem.setEnabled(false);
+		 * 
+		 * ToolItem toolItem_5 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+		 * 
+		 * moveUpOutputItem = new ToolItem(outputTabToolBar, SWT.NONE); moveUpOutputItem
+		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/moveup_icon.png"));
+		 * moveUpOutputItem.setToolTipText("Move Up");
+		 * moveUpOutputItem.setEnabled(false);
+		 * 
+		 * ToolItem toolItem_6 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+		 * 
+		 * moveDownOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		 * moveDownOutputItem .setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/movedown_icon.png"));
+		 * moveDownOutputItem.setToolTipText("Move Down");
+		 * moveDownOutputItem.setEnabled(false);
+		 * 
+		 * ToolItem toolItem_7 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+		 * 
+		 * refreshOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		 * refreshOutputItem.setToolTipText("Refresh"); refreshOutputItem
+		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		 * "icons/testcase_icons/refresh_icon.png"));
+		 * 
+		 * outputTable = new CFLOutputTable(composite_12, SWT.BORDER |
+		 * SWT.FULL_SELECTION, this); // outputTable = new Table(composite_12,
+		 * SWT.BORDER | SWT.FULL_SELECTION); outputTable.setLayoutData(new
+		 * GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		 * outputTable.setHeaderVisible(true); outputTable.setLinesVisible(true);
+		 */
 		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setText("Compilation Results");
 
@@ -296,30 +300,25 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			}
 		});
 
-		outputTable.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-		inputTable.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
+		/*
+		 * outputTable.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } }); inputTable.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 */
 
 		addButtonListeners();
 	}
@@ -345,131 +344,125 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	}
 
 	public void addButtonListeners() {
+		/*
+		 * addOutputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 * 
+		 * addInputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 * 
+		 * moveUpInputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 * 
+		 * moveDownInputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 * 
+		 * deleteOutputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } }); deleteInputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * toggleDeleteButton(false); }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 * 
+		 * moveUpOutputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 * 
+		 * moveDownOutputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 * 
+		 * deleteOutputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 * 
+		 * refreshOutputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 * 
+		 * refreshInputItem.addSelectionListener(new SelectionListener() {
+		 * 
+		 * @Override public void widgetSelected(SelectionEvent e) {
+		 * 
+		 * }
+		 * 
+		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
+		 * 
+		 * } });
+		 */
 
-		addOutputItem.addSelectionListener(new SelectionListener() {
+		refreshORTable.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				associateor.renderORNodes();
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		addInputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		moveUpInputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		moveDownInputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		deleteOutputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-		deleteInputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				toggleDeleteButton(false);
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		moveUpOutputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		moveDownOutputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		deleteOutputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		refreshOutputItem.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});
@@ -495,19 +488,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		});
 
 		deleteLibrary.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		refreshInputItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {

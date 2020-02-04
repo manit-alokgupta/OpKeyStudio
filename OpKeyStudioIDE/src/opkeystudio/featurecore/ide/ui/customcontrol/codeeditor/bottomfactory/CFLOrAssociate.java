@@ -141,7 +141,7 @@ public class CFLOrAssociate extends CustomTable {
 		}
 	}
 
-	private void renderORNodes() {
+	public void renderORNodes() {
 		disposeAllTableEditors();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
 		for (Artifact artifact : artifacts) {
