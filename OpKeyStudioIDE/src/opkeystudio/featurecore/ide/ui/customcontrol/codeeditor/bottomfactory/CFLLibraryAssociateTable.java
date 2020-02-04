@@ -42,7 +42,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 
 	private void init() {
 
-		String[] headers = new String[] { "#", "FileName", "Type" };
+		String[] headers = new String[] {"FileName", "Type" };
 		for (String header : headers) {
 			TableColumn column = new TableColumn(this, 0);
 			column.setText(header);
@@ -123,7 +123,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 			String extension = fileSplit[1];
 
 			CustomTableItem cti = new CustomTableItem(this, 0);
-			cti.setText(new String[] { "", fileName, extension });
+			cti.setText(new String[] {fileName, extension });
 			cti.setControlData(file);
 		}
 	}
