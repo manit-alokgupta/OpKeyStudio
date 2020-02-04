@@ -98,6 +98,11 @@ public class OpKeyWebPlayer {
 		return element;
 	}
 
+	public String getObjectText(ORObject orobject) {
+		WebElement element = findWebElement(orobject);
+		return element.getText();
+	}
+
 	public void closeBrowser() {
 		getCurrentWebDriver().close();
 	}
