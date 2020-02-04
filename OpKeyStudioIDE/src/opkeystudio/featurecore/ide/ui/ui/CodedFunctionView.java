@@ -48,9 +48,12 @@ public class CodedFunctionView extends Composite {
 	private CodedFunctionBottomFactoryUI bottomFactoryUi;
 	private String codedFLClassPath;
 	private String artifactOpkeyDataLibraryPath;
+	private Artifact artifact;
 
 	public CodedFunctionView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
 
@@ -146,6 +149,9 @@ public class CodedFunctionView extends Composite {
 	}
 
 	public void saveAllCFL() {
+		if (saveButton.getEnabled() == false) {
+			return;
+		}
 		JavaAutoCompletion completion = editor.getAutoCompletion();
 		completion.setCompletionProvider(CodeCompletionProvider.getInstance(this).getCompletionProvider());
 		completion.install(editor);
@@ -174,6 +180,7 @@ public class CodedFunctionView extends Composite {
 				editor.getCflCode().setUsercode(methodSource.getBody());
 				editor.getCflCode().setModified(true);
 				new CodedFunctionApi().saveCFLCode(editor.getCflCode());
+				toggleSaveButton(false);
 				renderCFLCode();
 			}
 		}
@@ -204,9 +211,7 @@ public class CodedFunctionView extends Composite {
 	}
 
 	public Artifact getArtifact() {
-		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		return artifact;
+		return this.artifact;
 	}
 
 	@Override

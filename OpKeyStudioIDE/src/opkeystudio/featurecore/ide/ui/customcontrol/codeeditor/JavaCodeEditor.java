@@ -20,9 +20,12 @@ import javax.swing.text.JTextComponent;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxDocument;
@@ -59,6 +62,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (UnsupportedLookAndFeelException e) {
@@ -104,6 +108,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		return this;
 	}
 
+	static boolean saveToggled = false;
+
 	private void init(Frame frame) {
 		JPanel mainEditorPanel = new JPanel(new BorderLayout());
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
@@ -131,6 +137,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
+				if (saveToggled) {
+					return;
+				}
 				try {
 					createIntellisenseDataFromCurrentText();
 				} catch (BadLocationException e1) {
@@ -169,8 +178,18 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
+				if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+					System.out.println("Saving");
+					saveToggled = true;
+					Display.getDefault().asyncExec(new Runnable() {
 
+						@Override
+						public void run() {
+							getCodeFunctionView().saveAllCFL();
+						}
+					});
+					return;
+				}
 			}
 		});
 	}
