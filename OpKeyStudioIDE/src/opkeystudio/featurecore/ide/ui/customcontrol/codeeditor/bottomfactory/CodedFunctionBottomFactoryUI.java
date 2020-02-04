@@ -1,8 +1,10 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
@@ -32,9 +34,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
-	
+
 	private StyledText consoleLogTextView;
-	
+
 	private CFLLibraryAssociateTable associateLibraries;
 	private CFLOrAssociate associateor;
 	private Table associatedr;
@@ -277,7 +279,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		compilationResultsTable.setHeaderVisible(true);
 		compilationResultsTable.setLinesVisible(true);
 
-		
 		TabItem consoleLogTabItem = new TabItem(tabFolder, SWT.NONE);
 		consoleLogTabItem.setText("Console");
 
@@ -285,11 +286,10 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		consoleLogTabItem.setControl(consoleLogComposite);
 		consoleLogComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		consoleLogTextView = new StyledText(consoleLogComposite,
-				SWT.BORDER | SWT.V_SCROLL);
-		
+		consoleLogTextView = new StyledText(consoleLogComposite, SWT.BORDER | SWT.V_SCROLL);
+
 		consoleLogTextView.setEditable(false);
-		
+
 		expandBar.addListener(SWT.Expand, new Listener() {
 
 			@Override
@@ -494,7 +494,16 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 				dialog.open();
 				String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 				if (filePath != null) {
-
+					String associatedLibsDir = getParentCodedFunctionView().getArtifactAssociatedLibraryPath();
+					File libraryToAssociate = new File(filePath);
+					File destinationDir = new File(associatedLibsDir + File.separator + libraryToAssociate.getName());
+					try {
+						FileUtils.copyFile(libraryToAssociate, destinationDir);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					associateLibraries.renderAssociatedLibraries();
 				}
 			}
 
