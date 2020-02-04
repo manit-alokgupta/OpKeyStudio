@@ -189,13 +189,20 @@ public class EditorTools {
 	}
 
 	public void executeCodedFl(String codedString, String pluginName) {
-		try {
-			execute(codedString, pluginName);
-		} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
-				| InstantiationException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		Thread executionThread=new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					execute(codedString, pluginName);
+				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
+						| InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		executionThread.start();
 	}
 
 	public URLClassLoader getURLClassLoaderOfClasses(String pluginName) throws MalformedURLException {
