@@ -170,7 +170,14 @@ public class CodedFunctionView extends Composite {
 				return;
 			}
 		}
-		editor.compileAndCheck();
+		List<CompileError> errors = editor.compileAndCheck();
+		List<CompileError> filteredErrors = new EditorTools(
+				getCodedFunctionBottomFactoryUi().getParentCodedFunctionView()).filterErrors(errors, Kind.ERROR);
+
+		if (filteredErrors.size() > 0) {
+			toggleSaveButton(false);
+			return;
+		}
 
 		String code = editor.getText();
 		JavaClassSource classSource = Roaster.parse(JavaClassSource.class, code);
