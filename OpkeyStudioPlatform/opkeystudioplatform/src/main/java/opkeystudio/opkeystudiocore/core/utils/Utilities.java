@@ -57,7 +57,14 @@ public class Utilities {
 		}
 
 		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
-				+ File.separator + "Artifacts" + File.separator + "libs";
+				+ File.separator + "CodedFL";
+		
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
+		
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "CodedFL" + File.separator + "CFLLibs";
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
@@ -96,7 +103,7 @@ public class Utilities {
 
 	public String getDefaultSourceCodeLibrariesDirPath() {
 		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
-				+ File.separator + "Artifacts" + File.separator + "libs";
+				+ File.separator + "CodedFL" + File.separator + "CFLLibs";
 		return path;
 	}
 
