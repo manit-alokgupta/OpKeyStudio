@@ -282,7 +282,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 	public void convertOpKeyVariablesToCode() {
 		Artifact artifact = getArtifact();
-		String defaultSourceCodeLibsPath = Utilities.getInstance().getDefaultSourceCodeLibrariesDirPath();
+		String defaultSourceCodeLibsPath = Utilities.getInstance().getDefaultCodedFLOpKeyLibrariesDirPath();
 		String defArtifactSourceCodeLibsPath = defaultSourceCodeLibsPath + File.separator
 				+ artifact.getArtifactVariableName();
 		File file = new File(defArtifactSourceCodeLibsPath);

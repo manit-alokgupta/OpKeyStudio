@@ -64,7 +64,12 @@ public class Utilities {
 		}
 		
 		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
-				+ File.separator + "CodedFL" + File.separator + "CFLLibs";
+				+ File.separator + "CodedFL" + File.separator + "CFLOpKeyLibs";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "CodedFL" + File.separator + "CFLAssociatedLibs";
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
@@ -101,12 +106,18 @@ public class Utilities {
 		return path;
 	}
 
-	public String getDefaultSourceCodeLibrariesDirPath() {
+	public String getDefaultCodedFLOpKeyLibrariesDirPath() {
 		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
-				+ File.separator + "CodedFL" + File.separator + "CFLLibs";
+				+ File.separator + "CodedFL" + File.separator + "CFLOpKeyLibs";
 		return path;
 	}
 
+	public String getDefaultCodedFLAssociatedLibrariesDirPath() {
+		String path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "CodedFL" + File.separator + "CFLAssociatedLibs";
+		return path;
+	}
+	
 	public String getXMLSerializedData(Object object) throws JsonProcessingException {
 		XmlMapper mapper = new XmlMapper();
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
