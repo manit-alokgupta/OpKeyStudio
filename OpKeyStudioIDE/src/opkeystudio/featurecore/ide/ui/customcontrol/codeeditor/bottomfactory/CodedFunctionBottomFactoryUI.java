@@ -506,20 +506,8 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 						e1.printStackTrace();
 					}
 					associateLibraries.renderAssociatedLibraries();
+					getParentCodedFunctionView().refreshIntellisense();
 				}
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		deleteLibrary.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
 			}
 
 			@Override
@@ -557,7 +545,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 					if (file.exists()) {
 						Files.delete(file);
 						associateLibraries.renderAssociatedLibraries();
-						getParentCodedFunctionView().refreshIntellisense();
 					}
 				}
 			}
