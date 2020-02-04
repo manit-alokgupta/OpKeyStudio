@@ -11,8 +11,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
@@ -68,19 +66,26 @@ public class EditorTools {
 	public List<File> getAllAssocitedLibraries(String pluginName) {
 		List<File> allFiles = new ArrayList<File>();
 		allFiles.addAll(getPluginBaseLibraries());
+		allFiles.addAll(getAllCFLOpKeyLibs());
 		allFiles.addAll(getAllCFLAssociatedLibs());
 		allFiles.addAll(getPluginsLibraries(pluginName));
 		return allFiles;
 	}
 
-	public List<File> getAllCFLAssociatedLibs() {
+	public List<File> getAllCFLOpKeyLibs() {
 		String path = getParentCodedFunctionView().getArtifactOpkeyDataLibraryPath();
+		return getAllFiles(new File(path), ".jar");
+	}
+
+	public List<File> getAllCFLAssociatedLibs() {
+		String path = getParentCodedFunctionView().getArtifactAssociatedLibraryPath();
 		return getAllFiles(new File(path), ".jar");
 	}
 
 	public String getClassPathOFAllAssociatedLibs(String pluginName) {
 		String classPath = "";
 		List<File> files = getPluginBaseLibraries();
+		files.addAll(getAllCFLOpKeyLibs());
 		files.addAll(getAllCFLAssociatedLibs());
 		files.addAll(getPluginsLibraries(pluginName));
 		for (File file : files) {
@@ -95,6 +100,7 @@ public class EditorTools {
 	public List<String> getAllClassNameFromAassociatedJar() {
 		ArrayList<String> allClases = new ArrayList<String>();
 		List<File> pluginBaseLibs = getPluginBaseLibraries();
+		pluginBaseLibs.addAll(getAllCFLOpKeyLibs());
 		pluginBaseLibs.addAll(getAllCFLAssociatedLibs());
 		pluginBaseLibs.addAll(getPluginsLibraries(opkeystudio.core.utils.Utilities.getInstance().getPluginName()));
 		for (File file : pluginBaseLibs) {

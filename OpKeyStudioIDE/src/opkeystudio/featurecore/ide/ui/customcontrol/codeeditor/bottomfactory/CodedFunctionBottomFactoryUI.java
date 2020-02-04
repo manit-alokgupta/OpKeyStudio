@@ -557,6 +557,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 					if (file.exists()) {
 						Files.delete(file);
 						associateLibraries.renderAssociatedLibraries();
+						getParentCodedFunctionView().refreshIntellisense();
 					}
 				}
 			}
