@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
@@ -103,6 +104,8 @@ public class ObjectRepositoryApi {
 				updateORObject(orObject);
 			}
 		}
+		GlobalLoader.getInstance().initAllORObjects();
+		GlobalLoader.getInstance().initAllORObjectsObjectProperties();
 	}
 
 	private void saveObjectProperties(List<ObjectAttributeProperty> objectAttributesProperties) throws SQLException {

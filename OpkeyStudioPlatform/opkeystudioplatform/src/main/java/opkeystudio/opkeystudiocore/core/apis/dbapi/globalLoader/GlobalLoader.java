@@ -62,7 +62,7 @@ public class GlobalLoader {
 		}
 	}
 
-	private void initGlobalVariables() {
+	public void initGlobalVariables() {
 		try {
 			this.globalVaribles = new GlobalVariableApi().getAllGlobalVariables();
 		} catch (SQLException | IOException e) {
@@ -71,7 +71,7 @@ public class GlobalLoader {
 		}
 	}
 
-	private void initAllORObjects() {
+	public void initAllORObjects() {
 		String query = "select * from or_objects";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -86,7 +86,7 @@ public class GlobalLoader {
 		}
 	}
 
-	private void initAllORObjectsObjectProperties() {
+	public void initAllORObjectsObjectProperties() {
 		String query = "select * from or_object_properties";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
