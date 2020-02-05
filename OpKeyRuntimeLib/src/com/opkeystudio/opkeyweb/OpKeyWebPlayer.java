@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,6 +21,7 @@ public class OpKeyWebPlayer {
 	private boolean waitForPageLoad;
 	private boolean waitForXhrLoad;
 	private int finderTimeout;
+	private JavascriptExecutor javaScriptExecutor;
 
 	public WebDriver openBrowser(String browserName, String url) {
 		if (currentWebDriver != null) {
@@ -216,6 +218,7 @@ public class OpKeyWebPlayer {
 
 	public void setCurrentWebDriver(WebDriver currentWebDriver) {
 		this.currentWebDriver = currentWebDriver;
+		this.setJavaScriptExecutor((JavascriptExecutor) this.currentWebDriver);
 	}
 
 	public boolean isWaitForPageLoad() {
@@ -240,6 +243,14 @@ public class OpKeyWebPlayer {
 
 	public void setFinderTimeout(int finderSetTimeout) {
 		this.finderTimeout = finderSetTimeout;
+	}
+
+	public JavascriptExecutor getJavaScriptExecutor() {
+		return javaScriptExecutor;
+	}
+
+	public void setJavaScriptExecutor(JavascriptExecutor javaScriptExecutor) {
+		this.javaScriptExecutor = javaScriptExecutor;
 	}
 
 }
