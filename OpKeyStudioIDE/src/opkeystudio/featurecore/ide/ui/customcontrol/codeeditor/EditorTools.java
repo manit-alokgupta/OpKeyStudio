@@ -97,6 +97,8 @@ public class EditorTools {
 		return classPath;
 	}
 
+	private static List<String> alreadyScannedClasses = new ArrayList<String>();
+
 	public List<String> getAllClassNameFromAassociatedJar() {
 		ArrayList<String> allClases = new ArrayList<String>();
 		List<File> pluginBaseLibs = new ArrayList<File>();
@@ -114,7 +116,10 @@ public class EditorTools {
 				if (className.contains("org.openqa") || className.contains("java.lang")
 						|| className.contains("java.util") || className.contains("java.io")
 						|| className.contains("com.opkeystudio")) {
-					allClases.add(className);
+					if (!alreadyScannedClasses.contains(className)) {
+						allClases.add(className);
+						alreadyScannedClasses.add(className);
+					}
 				}
 			}
 		}

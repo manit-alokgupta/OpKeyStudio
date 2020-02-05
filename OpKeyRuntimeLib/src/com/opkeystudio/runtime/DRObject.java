@@ -31,7 +31,8 @@ public class DRObject {
 		return drDatas;
 	}
 
-	public static void setDrDatas(Map<String, List<String>> drDatas) {
-		drDatas = drDatas;
+	public static void setDrDatas(Map<String, List<String>> drDatas2) {
+		drDatas = drDatas2;
 	}
+	
 }

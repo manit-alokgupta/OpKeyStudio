@@ -1,6 +1,9 @@
 package opkeystudio.core.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -67,9 +70,9 @@ public class DtoToCodeConverter {
 
 	public JavaClassSource getJavaClassDRObjects(Artifact artifact, List<DRColumnAttributes> drColumns) {
 		String classBody = "public class %s{%s}";
-		String staticBody = "static {%s}";
+		String staticBody = "%s static {%s}";
 
-		String methodCall = "addProperty(\"%s\",\"%s\");";
+		String methodCall = "addDRCell(\"%s\",\"%s\");";
 		String staticVariableDatas = "";
 		for (DRColumnAttributes drColumnAttribute : drColumns) {
 			String columnName = drColumnAttribute.getName();
@@ -83,12 +86,32 @@ public class DtoToCodeConverter {
 			}
 		}
 
-		String staticBodyData = String.format(staticBody, staticVariableDatas);
+		String staticBodyData = String.format(staticBody, getDRObjectBody(), staticVariableDatas);
 		String classBodyData = String.format(classBody, artifact.getArtifactVariableName(), staticBodyData);
 		JavaClassSource outClass = (JavaClassSource) Roaster.parse(classBodyData);
-		outClass.addImport("com.opkeystudio.runtime.DRObject");
-		outClass.setSuperType("com.opkeystudio.runtime.DRObject");
+		outClass.addImport("java.util.ArrayList");
+		outClass.addImport("java.util.HashMap");
+		outClass.addImport("java.util.List");
+		outClass.addImport("java.util.Map");
 		return outClass;
+	}
+
+	private String getDRObjectBody() {
+		String data = "	private static Map<String, List<String>> drDatas = new HashMap<>();\r\n" + "\r\n"
+				+ "	public static void addDRCell(String column, String cellValue) {\r\n"
+				+ "		Map<String, List<String>> drDatas = getDrDatas();\r\n"
+				+ "		if (drDatas.get(column) != null) {\r\n" + "			drDatas.get(column).add(cellValue);\r\n"
+				+ "			return;\r\n" + "		}\r\n"
+				+ "		List<String> cellDatas = new ArrayList<String>();\r\n" + "		cellDatas.add(cellValue);\r\n"
+				+ "		drDatas.put(column, cellDatas);\r\n" + "	}\r\n" + "\r\n"
+				+ "	public static List<String> getDRCells(String column) {\r\n"
+				+ "		List<String> drcells = getDrDatas().get(column);\r\n" + "		if (drcells == null) {\r\n"
+				+ "			return new ArrayList<String>();\r\n" + "		}\r\n" + "		return drcells;\r\n"
+				+ "	}\r\n" + "\r\n" + "	public static Map<String, List<String>> getDrDatas() {\r\n"
+				+ "		return drDatas;\r\n" + "	}\r\n" + "\r\n"
+				+ "	public static void setDrDatas(Map<String, List<String>> drDatas2) {\r\n"
+				+ "		drDatas = drDatas2;\r\n" + "	}";
+		return data;
 	}
 
 }
