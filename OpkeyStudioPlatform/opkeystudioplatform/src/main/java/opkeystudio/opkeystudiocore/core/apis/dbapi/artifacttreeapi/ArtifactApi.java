@@ -89,6 +89,8 @@ public class ArtifactApi {
 					new DataRepositoryConstructApi().addDRCell(drCellAttribute);
 				}
 			}
+			GlobalLoader.getInstance().initAllDRColumns();
+			GlobalLoader.getInstance().initALLDRCells();
 		}
 		GlobalLoader.getInstance().setAllArtifacts(getAllArtificates());
 	}

@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -31,6 +33,8 @@ public class GlobalLoader {
 	private List<ObjectAttributeProperty> objectAttributeProperties = new ArrayList<>();
 
 	private List<GlobalVariable> globalVaribles = new ArrayList<GlobalVariable>();
+	private List<DRColumnAttributes> allColumns = new ArrayList<DRColumnAttributes>();
+	private List<DRCellAttributes> drCellAttributes = new ArrayList<DRCellAttributes>();
 
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
@@ -44,13 +48,15 @@ public class GlobalLoader {
 
 			@Override
 			public void run() {
+				globalLoader.initGlobalVariables();
 				globalLoader.initAllFlowInputArguments();
 				globalLoader.initAllFlowOutputArguments();
 				globalLoader.initAllComponentFlowInputArguments();
 				globalLoader.initAllComponentFlowOutputArguments();
 				globalLoader.initAllORObjects();
 				globalLoader.initAllORObjectsObjectProperties();
-				globalLoader.initGlobalVariables();
+				globalLoader.initAllDRColumns();
+				globalLoader.initALLDRCells();
 			}
 		});
 		thread.start();
@@ -66,6 +72,36 @@ public class GlobalLoader {
 		try {
 			this.globalVaribles = new GlobalVariableApi().getAllGlobalVariables();
 		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void initAllDRColumns() {
+		String query = "select * from dr_columns ORDER BY position asc";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, DRColumnAttributes.class);
+		List<DRColumnAttributes> drcolumns = new ArrayList<DRColumnAttributes>();
+		try {
+			drcolumns = mapper.readValue(result, type);
+			setAllDRColumns(drcolumns);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void initALLDRCells() {
+		String query = "select * from dr_cell ORDER BY position asc";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, DRCellAttributes.class);
+		List<DRCellAttributes> drCells = new ArrayList<DRCellAttributes>();
+		try {
+			drCells = mapper.readValue(result, type);
+			setDrCellAttributes(drCells);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -256,5 +292,42 @@ public class GlobalLoader {
 			}
 		}
 		return retObjectAttributes;
+	}
+
+	public List<DRColumnAttributes> getAllDRColumns(String drid) {
+		List<DRColumnAttributes> retOrObjects = new ArrayList<DRColumnAttributes>();
+		List<DRColumnAttributes> drobjects = GlobalLoader.getInstance().getAllDRColumns();
+		for (DRColumnAttributes object : drobjects) {
+			if (object.getDr_id().equals(drid)) {
+				retOrObjects.add(object);
+			}
+		}
+		return retOrObjects;
+	}
+
+	public List<DRCellAttributes> getDRColumnCells(String drid) {
+		List<DRCellAttributes> retObjectAttributes = new ArrayList<DRCellAttributes>();
+		for (DRCellAttributes objectAttrProp : GlobalLoader.getInstance().getDrCellAttributes()) {
+			if (objectAttrProp.getDr_id().equals(drid)) {
+				retObjectAttributes.add(objectAttrProp);
+			}
+		}
+		return retObjectAttributes;
+	}
+
+	public List<DRColumnAttributes> getAllDRColumns() {
+		return allColumns;
+	}
+
+	public void setAllDRColumns(List<DRColumnAttributes> allColumns) {
+		this.allColumns = allColumns;
+	}
+
+	public List<DRCellAttributes> getDrCellAttributes() {
+		return drCellAttributes;
+	}
+
+	public void setDrCellAttributes(List<DRCellAttributes> drCellAttributes) {
+		this.drCellAttributes = drCellAttributes;
 	}
 }
