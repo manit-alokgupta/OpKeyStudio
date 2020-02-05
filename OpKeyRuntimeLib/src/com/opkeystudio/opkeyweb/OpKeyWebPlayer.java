@@ -24,6 +24,7 @@ public class OpKeyWebPlayer {
 	private boolean waitForPageLoad;
 	private boolean waitForXhrLoad;
 	private int finderTimeout;
+	private int pageLoadAndXHRTimeout = 30;
 	private JavascriptExecutor javaScriptExecutor;
 
 	public WebDriver openBrowser(String browserName, String url) {
@@ -123,10 +124,12 @@ public class OpKeyWebPlayer {
 	}
 
 	public void closeBrowser() {
+		waitForPageLoad();
 		getCurrentWebDriver().close();
 	}
 
 	public void closeAllBrowser() {
+		waitForPageLoad();
 		getCurrentWebDriver().quit();
 	}
 
@@ -221,7 +224,7 @@ public class OpKeyWebPlayer {
 		if (isWaitForPageLoad() == false) {
 			return;
 		}
-		WebDriverWait wait = new WebDriverWait(getCurrentWebDriver(), 30);
+		WebDriverWait wait = new WebDriverWait(getCurrentWebDriver(), getPageLoadAndXHRTimeout());
 		wait.pollingEvery(10, TimeUnit.MILLISECONDS);
 		ExpectedCondition<Boolean> windowReadyState = new ExpectedCondition<Boolean>() {
 			@Override
@@ -272,6 +275,14 @@ public class OpKeyWebPlayer {
 
 	public void setJavaScriptExecutor(JavascriptExecutor javaScriptExecutor) {
 		this.javaScriptExecutor = javaScriptExecutor;
+	}
+
+	public int getPageLoadAndXHRTimeout() {
+		return pageLoadAndXHRTimeout;
+	}
+
+	public void setPageLoadAndXHRTimeout(int pageLoadAndXHRTimeout) {
+		this.pageLoadAndXHRTimeout = pageLoadAndXHRTimeout;
 	}
 
 }
