@@ -41,7 +41,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 	private CFLLibraryAssociateTable associateLibraries;
 	private CFLOrAssociate associateor;
-	private Table associatedr;
+	private CFLDRAssociate associatedr;
 	private CFLInputTable inputTable;
 	private CFLOutputTable outputTable;
 	private TabItem inputTabItem;
@@ -59,7 +59,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private ToolItem refreshOutputItem;
 
 	private ToolItem refreshORTable;
-
+	private ToolItem refreshDRTable;
 	private ToolItem addLibrary;
 	private ToolItem deleteLibrary;
 
@@ -161,6 +161,30 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		associateor.setHeaderVisible(true);
 		associateor.setLinesVisible(true);
+
+		TabItem associateDRTabItem = new TabItem(tabFolder, SWT.NONE);
+		associateDRTabItem.setText("Associate DR");
+		associateDRTabItem.setToolTipText("Associate DR");
+
+		Composite associateDRHolder = new Composite(tabFolder, SWT.NONE);
+		associateDRTabItem.setControl(associateDRHolder);
+		associateDRHolder.setLayout(new GridLayout(1, false));
+		associateDRHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+
+		ToolBar toolBar_DR_3 = new ToolBar(associateDRHolder, SWT.FLAT | SWT.RIGHT);
+		toolBar_DR_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_DR_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+
+		refreshDRTable = new ToolItem(toolBar_DR_3, SWT.NONE);
+		refreshDRTable.setToolTipText("Refresh");
+		refreshDRTable.setText("Refresh");
+		refreshDRTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+
+		associatedr = new CFLDRAssociate(associateDRHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
+		associatedr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associatedr.setHeaderVisible(true);
+		associatedr.setLinesVisible(true);
+
 		/*
 		 * inputTabItem = new TabItem(tabFolder, SWT.NONE);
 		 * inputTabItem.setText("Input"); inputTabItem.setToolTipText("Output");
@@ -486,6 +510,19 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			}
 		});
 
+		refreshDRTable.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				associatedr.renderDRNodes();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		addLibrary.addSelectionListener(new SelectionListener() {
 
 			@Override
