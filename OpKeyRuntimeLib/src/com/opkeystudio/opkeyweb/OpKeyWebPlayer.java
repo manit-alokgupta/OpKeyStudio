@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -118,10 +119,15 @@ public class OpKeyWebPlayer {
 	}
 
 	public WebElement findWebElement(ORObject orobject) {
+		WebObject webObject = convertORObjectToWebObject(orobject);
+		WebDriver driver = getCurrentWebDriver();
+		if (webObject.getId() != null) {
+			List<WebElement> elements = driver.findElements(By.id(webObject.getId()));
+		}
 		return null;
 	}
 
-	private WebObject convertORObjectToDummyObject(ORObject orobject) {
+	private WebObject convertORObjectToWebObject(ORObject orobject) {
 		WebObject object = new WebObject();
 		Map<String, String> allProperties = orobject.getAllProperties();
 		Set<String> keys = allProperties.keySet();
@@ -143,6 +149,18 @@ public class OpKeyWebPlayer {
 			}
 			if (key.equals("tag")) {
 				object.setTag(value);
+			}
+			if (key.equals("class")) {
+				object.setClassName(value);
+			}
+			if (key.equals("input-type")) {
+				object.setInputType(value);
+			}
+			if (key.equals("innertext")) {
+				object.setInnerText(value);
+			}
+			if (key.equals("css")) {
+				object.setCss(value);
 			}
 		}
 		return object;

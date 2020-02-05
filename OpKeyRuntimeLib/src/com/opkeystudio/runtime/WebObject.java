@@ -12,6 +12,7 @@ public class WebObject {
 	private String className;
 	private String innerText;
 	private String textContent;
+	private String css;
 	private List<String> xpaths = new ArrayList<String>();
 
 	public String getId() {
@@ -84,6 +85,14 @@ public class WebObject {
 
 	public void setHref(String href) {
 		this.href = href;
+	}
+
+	public String getCss() {
+		return css;
+	}
+
+	public void setCss(String css) {
+		this.css = css;
 	}
 
 }
