@@ -17,6 +17,8 @@ import com.opkeystudio.runtime.ORObject;
 
 public class OpKeyWebPlayer {
 	private WebDriver currentWebDriver;
+	private boolean waitForPageLoad;
+	private boolean waitForXhrLoad;
 
 	public WebDriver openBrowser(String browserName, String url) {
 		if (currentWebDriver != null) {
@@ -213,6 +215,22 @@ public class OpKeyWebPlayer {
 
 	public void setCurrentWebDriver(WebDriver currentWebDriver) {
 		this.currentWebDriver = currentWebDriver;
+	}
+
+	public boolean isWaitForPageLoad() {
+		return waitForPageLoad;
+	}
+
+	public void setWaitForPageLoad(boolean waitForPageLoad) {
+		this.waitForPageLoad = waitForPageLoad;
+	}
+
+	public boolean isWaitForXhrLoad() {
+		return waitForXhrLoad;
+	}
+
+	public void setWaitForXhrLoad(boolean waitForXhrLoad) {
+		this.waitForXhrLoad = waitForXhrLoad;
 	}
 
 }
