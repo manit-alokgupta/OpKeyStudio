@@ -9,7 +9,14 @@ public class DRObject {
 	private Map<String, List<String>> drDatas = new HashMap<>();
 
 	public void addDRCell(String column, String cellValue) {
-
+		Map<String, List<String>> drDatas = getDrDatas();
+		if (drDatas.get(column) != null) {
+			drDatas.get(column).add(cellValue);
+			return;
+		}
+		List<String> cellDatas = new ArrayList<String>();
+		cellDatas.add(cellValue);
+		drDatas.put(column, cellDatas);
 	}
 
 	public List<String> getDRCells(String column) {
