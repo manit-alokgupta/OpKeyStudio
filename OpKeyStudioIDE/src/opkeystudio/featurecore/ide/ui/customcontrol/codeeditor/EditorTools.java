@@ -111,7 +111,8 @@ public class EditorTools {
 		for (File file : pluginsLibrary) {
 			List<String> classNames = getAllClassNamesFromJar(file.getAbsolutePath());
 			for (String className : classNames) {
-				if (className.contains("org.openqa") || className.contains("java.lang") || className.contains("java.io")
+				if (className.contains("org.openqa") || className.contains("java.lang")
+						|| className.contains("java.util") || className.contains("java.io")
 						|| className.contains("com.opkeystudio")) {
 					allClases.add(className);
 				}
