@@ -28,6 +28,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
@@ -108,13 +110,17 @@ public class CFLDRAssociate extends CustomTable {
 				setSelection(item);
 				Artifact artifact = (Artifact) item.getControlData();
 				if (associateOR.getSelection() == true) {
-					List<ORObject> allOrObjects = GlobalLoader.getInstance().getAllOrObjects(artifact.getId());
-					for (ORObject object : allOrObjects) {
-						List<ObjectAttributeProperty> attributeProps = GlobalLoader.getInstance()
-								.getORObjectAttributeProperty(object.getObject_id());
-						object.setObjectAttributesProperty(attributeProps);
+					List<DRColumnAttributes> allDRColumns = GlobalLoader.getInstance().getAllDRColumns(artifact.getId());
+					for (DRColumnAttributes drColumn : allDRColumns) {
+						System.out.println("DRColumn "+drColumn.getName());
+						List<DRCellAttributes> drCells = GlobalLoader.getInstance().getDRColumnCells(drColumn.getColumn_id());
+						drColumn.setDrCellAttributes(drCells);
+						for(DRCellAttributes drCell:drCells) {
+							System.out.println("DR Cell "+drCell.getValue());
+						}
 					}
 
+					/*
 					JavaClassSource classSource = new DtoToCodeConverter().getJavaClassORObjects(artifact,
 							allOrObjects);
 					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
@@ -134,7 +140,7 @@ public class CFLDRAssociate extends CustomTable {
 					List<CompileError> errors = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
 							.compileAllOpKeyLibs();
 
-					System.out.println("Errors Found " + errors.size());
+					System.out.println("Errors Found " + errors.size());*/
 					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense();
 				}
 				if (associateOR.getSelection() == false) {

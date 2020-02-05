@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.drapi;
 
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
@@ -15,6 +16,8 @@ public class DataRepositoryConstructApi {
 			updateDRColumn(drColumnAttribute);
 			saveALLDRCellAttributes(drColumnAttribute.getDrCellAttributes());
 		}
+		GlobalLoader.getInstance().initAllDRColumns();
+		GlobalLoader.getInstance().initALLDRCells();
 	}
 
 	private void saveALLDRCellAttributes(List<DRCellAttributes> drCellAattributes) {

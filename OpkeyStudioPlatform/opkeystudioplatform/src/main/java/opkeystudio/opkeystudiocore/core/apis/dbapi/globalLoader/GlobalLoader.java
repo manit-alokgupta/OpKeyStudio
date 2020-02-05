@@ -308,7 +308,7 @@ public class GlobalLoader {
 	public List<DRCellAttributes> getDRColumnCells(String drid) {
 		List<DRCellAttributes> retObjectAttributes = new ArrayList<DRCellAttributes>();
 		for (DRCellAttributes objectAttrProp : GlobalLoader.getInstance().getDrCellAttributes()) {
-			if (objectAttrProp.getDr_id().equals(drid)) {
+			if (objectAttrProp.getColumn_id().equals(drid)) {
 				retObjectAttributes.add(objectAttrProp);
 			}
 		}
