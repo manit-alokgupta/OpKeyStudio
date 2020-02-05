@@ -110,15 +110,16 @@ public class CFLDRAssociate extends CustomTable {
 				setSelection(item);
 				Artifact artifact = (Artifact) item.getControlData();
 				if (associateOR.getSelection() == true) {
-					List<DRColumnAttributes> allDRColumns = GlobalLoader.getInstance().getAllDRColumns(artifact.getId());
+					List<DRColumnAttributes> allDRColumns = GlobalLoader.getInstance()
+							.getAllDRColumns(artifact.getId());
 					for (DRColumnAttributes drColumn : allDRColumns) {
-						List<DRCellAttributes> drCells = GlobalLoader.getInstance().getDRColumnCells(drColumn.getColumn_id());
+						List<DRCellAttributes> drCells = GlobalLoader.getInstance()
+								.getDRColumnCells(drColumn.getColumn_id());
 						drColumn.setDrCellAttributes(drCells);
 					}
 
-					/*
-					JavaClassSource classSource = new DtoToCodeConverter().getJavaClassORObjects(artifact,
-							allOrObjects);
+					JavaClassSource classSource = new DtoToCodeConverter().getJavaClassDRObjects(artifact,
+							allDRColumns);
 					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
 							.getArtifactOpkeyDataLibraryPath();
 					File file = new File(
@@ -136,7 +137,7 @@ public class CFLDRAssociate extends CustomTable {
 					List<CompileError> errors = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
 							.compileAllOpKeyLibs();
 
-					System.out.println("Errors Found " + errors.size());*/
+					System.out.println("Errors Found " + errors.size());
 					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense();
 				}
 				if (associateOR.getSelection() == false) {
