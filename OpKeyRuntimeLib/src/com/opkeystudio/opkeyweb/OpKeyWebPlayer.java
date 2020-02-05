@@ -29,6 +29,7 @@ public class OpKeyWebPlayer {
 		if (browserName.toLowerCase().contains("firefox")) {
 			currentWebDriver = new FirefoxDriver();
 		}
+		setCurrentWebDriver(currentWebDriver);
 		return currentWebDriver;
 	}
 
@@ -124,23 +125,23 @@ public class OpKeyWebPlayer {
 		if (webObject.getId() != null) {
 			List<WebElement> elements = driver.findElements(By.id(webObject.getId()));
 			if (elements.size() == 1) {
-				System.out.println(">>Element Found By Id "+webObject.getId());
+				System.out.println(">>Element Found By Id " + webObject.getId());
 				return elements.get(0);
 			}
 		}
-		
+
 		if (webObject.getName() != null) {
 			List<WebElement> elements = driver.findElements(By.name(webObject.getName()));
 			if (elements.size() == 1) {
-				System.out.println(">>Element Found By Name "+webObject.getName());
+				System.out.println(">>Element Found By Name " + webObject.getName());
 				return elements.get(0);
 			}
 		}
-		
+
 		if (webObject.getClassName() != null) {
 			List<WebElement> elements = driver.findElements(By.className(webObject.getClassName()));
 			if (elements.size() == 1) {
-				System.out.println(">>Element Found By ClassName "+webObject.getClassName());
+				System.out.println(">>Element Found By ClassName " + webObject.getClassName());
 				return elements.get(0);
 			}
 		}
@@ -148,7 +149,7 @@ public class OpKeyWebPlayer {
 		for (String xpath : webObject.getXpaths()) {
 			List<WebElement> elements = driver.findElements(By.xpath(xpath));
 			if (elements.size() == 1) {
-				System.out.println(">>Element Found By Xpath "+xpath);
+				System.out.println(">>Element Found By Xpath " + xpath);
 				return elements.get(0);
 			}
 		}
