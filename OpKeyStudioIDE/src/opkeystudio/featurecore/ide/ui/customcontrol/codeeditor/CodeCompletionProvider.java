@@ -282,6 +282,10 @@ public class CodeCompletionProvider {
 		this.allTokens.add(token);
 	}
 
+	public void clearAutoCompleteToken() {
+		this.allTokens = new ArrayList<AutoCompleteToken>();
+	}
+
 	public void setAllTokens(List<AutoCompleteToken> allTokens) {
 		this.allTokens = allTokens;
 	}

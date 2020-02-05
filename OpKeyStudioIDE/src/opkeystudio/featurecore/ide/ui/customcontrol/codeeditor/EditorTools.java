@@ -146,6 +146,7 @@ public class EditorTools {
 
 	public void initIntellisense() {
 		try {
+			CodeCompletionProvider.getInstance(getParentCodedFunctionView()).clearAutoCompleteToken();
 			System.out.println("Fetching Class Information");
 			URLClassLoader classLoader = getURLClassLoaderOfClasses(
 					opkeystudio.core.utils.Utilities.getInstance().getPluginName());
