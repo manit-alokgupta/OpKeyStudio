@@ -23,4 +23,8 @@ public class ORObject {
 		this.properties.put(key, value);
 		return this;
 	}
+
+	public Map<String, String> getAllProperties() {
+		return this.properties;
+	}
 }

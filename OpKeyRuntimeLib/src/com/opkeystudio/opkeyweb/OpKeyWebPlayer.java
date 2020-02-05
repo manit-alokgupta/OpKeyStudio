@@ -1,11 +1,17 @@
 package com.opkeystudio.opkeyweb;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import com.opkeystudio.runtime.WebObject;
 import com.opkeystudio.runtime.ORObject;
 
 public class OpKeyWebPlayer {
@@ -113,7 +119,33 @@ public class OpKeyWebPlayer {
 
 	public WebElement findWebElement(ORObject orobject) {
 		return null;
+	}
 
+	private WebObject convertORObjectToDummyObject(ORObject orobject) {
+		WebObject object = new WebObject();
+		Map<String, String> allProperties = orobject.getAllProperties();
+		Set<String> keys = allProperties.keySet();
+		List<String> xpaths = new ArrayList<String>();
+		for (String key : keys) {
+			if (key.contains("xpath:")) {
+				xpaths.add(orobject.getProperty(key));
+			}
+		}
+		object.setXpaths(xpaths);
+
+		for (String key : keys) {
+			String value = orobject.getProperty(key);
+			if (key.equals("id")) {
+				object.setId(value);
+			}
+			if (key.equals("name")) {
+				object.setName(value);
+			}
+			if (key.equals("tag")) {
+				object.setTag(value);
+			}
+		}
+		return object;
 	}
 
 	public WebDriver getCurrentWebDriver() {
