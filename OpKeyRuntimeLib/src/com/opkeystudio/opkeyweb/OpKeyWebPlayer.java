@@ -19,6 +19,7 @@ public class OpKeyWebPlayer {
 	private WebDriver currentWebDriver;
 	private boolean waitForPageLoad;
 	private boolean waitForXhrLoad;
+	private int finderTimeout;
 
 	public WebDriver openBrowser(String browserName, String url) {
 		if (currentWebDriver != null) {
@@ -231,6 +232,14 @@ public class OpKeyWebPlayer {
 
 	public void setWaitForXhrLoad(boolean waitForXhrLoad) {
 		this.waitForXhrLoad = waitForXhrLoad;
+	}
+
+	public int getFinderTimeout() {
+		return finderTimeout;
+	}
+
+	public void setFinderTimeout(int finderSetTimeout) {
+		this.finderTimeout = finderSetTimeout;
 	}
 
 }
