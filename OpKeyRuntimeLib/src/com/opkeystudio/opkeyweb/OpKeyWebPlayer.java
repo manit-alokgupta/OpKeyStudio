@@ -175,7 +175,7 @@ public class OpKeyWebPlayer {
 		Set<String> keys = allProperties.keySet();
 		List<String> xpaths = new ArrayList<String>();
 		for (String key : keys) {
-			if (key.contains("xpath:")) {
+			if (key.toLowerCase().contains("xpath:")) {
 				xpaths.add(orobject.getProperty(key));
 			}
 		}
@@ -183,25 +183,25 @@ public class OpKeyWebPlayer {
 
 		for (String key : keys) {
 			String value = orobject.getProperty(key);
-			if (key.equals("id")) {
+			if (key.equalsIgnoreCase("id")) {
 				object.setId(value);
 			}
-			if (key.equals("name")) {
+			if (key.equalsIgnoreCase("name")) {
 				object.setName(value);
 			}
-			if (key.equals("tag")) {
+			if (key.equalsIgnoreCase("tag")) {
 				object.setTag(value);
 			}
-			if (key.equals("class")) {
+			if (key.equalsIgnoreCase("class")) {
 				object.setClassName(value);
 			}
-			if (key.equals("input-type")) {
+			if (key.equalsIgnoreCase("input-type")) {
 				object.setInputType(value);
 			}
-			if (key.equals("innertext")) {
+			if (key.equalsIgnoreCase("innertext")) {
 				object.setInnerText(value);
 			}
-			if (key.equals("css")) {
+			if (key.equalsIgnoreCase("css")) {
 				object.setCss(value);
 			}
 		}
