@@ -166,6 +166,15 @@ public class OpKeyWebPlayer {
 		return object;
 	}
 
+	public void wait(int timeInSeconds) {
+		try {
+			Thread.sleep(timeInSeconds * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public WebDriver getCurrentWebDriver() {
 		return currentWebDriver;
 	}
