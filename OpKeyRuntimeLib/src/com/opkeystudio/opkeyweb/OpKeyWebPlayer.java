@@ -25,9 +25,11 @@ public class OpKeyWebPlayer {
 		}
 		if (browserName.toLowerCase().contains("chrome")) {
 			currentWebDriver = new ChromeDriver();
+			currentWebDriver.get(url);
 		}
 		if (browserName.toLowerCase().contains("firefox")) {
 			currentWebDriver = new FirefoxDriver();
+			currentWebDriver.get(url);
 		}
 		setCurrentWebDriver(currentWebDriver);
 		return currentWebDriver;
