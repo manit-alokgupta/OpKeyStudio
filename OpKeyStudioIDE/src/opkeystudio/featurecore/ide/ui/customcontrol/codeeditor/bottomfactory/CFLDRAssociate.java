@@ -186,7 +186,7 @@ public class CFLDRAssociate extends CustomTable {
 	public void renderDRNodes() {
 		disposeAllTableEditors();
 		this.removeAll();
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("DataRepository");
 		for (Artifact artifact : artifacts) {
 			CustomTableItem item = new CustomTableItem(this, 0);
 			item.setText(new String[] { "", artifact.getArtifactVariableName() });
