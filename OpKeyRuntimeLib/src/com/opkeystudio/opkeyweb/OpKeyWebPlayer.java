@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -11,7 +12,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.opkeystudio.runtime.WebObject;
 import com.opkeystudio.runtime.ORObject;
@@ -37,6 +40,7 @@ public class OpKeyWebPlayer {
 			currentWebDriver.get(url);
 		}
 		setCurrentWebDriver(currentWebDriver);
+		waitForPageLoad();
 		return currentWebDriver;
 	}
 
@@ -127,6 +131,7 @@ public class OpKeyWebPlayer {
 	}
 
 	public WebElement findWebElement(ORObject orobject) {
+		waitForPageLoad();
 		WebObject webObject = convertORObjectToWebObject(orobject);
 		WebDriver driver = getCurrentWebDriver();
 		if (webObject.getId() != null) {
@@ -210,6 +215,22 @@ public class OpKeyWebPlayer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void waitForPageLoad() {
+		if (isWaitForPageLoad() == false) {
+			return;
+		}
+		WebDriverWait wait = new WebDriverWait(getCurrentWebDriver(), 30);
+		wait.pollingEvery(10, TimeUnit.MILLISECONDS);
+		ExpectedCondition<Boolean> windowReadyState = new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString()
+						.equals("complete");
+			}
+		};
+		wait.until(windowReadyState);
 	}
 
 	public WebDriver getCurrentWebDriver() {
