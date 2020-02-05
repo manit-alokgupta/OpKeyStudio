@@ -112,12 +112,8 @@ public class CFLDRAssociate extends CustomTable {
 				if (associateOR.getSelection() == true) {
 					List<DRColumnAttributes> allDRColumns = GlobalLoader.getInstance().getAllDRColumns(artifact.getId());
 					for (DRColumnAttributes drColumn : allDRColumns) {
-						System.out.println("DRColumn "+drColumn.getName());
 						List<DRCellAttributes> drCells = GlobalLoader.getInstance().getDRColumnCells(drColumn.getColumn_id());
 						drColumn.setDrCellAttributes(drCells);
-						for(DRCellAttributes drCell:drCells) {
-							System.out.println("DR Cell "+drCell.getValue());
-						}
 					}
 
 					/*

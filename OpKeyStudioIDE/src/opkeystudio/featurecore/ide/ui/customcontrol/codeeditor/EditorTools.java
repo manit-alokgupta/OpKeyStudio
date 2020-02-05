@@ -99,12 +99,23 @@ public class EditorTools {
 
 	public List<String> getAllClassNameFromAassociatedJar() {
 		ArrayList<String> allClases = new ArrayList<String>();
-		List<File> pluginBaseLibs = getPluginBaseLibraries();
+		List<File> pluginBaseLibs = new ArrayList<File>();
 		pluginBaseLibs.addAll(getAllCFLOpKeyLibs());
 		pluginBaseLibs.addAll(getAllCFLAssociatedLibs());
-		pluginBaseLibs.addAll(getPluginsLibraries(opkeystudio.core.utils.Utilities.getInstance().getPluginName()));
 		for (File file : pluginBaseLibs) {
 			allClases.addAll(getAllClassNamesFromJar(file.getAbsolutePath()));
+		}
+
+		List<File> pluginsLibrary = getPluginsLibraries(opkeystudio.core.utils.Utilities.getInstance().getPluginName());
+		pluginsLibrary.addAll(getPluginBaseLibraries());
+		for (File file : pluginsLibrary) {
+			List<String> classNames = getAllClassNamesFromJar(file.getAbsolutePath());
+			for (String className : classNames) {
+				if (className.contains("org.openqa") || className.contains("java.lang") || className.contains("java.io")
+						|| className.contains("com.opkeystudio")) {
+					allClases.add(className);
+				}
+			}
 		}
 		return allClases;
 	}
@@ -133,8 +144,6 @@ public class EditorTools {
 		return listofClasses;
 	}
 
-	private static List<String> alreadyScannedClasses = new ArrayList<String>();
-
 	public void initIntellisense() {
 		try {
 			System.out.println("Fetching Class Information");
@@ -142,9 +151,6 @@ public class EditorTools {
 					opkeystudio.core.utils.Utilities.getInstance().getPluginName());
 			List<String> classNames = getAllClassNameFromAassociatedJar();
 			for (String className : classNames) {
-				if (alreadyScannedClasses.contains(className)) {
-					continue;
-				}
 				if (className.contains("$")) {
 					continue;
 				}
@@ -152,12 +158,7 @@ public class EditorTools {
 					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
 					String modifiers = Modifier.toString(classToLoad.getModifiers());
 					modifiers = modifiers.toLowerCase();
-					// if (modifiers.contains("public") || modifiers.contains("interface")) {
-					// if (!modifiers.contains("final") && !modifiers.contains("abstract")) {
 					parseClass(classToLoad);
-					alreadyScannedClasses.add(className);
-					// }
-					// }
 
 				} catch (NoClassDefFoundError e) {
 					// TODO: handle exception
