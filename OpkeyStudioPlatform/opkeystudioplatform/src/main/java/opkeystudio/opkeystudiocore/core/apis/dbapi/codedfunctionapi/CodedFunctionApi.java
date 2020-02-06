@@ -30,6 +30,7 @@ public class CodedFunctionApi {
 			query = new QueryMaker().createUpdateQuery(cflcode, "cf_code",
 					String.format("Where CF_ID='%s'", cflcode.getCf_id()));
 		}
+		System.out.println(query);
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
