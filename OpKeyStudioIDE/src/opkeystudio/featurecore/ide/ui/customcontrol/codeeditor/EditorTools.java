@@ -28,6 +28,7 @@ public class EditorTools {
 	private ByteArrayOutputStream standardErrorOutput;
 	private CodedFunctionView parentCodedFunctionView;
 	private boolean executionCompleted = false;
+	private static List<String> alreadyScannedClasses = new ArrayList<String>();
 
 	public EditorTools(CodedFunctionView codedFuntionView) {
 		this.setParentCodedFunctionView(codedFuntionView);
@@ -98,8 +99,6 @@ public class EditorTools {
 		return classPath;
 	}
 
-	private static List<String> alreadyScannedClasses = new ArrayList<String>();
-
 	public List<String> getAllClassNameFromAassociatedJar() {
 		ArrayList<String> allClases = new ArrayList<String>();
 		List<File> pluginBaseLibs = new ArrayList<File>();
@@ -151,9 +150,13 @@ public class EditorTools {
 		return listofClasses;
 	}
 
-	public void initIntellisense() {
+	public void initIntellisense(boolean requireInIt) {
 		try {
-			CodeCompletionProvider.getInstance(getParentCodedFunctionView()).clearAutoCompleteToken();
+			if (requireInIt) {
+				CodeCompletionProvider.getInstance(getParentCodedFunctionView()).clearAutoCompleteToken();
+				CodeCompletionProvider.getInstance(getParentCodedFunctionView()).reinitProvider();
+				alreadyScannedClasses.clear();
+			}
 			System.out.println("Fetching Class Information");
 			URLClassLoader classLoader = getURLClassLoaderOfClasses(
 					opkeystudio.core.utils.Utilities.getInstance().getPluginName());

@@ -542,7 +542,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 						e1.printStackTrace();
 					}
 					associateLibraries.renderAssociatedLibraries();
-					getParentCodedFunctionView().refreshIntellisense();
+					getParentCodedFunctionView().refreshIntellisense(false);
 				}
 			}
 

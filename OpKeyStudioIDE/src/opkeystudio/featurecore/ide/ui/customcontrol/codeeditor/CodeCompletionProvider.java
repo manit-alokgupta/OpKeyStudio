@@ -51,7 +51,7 @@ public class CodeCompletionProvider {
 			public void run() {
 				MessageDialogs msd = new MessageDialogs();
 				msd.openProgressDialog(null, "Please wait initializing Intellisense...");
-				new EditorTools(cview).initIntellisense();
+				new EditorTools(cview).initIntellisense(true);
 				msd.closeProgressDialog();
 			}
 		});
@@ -73,6 +73,10 @@ public class CodeCompletionProvider {
 				new ShorthandCompletion(provider, "syserr", "System.err.println(", "System.err.println("));
 		return provider;
 
+	}
+
+	public void reinitProvider() {
+		provider = new JavaCompletionProvider();
 	}
 
 	public void addBasicCompletion(String data) {

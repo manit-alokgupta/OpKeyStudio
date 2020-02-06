@@ -134,7 +134,7 @@ public class CFLOrAssociate extends CustomTable {
 							.compileAllOpKeyLibs();
 
 					System.out.println("Errors Found " + errors.size());
-					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense();
+					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense(false);
 				}
 				if (associateOR.getSelection() == false) {
 					File file1 = new File(
@@ -162,7 +162,7 @@ public class CFLOrAssociate extends CustomTable {
 							.compileAllOpKeyLibs();
 
 					System.out.println("Errors Found " + errors.size());
-					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense();
+					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense(false);
 				}
 			}
 

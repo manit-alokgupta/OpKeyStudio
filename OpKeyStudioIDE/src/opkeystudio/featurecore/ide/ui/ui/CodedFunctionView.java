@@ -168,7 +168,7 @@ public class CodedFunctionView extends Composite {
 					saveCFL(true);
 				}
 				editor.convertOpKeyVariablesToCode();
-				refreshIntellisense();
+				refreshIntellisense(true);
 				renderCFLCode();
 			}
 
@@ -182,8 +182,8 @@ public class CodedFunctionView extends Composite {
 
 	}
 
-	public void refreshIntellisense() {
-		new EditorTools(this).initIntellisense();
+	public void refreshIntellisense(boolean reinit) {
+		new EditorTools(this).initIntellisense(reinit);
 	}
 
 	public CodedFunctionView getInstance() {
