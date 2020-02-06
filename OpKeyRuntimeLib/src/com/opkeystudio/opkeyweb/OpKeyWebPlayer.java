@@ -27,6 +27,10 @@ public class OpKeyWebPlayer {
 	private int pageLoadAndXHRTimeout = 30;
 	private JavascriptExecutor javaScriptExecutor;
 
+	public OpKeyWebPlayer(WebDriver driver) {
+		this.setCurrentWebDriver(driver);
+	}
+
 	public WebDriver openBrowser(String browserName, String url) {
 		if (currentWebDriver != null) {
 			currentWebDriver.get(url);
@@ -211,7 +215,7 @@ public class OpKeyWebPlayer {
 		return object;
 	}
 
-	public void wait(int timeInSeconds) {
+	public void sleep(int timeInSeconds) {
 		try {
 			Thread.sleep(timeInSeconds * 1000);
 		} catch (InterruptedException e) {
@@ -224,16 +228,20 @@ public class OpKeyWebPlayer {
 		if (isWaitForPageLoad() == false) {
 			return;
 		}
-		WebDriverWait wait = new WebDriverWait(getCurrentWebDriver(), getPageLoadAndXHRTimeout());
-		wait.pollingEvery(10, TimeUnit.MILLISECONDS);
-		ExpectedCondition<Boolean> windowReadyState = new ExpectedCondition<Boolean>() {
-			@Override
-			public Boolean apply(WebDriver driver) {
-				return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString()
-						.equals("complete");
+		while (true) {
+			String readyState = (String) getJavaScriptExecutor().executeScript("return document.readyState");
+			System.out.println(">>Waiting for Page Load To Complete " + readyState);
+			if (readyState.toLowerCase().equals("complete") || readyState.toLowerCase().equals("interactive")) {
+				System.out.println("Page Load Completed");
+				break;
 			}
-		};
-		wait.until(windowReadyState);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public WebDriver getCurrentWebDriver() {
