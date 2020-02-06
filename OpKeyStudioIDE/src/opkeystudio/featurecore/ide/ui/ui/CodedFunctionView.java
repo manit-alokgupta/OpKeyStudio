@@ -50,7 +50,7 @@ public class CodedFunctionView extends Composite {
 	private CodedFunctionBottomFactoryUI bottomFactoryUi;
 	private String codedFLClassPath;
 	private String artifactOpkeyDataLibraryPath;
-	
+
 	private String artifactAssociatedLibraryPath;
 	private Artifact artifact;
 
@@ -252,6 +252,17 @@ public class CodedFunctionView extends Composite {
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
 		if (cflcodes.size() > 0) {
 			CFLCode cflcode = cflcodes.get(0);
+			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions());
+			editor.setJavaCode(code);
+			editor.setCflCode(cflcode);
+		}
+		if (cflcodes.size() == 0) {
+			CFLCode cflcode = new CFLCode();
+			cflcode.setAdded(true);
+			cflcode.setCf_id(getArtifact().getId());
+			cflcode.setUsercode("");
+			cflcode.setLanguage("JAVA");
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
 					cflcode.getUsercode(), cflcode.getPrivateuserfunctions());
 			editor.setJavaCode(code);
