@@ -33,7 +33,7 @@ public class DRObject {
 		return filteredDatas;
 	}
 
-	public String getDRCell(String columnName, int rowNo) {
+	public static String getDRCell(String columnName, int rowNo) {
 		return getDRCells(columnName).get(rowNo);
 	}
 
