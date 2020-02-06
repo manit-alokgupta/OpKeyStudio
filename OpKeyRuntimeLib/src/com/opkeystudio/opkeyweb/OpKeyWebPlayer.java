@@ -62,7 +62,6 @@ public class OpKeyWebPlayer {
 
 	public WebElement typeText(ORObject orobject, String valueToType) {
 		WebElement element = findWebElement(orobject);
-		element.clear();
 		getJavaScriptExecutor().executeScript("arguments[0].value=''", element);
 		element.sendKeys(valueToType);
 		return element;
@@ -70,7 +69,6 @@ public class OpKeyWebPlayer {
 
 	public WebElement clearText(ORObject orobject) {
 		WebElement element = findWebElement(orobject);
-		element.clear();
 		getJavaScriptExecutor().executeScript("arguments[0].value=''", element);
 		return element;
 	}
@@ -169,18 +167,18 @@ public class OpKeyWebPlayer {
 				}
 			}
 
-			if (webObject.getCss() != null) {
-				List<WebElement> elements = driver.findElements(By.cssSelector(webObject.getCss()));
-				if (elements.size() == 1) {
-					System.out.println(">>Element Found By ClassName " + webObject.getClassName());
-					return elements.get(0);
-				}
-			}
-
 			for (String xpath : webObject.getXpaths()) {
 				List<WebElement> elements = driver.findElements(By.xpath(xpath));
 				if (elements.size() == 1) {
 					System.out.println(">>Element Found By Xpath " + xpath);
+					return elements.get(0);
+				}
+			}
+
+			if (webObject.getCss() != null) {
+				List<WebElement> elements = driver.findElements(By.cssSelector(webObject.getCss()));
+				if (elements.size() == 1) {
+					System.out.println(">>Element Found By Css " + webObject.getCss());
 					return elements.get(0);
 				}
 			}
