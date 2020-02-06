@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,18 +11,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.opkeystudio.runtime.WebObject;
 import com.opkeystudio.runtime.ORObject;
+import com.opkeystudio.runtime.WebObject;
 
 public class OpKeyWebPlayer {
 	private WebDriver currentWebDriver;
 	private boolean waitForPageLoad;
 	private boolean waitForXhrLoad;
-	private int finderTimeout;
+	private int finderTimeout = 30;
 	private int pageLoadAndXHRTimeout = 30;
 	private JavascriptExecutor javaScriptExecutor;
 
@@ -141,39 +138,57 @@ public class OpKeyWebPlayer {
 	}
 
 	public WebElement findWebElement(ORObject orobject) {
-		waitForPageLoad();
-		WebObject webObject = convertORObjectToWebObject(orobject);
-		WebDriver driver = getCurrentWebDriver();
-		if (webObject.getId() != null) {
-			List<WebElement> elements = driver.findElements(By.id(webObject.getId()));
-			if (elements.size() == 1) {
-				System.out.println(">>Element Found By Id " + webObject.getId());
-				return elements.get(0);
+		int i = 0;
+		while (i < getFinderTimeout()) {
+			waitForPageLoad();
+			WebObject webObject = convertORObjectToWebObject(orobject);
+			WebDriver driver = getCurrentWebDriver();
+			if (webObject.getId() != null) {
+				List<WebElement> elements = driver.findElements(By.id(webObject.getId()));
+				if (elements.size() == 1) {
+					System.out.println(">>Element Found By Id " + webObject.getId());
+					return elements.get(0);
+				}
 			}
-		}
 
-		if (webObject.getName() != null) {
-			List<WebElement> elements = driver.findElements(By.name(webObject.getName()));
-			if (elements.size() == 1) {
-				System.out.println(">>Element Found By Name " + webObject.getName());
-				return elements.get(0);
+			if (webObject.getName() != null) {
+				List<WebElement> elements = driver.findElements(By.name(webObject.getName()));
+				if (elements.size() == 1) {
+					System.out.println(">>Element Found By Name " + webObject.getName());
+					return elements.get(0);
+				}
 			}
-		}
 
-		if (webObject.getClassName() != null) {
-			List<WebElement> elements = driver.findElements(By.className(webObject.getClassName()));
-			if (elements.size() == 1) {
-				System.out.println(">>Element Found By ClassName " + webObject.getClassName());
-				return elements.get(0);
+			if (webObject.getClassName() != null) {
+				List<WebElement> elements = driver.findElements(By.className(webObject.getClassName()));
+				if (elements.size() == 1) {
+					System.out.println(">>Element Found By ClassName " + webObject.getClassName());
+					return elements.get(0);
+				}
 			}
-		}
 
-		for (String xpath : webObject.getXpaths()) {
-			List<WebElement> elements = driver.findElements(By.xpath(xpath));
-			if (elements.size() == 1) {
-				System.out.println(">>Element Found By Xpath " + xpath);
-				return elements.get(0);
+			if (webObject.getCss() != null) {
+				List<WebElement> elements = driver.findElements(By.cssSelector(webObject.getCss()));
+				if (elements.size() == 1) {
+					System.out.println(">>Element Found By ClassName " + webObject.getClassName());
+					return elements.get(0);
+				}
 			}
+
+			for (String xpath : webObject.getXpaths()) {
+				List<WebElement> elements = driver.findElements(By.xpath(xpath));
+				if (elements.size() == 1) {
+					System.out.println(">>Element Found By Xpath " + xpath);
+					return elements.get(0);
+				}
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			i++;
 		}
 		System.out.println(">>Element Not Found");
 		return null;
