@@ -63,6 +63,7 @@ public class OpKeyWebPlayer {
 	public WebElement typeText(ORObject orobject, String valueToType) {
 		WebElement element = findWebElement(orobject);
 		element.clear();
+		getJavaScriptExecutor().executeScript("arguments[0].value=''", element);
 		element.sendKeys(valueToType);
 		return element;
 	}
@@ -70,6 +71,7 @@ public class OpKeyWebPlayer {
 	public WebElement clearText(ORObject orobject) {
 		WebElement element = findWebElement(orobject);
 		element.clear();
+		getJavaScriptExecutor().executeScript("arguments[0].value=''", element);
 		return element;
 	}
 
