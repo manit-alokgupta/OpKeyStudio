@@ -6,6 +6,7 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
+import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class DRMaker {
@@ -68,6 +69,37 @@ public class DRMaker {
 
 		}
 		return allColumnAttributes;
+	}
+	
+	
+	public String getDefaultDRStructureFullQuery(Artifact artifact) {
+		String fullQuery="";
+		List<DRColumnAttributes> allColumnAttributes = new ArrayList<DRColumnAttributes>();
+		for (int i = 0; i < 26; i++) {
+			DRColumnAttributes drColumnAttribute = new DRColumnAttributes();
+			drColumnAttribute.setColumn_id(Utilities.getInstance().getUniqueUUID(""));
+			drColumnAttribute.setDr_id(artifact.getId());
+			drColumnAttribute.setName("Column-" + i);
+			drColumnAttribute.setPosition(i * 10);
+			drColumnAttribute.setIsencrypted(false);
+			drColumnAttribute.setAdded(true);
+			fullQuery+=new QueryMaker().createInsertQuery(drColumnAttribute, "dr_columns", "");
+			List<DRCellAttributes> drCellAttributes = new ArrayList<DRCellAttributes>();
+			for (int j = 0; j < 26; j++) {
+				DRCellAttributes drCellAttribute = new DRCellAttributes();
+				drCellAttribute.setDr_cell_id(Utilities.getInstance().getUniqueUUID(""));
+				drCellAttribute.setDr_id(drColumnAttribute.getDr_id());
+				drCellAttribute.setColumn_id(drColumnAttribute.getColumn_id());
+				drCellAttribute.setPosition(j * 10);
+				drCellAttribute.setAdded(true);
+				drCellAttributes.add(drCellAttribute);
+				fullQuery+=new QueryMaker().createInsertQuery(drCellAttribute, "dr_cell", "");
+			}
+			drColumnAttribute.setDrCellAttributes(drCellAttributes);
+			allColumnAttributes.add(drColumnAttribute);
+
+		}
+		return fullQuery;
 	}
 
 	public void addDRRow(Artifact artifact, int selectedRowNo, List<DRColumnAttributes> columnAttributes) {

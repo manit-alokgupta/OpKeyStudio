@@ -79,7 +79,7 @@ public class QueryMaker {
 		}
 
 		if (queryType == QUERYTYPE.INSERT) {
-			String queryFormat = "INSERT INTO %s(%s) VALUES(%s)" + conditionString;
+			String queryFormat = "INSERT INTO %s(%s) VALUES(%s);" + conditionString;
 			DuoList<String, String> queryObject = getQueryString(object, ignoreColumnName);
 			String finalQuery = String.format(queryFormat, tableName, formatString(queryObject.getAllFirstValues()),
 					formatString(queryObject.getAllSecondValues()));

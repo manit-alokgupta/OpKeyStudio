@@ -82,13 +82,14 @@ public class ArtifactApi {
 		new ArtifactApiUtilities().createMainArtifactClob(artifact);
 		new ArtifactApiUtilities().createFlowManualTestCase(artifact);
 		if (artifactType == MODULETYPE.DataRepository) {
-			List<DRColumnAttributes> drColumnAttributes = new DRMaker().getDefaultDRStructure(artifact);
-			for (DRColumnAttributes drColumnAttribute : drColumnAttributes) {
-				new DataRepositoryConstructApi().addDRColumn(drColumnAttribute);
-				for (DRCellAttributes drCellAttribute : drColumnAttribute.getDrCellAttributes()) {
-					new DataRepositoryConstructApi().addDRCell(drCellAttribute);
-				}
-			}
+			String fullQuery = "";
+			System.out.println("Creating Query "+System.currentTimeMillis());
+			fullQuery = new DRMaker().getDefaultDRStructureFullQuery(artifact);
+			System.out.println("Creating Query Completed"+System.currentTimeMillis());
+			
+			System.out.println("Executing Query "+System.currentTimeMillis());
+			QueryExecutor.getInstance().executeUpdateQuery(fullQuery);
+			System.out.println("Executing Query Completed"+System.currentTimeMillis());
 			GlobalLoader.getInstance().initAllDRColumns();
 			GlobalLoader.getInstance().initALLDRCells();
 		}

@@ -43,6 +43,14 @@ public class DataRepositoryConstructApi {
 		}
 	}
 
+	public String get_addDRColumnQuery(DRColumnAttributes columnAttribute) {
+		if (columnAttribute.isAdded()) {
+			String query = new QueryMaker().createInsertQuery(columnAttribute, "dr_columns", "");
+			return query;
+		}
+		return "";
+	}
+
 	private void updateDRColumn(DRColumnAttributes columnAttribute) {
 		if (columnAttribute.isModified()) {
 			String query = new QueryMaker().createUpdateQuery(columnAttribute, "dr_columns",
@@ -63,6 +71,14 @@ public class DataRepositoryConstructApi {
 			String query = new QueryMaker().createInsertQuery(drCellAttribute, "dr_cell", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
+	}
+
+	public String get_addDRCell(DRCellAttributes drCellAttribute) {
+		if (drCellAttribute.isAdded()) {
+			String query = new QueryMaker().createInsertQuery(drCellAttribute, "dr_cell", "");
+			return query;
+		}
+		return "";
 	}
 
 	private void updateDRCell(DRCellAttributes drCellAttribute) {
