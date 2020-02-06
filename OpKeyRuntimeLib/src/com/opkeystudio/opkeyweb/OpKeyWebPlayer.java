@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import com.opkeystudio.runtime.ORObject;
@@ -45,7 +46,10 @@ public class OpKeyWebPlayer {
 			currentWebDriver = new FirefoxDriver();
 			currentWebDriver.get(url);
 		}
-
+		if (browserName.toLowerCase().contains("ie")) {
+			currentWebDriver = new InternetExplorerDriver();
+			currentWebDriver.get(url);
+		}
 		currentWebDriver.manage().window().maximize();
 		setCurrentWebDriver(currentWebDriver);
 		waitForPageLoad();
