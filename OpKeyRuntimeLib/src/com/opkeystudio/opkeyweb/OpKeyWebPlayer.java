@@ -33,6 +33,7 @@ public class OpKeyWebPlayer {
 
 	public WebDriver openBrowser(String browserName, String url) {
 		if (currentWebDriver != null) {
+			currentWebDriver.manage().window().maximize();
 			currentWebDriver.get(url);
 			return currentWebDriver;
 		}
@@ -44,6 +45,8 @@ public class OpKeyWebPlayer {
 			currentWebDriver = new FirefoxDriver();
 			currentWebDriver.get(url);
 		}
+		
+		currentWebDriver.manage().window().maximize();
 		setCurrentWebDriver(currentWebDriver);
 		waitForPageLoad();
 		return currentWebDriver;
