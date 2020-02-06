@@ -74,6 +74,7 @@ public class EditorTools {
 
 	public List<File> getAllCFLOpKeyLibs() {
 		String path = getParentCodedFunctionView().getArtifactOpkeyDataLibraryPath();
+		System.out.println("Parent Path " + path);
 		return getAllFiles(new File(path), ".jar");
 	}
 
