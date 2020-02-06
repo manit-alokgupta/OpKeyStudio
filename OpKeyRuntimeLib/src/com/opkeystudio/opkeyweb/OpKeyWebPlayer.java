@@ -45,7 +45,7 @@ public class OpKeyWebPlayer {
 			currentWebDriver = new FirefoxDriver();
 			currentWebDriver.get(url);
 		}
-		
+
 		currentWebDriver.manage().window().maximize();
 		setCurrentWebDriver(currentWebDriver);
 		waitForPageLoad();
@@ -54,6 +54,14 @@ public class OpKeyWebPlayer {
 
 	public void initChromeDriverExecutablePath(String driverPath) {
 		System.setProperty("webdriver.chrome.driver", driverPath);
+	}
+
+	public void initFirefoxDriverExecutablePath(String driverPath) {
+		System.setProperty("webdriver.gecko.driver", driverPath);
+	}
+
+	public void initIEDriverExecutablePath(String driverPath) {
+		System.setProperty("webdriver.ie.driver", driverPath);
 	}
 
 	public WebElement click(ORObject orobject) {

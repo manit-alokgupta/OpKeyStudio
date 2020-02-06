@@ -33,6 +33,10 @@ public class DRObject {
 		return filteredDatas;
 	}
 
+	public String getDRCell(String columnName, int rowNo) {
+		return getDRCells(columnName).get(rowNo);
+	}
+
 	public static Map<String, List<String>> getDrDatas() {
 		return drDatas;
 	}
