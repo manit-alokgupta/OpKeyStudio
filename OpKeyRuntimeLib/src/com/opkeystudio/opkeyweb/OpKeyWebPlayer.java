@@ -27,6 +27,9 @@ public class OpKeyWebPlayer {
 	private int pageLoadAndXHRTimeout = 30;
 	private JavascriptExecutor javaScriptExecutor;
 
+	public OpKeyWebPlayer() {
+	}
+
 	public OpKeyWebPlayer(WebDriver driver) {
 		this.setCurrentWebDriver(driver);
 	}
