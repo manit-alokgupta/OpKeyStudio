@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class Artifact extends Modified {
 	public enum MODULETYPE {
@@ -184,6 +185,7 @@ public class Artifact extends Modified {
 	}
 
 	public String getArtifactVariableName() {
-		return getName().replaceAll(" ", "_");
+		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
+		return varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
 	}
 }

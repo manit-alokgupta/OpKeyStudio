@@ -24,7 +24,13 @@ public class DRObject {
 		if (drcells == null) {
 			return new ArrayList<String>();
 		}
-		return drcells;
+		List<String> filteredDatas = new ArrayList<String>();
+		for (String drcell : drcells) {
+			if (!drcell.trim().isEmpty()) {
+				filteredDatas.add(drcell);
+			}
+		}
+		return filteredDatas;
 	}
 
 	public static Map<String, List<String>> getDrDatas() {
@@ -34,5 +40,5 @@ public class DRObject {
 	public static void setDrDatas(Map<String, List<String>> drDatas2) {
 		drDatas = drDatas2;
 	}
-	
+
 }

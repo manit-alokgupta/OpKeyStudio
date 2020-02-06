@@ -106,11 +106,14 @@ public class DtoToCodeConverter {
 				+ "		drDatas.put(column, cellDatas);\r\n" + "	}\r\n" + "\r\n"
 				+ "	public static List<String> getDRCells(String column) {\r\n"
 				+ "		List<String> drcells = getDrDatas().get(column);\r\n" + "		if (drcells == null) {\r\n"
-				+ "			return new ArrayList<String>();\r\n" + "		}\r\n" + "		return drcells;\r\n"
-				+ "	}\r\n" + "\r\n" + "	public static Map<String, List<String>> getDrDatas() {\r\n"
-				+ "		return drDatas;\r\n" + "	}\r\n" + "\r\n"
-				+ "	public static void setDrDatas(Map<String, List<String>> drDatas2) {\r\n"
-				+ "		drDatas = drDatas2;\r\n" + "	}";
+				+ "			return new ArrayList<String>();\r\n" + "		}\r\n"
+				+ "		List<String> filteredDatas = new ArrayList<String>();\r\n"
+				+ "		for (String drcell : drcells) {\r\n" + "			if (!drcell.trim().isEmpty()) {\r\n"
+				+ "				filteredDatas.add(drcell);\r\n" + "			}\r\n" + "		}\r\n"
+				+ "		return filteredDatas;\r\n" + "	}\r\n" + "\r\n"
+				+ "	public static Map<String, List<String>> getDrDatas() {\r\n" + "		return drDatas;\r\n"
+				+ "	}\r\n" + "\r\n" + "	public static void setDrDatas(Map<String, List<String>> drDatas2) {\r\n"
+				+ "		drDatas = drDatas2;\r\n" + "	}\r\n" + "";
 		return data;
 	}
 

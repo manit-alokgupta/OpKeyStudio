@@ -5,6 +5,7 @@ import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ORObject extends Modified implements Cloneable {
 	@DBField
@@ -181,7 +182,8 @@ public class ORObject extends Modified implements Cloneable {
 	}
 
 	public String getVariableName() {
-		return getName().replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
+		return varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
 	}
 
 	public void setVariableName(String variableName) {
