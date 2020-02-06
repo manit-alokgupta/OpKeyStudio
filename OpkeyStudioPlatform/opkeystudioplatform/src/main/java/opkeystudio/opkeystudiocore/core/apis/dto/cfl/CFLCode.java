@@ -9,7 +9,7 @@ public class CFLCode extends Modified {
 	@DBField
 	private String cf_id;
 	@DBField
-	private String plugin_id;
+	private String pluginid;
 	@DBField
 	private String usercode;
 	@DBField
@@ -35,13 +35,6 @@ public class CFLCode extends Modified {
 		this.cf_id = cf_id;
 	}
 
-	public String getPlugin_id() {
-		return plugin_id;
-	}
-
-	public void setPlugin_id(String plugin_id) {
-		this.plugin_id = plugin_id;
-	}
 
 	public String getUsercode() {
 		return usercode;
@@ -73,5 +66,13 @@ public class CFLCode extends Modified {
 
 	public void setImportpackages(String importpackages) {
 		this.importpackages = importpackages;
+	}
+
+	public String getPluginid() {
+		return pluginid;
+	}
+
+	public void setPluginid(String pluginid) {
+		this.pluginid = pluginid;
 	}
 }
