@@ -111,11 +111,11 @@ public class DtoToCodeConverter {
 				+ "		for (String drcell : drcells) {\r\n" + "			if (!drcell.trim().isEmpty()) {\r\n"
 				+ "				filteredDatas.add(drcell);\r\n" + "			}\r\n" + "		}\r\n"
 				+ "		return filteredDatas;\r\n" + "	}\r\n" + "\r\n"
-				+ "	public String getDRCell(String columnName, int rowNo) {\r\n"
+				+ "	public static String getDRCell(String columnName, int rowNo) {\r\n"
 				+ "		return getDRCells(columnName).get(rowNo);\r\n" + "	}\r\n" + "\r\n"
 				+ "	public static Map<String, List<String>> getDrDatas() {\r\n" + "		return drDatas;\r\n"
 				+ "	}\r\n" + "\r\n" + "	public static void setDrDatas(Map<String, List<String>> drDatas2) {\r\n"
-				+ "		drDatas = drDatas2;\r\n" + "	}\r\n" + "";
+				+ "		drDatas = drDatas2;\r\n" + "	}";
 		return data;
 	}
 
