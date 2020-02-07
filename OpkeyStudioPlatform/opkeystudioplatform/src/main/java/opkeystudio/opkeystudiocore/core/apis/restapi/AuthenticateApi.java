@@ -13,6 +13,8 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class AuthenticateApi {
 	public AuthentcationData loginToOpKey(String username, String password) throws IOException {
+		ServiceRepository.getInstance().setOpKeyHostAuthToken(null);
+		ServiceRepository.getInstance().setOpKeyHostSessionId(null);
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("loginsource", "OPKEYECLIPSE");
 		String retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/OpKeyAuth/Login", "POST", params,
