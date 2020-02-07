@@ -141,22 +141,22 @@ public class ArtifactTreeUI extends Composite {
 		toolbarNew = new ToolItem(toolBar_1, SWT.DROP_DOWN);
 		toolbarNew.setEnabled(false);
 		toolbarNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		toolbarNew.setText("New");
+	//	toolbarNew.setText("New");
 		toolbarNew.setToolTipText("New");
 
-		ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		//ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
 //		toolbarNew.setDropDownMenu(menu_1);
 
 		toolbarRename = new ToolItem(toolBar_1, SWT.NONE);
-		toolbarRename.setText("Rename");
+		//toolbarRename.setText("Rename");
 		toolbarRename.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
 		toolbarRename.setEnabled(false);
 		toolbarRename.setToolTipText("Rename");
 
-		ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		//ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		toolbarDelete = new ToolItem(toolBar_1, SWT.NONE);
-		toolbarDelete.setText("Delete");
+		//toolbarDelete.setText("Delete");
 		toolbarDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		toolbarDelete.setEnabled(false);
 		toolbarDelete.setToolTipText("Delete");

@@ -20,6 +20,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -225,6 +227,14 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 					cti.setText(atreeNode.getText());
 					cti.setControlData(atreeNode);
 					addIcon(cti);
+
+					cti.addListener(SWT.Expand, new Listener() {
+
+						@Override
+						public void handleEvent(Event event) {
+							
+						}
+					});
 				}
 			}
 		}
