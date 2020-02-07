@@ -186,6 +186,56 @@ public class FlowMaker {
 		return flowStep;
 	}
 
+	
+	public List<FlowInputArgument> getFlowStepOutputArguments(Artifact artifact, FlowStep flowStep) {
+		List<FlowInputArgument> flowOutputArguments = new ArrayList<FlowInputArgument>();
+		if (flowStep.getKeyword() != null) {
+			List<KeyWordInputArgument> keywordOutputArguments = flowStep.getKeyword().getKeywordInputArguments();
+			for (KeyWordInputArgument keywordOutputArgument : keywordOutputArguments) {
+				FlowInputArgument flowOutputArgument = new FlowInputArgument();
+				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+					flowOutputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
+					flowOutputArgument.setStepid(flowStep.getStepid());
+					flowOutputArgument.setArg_datasource(DataSource.StaticValue);
+				} else {
+					flowOutputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+					flowOutputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+					flowOutputArgument.setDatasource(DataSource.StaticValue);
+				}
+				flowOutputArgument.setKeyword_ip_id(keywordOutputArgument.getArgid());
+				flowOutputArgument.setStaticobjectid(null);
+				flowOutputArgument.setAdded(true);
+				
+
+				flowOutputArguments.add(flowOutputArgument);
+			}
+		}
+		
+		if (flowStep.getFunctionLibraryComponent() != null) {
+			List<ComponentInputArgument> componentOutputArgs = flowStep.getFunctionLibraryComponent()
+					.getComponentInputArguments();
+			for (ComponentInputArgument componentOutputArgument : componentOutputArgs) {
+				FlowInputArgument flowOutputArgument = new FlowInputArgument();
+				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+					flowOutputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
+					flowOutputArgument.setStepid(flowStep.getStepid());
+					flowOutputArgument.setArg_datasource(DataSource.StaticValue);
+				} else {
+					flowOutputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+					flowOutputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+					flowOutputArgument.setDatasource(DataSource.StaticValue);
+				}
+				flowOutputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+				flowOutputArgument.setComponent_ip_id(componentOutputArgument.getIp_id());
+				flowOutputArgument.setStaticobjectid(null);
+				flowOutputArgument.setAdded(true);
+
+				flowOutputArguments.add(flowOutputArgument);
+			}
+		}
+		return flowOutputArguments;
+	}
+	
 	public List<FlowInputArgument> getFlowStepInputArguments(Artifact artifact, FlowStep flowStep) {
 		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
 		if (flowStep.getKeyword() != null) {
