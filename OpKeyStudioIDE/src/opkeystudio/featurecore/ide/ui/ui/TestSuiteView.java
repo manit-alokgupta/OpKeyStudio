@@ -314,6 +314,7 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
+				getAddTestCaseButton().setEnabled(false);
 				Text text = (Text) e.getSource();
 				String searchValue = text.getText();
 				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
