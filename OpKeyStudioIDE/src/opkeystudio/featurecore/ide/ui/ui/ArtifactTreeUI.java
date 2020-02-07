@@ -102,7 +102,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -280,7 +280,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -311,7 +311,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -415,7 +415,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -444,7 +444,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -479,7 +479,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -496,7 +496,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -528,7 +528,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -560,7 +560,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -580,7 +580,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -617,7 +617,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -643,7 +643,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -678,20 +678,11 @@ public class ArtifactTreeUI extends Composite {
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Folder);
-
-//				new ArtifactApi().createArtifact(artifactId, inputValue, MODULETYPE.Folder);
-//				try {
-//					artifactTree.renderArtifacts();
-//				} catch (SQLException | IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -718,20 +709,11 @@ public class ArtifactTreeUI extends Composite {
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
-
-//				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Flow);
-//				try {
-//					artifactTree.renderArtifacts();
-//				} catch (SQLException | IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -760,20 +742,11 @@ public class ArtifactTreeUI extends Composite {
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
-
-//				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.Component);
-//				try {
-//					artifactTree.renderArtifacts();
-//				} catch (SQLException | IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -800,20 +773,11 @@ public class ArtifactTreeUI extends Composite {
 				}
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
-
-//				new ArtifactApi().createArtifact(artifact.getId(), inputValue, MODULETYPE.ObjectRepository);
-//				try {
-//					artifactTree.renderArtifacts();
-//				} catch (SQLException | IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -844,7 +808,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -876,7 +840,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -893,13 +857,13 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 		});
@@ -1016,7 +980,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
+		
 
 			}
 
@@ -1042,7 +1006,7 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODo Auto-generated method stub
+		
 
 			}
 		});
@@ -1050,12 +1014,6 @@ public class ArtifactTreeUI extends Composite {
 	}
 
 	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
-		String artifactId = null;
-		if (parentArtifact != null) {
-			if (parentArtifact.getId() != null) {
-				artifactId = parentArtifact.getId();
-			}
-		}
 		new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
 		artifactTree.renderArtifacts();
 	}

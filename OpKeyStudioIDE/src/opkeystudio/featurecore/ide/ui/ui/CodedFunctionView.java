@@ -18,7 +18,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jboss.forge.roaster.Roaster;
-import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
@@ -113,7 +112,7 @@ public class CodedFunctionView extends Composite {
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
+							
 							e1.printStackTrace();
 						}
 						while (true) {
@@ -129,7 +128,7 @@ public class CodedFunctionView extends Composite {
 							try {
 								Thread.sleep(500);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 						}
@@ -141,7 +140,7 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -155,7 +154,7 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -174,7 +173,7 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});

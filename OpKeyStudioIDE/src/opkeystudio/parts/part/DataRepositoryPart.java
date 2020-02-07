@@ -12,16 +12,15 @@ import org.eclipse.swt.widgets.Composite;
 import opkeystudio.featurecore.ide.ui.ui.DataRepositoryView;
 
 public class DataRepositoryPart {
-	private DataRepositoryView dataRepositoryView;
 
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
-		dataRepositoryView = new DataRepositoryView(parent, 0);
+		new DataRepositoryView(parent, 0);
 	}
 
 	@PreDestroy
 	public void preDestroy() {
-		
+
 	}
 
 	@Focus

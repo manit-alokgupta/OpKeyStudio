@@ -1,7 +1,6 @@
 package opkeystudio;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;

@@ -166,6 +166,7 @@ public class EditorTools {
 					continue;
 				}
 				try {
+					@SuppressWarnings("rawtypes")
 					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
 					String modifiers = Modifier.toString(classToLoad.getModifiers());
 					modifiers = modifiers.toLowerCase();
@@ -197,7 +198,7 @@ public class EditorTools {
 		}
 	}
 
-	private void parseClass(Class _class) {
+	private void parseClass(@SuppressWarnings("rawtypes") Class _class) {
 		AutoCompleteToken token = new AutoCompleteToken(_class);
 		CodeCompletionProvider.getInstance(getParentCodedFunctionView()).addAutoCompleteToken(token);
 		CodeCompletionProvider.getInstance(getParentCodedFunctionView()).createConstructorIntellisense(_class);
@@ -259,6 +260,7 @@ public class EditorTools {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
 		}
 		URLClassLoader child = new URLClassLoader(allJarsAndClasses, EditorTools.class.getClassLoader());
+		@SuppressWarnings("rawtypes")
 		Class classToLoad = Class.forName(codedflfile.getName().replaceAll(".class", ""), true, child);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("run");

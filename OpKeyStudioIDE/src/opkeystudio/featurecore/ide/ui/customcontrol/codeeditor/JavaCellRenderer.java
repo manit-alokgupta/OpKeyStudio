@@ -27,6 +27,7 @@ import org.fife.ui.autocomplete.MarkupTagCompletion;
 import org.fife.ui.autocomplete.TemplateCompletion;
 import org.fife.ui.autocomplete.VariableCompletion;
 
+@SuppressWarnings("serial")
 public class JavaCellRenderer extends CompletionCellRenderer {
 
 	private BufferedImage convertToAWT(ImageData data) {
@@ -82,62 +83,62 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 
 	@Override
 	protected Icon createEmptyIcon() {
-		// TODO Auto-generated method stub
+
 		return super.createEmptyIcon();
 	}
 
 	@Override
 	public void delegateToSubstanceRenderer() throws Exception {
-		// TODO Auto-generated method stub
+
 		super.delegateToSubstanceRenderer();
 	}
 
 	@Override
 	public DefaultListCellRenderer getDelegateRenderer() {
-		// TODO Auto-generated method stub
+
 		return super.getDelegateRenderer();
 	}
 
 	@Override
 	public Font getDisplayFont() {
-		// TODO Auto-generated method stub
+
 		return super.getDisplayFont();
 	}
 
 	@Override
 	protected Icon getEmptyIcon() {
-		// TODO Auto-generated method stub
+
 		return super.getEmptyIcon();
 	}
 
 	@Override
 	protected Icon getIcon(String arg0) {
-		// TODO Auto-generated method stub
+
 		return super.getIcon(arg0);
 	}
 
 	@Override
-	public Component getListCellRendererComponent(JList arg0, Object arg1, int arg2, boolean arg3, boolean arg4) {
-		// TODO Auto-generated method stub
+	public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList arg0, Object arg1, int arg2, boolean arg3, boolean arg4) {
+
 		return super.getListCellRendererComponent(arg0, arg1, arg2, arg3, arg4);
 	}
 
 	@Override
 	public boolean getShowTypes() {
-		// TODO Auto-generated method stub
+
 		return super.getShowTypes();
 	}
 
 	@Override
 	protected void paintComponent(Graphics arg0) {
-		// TODO Auto-generated method stub
+
 		super.paintComponent(arg0);
 	}
 
 	@Override
-	protected void prepareForFunctionCompletion(JList arg0, FunctionCompletion arg1, int arg2, boolean arg3,
+	protected void prepareForFunctionCompletion(@SuppressWarnings("rawtypes") JList arg0, FunctionCompletion arg1, int arg2, boolean arg3,
 			boolean arg4) {
-		// TODO Auto-generated method stub
+
 		super.prepareForFunctionCompletion(arg0, arg1, arg2, arg3, arg4);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.ico");
 		BufferedImage image = convertToAWT(img.getImageData());
@@ -146,14 +147,14 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 	}
 
 	@Override
-	protected void prepareForMarkupTagCompletion(JList list, MarkupTagCompletion mc, int index, boolean selected,
+	protected void prepareForMarkupTagCompletion(@SuppressWarnings("rawtypes") JList list, MarkupTagCompletion mc, int index, boolean selected,
 			boolean hasFocus) {
-		// TODO Auto-generated method stub
+
 		super.prepareForMarkupTagCompletion(list, mc, index, selected, hasFocus);
 	}
 
 	@Override
-	protected void prepareForOtherCompletion(JList arg0, Completion arg1, int arg2, boolean arg3, boolean arg4) {
+	protected void prepareForOtherCompletion(@SuppressWarnings("rawtypes") JList arg0, Completion arg1, int arg2, boolean arg3, boolean arg4) {
 		super.prepareForOtherCompletion(arg0, arg1, arg2, arg3, arg4);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/class.ico");
 		BufferedImage image = convertToAWT(img.getImageData());
@@ -162,16 +163,16 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 	}
 
 	@Override
-	protected void prepareForTemplateCompletion(JList list, TemplateCompletion tc, int index, boolean selected,
+	protected void prepareForTemplateCompletion(@SuppressWarnings("rawtypes") JList list, TemplateCompletion tc, int index, boolean selected,
 			boolean hasFocus) {
-		// TODO Auto-generated method stub
+
 		super.prepareForTemplateCompletion(list, tc, index, selected, hasFocus);
 	}
 
 	@Override
-	protected void prepareForVariableCompletion(JList list, VariableCompletion vc, int index, boolean selected,
+	protected void prepareForVariableCompletion(@SuppressWarnings("rawtypes") JList list, VariableCompletion vc, int index, boolean selected,
 			boolean hasFocus) {
-		// TODO Auto-generated method stub
+
 		super.prepareForVariableCompletion(list, vc, index, selected, hasFocus);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/yellow dot.ico");
 		BufferedImage image = convertToAWT(img.getImageData());
@@ -181,49 +182,49 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 
 	@Override
 	public void setDelegateRenderer(DefaultListCellRenderer delegate) {
-		// TODO Auto-generated method stub
+
 		super.setDelegateRenderer(delegate);
 	}
 
 	@Override
 	public void setDisplayFont(Font font) {
-		// TODO Auto-generated method stub
+
 		super.setDisplayFont(font);
 	}
 
 	@Override
 	protected void setIconWithDefault(Completion completion, Icon defaultIcon) {
-		// TODO Auto-generated method stub
+
 		super.setIconWithDefault(completion, defaultIcon);
 	}
 
 	@Override
 	protected void setIconWithDefault(Completion completion) {
-		// TODO Auto-generated method stub
+
 		super.setIconWithDefault(completion);
 	}
 
 	@Override
 	public void setParamColor(Color color) {
-		// TODO Auto-generated method stub
+
 		super.setParamColor(color);
 	}
 
 	@Override
 	public void setShowTypes(boolean show) {
-		// TODO Auto-generated method stub
+
 		super.setShowTypes(show);
 	}
 
 	@Override
 	public void setTypeColor(Color color) {
-		// TODO Auto-generated method stub
+
 		super.setTypeColor(color);
 	}
 
 	@Override
 	public void updateUI() {
-		// TODO Auto-generated method stub
+
 		super.updateUI();
 	}
 

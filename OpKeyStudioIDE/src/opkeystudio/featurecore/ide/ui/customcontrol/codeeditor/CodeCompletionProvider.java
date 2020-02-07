@@ -24,9 +24,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
-import org.fife.ui.autocomplete.FunctionCompletion;
 import org.fife.ui.autocomplete.ShorthandCompletion;
-import org.fife.ui.autocomplete.VariableCompletion;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
@@ -170,16 +168,17 @@ public class CodeCompletionProvider {
 	public void createIntellisenseData() {
 		List<AutoCompleteToken> allTokens = getAllTokens();
 		for (AutoCompleteToken token : allTokens) {
+			@SuppressWarnings("rawtypes")
 			Class _class = token.getTokenClass();
 			createConstructorIntellisense(_class);
 		}
 	}
 
-	public void createConstructorIntellisense(Class _class) {
+	public void createConstructorIntellisense(@SuppressWarnings("rawtypes") Class _class) {
 		try {
+			@SuppressWarnings("rawtypes")
 			Constructor[] _constructors = _class.getConstructors();
-			for (Constructor constructor : _constructors) {
-				String name = constructor.getName();
+			for (@SuppressWarnings("rawtypes") Constructor constructor : _constructors) {
 				Parameter[] parameters = constructor.getParameters();
 				String parametersString = "";
 				String argumentsString = "";
@@ -233,6 +232,7 @@ public class CodeCompletionProvider {
 
 	public JavaCompletionProvider getClassMethodsCompletionProvider(AutoCompleteToken token) {
 		JavaCompletionProvider provider = new JavaCompletionProvider();
+		@SuppressWarnings("rawtypes")
 		Class _class = token.getTokenClass();
 		Method[] methods = _class.getMethods();
 		Field[] fields = _class.getFields();
@@ -259,7 +259,6 @@ public class CodeCompletionProvider {
 	}
 
 	private void parseMethod(JavaCompletionProvider provider, Method method) {
-		String name = method.getName();
 		Parameter[] parameters = method.getParameters();
 		String parametersString = "";
 		String argumentsString = "";

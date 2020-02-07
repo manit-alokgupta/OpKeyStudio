@@ -67,7 +67,6 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem addChildObjectToolItem;
 	private ORObject obRepo;
 	private String orId;
-	private Display display;
 	private String[] parentObjectTypes = new String[] { "Html Page", "Frame", "Page" };
 	private String[] childObjectTypes = new String[] { "Area", "Base", "Button", "Checkbox", "Clickable Image Map",
 			"Color Picker", "Custom", "Custom Object", "Datetime Picker", "Div", "Drop Down List", "Edit Field",
@@ -126,7 +125,7 @@ public class ObjectRepositoryView extends Composite {
 
 				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
-					// TODO Auto-generated method stub
+					
 
 				}
 			});
@@ -155,7 +154,7 @@ public class ObjectRepositoryView extends Composite {
 
 				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
-					// TODO Auto-generated method stub
+					
 
 				}
 			});
@@ -166,7 +165,6 @@ public class ObjectRepositoryView extends Composite {
 	@SuppressWarnings("unused")
 	public void ObjectRepositoryUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
-		display = getParent().getDisplay();
 		TabFolder tabFolder = new TabFolder(this, SWT.BOTTOM);
 
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
@@ -211,7 +209,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -233,7 +231,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -363,7 +361,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -379,13 +377,13 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -530,7 +528,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -546,7 +544,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -562,7 +560,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -571,13 +569,13 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -591,7 +589,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
@@ -605,7 +603,7 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				
 
 			}
 		});
