@@ -59,10 +59,10 @@ public class FlowMaker {
 		}
 		flowStep.setPosition(selectedFlowStepPosition + 5);
 		flowStep.setShouldrun(true);
-		
+
 		if (keyword != null) {
 			List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(artifact, flowStep);
-			List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
+			List<FlowOutputArgument> flowOutputArguments = getFlowStepOutputArguments(artifact, flowStep);
 			flowStep.setFlowInputArgs(flowInputArguments);
 			flowStep.setFlowOutputArgs(flowOutputArguments);
 		}
@@ -164,7 +164,7 @@ public class FlowMaker {
 		flComp.setComponentOutputArguments(outputArgs);
 
 		List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(artifact, flowStep);
-		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
+		List<FlowOutputArgument> flowOutputArguments = getFlowStepOutputArguments(artifact, flowStep);
 		flowStep.setFlowInputArgs(flowInputArguments);
 		flowStep.setFlowOutputArgs(flowOutputArguments);
 
@@ -186,31 +186,23 @@ public class FlowMaker {
 		return flowStep;
 	}
 
-	
-	public List<FlowInputArgument> getFlowStepOutputArguments(Artifact artifact, FlowStep flowStep) {
-		List<FlowInputArgument> flowOutputArguments = new ArrayList<FlowInputArgument>();
+	public List<FlowOutputArgument> getFlowStepOutputArguments(Artifact artifact, FlowStep flowStep) {
+		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
 		if (flowStep.getKeyword() != null) {
-			List<KeyWordInputArgument> keywordOutputArguments = flowStep.getKeyword().getKeywordInputArguments();
-			for (KeyWordInputArgument keywordOutputArgument : keywordOutputArguments) {
-				FlowInputArgument flowOutputArgument = new FlowInputArgument();
-				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-					flowOutputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
-					flowOutputArgument.setStepid(flowStep.getStepid());
-					flowOutputArgument.setArg_datasource(DataSource.StaticValue);
-				} else {
-					flowOutputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
-					flowOutputArgument.setFlow_stepid(flowStep.getFlow_stepid());
-					flowOutputArgument.setDatasource(DataSource.StaticValue);
-				}
-				flowOutputArgument.setKeyword_ip_id(keywordOutputArgument.getArgid());
-				flowOutputArgument.setStaticobjectid(null);
-				flowOutputArgument.setAdded(true);
-				
-
-				flowOutputArguments.add(flowOutputArgument);
+			FlowOutputArgument flowOutputArgument = new FlowOutputArgument();
+			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+				flowOutputArgument.setComponentstep_oa_id(Utilities.getInstance().getUniqueUUID(""));
+				flowOutputArgument.setComponentstep_id(flowStep.getStepid());
+			} else {
+				flowOutputArgument.setFlow_step_oa_id(Utilities.getInstance().getUniqueUUID(""));
+				flowOutputArgument.setFlow_stepid(flowStep.getFlow_stepid());
 			}
+			flowOutputArgument.setKeyword_op_id(flowStep.getKeyword().getKeywordid());
+			flowOutputArgument.setAdded(true);
+
+			flowOutputArguments.add(flowOutputArgument);
 		}
-		
+
 		if (flowStep.getFunctionLibraryComponent() != null) {
 			List<ComponentInputArgument> componentInputArgs = flowStep.getFunctionLibraryComponent()
 					.getComponentInputArguments();
@@ -230,12 +222,12 @@ public class FlowMaker {
 				flowInputArgument.setStaticobjectid(null);
 				flowInputArgument.setAdded(true);
 
-				flowOutputArguments.add(flowInputArgument);
+				// flowOutputArguments.add(flowInputArgument);
 			}
 		}
 		return flowOutputArguments;
 	}
-	
+
 	public List<FlowInputArgument> getFlowStepInputArguments(Artifact artifact, FlowStep flowStep) {
 		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
 		if (flowStep.getKeyword() != null) {
@@ -254,12 +246,11 @@ public class FlowMaker {
 				flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
 				flowInputArgument.setStaticobjectid(null);
 				flowInputArgument.setAdded(true);
-				
 
 				flowInputArguments.add(flowInputArgument);
 			}
 		}
-		
+
 		if (flowStep.getFunctionLibraryComponent() != null) {
 			List<ComponentInputArgument> componentInputArgs = flowStep.getFunctionLibraryComponent()
 					.getComponentInputArguments();
