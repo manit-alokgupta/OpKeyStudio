@@ -53,17 +53,21 @@ public class CustomTable extends Table {
 	}
 
 	public void selectDefaultRow() {
-		if (this.getItemCount() == 0) {
-			return;
+		try {
+			if (this.getItemCount() == 0) {
+				return;
+			}
+			this.setSelection(this.getSelectedRowIndex());
+			if (this.getTablecursor() != null) {
+				int column = this.getSelectedColumn();
+				System.out.println("Selecting Column " + column);
+				this.getTablecursor().setSelection(this.getSelectedRowIndex(), column);
+				this.getTablecursor().notifyListeners(SWT.Selection, null);
+			}
+			this.notifyListeners(SWT.Selection, null);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		this.setSelection(this.getSelectedRowIndex());
-		if (this.getTablecursor() != null) {
-			int column = this.getSelectedColumn();
-			System.out.println("Selecting Column "+column);
-			this.getTablecursor().setSelection(this.getSelectedRowIndex(), column);
-			this.getTablecursor().notifyListeners(SWT.Selection, null);
-		}
-		this.notifyListeners(SWT.Selection, null);
 	}
 
 	public int getSelectedColumn() {

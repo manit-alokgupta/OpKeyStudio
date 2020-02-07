@@ -137,7 +137,7 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 
@@ -500,11 +500,23 @@ public class SuiteStepTable extends CustomTable {
 		if (this.getSelection().length == 0) {
 			return null;
 		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
 		SuiteStepTableItem suiteStepTableItem = (SuiteStepTableItem) this.getSelection()[0];
 		return suiteStepTableItem.getTestSuiteData();
 	}
 
 	public TestSuiteStep getPrevTestSuite() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == 0) {
 			return null;
@@ -518,6 +530,15 @@ public class SuiteStepTable extends CustomTable {
 	}
 
 	public TestSuiteStep getNextTestSuite() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
 		int selectedIndex = this.getSelectionIndices()[0];
 		if (selectedIndex == this.getItemCount() - 1) {
 			return null;
