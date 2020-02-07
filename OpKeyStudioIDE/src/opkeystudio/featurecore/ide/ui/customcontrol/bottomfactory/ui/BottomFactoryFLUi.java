@@ -29,7 +29,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
@@ -43,7 +42,6 @@ public class BottomFactoryFLUi extends Composite {
 	private UsedByTable usedByTable;
 	private AuditTrailsTable auditTrailsTable;
 	private TagTable tagsTable;
-	private BackupTable backupTable;
 	private InputTable inputTable;
 	private OutputTable outputTable;
 
@@ -224,29 +222,6 @@ public class BottomFactoryFLUi extends Composite {
 		tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tagsTable.setHeaderVisible(true);
 		tagsTable.setLinesVisible(true);
-
-		TabItem backupTabItem = new TabItem(tabFolder, SWT.NONE);
-		backupTabItem.setText("Backup");
-		backupTabItem.setToolTipText("Backup");
-
-		Composite composite_9 = new Composite(tabFolder, SWT.NONE);
-		backupTabItem.setControl(composite_9);
-		composite_9.setLayout(new GridLayout(1, false));
-		composite_9.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolBar toolBar_3 = new ToolBar(composite_9, SWT.FLAT | SWT.RIGHT);
-		toolBar_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		toolBar_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolItem compareBackupItem = new ToolItem(toolBar_3, SWT.NONE);
-		compareBackupItem.setToolTipText("Compare With Backup");
-		compareBackupItem.setText("New Item");
-
-		backupTable = new BackupTable(composite_9, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		backupTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
-		backupTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		backupTable.setHeaderVisible(true);
-		backupTable.setLinesVisible(true);
 
 		inputTabItem = new TabItem(tabFolder, SWT.NONE);
 		inputTabItem.setText("Input");

@@ -35,13 +35,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.ExecutionStatusTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 
 public class BottomFactoryTestSuiteUi extends Composite {
 
-	private Table mailToTable;
 	private Table table_1;
 	private Text textSearch;
 
@@ -49,8 +46,6 @@ public class BottomFactoryTestSuiteUi extends Composite {
 	private ExecutionStatusTable executionStatusTable;
 	private TestCaseDocumentTable testCaseDocTable;
 
-	private ToolItem addMailToItem;
-	private ToolItem deleteMailToItem;
 	private ToolItem sessionRefreshToolItem;
 	private ToolItem testCaseDocRefreshItem;
 	private ToolItem executionStatusrRefreshItem;
@@ -162,32 +157,6 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		executionStatusTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		executionStatusTable.setHeaderVisible(true);
 		executionStatusTable.setLinesVisible(true);
-
-		TabItem mailToTabItem = new TabItem(tabFolder, SWT.NONE);
-		mailToTabItem.setText("Mail To");
-
-		Composite composite_5 = new Composite(tabFolder, SWT.NONE);
-		mailToTabItem.setControl(composite_5);
-		composite_5.setLayout(new GridLayout(1, false));
-
-		ToolBar mailToToolbar = new ToolBar(composite_5, SWT.FLAT | SWT.RIGHT);
-		mailToToolbar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		addMailToItem = new ToolItem(mailToToolbar, SWT.NONE);
-		addMailToItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		addMailToItem.setToolTipText("Add");
-
-		ToolItem toolItem = new ToolItem(mailToToolbar, SWT.SEPARATOR);
-
-		deleteMailToItem = new ToolItem(mailToToolbar, SWT.NONE);
-		deleteMailToItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		deleteMailToItem.setToolTipText("Delete");
-
-		mailToTable = new Table(composite_5, SWT.BORDER | SWT.FULL_SELECTION);
-		mailToTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		mailToTable.setHeaderVisible(true);
-		mailToTable.setLinesVisible(true);
 
 		TabItem scheduleSessionTabItem = new TabItem(tabFolder, SWT.NONE);
 		scheduleSessionTabItem.setText("Scheduled Session");
@@ -328,36 +297,6 @@ public class BottomFactoryTestSuiteUi extends Composite {
 	}
 
 	public void addButtonListener() {
-
-		addMailToItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		deleteMailToItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 
 		sessionRefreshToolItem.addSelectionListener(new SelectionListener() {
 
