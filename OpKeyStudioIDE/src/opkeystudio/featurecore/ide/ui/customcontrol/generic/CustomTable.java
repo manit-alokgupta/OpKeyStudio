@@ -19,7 +19,6 @@ public class CustomTable extends Table {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				System.out.println("Selection ");
 				setSelectedRowIndex(getSelectionIndex());
 			}
 
@@ -60,7 +59,6 @@ public class CustomTable extends Table {
 			this.setSelection(this.getSelectedRowIndex());
 			if (this.getTablecursor() != null) {
 				int column = this.getSelectedColumn();
-				System.out.println("Selecting Column " + column);
 				this.getTablecursor().setSelection(this.getSelectedRowIndex(), column);
 				this.getTablecursor().notifyListeners(SWT.Selection, null);
 			}
