@@ -171,8 +171,8 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 				System.out.println("Expand Called");
 				CustomTreeItem treeItem = (CustomTreeItem) event.item;
 				ArtifactTreeNode treeNode = (ArtifactTreeNode) treeItem.getControlData();
-				treeItem.removeAll();
 				List<ArtifactTreeNode> nodes = new ArtifactTreeApi().getArtificateNodes(treeNode.getId());
+				treeItem.removeAll();
 				renderAllArtifactTree(treeItem, nodes);
 			}
 		});
@@ -238,7 +238,11 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 			if (artifact.getParent() != null) {
 				if (artifact.getParent().equals(artifactId)) {
 					CustomTreeItem artitreeitem = new CustomTreeItem(rootNode, 0);
-					artitreeitem.setText(artifact.getText());
+					String text = artifact.getText();
+					if (text.equals("Loading_eea00542-8578-4d09-be64-96e744db3596")) {
+						text = "Loading...";
+					}
+					artitreeitem.setText(text);
 					artitreeitem.setControlData(artifact);
 					addIcon(artitreeitem);
 					renderAllArtifactTree(artitreeitem, allArtifacts);
