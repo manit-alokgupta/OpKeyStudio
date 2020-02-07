@@ -55,7 +55,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	private Table table;
 	private Tree tree;
 	private Text text_1;
-	private org.eclipse.swt.widgets.Button exportButton;
+	private org.eclipse.swt.widgets.Button importButton;
 	private String[] tableHeaders = { "Mode", "Project" };
 	private List<Project> allProjects = new ArrayList<>();
 	private Project selectedProject;
@@ -207,7 +207,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	}
 
 	private void toggleExportButton(boolean status) {
-		this.exportButton.setEnabled(status);
+		this.importButton.setEnabled(status);
 	}
 
 	private void addIcon(CustomTreeItem artTreeItem) {
@@ -356,8 +356,9 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		exportButton = createButton(parent, IDialogConstants.OK_ID, "Import", true);
-		exportButton.addSelectionListener(new SelectionListener() {
+		importButton = createButton(parent, IDialogConstants.OK_ID, "Import", true);
+		importButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/import.png"));
+		importButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
