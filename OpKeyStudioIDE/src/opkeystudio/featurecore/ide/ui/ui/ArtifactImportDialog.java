@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
@@ -163,6 +164,19 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 			}
 		});
 
+		tree.addListener(SWT.Expand, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				System.out.println("Expand Called");
+				CustomTreeItem treeItem = (CustomTreeItem) event.item;
+				ArtifactTreeNode treeNode = (ArtifactTreeNode) treeItem.getControlData();
+				treeItem.removeAll();
+				List<ArtifactTreeNode> nodes = new ArtifactTreeApi().getArtificateNodes(treeNode.getId());
+				renderAllArtifactTree(treeItem, nodes);
+			}
+		});
+
 		tree.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -217,6 +231,23 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 		}
 	}
 
+	private void renderAllArtifactTree(CustomTreeItem rootNode, List<ArtifactTreeNode> allArtifacts) {
+		ArtifactTreeNode atreeNode = (ArtifactTreeNode) rootNode.getControlData();
+		String artifactId = atreeNode.getId();
+		for (ArtifactTreeNode artifact : allArtifacts) {
+			if (artifact.getParent() != null) {
+				if (artifact.getParent().equals(artifactId)) {
+					CustomTreeItem artitreeitem = new CustomTreeItem(rootNode, 0);
+					artitreeitem.setText(artifact.getText());
+					artitreeitem.setControlData(artifact);
+					addIcon(artitreeitem);
+					renderAllArtifactTree(artitreeitem, allArtifacts);
+				}
+			}
+		}
+	}
+
+	// Loading_eea00542-8578-4d09-be64-96e744db3596
 	public void renderArtifactTree() throws IOException {
 		tree.removeAll();
 		List<ArtifactTreeNode> treeNodes = new ArtifactTreeApi().getRootArtificateFolder();
@@ -227,14 +258,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 					cti.setText(atreeNode.getText());
 					cti.setControlData(atreeNode);
 					addIcon(cti);
-
-					cti.addListener(SWT.Expand, new Listener() {
-
-						@Override
-						public void handleEvent(Event event) {
-							
-						}
-					});
+					renderAllArtifactTree(cti, treeNodes);
 				}
 			}
 		}
