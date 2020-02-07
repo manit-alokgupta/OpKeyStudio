@@ -22,7 +22,6 @@ public class ArtifactTreeApi {
 		try {
 			retdata = new OpKeyApiCommunicator().sendDataToOpKeyServer("/api/ExplorerTreeAPI/GetJSTreeNodesLazy", "GET",
 					params, null, null);
-			System.out.println(retdata);
 			ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 			CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ArtifactTreeNode.class);
 			return mapper.readValue(retdata, type);
