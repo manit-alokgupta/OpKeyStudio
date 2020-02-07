@@ -212,25 +212,25 @@ public class FlowMaker {
 		}
 		
 		if (flowStep.getFunctionLibraryComponent() != null) {
-			List<ComponentInputArgument> componentOutputArgs = flowStep.getFunctionLibraryComponent()
+			List<ComponentInputArgument> componentInputArgs = flowStep.getFunctionLibraryComponent()
 					.getComponentInputArguments();
-			for (ComponentInputArgument componentOutputArgument : componentOutputArgs) {
-				FlowInputArgument flowOutputArgument = new FlowInputArgument();
+			for (ComponentInputArgument componentInputArgument : componentInputArgs) {
+				FlowInputArgument flowInputArgument = new FlowInputArgument();
 				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-					flowOutputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
-					flowOutputArgument.setStepid(flowStep.getStepid());
-					flowOutputArgument.setArg_datasource(DataSource.StaticValue);
+					flowInputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
+					flowInputArgument.setStepid(flowStep.getStepid());
+					flowInputArgument.setArg_datasource(DataSource.StaticValue);
 				} else {
-					flowOutputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
-					flowOutputArgument.setFlow_stepid(flowStep.getFlow_stepid());
-					flowOutputArgument.setDatasource(DataSource.StaticValue);
+					flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+					flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+					flowInputArgument.setDatasource(DataSource.StaticValue);
 				}
-				flowOutputArgument.setFlow_stepid(flowStep.getFlow_stepid());
-				flowOutputArgument.setComponent_ip_id(componentOutputArgument.getIp_id());
-				flowOutputArgument.setStaticobjectid(null);
-				flowOutputArgument.setAdded(true);
+				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+				flowInputArgument.setComponent_ip_id(componentInputArgument.getIp_id());
+				flowInputArgument.setStaticobjectid(null);
+				flowInputArgument.setAdded(true);
 
-				flowOutputArguments.add(flowOutputArgument);
+				flowOutputArguments.add(flowInputArgument);
 			}
 		}
 		return flowOutputArguments;
