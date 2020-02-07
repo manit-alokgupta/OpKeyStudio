@@ -1,7 +1,5 @@
 package opkeystudio.opkeystudiocore.core.keywordmanager.dto;
 
-import opkeystudio.opkeystudiocore.core.utils.DataType.GenericDataType;
-
 public class KeyWordInputArgument {
 	
 	private String keywordid;
