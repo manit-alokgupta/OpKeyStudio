@@ -144,8 +144,12 @@ public class FlowMaker {
 	public FlowStep getFlowStepDTOWithFunctionLibray(Artifact artifact, FlowStep selectedFlowStep, Artifact flArtifact,
 			String flow_id, List<FlowStep> flowSteps)
 			throws JsonParseException, JsonMappingException, SQLException, IOException {
-		int selectedFlowStepIndex = flowSteps.indexOf(selectedFlowStep);
-		int selectedFlowStepPosition = selectedFlowStep.getPosition();
+		int selectedFlowStepPosition = 0;
+		int selectedFlowStepIndex = 0;
+		if (selectedFlowStep != null) {
+			selectedFlowStepIndex = flowSteps.indexOf(selectedFlowStep);
+			selectedFlowStepPosition = selectedFlowStep.getPosition();
+		}
 		FlowStep flowStep = new FlowStep();
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			flowStep.setComponent_id(flow_id);
