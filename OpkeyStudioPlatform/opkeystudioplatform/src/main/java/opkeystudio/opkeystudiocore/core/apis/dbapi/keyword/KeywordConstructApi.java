@@ -7,6 +7,9 @@ import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 
 public class KeywordConstructApi {
 	public void insertKeyword(Keyword keyword) {
+		if (keyword == null) {
+			return;
+		}
 		String query = new QueryMaker().createInsertQuery(keyword, "main_keywords", "");
 		query = query.replaceAll(" class1,", " class,");
 		System.out.println(query);

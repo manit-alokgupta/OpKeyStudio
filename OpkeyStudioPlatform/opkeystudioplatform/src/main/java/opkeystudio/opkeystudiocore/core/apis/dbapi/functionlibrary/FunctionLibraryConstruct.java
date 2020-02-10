@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary;
 
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.keyword.KeywordConstructApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -80,6 +81,7 @@ public class FunctionLibraryConstruct {
 			String query = new QueryMaker().createUpdateQuery(flowStep, "component_design_steps",
 					String.format("WHERE stepid ='%s'", flowStep.getStepid()));
 			QueryExecutor.getInstance().executeUpdateQuery(query);
+			new KeywordConstructApi().insertKeyword(flowStep.getKeyword());
 		}
 	}
 
@@ -88,6 +90,8 @@ public class FunctionLibraryConstruct {
 			String query = new QueryMaker().createInsertQuery(flowStep, "component_design_steps", "", "flow_id",
 					"flow_stepid");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
+			new KeywordConstructApi().insertKeyword(flowStep.getKeyword());
+
 		}
 	}
 
