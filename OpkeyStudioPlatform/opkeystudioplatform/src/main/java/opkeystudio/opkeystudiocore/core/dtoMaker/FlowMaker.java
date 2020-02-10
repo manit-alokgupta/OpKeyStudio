@@ -238,12 +238,13 @@ public class FlowMaker {
 					flowInputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
 					flowInputArgument.setStepid(flowStep.getStepid());
 					flowInputArgument.setArg_datasource(DataSource.StaticValue);
+					flowInputArgument.setKey_arg_id(keywordInputArgument.getArgid());
 				} else {
 					flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
 					flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
 					flowInputArgument.setDatasource(DataSource.StaticValue);
+					flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
 				}
-				flowInputArgument.setKeyword_ip_id(keywordInputArgument.getArgid());
 				flowInputArgument.setStaticobjectid(null);
 				flowInputArgument.setAdded(true);
 
