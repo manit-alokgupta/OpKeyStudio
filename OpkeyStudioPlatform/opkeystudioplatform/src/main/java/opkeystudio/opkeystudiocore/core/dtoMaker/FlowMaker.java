@@ -52,9 +52,9 @@ public class FlowMaker {
 			flowStep.setKeyword(keyword);
 			flowStep.setKeywordid(keyword.getKeywordid());
 			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-				flowStep.setComments(flowStep.getKeyword().getKeyworddescription());
+				flowStep.setComments(flowStep.getKeyword().getDescription());
 			} else {
-				flowStep.setComment(flowStep.getKeyword().getKeyworddescription());
+				flowStep.setComment(flowStep.getKeyword().getDescription());
 			}
 		}
 		flowStep.setPosition(selectedFlowStepPosition + 5);

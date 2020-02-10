@@ -156,7 +156,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 
@@ -196,7 +196,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 
@@ -216,7 +216,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 		movedownMenuItem.addSelectionListener(new SelectionListener() {
@@ -228,7 +228,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 		addStepMenuItem.addSelectionListener(new SelectionListener() {
@@ -414,7 +414,7 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 		editor1.setEditor(button, item, 0);
@@ -459,7 +459,7 @@ public class FlowStepTable extends CustomTable {
 					keywordDescription = flowStep.getComments();
 				}
 				if (flowStep.getKeyword() != null) {
-					keyWordName = flowStep.getKeyword().getKeywordname();
+					keyWordName = flowStep.getKeyword().getName();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
 					flowTableItem.setText(new String[] { "", keyWordName, orname, "",
 							new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), keywordDescription });
@@ -492,7 +492,7 @@ public class FlowStepTable extends CustomTable {
 					orname = flowStep.getOrObject().get(0).getName();
 				}
 				if (flowStep.getKeyword() != null) {
-					keyWordName = flowStep.getKeyword().getKeywordname();
+					keyWordName = flowStep.getKeyword().getName();
 					String keywordDescription = "";
 					if (flowStep.getComment() != null) {
 						keywordDescription = flowStep.getComment();
@@ -588,7 +588,7 @@ public class FlowStepTable extends CustomTable {
 	public void deleteStep() throws JsonParseException, JsonMappingException, SQLException, IOException {
 		String name = "";
 		if (this.getSelectedFlowStep().getKeyword() != null) {
-			name = this.getSelectedFlowStep().getKeyword().getKeywordname();
+			name = this.getSelectedFlowStep().getKeyword().getName();
 		} else if (this.getSelectedFlowStep().getFunctionLibraryComponent() != null) {
 			name = this.getSelectedFlowStep().getFunctionLibraryComponent().getName();
 		}

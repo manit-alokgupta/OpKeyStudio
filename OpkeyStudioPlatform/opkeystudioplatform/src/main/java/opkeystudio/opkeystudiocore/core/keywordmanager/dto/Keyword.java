@@ -6,8 +6,10 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.query.DBField;
 
 public class Keyword extends Modified {
+	@DBField
 	private String keywordid;
 	private String outputdescription;
 	private String description;
@@ -17,7 +19,6 @@ public class Keyword extends Modified {
 	private String keywordexpectedresult;
 	private String datatype;
 	private String name;
-	private String keyworddescription;
 	private String outputtype;
 	private int position;
 	@JsonProperty("class")
@@ -25,7 +26,6 @@ public class Keyword extends Modified {
 	private String argid;
 	private String categoryid;
 	private String defaultvalue;
-	private String keywordname;
 	private String argumentname;
 	private String pluginid;
 	private String deprecation_reason;
@@ -105,14 +105,6 @@ public class Keyword extends Modified {
 		this.name = name;
 	}
 
-	public String getKeyworddescription() {
-		return keyworddescription;
-	}
-
-	public void setKeyworddescription(String keyworddescription) {
-		this.keyworddescription = keyworddescription;
-	}
-
 	public String getOutputtype() {
 		return outputtype;
 	}
@@ -159,14 +151,6 @@ public class Keyword extends Modified {
 
 	public void setDefaultvalue(String defaultvalue) {
 		this.defaultvalue = defaultvalue;
-	}
-
-	public String getKeywordname() {
-		return keywordname;
-	}
-
-	public void setKeywordname(String keywordname) {
-		this.keywordname = keywordname;
 	}
 
 	public String getArgumentname() {

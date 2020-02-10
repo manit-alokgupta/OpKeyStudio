@@ -174,7 +174,7 @@ public class GenericTree extends CustomTree {
 				treeItem.setExpanded(true);
 				TreeItem[] treeItems_1 = treeItem.getItems();
 				for (TreeItem treeItem_1 : treeItems_1) {
-					if (treeItem_1.getText().equals(keyword.getKeywordname())) {
+					if (treeItem_1.getText().equals(keyword.getName())) {
 						this.setSelection(treeItem_1);
 						this.setFocus();
 					}
@@ -228,7 +228,7 @@ public class GenericTree extends CustomTree {
 			List<Keyword> keywords = KeywordManager.getInstance().getKeywordGroup(groupName);
 			for (Keyword keyword : keywords) {
 				CustomTreeItem keywItem = new CustomTreeItem(cti, 0);
-				keywItem.setText(keyword.getKeywordname());
+				keywItem.setText(keyword.getName());
 				keywItem.setControlData(keyword);
 			}
 		}
