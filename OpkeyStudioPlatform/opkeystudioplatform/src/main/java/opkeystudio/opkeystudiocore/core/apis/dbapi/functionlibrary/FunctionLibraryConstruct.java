@@ -2,7 +2,6 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary;
 
 import java.util.List;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -15,6 +14,9 @@ public class FunctionLibraryConstruct {
 
 	public void saveAllComponentSteps(List<FlowStep> allFlowSteps) {
 		for (FlowStep flowStep : allFlowSteps) {
+			if (flowStep.getKeyword() == null && flowStep.getFunctionLibraryComponent() == null) {
+				continue;
+			}
 			saveFlowInputArguments(flowStep.getFlowInputArgs());
 			saveFlowOutputArguments(flowStep.getFlowOutputArgs());
 			if (flowStep.getFunctionLibraryComponent() != null) {

@@ -24,6 +24,9 @@ public class FlowConstruct {
 		}
 
 		for (FlowStep flowStep : allFlowSteps) {
+			if (flowStep.getKeyword() == null && flowStep.getFunctionLibraryComponent() == null) {
+				continue;
+			}
 			saveFlowInputArguments(flowStep.getFlowInputArgs());
 			saveFlowOutputArguments(flowStep.getFlowOutputArgs());
 			saveFlowStep(flowStep);
@@ -57,6 +60,13 @@ public class FlowConstruct {
 			String query = String.format("delete from flow_design_steps where flow_stepid='%s'",
 					flowStep.getFlow_stepid());
 			QueryExecutor.getInstance().executeUpdateQuery(query);
+			for (FlowInputArgument outputArg : flowStep.getFlowInputArgs()) {
+				deleteFlowInputArgument(outputArg);
+			}
+			for (FlowOutputArgument inputArg : flowStep.getFlowOutputArgs()) {
+				deleteFlowOutputArgument(inputArg);
+			}
+
 		}
 	}
 
