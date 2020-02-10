@@ -111,6 +111,14 @@ public class OpKeyWebPlayer {
 		return element;
 	}
 
+	public WebElement selectRadioButton(ORObject orobject) {
+		WebElement element = findWebElement(orobject);
+		if (element.isSelected() == false) {
+			element.click();
+		}
+		return element;
+	}
+
 	public boolean verifyObjectExists(ORObject orobject) {
 		WebElement element = findWebElement(orobject);
 		if (element == null) {
