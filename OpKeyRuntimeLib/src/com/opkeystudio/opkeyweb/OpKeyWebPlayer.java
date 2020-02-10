@@ -56,15 +56,15 @@ public class OpKeyWebPlayer {
 		return currentWebDriver;
 	}
 
-	public void initChromeDriverExecutablePath(String driverPath) {
+	public void setChromeDriverPath(String driverPath) {
 		System.setProperty("webdriver.chrome.driver", driverPath);
 	}
 
-	public void initFirefoxDriverExecutablePath(String driverPath) {
+	public void setFirefoxDriverPath(String driverPath) {
 		System.setProperty("webdriver.gecko.driver", driverPath);
 	}
 
-	public void initIEDriverExecutablePath(String driverPath) {
+	public void setIEDriverPath(String driverPath) {
 		System.setProperty("webdriver.ie.driver", driverPath);
 	}
 
@@ -73,6 +73,26 @@ public class OpKeyWebPlayer {
 		element.click();
 		return element;
 
+	}
+
+	public WebElement clickButton(ORObject orobject) {
+		return click(orobject);
+	}
+
+	public WebElement clickImage(ORObject orobject) {
+		return click(orobject);
+	}
+
+	public WebElement clickLink(ORObject orobject) {
+		return click(orobject);
+	}
+
+	public WebElement typeTextOnEditBox(ORObject orobject, String valueToType) {
+		return typeText(orobject, valueToType);
+	}
+
+	public WebElement typeTextInTextArea(ORObject orobject, String valueToType) {
+		return typeText(orobject, valueToType);
 	}
 
 	public WebElement typeText(ORObject orobject, String valueToType) {

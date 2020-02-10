@@ -7,10 +7,14 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.ui.LoginDialog;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactUpload;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class ExportToSaas {
 	@Execute
 	public void execute(Shell shell) {
+		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
+			return;
+		}
 		Utilities.getInstance().setDefaultShell(shell);
 		boolean loginRequired = new ArtifactUpload().isLoginToSaasRequired();
 		if (loginRequired) {
