@@ -95,6 +95,30 @@ public class OpKeyWebPlayer {
 		return typeText(orobject, valueToType);
 	}
 
+	public WebElement selectCheckBox(ORObject orobject) {
+		WebElement element = findWebElement(orobject);
+		if (element.isSelected() == false) {
+			element.click();
+		}
+		return element;
+	}
+
+	public WebElement deSelectCheckBox(ORObject orobject) {
+		WebElement element = findWebElement(orobject);
+		if (element.isSelected() == true) {
+			element.click();
+		}
+		return element;
+	}
+
+	public boolean verifyObjectExists(ORObject orobject) {
+		WebElement element = findWebElement(orobject);
+		if (element == null) {
+			return false;
+		}
+		return true;
+	}
+
 	public WebElement typeText(ORObject orobject, String valueToType) {
 		WebElement element = findWebElement(orobject);
 		getJavaScriptExecutor().executeScript("arguments[0].value=''", element);
