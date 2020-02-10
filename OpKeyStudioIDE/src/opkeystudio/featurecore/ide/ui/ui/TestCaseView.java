@@ -180,21 +180,21 @@ public class TestCaseView extends Composite {
 
 		itemRecord = new ToolItem(toolBar_1, SWT.NONE);
 		itemRecord.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/record_icon.png"));
-		itemRecord.setText("Record");
+		//itemRecord.setText("Record");
 		itemRecord.setToolTipText("Record");
 
 		seperator1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemAdd = new ToolItem(toolBar_1, SWT.NONE);
 		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		itemAdd.setText("Add");
+		//itemAdd.setText("Add");
 		itemAdd.setToolTipText("Add Test Step");
 
 		seperator2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemRunnow = new ToolItem(toolBar_1, SWT.NONE);
 		itemRunnow.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
-		itemRunnow.setText("Run Now");
+	//	itemRunnow.setText("Run Now");
 		itemRunnow.setToolTipText("Run Now");
 
 		seperator3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
@@ -202,7 +202,7 @@ public class TestCaseView extends Composite {
 		itemMoveup = new ToolItem(toolBar_1, SWT.NONE);
 		itemMoveup.setEnabled(false);
 		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
-		itemMoveup.setText("Move up");
+	//	itemMoveup.setText("Move up");
 		itemMoveup.setToolTipText("Move Step Up");
 
 		seperator4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
@@ -210,7 +210,7 @@ public class TestCaseView extends Composite {
 		itemMovedown = new ToolItem(toolBar_1, SWT.NONE);
 		itemMovedown.setEnabled(false);
 		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
-		itemMovedown.setText("Move Down");
+		//itemMovedown.setText("Move Down");
 		itemMovedown.setToolTipText("Move Step Down");
 
 		seperator5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
@@ -218,7 +218,7 @@ public class TestCaseView extends Composite {
 		itemDelete = new ToolItem(toolBar_1, SWT.NONE);
 		itemDelete.setEnabled(false);
 		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		itemDelete.setText("Delete");
+		//itemDelete.setText("Delete");
 		itemDelete.setToolTipText(" Delete Test Step");
 		
 		seperator6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
@@ -226,14 +226,14 @@ public class TestCaseView extends Composite {
 		itemSave = new ToolItem(toolBar_1, SWT.NONE);
 		itemSave.setEnabled(false);
 		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
-		itemSave.setText("Save");
+		//itemSave.setText("Save");
 		itemSave.setToolTipText("Save");
 
 		seperator7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemRefresh = new ToolItem(toolBar_1, SWT.NONE);
 		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-		itemRefresh.setText("Refresh");
+		//itemRefresh.setText("Refresh");
 		itemRefresh.setToolTipText("Refresh");
 
 		flowStepTable = new FlowStepTable(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
