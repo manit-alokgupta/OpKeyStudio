@@ -251,7 +251,7 @@ public class TestCaseView extends Composite {
 		testCaseArgumentsTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		testCaseSashForm.setWeights(new int[] { 7, 3 });
 		stepDetailsTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		stepDetailsTabItem.setText("Step Details");
+	//	stepDetailsTabItem.setText("Step Details");
 		stepDetailsTabItem.setToolTipText("Step Details");
 		stepDetailsTabItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/stepdetails.png"));
@@ -334,7 +334,7 @@ public class TestCaseView extends Composite {
 
 		addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/addstep.png"));
-		addStepTabItem.setText("Add Step");
+	//	addStepTabItem.setText("Add Step");
 		addStepTabItem.setToolTipText("Add Step");
 		SashForm sashForm_3 = new SashForm(testCaseArgumentsTabFolder, SWT.NONE);
 		sashForm_3.setOrientation(SWT.VERTICAL);
@@ -436,7 +436,7 @@ public class TestCaseView extends Composite {
 
 		TabItem testObjectTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		testObjectTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/object.png"));
-		testObjectTabItem.setText("Test Object");
+	//	testObjectTabItem.setText("Test Object");
 		testObjectTabItem.setToolTipText("Test Object");
 		Composite composite_2 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
 		testObjectTabItem.setControl(composite_2);
@@ -460,7 +460,7 @@ public class TestCaseView extends Composite {
 
 		TabItem inputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		inputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/inputdata.png"));
-		inputDataTabItem.setText("Input Data");
+	//	inputDataTabItem.setText("Input Data");
 		inputDataTabItem.setToolTipText("Input Data");
 		Composite composite_3 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
 		inputDataTabItem.setControl(composite_3);
@@ -543,7 +543,7 @@ public class TestCaseView extends Composite {
 		TabItem outputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		outputDataTabItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/outputdata.png"));
-		outputDataTabItem.setText("Output Data");
+		//outputDataTabItem.setText("Output Data");
 		outputDataTabItem.setToolTipText("Output Data");
 
 		Composite composite_4 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
