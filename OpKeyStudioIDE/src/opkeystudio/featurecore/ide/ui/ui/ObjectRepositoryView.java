@@ -116,7 +116,8 @@ public class ObjectRepositoryView extends Composite {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
-					ORObject orobject = new ORObjectMaker().getORObjectDTO(getOrId(), null, name, item.getText());
+					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name,
+							item.getText());
 					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
 					toggleSaveButton(true);
 					objectRepositoryTree.refreshObjectRepositories();
@@ -125,7 +126,6 @@ public class ObjectRepositoryView extends Composite {
 
 				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
-					
 
 				}
 			});
@@ -145,8 +145,8 @@ public class ObjectRepositoryView extends Composite {
 					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
 					ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
 					ORObject selectedobject = treeItem.getObjectRepository();
-					ORObject orobject = new ORObjectMaker().getORObjectDTO(getOrId(), selectedobject.getObject_id(),
-							name, item.getText());
+					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
+							selectedobject.getObject_id(), name, item.getText());
 					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
 					toggleSaveButton(true);
 					objectRepositoryTree.refreshObjectRepositories();
@@ -154,7 +154,6 @@ public class ObjectRepositoryView extends Composite {
 
 				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
-					
 
 				}
 			});
@@ -209,7 +208,6 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -231,7 +229,6 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -361,7 +358,6 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -377,13 +373,11 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				
 
 			}
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				
 
 			}
 		});
@@ -528,7 +522,6 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -544,7 +537,6 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -560,7 +552,6 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -569,13 +560,11 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
 
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -589,7 +578,6 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -603,7 +591,6 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
