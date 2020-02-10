@@ -94,8 +94,8 @@ public class BottomFactoryFLUi extends Composite {
 		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
 
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
-		item.setText("Bottom Factory");
-		item.setHeight(400);
+		item.setText("Function Library");
+		item.setHeight(250);
 
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
