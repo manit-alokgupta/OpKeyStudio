@@ -1,14 +1,23 @@
 package opkeystudio.opkeystudiocore.core.keywordmanager.dto;
 
+import opkeystudio.opkeystudiocore.core.query.DBField;
+
 public class KeyWordInputArgument {
-	
+	@DBField
 	private String keywordid;
+	@DBField
 	private String datatype;
+	@DBField
 	private String name;
+	@DBField
 	private String description;
+	@DBField
 	private int position;
+	@DBField
 	private String argid;
+	@DBField
 	private boolean isoptional;
+	@DBField
 	private String defaultvalue;
 
 	public String getKeywordid() {

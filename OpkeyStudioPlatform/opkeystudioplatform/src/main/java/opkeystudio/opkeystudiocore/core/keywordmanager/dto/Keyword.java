@@ -10,24 +10,36 @@ import opkeystudio.opkeystudiocore.core.query.DBField;
 
 public class Keyword extends Modified {
 	@DBField
+	private boolean isdeleted = false;
+	@DBField
 	private String keywordid;
+	@DBField
 	private String outputdescription;
+	@DBField
 	private String description;
+	@DBField
 	private String keywordtype;
 	private boolean isoptional;
+	@DBField
 	private String associatedmethod;
 	private String keywordexpectedresult;
 	private String datatype;
+	@DBField
 	private String name;
+	@DBField
 	private String outputtype;
 	private int position;
+	@DBField
 	@JsonProperty("class")
 	private String class1;
 	private String argid;
+	@DBField
 	private String categoryid;
 	private String defaultvalue;
 	private String argumentname;
+	@DBField
 	private String pluginid;
+	@DBField
 	private String deprecation_reason;
 	private String pluginName;
 	private boolean KeywordContainsORObject = false;
@@ -199,5 +211,13 @@ public class Keyword extends Modified {
 
 	public void setKeywordContainsORObject(boolean keywordContainsORObject) {
 		KeywordContainsORObject = keywordContainsORObject;
+	}
+
+	public boolean isIsdeleted() {
+		return isdeleted;
+	}
+
+	public void setIsdeleted(boolean isdeleted) {
+		this.isdeleted = isdeleted;
 	}
 }

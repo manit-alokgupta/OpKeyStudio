@@ -4,6 +4,7 @@ import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.keyword.KeywordContruxtApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -72,6 +73,7 @@ public class FlowConstruct {
 
 	private void updateFlowStep(FlowStep flowStep) {
 		if (flowStep.isModified()) {
+			new KeywordContruxtApi().insertKeyword(flowStep.getKeyword());
 			String query = new QueryMaker().createUpdateQuery(flowStep, "flow_design_steps",
 					String.format("WHERE flow_stepid='%s'", flowStep.getFlow_stepid()));
 			QueryExecutor.getInstance().executeUpdateQuery(query);
@@ -80,6 +82,7 @@ public class FlowConstruct {
 
 	private void addFlowStep(FlowStep flowStep) {
 		if (flowStep.isAdded()) {
+			new KeywordContruxtApi().insertKeyword(flowStep.getKeyword());
 			String query = new QueryMaker().createInsertQuery(flowStep, "flow_design_steps", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
