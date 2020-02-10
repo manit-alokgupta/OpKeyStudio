@@ -514,7 +514,8 @@ public class ObjectRepositoryView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ORObject orobject = getObjectRepositoryTree().getSelectedORObject();
 				if (orobject != null) {
-					ObjectAttributeProperty attrProp = new ORObjectMaker().getNewObjectAttributeProperty(orobject);
+					ObjectAttributeProperty attrProp = new ORObjectMaker().getNewObjectAttributeProperty(orobject,
+							objectAttributeTable.getObjectPropertiesData());
 					objectAttributeTable.getObjectPropertiesData().add(attrProp);
 					objectAttributeTable.renderObjectAttributes();
 				}

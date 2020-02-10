@@ -1,5 +1,7 @@
 package opkeystudio.opkeystudiocore.core.dtoMaker;
 
+import java.util.List;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
@@ -7,7 +9,12 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ORObjectMaker {
 
-	public ObjectAttributeProperty getNewObjectAttributeProperty(ORObject orObject) {
+	public ObjectAttributeProperty getNewObjectAttributeProperty(ORObject orObject,
+			List<ObjectAttributeProperty> allAttributes) {
+		int position = 0;
+		if (allAttributes.size() > 0) {
+			position = allAttributes.get(allAttributes.size() - 1).getPosition() + 10;
+		}
 		ObjectAttributeProperty objectAttributeProperty = new ObjectAttributeProperty();
 		objectAttributeProperty.setIseditable(true);
 		objectAttributeProperty.setProperty_id(Utilities.getInstance().getUniqueUUID(""));
@@ -16,6 +23,7 @@ public class ORObjectMaker {
 		objectAttributeProperty.setProperty("");
 		objectAttributeProperty.setValue("");
 		objectAttributeProperty.setDatatype("String");
+		objectAttributeProperty.setPosition(position);
 		objectAttributeProperty.setAdded(true);
 		return objectAttributeProperty;
 	}
