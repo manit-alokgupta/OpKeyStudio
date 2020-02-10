@@ -61,6 +61,24 @@ public class SQLiteCommunicator {
 		return convertToJSON(rs);
 	}
 
+	public byte[] executeQueryStringWithByteDatas(String query) throws SQLException {
+		ResultSet resultSet = executeQuery(query);
+		while (resultSet.next()) {
+			int total_rows = resultSet.getMetaData().getColumnCount();
+			for (int i = 0; i < total_rows; i++) {
+				String columnTypeName = resultSet.getMetaData().getColumnTypeName(i + 1);
+				if (columnTypeName.equals("BLOB")) {
+					byte[] bytes = resultSet.getBytes(i + 1);
+					if (bytes == null) {
+						continue;
+					}
+					return bytes;
+				}
+			}
+		}
+		return null;
+	}
+
 	private String convertToJSON(ResultSet resultSet) throws SQLException {
 		JSONArray jsonArray = new JSONArray();
 		while (resultSet.next()) {

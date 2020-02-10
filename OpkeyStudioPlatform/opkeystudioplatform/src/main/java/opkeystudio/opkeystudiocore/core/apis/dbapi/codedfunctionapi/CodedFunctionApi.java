@@ -98,10 +98,9 @@ public class CodedFunctionApi {
 		}
 		return new ArrayList<CFLibraryMap>();
 	}
-	
-	public List<MainFileStoreDTO> getMainFileStores(CFLibraryMap cfLibraryMap)
-	{
-		String query=String.format("SELECT * FROM main_filestore Where f_id='%s'", cfLibraryMap.getF_id());
+
+	public List<MainFileStoreDTO> getMainFileStores(CFLibraryMap cfLibraryMap) {
+		String query = String.format("SELECT * FROM main_filestore Where f_id='%s'", cfLibraryMap.getF_id());
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -112,7 +111,12 @@ public class CodedFunctionApi {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ArrayList<MainFileStoreDTO>();	
+		return new ArrayList<MainFileStoreDTO>();
+	}
+
+	public byte[] getLibraryFileData(CFLibraryMap cfLibraryMap) {
+		String query = String.format("select DATA from main_filestore_data WHERE f_id='%s'", cfLibraryMap.getF_id());
+		return QueryExecutor.getInstance().executeQueryWithByteData(query);
 	}
 
 	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode) {

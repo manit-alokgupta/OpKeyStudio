@@ -25,6 +25,16 @@ public class QueryExecutor {
 		return null;
 	}
 
+	public byte[] executeQueryWithByteData(String query) {
+		try {
+			SQLiteCommunicator sqlComm = SQLiteCommunicator.getOpKeyDBCommunicator();
+			return sqlComm.executeQueryStringWithByteDatas(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public int executeUpdateQuery(String query) {
 		try {
 			SQLiteCommunicator sqlComm = SQLiteCommunicator.getOpKeyDBCommunicator();
