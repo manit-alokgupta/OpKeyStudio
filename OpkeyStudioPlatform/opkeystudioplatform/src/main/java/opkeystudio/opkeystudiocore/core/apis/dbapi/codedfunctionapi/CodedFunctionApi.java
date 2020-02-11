@@ -153,14 +153,15 @@ public class CodedFunctionApi {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				String fileStoreQuery = new QueryMaker().createUpdateQuery(fileStoreDto, "main_filestore", "");
+				String fileStoreQuery = new QueryMaker().createUpdateQuery(fileStoreDto, "main_filestore",
+						String.format("WHERE F_ID='%s'", fileStoreDto.getF_id()));
 				QueryExecutor.getInstance().executeUpdateQuery(fileStoreQuery);
 				String f_id = fileStoreDto.getF_id();
 				String dbFile = "jdbc:sqlite:" + ServiceRepository.getInstance().getExportedDBFilePath();
 				Connection c;
 				try {
 					c = DriverManager.getConnection(dbFile);
-					String sql = "UPDATE main_filestore_data SET DATA=? WHERE F_ID='" + f_id + "'";
+					String sql = "UPDATE main_filestore_data SET DATA=? WHERE F_ID=?";
 					PreparedStatement p_stmt = c.prepareStatement(sql);
 					try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
 						try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
@@ -168,8 +169,8 @@ public class CodedFunctionApi {
 							oos.flush();
 							oos.close();
 
-							p_stmt.setString(1, f_id);
-							p_stmt.setBytes(2, bos.toByteArray());
+							p_stmt.setBytes(1, bos.toByteArray());
+							p_stmt.setString(2, f_id);
 							p_stmt.execute();
 							c.close();
 						} catch (FileNotFoundException e) {
