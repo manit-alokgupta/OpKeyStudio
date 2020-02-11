@@ -35,7 +35,7 @@ public class GlobalLoader {
 	private List<GlobalVariable> globalVaribles = new ArrayList<GlobalVariable>();
 	private List<DRColumnAttributes> allColumns = new ArrayList<DRColumnAttributes>();
 	private List<DRCellAttributes> drCellAttributes = new ArrayList<DRCellAttributes>();
-
+	
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
 			globalLoader = new GlobalLoader();

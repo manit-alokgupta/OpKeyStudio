@@ -1,8 +1,9 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.cfl;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class MainFileStoreDTO {
+public class MainFileStoreDTO extends Modified {
 	private int clustering_key;
 	@DBField
 	private String f_id;
