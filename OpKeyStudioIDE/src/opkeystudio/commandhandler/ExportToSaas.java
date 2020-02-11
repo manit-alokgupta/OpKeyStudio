@@ -1,6 +1,10 @@
 package opkeystudio.commandhandler;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.core.utils.MessageDialogs;
@@ -23,16 +27,23 @@ public class ExportToSaas {
 
 		}
 		MessageDialogs msd = new MessageDialogs();
-		msd.openProgressDialog(shell, "Exporting Artifact to SAAS. Please wait....");
-		String retdata = new ArtifactUpload().uploadCurrentUsedArtifact();
-		msd.closeProgressDialog();
+		msd.openProgressDialog(shell, "Exporting Artifact to SAAS. Please wait....", true, new IRunnableWithProgress() {
 
-		if (retdata == null) {
-			msd.openErrorDialog("OpKey", "Unable to perform Export to SAAS");
-		}
-		if (retdata.contains("[{")) {
-			msd.openInformationDialog("OpKey", "Export to SAAS Finished");
-		}
+			@Override
+			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				String retdata = new ArtifactUpload().uploadCurrentUsedArtifact();
+				if (retdata == null) {
+					new MessageDialogs().openErrorDialog("OpKey", "Unable to perform Export to SAAS");
+				}
+				else if (retdata.contains("[{")) {
+					new MessageDialogs().openInformationDialog("OpKey", "Export to SAAS Finished");
+				}
+				else {
+					new MessageDialogs().openErrorDialog("OpKey", retdata);
+				}
+			}
+		});
+		msd.closeProgressDialog();
 	}
 
 }

@@ -1,11 +1,14 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.KeyEvent;
@@ -362,15 +365,22 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog(getParentshell(), "Importing from OpKey SAAS. Please Wait");
 				ArtifactTreeNode selectedArtifact = getSelectedArtifactTreeNode();
-				try {
-					exportArtifact(selectedArtifact);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				MessageDialogs msd = new MessageDialogs();
+				msd.openProgressDialog(getParentshell(), "Importing from OpKey SAAS. Please Wait", true,
+						new IRunnableWithProgress() {
+
+							@Override
+							public void run(IProgressMonitor monitor)
+									throws InvocationTargetException, InterruptedException {
+								try {
+									exportArtifact(selectedArtifact);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+						});
 				msd.closeProgressDialog();
 			}
 

@@ -7,6 +7,7 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
@@ -16,6 +17,8 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
@@ -48,8 +51,13 @@ public class CodeCompletionProvider {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog(null, "Please wait initializing Intellisense...");
-				new EditorTools(cview).initIntellisense(true);
+				msd.openProgressDialog(null, "Please wait initializing Intellisense...",false,new IRunnableWithProgress() {
+					
+					@Override
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						new EditorTools(cview).initIntellisense(true);	
+					}
+				});
 				msd.closeProgressDialog();
 			}
 		});

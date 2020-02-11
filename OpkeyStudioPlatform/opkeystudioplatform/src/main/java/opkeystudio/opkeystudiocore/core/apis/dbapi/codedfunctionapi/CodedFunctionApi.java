@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
@@ -51,21 +52,22 @@ public class CodedFunctionApi {
 			System.out.println(query);
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
+
+		GlobalLoader.getInstance().initAllCFCodes();
+		GlobalLoader.getInstance().initAllCFLibraryMap();
+		GlobalLoader.getInstance().initAllCFLInputParameters();
+		GlobalLoader.getInstance().initAllCFLOutputParameters();
 	}
 
 	public List<CFLCode> getCodedFLCodeData(Artifact artifact) {
-		String query = String.format("SELECT * FROM cf_code WHERE cf_id='%s'", artifact.getId());
-		String result = QueryExecutor.getInstance().executeQuery(query);
-		System.out.println(result);
-		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLCode.class);
-		try {
-			return mapper.readValue(result, type);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		List<CFLCode> cflCodes = new ArrayList<CFLCode>();
+		List<CFLCode> allcflCodes = GlobalLoader.getInstance().getAllCfCodes();
+		for (CFLCode cfcode : allcflCodes) {
+			if (cfcode.getCf_id().equals(artifact.getId())) {
+				cflCodes.add(cfcode);
+			}
 		}
-		return new ArrayList<CFLCode>();
+		return cflCodes;
 	}
 
 	public List<CFLInputParameter> getCodedFLInputParameters(Artifact artifact) {
