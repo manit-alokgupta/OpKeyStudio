@@ -138,6 +138,61 @@ public class CodedFunctionApi {
 	}
 
 	public void addLibraryFileInDb(Artifact artifact, File libraryFile) {
+		String[] fileData = libraryFile.getName().split("\\.");
+		String fileName = fileData[0];
+		String fileExtension = fileData[fileData.length - 1];
+
+		List<MainFileStoreDTO> fileStoreDtos = GlobalLoader.getInstance().getAllMainFileStoreDtos();
+		for (MainFileStoreDTO fileStoreDto : fileStoreDtos) {
+			if (fileStoreDto.getFilename().toLowerCase().equals(fileName)) {
+				fileStoreDto.setUploadedon(Utilities.getInstance().getCurrentDateTime());
+				try (InputStream is = Files.newInputStream(Paths.get(libraryFile.toURI()))) {
+					String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
+					fileStoreDto.setMd5_checksum(md5);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String fileStoreQuery = new QueryMaker().createUpdateQuery(fileStoreDto, "main_filestore", "");
+				QueryExecutor.getInstance().executeUpdateQuery(fileStoreQuery);
+				String f_id = fileStoreDto.getF_id();
+				String dbFile = "jdbc:sqlite:" + ServiceRepository.getInstance().getExportedDBFilePath();
+				Connection c;
+				try {
+					c = DriverManager.getConnection(dbFile);
+					String sql = "UPDATE main_filestore_data SET DATA=? WHERE F_ID='" + f_id + "'";
+					PreparedStatement p_stmt = c.prepareStatement(sql);
+					try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+						try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+							oos.write(readFileToByteArray(libraryFile));
+							oos.flush();
+							oos.close();
+
+							p_stmt.setString(1, f_id);
+							p_stmt.setBytes(2, bos.toByteArray());
+							p_stmt.execute();
+							c.close();
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				GlobalLoader.getInstance().initAllCFLibraryMap();
+				GlobalLoader.getInstance().initAllMainFileStoreDTOS();
+				return;
+			}
+		}
+
 		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
 		new ArtifactApi().updateArtifact(artifact);
 		CFLibraryMap cflibraryMap = new CFLibraryMap();
@@ -146,9 +201,6 @@ public class CodedFunctionApi {
 		String cflmQuery = new QueryMaker().createInsertQuery(cflibraryMap, "cf_library_map", "");
 		QueryExecutor.getInstance().executeUpdateQuery(cflmQuery);
 
-		String[] fileData = libraryFile.getName().split("\\.");
-		String fileName = fileData[0];
-		String fileExtension = fileData[fileData.length - 1];
 		MainFileStoreDTO mainFileStoreDto = new MainFileStoreDTO();
 		mainFileStoreDto.setF_id(cflibraryMap.getF_id());
 		mainFileStoreDto.setFilename(fileName);
