@@ -54,8 +54,8 @@ public class Utilities {
 			if (artifact_0 == null) {
 				continue;
 			}
-			System.out.println("ID FOUND " + artifact_0.getId());
 			if (artifact_0.getId().equals(artifact.getId())) {
+				System.out.println("ID FOUND " + artifact_0.getId());
 				return mpart;
 			}
 		}
@@ -80,6 +80,7 @@ public class Utilities {
 	}
 
 	public void openArtifacts(Artifact artifact) {
+		System.out.println("Opening Artifact " + artifact.getId());
 		MPart mpart = Utilities.getInstance().getArtifactMPart(artifact);
 		if (mpart != null) {
 			System.out.println("MPART Found");
