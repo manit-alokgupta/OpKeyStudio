@@ -159,7 +159,7 @@ public class Utilities {
 	}
 
 	public String getCurrentDateTime() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 		String dateString = format.format(new Date());
 		return dateString;

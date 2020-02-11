@@ -136,6 +136,8 @@ public class CodedFunctionApi {
 	}
 
 	public void addLibraryFileInDb(Artifact artifact, File libraryFile) {
+		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		new ArtifactApi().updateArtifact(artifact);
 		CFLibraryMap cflibraryMap = new CFLibraryMap();
 		cflibraryMap.setCf_id(artifact.getId());
 		cflibraryMap.setF_id(Utilities.getInstance().getUniqueUUID(""));
@@ -150,7 +152,7 @@ public class CodedFunctionApi {
 		mainFileStoreDto.setFilename(fileName);
 		mainFileStoreDto.setExtension(fileExtension);
 		mainFileStoreDto.setUploadedon(Utilities.getInstance().getCurrentDateTime());
-		mainFileStoreDto.setSize(String.valueOf(libraryFile.length()));
+		mainFileStoreDto.setSize(String.valueOf(100));
 		mainFileStoreDto.setFilelocationtype("AwsS3");
 		try (InputStream is = Files.newInputStream(Paths.get(libraryFile.toURI()))) {
 			String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
