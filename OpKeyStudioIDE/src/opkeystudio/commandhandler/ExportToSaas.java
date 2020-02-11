@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.core.utils.MessageDialogs;
@@ -33,13 +34,29 @@ public class ExportToSaas {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 				String retdata = new ArtifactUpload().uploadCurrentUsedArtifact();
 				if (retdata == null) {
-					new MessageDialogs().openErrorDialog("OpKey", "Unable to perform Export to SAAS");
-				}
-				else if (retdata.contains("[{")) {
-					new MessageDialogs().openInformationDialog("OpKey", "Export to SAAS Finished");
-				}
-				else {
-					new MessageDialogs().openErrorDialog("OpKey", retdata);
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							new MessageDialogs().openErrorDialog("OpKey", "Unable to perform Export to SAAS");
+						}
+					});
+				} else if (retdata.contains("[{")) {
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							new MessageDialogs().openInformationDialog("OpKey", "Export to SAAS Finished");
+						}
+					});
+				} else {
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							new MessageDialogs().openErrorDialog("OpKey", retdata);
+						}
+					});
 				}
 			}
 		});
