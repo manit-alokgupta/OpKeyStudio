@@ -35,7 +35,6 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import opkeystudio.core.utils.DtoToCodeConverter;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
