@@ -22,6 +22,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
@@ -35,7 +36,9 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CodedFunctionApi {
 
-	public void saveCFLCode(CFLCode cflcode) {
+	public void saveCFLCode(Artifact artifact, CFLCode cflcode) {
+		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		new ArtifactApi().updateArtifact(artifact);
 		String query = "";
 		if (cflcode.isAdded()) {
 			query = new QueryMaker().createInsertQuery(cflcode, "cf_code", "");
@@ -163,7 +166,7 @@ public class CodedFunctionApi {
 		Connection c;
 		try {
 			c = DriverManager.getConnection(dbFile);
-			String sql = "INSERT INTO table_name (f_d, data) VALUES (?, ?)";
+			String sql = "INSERT INTO main_filestore_data (f_id, data) VALUES (?, ?)";
 			PreparedStatement p_stmt = c.prepareStatement(sql);
 			try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
 				try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {

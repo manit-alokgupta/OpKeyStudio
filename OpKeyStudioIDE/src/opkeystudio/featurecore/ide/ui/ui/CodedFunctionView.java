@@ -112,7 +112,7 @@ public class CodedFunctionView extends Composite {
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e1) {
-							
+
 							e1.printStackTrace();
 						}
 						while (true) {
@@ -128,7 +128,7 @@ public class CodedFunctionView extends Composite {
 							try {
 								Thread.sleep(500);
 							} catch (InterruptedException e) {
-								
+
 								e.printStackTrace();
 							}
 						}
@@ -140,7 +140,6 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -154,7 +153,6 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -173,7 +171,6 @@ public class CodedFunctionView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
 
 			}
 		});
@@ -228,7 +225,7 @@ public class CodedFunctionView extends Composite {
 				editor.getCflCode().setUsercode(methodSource.getBody());
 				editor.getCflCode().setAdded(true);
 				editor.getCflCode().setModified(true);
-				new CodedFunctionApi().saveCFLCode(editor.getCflCode());
+				new CodedFunctionApi().saveCFLCode(getArtifact(), editor.getCflCode());
 				toggleSaveButton(false);
 				renderCFLCode();
 			}

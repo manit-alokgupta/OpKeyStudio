@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
 
@@ -541,6 +542,8 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					new CodedFunctionApi().addLibraryFileInDb(getParentCodedFunctionView().getArtifact(),
+							libraryToAssociate);
 					associateLibraries.renderAssociatedLibraries();
 					getParentCodedFunctionView().refreshIntellisense(false);
 				}
