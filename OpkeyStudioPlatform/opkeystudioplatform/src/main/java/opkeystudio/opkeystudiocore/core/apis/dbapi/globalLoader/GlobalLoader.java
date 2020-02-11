@@ -5,11 +5,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.forge.roaster._shade.org.eclipse.jdt.internal.compiler.flow.ConditionalFlowInfo;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
@@ -35,7 +41,12 @@ public class GlobalLoader {
 	private List<GlobalVariable> globalVaribles = new ArrayList<GlobalVariable>();
 	private List<DRColumnAttributes> allColumns = new ArrayList<DRColumnAttributes>();
 	private List<DRCellAttributes> drCellAttributes = new ArrayList<DRCellAttributes>();
-	
+
+	private List<CFLCode> allCfCodes = new ArrayList<CFLCode>();
+	private List<CFLibraryMap> allLibraryMaps = new ArrayList<CFLibraryMap>();
+	private List<CFLInputParameter> allCFLInputParameters = new ArrayList<CFLInputParameter>();
+	private List<CFLOutputParameter> allCFLOutputParameters = new ArrayList<CFLOutputParameter>();
+
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
 			globalLoader = new GlobalLoader();
@@ -57,6 +68,10 @@ public class GlobalLoader {
 				globalLoader.initAllORObjectsObjectProperties();
 				globalLoader.initAllDRColumns();
 				globalLoader.initALLDRCells();
+				globalLoader.initAllCFCodes();
+				globalLoader.initAllCFLibraryMap();
+				globalLoader.initAllCFLInputParameters();
+				globalLoader.initAllCFLOutputParameters();
 			}
 		});
 		thread.start();
@@ -198,6 +213,66 @@ public class GlobalLoader {
 		}
 	}
 
+	public void initAllCFCodes() {
+		String query = "select * from cf_code";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLCode.class);
+		List<CFLCode> outputArguments;
+		try {
+			outputArguments = mapper.readValue(result, type);
+			setAllCfCodes(outputArguments);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void initAllCFLibraryMap() {
+		String query = "select * from cf_library_map";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLibraryMap.class);
+		List<CFLibraryMap> outputArguments;
+		try {
+			outputArguments = mapper.readValue(result, type);
+			setAllLibraryMaps(outputArguments);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void initAllCFLInputParameters() {
+		String query = "select * from cf_input_parameters";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLInputParameter.class);
+		List<CFLInputParameter> outputArguments;
+		try {
+			outputArguments = mapper.readValue(result, type);
+			
+			setAllCFLInputParameters(outputArguments);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void initAllCFLOutputParameters() {
+		String query = "select * from cf_output_parameters";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLOutputParameter.class);
+		List<CFLOutputParameter> outputArguments;
+		try {
+			outputArguments = mapper.readValue(result, type);
+			setAllCFLOutputParameters(outputArguments);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public List<FlowInputArgument> getFlowInputArguments() {
 		return flowInputArguments;
 	}
@@ -329,5 +404,37 @@ public class GlobalLoader {
 
 	public void setDrCellAttributes(List<DRCellAttributes> drCellAttributes) {
 		this.drCellAttributes = drCellAttributes;
+	}
+
+	public List<CFLCode> getAllCfCodes() {
+		return allCfCodes;
+	}
+
+	public void setAllCfCodes(List<CFLCode> allCfCodes) {
+		this.allCfCodes = allCfCodes;
+	}
+
+	public List<CFLibraryMap> getAllLibraryMaps() {
+		return allLibraryMaps;
+	}
+
+	public void setAllLibraryMaps(List<CFLibraryMap> allLibraryMaps) {
+		this.allLibraryMaps = allLibraryMaps;
+	}
+
+	public List<CFLOutputParameter> getAllCFLOutputParameters() {
+		return allCFLOutputParameters;
+	}
+
+	public void setAllCFLOutputParameters(List<CFLOutputParameter> allCFLOutputParameters) {
+		this.allCFLOutputParameters = allCFLOutputParameters;
+	}
+
+	public List<CFLInputParameter> getAllCFLInputParameters() {
+		return allCFLInputParameters;
+	}
+
+	public void setAllCFLInputParameters(List<CFLInputParameter> allCFLInputParameters) {
+		this.allCFLInputParameters = allCFLInputParameters;
 	}
 }
