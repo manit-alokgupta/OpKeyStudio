@@ -150,9 +150,9 @@ public class CodedFunctionApi {
 		MainFileStoreDTO mainFileStoreDto = new MainFileStoreDTO();
 		mainFileStoreDto.setF_id(cflibraryMap.getF_id());
 		mainFileStoreDto.setFilename(fileName);
-		mainFileStoreDto.setExtension(fileExtension);
+		mainFileStoreDto.setExtension("." + fileExtension);
 		mainFileStoreDto.setUploadedon(Utilities.getInstance().getCurrentDateTime());
-		mainFileStoreDto.setSize(String.valueOf(100));
+		mainFileStoreDto.setSize(String.valueOf(libraryFile.length()));
 		mainFileStoreDto.setFilelocationtype("AwsS3");
 		try (InputStream is = Files.newInputStream(Paths.get(libraryFile.toURI()))) {
 			String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
