@@ -62,24 +62,24 @@ public class MessageDialogs {
 			shell = Display.getDefault().getActiveShell();
 		}
 		progressDialog = new ProgressMonitorDialog(shell);
-		try {
-			progressDialog.run(true, cancelabel, new IRunnableWithProgress() {
+			try {
+				progressDialog.run(true, cancelabel, new IRunnableWithProgress() {
 
-				@Override
-				public void run(IProgressMonitor monitor) {
-					monitor.setTaskName(message);
-					try {
-						runnable.run(monitor);
-					} catch (InvocationTargetException | InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					@Override
+					public void run(IProgressMonitor monitor) {
+						monitor.setTaskName(message);
+						try {
+							runnable.run(monitor);
+						} catch (InvocationTargetException | InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
-				}
-			});
-		} catch (InvocationTargetException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				});
+			} catch (InvocationTargetException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		progressDialog.open();
 	}
 

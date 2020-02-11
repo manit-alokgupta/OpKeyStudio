@@ -101,6 +101,12 @@ public class ArtifactExporting {
 	}
 
 	private void downLoadArtifactFile(String fileName, String fileDownloadURL) {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String downloadFileId = Utilities.getInstance().getUniqueUUID("");
 		String artifactsDownloadFolder = Utilities.getInstance().getArtifactsDownloadFolder();
 		String artifactFilePath = artifactsDownloadFolder + File.separator + downloadFileId + ".zip";
