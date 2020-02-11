@@ -1,10 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +14,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import opkeystudio.core.utils.DtoToCodeConverter;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
-import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class CFLLibraryAssociateTable extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
