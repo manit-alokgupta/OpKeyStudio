@@ -16,7 +16,7 @@ public class MainFileStoreDTO extends Modified {
 	@DBField
 	private String uploadedon;
 	@DBField
-	private int size;
+	private String size;
 	@DBField
 	private String filelocationtype;
 	@DBField
@@ -78,11 +78,11 @@ public class MainFileStoreDTO extends Modified {
 		this.uploadedon = uploadedon;
 	}
 
-	public int getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(int size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 

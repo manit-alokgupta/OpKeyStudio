@@ -142,12 +142,15 @@ public class CodedFunctionApi {
 		String cflmQuery = new QueryMaker().createInsertQuery(cflibraryMap, "cf_library_map", "");
 		QueryExecutor.getInstance().executeUpdateQuery(cflmQuery);
 
+		String[] fileData = libraryFile.getName().split("\\.");
+		String fileName = fileData[0];
+		String fileExtension = fileData[fileData.length - 1];
 		MainFileStoreDTO mainFileStoreDto = new MainFileStoreDTO();
 		mainFileStoreDto.setF_id(cflibraryMap.getF_id());
-		mainFileStoreDto.setFilename(libraryFile.getName());
-		mainFileStoreDto.setExtension(".jar");
+		mainFileStoreDto.setFilename(fileName);
+		mainFileStoreDto.setExtension(fileExtension);
 		mainFileStoreDto.setUploadedon(Utilities.getInstance().getCurrentDateTime());
-		mainFileStoreDto.setSize(100);
+		mainFileStoreDto.setSize(String.valueOf(libraryFile.length()));
 		mainFileStoreDto.setFilelocationtype("AwsS3");
 		try (InputStream is = Files.newInputStream(Paths.get(libraryFile.toURI()))) {
 			String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
