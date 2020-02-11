@@ -201,6 +201,7 @@ public class CodedFunctionApi {
 			e.printStackTrace();
 		}
 		GlobalLoader.getInstance().initAllCFLibraryMap();
+		GlobalLoader.getInstance().initAllMainFileStoreDTOS();
 	}
 
 	private byte[] readFileToByteArray(File file) {

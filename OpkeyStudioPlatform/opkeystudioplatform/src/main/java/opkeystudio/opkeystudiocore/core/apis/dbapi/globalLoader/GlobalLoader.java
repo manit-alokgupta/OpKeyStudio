@@ -45,8 +45,9 @@ public class GlobalLoader {
 	private List<CFLibraryMap> allLibraryMaps = new ArrayList<CFLibraryMap>();
 	private List<CFLInputParameter> allCFLInputParameters = new ArrayList<CFLInputParameter>();
 	private List<CFLOutputParameter> allCFLOutputParameters = new ArrayList<CFLOutputParameter>();
-	
-	private List<MainFileStoreDTO> allMainFileStoreDtos=new ArrayList<MainFileStoreDTO>();
+
+	private List<MainFileStoreDTO> allMainFileStoreDtos = new ArrayList<MainFileStoreDTO>();
+
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
 			globalLoader = new GlobalLoader();
@@ -72,6 +73,7 @@ public class GlobalLoader {
 				globalLoader.initAllCFLibraryMap();
 				globalLoader.initAllCFLInputParameters();
 				globalLoader.initAllCFLOutputParameters();
+				globalLoader.initAllMainFileStoreDTOS();
 			}
 		});
 		thread.start();
@@ -242,7 +244,7 @@ public class GlobalLoader {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void initAllCFLInputParameters() {
 		String query = "select * from cf_input_parameters";
 		String result = QueryExecutor.getInstance().executeQuery(query);
@@ -251,7 +253,7 @@ public class GlobalLoader {
 		List<CFLInputParameter> outputArguments;
 		try {
 			outputArguments = mapper.readValue(result, type);
-			
+
 			setAllCFLInputParameters(outputArguments);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -273,6 +275,22 @@ public class GlobalLoader {
 			e.printStackTrace();
 		}
 	}
+
+	public void initAllMainFileStoreDTOS() {
+		String query = "select * from main_filestore";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, MainFileStoreDTO.class);
+		List<MainFileStoreDTO> outputArguments;
+		try {
+			outputArguments = mapper.readValue(result, type);
+			setAllMainFileStoreDtos(outputArguments);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public List<FlowInputArgument> getFlowInputArguments() {
 		return flowInputArguments;
 	}
