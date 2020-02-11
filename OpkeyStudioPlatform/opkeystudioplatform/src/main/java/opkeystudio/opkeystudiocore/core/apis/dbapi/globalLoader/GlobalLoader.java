@@ -14,6 +14,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
@@ -44,7 +45,8 @@ public class GlobalLoader {
 	private List<CFLibraryMap> allLibraryMaps = new ArrayList<CFLibraryMap>();
 	private List<CFLInputParameter> allCFLInputParameters = new ArrayList<CFLInputParameter>();
 	private List<CFLOutputParameter> allCFLOutputParameters = new ArrayList<CFLOutputParameter>();
-
+	
+	private List<MainFileStoreDTO> allMainFileStoreDtos=new ArrayList<MainFileStoreDTO>();
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
 			globalLoader = new GlobalLoader();
@@ -434,5 +436,13 @@ public class GlobalLoader {
 
 	public void setAllCFLInputParameters(List<CFLInputParameter> allCFLInputParameters) {
 		this.allCFLInputParameters = allCFLInputParameters;
+	}
+
+	public List<MainFileStoreDTO> getAllMainFileStoreDtos() {
+		return allMainFileStoreDtos;
+	}
+
+	public void setAllMainFileStoreDtos(List<MainFileStoreDTO> allMainFileStoreDtos) {
+		this.allMainFileStoreDtos = allMainFileStoreDtos;
 	}
 }

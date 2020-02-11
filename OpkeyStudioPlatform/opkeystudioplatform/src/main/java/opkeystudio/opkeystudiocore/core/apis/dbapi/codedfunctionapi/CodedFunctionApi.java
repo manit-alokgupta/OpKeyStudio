@@ -200,6 +200,7 @@ public class CodedFunctionApi {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		GlobalLoader.getInstance().initAllCFLibraryMap();
 	}
 
 	private byte[] readFileToByteArray(File file) {
