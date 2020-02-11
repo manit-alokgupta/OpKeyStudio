@@ -192,6 +192,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 				}
 			}
 		});
+		includeOpKeyRuntimeLib();
 	}
 
 	private void createIntellisenseDataFromCurrentText() throws BadLocationException {
@@ -280,6 +281,11 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		getCodeFunctionView().getCodedFunctionBottomFactoryUi().getCompilationResultTable()
 				.renderCompilingError(compileErrors);
 		return compileErrors;
+	}
+
+	private void includeOpKeyRuntimeLib() {
+		File runtimeJar=new File(Utilities.getInstance().getDefaultPluginBaseDir()+File.separator+"opkeyeruntimeJar.jar");
+		new CodedFunctionApi().addLibraryFileInDb(getCodeFunctionView().getArtifact(), runtimeJar);
 	}
 
 	public void convertOpKeyVariablesToCode() {
