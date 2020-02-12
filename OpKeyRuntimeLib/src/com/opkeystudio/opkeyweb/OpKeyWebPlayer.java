@@ -12,6 +12,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import com.opkeystudio.runtime.ORObject;
@@ -259,6 +261,13 @@ public class OpKeyWebPlayer {
 		}
 		System.out.println(">>Element Not Found");
 		return null;
+	}
+
+	public WebElement mouseHover(ORObject orobject) {
+		WebElement element = findWebElement(orobject);
+		Actions actions = new Actions(getCurrentWebDriver());
+		actions.moveToElement(element).perform();
+		return element;
 	}
 
 	private WebObject convertORObjectToWebObject(ORObject orobject) {
