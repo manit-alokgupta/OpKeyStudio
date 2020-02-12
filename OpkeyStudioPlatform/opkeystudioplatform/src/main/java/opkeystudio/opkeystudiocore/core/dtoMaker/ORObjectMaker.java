@@ -37,7 +37,7 @@ public class ORObjectMaker {
 		orobject.setCreatedon_tz(Utilities.getInstance().getCurrentTimeZone());
 		orobject.setCreatedby(artifact.getCreated_by());
 		orobject.setModifiedby(artifact.getModified_by());
-		orobject.setModifiedon(Utilities.getInstance().getCurrentDateTime());
+		orobject.setModifiedon(Utilities.getInstance().getUpdateCurrentDateTime());
 		orobject.setModifiedon_tz(Utilities.getInstance().getCurrentTimeZone());
 		orobject.setParent_object_id(parentId);
 		orobject.setName(objectName);

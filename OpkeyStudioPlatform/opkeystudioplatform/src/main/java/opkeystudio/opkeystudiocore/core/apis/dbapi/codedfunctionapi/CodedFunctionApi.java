@@ -37,7 +37,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class CodedFunctionApi {
 
 	public void saveCFLCode(Artifact artifact, CFLCode cflcode) {
-		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		artifact.setModified_on(Utilities.getInstance().getUpdateCurrentDateTime());
 		new ArtifactApi().updateArtifact(artifact);
 		String query = "";
 		if (cflcode.isAdded()) {
@@ -144,7 +144,7 @@ public class CodedFunctionApi {
 		List<MainFileStoreDTO> fileStoreDtos = GlobalLoader.getInstance().getAllMainFileStoreDtos();
 		for (MainFileStoreDTO fileStoreDto : fileStoreDtos) {
 			if (fileStoreDto.getFilename().toLowerCase().equals(fileName)) {
-				fileStoreDto.setUploadedon(Utilities.getInstance().getCurrentDateTime());
+				fileStoreDto.setUploadedon(Utilities.getInstance().getUpdateCurrentDateTime());
 				try (InputStream is = Files.newInputStream(Paths.get(libraryFile.toURI()))) {
 					String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
 					fileStoreDto.setMd5_checksum(md5);

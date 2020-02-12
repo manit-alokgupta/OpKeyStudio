@@ -16,7 +16,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowConstruct {
 	public void saveAllFlowSteps(Artifact artifact, List<FlowStep> allFlowSteps) {
-		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		artifact.setModified_on(Utilities.getInstance().getUpdateCurrentDateTime());
 		new ArtifactApi().updateArtifact(artifact);
 		System.out.println("Saving " + artifact.getFile_type_enum());
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {

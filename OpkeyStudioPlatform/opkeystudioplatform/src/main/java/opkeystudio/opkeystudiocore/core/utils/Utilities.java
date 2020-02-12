@@ -165,6 +165,20 @@ public class Utilities {
 		return dateString;
 	}
 
+	@SuppressWarnings("deprecation")
+	public String getUpdateCurrentDateTime() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date=new Date();
+		date.setHours(date.getHours()+1);
+		String dateString = format.format(date);
+		return dateString;
+	}
+	
+	public static void main(String[] args)
+	{
+		String date=Utilities.getInstance().getUpdateCurrentDateTime();
+		System.out.println(date);
+	}
 	public String getCurrentTimeZone() {
 		return "Coordinated Universal Time";
 	}

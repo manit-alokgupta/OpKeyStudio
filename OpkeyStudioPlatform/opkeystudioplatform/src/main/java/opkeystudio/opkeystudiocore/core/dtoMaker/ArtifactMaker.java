@@ -16,7 +16,7 @@ public class ArtifactMaker {
 		artifact.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
 		artifact.setCreated_on(Utilities.getInstance().getCurrentDateTime());
 		artifact.setCreated_on_tz(Utilities.getInstance().getCurrentTimeZone());
-		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		artifact.setModified_on(Utilities.getInstance().getUpdateCurrentDateTime());
 		artifact.setModified_on_tz(Utilities.getInstance().getCurrentTimeZone());
 		artifact.setCreated_by(parentId.getCreated_by());
 		artifact.setModified_by(parentId.getModified_by());

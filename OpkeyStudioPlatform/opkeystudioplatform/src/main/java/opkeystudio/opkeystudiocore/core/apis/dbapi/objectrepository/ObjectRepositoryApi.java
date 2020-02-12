@@ -90,7 +90,7 @@ public class ObjectRepositoryApi {
 	}
 
 	public void saveORObjects(Artifact artifact, List<ORObject> objectRepositories) throws SQLException {
-		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		artifact.setModified_on(Utilities.getInstance().getUpdateCurrentDateTime());
 		new ArtifactApi().updateArtifact(artifact);
 		for (ORObject orObject : objectRepositories) {
 			saveObjectProperties(orObject.getObjectAttributesProperty());
