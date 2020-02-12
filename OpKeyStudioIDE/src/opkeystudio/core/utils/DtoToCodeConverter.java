@@ -20,10 +20,12 @@ public class DtoToCodeConverter {
 		class1.setName("OpKeyGlobalVariables").setPublic();
 		for (GlobalVariable gv : globalVariables) {
 			try {
-			class1.addField().setName(gv.getName().replaceAll(" ", "_")).setType("String")
-					.setStringInitializer(gv.getValue()).setPublic().setStatic(true);
-			}catch (Exception e) {
+				class1.addField().setName(gv.getName().replaceAll(" ", "_")).setType("String")
+						.setStringInitializer(gv.getValue()).setPublic().setStatic(true);
+			} catch (Exception e) {
 				e.printStackTrace();
+				class1.addField().setName("_" + gv.getName().replaceAll(" ", "_")).setType("String")
+						.setStringInitializer(gv.getValue()).setPublic().setStatic(true);
 			}
 		}
 		return class1;
