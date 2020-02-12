@@ -8,7 +8,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
 import opkeystudio.opkeystudiocore.core.communicator.OpKeyApiCommunicator;
@@ -91,11 +92,18 @@ public class ArtifactExporting {
 					"00000000-0000-0000-0000-000000000000", "");
 
 			String downlodedData = new ArtifactExporting().downloadExportedZip(sessionData);
-			System.out.println("Downloaded Data "+downlodedData);
-			JSONObject jsonObject = new JSONObject(downlodedData);
-			String fileName = jsonObject.getString("Item1");
-			String filePath = jsonObject.getString("Item2");
-			downLoadArtifactFile(fileName, filePath);
+			System.out.println("Downloaded Data " + downlodedData);
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			JsonNode rootNode = objectMapper.readTree(downlodedData);
+			JsonNode fileNameNode = rootNode.path("Item1");
+			JsonNode filePathNode = rootNode.path("Item2");
+			/*
+			 * JSONObject jsonObject = new JSONObject(downlodedData); String fileName =
+			 * jsonObject.getString("Item1"); String filePath =
+			 * jsonObject.getString("Item2");
+			 */
+			downLoadArtifactFile(fileNameNode.textValue(), filePathNode.textValue());
 			return true;
 		}
 		return false;
