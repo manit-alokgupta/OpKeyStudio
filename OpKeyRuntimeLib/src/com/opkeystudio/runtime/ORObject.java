@@ -17,7 +17,7 @@ public class ORObject {
 
 	public String getProperty(String key) {
 		String data = this.properties.get(key);
-		return decodeString(data);
+		return data;
 	}
 
 	public ORObject addProperty(String key, String value) {
@@ -27,14 +27,5 @@ public class ORObject {
 
 	public Map<String, String> getAllProperties() {
 		return this.properties;
-	}
-
-	public String encodeString(String inputString) {
-		return java.util.Base64.getEncoder().encodeToString(inputString.getBytes());
-	}
-
-	public String decodeString(String inputString) {
-		byte[] bytes = java.util.Base64.getDecoder().decode(inputString);
-		return new String(bytes);
 	}
 }
