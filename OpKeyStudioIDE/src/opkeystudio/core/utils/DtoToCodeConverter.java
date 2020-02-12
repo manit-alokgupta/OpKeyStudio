@@ -1,6 +1,10 @@
 package opkeystudio.core.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -85,7 +89,7 @@ public class DtoToCodeConverter {
 				if (drcellValue == null) {
 					drcellValue = "";
 				}
-				drcellValue=drcellValue.trim();
+				drcellValue = drcellValue.trim();
 				String fromatedCall = String.format(methodCall, columnName, drcellValue);
 				staticVariableDatas += fromatedCall;
 			}
@@ -104,29 +108,33 @@ public class DtoToCodeConverter {
 	private String getDRObjectBody() {
 		String data = "	private static Map<String, List<String>> drDatas = new HashMap<>();\r\n" + "\r\n"
 				+ "	public static void addDRCell(String column, String cellValue) {\r\n"
-				+ "		cellValue=encodeToBase64(cellValue);\r\n"
 				+ "		Map<String, List<String>> drDatas = getDrDatas();\r\n"
 				+ "		if (drDatas.get(column) != null) {\r\n" + "			drDatas.get(column).add(cellValue);\r\n"
 				+ "			return;\r\n" + "		}\r\n"
 				+ "		List<String> cellDatas = new ArrayList<String>();\r\n" + "		cellDatas.add(cellValue);\r\n"
 				+ "		drDatas.put(column, cellDatas);\r\n" + "	}\r\n" + "\r\n"
+				+ "	public static List<String> getAllDRColumns() {\r\n"
+				+ "		List<String> allColumns = new ArrayList<String>();\r\n"
+				+ "		Set<String> columns = getDrDatas().keySet();\r\n" + "		for (String column : columns) {\r\n"
+				+ "			allColumns.add(column);\r\n" + "		}\r\n" + "		return allColumns;\r\n" + "	}\r\n"
+				+ "\r\n" + "	public static List<String> getDRRowValues(int rowno) {\r\n"
+				+ "		List<String> allRowsValue = new ArrayList<String>();\r\n"
+				+ "		List<String> columns = getAllDRColumns();\r\n" + "		for (String column : columns) {\r\n"
+				+ "			List<String> cells = getDRCells(column);\r\n"
+				+ "			allRowsValue.add(cells.get(rowno));\r\n" + "		}\r\n"
+				+ "		return allRowsValue;\r\n" + "	}\r\n" + "\r\n"
 				+ "	public static List<String> getDRCells(String column) {\r\n"
 				+ "		List<String> drcells = getDrDatas().get(column);\r\n" + "		if (drcells == null) {\r\n"
 				+ "			return new ArrayList<String>();\r\n" + "		}\r\n"
 				+ "		List<String> filteredDatas = new ArrayList<String>();\r\n"
 				+ "		for (String drcell : drcells) {\r\n" + "			if (!drcell.trim().isEmpty()) {\r\n"
-				+ "				drcell=decodeToBase64(drcell);\r\n" + "				filteredDatas.add(drcell);\r\n"
-				+ "			}\r\n" + "		}\r\n" + "		return filteredDatas;\r\n" + "	}\r\n" + "\r\n"
+				+ "				filteredDatas.add(drcell);\r\n" + "			}\r\n" + "		}\r\n"
+				+ "		return filteredDatas;\r\n" + "	}\r\n" + "\r\n"
 				+ "	public static String getDRCell(String columnName, int rowNo) {\r\n"
 				+ "		return getDRCells(columnName).get(rowNo);\r\n" + "	}\r\n" + "\r\n"
 				+ "	public static Map<String, List<String>> getDrDatas() {\r\n" + "		return drDatas;\r\n"
 				+ "	}\r\n" + "\r\n" + "	public static void setDrDatas(Map<String, List<String>> drDatas2) {\r\n"
-				+ "		drDatas = drDatas2;\r\n" + "	}\r\n" + "	\r\n"
-				+ "	private static String encodeToBase64(String inputString) {\r\n"
-				+ "		return java.util.Base64.getEncoder().encodeToString(inputString.getBytes());\r\n" + "	}\r\n"
-				+ "\r\n" + "	private static String decodeToBase64(String inputString) {\r\n"
-				+ "		byte[] bytes = java.util.Base64.getDecoder().decode(inputString);\r\n"
-				+ "		return new String(bytes);\r\n" + "	}";
+				+ "		drDatas = drDatas2;\r\n" + "	}";
 		return data;
 	}
 
