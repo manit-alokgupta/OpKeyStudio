@@ -58,11 +58,11 @@ public class Utilities {
 
 		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "CodedFL";
-		
+
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
-		
+
 		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "CodedFL" + File.separator + "CFLOpKeyLibs";
 		if (!new File(path).exists()) {
@@ -117,7 +117,7 @@ public class Utilities {
 				+ File.separator + "CodedFL" + File.separator + "CFLAssociatedLibs";
 		return path;
 	}
-	
+
 	public String getXMLSerializedData(Object object) throws JsonProcessingException {
 		XmlMapper mapper = new XmlMapper();
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -270,8 +270,8 @@ public class Utilities {
 		zipStream.closeEntry();
 		fis.close();
 	}
-	
+
 	public String removeSpecialCharacters(String input) {
-		return input.replaceAll("[^a-zA-Z0-9]", "");  
+		return input.replaceAll("[^a-zA-Z0-9]", "");
 	}
 }

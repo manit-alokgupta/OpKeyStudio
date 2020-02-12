@@ -19,8 +19,12 @@ public class DtoToCodeConverter {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName("OpKeyGlobalVariables").setPublic();
 		for (GlobalVariable gv : globalVariables) {
+			try {
 			class1.addField().setName(gv.getName().replaceAll(" ", "_")).setType("String")
 					.setStringInitializer(gv.getValue()).setPublic().setStatic(true);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return class1;
 	}
