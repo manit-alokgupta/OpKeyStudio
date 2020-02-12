@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
@@ -164,22 +165,14 @@ public class CodedFunctionApi {
 					String sql = "UPDATE main_filestore_data SET DATA=? WHERE F_ID=?";
 					PreparedStatement p_stmt = c.prepareStatement(sql);
 					try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-						try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
-							oos.write(readFileToByteArray(libraryFile));
-							oos.flush();
-							oos.close();
+						bos.write(readFileToByteArray(libraryFile));
+						bos.flush();
+						bos.close();
 
-							p_stmt.setBytes(1, bos.toByteArray());
-							p_stmt.setString(2, f_id);
-							p_stmt.execute();
-							c.close();
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						p_stmt.setBytes(1, bos.toByteArray());
+						p_stmt.setString(2, f_id);
+						p_stmt.execute();
+						c.close();
 					} catch (IOException e2) {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
@@ -229,22 +222,14 @@ public class CodedFunctionApi {
 			String sql = "INSERT INTO main_filestore_data (f_id, data) VALUES (?, ?)";
 			PreparedStatement p_stmt = c.prepareStatement(sql);
 			try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-				try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
-					oos.write(readFileToByteArray(libraryFile));
-					oos.flush();
-					oos.close();
+				bos.write(readFileToByteArray(libraryFile));
+				bos.flush();
+				bos.close();
 
-					p_stmt.setString(1, cflibraryMap.getF_id());
-					p_stmt.setBytes(2, bos.toByteArray());
-					p_stmt.execute();
-					c.close();
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				p_stmt.setString(1, cflibraryMap.getF_id());
+				p_stmt.setBytes(2, bos.toByteArray());
+				p_stmt.execute();
+				c.close();
 			} catch (IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -271,6 +256,16 @@ public class CodedFunctionApi {
 			ioExp.printStackTrace();
 		}
 		return bArray;
+	}
+
+	public static void main(String[] args) throws IOException {
+		File file = new File("E:\\OpKeyEResources\\resources\\libraries\\PluginBase\\opkeyeruntimeJar.jar");
+		byte[] bytes = new CodedFunctionApi().readFileToByteArray(file);
+		FileOutputStream fos = new FileOutputStream(
+				new File("E:\\OpKeyEResources\\resources\\libraries\\PluginBase\\opkeyeruntimeJar2.jar"));
+		fos.write(bytes);
+		fos.flush();
+		fos.close();
 	}
 
 	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode) {
