@@ -183,7 +183,11 @@ public class ORObject extends Modified implements Cloneable {
 
 	public String getVariableName() {
 		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
-		return varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		varName = varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		if (varName.trim().isEmpty()) {
+			return "unknownVar";
+		}
+		return varName;
 	}
 
 	public void setVariableName(String variableName) {
