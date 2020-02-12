@@ -17,11 +17,10 @@ public class ORObject {
 
 	public String getProperty(String key) {
 		String data = this.properties.get(key);
-		return decodeToBase64(data);
+		return decodeString(data);
 	}
 
 	public ORObject addProperty(String key, String value) {
-		value = encodeToBase64(value);
 		this.properties.put(key, value);
 		return this;
 	}
@@ -30,11 +29,11 @@ public class ORObject {
 		return this.properties;
 	}
 
-	public String encodeToBase64(String inputString) {
+	public String encodeString(String inputString) {
 		return java.util.Base64.getEncoder().encodeToString(inputString.getBytes());
 	}
 
-	public String decodeToBase64(String inputString) {
+	public String decodeString(String inputString) {
 		byte[] bytes = java.util.Base64.getDecoder().decode(inputString);
 		return new String(bytes);
 	}

@@ -1,5 +1,6 @@
 package com.opkeystudio.runtime;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,6 @@ public class DRObject {
 	private static Map<String, List<String>> drDatas = new HashMap<>();
 
 	public static void addDRCell(String column, String cellValue) {
-		cellValue=encodeToBase64(cellValue);
 		Map<String, List<String>> drDatas = getDrDatas();
 		if (drDatas.get(column) != null) {
 			drDatas.get(column).add(cellValue);
@@ -28,7 +28,7 @@ public class DRObject {
 		List<String> filteredDatas = new ArrayList<String>();
 		for (String drcell : drcells) {
 			if (!drcell.trim().isEmpty()) {
-				drcell=decodeToBase64(drcell);
+				drcell=decodeString(drcell);
 				filteredDatas.add(drcell);
 			}
 		}
@@ -47,13 +47,9 @@ public class DRObject {
 		drDatas = drDatas2;
 	}
 	
-	private static String encodeToBase64(String inputString) {
-		return java.util.Base64.getEncoder().encodeToString(inputString.getBytes());
-	}
 
-	private static String decodeToBase64(String inputString) {
-		byte[] bytes = java.util.Base64.getDecoder().decode(inputString);
-		return new String(bytes);
+	private static String decodeString(String inputString) {
+		return URLDecoder.decode(inputString);
 	}
 
 }
