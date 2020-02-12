@@ -91,6 +91,7 @@ public class ArtifactExporting {
 					"00000000-0000-0000-0000-000000000000", "");
 
 			String downlodedData = new ArtifactExporting().downloadExportedZip(sessionData);
+			System.out.println("Downloaded Data "+downlodedData);
 			JSONObject jsonObject = new JSONObject(downlodedData);
 			String fileName = jsonObject.getString("Item1");
 			String filePath = jsonObject.getString("Item2");
