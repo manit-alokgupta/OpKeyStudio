@@ -53,7 +53,7 @@ public class DtoToCodeConverter {
 				if (oap.getProperty().toLowerCase().equals("objectimage")) {
 					continue;
 				}
-				String methodBody = String.format(methodCall, oap.getProperty(), oap.getValue());
+				String methodBody = String.format(methodCall, oap.getProperty(), oap.getValue().trim());
 				if (count == 0) {
 					methodBody = orobject.getVariableName() + methodBody;
 				}
@@ -66,6 +66,7 @@ public class DtoToCodeConverter {
 
 		String staticBodyData = String.format(staticBody, staticVariableDatas, variabledeclarationdata);
 		String classBodyData = String.format(classBody, artifact.getArtifactVariableName(), staticBodyData);
+		System.out.println(classBodyData);
 		JavaClassSource outClass = (JavaClassSource) Roaster.parse(classBodyData);
 		outClass.addImport("com.opkeystudio.runtime.ORObject");
 		return outClass;
