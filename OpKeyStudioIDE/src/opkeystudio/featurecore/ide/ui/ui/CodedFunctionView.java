@@ -1,11 +1,14 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.tools.Diagnostic.Kind;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -99,43 +102,52 @@ public class CodedFunctionView extends Composite {
 					return;
 				}
 
-				EditorTools tools = new EditorTools(getInstance());
-				tools.executeCodedFl(getCodedFLClassPath(),
-						opkeystudio.core.utils.Utilities.getInstance().getPluginName());
-				Display.getDefault().asyncExec(new Runnable() {
+				MessageDialogs msd = new MessageDialogs();
+				msd.openProgressDialog_2(parent.getShell(), "Please Wait Execution is on Progress...", true,
+						new IRunnableWithProgress() {
 
-					@Override
-					public void run() {
-						toggleRunButton(false);
-						MessageDialogs msd = new MessageDialogs();
-						msd.openProgressDialog(parent.getShell(), "Please Wait Execution is on Progress...");
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e1) {
+							@Override
+							public void run(IProgressMonitor monitor)
+									throws InvocationTargetException, InterruptedException {
+								monitor.setTaskName("Please Wait Execution is on Progress...");
+								EditorTools tools = new EditorTools(getInstance());
+								tools.executeCodedFl(getCodedFLClassPath(),
+										opkeystudio.core.utils.Utilities.getInstance().getPluginName());
+								Display.getDefault().asyncExec(new Runnable() {
 
-							e1.printStackTrace();
-						}
-						while (true) {
-							ByteArrayOutputStream errorOutPut = tools.getStandardErrorOutput();
-							ByteArrayOutputStream standardOutPut = tools.getStandardOutput();
-							String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
-									+ errorOutPut.toString();
-							getCodedFunctionBottomFactoryUi().getConsoleLogTextView().setText(consoleOutPut);
-							boolean executionCompleted = tools.isExecutionCompleted();
-							if (executionCompleted) {
-								break;
+									@Override
+									public void run() {
+										toggleRunButton(false);
+										try {
+											Thread.sleep(1000);
+										} catch (InterruptedException e1) {
+
+											e1.printStackTrace();
+										}
+										while (true) {
+											ByteArrayOutputStream errorOutPut = tools.getStandardErrorOutput();
+											ByteArrayOutputStream standardOutPut = tools.getStandardOutput();
+											String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
+													+ errorOutPut.toString();
+											getCodedFunctionBottomFactoryUi().getConsoleLogTextView()
+													.setText(consoleOutPut);
+											boolean executionCompleted = tools.isExecutionCompleted();
+											if (executionCompleted) {
+												break;
+											}
+											try {
+												Thread.sleep(500);
+											} catch (InterruptedException e) {
+
+												e.printStackTrace();
+											}
+										}
+										toggleRunButton(true);
+									}
+								});
 							}
-							try {
-								Thread.sleep(500);
-							} catch (InterruptedException e) {
-
-								e.printStackTrace();
-							}
-						}
-						msd.closeProgressDialog();
-						toggleRunButton(true);
-					}
-				});
+						});
+				msd.closeProgressDialog();
 			}
 
 			@Override
