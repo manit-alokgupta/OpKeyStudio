@@ -1,7 +1,10 @@
 package opkeystudio.core.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -142,7 +145,13 @@ public class DtoToCodeConverter {
 				+ "		List<String> allColumns = new ArrayList<String>();\r\n"
 				+ "		Set<String> columns = getDrDatas().keySet();\r\n" + "		for (String column : columns) {\r\n"
 				+ "			allColumns.add(column);\r\n" + "		}\r\n" + "		return allColumns;\r\n" + "	}\r\n"
-				+ "\r\n" + "	public static List<String> getDRRowValues(int rowno) {\r\n"
+				+ "\r\n" + "	public static int getAllDRColumnCount() {\r\n"
+				+ "		return getDrDatas().keySet().size();\r\n" + "	}\r\n" + "\r\n"
+				+ "	public static int getAllDRRowCount() {\r\n" + "		List<String> columns = getAllDRColumns();\r\n"
+				+ "		for (String column : columns) {\r\n"
+				+ "			List<String> cells = getDRCells(column);\r\n" + "			return cells.size();\r\n"
+				+ "		}\r\n" + "		return 0;\r\n" + "	}\r\n" + "\r\n"
+				+ "	public static List<String> getDRRowValues(int rowno) {\r\n"
 				+ "		List<String> allRowsValue = new ArrayList<String>();\r\n"
 				+ "		List<String> columns = getAllDRColumns();\r\n" + "		for (String column : columns) {\r\n"
 				+ "			List<String> cells = getDRCells(column);\r\n" + "			if (cells.size() > 0) {\r\n"
