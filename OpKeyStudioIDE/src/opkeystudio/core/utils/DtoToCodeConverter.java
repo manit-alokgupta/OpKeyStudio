@@ -1,10 +1,7 @@
 package opkeystudio.core.utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -35,6 +32,13 @@ public class DtoToCodeConverter {
 		return class1;
 	}
 
+	private boolean isVariableAlreadyAdded(List<String> varaiableNames, String varName) {
+		if (varaiableNames.contains(varName)) {
+			return true;
+		}
+		return false;
+	}
+
 	public JavaClassSource getJavaClassORObjects(Artifact artifact, List<ORObject> orObjects) {
 		String classBody = "public class %s{%s}";
 		String staticBody = "%s static {%s}";
@@ -44,9 +48,25 @@ public class DtoToCodeConverter {
 		String methodCall = ".addProperty(\"%s\",\"%s\")";
 		String staticVariableDatas = "";
 		String variabledeclarationdata = "";
+		List<String> variableNames = new ArrayList<String>();
 		for (ORObject orobject : orObjects) {
-			String variableData = String.format(staticVariableBody, orobject.getVariableName());
-			staticVariableDatas += variableData;
+			String variableName = orobject.getVariableName();
+			int count = 0;
+			if (variableNames.contains(variableName)) {
+				while (true) {
+					count++;
+					String varName = variableName + String.valueOf(count);
+					boolean contains = isVariableAlreadyAdded(variableNames, varName);
+					if (contains == false) {
+						orobject.setVariableName(varName);
+						break;
+					}
+				}
+			} else {
+				String variableData = String.format(staticVariableBody, orobject.getVariableName());
+				staticVariableDatas += variableData;
+				variableNames.add(orobject.getVariableName());
+			}
 		}
 
 		for (ORObject orobject : orObjects) {
@@ -58,7 +78,7 @@ public class DtoToCodeConverter {
 					continue;
 				}
 				String methodBody = String.format(methodCall, oap.getProperty(),
-						oap.getValue().trim().replace("\\", "\\\\"));
+						oap.getValue().trim().replace("\\", "\\\\").replace("\"", "\\\""));
 				if (count == 0) {
 					methodBody = orobject.getVariableName() + methodBody;
 				}
@@ -90,7 +110,7 @@ public class DtoToCodeConverter {
 				if (drcellValue == null) {
 					drcellValue = "";
 				}
-				drcellValue = drcellValue.trim().replace("\\", "\\\\");
+				drcellValue = drcellValue.trim().trim().replace("\\", "\\\\").replace("\"", "\\\"");
 				String fromatedCall = String.format(methodCall, columnName, drcellValue);
 				staticVariableDatas += fromatedCall;
 			}
