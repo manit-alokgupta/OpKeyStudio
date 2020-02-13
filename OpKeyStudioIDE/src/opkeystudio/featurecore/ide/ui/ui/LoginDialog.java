@@ -5,6 +5,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Composite;
 
+import static org.assertj.core.api.Assertions.catchThrowable;
+
 import java.io.IOException;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -143,6 +145,8 @@ public class LoginDialog extends Dialog {
 				} catch (IOException e1) {
 					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
 							"Please check your credential");
+				} catch (Exception e2) {
+					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed", "Wrong Domain Url provided. Please check.");
 				}
 			}
 		});
