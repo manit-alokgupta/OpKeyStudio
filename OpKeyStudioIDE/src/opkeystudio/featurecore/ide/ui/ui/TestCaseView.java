@@ -90,10 +90,8 @@ public class TestCaseView extends Composite {
 	private ToolItem seperator6;
 	@SuppressWarnings("unused")
 	private ToolItem seperator7;
-	private ToolItem itemRunnow;
 	private ToolItem itemMoveup;
 	private ToolItem itemAdd;
-	private ToolItem itemRecord;
 	private ToolItem itemMovedown;
 	private ToolItem itemRefresh;
 	private ToolItem itemSave;
@@ -177,25 +175,11 @@ public class TestCaseView extends Composite {
 		ToolBar toolBar_1 = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		itemRecord = new ToolItem(toolBar_1, SWT.NONE);
-		itemRecord.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/record_icon.png"));
-		//itemRecord.setText("Record");
-		itemRecord.setToolTipText("Record");
-
-		seperator1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
+		
 		itemAdd = new ToolItem(toolBar_1, SWT.NONE);
 		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
 		//itemAdd.setText("Add");
 		itemAdd.setToolTipText("Add Test Step");
-
-		seperator2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		itemRunnow = new ToolItem(toolBar_1, SWT.NONE);
-		itemRunnow.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
-	//	itemRunnow.setText("Run Now");
-		itemRunnow.setToolTipText("Run Now");
 
 		seperator3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -788,14 +772,6 @@ public class TestCaseView extends Composite {
 		itemAdd.setEnabled(status);
 	}
 
-	public void toggleRecordButton(boolean status) {
-		itemRecord.setEnabled(status);
-	}
-
-	public void toggleRunnowButton(boolean status) {
-		itemRunnow.setEnabled(status);
-	}
-
 	public void toggleMoveupButton(boolean status) {
 		flowStepTable.toggleMoveUpMenuItem(status);
 		itemMoveup.setEnabled(status);
@@ -826,36 +802,6 @@ public class TestCaseView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Add Button pressed");
 				flowStepTable.addStep();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		itemRecord.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		itemRunnow.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
