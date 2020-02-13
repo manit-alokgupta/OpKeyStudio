@@ -20,6 +20,14 @@ public class DRObject {
 		drDatas.put(column, cellDatas);
 	}
 
+	public static void updateDRCell(String columnName, int rowNo, String value) {
+		List<String> cells = getDRCells(columnName);
+		if (cells.size() == 0) {
+			return;
+		}
+		cells.set(rowNo, value);
+	}
+
 	public static List<String> getAllDRColumns() {
 		List<String> allColumns = new ArrayList<String>();
 		Set<String> columns = getDrDatas().keySet();
