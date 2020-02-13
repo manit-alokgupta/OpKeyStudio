@@ -25,6 +25,10 @@
                   value="000000">
             </property>
             <property
+                  name="applicationCSS"
+                  value="platform:/plugin/OpKeyStudio/css/default.css">
+            </property>
+            <property
                   name="preferenceCustomization"
                   value="plugin_customization.ini">
             </property>
