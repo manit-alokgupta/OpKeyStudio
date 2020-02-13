@@ -146,13 +146,9 @@ public class CodedFunctionApi {
 		for (MainFileStoreDTO fileStoreDto : fileStoreDtos) {
 			if (fileStoreDto.getFilename().toLowerCase().equals(fileName)) {
 				fileStoreDto.setUploadedon(Utilities.getInstance().getUpdateCurrentDateTime());
-				try (InputStream is = Files.newInputStream(Paths.get(libraryFile.toURI()))) {
-					String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
-					fileStoreDto.setMd5_checksum(md5);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				byte[] bytes = readFileToByteArray(libraryFile);
+				String md5 = Utilities.getInstance().getMD5String(bytes);
+				fileStoreDto.setMd5_checksum(md5);
 				fileStoreDto.setFilelocationtype("Database");
 				String fileStoreQuery = new QueryMaker().createUpdateQuery(fileStoreDto, "main_filestore",
 						String.format("WHERE F_ID='%s'", fileStoreDto.getF_id()));
@@ -202,13 +198,9 @@ public class CodedFunctionApi {
 		mainFileStoreDto.setUploadedon(Utilities.getInstance().getCurrentDateTime());
 		mainFileStoreDto.setSize(String.valueOf(libraryFile.length()));
 		mainFileStoreDto.setFilelocationtype("Database");
-		try (InputStream is = Files.newInputStream(Paths.get(libraryFile.toURI()))) {
-			String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
-			mainFileStoreDto.setMd5_checksum(md5);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		byte[] bytes = readFileToByteArray(libraryFile);
+		String md5 = Utilities.getInstance().getMD5String(bytes);
+		mainFileStoreDto.setMd5_checksum(md5);
 		mainFileStoreDto.setTag("CustomKeywordLibrary");
 		mainFileStoreDto.setUploadedon_tz(Utilities.getInstance().getCurrentTimeZone());
 
@@ -258,15 +250,6 @@ public class CodedFunctionApi {
 		return bArray;
 	}
 
-	public static void main(String[] args) throws IOException {
-		File file = new File("E:\\OpKeyEResources\\resources\\libraries\\PluginBase\\opkeyeruntimeJar.jar");
-		byte[] bytes = new CodedFunctionApi().readFileToByteArray(file);
-		FileOutputStream fos = new FileOutputStream(
-				new File("E:\\OpKeyEResources\\resources\\libraries\\PluginBase\\opkeyeruntimeJar2.jar"));
-		fos.write(bytes);
-		fos.flush();
-		fos.close();
-	}
 
 	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode) {
 		JavaClassSource _class = Roaster.create(JavaClassSource.class);

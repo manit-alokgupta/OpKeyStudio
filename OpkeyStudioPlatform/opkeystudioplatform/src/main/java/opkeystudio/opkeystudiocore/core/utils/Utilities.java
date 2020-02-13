@@ -9,6 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
@@ -76,8 +79,8 @@ public class Utilities {
 	}
 
 	public String getDefaultInstallDir() {
-		 return "E:\\OpKeyEResources";
-		//return defaultInstallDir;
+		return "E:\\OpKeyEResources";
+		// return defaultInstallDir;
 	}
 
 	public String getDefaultPluginBaseDir() {
@@ -287,5 +290,19 @@ public class Utilities {
 
 	public String removeSpecialCharacters(String input) {
 		return input.replaceAll("[^a-zA-Z0-9]", "");
+	}
+
+	public String getMD5String(byte[] buffer) {
+		MessageDigest m;
+		try {
+			m = MessageDigest.getInstance("MD5");
+			byte[] digest = m.digest(buffer);
+			String hash = new BigInteger(digest).toString();
+			return hash;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
 	}
 }
