@@ -195,6 +195,18 @@ public class OpKeyWebPlayer {
 		return element.getText();
 	}
 
+	public String getObjectAttribute(ORObject orobject, String attrName) {
+		WebElement element = findWebElement(orobject);
+		return element.getAttribute(attrName);
+	}
+
+	public boolean assertEquals(Object obj1, Object obj2) {
+		if (obj1.equals(obj2)) {
+			return true;
+		}
+		return false;
+	}
+
 	public void closeBrowser() {
 		waitForPageLoad();
 		getCurrentWebDriver().close();
@@ -209,6 +221,7 @@ public class OpKeyWebPlayer {
 		int i = 0;
 		while (i < getFinderTimeout()) {
 			waitForPageLoad();
+			sleep(1);
 			WebObject webObject = convertORObjectToWebObject(orobject);
 			WebDriver driver = getCurrentWebDriver();
 			if (webObject.getId() != null) {
@@ -400,4 +413,94 @@ public class OpKeyWebPlayer {
 		this.pageLoadAndXHRTimeout = pageLoadAndXHRTimeout;
 	}
 
+	public String xpathForTextKeywords(String tempText, boolean isContains, String tag) {
+		String x;
+		String extraProperty = "";
+		String xpathForImg = "";
+		String preXpath = "";
+
+		/**
+		 * It finds element with text no need to use this in img property
+		 * (textNodeXpath)
+		 */
+		String textNodeXpath = "";
+
+		if (tag == null || tag.isEmpty()) {
+			tag = "*";
+		} else if (tag.equals("img")) {
+			xpathForImg = "or contains(normalize-space(@alt)," + handleComaInText(tempText)
+					+ ") or contains(normalize-space(@alt)," + handleComaInText(specialSpaceText(tempText)) + ")";
+		} else {
+		}
+
+		if (isContains) {
+			if (tag.equals("*"))
+				textNodeXpath = " | " + preXpath + "//text()[contains(. , " + handleComaInText(tempText)
+						+ ")]/parent::*" + " | " + preXpath + "//text()[contains(. , "
+						+ handleComaInText(specialSpaceText(tempText)) + ")]/parent::*";
+
+			x = preXpath + "//" + tag
+					+ "[not(self::script) and not(self::title) and not(@type='hidden') and not(parent::*[@title='"
+					+ tempText + "'])" + extraProperty + " and (contains(normalize-space(text()),"
+					+ handleComaInText(tempText) + ") or (contains(normalize-space(@value),"
+					+ handleComaInText(tempText) + ") and (self::input[" + lowerXpathProperty("type", "button")
+					+ "])) or (contains(normalize-space(@value)," + handleComaInText(tempText) + ") and (self::input["
+					+ lowerXpathProperty("type", "submit") + "])) or (contains(normalize-space(@value),"
+					+ handleComaInText(tempText) + ") and (self::input[" + lowerXpathProperty("type", "reset")
+					+ "])) or contains(normalize-space(text())," + handleComaInText(specialSpaceText(tempText))
+					+ ") or contains(normalize-space(@placeholder)," + handleComaInText(tempText)
+					+ ") or contains(normalize-space(@placeholder)," + handleComaInText(specialSpaceText(tempText))
+					+ ") or contains(normalize-space(@data-original-title)," + handleComaInText(tempText)
+					+ ") or contains(normalize-space(@data-original-title),"
+					+ handleComaInText(specialSpaceText(tempText)) + ") or contains(normalize-space(@title),"
+					+ handleComaInText(tempText) + ") or contains(normalize-space(@title),"
+					+ handleComaInText(specialSpaceText(tempText)) + "" + xpathForImg
+					+ " or contains(normalize-space(@data-placeholder)," + handleComaInText(tempText) + ") ) )] "
+					+ textNodeXpath;
+
+		} else {
+			if (tag.equals("*"))
+				textNodeXpath = " | " + preXpath + "//text()[normalize-space(.) = " + handleComaInText(tempText)
+						+ "]/parent::*" + " | " + preXpath + "//text()[normalize-space(.) = "
+						+ handleComaInText(specialSpaceText(tempText)) + "]/parent::*";
+
+			x = preXpath + "//" + tag + "[not(self::script) and not(@type='hidden') and not(parent::*[@title='"
+					+ tempText + "'])" + extraProperty + " and (normalize-space(text())=" + handleComaInText(tempText)
+					+ " or text()=" + handleComaInText(tempText)
+					+ " or normalize-space(translate(text(),'\u00a0',' '))=" + handleComaInText(tempText)
+					+ " or (normalize-space(@value)=" + handleComaInText(tempText) + " and (self::input["
+					+ lowerXpathProperty("type", "button") + "]))" + " or (normalize-space(@value)="
+					+ handleComaInText(tempText) + " and (self::input[" + lowerXpathProperty("type", "reset") + "]))"
+					+ " or (normalize-space(@value)=" + handleComaInText(tempText) + " and (self::input["
+					+ lowerXpathProperty("type", "submit") + "])) or normalize-space(text())="
+					+ handleComaInText(specialSpaceText(tempText)) + " or normalize-space(@placeholder)="
+					+ handleComaInText(tempText) + " or normalize-space(@placeholder)="
+					+ handleComaInText(specialSpaceText(tempText)) + " or normalize-space(@data-original-title)="
+					+ handleComaInText(tempText) + " or normalize-space(@data-original-title)="
+					+ handleComaInText(specialSpaceText(tempText)) + " or normalize-space(@title)="
+					+ handleComaInText(tempText) + " or normalize-space(@title)="
+					+ handleComaInText(specialSpaceText(tempText)) + xpathForImg
+					+ " or normalize-space(@data-placeholder)=" + handleComaInText(tempText) + " )] " + textNodeXpath;
+
+		}
+
+		return "(" + x + ")";
+	}
+
+	private String handleComaInText(String text) {
+		if (text.contains("\""))
+			return "'" + text + "'";
+		return "\"" + text + "\"";
+	}
+
+	private String specialSpaceText(String text) {
+		text = text.trim();
+		text = text.replace(' ', '\u00A0');
+		return text;
+	}
+
+	private String lowerXpathProperty(String attribute, String text) {
+		return "translate(@" + attribute + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = '"
+				+ text.toLowerCase() + "'";
+	}
 }
