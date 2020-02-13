@@ -250,7 +250,6 @@ public class CodedFunctionApi {
 		return bArray;
 	}
 
-
 	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode) {
 		JavaClassSource _class = Roaster.create(JavaClassSource.class);
 		_class.setName(className).setPublic();

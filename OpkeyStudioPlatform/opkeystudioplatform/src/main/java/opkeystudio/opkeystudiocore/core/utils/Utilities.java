@@ -21,6 +21,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import javax.xml.bind.DatatypeConverter;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -297,8 +299,8 @@ public class Utilities {
 		try {
 			m = MessageDigest.getInstance("MD5");
 			byte[] digest = m.digest(buffer);
-			String hash = new BigInteger(digest).toString();
-			return hash;
+			String myHash = DatatypeConverter.printBase64Binary(digest);
+			return myHash;
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
