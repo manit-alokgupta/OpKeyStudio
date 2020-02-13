@@ -37,6 +37,19 @@ public class DRObject {
 		return allColumns;
 	}
 
+	public static int getAllDRColumnCount() {
+		return getDrDatas().keySet().size();
+	}
+
+	public static int getAllDRRowCount() {
+		List<String> columns = getAllDRColumns();
+		for (String column : columns) {
+			List<String> cells = getDRCells(column);
+			return cells.size();
+		}
+		return 0;
+	}
+
 	public static List<String> getDRRowValues(int rowno) {
 		List<String> allRowsValue = new ArrayList<String>();
 		List<String> columns = getAllDRColumns();
