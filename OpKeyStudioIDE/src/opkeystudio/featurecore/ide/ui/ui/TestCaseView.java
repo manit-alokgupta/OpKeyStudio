@@ -548,10 +548,6 @@ public class TestCaseView extends Composite {
 			bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		}
 
-		TabItem sourceCodeTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
-		sourceCodeTabItem.setText("Source Code");
-		sourceCodeTabItem.setToolTipText("Source Code");
-
 		// Source Code Editor Will Be added here
 		// sourceCodeTabItem.setControl(sourceCodeEditor);
 		cursor.setMenu(flowStepTable.getMenu());
