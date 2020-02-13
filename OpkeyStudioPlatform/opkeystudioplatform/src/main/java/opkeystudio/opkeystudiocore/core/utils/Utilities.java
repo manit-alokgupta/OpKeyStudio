@@ -173,7 +173,6 @@ public class Utilities {
 	public String getUpdateCurrentDateTime() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
-		date.setHours(date.getHours() + 1);
 		String dateString = format.format(date);
 		return dateString;
 	}
