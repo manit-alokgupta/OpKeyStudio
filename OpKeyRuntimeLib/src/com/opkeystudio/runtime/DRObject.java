@@ -34,7 +34,9 @@ public class DRObject {
 		List<String> columns = getAllDRColumns();
 		for (String column : columns) {
 			List<String> cells = getDRCells(column);
-			allRowsValue.add(cells.get(rowno));
+			if (cells.size() > 0) {
+				allRowsValue.add(cells.get(rowno));
+			}
 		}
 		return allRowsValue;
 	}

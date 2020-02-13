@@ -1,6 +1,10 @@
 package opkeystudio.core.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -53,7 +57,8 @@ public class DtoToCodeConverter {
 				if (oap.getProperty().toLowerCase().equals("objectimage")) {
 					continue;
 				}
-				String methodBody = String.format(methodCall, oap.getProperty(), oap.getValue().trim().replace("\\", "\\\\"));
+				String methodBody = String.format(methodCall, oap.getProperty(),
+						oap.getValue().trim().replace("\\", "\\\\"));
 				if (count == 0) {
 					methodBody = orobject.getVariableName() + methodBody;
 				}
@@ -98,6 +103,7 @@ public class DtoToCodeConverter {
 		outClass.addImport("java.util.HashMap");
 		outClass.addImport("java.util.List");
 		outClass.addImport("java.util.Map");
+		outClass.addImport("java.util.Set");
 		return outClass;
 	}
 
@@ -116,8 +122,8 @@ public class DtoToCodeConverter {
 				+ "\r\n" + "	public static List<String> getDRRowValues(int rowno) {\r\n"
 				+ "		List<String> allRowsValue = new ArrayList<String>();\r\n"
 				+ "		List<String> columns = getAllDRColumns();\r\n" + "		for (String column : columns) {\r\n"
-				+ "			List<String> cells = getDRCells(column);\r\n"
-				+ "			allRowsValue.add(cells.get(rowno));\r\n" + "		}\r\n"
+				+ "			List<String> cells = getDRCells(column);\r\n" + "			if (cells.size() > 0) {\r\n"
+				+ "				allRowsValue.add(cells.get(rowno));\r\n" + "			}\r\n" + "		}\r\n"
 				+ "		return allRowsValue;\r\n" + "	}\r\n" + "\r\n"
 				+ "	public static List<String> getDRCells(String column) {\r\n"
 				+ "		List<String> drcells = getDrDatas().get(column);\r\n" + "		if (drcells == null) {\r\n"
