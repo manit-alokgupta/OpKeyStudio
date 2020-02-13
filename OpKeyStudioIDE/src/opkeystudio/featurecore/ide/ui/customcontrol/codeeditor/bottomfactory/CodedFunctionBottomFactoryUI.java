@@ -381,8 +381,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	}
 
 	public void toggleDeleteButton(boolean status) {
-		deleteInputItem.setEnabled(status);
-		deleteOutputItem.setEnabled(status);
 		deleteLibrary.setEnabled(status);
 	}
 
@@ -578,9 +576,11 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Deleting...");
 				CustomTableItem item = associateLibraries.getSelectedLibrary();
 				if (item != null) {
 					File file = (File) item.getControlData();
+					System.out.println("Deleting File "+file.getAbsolutePath());
 					if (file.exists()) {
 						Files.delete(file);
 						associateLibraries.renderAssociatedLibraries();

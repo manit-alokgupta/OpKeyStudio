@@ -153,6 +153,7 @@ public class CodedFunctionApi {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				fileStoreDto.setFilelocationtype("Database");
 				String fileStoreQuery = new QueryMaker().createUpdateQuery(fileStoreDto, "main_filestore",
 						String.format("WHERE F_ID='%s'", fileStoreDto.getF_id()));
 				QueryExecutor.getInstance().executeUpdateQuery(fileStoreQuery);
@@ -200,7 +201,7 @@ public class CodedFunctionApi {
 		mainFileStoreDto.setExtension("." + fileExtension);
 		mainFileStoreDto.setUploadedon(Utilities.getInstance().getCurrentDateTime());
 		mainFileStoreDto.setSize(String.valueOf(libraryFile.length()));
-		mainFileStoreDto.setFilelocationtype("AwsS3");
+		mainFileStoreDto.setFilelocationtype("Database");
 		try (InputStream is = Files.newInputStream(Paths.get(libraryFile.toURI()))) {
 			String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
 			mainFileStoreDto.setMd5_checksum(md5);
