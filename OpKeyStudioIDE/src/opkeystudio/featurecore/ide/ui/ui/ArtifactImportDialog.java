@@ -34,7 +34,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
@@ -57,7 +56,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	private Text projectSearch;
 	private Table table;
 	private Tree tree;
-	private Text text_1;
+	//private Text text_1;
 	private org.eclipse.swt.widgets.Button importButton;
 	private String[] tableHeaders = { "Mode", "Project" };
 	private List<Project> allProjects = new ArrayList<>();
@@ -100,9 +99,9 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 		Composite composite_1 = new Composite(sashForm, SWT.BORDER);
 		composite_1.setLayout(new GridLayout(1, false));
 
-		text_1 = new Text(composite_1, SWT.BORDER);
-		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		text_1.setMessage("Search Artifact");
+	//	text_1 = new Text(composite_1, SWT.BORDER);
+	//	text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	//	text_1.setMessage("Search Artifact");
 		tree = new Tree(composite_1, SWT.BORDER);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm.setWeights(new int[] { 2, 2 });

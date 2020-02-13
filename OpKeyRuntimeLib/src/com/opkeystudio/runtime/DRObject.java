@@ -25,7 +25,7 @@ public class DRObject {
 		if (cells.size() == 0) {
 			return;
 		}
-		cells.set(rowNo, value);
+		getDrDatas().get(columnName).set(rowNo, value);
 	}
 
 	public static List<String> getAllDRColumns() {
