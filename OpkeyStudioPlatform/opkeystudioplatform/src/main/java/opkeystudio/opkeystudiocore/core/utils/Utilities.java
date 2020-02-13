@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -81,8 +80,8 @@ public class Utilities {
 	}
 
 	public String getDefaultInstallDir() {
-		return "E:\\OpKeyEResources";
-		// return defaultInstallDir;
+	//	return "E:\\OpKeyEResources";
+		 return defaultInstallDir;
 	}
 
 	public String getDefaultPluginBaseDir() {

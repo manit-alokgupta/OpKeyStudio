@@ -269,6 +269,20 @@ public class OpKeyWebPlayer {
 		return element;
 	}
 
+	public void selectWindow(String title, int index) {
+		String currentWindow = getCurrentWebDriver().getWindowHandle(); // will keep current window to switch back
+		for (String winHandle : getCurrentWebDriver().getWindowHandles()) {
+			if (getCurrentWebDriver().switchTo().window(winHandle).getTitle().equals(title)) {
+				return;
+			}
+			getCurrentWebDriver().switchTo().window(currentWindow);
+		}
+	}
+
+	public void switchToDefaultContent() {
+		getCurrentWebDriver().switchTo().defaultContent();
+	}
+
 	private WebObject convertORObjectToWebObject(ORObject orobject) {
 		WebObject object = new WebObject();
 		Map<String, String> allProperties = orobject.getAllProperties();
