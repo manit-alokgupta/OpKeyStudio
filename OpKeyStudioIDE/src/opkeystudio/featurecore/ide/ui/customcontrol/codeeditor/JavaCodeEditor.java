@@ -55,7 +55,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private JavaAutoCompletion autoCompletion;
 
 	public JavaCodeEditor(Composite parent, CodedFunctionView parentView) {
-		super(new RSyntaxDocument(SyntaxConstants.SYNTAX_STYLE_JAVA));
+		
+		super();
+		System.out.println("JC 1");
 		this.setCodeFunctionView(parentView);
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
