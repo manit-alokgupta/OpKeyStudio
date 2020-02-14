@@ -125,6 +125,12 @@ public class CFLLibraryAssociateTable extends CustomTable {
 		}
 		String path = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifactAssociatedLibraryPath();
 		for (MainFileStoreDTO fileStoreDto : filteredMainFileStoreDtos) {
+			if (fileStoreDto.getFilename().contains("opkeylibs")) {
+				continue;
+			}
+			if (fileStoreDto.getFilename().contains("opkeyeruntime")) {
+				continue;
+			}
 			String fid = fileStoreDto.getF_id();
 			byte[] bytes = new CodedFunctionApi().getLibraryFileData(fid);
 			File file = new File(path + File.separator + fileStoreDto.getFilename() + fileStoreDto.getExtension());

@@ -3,8 +3,6 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import javax.tools.Diagnostic.Kind;
 
@@ -232,7 +230,7 @@ public class CodedFunctionView extends Composite {
 		}
 
 		String code = editor.getText();
-		
+
 		JavaClassSource classSource = Roaster.parse(JavaClassSource.class, code);
 		MethodSource<JavaClassSource> methodSource = classSource.getMethod("run");
 		if (methodSource != null) {
@@ -264,8 +262,12 @@ public class CodedFunctionView extends Composite {
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
 		if (cflcodes.size() > 0) {
 			CFLCode cflcode = cflcodes.get(0);
+			String imports = "";
+			if (cflcode.getImportpackages() != null) {
+				imports = cflcode.getImportpackages();
+			}
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions());
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports);
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
 		}
@@ -277,7 +279,7 @@ public class CodedFunctionView extends Composite {
 			cflcode.setLanguage("JAVA");
 			cflcode.setPluginid("2626b33a-a06c-408c-8f69-f8f1490a49bb");
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions());
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(),"");
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
 		}
