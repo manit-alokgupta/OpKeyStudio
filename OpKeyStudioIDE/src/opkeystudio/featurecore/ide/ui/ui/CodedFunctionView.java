@@ -3,6 +3,8 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import javax.tools.Diagnostic.Kind;
 
@@ -230,6 +232,7 @@ public class CodedFunctionView extends Composite {
 		}
 
 		String code = editor.getText();
+		
 		JavaClassSource classSource = Roaster.parse(JavaClassSource.class, code);
 		MethodSource<JavaClassSource> methodSource = classSource.getMethod("run");
 		if (methodSource != null) {

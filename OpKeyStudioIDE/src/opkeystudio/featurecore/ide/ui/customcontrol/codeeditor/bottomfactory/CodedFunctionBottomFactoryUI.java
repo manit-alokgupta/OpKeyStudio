@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
 
@@ -531,15 +532,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 				dialog.open();
 				String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 				if (filePath != null) {
-					String associatedLibsDir = getParentCodedFunctionView().getArtifactAssociatedLibraryPath();
 					File libraryToAssociate = new File(filePath);
-					File destinationDir = new File(associatedLibsDir + File.separator + libraryToAssociate.getName());
-					try {
-						FileUtils.copyFile(libraryToAssociate, destinationDir);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 					new CodedFunctionApi().addLibraryFileInDb(getParentCodedFunctionView().getArtifact(),
 							libraryToAssociate);
 					associateLibraries.renderAssociatedLibraries();
@@ -579,12 +572,10 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 				System.out.println("Deleting...");
 				CustomTableItem item = associateLibraries.getSelectedLibrary();
 				if (item != null) {
-					File file = (File) item.getControlData();
-					System.out.println("Deleting File "+file.getAbsolutePath());
-					if (file.exists()) {
-						Files.delete(file);
-						associateLibraries.renderAssociatedLibraries();
-					}
+					MainFileStoreDTO file = (MainFileStoreDTO) item.getControlData();
+					System.out.println("Deleting File " + file.getFilename());
+					new CodedFunctionApi().deleteAssociatedLibrary(file.getF_id());
+					associateLibraries.renderAssociatedLibraries();
 				}
 			}
 

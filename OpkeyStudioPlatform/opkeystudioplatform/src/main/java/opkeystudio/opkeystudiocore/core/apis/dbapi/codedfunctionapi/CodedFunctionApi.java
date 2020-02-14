@@ -131,9 +131,20 @@ public class CodedFunctionApi {
 		return new ArrayList<MainFileStoreDTO>();
 	}
 
-	public byte[] getLibraryFileData(CFLibraryMap cfLibraryMap) {
-		String query = String.format("select DATA from main_filestore_data WHERE f_id='%s'", cfLibraryMap.getF_id());
+	public byte[] getLibraryFileData(String fid) {
+		String query = String.format("select DATA from main_filestore_data WHERE f_id='%s'", fid);
 		return QueryExecutor.getInstance().executeQueryWithByteData(query);
+	}
+
+	public void deleteAssociatedLibrary(String fid) {
+		String query = String.format("delete from cf_library_map where f_id='%s'", fid);
+		String query1 = String.format("delete from main_filestore where f_id='%s'", fid);
+		String query2 = String.format("delete from main_filestore_data where f_id='%s'", fid);
+		QueryExecutor.getInstance().executeUpdateQuery(query);
+		QueryExecutor.getInstance().executeUpdateQuery(query1);
+		QueryExecutor.getInstance().executeUpdateQuery(query2);
+		GlobalLoader.getInstance().initAllCFLibraryMap();
+		GlobalLoader.getInstance().initAllMainFileStoreDTOS();
 	}
 
 	public void addLibraryFileInDb(Artifact artifact, File libraryFile) {

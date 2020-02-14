@@ -1,6 +1,8 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +17,14 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 
 public class CFLLibraryAssociateTable extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -102,18 +108,38 @@ public class CFLLibraryAssociateTable extends CustomTable {
 	public void renderAssociatedLibraries() {
 		disposeAllTableEditors();
 		this.removeAll();
+		Artifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifact();
+		List<String> libraryMapsFID = new ArrayList<String>();
+		List<MainFileStoreDTO> filteredMainFileStoreDtos = new ArrayList<MainFileStoreDTO>();
+		List<CFLibraryMap> libraryMaps = GlobalLoader.getInstance().getAllLibraryMaps();
+		for (CFLibraryMap libraryMap : libraryMaps) {
+			if (libraryMap.getCf_id().equals(artifact.getId())) {
+				libraryMapsFID.add(libraryMap.getF_id());
+				List<MainFileStoreDTO> mainFileStoreDTOS = GlobalLoader.getInstance().getAllMainFileStoreDtos();
+				for (MainFileStoreDTO mainFileStoreDto : mainFileStoreDTOS) {
+					if (mainFileStoreDto.getF_id().equals(libraryMap.getF_id())) {
+						filteredMainFileStoreDtos.add(mainFileStoreDto);
+					}
+				}
+			}
+		}
 		String path = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifactAssociatedLibraryPath();
-		List<File> libsFiles = new EditorTools(getParentBottomFactoryUI().getParentCodedFunctionView())
-				.getAllFiles(new File(path), ".jar");
-		for (File file : libsFiles) {
-			String fileName = file.getName();
-			String[] fileSplit = fileName.split("\\.");
-			fileName = fileSplit[0];
-			String extension = fileSplit[fileSplit.length - 1];
-
+		for (MainFileStoreDTO fileStoreDto : filteredMainFileStoreDtos) {
+			String fid = fileStoreDto.getF_id();
+			byte[] bytes = new CodedFunctionApi().getLibraryFileData(fid);
+			File file = new File(path + File.separator + fileStoreDto.getFilename() + fileStoreDto.getExtension());
+			try {
+				FileOutputStream writer = new FileOutputStream(file);
+				writer.write(bytes);
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			CustomTableItem cti = new CustomTableItem(this, 0);
-			cti.setText(new String[] { fileName, extension });
-			cti.setControlData(file);
+			cti.setText(new String[] { fileStoreDto.getFilename(), fileStoreDto.getExtension() });
+			cti.setControlData(fileStoreDto);
 		}
 	}
 
