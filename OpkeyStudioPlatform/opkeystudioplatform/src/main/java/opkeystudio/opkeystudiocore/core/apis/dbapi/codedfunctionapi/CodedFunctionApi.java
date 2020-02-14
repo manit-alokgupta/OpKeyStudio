@@ -171,7 +171,6 @@ public class CodedFunctionApi {
 						bos.write(readFileToByteArray(libraryFile));
 						bos.flush();
 						bos.close();
-
 						p_stmt.setBytes(1, bos.toByteArray());
 						p_stmt.setString(2, f_id);
 						p_stmt.execute();

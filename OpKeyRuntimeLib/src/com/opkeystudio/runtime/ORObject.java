@@ -23,9 +23,12 @@ public class ORObject {
 		return data;
 	}
 
-	public ORObject addProperty(String key, String value) {
+	public void addProperty(String key, String value) {
 		this.properties.put(key, value);
-		return this;
+	}
+
+	public void updateProperty(String key, String value) {
+		this.properties.put(key, value);
 	}
 
 	public List<String> getAllPropertyNames() {
