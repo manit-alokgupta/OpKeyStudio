@@ -22,6 +22,10 @@ public class SQLiteCommunicator {
 		return opkeyDBConnector;
 	}
 
+	public Connection getSqliteConnection() {
+		return this.connection;
+	}
+
 	public static void getOpKeyDBCommunicator(SQLiteCommunicator comm) {
 		opkeyDBConnector = comm;
 	}

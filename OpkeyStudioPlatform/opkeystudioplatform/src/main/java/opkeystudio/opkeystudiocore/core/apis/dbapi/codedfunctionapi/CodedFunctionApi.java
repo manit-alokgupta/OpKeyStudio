@@ -156,10 +156,12 @@ public class CodedFunctionApi {
 		List<MainFileStoreDTO> fileStoreDtos = GlobalLoader.getInstance().getAllMainFileStoreDtos();
 		for (MainFileStoreDTO fileStoreDto : fileStoreDtos) {
 			if (fileStoreDto.getFilename().toLowerCase().equals(fileName)) {
+				System.out.println("Inside Update");
 				fileStoreDto.setUploadedon(Utilities.getInstance().getUpdateCurrentDateTime());
 				byte[] bytes = readFileToByteArray(libraryFile);
 				String md5 = Utilities.getInstance().getMD5String(bytes);
 				fileStoreDto.setMd5_checksum(md5);
+				fileStoreDto.setSize(String.valueOf(libraryFile.length()));
 				fileStoreDto.setFilelocationtype("Database");
 				String fileStoreQuery = new QueryMaker().createUpdateQuery(fileStoreDto, "main_filestore",
 						String.format("WHERE F_ID='%s'", fileStoreDto.getF_id()));
@@ -219,9 +221,8 @@ public class CodedFunctionApi {
 		QueryExecutor.getInstance().executeUpdateQuery(fileStoreQuery);
 
 		String dbFile = "jdbc:sqlite:" + ServiceRepository.getInstance().getExportedDBFilePath();
-		Connection c;
+		Connection c = QueryExecutor.getInstance().getConnection();
 		try {
-			c = DriverManager.getConnection(dbFile);
 			String sql = "INSERT INTO main_filestore_data (f_id, data) VALUES (?, ?)";
 			PreparedStatement p_stmt = c.prepareStatement(sql);
 			try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
@@ -232,7 +233,6 @@ public class CodedFunctionApi {
 				p_stmt.setString(1, cflibraryMap.getF_id());
 				p_stmt.setBytes(2, bos.toByteArray());
 				p_stmt.execute();
-				c.close();
 			} catch (IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();

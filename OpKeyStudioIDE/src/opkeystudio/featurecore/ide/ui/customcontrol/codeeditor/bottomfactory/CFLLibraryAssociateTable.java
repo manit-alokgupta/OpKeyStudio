@@ -141,6 +141,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 			cti.setText(new String[] { fileStoreDto.getFilename(), fileStoreDto.getExtension() });
 			cti.setControlData(fileStoreDto);
 		}
+		selectDefaultRow();
 	}
 
 	public CustomTableItem getSelectedLibrary() {

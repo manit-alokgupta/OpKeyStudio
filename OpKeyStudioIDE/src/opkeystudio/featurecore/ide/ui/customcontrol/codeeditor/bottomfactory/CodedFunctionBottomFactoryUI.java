@@ -31,6 +31,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
@@ -533,6 +534,12 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 				String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 				if (filePath != null) {
 					File libraryToAssociate = new File(filePath);
+					long filesize = libraryToAssociate.length();
+					if (filesize > 1499999) {
+						new MessageDialogs().openErrorDialog("OpKey",
+								"File can't be added. File Size is greater than 15mb");
+						return;
+					}
 					new CodedFunctionApi().addLibraryFileInDb(getParentCodedFunctionView().getArtifact(),
 							libraryToAssociate);
 					associateLibraries.renderAssociatedLibraries();

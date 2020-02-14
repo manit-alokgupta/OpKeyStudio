@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.query;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
@@ -44,5 +45,17 @@ public class QueryExecutor {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+	public Connection getConnection() {
+		SQLiteCommunicator sqlComm;
+		try {
+			sqlComm = SQLiteCommunicator.getOpKeyDBCommunicator();
+			return sqlComm.getSqliteConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
