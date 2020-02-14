@@ -23,8 +23,9 @@ public class ORObject {
 		return data;
 	}
 
-	public void addProperty(String key, String value) {
+	public ORObject addProperty(String key, String value) {
 		this.properties.put(key, value);
+		return this;
 	}
 
 	public void updateProperty(String key, String value) {
