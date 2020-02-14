@@ -249,10 +249,14 @@ public class OpKeyWebPlayer {
 			}
 
 			for (String xpath : webObject.getXpaths()) {
-				List<WebElement> elements = driver.findElements(By.xpath(xpath));
-				if (elements.size() == 1) {
-					System.out.println(">>Element Found By Xpath " + xpath);
-					return elements.get(0);
+				try {
+					List<WebElement> elements = driver.findElements(By.xpath(xpath));
+					if (elements.size() == 1) {
+						System.out.println(">>Element Found By Xpath " + xpath);
+						return elements.get(0);
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
 				}
 			}
 

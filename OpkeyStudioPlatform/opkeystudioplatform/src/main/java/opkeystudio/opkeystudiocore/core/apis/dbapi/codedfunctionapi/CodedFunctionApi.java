@@ -151,7 +151,7 @@ public class CodedFunctionApi {
 
 		List<MainFileStoreDTO> fileStoreDtos = GlobalLoader.getInstance().getAllMainFileStoreDtos();
 		for (MainFileStoreDTO fileStoreDto : fileStoreDtos) {
-			if (fileStoreDto.getFilename().toLowerCase().equals(fileName)) {
+			if (fileStoreDto.getFilename().toLowerCase().equals(fileName.toLowerCase())) {
 				System.out.println("Inside Update");
 				fileStoreDto.setUploadedon(Utilities.getInstance().getUpdateCurrentDateTime());
 				byte[] bytes = readFileToByteArray(libraryFile);
