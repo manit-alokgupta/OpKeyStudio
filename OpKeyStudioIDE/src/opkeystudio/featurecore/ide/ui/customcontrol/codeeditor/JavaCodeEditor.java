@@ -25,10 +25,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.fife.ui.autocomplete.CompletionProvider;
-import org.fife.ui.rsyntaxtextarea.RSyntaxDocument;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Token;
+import org.fife.ui.rsyntaxtextarea.folding.FoldManager;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
@@ -55,7 +55,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private JavaAutoCompletion autoCompletion;
 
 	public JavaCodeEditor(Composite parent, CodedFunctionView parentView) {
-		
+
 		super();
 		System.out.println("JC 1");
 		this.setCodeFunctionView(parentView);
@@ -132,7 +132,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
 		frame.add(mainEditorPanel);
-
 		this.addKeyListener(new KeyListener() {
 
 			@Override
@@ -285,7 +284,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	}
 
 	private void includeOpKeyRuntimeLib() {
-		File runtimeJar=new File(Utilities.getInstance().getDefaultPluginBaseDir()+File.separator+"opkeyeruntimeJar.jar");
+		File runtimeJar = new File(
+				Utilities.getInstance().getDefaultPluginBaseDir() + File.separator + "opkeyeruntimeJar.jar");
 		new CodedFunctionApi().addLibraryFileInDb(getCodeFunctionView().getArtifact(), runtimeJar);
 	}
 
