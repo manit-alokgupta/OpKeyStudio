@@ -3,11 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -167,10 +163,8 @@ public class CodedFunctionApi {
 						String.format("WHERE F_ID='%s'", fileStoreDto.getF_id()));
 				QueryExecutor.getInstance().executeUpdateQuery(fileStoreQuery);
 				String f_id = fileStoreDto.getF_id();
-				String dbFile = "jdbc:sqlite:" + ServiceRepository.getInstance().getExportedDBFilePath();
-				Connection c;
+				Connection c = QueryExecutor.getInstance().getConnection();
 				try {
-					c = DriverManager.getConnection(dbFile);
 					String sql = "UPDATE main_filestore_data SET DATA=? WHERE F_ID=?";
 					PreparedStatement p_stmt = c.prepareStatement(sql);
 					try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
@@ -181,7 +175,6 @@ public class CodedFunctionApi {
 						p_stmt.setBytes(1, bos.toByteArray());
 						p_stmt.setString(2, f_id);
 						p_stmt.execute();
-						c.close();
 					} catch (IOException e2) {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
@@ -219,8 +212,6 @@ public class CodedFunctionApi {
 
 		String fileStoreQuery = new QueryMaker().createInsertQuery(mainFileStoreDto, "main_filestore", "");
 		QueryExecutor.getInstance().executeUpdateQuery(fileStoreQuery);
-
-		String dbFile = "jdbc:sqlite:" + ServiceRepository.getInstance().getExportedDBFilePath();
 		Connection c = QueryExecutor.getInstance().getConnection();
 		try {
 			String sql = "INSERT INTO main_filestore_data (f_id, data) VALUES (?, ?)";
