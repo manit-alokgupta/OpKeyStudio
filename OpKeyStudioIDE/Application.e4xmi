@@ -15,6 +15,7 @@
           <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600" selectedElement="_EfD4oNVsEemLeZBMchgvxw">
             <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.workbenchpartstack" containerData="600">
               <tags>workbenchCategory</tags>
+              <tags>NoAutoCollapse</tags>
             </children>
           </children>
         </children>
