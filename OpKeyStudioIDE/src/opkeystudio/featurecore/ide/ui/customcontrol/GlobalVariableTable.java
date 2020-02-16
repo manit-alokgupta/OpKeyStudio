@@ -340,11 +340,6 @@ public class GlobalVariableTable extends CustomTable {
 	}
 
 	public void saveAll() {
-		boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to save global varaible?");
-		if (!status) {
-			refreshGlobalVariables();
-			return;
-		}
 
 		List<GlobalVariable> allGlobalVariables = getGlobalVariablesData();
 		for (GlobalVariable gv : allGlobalVariables) {
