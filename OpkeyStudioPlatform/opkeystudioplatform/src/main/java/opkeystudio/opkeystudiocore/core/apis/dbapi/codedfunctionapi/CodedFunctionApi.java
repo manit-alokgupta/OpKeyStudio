@@ -144,6 +144,8 @@ public class CodedFunctionApi {
 	}
 
 	public void addLibraryFileInDb(Artifact artifact, File libraryFile) {
+		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
+		new ArtifactApi().updateArtifact(artifact);
 		String[] fileData = libraryFile.getName().split("\\.");
 		String fileName = fileData[0];
 		fileName = fileName + artifact.getId().replaceAll("-", "_");
@@ -188,8 +190,6 @@ public class CodedFunctionApi {
 			}
 		}
 
-		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
-		new ArtifactApi().updateArtifact(artifact);
 		CFLibraryMap cflibraryMap = new CFLibraryMap();
 		cflibraryMap.setCf_id(artifact.getId());
 		cflibraryMap.setF_id(Utilities.getInstance().getUniqueUUID(""));

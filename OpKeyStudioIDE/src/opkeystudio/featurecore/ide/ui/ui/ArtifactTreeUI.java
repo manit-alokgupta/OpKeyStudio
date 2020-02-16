@@ -102,7 +102,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-		
 
 			}
 		});
@@ -141,22 +140,22 @@ public class ArtifactTreeUI extends Composite {
 		toolbarNew = new ToolItem(toolBar_1, SWT.DROP_DOWN);
 		toolbarNew.setEnabled(false);
 		toolbarNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-	//	toolbarNew.setText("New");
+		// toolbarNew.setText("New");
 		toolbarNew.setToolTipText("New");
 
-		//ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		// ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
 //		toolbarNew.setDropDownMenu(menu_1);
 
 		toolbarRename = new ToolItem(toolBar_1, SWT.NONE);
-		//toolbarRename.setText("Rename");
+		// toolbarRename.setText("Rename");
 		toolbarRename.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
 		toolbarRename.setEnabled(false);
 		toolbarRename.setToolTipText("Rename");
 
-		//ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		// ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		toolbarDelete = new ToolItem(toolBar_1, SWT.NONE);
-		//toolbarDelete.setText("Delete");
+		// toolbarDelete.setText("Delete");
 		toolbarDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
 		toolbarDelete.setEnabled(false);
 		toolbarDelete.setToolTipText("Delete");
@@ -260,7 +259,7 @@ public class ArtifactTreeUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "");
+						"TestCase Name", "Test Case " + getVarName());
 				if (inputValue == null) {
 					System.out.println("cancel pressed ");
 					return;
@@ -280,7 +279,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -311,7 +309,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -415,7 +412,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -444,7 +440,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -479,7 +474,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -496,7 +490,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -528,7 +521,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -560,7 +552,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -580,7 +571,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -617,7 +607,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -643,7 +632,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -682,7 +670,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -713,7 +700,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -746,7 +732,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -777,7 +762,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -808,7 +792,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -840,7 +823,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
@@ -857,13 +839,11 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-		
 
 			}
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-		
 
 			}
 		});
@@ -980,7 +960,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-		
 
 			}
 
@@ -1006,7 +985,6 @@ public class ArtifactTreeUI extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-		
 
 			}
 		});
