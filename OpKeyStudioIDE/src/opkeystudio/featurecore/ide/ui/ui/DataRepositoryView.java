@@ -19,6 +19,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
@@ -205,7 +206,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 			}
 
 			@Override
@@ -332,15 +333,7 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				List<DRColumnAttributes> drColumns = dataRepositoryTable.getDrColumnAttributes();
-				new DataRepositoryConstructApi().saveAllDRColumns(drColumns);
-				toggleSaveButton(false);
-				try {
-					dataRepositoryTable.renderAllDRDetails();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				saveDR();
 			}
 
 			@Override
@@ -354,6 +347,12 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if (saveToolItm.getEnabled() == true) {
+					boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to save?");
+					if (status) {
+						saveDR();
+					}
+				}
 				try {
 					dataRepositoryTable.renderAllDRDetails();
 				} catch (IOException e1) {
@@ -384,6 +383,18 @@ public class DataRepositoryView extends Composite {
 
 			}
 		});
+	}
+
+	private void saveDR() {
+		List<DRColumnAttributes> drColumns = dataRepositoryTable.getDrColumnAttributes();
+		new DataRepositoryConstructApi().saveAllDRColumns(drColumns);
+		toggleSaveButton(false);
+		try {
+			dataRepositoryTable.renderAllDRDetails();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public Artifact getArtifact() {

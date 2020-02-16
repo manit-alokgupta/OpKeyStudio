@@ -30,7 +30,6 @@ public class CodedFunctionPart {
 
 	@Persist
 	public void save() {
-		System.out.println("Console Window Save");
 
 	}
 
