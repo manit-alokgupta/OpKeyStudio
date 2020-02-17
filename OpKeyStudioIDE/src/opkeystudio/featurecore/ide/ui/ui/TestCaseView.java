@@ -329,7 +329,7 @@ public class TestCaseView extends Composite {
 		Button clearButton = new Button(composite_12, SWT.NONE);
 		clearButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		clearButton.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		clearButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
+		clearButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/erase.png"));
 		clearButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		clearButton.setToolTipText("Clear");
 		clearButton.addSelectionListener(new SelectionListener() {
@@ -338,8 +338,11 @@ public class TestCaseView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				String textToSearch = searchBox.getText();
 				searchBox.setText("");
-//				allDataTreeView.filterDataInTree(textToSearch);
-
+				if (allDataTreeView.isKeywordTree()) {
+					allDataTreeView.initKeywords("");
+				} else if (allDataTreeView.isFlTree()) {
+					allDataTreeView.initFunctionLibraries("");
+				}
 			}
 
 			@Override
