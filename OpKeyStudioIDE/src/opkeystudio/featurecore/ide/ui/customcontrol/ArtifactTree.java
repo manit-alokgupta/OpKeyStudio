@@ -3,6 +3,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
@@ -193,6 +194,20 @@ public class ArtifactTree extends CustomTree {
 		}
 		expandAll(rootNode);
 		GlobalLoader.getInstance().initAllArguments();
+	}
+
+	public void highlightArtifact(String artifactId) {
+		List<TreeItem> titems = this.getAllTreeItems();
+		for (TreeItem item : titems) {
+			ArtifactTreeItem ati = (ArtifactTreeItem) item;
+			if (ati.getArtifact() != null) {
+				if (ati.getArtifact().getId().equals(artifactId)) {
+					this.setSelection(item);
+					this.notifyListeners(SWT.FocusIn, null);
+					break;
+				}
+			}
+		}
 	}
 
 	public void refereshArtifacts() {

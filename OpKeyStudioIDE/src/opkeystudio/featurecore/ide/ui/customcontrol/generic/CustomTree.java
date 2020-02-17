@@ -1,7 +1,13 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.generic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+
+import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 
 public class CustomTree extends Tree {
 	private Object controlData;
@@ -16,6 +22,26 @@ public class CustomTree extends Tree {
 
 	public void setControlData(Object controlData) {
 		this.controlData = controlData;
+	}
+
+	public List<TreeItem> getAllTreeItems() {
+		List<TreeItem> allitems = new ArrayList<TreeItem>();
+		TreeItem items[] = this.getItems();
+		for (TreeItem item : items) {
+			allitems.add(item);
+			allitems.addAll(getTreeItems(item));
+		}
+		return allitems;
+	}
+
+	public List<TreeItem> getTreeItems(TreeItem titem) {
+		List<TreeItem> allitems = new ArrayList<TreeItem>();
+		TreeItem items[] = titem.getItems();
+		for (TreeItem item : items) {
+			allitems.add(item);
+			allitems.addAll(getTreeItems(item));
+		}
+		return allitems;
 	}
 
 	@Override
