@@ -31,10 +31,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 

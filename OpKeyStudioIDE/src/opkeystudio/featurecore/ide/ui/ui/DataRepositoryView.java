@@ -43,10 +43,7 @@ public class DataRepositoryView extends Composite {
 	private ToolItem deleteRowToolItm;
 	private ToolItem moveRowUpToolItm;
 	private ToolItem moveRowDownToolItm;
-	private ToolItem exportExcelDataToolItm;
-	private ToolItem inportExcelDataToolItm;
 	private ToolItem saveToolItm;
-	private ToolItem createBackupToolItm;
 
 	/**
 	 * Create the composite.
@@ -123,18 +120,6 @@ public class DataRepositoryView extends Composite {
 		moveRowDownToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/move_row_down.png"));
 		moveRowDownToolItm.setToolTipText("Move Row Down");
 
-		ToolItem toolItem_8 = new ToolItem(toolBar, SWT.SEPARATOR);
-
-		exportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
-		exportExcelDataToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/import.png"));
-		exportExcelDataToolItm.setToolTipText("Export Data From Excel");
-
-		ToolItem toolItem_9 = new ToolItem(toolBar, SWT.SEPARATOR);
-
-		inportExcelDataToolItm = new ToolItem(toolBar, SWT.NONE);
-		inportExcelDataToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
-		inportExcelDataToolItm.setToolTipText("Import Data In Excel");
-
 		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		saveToolItm = new ToolItem(toolBar, SWT.NONE);
@@ -146,15 +131,6 @@ public class DataRepositoryView extends Composite {
 		refreshToolItm = new ToolItem(toolBar, SWT.NONE);
 		refreshToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
 		refreshToolItm.setToolTipText("Refresh");
-
-		ToolItem toolItem_11 = new ToolItem(toolBar, SWT.SEPARATOR);
-
-		createBackupToolItm = new ToolItem(toolBar, SWT.NONE);
-		createBackupToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/backup_create.png"));
-		createBackupToolItm.setToolTipText("Create New Backup");
-
-//		OleFrame frame = new OleFrame(parent, SWT.NONE);
-//		site = new OleClientSite(frame, SWT.NONE, "Excel.Sheet");
 
 		dataRepositoryTable = new DataRepositoryTable(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI, this);
 		dataRepositoryTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -199,20 +175,6 @@ public class DataRepositoryView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
-
-		exportExcelDataToolItm.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -314,21 +276,6 @@ public class DataRepositoryView extends Composite {
 			}
 		});
 
-		inportExcelDataToolItm.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 		saveToolItm.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -359,21 +306,6 @@ public class DataRepositoryView extends Composite {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		createBackupToolItm.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -443,20 +375,8 @@ public class DataRepositoryView extends Composite {
 		this.moveRowDownToolItm.setEnabled(status);
 	}
 
-	public void toggleExportDataButton(boolean status) {
-		this.exportExcelDataToolItm.setEnabled(status);
-	}
-
-	public void toggleImportDataButton(boolean status) {
-		this.inportExcelDataToolItm.setEnabled(status);
-	}
-
 	public void toggleSaveButton(boolean status) {
 		this.saveToolItm.setEnabled(status);
-	}
-
-	public void toggleCreateBackupButton(boolean status) {
-		this.createBackupToolItm.setEnabled(status);
 	}
 
 	@Override

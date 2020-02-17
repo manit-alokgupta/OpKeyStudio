@@ -54,7 +54,6 @@ public class DataRepositoryTable extends CustomTable {
 		getParentDataRepositoryView().toggleMoveRowDownButton(false);
 		getParentDataRepositoryView().toggleMoveRowUpButton(false);
 		getParentDataRepositoryView().toggleAddColumnButton(false);
-		getParentDataRepositoryView().toggleCreateBackupButton(false);
 		getParentDataRepositoryView().toggleAddRowButton(false);
 		getParentDataRepositoryView().toggleDeleteColumnButton(false);
 		getParentDataRepositoryView().toggleDeleteRowButton(false);
