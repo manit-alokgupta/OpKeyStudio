@@ -41,6 +41,7 @@ public class ImportDBFromOpKeyCommand {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		new Utilities().closeAllMparts();
 		SQLiteCommunicator.getOpKeyDBCommunicator(sqlComm);
 		List<Project> projects = new ProjectDataApi().getProjectList();
 		ServiceRepository.getInstance().setDefaultProject(projects.get(0));

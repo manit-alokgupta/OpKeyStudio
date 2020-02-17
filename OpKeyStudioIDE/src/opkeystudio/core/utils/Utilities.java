@@ -62,6 +62,19 @@ public class Utilities {
 		return null;
 	}
 
+	public void closeAllMparts() {
+		Collection<MPart> allParts = getAllParts();
+		System.out.println("All Parts " + allParts.size());
+		for (MPart mpart : allParts) {
+			System.out.println("Closing Already Opened Mparts");
+			Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+			if (artifact_0 != null) {
+				EPartService partService = Utilities.getInstance().getEpartService();
+				partService.hidePart(mpart, true);
+			}
+		}
+	}
+
 	public void showErrorDialog(Shell shell, String title, String message) {
 		MessageDialog.openError(shell, title, message);
 	}
