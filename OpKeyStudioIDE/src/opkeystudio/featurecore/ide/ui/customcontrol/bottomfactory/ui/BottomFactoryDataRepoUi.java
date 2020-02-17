@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -29,20 +27,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 
 public class BottomFactoryDataRepoUi extends Composite {
 	private UsedByTable usedByTable;
 	private AuditTrailsTable auditTrailsTable;
-	private ToolItem addTagItem;
-	private ToolItem deleteTagItem;
-	private ToolItem copyTagItem;
-	private ToolItem pasteTagItem;
-	private ToolItem moveUpTagItem;
-	private ToolItem moveDownTagItem;
 	private Display display;
 
 	/**
@@ -170,18 +159,6 @@ public class BottomFactoryDataRepoUi extends Composite {
 			}
 		});
 		addButtonListener();
-	}
-
-	public void toggleMoveUpButton(boolean status) {
-		moveUpTagItem.setEnabled(status);
-	}
-
-	public void toggleMoveDownButton(boolean status) {
-		moveDownTagItem.setEnabled(status);
-	}
-
-	public void toggleDeleteButton(boolean status) {
-		deleteTagItem.setEnabled(status);
 	}
 
 	public void addButtonListener() {
