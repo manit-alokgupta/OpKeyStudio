@@ -36,12 +36,14 @@ public class GenericTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
 	private boolean treeExtended = false;
 	private TREETYPE treeType;
+	private boolean keywordTree = false;
+	private boolean flTree = false;
 
 	public GenericTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
 		this.setParentTestCaseView(testCaseView);
 		init();
-		initKeywords();
+		initKeywords("");
 	}
 
 	public GenericTree(Composite parent, int style, TestCaseView testCaseView, TREETYPE treetype) {
@@ -219,7 +221,9 @@ public class GenericTree extends CustomTree {
 		this.setRedraw(true);
 	}
 
-	public void initKeywords() {
+	public void initKeywords(String keywordName) {
+		setFlTree(false);
+		setKeywordTree(true);
 		this.removeAll();
 		Set<String> groupNames = KeywordManager.getInstance().getAllGroupNames();
 		for (String groupName : groupNames) {
@@ -227,26 +231,34 @@ public class GenericTree extends CustomTree {
 			cti.setText(groupName);
 			List<Keyword> keywords = KeywordManager.getInstance().getKeywordGroup(groupName);
 			for (Keyword keyword : keywords) {
-				CustomTreeItem keywItem = new CustomTreeItem(cti, 0);
-				keywItem.setText(keyword.getName());
-				keywItem.setControlData(keyword);
+				if (keyword.getName().toLowerCase().startsWith(keywordName.toLowerCase())) {
+					CustomTreeItem keywItem = new CustomTreeItem(cti, 0);
+					keywItem.setText(keyword.getName());
+					keywItem.setControlData(keyword);
+				}
+			}
+			if (!keywordName.trim().isEmpty()) {
+				expandAll(cti);
 			}
 		}
 	}
 
-	public void initFunctionLibraries() {
+	public void initFunctionLibraries(String flName) {
+		setFlTree(true);
+		setKeywordTree(false);
 		this.removeAll();
 		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("Component");
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Function Library");
 		rootNode.setExpanded(true);
 		for (Artifact artifact : artifacts) {
-			CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
-			keywItem.setText(artifact.getName());
-			keywItem.setControlData(artifact);
-			addIcon(keywItem);
+			if (artifact.getName().toLowerCase().contains(flName.toLowerCase())) {
+				CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
+				keywItem.setText(artifact.getName());
+				keywItem.setControlData(artifact);
+				addIcon(keywItem);
+			}
 		}
-		expandAll(rootNode);
 	}
 
 	public void initSeriveRepo() {
@@ -325,5 +337,21 @@ public class GenericTree extends CustomTree {
 
 	public void setTreeType(TREETYPE treeType) {
 		this.treeType = treeType;
+	}
+
+	public boolean isFlTree() {
+		return flTree;
+	}
+
+	public void setFlTree(boolean flTree) {
+		this.flTree = flTree;
+	}
+
+	public boolean isKeywordTree() {
+		return keywordTree;
+	}
+
+	public void setKeywordTree(boolean keywordTree) {
+		this.keywordTree = keywordTree;
 	}
 }

@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
@@ -49,7 +48,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree.
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
-import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.StepDetailsInputData;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
@@ -67,14 +65,10 @@ public class TestCaseView extends Composite {
 	private OutputDataTable outputVariableTable;
 	private TestObjectTable testObjectTable;
 	private InputDataTable inputDataTable;
-	private StepDetailsInputData InputDataTable;
 	private ObjectRepositoryTree testObjectTree;
 	private ComponentArgumentInputTable componentArgumentInputTable;
-	private Table mappedTable;
-	private Table propertyTable;
 	private GenericTree drTree;
 	private GlobalVariableTable globalVariableTable;
-	private Table autoDataGenTable;
 	private Text searchBox;
 	@SuppressWarnings("unused")
 	private ToolItem seperator1;
@@ -273,53 +267,6 @@ public class TestCaseView extends Composite {
 		gd_stepInfoImage.widthHint = 88;
 		stepInfoImage.setLayoutData(gd_stepInfoImage);
 
-		// expanditemTestObject = new ExpandItem(expandBar, SWT.NONE);
-		// expanditemTestObject.setExpanded(true);
-		// expanditemTestObject.setText("Test Object");
-		// expanditemTestObject.setHeight(150);
-		// Composite composite_6 = new Composite(expandBar, SWT.NONE);
-		// expanditemTestObject.setControl(composite_6);
-		// expanditemTestObject.setHeight(expanditemTestObject.getControl().computeSize(SWT.DEFAULT,
-		// SWT.DEFAULT).y);
-
-		// composite_6.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		// SashForm sashForm = new SashForm(composite_6, SWT.NONE);
-		// sashForm.setSashWidth(1);
-
-		// Composite composite_8 = new Composite(sashForm, SWT.NONE);
-		// composite_8.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-//		mappedTable = new Table(composite_8, SWT.BORDER | SWT.FULL_SELECTION);
-//		mappedTable.setHeaderVisible(true);
-		// mappedTable.setLinesVisible(true);
-
-//		TableCursor tableCursor = new TableCursor(mappedTable, SWT.NONE);
-
-		// Composite composite_9 = new Composite(sashForm, SWT.NONE);
-		// composite_9.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		// propertyTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
-//		propertyTable.setHeaderVisible(true);
-		// propertyTable.setLinesVisible(true);
-
-		// TableCursor tableCursor_1 = new TableCursor(propertyTable, SWT.NONE);
-//		sashForm.setWeights(new int[] { 1, 2 });
-
-		// expenditemInputData = new ExpandItem(expandBar, SWT.NONE);
-		// expenditemInputData.setExpanded(true);
-		// expenditemInputData.setText("Input Data");
-		// expenditemInputData.setHeight(150);
-
-//		Composite composite_7 = new Composite(expandBar, SWT.NONE);
-//		expenditemInputData.setControl(composite_7);
-//		expenditemInputData.setHeight(expenditemInputData.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-//		composite_7.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-//		InputDataTable = new StepDetailsInputData(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		InputDataTable.setHeaderVisible(true);
-//		InputDataTable.setLinesVisible(true);
-
 		addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/addstep.png"));
 		// addStepTabItem.setText("Add Step");
@@ -352,24 +299,6 @@ public class TestCaseView extends Composite {
 		functionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
 		functionLibraryButton.setText("Function Library");
 		functionLibraryButton.setToolTipText("Function Library");
-		ToolItem seperator10 = new ToolItem(toolBar, SWT.SEPARATOR);
-
-		/*
-		 * serviceRepoButton = new ToolItem(toolBar, SWT.NONE); serviceRepoButton
-		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/servicerepo.png"));
-		 * serviceRepoButton.setText("Service Repository");
-		 * serviceRepoButton.setToolTipText("Service Repository");
-		 */
-
-		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
-		/*
-		 * codedFunLibraryButton = new ToolItem(toolBar, SWT.NONE);
-		 * codedFunLibraryButton.setImage( ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/coded_functionlibrary.png"));
-		 * codedFunLibraryButton.setText("Coded Function Library");
-		 * codedFunLibraryButton.setToolTipText("Coded Function Library");
-		 */
 
 		Composite composite_12 = new Composite(composite_10, SWT.NONE);
 		composite_12.setLayout(new GridLayout(2, false));
@@ -383,7 +312,11 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-
+				if (allDataTreeView.isKeywordTree()) {
+					allDataTreeView.initKeywords(searchBox.getText());
+				} else if (allDataTreeView.isFlTree()) {
+					allDataTreeView.initFunctionLibraries(searchBox.getText());
+				}
 			}
 
 			@Override
@@ -921,7 +854,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				allDataTreeView.initKeywords();
+				allDataTreeView.initKeywords("");
 
 			}
 
@@ -936,7 +869,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				allDataTreeView.initFunctionLibraries();
+				allDataTreeView.initFunctionLibraries("");
 			}
 
 			@Override
