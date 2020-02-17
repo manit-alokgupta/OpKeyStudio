@@ -37,14 +37,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 public class BottomFactoryDataRepoUi extends Composite {
 	private UsedByTable usedByTable;
 	private AuditTrailsTable auditTrailsTable;
-	private TagTable tagsTable;
-	private BackupTable backupTable;
-
-//	private Table usedByTable;
-//	private Table auditTrailsTable;
-//	private Table tagsTable;
-//	private Table backupTable;
-
 	private ToolItem addTagItem;
 	private ToolItem deleteTagItem;
 	private ToolItem copyTagItem;
@@ -151,86 +143,6 @@ public class BottomFactoryDataRepoUi extends Composite {
 		auditTrailsTable.setHeaderVisible(true);
 		auditTrailsTable.setLinesVisible(true);
 
-		TabItem tagsTabItem = new TabItem(tabFolder, SWT.NONE);
-		tagsTabItem.setText("Tags");
-		tagsTabItem.setToolTipText("Tags");
-
-		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
-		tagsTabItem.setControl(composite_7);
-		composite_7.setLayout(new GridLayout(1, false));
-		composite_7.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolBar toolBar_1 = new ToolBar(composite_7, SWT.FLAT | SWT.RIGHT);
-		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		toolBar_1.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-
-		addTagItem = new ToolItem(toolBar_1, SWT.NONE);
-//		addTagItem.setWidth(27);
-		addTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
-		addTagItem.setToolTipText("Add");
-
-		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		deleteTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		deleteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
-		deleteTagItem.setToolTipText("Delete");
-		deleteTagItem.setEnabled(false);
-
-		ToolItem toolItem2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		copyTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		copyTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
-		copyTagItem.setToolTipText("copy");
-
-		ToolItem toolItem3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		pasteTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		pasteTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
-		pasteTagItem.setToolTipText("Paste");
-
-		ToolItem toolItem4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		moveUpTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		moveUpTagItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
-		moveUpTagItem.setToolTipText("Move Up");
-		moveUpTagItem.setEnabled(false);
-
-		ToolItem toolItem5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
-		moveDownTagItem = new ToolItem(toolBar_1, SWT.NONE);
-		moveDownTagItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
-		moveDownTagItem.setToolTipText("Move Down");
-		moveDownTagItem.setEnabled(false);
-
-		tagsTable = new TagTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
-		tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		tagsTable.setHeaderVisible(true);
-		tagsTable.setLinesVisible(true);
-
-		TabItem backupTabItem = new TabItem(tabFolder, SWT.NONE);
-		backupTabItem.setText("Backup");
-		backupTabItem.setToolTipText("Backup");
-
-		Composite composite_9 = new Composite(tabFolder, SWT.NONE);
-		backupTabItem.setControl(composite_9);
-		composite_9.setLayout(new GridLayout(1, false));
-		composite_9.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolBar toolBar_3 = new ToolBar(composite_9, SWT.FLAT | SWT.RIGHT);
-		toolBar_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		ToolItem compareBackupItem = new ToolItem(toolBar_3, SWT.NONE);
-		compareBackupItem.setToolTipText("Compare With Backup");
-		compareBackupItem.setText("New Item");
-
-		backupTable = new BackupTable(composite_9, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		backupTable = new Table(composite_9, SWT.BORDER | SWT.FULL_SELECTION);
-		backupTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		backupTable.setHeaderVisible(true);
-		backupTable.setLinesVisible(true);
-
 		expandBar.addListener(SWT.Expand, new Listener() {
 
 			@Override
@@ -257,38 +169,6 @@ public class BottomFactoryDataRepoUi extends Composite {
 				});
 			}
 		});
-
-		tagsTable.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				BottomFactoryTag bottomFactoryTag = tagsTable.getSelectedTagData();
-				if (tagsTable.getSelectedTagData() != null) {
-					toggleDeleteButton(true);
-				} else {
-					toggleDeleteButton(false);
-				}
-
-				if (tagsTable.getPrevTagData() != null) {
-					toggleMoveUpButton(true);
-				} else {
-					toggleMoveUpButton(false);
-				}
-
-				if (tagsTable.getNextTagData() != null) {
-					toggleMoveDownButton(true);
-				} else {
-					toggleMoveDownButton(false);
-				}
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		addButtonListener();
 	}
 
@@ -306,99 +186,10 @@ public class BottomFactoryDataRepoUi extends Composite {
 
 	public void addButtonListener() {
 
-		addTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				tagsTable.addBlankTagData();
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		deleteTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				tagsTable.deleteTagData(tagsTable.getSelectedTagData());
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		copyTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		pasteTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		moveUpTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				tagsTable.moveTagDataUp(tagsTable.getSelectedTagData(), tagsTable.getPrevTagData());
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		moveDownTagItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				tagsTable.moveTagDataDown(tagsTable.getSelectedTagData(), tagsTable.getNextTagData());
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	public void refreshBottomFactory() throws JsonParseException, JsonMappingException, IOException, SQLException {
-		tagsTable.renderAllTagData();
+
 	}
 
 	@Override
