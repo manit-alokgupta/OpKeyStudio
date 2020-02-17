@@ -26,11 +26,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class BottomFactoryTestSuiteUi extends Composite {
-
-	private ToolItem sessionRefreshToolItem;
-	private ToolItem testCaseDocRefreshItem;
-	private ToolItem executionStatusrRefreshItem;
-	private ToolItem exportAuditToolItem;
 	private Display display;
 
 	/**
@@ -129,65 +124,6 @@ public class BottomFactoryTestSuiteUi extends Composite {
 
 	public void addButtonListener() {
 
-		sessionRefreshToolItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		testCaseDocRefreshItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		executionStatusrRefreshItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		exportAuditToolItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	public void refreshBottomFactory() throws JsonParseException, JsonMappingException, IOException, SQLException {
