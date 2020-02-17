@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.dtoMaker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -28,6 +29,9 @@ public class ORObjectMaker {
 		return objectAttributeProperty;
 	}
 
+	String[] parentORAttrs = new String[] { "url", "title", "index" };
+	String[] childORAttrs = new String[] { "name", "tag", "title", "class", "style" };
+
 	public ORObject getORObjectDTO(Artifact artifact, String orid, String parentId, String objectName,
 			String objectType) {
 		ORObject orobject = new ORObject();
@@ -43,6 +47,21 @@ public class ORObjectMaker {
 		orobject.setName(objectName);
 		orobject.setOpkeytype(objectType);
 		orobject.setAdded(true);
+		List<ObjectAttributeProperty> orprops = new ArrayList<ObjectAttributeProperty>();
+		if (parentId == null) {
+			for (String parentOR : parentORAttrs) {
+				ObjectAttributeProperty oap = getNewObjectAttributeProperty(orobject, orprops);
+				oap.setProperty(parentOR);
+				orprops.add(oap);
+			}
+		} else {
+			for (String childOR : childORAttrs) {
+				ObjectAttributeProperty oap = getNewObjectAttributeProperty(orobject, orprops);
+				oap.setProperty(childOR);
+				orprops.add(oap);
+			}
+		}
+		orobject.setObjectAttributesProperty(orprops);
 		return orobject;
 	}
 }
