@@ -12,39 +12,23 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.AuditTrailsTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.ExecutionStatusTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
-
 public class BottomFactoryTestSuiteUi extends Composite {
-
-	private Table table_1;
-	private Text textSearch;
-
-	private AuditTrailsTable auditTrailsTable;
-	private ExecutionStatusTable executionStatusTable;
-	private TestCaseDocumentTable testCaseDocTable;
 
 	private ToolItem sessionRefreshToolItem;
 	private ToolItem testCaseDocRefreshItem;
@@ -109,150 +93,6 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		Composite composite_4 = new Composite(sashForm, SWT.BORDER);
 		composite_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		sashForm.setWeights(new int[] { 1, 1 });
-
-		TabItem auditTrailsTabItem = new TabItem(tabFolder, SWT.NONE);
-		auditTrailsTabItem.setText("Audit Trails");
-		auditTrailsTabItem.setToolTipText("Audit Trails");
-
-		Composite composite_6 = new Composite(tabFolder, SWT.NONE);
-		auditTrailsTabItem.setControl(composite_6);
-		composite_6.setLayout(new GridLayout(1, false));
-		composite_6.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolBar toolBar = new ToolBar(composite_6, SWT.FLAT | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		exportAuditToolItem = new ToolItem(toolBar, SWT.NONE);
-		exportAuditToolItem.setWidth(27);
-		exportAuditToolItem.setToolTipText("Export Audit Trails");
-		exportAuditToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
-
-		auditTrailsTable = new AuditTrailsTable(composite_6, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		auditTrailsTable = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
-		auditTrailsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		auditTrailsTable.setHeaderVisible(true);
-		auditTrailsTable.setLinesVisible(true);
-
-		TabItem executionStatusTabItem = new TabItem(tabFolder, SWT.NONE);
-		executionStatusTabItem.setText("Execution Status");
-		executionStatusTabItem.setToolTipText("Execution Status");
-
-		Composite composite_8 = new Composite(tabFolder, SWT.NONE);
-		executionStatusTabItem.setControl(composite_8);
-		composite_8.setLayout(new GridLayout(1, false));
-		composite_8.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolBar toolBar_2 = new ToolBar(composite_8, SWT.FLAT | SWT.RIGHT);
-		toolBar_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		toolBar_2.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		executionStatusrRefreshItem = new ToolItem(toolBar_2, SWT.NONE);
-		executionStatusrRefreshItem.setToolTipText("Refresh");
-		executionStatusrRefreshItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-
-		executionStatusTable = new ExecutionStatusTable(composite_8, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		executionStatusTable = new Table(composite_8, SWT.BORDER | SWT.FULL_SELECTION);
-		executionStatusTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		executionStatusTable.setHeaderVisible(true);
-		executionStatusTable.setLinesVisible(true);
-
-		TabItem scheduleSessionTabItem = new TabItem(tabFolder, SWT.NONE);
-		scheduleSessionTabItem.setText("Scheduled Session");
-
-		Composite composite_12 = new Composite(tabFolder, SWT.NONE);
-		scheduleSessionTabItem.setControl(composite_12);
-		composite_12.setLayout(new GridLayout(1, false));
-
-		Composite composite_13 = new Composite(composite_12, SWT.NONE);
-		composite_13.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		composite_13.setLayout(new GridLayout(4, false));
-
-		ToolBar sessionToolbar = new ToolBar(composite_13, SWT.FLAT | SWT.RIGHT);
-		sessionToolbar.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-
-		sessionRefreshToolItem = new ToolItem(sessionToolbar, SWT.NONE);
-		sessionRefreshToolItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-		sessionRefreshToolItem.setToolTipText("Refresh");
-
-		Label label = new Label(composite_13, SWT.SEPARATOR | SWT.HORIZONTAL);
-		label.setVisible(false);
-		GridData gd_label = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_label.widthHint = 163;
-		label.setLayoutData(gd_label);
-
-		textSearch = new Text(composite_13, SWT.BORDER);
-		textSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		textSearch.setMessage("Search");
-
-		Button clearButton = new Button(composite_13, SWT.NONE);
-		clearButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/erase.png"));
-		clearButton.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
-		clearButton.setToolTipText("Clear Search");
-
-		table_1 = new Table(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		table_1.setHeaderVisible(true);
-		table_1.setLinesVisible(true);
-
-		TabItem testCaseDocTabItem = new TabItem(tabFolder, SWT.NONE);
-		testCaseDocTabItem.setText("Test Case Document");
-		testCaseDocTabItem.setToolTipText("Test Case Document");
-
-		Composite composite_10 = new Composite(tabFolder, SWT.NONE);
-		testCaseDocTabItem.setControl(composite_10);
-		composite_10.setLayout(new GridLayout(1, false));
-		composite_10.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolBar toolBar_4 = new ToolBar(composite_10, SWT.FLAT | SWT.RIGHT);
-		toolBar_4.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		toolBar_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		testCaseDocRefreshItem = new ToolItem(toolBar_4, SWT.NONE);
-		testCaseDocRefreshItem.setToolTipText("Refresh");
-		testCaseDocRefreshItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-
-		testCaseDocTable = new TestCaseDocumentTable(composite_10, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		testCaseDocTable = new Table(composite_10, SWT.BORDER | SWT.FULL_SELECTION);
-		testCaseDocTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		testCaseDocTable.setHeaderVisible(true);
-		testCaseDocTable.setLinesVisible(true);
-
-		textSearch.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				Text text = (Text) e.getSource();
-				String searchValue = text.getText();
-				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
-
-				}
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		clearButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				textSearch.setText("");
-				String textToSearch = textSearch.getText();
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
 
 		expandBar.addListener(SWT.Expand, new Listener() {
 

@@ -31,7 +31,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByT
 
 public class BottomFactoryDataRepoUi extends Composite {
 	private UsedByTable usedByTable;
-	private AuditTrailsTable auditTrailsTable;
 	private Display display;
 
 	/**
@@ -108,29 +107,6 @@ public class BottomFactoryDataRepoUi extends Composite {
 		usedByTable.setLinesVisible(true);
 
 		TableCursor tableCursor = new TableCursor(usedByTable, SWT.NONE);
-
-		TabItem auditTrailsTabItem = new TabItem(tabFolder, SWT.NONE);
-		auditTrailsTabItem.setText("Audit Trails");
-		auditTrailsTabItem.setToolTipText("Audit Trails");
-
-		Composite composite_6 = new Composite(tabFolder, SWT.NONE);
-		auditTrailsTabItem.setControl(composite_6);
-		composite_6.setLayout(new GridLayout(1, false));
-		composite_6.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		ToolBar toolBar = new ToolBar(composite_6, SWT.FLAT | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		ToolItem exportAuditToolItem = new ToolItem(toolBar, SWT.NONE);
-		exportAuditToolItem.setWidth(27);
-		exportAuditToolItem.setToolTipText("Export Audit Trails");
-		exportAuditToolItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/export.png"));
-
-		auditTrailsTable = new AuditTrailsTable(composite_6, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		auditTrailsTable = new Table(composite_6, SWT.BORDER | SWT.FULL_SELECTION);
-		auditTrailsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		auditTrailsTable.setHeaderVisible(true);
-		auditTrailsTable.setLinesVisible(true);
 
 		expandBar.addListener(SWT.Expand, new Listener() {
 
