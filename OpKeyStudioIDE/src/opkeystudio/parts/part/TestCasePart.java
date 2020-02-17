@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class TestCasePart {
@@ -32,7 +31,6 @@ public class TestCasePart {
 		System.out.println("Focused");
 		ArtifactTree tree =(ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 		Artifact artifact = getArtifact();
-		System.out.println(artifact.getName());
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
 		}

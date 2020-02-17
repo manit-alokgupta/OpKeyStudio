@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class TestSuitePart {
