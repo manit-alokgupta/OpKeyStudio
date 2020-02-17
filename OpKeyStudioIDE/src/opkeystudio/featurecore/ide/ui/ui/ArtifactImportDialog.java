@@ -56,7 +56,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	private Text projectSearch;
 	private Table table;
 	private Tree tree;
-	//private Text text_1;
+	// private Text text_1;
 	private org.eclipse.swt.widgets.Button importButton;
 	private String[] tableHeaders = { "Mode", "Project" };
 	private List<Project> allProjects = new ArrayList<>();
@@ -99,9 +99,9 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 		Composite composite_1 = new Composite(sashForm, SWT.BORDER);
 		composite_1.setLayout(new GridLayout(1, false));
 
-	//	text_1 = new Text(composite_1, SWT.BORDER);
-	//	text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	//	text_1.setMessage("Search Artifact");
+		// text_1 = new Text(composite_1, SWT.BORDER);
+		// text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		// text_1.setMessage("Search Artifact");
 		tree = new Tree(composite_1, SWT.BORDER);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm.setWeights(new int[] { 2, 2 });
@@ -348,7 +348,11 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	}
 
 	private void exportArtifact(ArtifactTreeNode artifactTreeNode) throws IOException {
-		new ArtifactExporting().exportArtifactFromOpKey(artifactTreeNode);
+		boolean status = new ArtifactExporting().exportArtifactFromOpKey(artifactTreeNode);
+		if (status == false) {
+			new MessageDialogs().openErrorDialog("OpKey",
+					"Importing from OpKey SAAS Failed. Please try again after some time.");
+		}
 	}
 
 	/**

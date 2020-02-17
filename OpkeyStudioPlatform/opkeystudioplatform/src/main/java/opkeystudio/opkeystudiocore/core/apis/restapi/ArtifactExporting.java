@@ -103,13 +103,15 @@ public class ArtifactExporting {
 			 * jsonObject.getString("Item1"); String filePath =
 			 * jsonObject.getString("Item2");
 			 */
-			downLoadArtifactFile(fileNameNode.textValue(), filePathNode.textValue());
-			return true;
+			boolean status = downLoadArtifactFile(fileNameNode.textValue(), filePathNode.textValue());
+			return status;
 		}
 		return false;
 	}
 
-	private void downLoadArtifactFile(String fileName, String fileDownloadURL) {
+	private int counter = 0;
+
+	private boolean downLoadArtifactFile(String fileName, String fileDownloadURL) {
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e1) {
@@ -136,8 +138,13 @@ public class ArtifactExporting {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			if (counter == 2) {
+				return false;
+			}
+			counter++;
 			downLoadArtifactFile(fileName, fileDownloadURL);
 		}
+		return true;
 	}
 
 	private void downloadUsingStream(String urlStr, String file) throws IOException {
