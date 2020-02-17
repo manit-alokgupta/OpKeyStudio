@@ -5,8 +5,6 @@ import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -21,7 +19,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -52,13 +49,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite.setLayout(new GridLayout(1, false));
-
-//		Composite composite_1 = new Composite(composite, SWT.NONE);
-//		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-//		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-//		gd_composite_1.heightHint = 54;
-//		composite_1.setLayoutData(gd_composite_1);
-
+		
 		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
 		expandBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
