@@ -25,7 +25,7 @@ public class CodedFunctionPart {
 
 	@Focus
 	public void onFocus() {
-		System.out.println("Console Window Focused");
+		
 	}
 
 	@Persist

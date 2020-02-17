@@ -23,11 +23,11 @@ public class ProjectExplorerPart {
 
 	@Focus
 	public void onFocus() {
-		System.out.println("Console Window Focused");
+		
 	}
 
 	@Persist
 	public void save() {
-		System.out.println("Console Window Save");
+		
 	}
 }
