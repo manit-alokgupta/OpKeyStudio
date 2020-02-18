@@ -236,8 +236,7 @@ public class TestCaseView extends Composite {
 		stepDetailsTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		// stepDetailsTabItem.setText("Step Details");
 		stepDetailsTabItem.setToolTipText("Step Details");
-		stepDetailsTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.STEP_DETAILS_ICON));
+		stepDetailsTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.STEP_DETAILS_ICON));
 
 		Composite composite = new Composite(testCaseArgumentsTabFolder, SWT.BORDER);
 		stepDetailsTabItem.setControl(composite);
@@ -409,8 +408,7 @@ public class TestCaseView extends Composite {
 
 		if (getArtifact().getFile_type_enum() != MODULETYPE.Component) {
 			TabItem drVariableTabItem = new TabItem(datasTabHolder, SWT.NONE);
-			drVariableTabItem
-					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+			drVariableTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			drVariableTabItem.setText("Global DR");
 			drVariableTabItem.setToolTipText("Global DR");
 			drTree = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this,
@@ -466,8 +464,7 @@ public class TestCaseView extends Composite {
 		sashForm_2.setWeights(new int[] { 1, 1 });
 
 		TabItem outputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		outputDataTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+		outputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 		// outputDataTabItem.setText("Output Data");
 		outputDataTabItem.setToolTipText("Output Data");
 
@@ -694,13 +691,14 @@ public class TestCaseView extends Composite {
 		testObjectTable.renderORObjectTable(flowStep);
 		if (renderTreeAlso) {
 			testObjectTree.removeAll();
-			if (flowStep.getOrObject().size() > 0) {
-				testObjectTree.fetchAndRenderORTree();
-			} else if (flowStep.getKeyword() != null) {
-				if (flowStep.getKeyword().isKeywordContainsORObject()) {
-					testObjectTree.fetchAndRenderORTree();
+			testObjectTree.fetchAndRenderORTree();
+			if (flowStep.getKeyword() != null) {
+				if (!flowStep.getKeyword().isKeywordContainsORObject()) {
+					testObjectTree.setEnabled(false);
+					return;
 				}
 			}
+			testObjectTree.setEnabled(true);
 		}
 	}
 
