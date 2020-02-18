@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,28 +12,38 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.ImageViewer;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomLabel;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
+import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 
 public class ObjectAttributeTable extends CustomTable {
 	private boolean paintCalled = false;
 	private ObjectAttributeTable thisTable;
 	private ObjectRepositoryView parentObjectRepositoryView;
 
+	private Composite parentComposite;
+
 	public ObjectAttributeTable(Composite parent, int style, ObjectRepositoryView parentView) {
 		super(parent, style);
+		this.setParentComposite(parent);
 		init();
 		thisTable = this;
 		this.setParentObjectRepositoryView(parentView);
@@ -155,6 +166,7 @@ public class ObjectAttributeTable extends CustomTable {
 		ObjectAttributeProperty attrProperty = item.getObjectAttributeData();
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
+		TableEditor editor3 = getTableEditor();
 		CustomButton isUsedButton = new CustomButton(this, SWT.CHECK);
 		CustomButton isRegexButton = new CustomButton(this, SWT.CHECK);
 		isUsedButton.setSelection(attrProperty.isIsused());
@@ -200,6 +212,42 @@ public class ObjectAttributeTable extends CustomTable {
 			}
 		});
 
+		if (attrProperty.getProperty().toLowerCase().equals("objectimage")
+				|| attrProperty.getProperty().toLowerCase().equals("image")) {
+			String query = String.format("SELECT VALUE FROM or_object_properties WHERE Property_Id='%s'",
+					attrProperty.getProperty_id());
+			byte[] bytes = QueryExecutor.getInstance().executeQueryWithByteData(query);
+			ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+			ImageData imgData = new ImageData(is);
+			Image img = new Image(this.getDisplay(), imgData);
+			CustomLabel label = new CustomLabel(this, 0);
+			label.setText("View Image");
+			label.setControlData(img);
+
+			label.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseUp(MouseEvent e) {
+					Image image = (Image) label.getControlData();
+					ImageViewer viewer = new ImageViewer(getParentComposite().getShell(), image, 0);
+					viewer.open();
+
+				}
+
+				@Override
+				public void mouseDown(MouseEvent e) {
+
+				}
+
+				@Override
+				public void mouseDoubleClick(MouseEvent e) {
+
+				}
+			});
+			editor3.setEditor(label, item, 1);
+			allTableEditors.add(editor3.getEditor());
+		}
+
 		editor2.setEditor(isUsedButton, item, 2);
 		editor1.setEditor(isRegexButton, item, 3);
 
@@ -244,5 +292,13 @@ public class ObjectAttributeTable extends CustomTable {
 
 	public void setParentObjectRepositoryView(ObjectRepositoryView parentObjectRepositoryView) {
 		this.parentObjectRepositoryView = parentObjectRepositoryView;
+	}
+
+	public Composite getParentComposite() {
+		return parentComposite;
+	}
+
+	public void setParentComposite(Composite parentComposite) {
+		this.parentComposite = parentComposite;
 	}
 }
