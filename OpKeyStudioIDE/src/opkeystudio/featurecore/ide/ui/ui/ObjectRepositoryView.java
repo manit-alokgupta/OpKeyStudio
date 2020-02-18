@@ -40,6 +40,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -169,7 +170,7 @@ public class ObjectRepositoryView extends Composite {
 
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("Object Repository");
-
+		tabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 		SashForm sashForm = new SashForm(tabFolder, SWT.NONE);
 		tabItem.setControl(sashForm);
 
@@ -235,25 +236,25 @@ public class ObjectRepositoryView extends Composite {
 		});
 
 		saveObject = new ToolItem(toolBar, SWT.NONE);
-		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
+		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 		saveObject.setToolTipText("Save");
 
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		renameObject = new ToolItem(toolBar, SWT.NONE);
-		renameObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+		renameObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
 		renameObject.setToolTipText("Rename");
 
 		ToolItem toolItem_5 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		deleteObject = new ToolItem(toolBar, SWT.NONE);
-		deleteObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deleteObject.setToolTipText("Delete");
 
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		refreshObject = new ToolItem(toolBar, SWT.NONE);
-		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		refreshObject.setToolTipText("Refresh");
 
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
@@ -271,23 +272,23 @@ public class ObjectRepositoryView extends Composite {
 		objectRepositoryTree.setMenu(menu);
 
 		cutMenuItem = new MenuItem(menu, SWT.CASCADE);
-		cutMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/cut.png"));
+		cutMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CUT_ICON));
 		cutMenuItem.setText("Cut");
 
 		copyMenuItem = new MenuItem(menu, SWT.NONE);
-		copyMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/copy.png"));
+		copyMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COPY_ICON));
 		copyMenuItem.setText("Copy");
 
 		pasteMenuItem = new MenuItem(menu, SWT.NONE);
-		pasteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/paste.png"));
+		pasteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.PASTE_ICON));
 		pasteMenuItem.setText("Paste");
 
 		renameMenuItem = new MenuItem(menu, SWT.NONE);
-		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
 		renameMenuItem.setText("Rename");
 
 		deleteMenuItem = new MenuItem(menu, SWT.NONE);
-		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deleteMenuItem.setText("Delete");
 
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
@@ -299,15 +300,14 @@ public class ObjectRepositoryView extends Composite {
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		addObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
-		addObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		addObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
 		addObjectAttribute.setText("Add");
 		addObjectAttribute.setToolTipText("Add Property");
 
 		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
-		deleteObjectAttribute
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deleteObjectAttribute.setText("Delete");
 		deleteObjectAttribute.setToolTipText("Delete Property");
 

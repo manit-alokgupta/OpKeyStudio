@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
@@ -69,67 +70,67 @@ public class DataRepositoryView extends Composite {
 		toolBar.setBounds(0, 0, 87, 23);
 
 		addColmToolItm = new ToolItem(toolBar, SWT.NONE);
-		addColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/add_column.png"));
+		addColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_COLUMN_ICON));
 		addColmToolItm.setToolTipText("Add Column");
 
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		deleteColmToolItm = new ToolItem(toolBar, SWT.NONE);
-		deleteColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/delete_column.png"));
+		deleteColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_COLUMN_ICON));
 		deleteColmToolItm.setToolTipText("Delete Column");
 
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		moveColmLeftToolItm = new ToolItem(toolBar, SWT.NONE);
-		moveColmLeftToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/move_col_left.png"));
+		moveColmLeftToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_LEFT_ICON));
 		moveColmLeftToolItm.setToolTipText("Move Column Left");
 
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		moveColmRightToolItm = new ToolItem(toolBar, SWT.NONE);
-		moveColmRightToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/move_col_right.png"));
+		moveColmRightToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_RIGHT_ICON));
 		moveColmRightToolItm.setToolTipText("Move Column Right");
 
 		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		renameColmToolItm = new ToolItem(toolBar, SWT.NONE);
-		renameColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+		renameColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
 		renameColmToolItm.setToolTipText("Rename Column ");
 
 		ToolItem toolItem_4 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		addRowToolItm = new ToolItem(toolBar, SWT.NONE);
-		addRowToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/add_row.png"));
+		addRowToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ROW_ICON));
 		addRowToolItm.setToolTipText("Add Row");
 
 		ToolItem toolItem_5 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		deleteRowToolItm = new ToolItem(toolBar, SWT.NONE);
-		deleteRowToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/delete_row.png"));
+		deleteRowToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ROW_ICON));
 		deleteRowToolItm.setToolTipText("Delete Row");
 
 		ToolItem toolItem_6 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		moveRowUpToolItm = new ToolItem(toolBar, SWT.NONE);
-		moveRowUpToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/move_row_up.png"));
+		moveRowUpToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 		moveRowUpToolItm.setToolTipText("Move Row Up");
 
 		ToolItem toolItem_7 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		moveRowDownToolItm = new ToolItem(toolBar, SWT.NONE);
-		moveRowDownToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/move_row_down.png"));
+		moveRowDownToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		moveRowDownToolItm.setToolTipText("Move Row Down");
 
 		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		saveToolItm = new ToolItem(toolBar, SWT.NONE);
-		saveToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
+		saveToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 		saveToolItm.setToolTipText("Save");
 
 		ToolItem toolItem_12 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		refreshToolItm = new ToolItem(toolBar, SWT.NONE);
-		refreshToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		refreshToolItm.setToolTipText("Refresh");
 
 		dataRepositoryTable = new DataRepositoryTable(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI, this);

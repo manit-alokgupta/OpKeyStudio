@@ -14,6 +14,7 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -46,16 +47,16 @@ public class ObjectRepositoryTree extends CustomTree {
 	private void addIcon(ObjectRepositoryTreeItem artTreeItem) {
 		ORObject orObject = artTreeItem.getObjectRepository();
 		if (orObject == null) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 			return;
 		}
 		String objectType = orObject.getOpkeytype();
 		if (objectType.toLowerCase().contains("page")) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/oricons/page2020.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR16_ICON));
 		} else if (objectType.toLowerCase().contains("frame")) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/oricons/iframe.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.IFRAME_ICON));
 		} else {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/oricons/controller.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CONTROLLER_ICON));
 		}
 	}
 

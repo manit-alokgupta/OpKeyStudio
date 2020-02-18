@@ -48,6 +48,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree.
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
@@ -147,10 +148,10 @@ public class TestCaseView extends Composite {
 		TabItem testCaseTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
 		if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			testCaseTabItem.setText("Function Library");
-			testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+			testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 		} else {
 			testCaseTabItem.setText("TestCase");
-			testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+			testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
 		}
 		Composite testCaseHolder = new Composite(mainTestCaseTabFolder, SWT.NONE);
 		testCaseHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -175,7 +176,7 @@ public class TestCaseView extends Composite {
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
 		itemAdd = new ToolItem(toolBar_1, SWT.NONE);
-		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_NEW_ICON));
 		// itemAdd.setText("Add");
 		itemAdd.setToolTipText("Add Test Step");
 
@@ -183,7 +184,7 @@ public class TestCaseView extends Composite {
 
 		itemMoveup = new ToolItem(toolBar_1, SWT.NONE);
 		itemMoveup.setEnabled(false);
-		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
+		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 		// itemMoveup.setText("Move up");
 		itemMoveup.setToolTipText("Move Step Up");
 
@@ -191,7 +192,7 @@ public class TestCaseView extends Composite {
 
 		itemMovedown = new ToolItem(toolBar_1, SWT.NONE);
 		itemMovedown.setEnabled(false);
-		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
+		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		// itemMovedown.setText("Move Down");
 		itemMovedown.setToolTipText("Move Step Down");
 
@@ -199,7 +200,7 @@ public class TestCaseView extends Composite {
 
 		itemDelete = new ToolItem(toolBar_1, SWT.NONE);
 		itemDelete.setEnabled(false);
-		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		// itemDelete.setText("Delete");
 		itemDelete.setToolTipText(" Delete Test Step");
 
@@ -207,14 +208,14 @@ public class TestCaseView extends Composite {
 
 		itemSave = new ToolItem(toolBar_1, SWT.NONE);
 		itemSave.setEnabled(false);
-		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
+		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 		// itemSave.setText("Save");
 		itemSave.setToolTipText("Save");
 
 		seperator7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemRefresh = new ToolItem(toolBar_1, SWT.NONE);
-		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		// itemRefresh.setText("Refresh");
 		itemRefresh.setToolTipText("Refresh");
 
@@ -236,7 +237,7 @@ public class TestCaseView extends Composite {
 		// stepDetailsTabItem.setText("Step Details");
 		stepDetailsTabItem.setToolTipText("Step Details");
 		stepDetailsTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/stepdetails.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.STEP_DETAILS_ICON));
 
 		Composite composite = new Composite(testCaseArgumentsTabFolder, SWT.BORDER);
 		stepDetailsTabItem.setControl(composite);
@@ -268,7 +269,7 @@ public class TestCaseView extends Composite {
 		stepInfoImage.setLayoutData(gd_stepInfoImage);
 
 		addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/addstep.png"));
+		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_NEW_ICON));
 		// addStepTabItem.setText("Add Step");
 		addStepTabItem.setToolTipText("Add Step");
 		SashForm sashForm_3 = new SashForm(testCaseArgumentsTabFolder, SWT.NONE);
@@ -290,13 +291,13 @@ public class TestCaseView extends Composite {
 		toolBar.setBounds(0, 0, 64, 64);
 
 		keywordButton = new ToolItem(toolBar, SWT.NONE);
-		keywordButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/keword.png"));
+		keywordButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TEXT_KEYWORD_ICON));
 		keywordButton.setText("Keyword");
 		keywordButton.setToolTipText("Keyword");
 		ToolItem seperator9 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		functionLibraryButton = new ToolItem(toolBar, SWT.NONE);
-		functionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+		functionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 		functionLibraryButton.setText("Function Library");
 		functionLibraryButton.setToolTipText("Function Library");
 
@@ -329,7 +330,7 @@ public class TestCaseView extends Composite {
 		Button clearButton = new Button(composite_12, SWT.NONE);
 		clearButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		clearButton.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		clearButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/erase.png"));
+		clearButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ERASER_ICON));
 		clearButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		clearButton.setToolTipText("Clear");
 		clearButton.addSelectionListener(new SelectionListener() {
@@ -359,7 +360,7 @@ public class TestCaseView extends Composite {
 		sashForm_3.setWeights(new int[] { 0, 1 });
 
 		TabItem testObjectTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		testObjectTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/object.png"));
+		testObjectTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
 		// testObjectTabItem.setText("Test Object");
 		testObjectTabItem.setToolTipText("Test Object");
 		Composite composite_2 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
@@ -383,7 +384,7 @@ public class TestCaseView extends Composite {
 		sashForm_1.setWeights(new int[] { 1, 1 });
 
 		TabItem inputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		inputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/inputdata.png"));
+		inputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
 		// inputDataTabItem.setText("Input Data");
 		inputDataTabItem.setToolTipText("Input Data");
 		Composite composite_3 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
@@ -409,7 +410,7 @@ public class TestCaseView extends Composite {
 		if (getArtifact().getFile_type_enum() != MODULETYPE.Component) {
 			TabItem drVariableTabItem = new TabItem(datasTabHolder, SWT.NONE);
 			drVariableTabItem
-					.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
+					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			drVariableTabItem.setText("Global DR");
 			drVariableTabItem.setToolTipText("Global DR");
 			drTree = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this,
@@ -420,7 +421,7 @@ public class TestCaseView extends Composite {
 		} else {
 			TabItem componentArgInputTable = new TabItem(datasTabHolder, SWT.NONE);
 			componentArgInputTable
-					.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
+					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			componentArgInputTable.setText("Data Input");
 			componentArgInputTable.setToolTipText("Data Input");
 			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder,
@@ -431,7 +432,7 @@ public class TestCaseView extends Composite {
 		}
 
 		TabItem dataOutPutTabItem = new TabItem(datasTabHolder, SWT.NONE);
-		dataOutPutTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/dataout.png"));
+		dataOutPutTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 		dataOutPutTabItem.setText("Data Output");
 		dataOutPutTabItem.setToolTipText("Data Output");
 		outputVariableTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this,
@@ -442,7 +443,7 @@ public class TestCaseView extends Composite {
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
 		globalVariableTable = new GlobalVariableTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
@@ -466,7 +467,7 @@ public class TestCaseView extends Composite {
 
 		TabItem outputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		outputDataTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/outputdata.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 		// outputDataTabItem.setText("Output Data");
 		outputDataTabItem.setToolTipText("Output Data");
 

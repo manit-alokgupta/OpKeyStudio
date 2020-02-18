@@ -59,4 +59,10 @@ public class OpKeyStudioIcons {
 	public static String USER_ICON = commonIconsDirPath + "user.png";
 	public static String OPEN_ICON = commonIconsDirPath + "open.png";
 
+	public static String CUT_ICON = commonIconsDirPath + "cut.png";
+	public static String COPY_ICON = commonIconsDirPath + "copy.png";
+	public static String PASTE_ICON = commonIconsDirPath + "paste.png";
+	public static String SEARCH_ICON = commonIconsDirPath + "search.png";
+	public static String INFO_ICON = commonIconsDirPath + "info.png";
+
 }

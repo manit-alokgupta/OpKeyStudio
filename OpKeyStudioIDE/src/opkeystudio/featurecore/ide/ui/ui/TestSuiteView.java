@@ -33,6 +33,7 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteTestCaseTree;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
@@ -91,38 +92,36 @@ public class TestSuiteView extends Composite {
 
 		runButton = new ToolItem(toolBar_1, SWT.NONE);
 		runButton.setToolTipText("Run Now");
-		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/run_icon.png"));
+		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
 		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		deleteSuiteStepButton = new ToolItem(toolBar_1, SWT.NONE);
 		deleteSuiteStepButton.setToolTipText("Delete Suite Step");
-		deleteSuiteStepButton
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteSuiteStepButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 
 		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		moveUpButton = new ToolItem(toolBar_1, SWT.NONE);
 		moveUpButton.setToolTipText("Move UP");
-		moveUpButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
+		moveUpButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 
 		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		moveDownButton = new ToolItem(toolBar_1, SWT.NONE);
 		moveDownButton.setToolTipText("Move Down");
-		moveDownButton
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
+		moveDownButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 
 		ToolItem toolItem_8 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		saveButton = new ToolItem(toolBar_1, SWT.NONE);
 		saveButton.setToolTipText("Save");
-		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
+		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 
 		ToolItem toolItem_9 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		refreshButton = new ToolItem(toolBar_1, SWT.NONE);
 		refreshButton.setToolTipText("Refresh");
-		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 
 		ToolItem toolItem_10 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
@@ -184,7 +183,7 @@ public class TestSuiteView extends Composite {
 		addTestCaseButton.setToolTipText("Add Available Test Cases/Sparkin/Gherkin Features");
 		addTestCaseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		addTestCaseButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		addTestCaseButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/leftArrow.png"));
+		addTestCaseButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_LEFT_ICON));
 		addTestCaseButton.setEnabled(false);
 
 		searchTextBox = new Text(composite_5, SWT.BORDER);
@@ -195,7 +194,7 @@ public class TestSuiteView extends Composite {
 		searchTestCaseButton = new Button(composite_5, SWT.NONE);
 		searchTestCaseButton.setToolTipText("Search");
 		searchTestCaseButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		searchTestCaseButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/search.png"));
+		searchTestCaseButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SEARCH_ICON));
 		searchTestCaseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
 		Composite composite_6 = new Composite(sashForm_1, SWT.NONE);
@@ -213,8 +212,7 @@ public class TestSuiteView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		refreshTestCaseTree
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshTestCaseTree.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		sashForm_1.setWeights(new int[] { 4, 1 });
 
 		Composite composite_4 = new Composite(composite_2, SWT.NONE);

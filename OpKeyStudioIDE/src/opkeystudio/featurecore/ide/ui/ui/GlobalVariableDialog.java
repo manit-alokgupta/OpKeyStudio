@@ -30,6 +30,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 
@@ -116,7 +117,7 @@ public class GlobalVariableDialog extends Dialog {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		addtoolitem = new ToolItem(toolBar, SWT.NONE);
-		addtoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		addtoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
 		addtoolitem.setText("Add");
 
 		addtoolitem.addSelectionListener(new SelectionAdapter() {
@@ -129,7 +130,7 @@ public class GlobalVariableDialog extends Dialog {
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		deletetoolitem = new ToolItem(toolBar, SWT.NONE);
-		deletetoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deletetoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deletetoolitem.setText("Delete");
 		deletetoolitem.setEnabled(false);
 		deletetoolitem.addSelectionListener(new SelectionAdapter() {
@@ -143,7 +144,7 @@ public class GlobalVariableDialog extends Dialog {
 				if (!canDelete) {
 					return;
 				}
-				
+
 				boolean isused = new GlobalVariableApiUtilities().isGlobalVariableUsed(globalVar);
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Can't delete Global Variable",
@@ -160,7 +161,7 @@ public class GlobalVariableDialog extends Dialog {
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		savetoolitem = new ToolItem(toolBar, SWT.NONE);
-		savetoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/save_icon.png"));
+		savetoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 		savetoolitem.setText("Save");
 		savetoolitem.setEnabled(false);
 		savetoolitem.addSelectionListener(new SelectionAdapter() {
@@ -175,8 +176,7 @@ public class GlobalVariableDialog extends Dialog {
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		refreshtoolitem = new ToolItem(toolBar, SWT.NONE);
-		refreshtoolitem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshtoolitem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		refreshtoolitem.setText("Refresh");
 		refreshtoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -225,7 +225,7 @@ public class GlobalVariableDialog extends Dialog {
 		});
 
 		Button clearButton = new Button(composite_1, SWT.NONE);
-		clearButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/erase.png"));
+		clearButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ERASER_ICON));
 		clearButton.setToolTipText("Clear");
 
 		clearButton.addSelectionListener(new SelectionListener() {

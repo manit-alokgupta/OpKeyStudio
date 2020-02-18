@@ -29,6 +29,7 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -126,6 +127,14 @@ public class SuiteStepTable extends CustomTable {
 		setToRunMenuItem.setText("Set to Run");
 		skipfromRunMenuItem.setText("Skip from Run");
 
+		openInNewTab.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OPEN_ICON));
+		copyMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COPY_ICON));
+		pasteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.PASTE_ICON));
+		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		moveupMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
+		movedownMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
+		setToRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
+		skipfromRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 		copyMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -374,7 +383,7 @@ public class SuiteStepTable extends CustomTable {
 		TableEditor editor1 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
 		if (testSuiteStep.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
-			item.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+			item.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
 		}
 		button.setSelection(testSuiteStep.isShouldrun());
 		button.addSelectionListener(new SelectionListener() {

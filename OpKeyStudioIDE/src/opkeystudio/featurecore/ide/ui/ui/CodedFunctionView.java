@@ -31,6 +31,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaAutoCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -68,15 +69,15 @@ public class CodedFunctionView extends Composite {
 
 		runButton = new ToolItem(toolBar, SWT.NONE);
 		runButton.setText("Run");
-		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/play.png"));
+		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
 
 		saveButton = new ToolItem(toolBar, SWT.NONE);
 		saveButton.setText("Save");
-		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/save.png"));
+		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setText("Refresh");
-		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/refresh.png"));
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 
 		editor = new JavaCodeEditor(this, this);
 		editor.setArtifact(getArtifact());
@@ -279,7 +280,7 @@ public class CodedFunctionView extends Composite {
 			cflcode.setLanguage("JAVA");
 			cflcode.setPluginid("2626b33a-a06c-408c-8f69-f8f1490a49bb");
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(),"");
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "");
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
 		}
