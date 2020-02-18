@@ -1,10 +1,7 @@
 package opkeystudio.core.utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -84,6 +81,7 @@ public class DtoToCodeConverter {
 				if (value == null) {
 					value = "";
 				}
+				value = value.replaceAll("\\r?\\n", "");
 				String methodBody = String.format(methodCall, oap.getProperty(),
 						value.trim().replace("\\", "\\\\").replace("\"", "\\\""));
 				if (count == 0) {
@@ -117,6 +115,7 @@ public class DtoToCodeConverter {
 				if (drcellValue == null) {
 					drcellValue = "";
 				}
+				drcellValue = drcellValue.replaceAll("\\r?\\n", "");
 				drcellValue = drcellValue.trim().trim().replace("\\", "\\\\").replace("\"", "\\\"");
 				String fromatedCall = String.format(methodCall, columnName, drcellValue);
 				staticVariableDatas += fromatedCall;
