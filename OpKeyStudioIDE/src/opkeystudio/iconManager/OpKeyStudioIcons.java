@@ -20,7 +20,6 @@ public class OpKeyStudioIcons {
 	public static String ADD_ROW_ICON = commonIconsDirPath + "add row.png";
 	public static String ADD_ICON = commonIconsDirPath + "add.png";
 	public static String ADD_NEW_ICON = commonIconsDirPath + "addnew.png";
-	public static String UPDATE_ICON = commonIconsDirPath + "addnew.png";
 	public static String ADD_NEW_TOOLBAR_ICON = commonIconsDirPath + "addnew_toolbar.png";
 	public static String BACKUP_CREATE_ICON = commonIconsDirPath + "backup create.png";
 	public static String CONTROLLER_ICON = commonIconsDirPath + "controller.png";
@@ -65,5 +64,13 @@ public class OpKeyStudioIcons {
 	public static String PASTE_ICON = commonIconsDirPath + "paste.png";
 	public static String SEARCH_ICON = commonIconsDirPath + "search.png";
 	public static String INFO_ICON = commonIconsDirPath + "info.png";
+
+	public static String DR_COLUMN_ICON = commonIconsDirPath + "dr column.png";
+	public static String BOTTOM_FACTORY_ICON = commonIconsDirPath + "bottomfactory.png";
+	public static String EXIT_ICON = commonIconsDirPath + "exit.png";
+	public static String PAGECONTROL_ICON = commonIconsDirPath + "pagecontrol.png";
+	public static String SET_TO_RUN_ICON = commonIconsDirPath + "set to run.png";
+	public static String SKIP_FROM_RUN_ICON = commonIconsDirPath + "skipfrom.png";
+	public static String UPDATE_ICON = commonIconsDirPath + "update.png";
 
 }
