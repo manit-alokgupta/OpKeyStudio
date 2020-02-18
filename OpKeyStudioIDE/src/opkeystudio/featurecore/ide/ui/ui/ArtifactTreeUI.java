@@ -119,7 +119,7 @@ public class ArtifactTreeUI extends Composite {
 
 		Button clearArtifactTreeButton = new Button(composite, SWT.NONE);
 		clearArtifactTreeButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		clearArtifactTreeButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/erase.png"));
+		clearArtifactTreeButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ERASER_ICON));
 		clearArtifactTreeButton.setToolTipText("Clear Text");
 
 		GridData gd_btnNewButton = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);

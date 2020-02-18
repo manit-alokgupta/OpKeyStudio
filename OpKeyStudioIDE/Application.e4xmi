@@ -31,7 +31,7 @@
         <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" iconURI="platform:/plugin/OpKeyStudio/icons/exit.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_oQOH4PV2EemEv-Dsdd6Nxw" elementId="opkeystudio.menu.tools" label="Tools">
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_qu-CQPV2EemEv-Dsdd6Nxw" elementId="opkeystudio.directmenuitem.globalvariable" label="Global Variable" iconURI="platform:/plugin/OpKeyStudio/icons/testcase_icons/global_variable.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.GlobalVariableHandler"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_qu-CQPV2EemEv-Dsdd6Nxw" elementId="opkeystudio.directmenuitem.globalvariable" label="Global Variable" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/global variable.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.GlobalVariableHandler"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_s3lGcNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.help" label="Help">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_uVJ3sNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.about" label="About" iconURI="platform:/plugin/OpKeyStudio/icons/about.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.AboutCommand"/>

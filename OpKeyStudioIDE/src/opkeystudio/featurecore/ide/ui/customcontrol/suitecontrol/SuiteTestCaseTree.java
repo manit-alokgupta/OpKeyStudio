@@ -7,9 +7,11 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.SuiteMaker;
@@ -29,6 +31,7 @@ public class SuiteTestCaseTree extends ArtifactTree {
 		Menu menu = new Menu(this);
 		addTestCaseMenuItem = new MenuItem(menu, 0);
 		addTestCaseMenuItem.setText("Add");
+		addTestCaseMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
 		this.setMenu(menu);
 		this.addSelectionListener(new SelectionListener() {
 

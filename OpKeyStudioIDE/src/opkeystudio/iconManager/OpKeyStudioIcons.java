@@ -20,6 +20,7 @@ public class OpKeyStudioIcons {
 	public static String ADD_ROW_ICON = commonIconsDirPath + "add row.png";
 	public static String ADD_ICON = commonIconsDirPath + "add.png";
 	public static String ADD_NEW_ICON = commonIconsDirPath + "addnew.png";
+	public static String UPDATE_ICON = commonIconsDirPath + "addnew.png";
 	public static String ADD_NEW_TOOLBAR_ICON = commonIconsDirPath + "addnew_toolbar.png";
 	public static String BACKUP_CREATE_ICON = commonIconsDirPath + "backup create.png";
 	public static String CONTROLLER_ICON = commonIconsDirPath + "controller.png";

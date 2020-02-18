@@ -16,6 +16,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
@@ -64,8 +65,10 @@ public class GenericTree extends CustomTree {
 		Menu menu = new Menu(this);
 		MenuItem addMenuItem = new MenuItem(menu, 0);
 		addMenuItem.setText("Add");
+		addMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
 		MenuItem updateMenuItem = new MenuItem(menu, 0);
 		updateMenuItem.setText("Update");
+		updateMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.UPDATE_ICON));
 		this.setMenu(menu);
 
 		addMenuItem.addSelectionListener(new SelectionListener() {
@@ -189,25 +192,25 @@ public class GenericTree extends CustomTree {
 		if (artTreeItem.getControlData() instanceof Artifact) {
 			Artifact artifact = (Artifact) artTreeItem.getControlData();
 			if (artifact == null) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Folder) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Flow) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
 			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.ObjectRepository) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Suite) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testsuite.png"));
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
 			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.DataRepository) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
 			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Component) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.CodedFunction) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 			}
 		}
 		if (artTreeItem.getControlData() instanceof DRColumnAttributes) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase.gif"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_COLUMN_ICON));
 		}
 	}
 
@@ -304,6 +307,7 @@ public class GenericTree extends CustomTree {
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Data Repositories");
 		rootNode.setExpanded(true);
+		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		addIcon(rootNode);
 		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("DataRepository");
 		for (Artifact drArtifact : artifacts) {
