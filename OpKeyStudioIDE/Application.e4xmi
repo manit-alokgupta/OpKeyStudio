@@ -42,7 +42,7 @@
         <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.open" label="Import From OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/import.png" tooltip="Import From OpKey SAAS" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBFromOpKeyCommand">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
         </children>
-        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" visible="false" label="Import Local DB" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/importdb.png" tooltip="Import Local DB" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportLocalDB">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" label="Import Local DB" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/importdb.png" tooltip="Import Local DB" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportLocalDB">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UFWaAAXdEeqm4_Ox7Tro1w"/>
         </children>
         <children xsi:type="menu:DirectToolItem" xmi:id="_VgQNIED2EeqJe4vmkghIxQ" elementId="opkeystudio.directtoolitem.exporttoopkeysaas" label="Export To OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/export.png" tooltip="Export To OpKey SAAS" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ExportToSaas"/>
@@ -64,22 +64,22 @@
     <children xmi:id="_6wlLesgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_6wlLe8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
-  <descriptors xmi:id="_SlOkABWUEeqUwaq8COvPIg" elementId="opkeystudio.partdescriptor.functionLibraryViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/fl.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.FunctionLibraryPart">
+  <descriptors xmi:id="_SlOkABWUEeqUwaq8COvPIg" elementId="opkeystudio.partdescriptor.functionLibraryViewer" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/artifacts/fl.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.FunctionLibraryPart">
     <toolbar xmi:id="_a3cR0BWUEeqUwaq8COvPIg" elementId="opkeystudio.toolbar.6"/>
   </descriptors>
-  <descriptors xmi:id="_KeW8wOphEemLasQpyDBSag" elementId="opkeystudio.partdescriptor.testCaseViewer" iconURI="platform:/plugin/OpKeyStudio/icons/artifact/testcase.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestCasePart">
+  <descriptors xmi:id="_KeW8wOphEemLasQpyDBSag" elementId="opkeystudio.partdescriptor.testCaseViewer" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/artifacts/tc.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestCasePart">
     <toolbar xmi:id="_bsrp8OphEemLasQpyDBSag" elementId="opkeystudio.toolbar.0"/>
   </descriptors>
-  <descriptors xmi:id="_OBre4PZcEemTN-XqgekRNg" elementId="opkeystudio.partdescriptor.objectRepository" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/or.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ObjectRepositoryPart">
+  <descriptors xmi:id="_OBre4PZcEemTN-XqgekRNg" elementId="opkeystudio.partdescriptor.objectRepository" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/artifacts/or.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ObjectRepositoryPart">
     <toolbar xmi:id="_mWBUsPsLEem7V4aKm4Or8w" elementId="opkeystudio.toolbar.3"/>
   </descriptors>
-  <descriptors xmi:id="_4ZhaAAusEeq3U7L8qMZpow" elementId="opkeystudio.partdescriptor.testSuiteViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/testsuite.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestSuitePart">
+  <descriptors xmi:id="_4ZhaAAusEeq3U7L8qMZpow" elementId="opkeystudio.partdescriptor.testSuiteViewer" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/artifacts/suite.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.TestSuitePart">
     <toolbar xmi:id="_f-S2IBAeEeqP9djnjLYhtA" elementId="opkeystudio.toolbar.4"/>
   </descriptors>
-  <descriptors xmi:id="_Wm_AQBEVEeq3D_1hcyWsSQ" elementId="opkeystudio.partdescriptor.dataRepoViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/note.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.DataRepositoryPart">
+  <descriptors xmi:id="_Wm_AQBEVEeq3D_1hcyWsSQ" elementId="opkeystudio.partdescriptor.dataRepoViewer" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/artifacts/drfile.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.DataRepositoryPart">
     <toolbar xmi:id="_bkajkBEVEeq3D_1hcyWsSQ" elementId="opkeystudio.toolbar.5"/>
   </descriptors>
-  <descriptors xmi:id="_CKDtECvEEeqGku3IS04kWw" elementId="opkeystudio.partdescriptor.codeFunctionViewer" iconURI="platform:/plugin/OpKeyStudio/icons/new_icons/cfl.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.CodedFunctionPart"/>
+  <descriptors xmi:id="_CKDtECvEEeqGku3IS04kWw" elementId="opkeystudio.partdescriptor.codeFunctionViewer" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/artifacts/cfl.png" allowMultiple="true" category="workbenchCategory" closeable="true" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.CodedFunctionPart"/>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
