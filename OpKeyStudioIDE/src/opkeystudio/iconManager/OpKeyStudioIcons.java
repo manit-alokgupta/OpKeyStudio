@@ -57,5 +57,6 @@ public class OpKeyStudioIcons {
 	public static String TESTOBJECT_ICON = commonIconsDirPath + "testobject.png";
 	public static String TEXT_KEYWORD_ICON = commonIconsDirPath + "text keyword.png";
 	public static String USER_ICON = commonIconsDirPath + "user.png";
+	public static String OPEN_ICON = commonIconsDirPath + "open.png";
 
 }

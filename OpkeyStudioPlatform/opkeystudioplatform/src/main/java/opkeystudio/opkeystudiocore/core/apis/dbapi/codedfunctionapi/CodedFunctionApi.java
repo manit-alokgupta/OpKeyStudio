@@ -148,7 +148,7 @@ public class CodedFunctionApi {
 		new ArtifactApi().updateArtifact(artifact);
 		String[] fileData = libraryFile.getName().split("\\.");
 		String fileName = fileData[0];
-		fileName = fileName + artifact.getId().replaceAll("-", "_");
+		//fileName = fileName + artifact.getId().replaceAll("-", "_");
 		String fileExtension = fileData[fileData.length - 1];
 
 		List<MainFileStoreDTO> fileStoreDtos = GlobalLoader.getInstance().getAllMainFileStoreDtos();

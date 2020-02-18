@@ -28,6 +28,7 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -141,7 +142,7 @@ public class ArtifactTreeUI extends Composite {
 
 		toolbarNew = new ToolItem(toolBar_1, SWT.DROP_DOWN);
 		toolbarNew.setEnabled(false);
-		toolbarNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		toolbarNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
 		// toolbarNew.setText("New");
 		toolbarNew.setToolTipText("New");
 
@@ -150,7 +151,7 @@ public class ArtifactTreeUI extends Composite {
 
 		toolbarRename = new ToolItem(toolBar_1, SWT.NONE);
 		// toolbarRename.setText("Rename");
-		toolbarRename.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+		toolbarRename.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
 		toolbarRename.setEnabled(false);
 		toolbarRename.setToolTipText("Rename");
 
@@ -158,7 +159,7 @@ public class ArtifactTreeUI extends Composite {
 
 		toolbarDelete = new ToolItem(toolBar_1, SWT.NONE);
 		// toolbarDelete.setText("Delete");
-		toolbarDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		toolbarDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_TOOL_ICON));
 		toolbarDelete.setEnabled(false);
 		toolbarDelete.setToolTipText("Delete");
 
@@ -166,8 +167,8 @@ public class ArtifactTreeUI extends Composite {
 
 		toolbarRefresh = new ToolItem(toolBar_1, SWT.NONE);
 		// toolbarDelete.setText("Delete");
-		toolbarRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
-	//	toolbarRefresh.setEnabled(false);
+		toolbarRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
+		// toolbarRefresh.setEnabled(false);
 		toolbarRefresh.setToolTipText("Refresh");
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
@@ -179,7 +180,7 @@ public class ArtifactTreeUI extends Composite {
 		artifactTree.setMenu(menu);
 
 		mntmNew = new MenuItem(menu, SWT.CASCADE);
-		mntmNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		mntmNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
 		mntmNew.setText("New");
 		mntmNew.setEnabled(false);
 
@@ -190,74 +191,73 @@ public class ArtifactTreeUI extends Composite {
 		toolBar_1.setMenu(newMenu);
 		toolbarFolder = new MenuItem(newMenu, SWT.PUSH);
 		toolbarFolder.setText("Folder");
-		toolbarFolder.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/create_folder.png"));
+		toolbarFolder.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 
 		toolbarTestCase = new MenuItem(newMenu, SWT.PUSH);
 		toolbarTestCase.setText("TestCase");
-		toolbarTestCase.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/artifact/testcase.png"));
+		toolbarTestCase.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
 
 		toolbarFunctionLibrary = new MenuItem(newMenu, SWT.PUSH);
 		toolbarFunctionLibrary.setText("Function Library");
-		toolbarFunctionLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+		toolbarFunctionLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 
 		toolbarObjectRepository = new MenuItem(newMenu, SWT.PUSH);
 		toolbarObjectRepository.setText("Object Repository");
-		toolbarObjectRepository.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
+		toolbarObjectRepository.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 
 		toolbarTestSuite = new MenuItem(newMenu, SWT.PUSH);
 		toolbarTestSuite.setText("Test Suite");
-		toolbarTestSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testSuite.png"));
+		toolbarTestSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
 
 		toolbarDR = new MenuItem(newMenu, SWT.PUSH);
 		toolbarDR.setText("DR");
-		toolbarDR.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
+		toolbarDR.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
 
 		folderMenuItem = new MenuItem(menu_1, SWT.NONE);
-		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/create_folder.png"));
+		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		folderMenuItem.setText("Folder");
 
 		testcaseMenuItem = new MenuItem(menu_1, SWT.NONE);
-		testcaseMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+		testcaseMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
 		testcaseMenuItem.setText("TestCase");
 
 		objectRepositoryMenuItem = new MenuItem(menu_1, SWT.NONE);
-		objectRepositoryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
+		objectRepositoryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 		objectRepositoryMenuItem.setText("ObjectRepository");
 
 		functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
 		functionLibraryMenuItem.setText("Function Library");
-		functionLibraryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+		functionLibraryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 
 		testSuiteMenuItem = new MenuItem(menu_1, SWT.PUSH);
 		testSuiteMenuItem.setText("Test Suite");
-		testSuiteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testSuite.png"));
+		testSuiteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
 
 		drMenuItem = new MenuItem(menu_1, SWT.PUSH);
 		drMenuItem.setText("DR");
-		drMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
+		drMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
 
 		codedFLMenuItem = new MenuItem(menu_1, SWT.PUSH);
 		codedFLMenuItem.setText("Coded FL");
-		codedFLMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/cfl.png"));
+		codedFLMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 
 		openMenuItem = new MenuItem(menu, SWT.NONE);
-		openMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/open.png"));
+		openMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OPEN_ICON));
 		openMenuItem.setText("Open");
 		openMenuItem.setEnabled(false);
 
 		renameMenuItem = new MenuItem(menu, SWT.NONE);
-		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/rename.png"));
+		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
 		renameMenuItem.setText("Rename");
 		renameMenuItem.setEnabled(false);
 
 		deleteMenuItem = new MenuItem(menu, SWT.NONE);
-		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deleteMenuItem.setText("Delete");
 		deleteMenuItem.setEnabled(false);
 
 		refreshMenuItem = new MenuItem(menu, SWT.NONE);
-		refreshMenuItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		refreshMenuItem.setText("Refresh");
 		refreshMenuItem.setEnabled(false);
 

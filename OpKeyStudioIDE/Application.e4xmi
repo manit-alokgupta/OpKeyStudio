@@ -6,7 +6,7 @@
       <children xsi:type="advanced:Perspective" xmi:id="_G81KgCYcEeq-PsV5Lg3LVA" elementId="opkeystudio.perspective.opkey" selectedElement="_9ST-ENVrEemLeZBMchgvxw" label="OpKey">
         <children xsi:type="basic:PartSashContainer" xmi:id="_9ST-ENVrEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.0" containerData="" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.explorertreepartstack" containerData="150">
-            <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.explorertreepart" containerData="" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ProjectExplorerPart" label="Project Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/class_obj.gif"/>
+            <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.explorertreepart" containerData="" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ProjectExplorerPart" label="Project Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/project explorar.png"/>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600" selectedElement="_EfD4oNVsEemLeZBMchgvxw">
             <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.workbenchpartstack" containerData="600">
@@ -25,9 +25,9 @@
     </children>
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="opkeystudio.menu.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_X8-2wPsEEemvU7QvzW07xw" elementId="opkeystudio.directmenuitem.importdb" label="Import From OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/import.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBFromOpKeyCommand"/>
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_WlEAgD2-Eeq5-OQK1h73hw" elementId="opkeystudio.directmenuitem.importlocaldb" visible="false" label="Import Local DB" iconURI="platform:/plugin/OpKeyStudio/icons/import.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportLocalDB"/>
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_N4_UEEDmEeqJe4vmkghIxQ" elementId="opkeystudio.directmenuitem.exporttoopkeysaas" label="Export to OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/export.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ExportToSaas"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_X8-2wPsEEemvU7QvzW07xw" elementId="opkeystudio.directmenuitem.importdb" label="Import From OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/import.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBFromOpKeyCommand"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_WlEAgD2-Eeq5-OQK1h73hw" elementId="opkeystudio.directmenuitem.importlocaldb" visible="false" label="Import Local DB" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/importdb.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportLocalDB"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_N4_UEEDmEeqJe4vmkghIxQ" elementId="opkeystudio.directmenuitem.exporttoopkeysaas" label="Export to OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/export.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ExportToSaas"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_ofxYsNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.exit" label="Exit" iconURI="platform:/plugin/OpKeyStudio/icons/exit.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ApplicationExit"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_oQOH4PV2EemEv-Dsdd6Nxw" elementId="opkeystudio.menu.tools" label="Tools">
@@ -39,13 +39,13 @@
     </mainMenu>
     <trimBars xmi:id="_vz6icNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.0">
       <children xsi:type="menu:ToolBar" xmi:id="_wiuJMNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.maintoolbarholder">
-        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.open" label="Import From OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/import.png" tooltip="Import From OpKey SAAS" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBFromOpKeyCommand">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_NN8tANqeEem51cXlp-aEQw" elementId="opkeystudio.directtoolitem.open" label="Import From OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/import.png" tooltip="Import From OpKey SAAS" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBFromOpKeyCommand">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_TqbBMNqeEem51cXlp-aEQw"/>
         </children>
-        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" visible="false" label="Import Local DB" iconURI="platform:/plugin/OpKeyStudio/icons/import.png" tooltip="Import Local DB" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportLocalDB">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_R7IlMAXdEeqm4_Ox7Tro1w" elementId="opkeystudio.directtoolitem.item2" visible="false" label="Import Local DB" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/importdb.png" tooltip="Import Local DB" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportLocalDB">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UFWaAAXdEeqm4_Ox7Tro1w"/>
         </children>
-        <children xsi:type="menu:DirectToolItem" xmi:id="_VgQNIED2EeqJe4vmkghIxQ" elementId="opkeystudio.directtoolitem.exporttoopkeysaas" label="Export To OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/export.png" tooltip="Export To OpKey SAAS" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ExportToSaas"/>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_VgQNIED2EeqJe4vmkghIxQ" elementId="opkeystudio.directtoolitem.exporttoopkeysaas" label="Export To OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/export.png" tooltip="Export To OpKey SAAS" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ExportToSaas"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_xg_vUNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.mainstatusbarholder" side="Bottom">

@@ -80,8 +80,12 @@ public class DtoToCodeConverter {
 				if (oap.getProperty().toLowerCase().equals("objectimage")) {
 					continue;
 				}
+				String value = oap.getValue();
+				if (value == null) {
+					value = "";
+				}
 				String methodBody = String.format(methodCall, oap.getProperty(),
-						oap.getValue().trim().replace("\\", "\\\\").replace("\"", "\\\""));
+						value.trim().replace("\\", "\\\\").replace("\"", "\\\""));
 				if (count == 0) {
 					methodBody = orobject.getVariableName() + methodBody;
 				}
