@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.InjectionException;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
@@ -63,15 +64,21 @@ public class Utilities {
 	}
 
 	public void closeAllMparts() {
-		Collection<MPart> allParts = getAllParts();
-		System.out.println("All Parts " + allParts.size());
-		for (MPart mpart : allParts) {
-			System.out.println("Closing Already Opened Mparts");
-			Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-			if (artifact_0 != null) {
-				EPartService partService = Utilities.getInstance().getEpartService();
-				partService.hidePart(mpart, true);
+		try {
+			Collection<MPart> allParts = getAllParts();
+			System.out.println("All Parts " + allParts.size());
+			for (MPart mpart : allParts) {
+				System.out.println("Closing Already Opened Mparts");
+				Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+				if (artifact_0 != null) {
+					EPartService partService = Utilities.getInstance().getEpartService();
+					partService.hidePart(mpart, true);
+				}
 			}
+		} catch (InjectionException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

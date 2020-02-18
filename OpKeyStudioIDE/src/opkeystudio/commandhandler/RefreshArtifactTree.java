@@ -16,8 +16,11 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository
 public class RefreshArtifactTree {
 	@Execute
 	public void execute(Shell shell) throws JsonParseException, JsonMappingException, SQLException, IOException {
+
+	}
+	
+	public void refreshArtifactTree() {
 		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 		tree.renderArtifacts();
 	}
-
 }

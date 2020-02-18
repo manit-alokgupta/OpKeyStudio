@@ -117,7 +117,7 @@ public class ObjectRepositoryView extends Composite {
 				public void widgetSelected(SelectionEvent e) {
 					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name,
-							item.getText());
+							item.getText(), objectRepositoryTree.getObjectRepositoriesData());
 					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
 					toggleSaveButton(true);
 					objectRepositoryTree.refreshObjectRepositories();
@@ -146,7 +146,8 @@ public class ObjectRepositoryView extends Composite {
 					ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
 					ORObject selectedobject = treeItem.getObjectRepository();
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
-							selectedobject.getObject_id(), name, item.getText());
+							selectedobject.getObject_id(), name, item.getText(),
+							objectRepositoryTree.getObjectRepositoriesData());
 					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
 					toggleSaveButton(true);
 					objectRepositoryTree.refreshObjectRepositories();

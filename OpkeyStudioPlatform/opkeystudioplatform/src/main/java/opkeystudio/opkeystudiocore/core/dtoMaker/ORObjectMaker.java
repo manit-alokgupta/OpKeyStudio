@@ -33,7 +33,11 @@ public class ORObjectMaker {
 	String[] childORAttrs = new String[] { "name", "tag", "title", "class", "style" };
 
 	public ORObject getORObjectDTO(Artifact artifact, String orid, String parentId, String objectName,
-			String objectType) {
+			String objectType, List<ORObject> allORObjects) {
+		int position = 0;
+		if (allORObjects.size() > 0) {
+			position = allORObjects.get(allORObjects.size() - 1).getPosition() + 10;
+		}
 		ORObject orobject = new ORObject();
 		orobject.setObject_id(Utilities.getInstance().getUniqueUUID(""));
 		orobject.setOr_id(orid);
@@ -47,6 +51,7 @@ public class ORObjectMaker {
 		orobject.setName(objectName);
 		orobject.setOpkeytype(objectType);
 		orobject.setAdded(true);
+		orobject.setPosition(position);
 		List<ObjectAttributeProperty> orprops = new ArrayList<ObjectAttributeProperty>();
 		if (parentId == null) {
 			for (String parentOR : parentORAttrs) {

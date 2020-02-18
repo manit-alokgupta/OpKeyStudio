@@ -125,7 +125,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllORObjects() {
-		String query = "select * from or_objects";
+		String query = "select * from or_objects order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ORObject.class);
@@ -140,7 +140,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllORObjectsObjectProperties() {
-		String query = "select * from or_object_properties";
+		String query = "select * from or_object_properties order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,

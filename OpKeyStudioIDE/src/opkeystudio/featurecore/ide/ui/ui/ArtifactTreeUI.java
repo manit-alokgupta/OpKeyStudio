@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.commandhandler.RefreshArtifactTree;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
@@ -38,6 +39,7 @@ public class ArtifactTreeUI extends Composite {
 	private ToolItem toolbarRename;
 	private ToolItem toolbarDelete;
 	private ToolItem toolbarNew;
+	private ToolItem toolbarRefresh;
 	String[] items = {};
 	private Menu menu_1;
 	private Menu newMenu;
@@ -161,6 +163,12 @@ public class ArtifactTreeUI extends Composite {
 		toolbarDelete.setToolTipText("Delete");
 
 //		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
+		toolbarRefresh = new ToolItem(toolBar_1, SWT.NONE);
+		// toolbarDelete.setText("Delete");
+		toolbarRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+	//	toolbarRefresh.setEnabled(false);
+		toolbarRefresh.setToolTipText("Refresh");
 
 		artifactTree = new ArtifactTree(this, SWT.BORDER);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -636,6 +644,19 @@ public class ArtifactTreeUI extends Composite {
 			}
 		});
 
+		toolbarRefresh.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				new RefreshArtifactTree().refreshArtifactTree();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		toolbarFolder.addSelectionListener(new SelectionListener() {
 
 			@Override
