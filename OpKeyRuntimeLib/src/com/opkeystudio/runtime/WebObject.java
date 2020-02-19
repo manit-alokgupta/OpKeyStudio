@@ -14,6 +14,7 @@ public class WebObject {
 	private String textContent;
 	private String css;
 	private List<String> xpaths = new ArrayList<String>();
+	private int index = 0;
 
 	public String getId() {
 		return id;
@@ -93,6 +94,14 @@ public class WebObject {
 
 	public void setCss(String css) {
 		this.css = css;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 }

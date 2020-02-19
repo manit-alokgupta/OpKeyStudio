@@ -113,11 +113,19 @@ public class OpKeyWebPlayer {
 	}
 
 	public WebElement selectRadioButton(ORObject orobject) {
-		WebElement element = findWebElement(orobject);
-		if (element.isSelected() == false) {
-			element.click();
+		int index = 0;
+		WebObject webObject = convertORObjectToWebObject(orobject);
+		index = webObject.getIndex();
+		List<WebElement> radioButtons = findWebElements(webObject);
+		System.out.println("Radio Buttons Size "+radioButtons.size());
+		if (radioButtons.size() > 0) {
+			if (radioButtons.size() > index) {
+				WebElement element = radioButtons.get(index);
+				element.click();
+				return element;
+			}
 		}
-		return element;
+		return null;
 	}
 
 	public boolean verifyObjectExists(ORObject orobject) {
@@ -279,6 +287,67 @@ public class OpKeyWebPlayer {
 		return null;
 	}
 
+	public List<WebElement> findWebElements(WebObject webObject) {
+		int i = 0;
+		while (i < getFinderTimeout()) {
+			waitForPageLoad();
+			sleep(1);
+			WebDriver driver = getCurrentWebDriver();
+			if (webObject.getId() != null) {
+				List<WebElement> elements = driver.findElements(By.id(webObject.getId()));
+				if (elements.size() > 0) {
+					System.out.println(">>Element Found By Id " + webObject.getId());
+					return elements;
+				}
+			}
+
+			if (webObject.getName() != null) {
+				List<WebElement> elements = driver.findElements(By.name(webObject.getName()));
+				if (elements.size() > 0) {
+					System.out.println(">>Element Found By Name " + webObject.getName());
+					return elements;
+				}
+			}
+
+			if (webObject.getClassName() != null) {
+				List<WebElement> elements = driver.findElements(By.className(webObject.getClassName()));
+				if (elements.size() > 0) {
+					System.out.println(">>Element Found By ClassName " + webObject.getClassName());
+					return elements;
+				}
+			}
+
+			for (String xpath : webObject.getXpaths()) {
+				try {
+					List<WebElement> elements = driver.findElements(By.xpath(xpath));
+					if (elements.size() > 0) {
+						System.out.println(">>Element Found By Xpath " + xpath);
+						return elements;
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+
+			if (webObject.getCss() != null) {
+				List<WebElement> elements = driver.findElements(By.cssSelector(webObject.getCss()));
+				if (elements.size() > 0) {
+					System.out.println(">>Element Found By Css " + webObject.getCss());
+					return elements;
+				}
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			i++;
+		}
+		System.out.println(">>Element Not Found");
+		return new ArrayList<WebElement>();
+	}
+
 	public WebElement mouseHover(ORObject orobject) {
 		WebElement element = findWebElement(orobject);
 		Actions actions = new Actions(getCurrentWebDriver());
@@ -334,6 +403,9 @@ public class OpKeyWebPlayer {
 			}
 			if (key.equalsIgnoreCase("css")) {
 				object.setCss(value);
+			}
+			if (key.equalsIgnoreCase("index")) {
+				object.setIndex(Integer.parseInt(value));
 			}
 		}
 		return object;
