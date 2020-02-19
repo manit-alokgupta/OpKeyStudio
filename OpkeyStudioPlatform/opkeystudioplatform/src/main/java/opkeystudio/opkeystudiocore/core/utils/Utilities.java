@@ -80,8 +80,8 @@ public class Utilities {
 	}
 
 	public String getDefaultInstallDir() {
-		 return "E:\\OpKeyEResources";
-		//Sreturn defaultInstallDir;
+		// return "E:\\OpKeyEResources";
+		return defaultInstallDir;
 	}
 
 	public String getDefaultPluginBaseDir() {
