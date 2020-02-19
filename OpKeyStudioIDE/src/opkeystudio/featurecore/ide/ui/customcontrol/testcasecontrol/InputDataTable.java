@@ -18,7 +18,6 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -160,6 +159,7 @@ public class InputDataTable extends CustomTable {
 
 	private void addInputTableEditor(CustomTableItem item)
 			throws JsonParseException, JsonMappingException, IOException {
+		item.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
 		FlowInputArgument flowInputArgument = (FlowInputArgument) item.getControlData();
 		DataSource dataSourceType = null;
 		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {

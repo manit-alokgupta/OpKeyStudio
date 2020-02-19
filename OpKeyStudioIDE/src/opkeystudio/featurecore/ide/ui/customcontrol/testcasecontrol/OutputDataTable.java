@@ -18,10 +18,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -223,6 +225,7 @@ public class OutputDataTable extends CustomTable {
 			CustomTableItem cti = new CustomTableItem(this, 0);
 			cti.setText(new String[] { keyword.getOutputtype(), "Output", flowOutPutArg.getOutputvariablename() });
 			cti.setControlData(flowOutPutArg);
+			cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 		}
 	}
 
@@ -235,6 +238,7 @@ public class OutputDataTable extends CustomTable {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { flowOutPutArg.getOutputvariablename(), "" });
 				cti.setControlData(flowOutPutArg);
+				cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			}
 		}
 	}

@@ -19,6 +19,7 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -124,6 +125,7 @@ public class TestObjectTable extends CustomTable {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { "Object", orobject.getName(), "", "" });
 				cti.setControlData(orobject);
+				cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
 			}
 			return;
 		}
@@ -131,6 +133,7 @@ public class TestObjectTable extends CustomTable {
 			if (flowStep.getKeyword().isKeywordContainsORObject()) {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { "Object", "", "", "" });
+				cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
 			}
 		}
 	}
