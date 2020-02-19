@@ -71,17 +71,17 @@ public class CodedFunctionView extends Composite {
 		runButton.setText("Run");
 		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
 		runButton.setToolTipText("Run");
-		
+
 		saveButton = new ToolItem(toolBar, SWT.NONE);
 		saveButton.setText("Save");
-		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
+		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_TOOL_ICON));
 		saveButton.setToolTipText("Save");
-		
+
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setText("Refresh");
-		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		refreshButton.setToolTipText("Refresh");
-		
+
 		editor = new JavaCodeEditor(this, this);
 		editor.setArtifact(getArtifact());
 		toggleSaveButton(false);

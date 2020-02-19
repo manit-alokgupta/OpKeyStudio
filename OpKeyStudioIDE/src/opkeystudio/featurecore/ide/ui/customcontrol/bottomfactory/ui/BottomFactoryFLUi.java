@@ -32,6 +32,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTa
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 
@@ -85,7 +86,8 @@ public class BottomFactoryFLUi extends Composite {
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
 		item.setText("Function Library");
 		item.setHeight(250);
-
+		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
+		
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
 		item.setControl(grpMenu);

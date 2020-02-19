@@ -100,7 +100,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
 		item.setText("Coded FL Arguments");
 		item.setHeight(200);
-
+		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
 		item.setControl(grpMenu);

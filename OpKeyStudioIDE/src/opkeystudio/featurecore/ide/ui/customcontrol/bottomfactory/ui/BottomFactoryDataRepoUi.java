@@ -18,12 +18,14 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 
 public class BottomFactoryDataRepoUi extends Composite {
 	private UsedByTable usedByTable;
@@ -59,7 +61,8 @@ public class BottomFactoryDataRepoUi extends Composite {
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
 		item.setText("Bottom Factory");
 		item.setHeight(400);
-
+		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
+		
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
 		item.setControl(grpMenu);

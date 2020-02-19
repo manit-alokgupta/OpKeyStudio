@@ -20,10 +20,13 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+
+import opkeystudio.iconManager.OpKeyStudioIcons;
 
 public class BottomFactoryTestSuiteUi extends Composite {
 	private Display display;
@@ -52,7 +55,8 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
 		item.setText("Bottom Factory");
 		item.setHeight(400);
-
+		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
+		
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
 		item.setControl(grpMenu);

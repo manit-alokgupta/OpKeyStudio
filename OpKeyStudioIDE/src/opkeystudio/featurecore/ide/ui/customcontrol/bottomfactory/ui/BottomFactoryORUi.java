@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.BackupTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TagTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 
 public class BottomFactoryORUi extends Composite {
@@ -68,7 +69,8 @@ public class BottomFactoryORUi extends Composite {
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
 		item.setText("Bottom Factory");
 		item.setHeight(400);
-
+		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
+		
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
 		item.setControl(grpMenu);
