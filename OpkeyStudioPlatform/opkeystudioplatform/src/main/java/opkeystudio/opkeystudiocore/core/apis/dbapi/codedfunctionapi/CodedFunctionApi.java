@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +26,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
-import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CodedFunctionApi {
@@ -148,7 +146,7 @@ public class CodedFunctionApi {
 		new ArtifactApi().updateArtifact(artifact);
 		String[] fileData = libraryFile.getName().split("\\.");
 		String fileName = fileData[0];
-		//fileName = fileName + artifact.getId().replaceAll("-", "_");
+		// fileName = fileName + artifact.getId().replaceAll("-", "_");
 		String fileExtension = fileData[fileData.length - 1];
 
 		List<MainFileStoreDTO> fileStoreDtos = GlobalLoader.getInstance().getAllMainFileStoreDtos();
@@ -183,6 +181,34 @@ public class CodedFunctionApi {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}
+				List<CFLibraryMap> filteredLibraryMaps = new ArrayList<CFLibraryMap>();
+				List<CFLibraryMap> libraryMaps = GlobalLoader.getInstance().getAllLibraryMaps();
+				for (CFLibraryMap libraryMap : libraryMaps) {
+					if (libraryMap.getCf_id().equals(artifact.getId())) {
+						filteredLibraryMaps.add(libraryMap);
+					}
+				}
+				if (filteredLibraryMaps.size() == 0) {
+					CFLibraryMap cflibraryMap = new CFLibraryMap();
+					cflibraryMap.setCf_id(artifact.getId());
+					cflibraryMap.setF_id(f_id);
+					String cflmQuery = new QueryMaker().createInsertQuery(cflibraryMap, "cf_library_map", "");
+					QueryExecutor.getInstance().executeUpdateQuery(cflmQuery);
+				} else {
+					boolean libraryMappingFound = false;
+					for (CFLibraryMap libraryMap : filteredLibraryMaps) {
+						if (libraryMap.getF_id().equals(f_id)) {
+							libraryMappingFound = true;
+						}
+					}
+					if (libraryMappingFound == false) {
+						CFLibraryMap cflibraryMap = new CFLibraryMap();
+						cflibraryMap.setCf_id(artifact.getId());
+						cflibraryMap.setF_id(f_id);
+						String cflmQuery = new QueryMaker().createInsertQuery(cflibraryMap, "cf_library_map", "");
+						QueryExecutor.getInstance().executeUpdateQuery(cflmQuery);
+					}
 				}
 				GlobalLoader.getInstance().initAllCFLibraryMap();
 				GlobalLoader.getInstance().initAllMainFileStoreDTOS();

@@ -148,7 +148,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 			CustomTableItem cti = new CustomTableItem(this, 0);
 			cti.setText(new String[] { fileStoreDto.getFilename(), fileStoreDto.getExtension() });
 			cti.setControlData(fileStoreDto);
-			cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
+			cti.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
 		}
 		selectDefaultRow();
 	}
