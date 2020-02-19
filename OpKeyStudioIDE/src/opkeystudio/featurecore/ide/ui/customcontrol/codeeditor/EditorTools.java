@@ -3,6 +3,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -265,6 +266,12 @@ public class EditorTools {
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("run");
 		Object result = method.invoke(instance);
+		try {
+			child.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public List<CompileError> filterErrors(List<CompileError> errors, Kind kind) {
