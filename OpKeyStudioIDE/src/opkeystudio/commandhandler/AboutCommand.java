@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Shell;
 public class AboutCommand {
 	@Execute
 	public void execute(Shell shell) {
-		MessageDialog.openInformation(shell, "About OpKey Studio", "");
+		MessageDialog.openInformation(shell, "About OpKey Studio", "OpKey-E is a product of OpKey. Visit https://www.opkey.com/");
 	}
 		
 }
