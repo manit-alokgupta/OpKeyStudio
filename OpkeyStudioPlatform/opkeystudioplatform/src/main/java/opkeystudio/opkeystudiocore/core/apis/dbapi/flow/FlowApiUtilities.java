@@ -42,19 +42,29 @@ public class FlowApiUtilities {
 			}
 		}
 		if (!outData.isEmpty()) {
-			return "Output: " + outData;
+			return "Output: " + "<"+outData+">";
 		}
-		return outData;
+		return "Output: <>";
 	}
 
-	public String getFlowInputArgumentsString(FlowStep flowStep) {
+	public String getFlowInputPutArgumentsString(FlowStep flowStep) {
 		String outData = "";
-		for (FlowInputArgument flowInputArgument : flowStep.getFlowInputArgs()) {
+		List<FlowInputArgument> flowStepInputargs = flowStep.getFlowInputArgs();
+		if (flowStepInputargs.size() == 0) {
+			return "";
+		}
+		for (FlowInputArgument flowInputArgument : flowStepInputargs) {
+			if (!outData.isEmpty()) {
+				outData += "|";
+			}
 			if (flowInputArgument.getStaticvalue() != null) {
 				outData += flowInputArgument.getStaticvalue();
 			}
 		}
-		return outData;
+		if (!outData.isEmpty()) {
+			return "Input: " + "<"+outData+">";
+		}
+		return "Input: <>";
 	}
 
 	private void removeAllInputValues(Artifact artifact, FlowInputArgument flowInputArgument) {
