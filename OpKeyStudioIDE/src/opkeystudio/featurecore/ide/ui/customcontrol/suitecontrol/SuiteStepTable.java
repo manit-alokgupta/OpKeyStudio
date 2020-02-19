@@ -133,8 +133,9 @@ public class SuiteStepTable extends CustomTable {
 		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		moveupMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 		movedownMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
-		setToRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
-		skipfromRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
+		setToRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SET_TO_RUN_ICON));
+		skipfromRunMenuItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SKIP_FROM_RUN_ICON));
 		copyMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override

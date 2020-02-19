@@ -144,7 +144,6 @@ public class FlowStepTable extends CustomTable {
 		setToRunMenuItem.setText("Set to Run");
 		skipfromRunMenuItem.setText("Skip from Run");
 
-		
 		openInNewTabMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OPEN_ICON));
 		copyMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COPY_ICON));
 		pasteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.PASTE_ICON));
@@ -152,8 +151,9 @@ public class FlowStepTable extends CustomTable {
 		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		moveupMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 		movedownMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
-		setToRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
-		skipfromRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
+		setToRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SET_TO_RUN_ICON));
+		skipfromRunMenuItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SKIP_FROM_RUN_ICON));
 		copyMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -393,14 +393,11 @@ public class FlowStepTable extends CustomTable {
 			flowStepTableItem.setImage(1,
 					ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TEXT_KEYWORD_ICON));
 		} else if (flowStep.getFunctionLibraryComponent() != null) {
-			flowStepTableItem.setImage(1,
-					ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
+			flowStepTableItem.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 		}
 		flowStepTableItem.setImage(2, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
-		flowStepTableItem.setImage(3,
-				ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
-		flowStepTableItem.setImage(4,
-				ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+		flowStepTableItem.setImage(3, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
+		flowStepTableItem.setImage(4, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 		flowStepTableItem.setImage(5, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INFO_ICON));
 	}
 
