@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -33,6 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
@@ -172,8 +174,8 @@ public class InputDataTable extends CustomTable {
 			CustomButton button = new CustomButton(this, SWT.NONE | SWT.NO_BACKGROUND);
 			button.setText(globalVar.getName());
 			button.setToolTipText(globalVar.getName());
-			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
-			button.setBackground(new Color(button.getDisplay(), 255, 255, 255));
+			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
+			button.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 			button.addMouseListener(new MouseListener() {
 
 				@Override
@@ -203,8 +205,8 @@ public class InputDataTable extends CustomTable {
 			CustomButton button = new CustomButton(this, SWT.NONE);
 			button.setText(drColumn.getName());
 			button.setToolTipText(drColumn.getName());
-			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
-			button.setBackground(new Color(button.getDisplay(), 255, 255, 255));
+			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_COLUMN_ICON));
+			button.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 			button.addMouseListener(new MouseListener() {
 
 				@Override
@@ -247,8 +249,8 @@ public class InputDataTable extends CustomTable {
 			CustomButton button = new CustomButton(this, SWT.NONE);
 			button.setText(flowOutputArgument.getOutputvariablename());
 			button.setToolTipText(flowOutputArgument.getOutputvariablename());
-			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
-			button.setBackground(new Color(button.getDisplay(), 255, 255, 112));
+			button.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+			button.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 			button.addMouseListener(new MouseListener() {
 
 				@Override
@@ -282,8 +284,8 @@ public class InputDataTable extends CustomTable {
 					button.setText(cia.getName());
 					button.setToolTipText(cia.getName());
 					button.setImage(
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/global_variable.png"));
-					button.setBackground(new Color(button.getDisplay(), 255, 255, 112));
+							ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
+					button.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 					button.addMouseListener(new MouseListener() {
 
 						@Override
