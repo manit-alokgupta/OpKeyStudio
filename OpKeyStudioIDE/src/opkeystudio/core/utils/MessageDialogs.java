@@ -100,4 +100,8 @@ public class MessageDialogs {
 	public void closeProgressDialog() {
 		this.progressDialog.close();
 	}
+
+	public void executeDisplayAsync(Runnable runnable) {
+		Display.getDefault().asyncExec(runnable);
+	}
 }

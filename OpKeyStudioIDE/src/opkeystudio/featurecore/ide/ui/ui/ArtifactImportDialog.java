@@ -350,8 +350,14 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	private void exportArtifact(ArtifactTreeNode artifactTreeNode) throws IOException {
 		boolean status = new ArtifactExporting().exportArtifactFromOpKey(artifactTreeNode);
 		if (status == false) {
-			new MessageDialogs().openErrorDialog("OpKey",
-					"Importing from OpKey SAAS Failed. Please try again after some time.");
+			new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+				@Override
+				public void run() {
+					new MessageDialogs().openErrorDialog("OpKey",
+							"Importing from OpKey SAAS Failed. Please try again after some time.");
+				}
+			});
 		}
 	}
 

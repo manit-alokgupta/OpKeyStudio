@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
 
@@ -126,12 +127,12 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 		addLibrary = new ToolItem(toolBar_1, SWT.NONE);
 		addLibrary.setWidth(27);
-		addLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		addLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
 		addLibrary.setToolTipText("Add 2");
 		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		deleteLibrary = new ToolItem(toolBar_1, SWT.NONE);
-		deleteLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deleteLibrary.setToolTipText("Delete");
 		deleteLibrary.setEnabled(false);
 
@@ -157,7 +158,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		refreshORTable = new ToolItem(toolBar_3, SWT.NONE);
 		refreshORTable.setToolTipText("Refresh");
 		refreshORTable.setText("Refresh");
-		refreshORTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshORTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 
 		associateor = new CFLOrAssociate(associateORHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -180,7 +181,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		refreshDRTable = new ToolItem(toolBar_DR_3, SWT.NONE);
 		refreshDRTable.setToolTipText("Refresh");
 		refreshDRTable.setText("Refresh");
-		refreshDRTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+		refreshDRTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 
 		associatedr = new CFLDRAssociate(associateDRHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 		associatedr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
