@@ -72,5 +72,10 @@ public class OpKeyStudioIcons {
 	public static String SET_TO_RUN_ICON = commonIconsDirPath + "set to run.png";
 	public static String SKIP_FROM_RUN_ICON = commonIconsDirPath + "skipfrom.png";
 	public static String UPDATE_ICON = commonIconsDirPath + "update.png";
+	
+	
+	public static String ASSOCIATE_LIBRARY_ICON = commonIconsDirPath + "assosiate library.png";
+	public static String COMPILATION_ICON = commonIconsDirPath + "compilation.png";
+	public static String CONSOLE_ICON = commonIconsDirPath + "consol.png";
 
 }

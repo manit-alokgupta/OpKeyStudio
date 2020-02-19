@@ -52,7 +52,7 @@ public class ObjectRepositoryTree extends CustomTree {
 		}
 		String objectType = orObject.getOpkeytype();
 		if (objectType.toLowerCase().contains("page")) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR16_ICON));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.PAGECONTROL_ICON));
 		} else if (objectType.toLowerCase().contains("frame")) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.IFRAME_ICON));
 		} else {

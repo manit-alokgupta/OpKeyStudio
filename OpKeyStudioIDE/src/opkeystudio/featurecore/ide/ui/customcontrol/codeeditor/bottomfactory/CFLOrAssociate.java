@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.wb.swt.ResourceManager;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.DtoToCodeConverter;
@@ -25,6 +26,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -191,6 +193,7 @@ public class CFLOrAssociate extends CustomTable {
 			CustomTableItem item = new CustomTableItem(this, 0);
 			item.setText(new String[] { "", artifact.getArtifactVariableName() });
 			item.setControlData(artifact);
+			item.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 			addTableEditor(item);
 		}
 	}

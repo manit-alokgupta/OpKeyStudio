@@ -114,6 +114,8 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		TabItem associateLibrariesTagItem = new TabItem(tabFolder, SWT.NONE);
 		associateLibrariesTagItem.setText("Associate Libraries");
 		associateLibrariesTagItem.setToolTipText("Associate Libraries");
+		associateLibrariesTagItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
 
 		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
 		associateLibrariesTagItem.setControl(composite_7);
@@ -145,6 +147,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		TabItem associateORTabItem = new TabItem(tabFolder, SWT.NONE);
 		associateORTabItem.setText("Associate OR");
 		associateORTabItem.setToolTipText("Associate OR");
+		associateORTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 
 		Composite associateORHolder = new Composite(tabFolder, SWT.NONE);
 		associateORTabItem.setControl(associateORHolder);
@@ -168,6 +171,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		TabItem associateDRTabItem = new TabItem(tabFolder, SWT.NONE);
 		associateDRTabItem.setText("Associate DR");
 		associateDRTabItem.setToolTipText("Associate DR");
+		associateDRTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
 
 		Composite associateDRHolder = new Composite(tabFolder, SWT.NONE);
 		associateDRTabItem.setControl(associateDRHolder);
@@ -298,6 +302,8 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		 */
 		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setText("Compilation Results");
+		compilationResultsTabItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
 
 		Composite compilationResultsComposite = new Composite(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setControl(compilationResultsComposite);
@@ -310,6 +316,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 		TabItem consoleLogTabItem = new TabItem(tabFolder, SWT.NONE);
 		consoleLogTabItem.setText("Console");
+		consoleLogTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CONSOLE_ICON));
 
 		Composite consoleLogComposite = new Composite(tabFolder, SWT.NONE);
 		consoleLogTabItem.setControl(consoleLogComposite);

@@ -16,10 +16,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
@@ -146,6 +148,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 			CustomTableItem cti = new CustomTableItem(this, 0);
 			cti.setText(new String[] { fileStoreDto.getFilename(), fileStoreDto.getExtension() });
 			cti.setControlData(fileStoreDto);
+			cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
 		}
 		selectDefaultRow();
 	}

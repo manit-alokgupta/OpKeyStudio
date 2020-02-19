@@ -210,7 +210,7 @@ public class GenericTree extends CustomTree {
 			}
 		}
 		if (artTreeItem.getControlData() instanceof DRColumnAttributes) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_COLUMN_ICON));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_COLUMN_ICON));
 		}
 	}
 
