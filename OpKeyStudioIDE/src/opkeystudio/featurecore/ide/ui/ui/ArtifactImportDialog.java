@@ -36,6 +36,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
 import opkeystudio.opkeystudiocore.core.apis.dto.Project;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -215,21 +216,21 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	private void addIcon(CustomTreeItem artTreeItem) {
 		ArtifactTreeNode atn = (ArtifactTreeNode) artTreeItem.getControlData();
 		if (atn == null) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		} else if (atn.getType() == Artifact.MODULETYPE.Folder) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/folder.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		} else if (atn.getType() == Artifact.MODULETYPE.Flow) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testcase.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
 		} else if (atn.getType() == Artifact.MODULETYPE.ObjectRepository) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/or.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 		} else if (atn.getType() == Artifact.MODULETYPE.Suite) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/testsuite.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
 		} else if (atn.getType() == Artifact.MODULETYPE.DataRepository) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/note.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
 		} else if (atn.getType() == Artifact.MODULETYPE.Component) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 		} else if (atn.getType() == Artifact.MODULETYPE.CodedFunction) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/new_icons/fl.png"));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		}
 	}
 
@@ -369,7 +370,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		importButton = createButton(parent, IDialogConstants.OK_ID, "Import", true);
-		importButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/import.png"));
+		importButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.IMPORT_ICON));
 		importButton.addSelectionListener(new SelectionListener() {
 
 			@Override
