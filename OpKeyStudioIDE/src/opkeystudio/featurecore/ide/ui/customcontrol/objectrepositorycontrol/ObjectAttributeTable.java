@@ -220,7 +220,7 @@ public class ObjectAttributeTable extends CustomTable {
 			ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 			ImageData imgData = new ImageData(is);
 			Image img = new Image(this.getDisplay(), imgData);
-			CustomLabel label = new CustomLabel(this, 0);
+			CustomLabel label = new CustomLabel(this, SWT.CENTER);
 			label.setText("View Image");
 			label.setControlData(img);
 
