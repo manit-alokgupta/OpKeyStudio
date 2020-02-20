@@ -77,5 +77,8 @@ public class OpKeyStudioIcons {
 	public static String ASSOCIATE_LIBRARY_ICON = commonIconsDirPath + "assosiate library.png";
 	public static String COMPILATION_ICON = commonIconsDirPath + "compilation.png";
 	public static String CONSOLE_ICON = commonIconsDirPath + "consol.png";
+	
+	public static String GREEN_FLAG_ICON = commonIconsDirPath + "greenflag.png";
+	public static String DARK_GREEN_FLAG_ICON = commonIconsDirPath + "darkgreenflag.png";
 
 }

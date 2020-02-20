@@ -232,12 +232,14 @@ public class GenericTree extends CustomTree {
 		for (String groupName : groupNames) {
 			CustomTreeItem cti = new CustomTreeItem(this, 0);
 			cti.setText(groupName);
+			cti.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DARK_GREEN_FLAG_ICON));
 			List<Keyword> keywords = KeywordManager.getInstance().getKeywordGroup(groupName);
 			for (Keyword keyword : keywords) {
 				if (keyword.getName().toLowerCase().startsWith(keywordName.toLowerCase())) {
 					CustomTreeItem keywItem = new CustomTreeItem(cti, 0);
 					keywItem.setText(keyword.getName());
 					keywItem.setControlData(keyword);
+					keywItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GREEN_FLAG_ICON));
 				}
 			}
 			if (!keywordName.trim().isEmpty()) {
