@@ -35,6 +35,8 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
@@ -267,6 +269,8 @@ public class CodedFunctionView extends Composite {
 
 	public void renderCFLCode() {
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
+		List<CFLInputParameter> inputParams = GlobalLoader.getInstance().getCFLInputParameters(getArtifact());
+		List<CFLOutputParameter> outputParams = GlobalLoader.getInstance().getCFLOutputParameters(getArtifact());
 		if (cflcodes.size() > 0) {
 			CFLCode cflcode = cflcodes.get(0);
 			String imports = "";
@@ -274,13 +278,13 @@ public class CodedFunctionView extends Composite {
 				imports = cflcode.getImportpackages();
 			}
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports);
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, inputParams, outputParams);
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
 			CodedFunctionArtifact cfa = new CodedFunctionArtifact();
 			cfa.setCflCode(editor.getCflCode());
-			cfa.setCflInputParameters(GlobalLoader.getInstance().getCFLInputParameters(getArtifact()));
-			cfa.setCflOutputParameters(GlobalLoader.getInstance().getCFLOutputParameters(getArtifact()));
+			cfa.setCflInputParameters(inputParams);
+			cfa.setCflOutputParameters(outputParams);
 			editor.setCodedFunctionArtifact(cfa);
 		}
 		if (cflcodes.size() == 0) {
@@ -291,13 +295,13 @@ public class CodedFunctionView extends Composite {
 			cflcode.setLanguage("JAVA");
 			cflcode.setPluginid("2626b33a-a06c-408c-8f69-f8f1490a49bb");
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "");
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "", inputParams, outputParams);
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
 			CodedFunctionArtifact cfa = new CodedFunctionArtifact();
 			cfa.setCflCode(editor.getCflCode());
-			cfa.setCflInputParameters(GlobalLoader.getInstance().getCFLInputParameters(getArtifact()));
-			cfa.setCflOutputParameters(GlobalLoader.getInstance().getCFLOutputParameters(getArtifact()));
+			cfa.setCflInputParameters(inputParams);
+			cfa.setCflOutputParameters(outputParams);
 			editor.setCodedFunctionArtifact(cfa);
 		}
 	}

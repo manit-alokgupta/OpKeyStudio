@@ -277,8 +277,8 @@ public class CodedFunctionApi {
 		return bArray;
 	}
 
-	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode,
-			String imports) {
+	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode, String imports,
+			List<CFLInputParameter> cflInputParameters, List<CFLOutputParameter> cflOutPutParameters) {
 		JavaClassSource _class = Roaster.create(JavaClassSource.class);
 		_class.setName(className).setPublic();
 		_class.addImport("com.crestech.opkey.plugin.contexts.Context");
