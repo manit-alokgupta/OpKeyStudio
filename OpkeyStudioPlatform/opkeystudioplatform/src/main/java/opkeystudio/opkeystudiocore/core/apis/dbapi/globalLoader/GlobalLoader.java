@@ -246,7 +246,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllCFLInputParameters() {
-		String query = "select * from cf_input_parameters";
+		String query = "select * from cf_input_parameters order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLInputParameter.class);
@@ -262,7 +262,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllCFLOutputParameters() {
-		String query = "select * from cf_output_parameters";
+		String query = "select * from cf_output_parameters order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLOutputParameter.class);

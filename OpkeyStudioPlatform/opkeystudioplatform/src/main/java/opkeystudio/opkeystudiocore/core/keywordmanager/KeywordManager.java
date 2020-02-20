@@ -15,6 +15,8 @@ public class KeywordManager {
 	private static KeywordManager manager;
 	private List<Keyword> allKeywords = new ArrayList<>();
 	private Map<String, List<Keyword>> allGroupedKeywords = new HashMap<>();
+	private String[] allowedPlugins = new String[] { "Appium Keywords", "Control Flow Constructs",
+			"OpKey Generic Keywords", "System Keywords", "Web Keywords" };
 
 	public static KeywordManager getInstance() {
 		if (manager == null) {
@@ -111,6 +113,9 @@ public class KeywordManager {
 	}
 
 	private void addKeywordInGroup(String groupName, Keyword keyword) {
+		if (!isGroupNameAllowed(groupName)) {
+			return;
+		}
 		if (getAllGroupedKeywords().containsKey(groupName)) {
 			List<Keyword> groupedKeywords = getAllGroupedKeywords().get(groupName);
 			groupedKeywords.add(keyword);
@@ -120,6 +125,17 @@ public class KeywordManager {
 		List<Keyword> groupedKeywords = new ArrayList<Keyword>();
 		groupedKeywords.add(keyword);
 		getAllGroupedKeywords().put(groupName, groupedKeywords);
+	}
+
+	private boolean isGroupNameAllowed(String keywordGroupName) {
+		for (String groupName : this.allowedPlugins) {
+			groupName = groupName.toLowerCase().trim().replaceAll(" ", "");
+			keywordGroupName = keywordGroupName.toLowerCase().trim().replaceAll(" ", "");
+			if (groupName.equals(keywordGroupName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
