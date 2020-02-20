@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.apache.commons.io.FileUtils;
-import org.assertj.core.util.Files;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
@@ -196,7 +194,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		inputTabItem.setText("Input");
 		inputTabItem.setToolTipText("Input");
 		inputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
-		
+
 		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
 		inputTabItem.setControl(composite_11);
 		composite_11.setLayout(new GridLayout(1, false));
@@ -227,16 +225,14 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 		moveDownInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
 		moveDownInputItem.setToolTipText("Move Down");
-		moveDownInputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
+		moveDownInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		moveDownInputItem.setEnabled(false);
 
 		ToolItem toolItem_3 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
 
 		refreshInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
 		refreshInputItem.setToolTipText("Refresh");
-		refreshInputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
+		refreshInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 
 		inputTable = new CFLInputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION, this);
 		inputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -262,24 +258,21 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		ToolItem toolItem_4 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
 
 		deleteOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		deleteOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		deleteOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deleteOutputItem.setToolTipText("Delete");
 		deleteOutputItem.setEnabled(false);
 
 		ToolItem toolItem_5 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
 
 		moveUpOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		moveUpOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
+		moveUpOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 		moveUpOutputItem.setToolTipText("Move Up");
 		moveUpOutputItem.setEnabled(false);
 
 		ToolItem toolItem_6 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
 
 		moveDownOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		moveDownOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
+		moveDownOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		moveDownOutputItem.setToolTipText("Move Down");
 		moveDownOutputItem.setEnabled(false);
 
@@ -287,8 +280,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 		refreshOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
 		refreshOutputItem.setToolTipText("Refresh");
-		refreshOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
+		refreshOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 
 		outputTable = new CFLOutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION, this);
 		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -628,5 +620,13 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 	public void setConsoleLogTextView(StyledText consoleLogTextView) {
 		this.consoleLogTextView = consoleLogTextView;
+	}
+
+	public CFLInputTable getCFLInputTable() {
+		return this.inputTable;
+	}
+
+	public CFLOutputTable getCFLOutputTable() {
+		return this.outputTable;
 	}
 }

@@ -463,4 +463,26 @@ public class GlobalLoader {
 	public void setAllMainFileStoreDtos(List<MainFileStoreDTO> allMainFileStoreDtos) {
 		this.allMainFileStoreDtos = allMainFileStoreDtos;
 	}
+
+	public List<CFLInputParameter> getCFLInputParameters(Artifact cfartifact) {
+		List<CFLInputParameter> inputParams = new ArrayList<CFLInputParameter>();
+		List<CFLInputParameter> cflInputParameters = GlobalLoader.getInstance().getAllCFLInputParameters();
+		for (CFLInputParameter cflInputParam : cflInputParameters) {
+			if (cflInputParam.getCf_id().equals(cfartifact.getId())) {
+				inputParams.add(cflInputParam);
+			}
+		}
+		return inputParams;
+	}
+
+	public List<CFLOutputParameter> getCFLOutputParameters(Artifact cfartifact) {
+		List<CFLOutputParameter> outputParams = new ArrayList<CFLOutputParameter>();
+		List<CFLOutputParameter> cflOutputParameters = GlobalLoader.getInstance().getAllCFLOutputParameters();
+		for (CFLOutputParameter cflOutputParam : cflOutputParameters) {
+			if (cflOutputParam.getCf_id().equals(cfartifact.getId())) {
+				outputParams.add(cflOutputParam);
+			}
+		}
+		return outputParams;
+	}
 }

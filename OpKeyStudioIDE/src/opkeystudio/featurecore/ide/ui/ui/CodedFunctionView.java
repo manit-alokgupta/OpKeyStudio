@@ -33,8 +33,10 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class CodedFunctionView extends Composite {
@@ -191,7 +193,8 @@ public class CodedFunctionView extends Composite {
 			}
 		});
 		renderCFLCode();
-
+		bottomFactoryUi.getCFLInputTable().renderCFLInputParameters();
+		bottomFactoryUi.getCFLOutputTable().renderCFLOutputParameters();
 	}
 
 	public void refreshIntellisense(boolean reinit) {
@@ -274,6 +277,11 @@ public class CodedFunctionView extends Composite {
 					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports);
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
+			CodedFunctionArtifact cfa = new CodedFunctionArtifact();
+			cfa.setCflCode(editor.getCflCode());
+			cfa.setCflInputParameters(GlobalLoader.getInstance().getCFLInputParameters(getArtifact()));
+			cfa.setCflOutputParameters(GlobalLoader.getInstance().getCFLOutputParameters(getArtifact()));
+			editor.setCodedFunctionArtifact(cfa);
 		}
 		if (cflcodes.size() == 0) {
 			CFLCode cflcode = new CFLCode();
@@ -286,6 +294,11 @@ public class CodedFunctionView extends Composite {
 					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "");
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
+			CodedFunctionArtifact cfa = new CodedFunctionArtifact();
+			cfa.setCflCode(editor.getCflCode());
+			cfa.setCflInputParameters(GlobalLoader.getInstance().getCFLInputParameters(getArtifact()));
+			cfa.setCflOutputParameters(GlobalLoader.getInstance().getCFLOutputParameters(getArtifact()));
+			editor.setCodedFunctionArtifact(cfa);
 		}
 	}
 
