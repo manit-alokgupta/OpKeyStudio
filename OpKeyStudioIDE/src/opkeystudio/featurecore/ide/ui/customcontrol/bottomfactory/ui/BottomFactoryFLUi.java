@@ -146,20 +146,20 @@ public class BottomFactoryFLUi extends Composite {
 
 		addInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
 		addInputItem.setToolTipText("Add");
-		addInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		addInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
 
 		ToolItem toolItem = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
 
 		deleteInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
 		deleteInputItem.setToolTipText("Delete");
-		deleteInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+		deleteInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deleteInputItem.setEnabled(false);
 
 		ToolItem toolItem_1 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
 
 		moveUpInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
 		moveUpInputItem.setToolTipText("Move Up");
-		moveUpInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
+		moveUpInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 		moveUpInputItem.setEnabled(false);
 
 		ToolItem toolItem_2 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
@@ -167,7 +167,7 @@ public class BottomFactoryFLUi extends Composite {
 		moveDownInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
 		moveDownInputItem.setToolTipText("Move Down");
 		moveDownInputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		moveDownInputItem.setEnabled(false);
 
 		ToolItem toolItem_3 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
@@ -175,7 +175,7 @@ public class BottomFactoryFLUi extends Composite {
 		refreshInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
 		refreshInputItem.setToolTipText("Refresh");
 		refreshInputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 
 		inputTable = new InputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		inputTable = new Table(composite_11, SWT.BORDER | SWT.FULL_SELECTION);
@@ -196,14 +196,14 @@ public class BottomFactoryFLUi extends Composite {
 		outputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
 		addOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		addOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/add_icon.png"));
+		addOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
 		addOutputItem.setToolTipText("Add");
 
 		ToolItem toolItem_4 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
 
 		deleteOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
 		deleteOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/delete_icon.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deleteOutputItem.setToolTipText("Delete");
 		deleteOutputItem.setEnabled(false);
 
@@ -211,7 +211,7 @@ public class BottomFactoryFLUi extends Composite {
 
 		moveUpOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
 		moveUpOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/moveup_icon.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 		moveUpOutputItem.setToolTipText("Move Up");
 		moveUpOutputItem.setEnabled(false);
 
@@ -219,7 +219,7 @@ public class BottomFactoryFLUi extends Composite {
 
 		moveDownOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
 		moveDownOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/movedown_icon.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		moveDownOutputItem.setToolTipText("Move Down");
 		moveDownOutputItem.setEnabled(false);
 
@@ -228,7 +228,7 @@ public class BottomFactoryFLUi extends Composite {
 		refreshOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
 		refreshOutputItem.setToolTipText("Refresh");
 		refreshOutputItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/testcase_icons/refresh_icon.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 
 		outputTable = new OutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION, this);
 //		outputTable = new Table(composite_12, SWT.BORDER | SWT.FULL_SELECTION);
