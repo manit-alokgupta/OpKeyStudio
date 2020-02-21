@@ -9,6 +9,7 @@ import pcloudystudio.objectspy.element.SnapshotMobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class RenderedTreeSnapshotMobileElement<T> extends BasicMobileElement
@@ -34,7 +35,7 @@ public abstract class RenderedTreeSnapshotMobileElement<T> extends BasicMobileEl
 	protected String makeXpath() {
 		final String tagName = this.getTagName();
 		final int index = this.getIndexPropertyForElement(tagName);
-		String xpath = StringUtils.isEmpty(tagName) ? "//*" : ("/" + tagName);
+		String xpath = tagName==null ? "//*" : ("/" + tagName);
 		if (index > 0) {
 			xpath = String.valueOf(xpath) + "[" + index + "]";
 		}
@@ -42,12 +43,12 @@ public abstract class RenderedTreeSnapshotMobileElement<T> extends BasicMobileEl
 			return "/" + xpath;
 		}
 		final String parentXpath = this.parentElement.getXpath();
-		xpath = String.valueOf(StringUtils.isEmpty(parentXpath) ? "//*" : parentXpath) + xpath;
+		xpath = String.valueOf(parentXpath==null ? "//*" : parentXpath) + xpath;
 		return xpath;
 	}
 
 	private int getIndexPropertyForElement(final String tagName) {
-		if (StringUtils.isEmpty(tagName) || this.parentElement == null) {
+		if (tagName==null || this.parentElement == null) {
 			return 0;
 		}
 		int index = 1;

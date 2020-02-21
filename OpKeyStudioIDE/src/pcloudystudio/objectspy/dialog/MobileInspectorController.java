@@ -127,7 +127,7 @@ public class MobileInspectorController {
 		final String pattern = "(\\\"([^=])*\\\")";
 		final Pattern pattern2 = Pattern.compile(pattern);
 		final Matcher matcher = pattern2.matcher(contentBuilder);
-		StrBuilder sb = new StrBuilder(contentBuilder);
+		StringBuilder sb = new StringBuilder(contentBuilder);
 		while (matcher.find()) {
 			final String str = matcher.group(1).substring(1, matcher.group(1).length() - 1);
 			sb = sb.replaceFirst(StrMatcher.stringMatcher(str), StringEscapeUtils.escapeXml(str));
