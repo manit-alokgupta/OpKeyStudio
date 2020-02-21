@@ -45,9 +45,9 @@ public class TreeViewer {
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(treeViewer.getTree());
 		treeViewer.setContentProvider(contentProvider);
 		treeViewer.setLabelProvider(labelProvider);
-		treeViewer.setAutoExpandLevel(30);
 		treeViewer.setInput((Object) new Object[] { MobileObjectSpyDialog.appRootElement });
-
+		treeViewer.refresh();
+		treeViewer.expandAll();
 	}
 
 }

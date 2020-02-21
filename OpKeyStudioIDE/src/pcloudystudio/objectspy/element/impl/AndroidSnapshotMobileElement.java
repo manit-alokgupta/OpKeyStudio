@@ -43,7 +43,7 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 	public void convertXMLElementToWebElementForAndroid(final Element xmlElement) {
 
 		final Map<String, String> htmlMobileElementProps = this.getAttributes();
-		if (xmlElement.getAttribute("class")!=null) {
+		if (xmlElement.getAttribute("class") != null) {
 			htmlMobileElementProps.put("class", xmlElement.getAttribute("class"));
 		}
 		String instance = "0";
@@ -105,11 +105,12 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 			htmlMobileElementProps.put("height", String.valueOf(bottom - top));
 		}
 		String guiName = htmlMobileElementProps.get("class");
-		if (guiName!=null) {
-			guiName = String.valueOf(guiName) + instance;
+		if (guiName != null) {
+			guiName = String.valueOf(guiName);
 			if (htmlMobileElementProps.get("text") != null) {
-				guiName = String.valueOf(guiName) + " " + htmlMobileElementProps.get("text");
+				guiName = String.valueOf(guiName) + " " + " {" + htmlMobileElementProps.get("text") + "} ";
 			}
+			guiName = String.valueOf(guiName) + " " + xmlElement.getAttribute("bounds");
 			if (guiName.contains("\n")) {
 				guiName = guiName.replace("\n", "");
 			}
