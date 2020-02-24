@@ -7,7 +7,6 @@ import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -158,7 +157,8 @@ public class MobileSpyDialog extends Dialog {
 		objectPropertiesTable = new Table(objectPropertiesScrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
 		objectPropertiesTable.setHeaderVisible(true);
 		objectPropertiesTable.setLinesVisible(true);
-
+		objectPropertiesScrolledComposite.setContent(objectPropertiesTable);
+		
 		TableColumn tblclmnName = new TableColumn(objectPropertiesTable, SWT.NONE);
 		tblclmnName.setWidth(96);
 		tblclmnName.setText("Name");
