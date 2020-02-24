@@ -9,11 +9,10 @@ import pcloudystudio.objectspy.element.SnapshotMobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public abstract class RenderedTreeSnapshotMobileElement<T> extends BasicMobileElement
-		implements SnapshotMobileElement<T> {
+implements SnapshotMobileElement<T> {
 	private static final long serialVersionUID = -6452866868131771671L;
 	private final RenderedTreeSnapshotMobileElement<T> parentElement;
 	private List<RenderedTreeSnapshotMobileElement<T>> childrenElement;
@@ -35,7 +34,7 @@ public abstract class RenderedTreeSnapshotMobileElement<T> extends BasicMobileEl
 	protected String makeXpath() {
 		final String tagName = this.getTagName();
 		final int index = this.getIndexPropertyForElement(tagName);
-		String xpath = tagName==null ? "//*" : ("/" + tagName);
+		String xpath = tagName == null ? "//*" : ("/" + tagName);
 		if (index > 0) {
 			xpath = String.valueOf(xpath) + "[" + index + "]";
 		}
@@ -43,12 +42,12 @@ public abstract class RenderedTreeSnapshotMobileElement<T> extends BasicMobileEl
 			return "/" + xpath;
 		}
 		final String parentXpath = this.parentElement.getXpath();
-		xpath = String.valueOf(parentXpath==null ? "//*" : parentXpath) + xpath;
+		xpath = String.valueOf(parentXpath == null ? "//*" : parentXpath) + xpath;
 		return xpath;
 	}
 
 	private int getIndexPropertyForElement(final String tagName) {
-		if (tagName==null || this.parentElement == null) {
+		if (tagName == null || this.parentElement == null) {
 			return 0;
 		}
 		int index = 1;
@@ -112,7 +111,6 @@ public abstract class RenderedTreeSnapshotMobileElement<T> extends BasicMobileEl
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	private boolean containsAllAttributes(final Map<String, String> attributesToVerify) {
 		if (attributesToVerify == null || attributesToVerify.isEmpty()) {
 			return false;
@@ -121,7 +119,8 @@ public abstract class RenderedTreeSnapshotMobileElement<T> extends BasicMobileEl
 		for (final Map.Entry<String, String> entryToVerify : attributesToVerify.entrySet()) {
 			final String key = entryToVerify.getKey();
 			if (!attributes.containsKey(key)
-					|| !ObjectUtils.equals((Object) attributes.get(key), (Object) entryToVerify.getValue())) {
+					|| !((Object) attributes.get(key)).equals(((Object) entryToVerify.getValue()))) {
+				// ObjectUtils.equals((Object) attributes.get(key), (Object) entryToVerify.getValue())
 				return false;
 			}
 		}

@@ -3,7 +3,24 @@ Bundle-ManifestVersion: 2
 Bundle-Name: OpKeyStudio
 Bundle-SymbolicName: OpKeyStudio;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: .,
+ swing2swt.jar
 Bundle-Activator: opkeystudio.Activator
+Export-Package: opkeystudio,
+ opkeystudio.commandhandler,
+ opkeystudio.core.utils,
+ opkeystudio.featurecore.ide.ui.customcontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui,
+ opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.generic,
+ opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol,
+ opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol,
+ opkeystudio.featurecore.ide.ui.ui,
+ opkeystudio.parts.part,
+ opkeystudio.splashHandlers,
+ org.eclipse.wb.swt
 Require-Bundle: org.eclipse.ui.workbench,
  javax.inject;bundle-version="0.0.0",
  org.eclipse.swt;bundle-version="0.0.0",
@@ -31,23 +48,8 @@ Require-Bundle: org.eclipse.ui.workbench,
  org.eclipse.jdt.ui;bundle-version="3.20.0",
  org.eclipse.core.filesystem;bundle-version="1.7.600"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Automatic-Module-Name: OpKeyStudio
+Bundle-ActivationPolicy: lazy
 Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
  javax.inject;version="1.0.0",
  org.eclipse.ui.views.contentoutline
-Bundle-ActivationPolicy: lazy
-Export-Package: opkeystudio,
- opkeystudio.commandhandler,
- opkeystudio.core.utils,
- opkeystudio.featurecore.ide.ui.customcontrol,
- opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui,
- opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol,
- opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol,
- opkeystudio.featurecore.ide.ui.customcontrol.generic,
- opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol,
- opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol,
- opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol,
- opkeystudio.featurecore.ide.ui.ui,
- opkeystudio.parts.part,
- opkeystudio.splashHandlers,
- org.eclipse.wb.swt
+Automatic-Module-Name: OpKeyStudio

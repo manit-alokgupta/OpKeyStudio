@@ -120,8 +120,6 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 		}
 		this.setName(guiName);
 		htmlMobileElementProps.put("xpath", this.makeXpath());
-
-		System.out.println(htmlMobileElementProps);
 	}
 
 	@Override

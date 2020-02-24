@@ -130,7 +130,7 @@ public class MobileInspectorController {
 		StringBuilder sb = new StringBuilder(contentBuilder);
 		while (matcher.find()) {
 			final String str = matcher.group(1).substring(1, matcher.group(1).length() - 1);
-			sb = sb.replaceFirst(StrMatcher.stringMatcher(str), StringEscapeUtils.escapeXml(str));
+			// sb = sb.replaceFirst(StrMatcher.stringMatcher(str), StringEscapeUtils.escapeXml(str));
 		}
 		return sb.toString();
 	}

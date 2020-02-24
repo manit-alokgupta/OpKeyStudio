@@ -35,7 +35,7 @@
         <children xsi:type="menu:DirectMenuItem" xmi:id="_NjObUFOxEequLatODeQ7Jg" elementId="opkeystudio.directmenuitem.appiumsettings" label="Appium Settings" iconURI="platform:/plugin/OpKeyStudio/icons/pcloudystudio/appium_settings.png" contributionURI="bundleclass://OpKeyStudio/pcloudystudio.commandhandler.AppiumSettingsHandler"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_NYyPYFSBEeqTCp8X32LpsQ" elementId="opkeystudio.menu.mobilespy" label="Mobile Spy">
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_O0weIFSBEeqTCp8X32LpsQ" elementId="opkeystudio.directmenuitem.android" label="Android" iconURI="platform:/plugin/OpKeyStudio/icons/pcloudystudio/android_logo.png" contributionURI="bundleclass://OpKeyStudio/pcloudystudio.objectspy.commandhandler.AndroidDeviceSpyHandler"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_O0weIFSBEeqTCp8X32LpsQ" elementId="opkeystudio.directmenuitem.android" label="Android" iconURI="platform:/plugin/OpKeyStudio/icons/pcloudystudio/android_logo.png" contributionURI="bundleclass://OpKeyStudio/pcloudystudio.mobilespy.commandhandler.MobileSpyHandler"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_s3lGcNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.help" label="Help">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_uVJ3sNVqEemLeZBMchgvxw" elementId="opkeystudio.directmenuitem.about" label="About" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/info.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.AboutCommand"/>
