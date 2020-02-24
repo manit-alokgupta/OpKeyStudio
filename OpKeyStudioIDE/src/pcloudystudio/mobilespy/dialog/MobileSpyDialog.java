@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -99,21 +100,8 @@ public class MobileSpyDialog extends Dialog {
 		allObjectsTreeScrolledComposite.setExpandHorizontal(true);
 		allObjectsTreeScrolledComposite.setExpandVertical(true);
 
-		MobileElementTreeContentProvider contentProvider = new MobileElementTreeContentProvider();
-		MobileElementLabelProvider labelProvider = new MobileElementLabelProvider();
-
-		setTreeRoot(MobileSpyDialog.this, this.inspectorController.getMobileObjectRoot());
-		this.allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER);
-		Tree tree = this.allObjectsCheckboxTreeViewer.getTree();
-		this.allObjectsCheckboxTreeViewer.setContentProvider(contentProvider);
-		this.allObjectsCheckboxTreeViewer.setLabelProvider(labelProvider);
-		this.allObjectsCheckboxTreeViewer.setInput((Object) new Object[] { this.appRootElement });
-		this.allObjectsCheckboxTreeViewer.refresh();
-		this.allObjectsCheckboxTreeViewer.expandAll();
-
-		allObjectsTreeScrolledComposite.setContent(tree);
-		allObjectsTreeScrolledComposite.setMinSize(tree.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
+		this.createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
+		
 		ScrolledComposite objectPropertiesScrolledComposite = new ScrolledComposite(sashForm,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		objectPropertiesScrolledComposite.setExpandHorizontal(true);
@@ -137,6 +125,23 @@ public class MobileSpyDialog extends Dialog {
 
 	public static void clearPropertiesTableData() {
 		objectPropertiesTable.removeAll();
+	}
+	
+	private void createAllObjectsTreeHierarchy(Composite allObjectsTreeScrolledComposite) {
+		MobileElementTreeContentProvider contentProvider = new MobileElementTreeContentProvider();
+		MobileElementLabelProvider labelProvider = new MobileElementLabelProvider();
+
+		setTreeRoot(MobileSpyDialog.this, this.inspectorController.getMobileObjectRoot());
+		this.allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER);
+		Tree tree = this.allObjectsCheckboxTreeViewer.getTree();
+		this.allObjectsCheckboxTreeViewer.setContentProvider(contentProvider);
+		this.allObjectsCheckboxTreeViewer.setLabelProvider(labelProvider);
+		this.allObjectsCheckboxTreeViewer.setInput((Object) new Object[] { this.appRootElement });
+		this.allObjectsCheckboxTreeViewer.refresh();
+		this.allObjectsCheckboxTreeViewer.expandAll();
+
+		((ScrolledComposite) allObjectsTreeScrolledComposite).setContent(tree);
+		((ScrolledComposite) allObjectsTreeScrolledComposite).setMinSize(tree.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	private void createObjectPropertiesTable(ScrolledComposite objectPropertiesScrolledComposite) {
