@@ -90,10 +90,18 @@ public class MobileSpyDialog extends Dialog {
 
 		SashForm sashForm = new SashForm(shlSpyMobile, SWT.NONE);
 
+		/*************************************************
+		 * Snapshot section
+		 ***************************************************************/
+
 		ScrolledComposite mobileSnapshotScrolledComposite = new ScrolledComposite(sashForm,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		mobileSnapshotScrolledComposite.setExpandHorizontal(true);
 		mobileSnapshotScrolledComposite.setExpandVertical(true);
+
+		/*************************************************
+		 * All Objects Tree Hierarchy section
+		 *********************************************/
 
 		ScrolledComposite allObjectsTreeScrolledComposite = new ScrolledComposite(sashForm,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -101,15 +109,17 @@ public class MobileSpyDialog extends Dialog {
 		allObjectsTreeScrolledComposite.setExpandVertical(true);
 
 		this.createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
-		
+
+		/*************************************************
+		 * Object Properties section
+		 ******************************************************/
+
 		ScrolledComposite objectPropertiesScrolledComposite = new ScrolledComposite(sashForm,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		objectPropertiesScrolledComposite.setExpandHorizontal(true);
 		objectPropertiesScrolledComposite.setExpandVertical(true);
 
 		this.createObjectPropertiesTable(objectPropertiesScrolledComposite);
-		objectPropertiesScrolledComposite.setContent(objectPropertiesTable);
-		objectPropertiesScrolledComposite.setMinSize(objectPropertiesTable.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		sashForm.setWeights(new int[] { 2, 3, 2 });
 	}
@@ -126,8 +136,8 @@ public class MobileSpyDialog extends Dialog {
 	public static void clearPropertiesTableData() {
 		objectPropertiesTable.removeAll();
 	}
-	
-	private void createAllObjectsTreeHierarchy(Composite allObjectsTreeScrolledComposite) {
+
+	private void createAllObjectsTreeHierarchy(ScrolledComposite allObjectsTreeScrolledComposite) {
 		MobileElementTreeContentProvider contentProvider = new MobileElementTreeContentProvider();
 		MobileElementLabelProvider labelProvider = new MobileElementLabelProvider();
 
@@ -140,8 +150,8 @@ public class MobileSpyDialog extends Dialog {
 		this.allObjectsCheckboxTreeViewer.refresh();
 		this.allObjectsCheckboxTreeViewer.expandAll();
 
-		((ScrolledComposite) allObjectsTreeScrolledComposite).setContent(tree);
-		((ScrolledComposite) allObjectsTreeScrolledComposite).setMinSize(tree.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		allObjectsTreeScrolledComposite.setContent(tree);
+		allObjectsTreeScrolledComposite.setMinSize(tree.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	private void createObjectPropertiesTable(ScrolledComposite objectPropertiesScrolledComposite) {
