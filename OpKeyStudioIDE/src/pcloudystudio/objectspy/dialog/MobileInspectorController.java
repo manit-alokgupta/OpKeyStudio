@@ -6,13 +6,17 @@ package pcloudystudio.objectspy.dialog;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.w3c.dom.Element;
+import org.apache.commons.io.FileUtils;
+import org.eclipse.wb.swt.ResourceManager;
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
 import org.xml.sax.SAXParseException;
 
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.AndroidSnapshotMobileElement;
 
+import java.io.File;
 import java.io.StringReader;
 import org.xml.sax.InputSource;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -122,7 +126,6 @@ public class MobileInspectorController {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public static String removeEscapeCharacter(final String contentBuilder) {
 		final String pattern = "(\\\"([^=])*\\\")";
 		final Pattern pattern2 = Pattern.compile(pattern);
@@ -130,9 +133,14 @@ public class MobileInspectorController {
 		StringBuilder sb = new StringBuilder(contentBuilder);
 		while (matcher.find()) {
 			final String str = matcher.group(1).substring(1, matcher.group(1).length() - 1);
-			// sb = sb.replaceFirst(StrMatcher.stringMatcher(str), StringEscapeUtils.escapeXml(str));
+			// sb = sb.replaceFirst(StrMatcher.stringMatcher(str),
+			// StringEscapeUtils.escapeXml(str));
 		}
 		return sb.toString();
+	}
+
+	public String getDefaultMobileScreenshotPath() throws Exception {
+		return OpKeyStudioIcons.MOBILE_SPY_CAPTURED_IMAGE;
 	}
 
 }

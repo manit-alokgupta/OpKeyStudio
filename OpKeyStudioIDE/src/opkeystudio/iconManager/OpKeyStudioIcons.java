@@ -4,6 +4,7 @@ public class OpKeyStudioIcons {
 	private static String opkeyDirPath = "icons/opkey/";
 	private static String commonIconsDirPath = opkeyDirPath + "commonicons/";
 	private static String artifactIconsDirPath = opkeyDirPath + "artifacts/";
+	private static String pcloudyStudioDirPath = "icons/pcloudystudio/";
 
 	// Artifact Icons
 	public static String CFL_ICON = artifactIconsDirPath + "cfl.png";
@@ -77,5 +78,7 @@ public class OpKeyStudioIcons {
 	public static String ASSOCIATE_LIBRARY_ICON = commonIconsDirPath + "assosiate library.png";
 	public static String COMPILATION_ICON = commonIconsDirPath + "compilation.png";
 	public static String CONSOLE_ICON = commonIconsDirPath + "consol.png";
+	
+	public static String MOBILE_SPY_CAPTURED_IMAGE = pcloudyStudioDirPath + "screencap.png";
 
 }
