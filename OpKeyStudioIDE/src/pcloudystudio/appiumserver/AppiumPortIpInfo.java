@@ -7,11 +7,10 @@ public class AppiumPortIpInfo {
 	private static AppiumPortIpInfo appiumPortIp;
 
 	public static AppiumPortIpInfo getInstance() {
-		if (appiumPortIp != null) {
-
-			return appiumPortIp;
-		} else
+		if (appiumPortIp == null) {
 			return new AppiumPortIpInfo();
+		}
+		return appiumPortIp;
 	}
 
 	public AppiumPortIpInfo() {
