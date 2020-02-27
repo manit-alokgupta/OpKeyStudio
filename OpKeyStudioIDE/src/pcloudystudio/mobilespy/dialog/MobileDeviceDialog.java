@@ -62,7 +62,7 @@ public class MobileDeviceDialog extends Dialog {
 		this.currentHeight = 0.0;
 		this.mobileInspetorDialog = mobileInspectorDialog;
 		this.initialLocation = location;
-		this.setShellStyle(SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE);
+		this.setShellStyle(SWT.CLOSE | SWT.TITLE);
 		this.isDisposed = false;
 	}
 
@@ -71,19 +71,18 @@ public class MobileDeviceDialog extends Dialog {
 		final GridLayout dialogAreaGridLayout = (GridLayout) dialogArea.getLayout();
 		dialogAreaGridLayout.marginWidth = 0;
 		dialogAreaGridLayout.marginHeight = 0;
-		(this.scrolledComposite = (ScrolledComposite) new ScrollableComposite(dialogArea,
-				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL)).setExpandHorizontal(true);
+		(this.scrolledComposite = new ScrollableComposite(dialogArea, SWT.H_SCROLL | SWT.V_SCROLL)).setExpandHorizontal(true);
 		this.scrolledComposite.setExpandVertical(true);
 		this.scrolledComposite.setLayout((Layout) new GridLayout());
 		this.scrolledComposite.setLayoutData((Object) new GridData(4, 4, true, true));
-		final Composite container = new Composite((Composite) this.scrolledComposite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		final Composite container = new Composite((Composite) this.scrolledComposite, SWT.BORDER);
 		container.setLayout((Layout) new FillLayout());
 		this.scrolledComposite.setContent((Control) container);
 		
 		this.currentWidth = this.currentScreenShot.getImageData().width;
 		this.currentHeight  = this.currentScreenShot.getImageData().height;
 		
-		(this.canvas = new Canvas(container, 0)).pack();
+		(this.canvas = new Canvas(container, SWT.NONE)).pack();
 		this.canvas.addPaintListener((PaintListener) new PaintListener() {
 			public void paintControl(final PaintEvent e) {
 				if (MobileDeviceDialog.this.currentScreenShot != null
