@@ -21,7 +21,9 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 		super(parent);
 	}
 
-	public void render(final Element xmlElement) {
+	@Override
+	public void render(Element xmlElement) {
+		// TODO Auto-generated method stub
 		if (xmlElement == null) {
 			return;
 		}
@@ -103,11 +105,11 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 			htmlMobileElementProps.put("y", String.valueOf(top));
 			htmlMobileElementProps.put("width", String.valueOf(right - left));
 			htmlMobileElementProps.put("height", String.valueOf(bottom - top));
-		}else {
+		} else {
 			htmlMobileElementProps.put("x", String.valueOf(0));
 			htmlMobileElementProps.put("y", String.valueOf(0));
 			htmlMobileElementProps.put("width", String.valueOf(1080));
-			htmlMobileElementProps.put("height", String.valueOf(2255));
+			htmlMobileElementProps.put("height", String.valueOf(2340));
 		}
 		String guiName = htmlMobileElementProps.get("class");
 		if (guiName != null) {

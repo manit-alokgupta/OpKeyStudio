@@ -1,25 +1,21 @@
 package pcloudystudio.objectspy.dialog;
 
-import java.util.Date;
-
 // Created by Alok Gupta on 20/02/2020.
 // Copyright © 2020 SSTS Inc. All rights reserved.
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.w3c.dom.Element;
-import org.apache.commons.io.FileUtils;
-import org.eclipse.wb.swt.ResourceManager;
-import org.w3c.dom.Document;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.text.StrBuilder;
+import org.apache.commons.lang3.text.StrMatcher;import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
 import org.xml.sax.SAXParseException;
 
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.AndroidSnapshotMobileElement;
-import pcloudystudio.objectspy.resources.util.Util;
 
-import java.io.File;
 import java.io.StringReader;
 import org.xml.sax.InputSource;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -133,20 +129,19 @@ public class MobileInspectorController {
 		final String pattern = "(\\\"([^=])*\\\")";
 		final Pattern pattern2 = Pattern.compile(pattern);
 		final Matcher matcher = pattern2.matcher(contentBuilder);
-		StringBuilder sb = new StringBuilder(contentBuilder);
+		StrBuilder sb = new StrBuilder(contentBuilder);
 		while (matcher.find()) {
 			final String str = matcher.group(1).substring(1, matcher.group(1).length() - 1);
-			// sb = sb.replaceFirst(StrMatcher.stringMatcher(str),
-			// StringEscapeUtils.escapeXml(str));
+			sb = sb.replaceFirst(StrMatcher.stringMatcher(str), StringEscapeUtils.escapeXml(str));
 		}
 		return sb.toString();
 	}
 
-	 public String captureScreenshot() throws Exception {
-		 /*
-	     *  final String screenshotFolder = Util.getDefaultMobileScreenshotPath();
-		 * final File screenshot = (File) this.driver.getScreenshotAs(OutputType.FILE);
-		 * if (!screenshot.exists()) { throw new
+	public String captureScreenshot() throws Exception {
+		/*
+		 * final String screenshotFolder = Util.getDefaultMobileScreenshotPath(); final
+		 * File screenshot = (File) this.driver.getScreenshotAs(OutputType.FILE); if
+		 * (!screenshot.exists()) { throw new
 		 * Exception("DIA_ERROR_MSG_UNABLE_TO_CAPTURE_SCREEN"); } final String fileName
 		 * = new String("screenshot_" + new Date().getTime() + ".jpg"); final String
 		 * path = String.valueOf(screenshotFolder) +
@@ -154,9 +149,10 @@ public class MobileInspectorController {
 		 * FileUtils.copyFile(screenshot, new File(path)); try {
 		 * FileUtils.forceDelete(screenshot); } catch (Exception ex) {} return path;
 		 */
-	        return System.getProperty("user.dir") + System.getProperty("file.separator") + OpKeyStudioIcons.MOBILE_SPY_CAPTURED_IMAGE;
-	    }
-	 
+		return System.getProperty("user.dir") + System.getProperty("file.separator")
+		+ OpKeyStudioIcons.MOBILE_SPY_CAPTURED_IMAGE;
+	}
+
 	public String getDefaultMobileScreenshotPath() throws Exception {
 		return OpKeyStudioIcons.MOBILE_SPY_CAPTURED_IMAGE;
 	}

@@ -37,7 +37,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.dialogs.Dialog;
 
 public class MobileDeviceDialog extends Dialog {
-	private static final String DIALOG_TITLE = "Device View";
+	private static final String DIALOG_TITLE = "Mobile Device";
 	private Image currentScreenShot = ResourceManager.getPluginImage("OpKeyStudio",
 			OpKeyStudioIcons.MOBILE_SPY_CAPTURED_IMAGE);
 	private Canvas canvas;
@@ -76,12 +76,13 @@ public class MobileDeviceDialog extends Dialog {
 		this.scrolledComposite.setExpandVertical(true);
 		this.scrolledComposite.setLayout((Layout) new GridLayout());
 		this.scrolledComposite.setLayoutData((Object) new GridData(4, 4, true, true));
-		final Composite container = new Composite((Composite) this.scrolledComposite, SWT.BORDER);
+		final Composite container = new Composite((Composite) this.scrolledComposite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		container.setLayout((Layout) new FillLayout());
 		this.scrolledComposite.setContent((Control) container);
-
-		this.currentWidth = 1080;
-		this.currentHeight = 2340;
+		
+		this.currentWidth = this.currentScreenShot.getImageData().width;
+		this.currentHeight  = this.currentScreenShot.getImageData().height;
+		
 		(this.canvas = new Canvas(container, 0)).pack();
 		this.canvas.addPaintListener((PaintListener) new PaintListener() {
 			public void paintControl(final PaintEvent e) {

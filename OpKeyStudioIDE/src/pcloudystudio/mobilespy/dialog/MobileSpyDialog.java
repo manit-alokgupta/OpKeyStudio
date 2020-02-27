@@ -3,13 +3,8 @@ package pcloudystudio.mobilespy.dialog;
 //Created by Alok Gupta on 20/02/2020.
 //Copyright © 2020 SSTS Inc. All rights reserved.
 
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -26,13 +21,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import opkeystudio.iconManager.OpKeyStudioIcons;
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.dialog.MobileInspectorController;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.CapturedMobileElement;
-import pcloudystudio.objectspy.element.impl.dialog.ProgressMonitorDialogWithThread;
 import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
 import pcloudystudio.objectspy.viewer.CapturedObjectTableViewer;
@@ -66,7 +59,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private ScrolledComposite allObjectsTreeScrolledComposite;
 	private ScrolledComposite objectPropertiesScrolledComposite;
 	private CapturedObjectTableViewer capturedObjectsTableViewer;
-
 
 	/**
 	 * Create the dialog.
@@ -180,6 +172,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	public static void addTableItemToPropertiesTableData(String key, String value) {
 		TableItem item1 = new TableItem(objectPropertiesTable, SWT.NONE);
 		item1.setText(new String[] { key, value });
+	}
+	
+	public static void highlightCheckedElement(String bounds) {
+		final int left = Integer.parseInt(bounds.substring(1, bounds.indexOf(44)));
+		final int top = Integer.parseInt(bounds.substring(bounds.indexOf(44) + 1, bounds.indexOf(93)));
+		final int right = Integer.parseInt(bounds.substring(bounds.lastIndexOf(91) + 1, bounds.lastIndexOf(44)));
+		final int bottom = Integer.parseInt(bounds.substring(bounds.lastIndexOf(44) + 1, bounds.lastIndexOf(93)));
 	}
 
 	public static void clearPropertiesTableData() {
@@ -323,7 +322,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			return;
 		}
 		final TreeMobileElement foundElement = this.recursivelyFindElementByLocation(this.appRootElement, x, y);
-		System.out.println(foundElement);
 		if (foundElement == null) {
 			return;
 		}
@@ -366,80 +364,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private void captureObjectAction() {
 		createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
 		createObjectPropertiesTable(objectPropertiesScrolledComposite);
+		openDeviceView();
 
-		final String appName = "Demo_appName";
-		final ProgressMonitorDialogWithThread dialog = new ProgressMonitorDialogWithThread(shlSpyMobile);
-		final IRunnableWithProgress runnable = (IRunnableWithProgress) new IRunnableWithProgress() {
-			public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				monitor.beginTask("DIA_JOB_TASK_CAPTURING_OBJECTS", -1);
-				dialog.runAndWait(new Callable<Object>() {
-					@Override
-					public Object call() throws Exception {
-						setTreeRoot(MobileSpyDialog.this, inspectorController.getMobileObjectRoot());
-						if (MobileSpyDialog.this.appRootElement != null) {
-							MobileSpyDialog.this.appRootElement.setName(appName);
-						}
-						return null;
-					}
-				});
-				MobileSpyDialog.this.checkMonitorCanceled(monitor);
-				this.refreshTreeElements(dialog);
-				final String imgPath = this.captureImage();
-				System.out.println("Screenshot path is: " + imgPath);
-				MobileSpyDialog.this.checkMonitorCanceled(monitor);
-				this.refreshDeviceView(imgPath);
-				UISynchronizeService.syncExec((Runnable) new Runnable() {
-					@Override
-					public void run() {
-						MobileSpyDialog.this.deviceView.getShell().forceActive();
-					}
-				});
-				monitor.done();
-			}
-
-			private void refreshTreeElements(final ProgressMonitorDialogWithThread dialog) {
-				UISynchronizeService.syncExec((Runnable) new Runnable() {
-					@Override
-					public void run() {
-						dialog.setCancelable(false);
-						MobileSpyDialog.this.allObjectsCheckboxTreeViewer
-						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
-						MobileSpyDialog.this.allObjectsCheckboxTreeViewer.refresh();
-						MobileSpyDialog.this.allObjectsCheckboxTreeViewer.expandAll();
-						MobileSpyDialog.this
-						.verifyCapturedElementsStates(MobileSpyDialog.this.capturedObjectsTableViewer
-								.getCapturedElements().toArray(new CapturedMobileElement[0]));
-						dialog.setCancelable(true);
-					}
-				});
-			}
-
-			private void refreshDeviceView(final String imgPath) {
-				final File imgFile = new File(imgPath);
-				if (imgFile.exists()) {
-					// MobileSpyDialog.this.deviceView.refreshDialog(imgFile, MobileSpyDialog.this.appRootElement);
-				}
-			}
-
-			private String captureImage() throws InvocationTargetException {
-				try {
-					return MobileSpyDialog.this.inspectorController.captureScreenshot();
-				} catch (Exception e) {
-					throw new InvocationTargetException(e);
-				}
-			}
-		};
-		try {
-			this.btnCapture.setEnabled(false);
-			this.openDeviceView();
-			dialog.run(true, true, runnable);
-		} catch (InterruptedException ex) {
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} finally {
-			this.btnCapture.setEnabled(true);
-		}
-		this.btnCapture.setEnabled(true);
 	}
 
 	private void verifyCapturedElementsStates(final CapturedMobileElement[] elements) {
@@ -470,12 +396,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					this.allObjectsCheckboxTreeViewer.setChecked((Object) treeElementLink, false);
 				}
 			}
-		}
-	}
-
-	private void checkMonitorCanceled(final IProgressMonitor monitor) throws InterruptedException {
-		if (monitor.isCanceled()) {
-			throw new InterruptedException("DIA_ERROR_MSG_OPERATION_CANCELED");
 		}
 	}
 }

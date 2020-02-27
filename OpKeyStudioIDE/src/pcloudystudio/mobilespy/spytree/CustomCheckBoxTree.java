@@ -128,6 +128,9 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 			if (mobileElementProps.get("xpath") != null && mobileElementProps.get("xpath").length() > 0) {
 				MobileSpyDialog.addTableItemToPropertiesTableData("xpath", mobileElementProps.get("xpath"));
 			}
+
+			if (mobileElementProps.get("bounds") != null && mobileElementProps.get("bounds").length() > 0)
+				MobileSpyDialog.highlightCheckedElement(mobileElementProps.get("bounds"));
 		}
 	}
 
