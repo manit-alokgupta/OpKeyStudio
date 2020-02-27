@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="target/dependency/commons-lang3-3.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/commons-lang3-3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/aspectjweaver-1.9.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/cglib-nodep-3.2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/commons-beanutils-1.9.2.jar"/>
@@ -18,7 +18,7 @@
 	<classpathentry exported="true" kind="lib" path="target/dependency/gson-2.8.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/okhttp-3.10.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/okio-1.14.1.jar"/>
-        <classpathentry exported="true" kind="lib" path="target/dependency/java-client-7.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/java-client-7.3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/selenium-api-3.14.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/selenium-chrome-driver-3.14.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/selenium-edge-driver-3.14.0.jar"/>
@@ -46,7 +46,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-        <classpathentry exported="true" kind="lib" path="target/dependency/asm-7.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/asm-7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/cglib-3.2.12.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/commons-validator-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/json-path-2.4.0.jar"/>

@@ -66,23 +66,25 @@ public class MobileDeviceDialog extends Dialog {
 		this.isDisposed = false;
 	}
 
-	protected Control createDialogArea(final Composite parent) {
+	@Override
+	protected Control createDialogArea(Composite parent) {
 		final Composite dialogArea = (Composite) super.createDialogArea(parent);
 		final GridLayout dialogAreaGridLayout = (GridLayout) dialogArea.getLayout();
 		dialogAreaGridLayout.marginWidth = 0;
 		dialogAreaGridLayout.marginHeight = 0;
-		(this.scrolledComposite = new ScrollableComposite(dialogArea, SWT.H_SCROLL | SWT.V_SCROLL)).setExpandHorizontal(true);
+		(this.scrolledComposite = new ScrollableComposite(dialogArea, SWT.H_SCROLL | SWT.V_SCROLL))
+				.setExpandHorizontal(true);
 		this.scrolledComposite.setExpandVertical(true);
 		this.scrolledComposite.setLayout((Layout) new GridLayout());
 		this.scrolledComposite.setLayoutData((Object) new GridData(4, 4, true, true));
 		final Composite container = new Composite((Composite) this.scrolledComposite, SWT.BORDER);
 		container.setLayout((Layout) new FillLayout());
 		this.scrolledComposite.setContent((Control) container);
-		
+
 		this.currentWidth = this.currentScreenShot.getImageData().width;
-		this.currentHeight  = this.currentScreenShot.getImageData().height;
-		
-		(this.canvas = new Canvas(container, SWT.NONE)).pack();
+		this.currentHeight = this.currentScreenShot.getImageData().height;
+
+		(this.canvas = new Canvas(container, 0)).pack();
 		this.canvas.addPaintListener((PaintListener) new PaintListener() {
 			public void paintControl(final PaintEvent e) {
 				if (MobileDeviceDialog.this.currentScreenShot != null
@@ -107,13 +109,15 @@ public class MobileDeviceDialog extends Dialog {
 			public void mouseDown(final MouseEvent e) {
 				if (e.button == 1) {
 					MobileDeviceDialog.this.inspectElementAt(e.x, e.y);
-					System.out.println("e.x and e.y: "+e.x +" "+ e.y);
 				}
 			}
 		});
 		return (Control) dialogArea;
 	}
 
+	/*--------------------------*/
+
+	@Override
 	protected boolean isResizable() {
 		return true;
 	}
@@ -121,7 +125,7 @@ public class MobileDeviceDialog extends Dialog {
 	private void inspectElementAt(final int x, final int y) {
 		final Double realX = x / this.hRatio;
 		final Double realY = y / this.hRatio;
-		mobileInspetorDialog.setSelectedElementByLocation(safeRoundDouble(realX), safeRoundDouble(realY));
+		this.mobileInspetorDialog.setSelectedElementByLocation(safeRoundDouble(realX), safeRoundDouble(realY));
 	}
 
 	private boolean isElementOnScreen(final Double x, final Double y, final Double width, final Double height) {
@@ -177,7 +181,7 @@ public class MobileDeviceDialog extends Dialog {
 						Thread.sleep(200L);
 					} catch (InterruptedException ex) {
 					}
-					getParentShell().getDisplay().syncExec(() -> {
+					UISynchronizeService.syncExec(() -> {
 						if (!MobileDeviceDialog.this.canvas.isDisposed()) {
 							MobileDeviceDialog.this.canvas.redraw();
 						}
@@ -202,21 +206,25 @@ public class MobileDeviceDialog extends Dialog {
 		return scaled;
 	}
 
+	@Override
 	protected Point getInitialSize() {
 		return new Point(400, 657);
 	}
 
-	protected void configureShell(final Shell shell) {
+	@Override
+	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText("Mobile Device");
 	}
 
-	protected void setShellStyle(final int newShellStyle) {
-		super.setShellStyle(SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE);
+	@Override
+	protected void setShellStyle(int newShellStyle) {
+		super.setShellStyle(SWT.BORDER | SWT.TITLE | SWT.CLOSE); // 2160
 		this.setBlockOnOpen(false);
 	}
 
-	protected Control createButtonBar(final Composite parent) {
+	@Override
+	protected Control createButtonBar(Composite parent) {
 		return (Control) parent;
 	}
 
@@ -226,14 +234,8 @@ public class MobileDeviceDialog extends Dialog {
 
 	public void highlightElement(final MobileElement selectedElement) {
 		final Map<String, String> attributes = selectedElement.getAttributes();
-
 		if (attributes == null || !attributes.containsKey("x") || !attributes.containsKey("y")
 				|| !attributes.containsKey("width") || !attributes.containsKey("height")) {
-			System.out.println(attributes.get("xpath"));
-			System.out.println(attributes.get("x"));
-			System.out.println(attributes.get("y"));
-			System.out.println(attributes.get("width"));
-			System.out.println(attributes.get("height"));
 			return;
 		}
 		final double x = Double.parseDouble(attributes.get("x"));
@@ -243,24 +245,34 @@ public class MobileDeviceDialog extends Dialog {
 		this.highlight(x, y, w, h);
 	}
 
-	/*
-	 * public void refreshDialog(final File imageFile, final MobileElement root) {
-	 * System.out.println("AAAAAAAA"); try { final ImageDescriptor imgDesc =
-	 * ImageDescriptor.createFromURL(imageFile.toURI().toURL()); final Image img =
-	 * imgDesc.createImage(); final Map<String, String> attributes; final Image
-	 * image; double rootHeight; final double imageRatio;
-	 * this.getParentShell().getDisplay().syncExec(() -> { attributes =
-	 * root.getAttributes(); rootHeight = image.getBounds().height;
-	 * System.out.println(rootHeight); if (attributes.containsKey("height")) {
-	 * rootHeight = Double.parseDouble(attributes.get("height"));
-	 * 
-	 * } imageRatio = rootHeight / image.getBounds().height; this.hRatio =
-	 * this.canvas.getSize().y / rootHeight; this.currentScreenShot =
-	 * this.scaleImage(image, image.getBounds().width * imageRatio * this.hRatio,
-	 * image.getBounds().height * this.hRatio * imageRatio); this.canvas.redraw();
-	 * return; }); this.refreshView(); } catch (Exception ex) {
-	 * LoggerSingleton.logError((Throwable) ex); } }
-	 */
+	public void refreshDialog(final File imageFile, final MobileElement root) {
+		try {
+			final ImageDescriptor imgDesc = ImageDescriptor.createFromURL(imageFile.toURI().toURL());
+			final Image img = imgDesc.createImage();
+			final Map<String, String> attributes;
+			final Image image;
+			double rootHeight;
+			final double imageRatio;
+			this.getShell().getDisplay().syncExec(() -> {
+				attributes = root.getAttributes();
+				rootHeight = image.getBounds().height;
+				if (attributes.containsKey("height")) {
+					rootHeight = Double.parseDouble(attributes.get("height"));
+				}
+				imageRatio = rootHeight / image.getBounds().height;
+				this.hRatio = this.canvas.getSize().y / rootHeight;
+				this.currentScreenShot = this.scaleImage(image, image.getBounds().width * imageRatio * this.hRatio,
+						image.getBounds().height * this.hRatio * imageRatio);
+				this.canvas.redraw();
+				return;
+			});
+			this.refreshView();
+		} catch (Exception ex) {
+			ex.printStackTrace(); // added
+			LoggerSingleton.logError((Throwable) ex);
+		}
+	}
+
 	private void refreshView() {
 		if (this.scrolledComposite == null || this.currentScreenShot == null) {
 			return;
@@ -275,6 +287,7 @@ public class MobileDeviceDialog extends Dialog {
 		});
 	}
 
+	@Override
 	protected void handleShellCloseEvent() {
 		super.handleShellCloseEvent();
 		this.dispose();
@@ -288,7 +301,8 @@ public class MobileDeviceDialog extends Dialog {
 		return this.isDisposed;
 	}
 
-	protected Point getInitialLocation(final Point initialSize) {
+	@Override
+	protected Point getInitialLocation(Point initialSize) {
 		if ((this.getShell().getStyle() & 0x10) == 0x0) {
 			return new Point(this.initialLocation.x, this.initialLocation.y + 5);
 		}
