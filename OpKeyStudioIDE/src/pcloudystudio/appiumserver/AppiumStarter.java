@@ -47,7 +47,7 @@ public class AppiumStarter {
 			else {
 
 				driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-				AndroidDriverObject.setDriver(driver);
+				AndroidDriverObject.getInstance().setDriver(driver);
 				String page_source = AndroidDriverObject.getDriver().getPageSource();
 				System.out.println(page_source);
 				System.out.println("================PageSource=====================");
