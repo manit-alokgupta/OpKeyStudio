@@ -1,5 +1,7 @@
 package pcloudystudio.objectspy.dialog;
 
+import java.util.Date;
+
 // Created by Alok Gupta on 20/02/2020.
 // Copyright © 2020 SSTS Inc. All rights reserved.
 
@@ -15,6 +17,7 @@ import org.xml.sax.SAXParseException;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.AndroidSnapshotMobileElement;
+import pcloudystudio.objectspy.resources.util.Util;
 
 import java.io.File;
 import java.io.StringReader;
@@ -139,6 +142,21 @@ public class MobileInspectorController {
 		return sb.toString();
 	}
 
+	 public String captureScreenshot() throws Exception {
+		 /*
+	     *  final String screenshotFolder = Util.getDefaultMobileScreenshotPath();
+		 * final File screenshot = (File) this.driver.getScreenshotAs(OutputType.FILE);
+		 * if (!screenshot.exists()) { throw new
+		 * Exception("DIA_ERROR_MSG_UNABLE_TO_CAPTURE_SCREEN"); } final String fileName
+		 * = new String("screenshot_" + new Date().getTime() + ".jpg"); final String
+		 * path = String.valueOf(screenshotFolder) +
+		 * System.getProperty("file.separator") + fileName;
+		 * FileUtils.copyFile(screenshot, new File(path)); try {
+		 * FileUtils.forceDelete(screenshot); } catch (Exception ex) {} return path;
+		 */
+	        return System.getProperty("user.dir") + System.getProperty("file.separator") + OpKeyStudioIcons.MOBILE_SPY_CAPTURED_IMAGE;
+	    }
+	 
 	public String getDefaultMobileScreenshotPath() throws Exception {
 		return OpKeyStudioIcons.MOBILE_SPY_CAPTURED_IMAGE;
 	}

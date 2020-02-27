@@ -9,7 +9,7 @@ import java.util.Map;
 public interface MobileElement extends Cloneable, Serializable {
 	String getName();
 
-	void setName(final String p0);
+	void setName(final String name);
 
 	String getXpath();
 

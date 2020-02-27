@@ -31,6 +31,7 @@ import pcloudystudio.objectspy.element.MobileElement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.dialogs.Dialog;
@@ -79,6 +80,8 @@ public class MobileDeviceDialog extends Dialog {
 		container.setLayout((Layout) new FillLayout());
 		this.scrolledComposite.setContent((Control) container);
 
+		this.currentWidth = 1080;
+		this.currentHeight = 2340;
 		(this.canvas = new Canvas(container, 0)).pack();
 		this.canvas.addPaintListener((PaintListener) new PaintListener() {
 			public void paintControl(final PaintEvent e) {
@@ -87,8 +90,7 @@ public class MobileDeviceDialog extends Dialog {
 					e.gc.drawImage(MobileDeviceDialog.this.currentScreenShot, 0, 0);
 					if (MobileDeviceDialog.this.currentWidth != 0.0 && MobileDeviceDialog.this.currentHeight != 0.0) {
 						final Color oldForegroundColor = e.gc.getForeground();
-						// e.gc.setForeground(ColorUtil.getColor("#76BF42"));
-						e.gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+						e.gc.setForeground(new Color((Device) Display.getCurrent(), new RGB(118, 198, 66)));
 						final int x = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentX);
 						final int y = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentY);
 						final int width = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentWidth);
