@@ -40,6 +40,7 @@ public class MobileDeviceDialog extends Dialog {
 	private static final String DIALOG_TITLE = "Mobile Device";
 	private Image currentScreenShot = ResourceManager.getPluginImage("OpKeyStudio",
 			OpKeyStudioIcons.MOBILE_SPY_CAPTURED_IMAGE);
+	private Image scaledScreenShot;
 	private Canvas canvas;
 	public static final int DIALOG_WIDTH = 400;
 	public static final int DIALOG_HEIGHT = 600;
@@ -73,7 +74,7 @@ public class MobileDeviceDialog extends Dialog {
 		dialogAreaGridLayout.marginWidth = 0;
 		dialogAreaGridLayout.marginHeight = 0;
 		(this.scrolledComposite = new ScrollableComposite(dialogArea, SWT.H_SCROLL | SWT.V_SCROLL))
-				.setExpandHorizontal(true);
+		.setExpandHorizontal(true);
 		this.scrolledComposite.setExpandVertical(true);
 		this.scrolledComposite.setLayout((Layout) new GridLayout());
 		this.scrolledComposite.setLayoutData((Object) new GridData(4, 4, true, true));
@@ -84,7 +85,9 @@ public class MobileDeviceDialog extends Dialog {
 		this.currentWidth = this.currentScreenShot.getImageData().width;
 		this.currentHeight = this.currentScreenShot.getImageData().height;
 
-		(this.canvas = new Canvas(container, 0)).pack();
+		this.currentScreenShot = this.scaleImage(this.currentScreenShot, 400, 622);
+
+		(this.canvas = new Canvas(container, SWT.NONE)).pack();
 		this.canvas.addPaintListener((PaintListener) new PaintListener() {
 			public void paintControl(final PaintEvent e) {
 				if (MobileDeviceDialog.this.currentScreenShot != null
@@ -108,10 +111,12 @@ public class MobileDeviceDialog extends Dialog {
 		this.canvas.addMouseListener((MouseListener) new MouseAdapter() {
 			public void mouseDown(final MouseEvent e) {
 				if (e.button == 1) {
+					System.out.println("clicked at: " + "(" + e.x + "," + e.y + ")");
 					MobileDeviceDialog.this.inspectElementAt(e.x, e.y);
 				}
 			}
 		});
+
 		return (Control) dialogArea;
 	}
 
@@ -181,7 +186,7 @@ public class MobileDeviceDialog extends Dialog {
 						Thread.sleep(200L);
 					} catch (InterruptedException ex) {
 					}
-					UISynchronizeService.syncExec(() -> {
+					Display.getDefault().syncExec(() -> {
 						if (!MobileDeviceDialog.this.canvas.isDisposed()) {
 							MobileDeviceDialog.this.canvas.redraw();
 						}
