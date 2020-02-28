@@ -109,7 +109,7 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 			htmlMobileElementProps.put("x", String.valueOf(0));
 			htmlMobileElementProps.put("y", String.valueOf(0));
 			htmlMobileElementProps.put("width", String.valueOf(1080));
-			htmlMobileElementProps.put("height", String.valueOf(2340));
+			htmlMobileElementProps.put("height", String.valueOf(2255));
 		}
 		String guiName = htmlMobileElementProps.get("class");
 		if (guiName != null) {

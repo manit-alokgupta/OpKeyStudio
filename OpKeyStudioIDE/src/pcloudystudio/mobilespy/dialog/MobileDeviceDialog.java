@@ -214,7 +214,7 @@ public class MobileDeviceDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText("Mobile Device");
+		shell.setText(DIALOG_TITLE);
 	}
 
 	@Override
