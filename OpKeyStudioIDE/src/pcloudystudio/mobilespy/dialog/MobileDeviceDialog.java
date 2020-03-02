@@ -85,7 +85,7 @@ public class MobileDeviceDialog extends Dialog {
 		this.currentWidth = this.currentScreenShot.getImageData().width;
 		this.currentHeight = this.currentScreenShot.getImageData().height;
 
-		this.currentScreenShot = this.scaleImage(this.currentScreenShot, 400, 622);
+		this.currentScreenShot = this.scaleImage(this.currentScreenShot, 400, 600);
 
 		(this.canvas = new Canvas(container, SWT.NONE)).pack();
 		this.canvas.addPaintListener((PaintListener) new PaintListener() {
@@ -128,8 +128,8 @@ public class MobileDeviceDialog extends Dialog {
 	}
 
 	private void inspectElementAt(final int x, final int y) {
-		final Double realX = x / this.hRatio;
-		final Double realY = y / this.hRatio;
+		final Double realX = (double) (x * this.currentScreenShot.getImageData().height / 600);
+		final Double realY = (double) (y * this.currentScreenShot.getImageData().width / 400);
 		this.mobileInspetorDialog.setSelectedElementByLocation(safeRoundDouble(realX), safeRoundDouble(realY));
 	}
 
