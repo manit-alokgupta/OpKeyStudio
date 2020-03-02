@@ -9,8 +9,8 @@ public class AndroidDefaultCapabilities {
 	private String plateformName = "Android";
 	private String launchTimeOut = "9000";
 	private String newCommandTimeout = "6000";
-	private String automationName = "uiautomator2";
-	private String orientation = "LANDSCAPE";
+	private String automationName = "UiAutomator2";
+	//private String orientation = "LANDSCAPE";
 	private DesiredCapabilities capabilities;
 	
     public AndroidDefaultCapabilities() {
@@ -21,7 +21,7 @@ public class AndroidDefaultCapabilities {
              
 		
 		capabilities.setCapability("platformName", plateformName);
-		capabilities.setCapability("orientation	",orientation );
+		//capabilities.setCapability("orientation	",orientation );
 		capabilities.setCapability("automationName", automationName);
 		capabilities.setCapability("newCommandTimeout", newCommandTimeout);
 		capabilities.setCapability("launchTimeout", launchTimeOut);
@@ -71,12 +71,11 @@ public class AndroidDefaultCapabilities {
 		this.automationName = automationName;
 	}
 
-	public String getOrientation() {
-		return orientation;
-	}
-
-	public void setOrientation(String orientation) {
-		this.orientation = orientation;
-	}
+	/*
+	 * public String getOrientation() { return orientation; }
+	 * 
+	 * public void setOrientation(String orientation) { this.orientation =
+	 * orientation; }
+	 */
 
 }

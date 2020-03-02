@@ -14,11 +14,11 @@ public class AppiumServerJava {
 
 			if (Port != null && IpAddress != null) {
 				runtime.exec(
-						"cmd.exe /c start cmd.exe /k \"appium -a"+" "+IpAddress+" "+"-p" + " " + Port+"\"");
+						"cmd.exe /c start cmd.exe /k \"appium -a"+" "+IpAddress+" "+"-p" + " " + Port+" "+"--session-override"+"\"");
 				Thread.sleep(10000);
 			} else {
 				System.out.println("Server is going to Start on default port and default ip address ");
-				runtime.exec("cmd.exe /c start cmd.exe /k \"appium -a 127.0.0.1 -p 4723\"");
+				runtime.exec("cmd.exe /c start cmd.exe /k \"appium -a 127.0.0.1 -p 4723 --session-override\"");
 				Thread.sleep(10000);
 
 			}

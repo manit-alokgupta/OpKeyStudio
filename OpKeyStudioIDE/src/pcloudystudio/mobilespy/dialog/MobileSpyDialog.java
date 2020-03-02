@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import pcloudystudio.appiumserver.AppiumStarter;
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.dialog.MobileInspectorController;
 import pcloudystudio.objectspy.element.MobileElement;
@@ -77,7 +78,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 * 
 	 * @return the result
 	 */
-	public Object open() {
+	public Object open() {   new AppiumStarter("Redmi Note 5","C:\\Users\\arjun.singh\\Desktop\\FollowMeInstrumentor_V3\\Original\\Alaska Airlines Travel_v3.31_apkpure.com.apk");
 		createContents();
 		shlSpyMobile.open();
 		shlSpyMobile.layout();

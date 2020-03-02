@@ -14,8 +14,7 @@ public class AppiumStarter {
 	private DesiredCapabilities capabilities;
 
 	public AppiumStarter(String deviceName, String ApplicationPath) {
-		AppiumServerJava server = new AppiumServerJava();
-		server.startServer();
+		AppiumServerJava .startServer();
 		capabilities = new AndroidDefaultCapabilities().getCapabilities();
 		capabilities.setCapability("deviceName", deviceName);
 		capabilities.setCapability("app", ApplicationPath);
@@ -36,9 +35,10 @@ public class AppiumStarter {
 			if ((port != "" || port != null) && (hostAddress != "" || hostAddress != null)) {
 				driver = new AndroidDriver(new URL("http://" + hostAddress + ":" + port + "/wd/hub"), capabilities);
 				AndroidDriverObject.setDriver(driver);
-
-				String page_source = AndroidDriverObject.getDriver().getPageSource();
+                       //  Thread.sleep(20000);
+				String page_source = driver.getPageSource();
 				System.out.println(page_source);
+			
 				System.out.println("================PageSource=====================");
 				System.out.println();
 
