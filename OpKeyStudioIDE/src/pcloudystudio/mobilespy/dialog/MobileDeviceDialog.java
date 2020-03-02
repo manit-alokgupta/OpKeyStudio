@@ -251,31 +251,22 @@ public class MobileDeviceDialog extends Dialog {
 	}
 
 	public void refreshDialog(final File imageFile, final MobileElement root) {
-		try {
-			final ImageDescriptor imgDesc = ImageDescriptor.createFromURL(imageFile.toURI().toURL());
-			final Image img = imgDesc.createImage();
-			final Map<String, String> attributes;
-			final Image image;
-			double rootHeight;
-			final double imageRatio;
-			this.getShell().getDisplay().syncExec(() -> {
-				attributes = root.getAttributes();
-				rootHeight = image.getBounds().height;
-				if (attributes.containsKey("height")) {
-					rootHeight = Double.parseDouble(attributes.get("height"));
-				}
-				imageRatio = rootHeight / image.getBounds().height;
-				this.hRatio = this.canvas.getSize().y / rootHeight;
-				this.currentScreenShot = this.scaleImage(image, image.getBounds().width * imageRatio * this.hRatio,
-						image.getBounds().height * this.hRatio * imageRatio);
-				this.canvas.redraw();
-				return;
-			});
-			this.refreshView();
-		} catch (Exception ex) {
-			ex.printStackTrace(); // added
-			LoggerSingleton.logError((Throwable) ex);
-		}
+		/*
+		 * try { final ImageDescriptor imgDesc =
+		 * ImageDescriptor.createFromURL(imageFile.toURI().toURL()); final Image img =
+		 * imgDesc.createImage(); final Map<String, String> attributes; final Image
+		 * image; double rootHeight; final double imageRatio;
+		 * this.getShell().getDisplay().syncExec(() -> { attributes =
+		 * root.getAttributes(); rootHeight = image.getBounds().height; if
+		 * (attributes.containsKey("height")) { rootHeight =
+		 * Double.parseDouble(attributes.get("height")); } imageRatio = rootHeight /
+		 * image.getBounds().height; this.hRatio = this.canvas.getSize().y / rootHeight;
+		 * this.currentScreenShot = this.scaleImage(image, image.getBounds().width *
+		 * imageRatio * this.hRatio, image.getBounds().height * this.hRatio *
+		 * imageRatio); this.canvas.redraw(); return; }); this.refreshView(); } catch
+		 * (Exception ex) { ex.printStackTrace(); // added
+		 * LoggerSingleton.logError((Throwable) ex); }
+		 */
 	}
 
 	private void refreshView() {
