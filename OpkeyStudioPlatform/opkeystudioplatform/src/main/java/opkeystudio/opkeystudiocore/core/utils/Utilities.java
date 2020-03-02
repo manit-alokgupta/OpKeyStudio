@@ -80,8 +80,8 @@ public class Utilities {
 	}
 
 	public String getDefaultInstallDir() {
-		return "E:\\OpKeyEResources";
-		// return defaultInstallDir;
+		// return "E:\\OpKeyEResources";
+		return defaultInstallDir;
 	}
 
 	public String getDefaultPluginBaseDir() {
@@ -169,7 +169,6 @@ public class Utilities {
 		return dateString;
 	}
 
-	@SuppressWarnings("deprecation")
 	public String getUpdateCurrentDateTime() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
@@ -255,6 +254,7 @@ public class Utilities {
 				}
 
 			}
+			zip.close();
 		} catch (Exception e) {
 		}
 
