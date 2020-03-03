@@ -14,7 +14,7 @@ public class AppiumStarter {
 	private DesiredCapabilities capabilities;
 
 	public AppiumStarter(String deviceName, String ApplicationPath) {
-		AppiumServerJava .startServer();
+		AppiumServer.startServer();
 		capabilities = new AndroidDefaultCapabilities().getCapabilities();
 		capabilities.setCapability("deviceName", deviceName);
 		capabilities.setCapability("app", ApplicationPath);
@@ -33,31 +33,24 @@ public class AppiumStarter {
 			String port = new AppiumPortIpInfo().getPort();
 			String hostAddress = new AppiumPortIpInfo().getHost_Address();
 			if ((port != "" || port != null) && (hostAddress != "" || hostAddress != null)) {
-				driver = new AndroidDriver(new URL("http://" + hostAddress + ":" + port + "/wd/hub"), capabilities);
+				driver = new AndroidDriver<WebElement>(new URL("http://" + hostAddress + ":" + port + "/wd/hub"),
+						capabilities);
 				AndroidDriverObject.setDriver(driver);
-                       //  Thread.sleep(20000);
-				String page_source = driver.getPageSource();
-				System.out.println(page_source);
-			
-				System.out.println("================PageSource=====================");
-				System.out.println();
+				// Thread.sleep(20000);
+				// String page_source = AndroidDriverObject.getDriver().getPageSource();
 
 			}
 
 			else {
 
-				driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-				AndroidDriverObject.getInstance().setDriver(driver);
-				String page_source = AndroidDriverObject.getDriver().getPageSource();
-				System.out.println(page_source);
-				System.out.println("================PageSource=====================");
+				driver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+				AndroidDriverObject.getInstance();
+				AndroidDriverObject.setDriver(driver);
+
 			}
 		} catch (Exception e) {
-
 			System.out.println("An Exception Occured See Exception Logs");
-
 			e.printStackTrace();
-
 		}
 	}
 

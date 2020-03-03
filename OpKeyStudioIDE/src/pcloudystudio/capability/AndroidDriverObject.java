@@ -1,8 +1,5 @@
 package pcloudystudio.capability;
 
-import java.net.URL;
-
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 
 import io.appium.java_client.android.AndroidDriver;
