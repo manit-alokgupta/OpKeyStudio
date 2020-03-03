@@ -10,11 +10,26 @@ public class AppiumServer {
 		Runtime runtime = Runtime.getRuntime();
 		try {
 			if (port != null && hostAddress != null) {
+
+				if (isServerRunning(Integer.parseInt(port))) {
+					Sleep(1000);
+					System.out.println("Shutting Down The Server");
+					stopServer();
+					Sleep(1000);
+				}
+
 				System.out.println("Starting server according to given host: " + hostAddress + ", and port: " + port);
 				runtime.exec("cmd.exe /c start cmd.exe /k \"appium -a" + " " + hostAddress + " " + "-p" + " " + port
 						+ " " + "--session-override" + "\"");
-				Thread.sleep(4000);
+				Sleep(4000);
 			} else {
+				if (isServerRunning(Integer.parseInt(port))) {
+					Sleep(1000);
+					System.out.println("Shutting Down The Server");
+					stopServer();
+					Sleep(1000);
+				}
+
 				System.out.println("Starting server on default host: 127.0.0.1, and port: 4723");
 				runtime.exec("cmd.exe /c start cmd.exe /k \"appium -a 127.0.0.1 -p 4723 --session-override\"");
 				Thread.sleep(4000);
@@ -42,6 +57,7 @@ public class AppiumServer {
 			serverSocket = new ServerSocket(port);
 			serverSocket.close();
 		} catch (IOException e) {
+			System.out.println("Given Port is in Use");
 			// If control comes here, then it means that the port is in use
 			isServerRunning = true;
 		} finally {
@@ -50,4 +66,15 @@ public class AppiumServer {
 		return isServerRunning;
 
 	}
+
+	public static void Sleep(long time) {
+		try {
+			Thread.sleep(time);
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+
+	}
+
 }
