@@ -28,7 +28,6 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
-import pcloudystudio.objectspy.dialog.MobileInspectorController;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.CapturedMobileElement;
@@ -115,7 +114,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		shlSpyMobile.setLocation(new Point(locationX, locationY));
 		shlSpyMobile.setLayout(new GridLayout(1, false));
 
-		Composite toolsComposite = new Composite(shlSpyMobile, SWT.NONE);
+		Composite toolsComposite = new Composite(shlSpyMobile, SWT.BORDER);
 		toolsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_toolsComposite.heightHint = 43;
@@ -123,15 +122,15 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 		Composite spyContainerComposite = new Composite(shlSpyMobile, SWT.NONE);
 		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_spyContainerComposite.heightHint = 672;
-		gd_spyContainerComposite.widthHint = 988;
+		gd_spyContainerComposite.heightHint = 670;
+		gd_spyContainerComposite.widthHint = 985;
 		spyContainerComposite.setLayoutData(gd_spyContainerComposite);
 		spyContainerComposite.setLayout(new FillLayout());
 
-		Composite bottomComposite = new Composite(shlSpyMobile, SWT.NONE);
+		Composite bottomComposite = new Composite(shlSpyMobile, SWT.BORDER);
 		bottomComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_bottomComposite.heightHint = 38;
+		gd_bottomComposite.heightHint = 32;
 		bottomComposite.setLayoutData(gd_bottomComposite);
 
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
@@ -187,7 +186,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			}
 		});
 
-		btnHelp.setBounds(10, 10, 45, 22);
+		btnHelp.setBounds(10, 5, 45, 22);
 		btnHelp.setText("Help");
 
 		sashForm.setWeights(new int[] { 3, 2 });

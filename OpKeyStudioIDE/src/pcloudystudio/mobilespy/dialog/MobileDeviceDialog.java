@@ -99,7 +99,6 @@ public class MobileDeviceDialog extends Dialog {
 		this.canvas.addMouseListener((MouseListener) new MouseAdapter() {
 			public void mouseDown(MouseEvent e) {
 				if (e.button == 1) {
-					System.out.println("clicked at: " + "(" + e.x + "," + e.y + ")");
 					MobileDeviceDialog.this.inspectElementAt(e.x, e.y);
 				}
 			}
