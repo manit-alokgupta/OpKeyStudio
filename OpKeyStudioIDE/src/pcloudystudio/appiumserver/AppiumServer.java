@@ -1,6 +1,7 @@
 package pcloudystudio.appiumserver;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 
 public class AppiumServer {
 	public static void startServer() {
@@ -31,5 +32,22 @@ public class AppiumServer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static Boolean isServerRunning(int port) {
+
+		boolean isServerRunning = false;
+		ServerSocket serverSocket;
+		try {
+			serverSocket = new ServerSocket(port);
+			serverSocket.close();
+		} catch (IOException e) {
+			// If control comes here, then it means that the port is in use
+			isServerRunning = true;
+		} finally {
+			serverSocket = null;
+		}
+		return isServerRunning;
+
 	}
 }
