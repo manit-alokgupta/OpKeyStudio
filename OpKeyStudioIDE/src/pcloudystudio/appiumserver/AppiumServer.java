@@ -23,7 +23,7 @@ public class AppiumServer {
 						+ " " + "--session-override" + "\"");
 				Sleep(4000);
 			} else {
-				if (isServerRunning(Integer.parseInt(port))) {
+				if (isServerRunning(4723)) {   // default port
 					Sleep(1000);
 					System.out.println("Shutting Down The Server");
 					stopServer();
