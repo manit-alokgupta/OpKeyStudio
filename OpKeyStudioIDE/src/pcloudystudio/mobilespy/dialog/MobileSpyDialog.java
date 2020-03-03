@@ -1,10 +1,18 @@
 package pcloudystudio.mobilespy.dialog;
 
-//Created by Alok Gupta on 20/02/2020.
-//Copyright © 2020 SSTS Inc. All rights reserved.
+// Created by Alok Gupta on 20/02/2020.
+// Copyright © 2020 SSTS Inc. All rights reserved.
+
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -21,12 +29,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import pcloudystudio.appiumserver.AppiumStarter;
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.dialog.MobileInspectorController;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.CapturedMobileElement;
+import pcloudystudio.objectspy.element.impl.dialog.ProgressMonitorDialogWithThread;
 import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
 import pcloudystudio.objectspy.viewer.CapturedObjectTableViewer;
@@ -71,6 +79,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		super(parent, style);
 		setText("SWT Dialog");
 		this.inspectorController = new MobileInspectorController();
+		this.elementsList = new ArrayList<TreeMobileElement>();
 	}
 
 	/**
@@ -78,7 +87,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 * 
 	 * @return the result
 	 */
-	public Object open() {   new AppiumStarter("Redmi Note 5","C:\\Users\\arjun.singh\\Desktop\\FollowMeInstrumentor_V3\\Original\\Alaska Airlines Travel_v3.31_apkpure.com.apk");
+	public Object open() {
 		createContents();
 		shlSpyMobile.open();
 		shlSpyMobile.layout();
@@ -106,8 +115,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		int locationX = (parentSize.width - shellSize.width) / 2 + parentSize.x;
 		int locationY = (parentSize.height - shellSize.height) / 2 + parentSize.y;
 		shlSpyMobile.setLocation(new Point(locationX, locationY));
-
-		setTreeRoot(MobileSpyDialog.this, this.inspectorController.getMobileObjectRoot());
 		shlSpyMobile.setLayout(new GridLayout(1, false));
 
 		Composite toolsComposite = new Composite(shlSpyMobile, SWT.NONE);
@@ -166,20 +173,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		sashForm.setWeights(new int[] { 3, 2 });
 	}
 
-	static void setTreeRoot(final MobileSpyDialog mobileSpyDialog, final TreeMobileElement appRootElement) {
+	static void setTreeRoot(MobileSpyDialog mobileSpyDialog, TreeMobileElement appRootElement) {
 		mobileSpyDialog.appRootElement = appRootElement;
 	}
 
 	public static void addTableItemToPropertiesTableData(String key, String value) {
 		TableItem item1 = new TableItem(objectPropertiesTable, SWT.NONE);
 		item1.setText(new String[] { key, value });
-	}
-	
-	public static void highlightCheckedElement(String bounds) {
-		final int left = Integer.parseInt(bounds.substring(1, bounds.indexOf(44)));
-		final int top = Integer.parseInt(bounds.substring(bounds.indexOf(44) + 1, bounds.indexOf(93)));
-		final int right = Integer.parseInt(bounds.substring(bounds.lastIndexOf(91) + 1, bounds.lastIndexOf(44)));
-		final int bottom = Integer.parseInt(bounds.substring(bounds.lastIndexOf(44) + 1, bounds.lastIndexOf(93)));
 	}
 
 	public static void clearPropertiesTableData() {
@@ -189,15 +189,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private void createAllObjectsTreeHierarchy(ScrolledComposite allObjectsTreeScrolledComposite) {
 		MobileElementTreeContentProvider contentProvider = new MobileElementTreeContentProvider();
 		MobileElementLabelProvider labelProvider = new MobileElementLabelProvider();
-
-		setTreeRoot(MobileSpyDialog.this, this.inspectorController.getMobileObjectRoot());
 		this.allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER);
 		Tree tree = this.allObjectsCheckboxTreeViewer.getTree();
 		this.allObjectsCheckboxTreeViewer.setContentProvider(contentProvider);
 		this.allObjectsCheckboxTreeViewer.setLabelProvider(labelProvider);
-		this.allObjectsCheckboxTreeViewer.setInput((Object) new Object[] { this.appRootElement });
-		this.allObjectsCheckboxTreeViewer.refresh();
-		this.allObjectsCheckboxTreeViewer.expandAll();
 
 		allObjectsTreeScrolledComposite.setContent(tree);
 		allObjectsTreeScrolledComposite.setMinSize(tree.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -217,7 +212,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		tblclmnValue.setWidth(239);
 		tblclmnValue.setText("Value");
 
-		final TableEditor editor = new TableEditor(objectPropertiesTable);
+		TableEditor editor = new TableEditor(objectPropertiesTable);
 		editor.horizontalAlignment = SWT.LEFT;
 		editor.grabHorizontal = true;
 		objectPropertiesTable.addListener(SWT.MouseDown, new Listener() {
@@ -227,14 +222,14 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				int index = objectPropertiesTable.getTopIndex();
 				while (index < objectPropertiesTable.getItemCount()) {
 					boolean visible = false;
-					final TableItem item = objectPropertiesTable.getItem(index);
+					TableItem item = objectPropertiesTable.getItem(index);
 					for (int i = 0; i < objectPropertiesTable.getColumnCount(); i++) {
 						Rectangle rect = item.getBounds(i);
 						if (rect.contains(pt) && i == 1) {
-							final int column = i;
-							final Text text = new Text(objectPropertiesTable, SWT.NONE);
+							int column = i;
+							Text text = new Text(objectPropertiesTable, SWT.NONE);
 							Listener textListener = new Listener() {
-								public void handleEvent(final Event e) {
+								public void handleEvent(Event e) {
 									switch (e.type) {
 									case SWT.FocusOut:
 										item.setText(column, text.getText());
@@ -282,30 +277,30 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		setDeviceView(this.deviceView);
 	}
 
-	private void setDeviceView(final MobileDeviceDialog deviceView) {
+	private void setDeviceView(MobileDeviceDialog deviceView) {
 		this.deviceView = deviceView;
 	}
 
-	private int getDeviceViewStartXIfPlaceRight(final Rectangle objectSpyViewBounds) {
+	private int getDeviceViewStartXIfPlaceRight(Rectangle objectSpyViewBounds) {
 		return objectSpyViewBounds.x + objectSpyViewBounds.width + 5;
 	}
 
-	private boolean isOutOfBound(final Rectangle displayBounds, final Point dialogSize, final int startX) {
+	private boolean isOutOfBound(Rectangle displayBounds, Point dialogSize, int startX) {
 		return startX < 0 || startX + dialogSize.x > displayBounds.width + displayBounds.x;
 	}
 
-	private int getDeviceViewStartXIfPlaceLeft(final Rectangle objectSpyViewBounds, final Point dialogSize) {
+	private int getDeviceViewStartXIfPlaceLeft(Rectangle objectSpyViewBounds, Point dialogSize) {
 		return objectSpyViewBounds.x - dialogSize.x - 5;
 	}
 
-	private int getDefaultDeviceViewDialogStartX(final Rectangle displayBounds, final Point dialogSize) {
+	private int getDefaultDeviceViewDialogStartX(Rectangle displayBounds, Point dialogSize) {
 		return displayBounds.width - dialogSize.x;
 	}
 
 	private Point calculateInitPositionForDeviceViewDialog() {
-		final Rectangle displayBounds = shlSpyMobile.getMonitor().getBounds();
-		final Point dialogSize = new Point(400, 600);
-		final Rectangle objectSpyViewBounds = shlSpyMobile.getBounds();
+		Rectangle displayBounds = shlSpyMobile.getMonitor().getBounds();
+		Point dialogSize = new Point(400, 600);
+		Rectangle objectSpyViewBounds = shlSpyMobile.getBounds();
 		int startX = this.getDeviceViewStartXIfPlaceRight(objectSpyViewBounds);
 		if (this.isOutOfBound(displayBounds, dialogSize, startX)) {
 			startX = this.getDeviceViewStartXIfPlaceLeft(objectSpyViewBounds, dialogSize);
@@ -317,12 +312,17 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	}
 
 	@Override
-	public void setSelectedElementByLocation(final int x, final int y) {
+	public void setSelectedElementByLocation(int x, int y) {
 		System.out.println(this.appRootElement.getXpath());
 		if (this.appRootElement == null) {
 			return;
 		}
-		final TreeMobileElement foundElement = this.recursivelyFindElementByLocation(this.appRootElement, x, y);
+
+		getAllMobileElementsList(this.appRootElement);
+
+		System.out.println("Elements list size is: " + elementsList.size());
+
+		TreeMobileElement foundElement = this.recursivelyFindElementByLocation(this.appRootElement, x, y);
 		if (foundElement == null) {
 			return;
 		}
@@ -337,15 +337,26 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		});
 	}
 
-	private TreeMobileElement recursivelyFindElementByLocation(final TreeMobileElement currentElement, final int x,
-			final int y) {
-		for (final TreeMobileElement childElement : currentElement.getChildrenElement()) {
-			final Map<String, String> attributes = childElement.getAttributes();
-			final Double elementX = Double.parseDouble(attributes.get("x"));
-			final Double elementY = Double.parseDouble(attributes.get("y"));
-			final Double elementWidth = Double.parseDouble(attributes.get("width"));
-			final Double elementHeight = Double.parseDouble(attributes.get("height"));
-			final Rectangle rectangle = new Rectangle(MobileDeviceDialog.safeRoundDouble(elementX),
+	private List<TreeMobileElement> elementsList;
+
+	private List<TreeMobileElement> getAllMobileElementsList(TreeMobileElement rootElement) {
+		for (TreeMobileElement childElement : rootElement.getChildrenElement()) {
+			for (int i = 0; i < rootElement.getChildrenElement().size(); i++) {
+				elementsList.add(rootElement.getChildrenElement().get(i));
+				getAllMobileElementsList(childElement);
+			}
+		}
+		return elementsList;
+	}
+
+	private TreeMobileElement recursivelyFindElementByLocation(TreeMobileElement currentElement, int x, int y) {
+		for (TreeMobileElement childElement : currentElement.getChildrenElement()) {
+			Map<String, String> attributes = childElement.getAttributes();
+			Double elementX = Double.parseDouble(attributes.get("x"));
+			Double elementY = Double.parseDouble(attributes.get("y"));
+			Double elementWidth = Double.parseDouble(attributes.get("width"));
+			Double elementHeight = Double.parseDouble(attributes.get("height"));
+			Rectangle rectangle = new Rectangle(MobileDeviceDialog.safeRoundDouble(elementX),
 					MobileDeviceDialog.safeRoundDouble(elementY), MobileDeviceDialog.safeRoundDouble(elementWidth),
 					MobileDeviceDialog.safeRoundDouble(elementHeight));
 			if (rectangle.contains(x, y)) {
@@ -355,7 +366,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		return currentElement;
 	}
 
-	private void highlightObject(final MobileElement selectedElement) {
+	private void highlightObject(MobileElement selectedElement) {
 		if (selectedElement == null || this.deviceView == null || this.deviceView.isDisposed()) {
 			return;
 		}
@@ -365,15 +376,94 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private void captureObjectAction() {
 		createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
 		createObjectPropertiesTable(objectPropertiesScrolledComposite);
-		openDeviceView();
 
+		String appName = "Demo App Name";
+		ProgressMonitorDialogWithThread dialog = new ProgressMonitorDialogWithThread(shlSpyMobile);
+		IRunnableWithProgress runnable = (IRunnableWithProgress) new IRunnableWithProgress() {
+			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				monitor.beginTask("Starting Application for Spy ...", -1);
+				dialog.runAndWait((Callable<Object>) new Callable<Object>() {
+					@Override
+					public Object call() throws Exception {
+						MobileSpyDialog.setTreeRoot(MobileSpyDialog.this,
+								MobileSpyDialog.this.inspectorController.getMobileObjectRoot());
+						if (MobileSpyDialog.this.appRootElement != null) {
+							MobileSpyDialog.this.appRootElement.setName(appName);
+						}
+						return null;
+					}
+				});
+				MobileSpyDialog.this.checkMonitorCanceled(monitor);
+				this.refreshTreeElements(dialog);
+				String imgPath = this.captureImage();
+				System.out.println("imgPath: " + imgPath);
+				MobileSpyDialog.this.checkMonitorCanceled(monitor);
+				this.refreshDeviceView(imgPath);
+				Display.getDefault().syncExec((Runnable) new Runnable() {
+					@Override
+					public void run() {
+						MobileSpyDialog.this.deviceView.getShell().forceActive();
+					}
+				});
+				monitor.done();
+			}
+
+			private void refreshTreeElements(ProgressMonitorDialogWithThread dialog) {
+				Display.getDefault().syncExec((Runnable) new Runnable() {
+					@Override
+					public void run() {
+						dialog.setCancelable(false);
+						MobileSpyDialog.this.allObjectsCheckboxTreeViewer
+						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+						MobileSpyDialog.this.allObjectsCheckboxTreeViewer.refresh();
+						MobileSpyDialog.this.allObjectsCheckboxTreeViewer.expandAll();
+						MobileSpyDialog.this
+						.verifyCapturedElementsStates(MobileSpyDialog.this.capturedObjectsTableViewer
+								.getCapturedElements().toArray(new CapturedMobileElement[0]));
+						dialog.setCancelable(true);
+					}
+				});
+			}
+
+			private void refreshDeviceView(String imgPath) {
+				File imgFile = new File(imgPath);
+				if (imgFile.exists()) {
+					MobileSpyDialog.this.deviceView.refreshDialog(imgFile, MobileSpyDialog.this.appRootElement);
+				}
+			}
+
+			private String captureImage() throws InvocationTargetException {
+				try {
+					return MobileSpyDialog.this.inspectorController.captureScreenshot();
+				} catch (Exception e) {
+					throw new InvocationTargetException(e);
+				}
+			}
+		};
+		try {
+			this.btnCapture.setEnabled(false);
+			this.openDeviceView();
+			dialog.run(true, true, runnable);
+		} catch (InterruptedException ex) {
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} finally {
+			this.btnCapture.setEnabled(true);
+		}
+		this.btnCapture.setEnabled(true);
 	}
 
-	private void verifyCapturedElementsStates(final CapturedMobileElement[] elements) {
+	private void checkMonitorCanceled(IProgressMonitor monitor) throws InterruptedException {
+		if (monitor.isCanceled()) {
+			throw new InterruptedException("ERROR_MSG_OPERATION_CANCELED");
+		}
+	}
+
+	private void verifyCapturedElementsStates(CapturedMobileElement[] elements) {
 		this.clearAllObjectState(elements);
 		if (this.appRootElement != null) {
-			for (final CapturedMobileElement needToVerify : elements) {
-				final TreeMobileElement foundElement = this.appRootElement.findBestMatch(needToVerify);
+			for (CapturedMobileElement needToVerify : elements) {
+				TreeMobileElement foundElement = this.appRootElement.findBestMatch(needToVerify);
 				if (foundElement != null) {
 					needToVerify.setLink(foundElement);
 					foundElement.setCapturedElement(needToVerify);
@@ -385,13 +475,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		this.capturedObjectsTableViewer.refresh();
 	}
 
-	private void clearAllObjectState(final CapturedMobileElement[] elements) {
-		for (final CapturedMobileElement captured : elements) {
-			final TreeMobileElement treeElementLink = captured.getLink();
+	private void clearAllObjectState(CapturedMobileElement[] elements) {
+		for (CapturedMobileElement captured : elements) {
+			TreeMobileElement treeElementLink = captured.getLink();
 			if (treeElementLink != null) {
 				treeElementLink.setCapturedElement(null);
 				captured.setLink(null);
-				final Tree elementTree = this.allObjectsCheckboxTreeViewer.getTree();
+				Tree elementTree = this.allObjectsCheckboxTreeViewer.getTree();
 				if (elementTree != null && !elementTree.isDisposed()
 						&& this.allObjectsCheckboxTreeViewer.getChecked((Object) treeElementLink)) {
 					this.allObjectsCheckboxTreeViewer.setChecked((Object) treeElementLink, false);

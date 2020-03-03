@@ -22,10 +22,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
-
-import opkeystudio.iconManager.OpKeyStudioIcons;
 import pcloudystudio.objectspy.element.MobileElement;
 
 import org.eclipse.swt.SWT;
@@ -37,13 +33,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.dialogs.Dialog;
 
 public class MobileDeviceDialog extends Dialog {
-	private static final String DIALOG_TITLE = "Mobile Device";
-	private Image currentScreenShot = ResourceManager.getPluginImage("OpKeyStudio",
-			OpKeyStudioIcons.MOBILE_SPY_CAPTURED_IMAGE);
-	private Image scaledScreenShot;
+	private static String DIALOG_TITLE = "Mobile Device";
+	private Image currentScreenShot;
 	private Canvas canvas;
-	public static final int DIALOG_WIDTH = 400;
-	public static final int DIALOG_HEIGHT = 600;
+	public static int DIALOG_WIDTH = 400;
+	public static int DIALOG_HEIGHT = 600;
 	private double currentX;
 	private double currentY;
 	private double currentWidth;
@@ -54,8 +48,7 @@ public class MobileDeviceDialog extends Dialog {
 	private MobileElementInspectorDialog mobileInspetorDialog;
 	private ScrolledComposite scrolledComposite;
 
-	public MobileDeviceDialog(final Shell parentShell, final MobileElementInspectorDialog mobileInspectorDialog,
-			final Point location) {
+	public MobileDeviceDialog(Shell parentShell, MobileElementInspectorDialog mobileInspectorDialog, Point location) {
 		super(parentShell);
 		this.currentX = 0.0;
 		this.currentY = 0.0;
@@ -69,8 +62,8 @@ public class MobileDeviceDialog extends Dialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		final Composite dialogArea = (Composite) super.createDialogArea(parent);
-		final GridLayout dialogAreaGridLayout = (GridLayout) dialogArea.getLayout();
+		Composite dialogArea = (Composite) super.createDialogArea(parent);
+		GridLayout dialogAreaGridLayout = (GridLayout) dialogArea.getLayout();
 		dialogAreaGridLayout.marginWidth = 0;
 		dialogAreaGridLayout.marginHeight = 0;
 		(this.scrolledComposite = new ScrollableComposite(dialogArea, SWT.H_SCROLL | SWT.V_SCROLL))
@@ -78,28 +71,23 @@ public class MobileDeviceDialog extends Dialog {
 		this.scrolledComposite.setExpandVertical(true);
 		this.scrolledComposite.setLayout((Layout) new GridLayout());
 		this.scrolledComposite.setLayoutData((Object) new GridData(4, 4, true, true));
-		final Composite container = new Composite((Composite) this.scrolledComposite, SWT.BORDER);
+		Composite container = new Composite((Composite) this.scrolledComposite, SWT.BORDER);
 		container.setLayout((Layout) new FillLayout());
 		this.scrolledComposite.setContent((Control) container);
 
-		this.currentWidth = this.currentScreenShot.getImageData().width;
-		this.currentHeight = this.currentScreenShot.getImageData().height;
-
-		this.currentScreenShot = this.scaleImage(this.currentScreenShot, 400, 600);
-
 		(this.canvas = new Canvas(container, SWT.NONE)).pack();
 		this.canvas.addPaintListener((PaintListener) new PaintListener() {
-			public void paintControl(final PaintEvent e) {
+			public void paintControl(PaintEvent e) {
 				if (MobileDeviceDialog.this.currentScreenShot != null
 						&& !MobileDeviceDialog.this.currentScreenShot.isDisposed()) {
 					e.gc.drawImage(MobileDeviceDialog.this.currentScreenShot, 0, 0);
 					if (MobileDeviceDialog.this.currentWidth != 0.0 && MobileDeviceDialog.this.currentHeight != 0.0) {
-						final Color oldForegroundColor = e.gc.getForeground();
+						Color oldForegroundColor = e.gc.getForeground();
 						e.gc.setForeground(new Color((Device) Display.getCurrent(), new RGB(118, 198, 66)));
-						final int x = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentX);
-						final int y = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentY);
-						final int width = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentWidth);
-						final int height = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentHeight);
+						int x = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentX);
+						int y = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentY);
+						int width = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentWidth);
+						int height = MobileDeviceDialog.safeRoundDouble(MobileDeviceDialog.this.currentHeight);
 						e.gc.drawRectangle(x, y, width, height);
 						e.gc.drawRectangle(x + 1, Math.max(y + 1, 0), Math.max(width - 2, 0), Math.max(height - 2, 0));
 						e.gc.setForeground(oldForegroundColor);
@@ -109,7 +97,7 @@ public class MobileDeviceDialog extends Dialog {
 		});
 
 		this.canvas.addMouseListener((MouseListener) new MouseAdapter() {
-			public void mouseDown(final MouseEvent e) {
+			public void mouseDown(MouseEvent e) {
 				if (e.button == 1) {
 					System.out.println("clicked at: " + "(" + e.x + "," + e.y + ")");
 					MobileDeviceDialog.this.inspectElementAt(e.x, e.y);
@@ -127,45 +115,45 @@ public class MobileDeviceDialog extends Dialog {
 		return true;
 	}
 
-	private void inspectElementAt(final int x, final int y) {
-		final Double realX = (double) (x * this.currentScreenShot.getImageData().height / 600);
-		final Double realY = (double) (y * this.currentScreenShot.getImageData().width / 400);
+	private void inspectElementAt(int x, int y) {
+		Double realX = x / this.hRatio;
+		Double realY = y / this.hRatio;
 		this.mobileInspetorDialog.setSelectedElementByLocation(safeRoundDouble(realX), safeRoundDouble(realY));
 	}
 
-	private boolean isElementOnScreen(final Double x, final Double y, final Double width, final Double height) {
-		final Rectangle elementRect = new Rectangle(x.intValue(), y.intValue(), width.intValue(), height.intValue());
+	private boolean isElementOnScreen(Double x, Double y, Double width, Double height) {
+		Rectangle elementRect = new Rectangle(x.intValue(), y.intValue(), width.intValue(), height.intValue());
 		return elementRect.intersects(this.getCurrentViewportRect());
 	}
 
-	private void scrollToElement(final Double x, final Double y) {
+	private void scrollToElement(Double x, Double y) {
 		this.scrolledComposite.setOrigin(x.intValue(), y.intValue());
 	}
 
 	private Rectangle getCurrentViewportRect() {
-		final ScrollBar verticalBar = this.scrolledComposite.getVerticalBar();
-		final ScrollBar horizontalBar = this.scrolledComposite.getHorizontalBar();
-		final int viewPortY = verticalBar.isVisible() ? verticalBar.getSelection() : 0;
-		final int viewPortX = horizontalBar.isVisible() ? horizontalBar.getSelection() : 0;
-		final Point viewPortSize = this.scrolledComposite.getSize();
-		final Rectangle viewPortRect = new Rectangle(viewPortX, viewPortY, viewPortSize.x, viewPortSize.y);
+		ScrollBar verticalBar = this.scrolledComposite.getVerticalBar();
+		ScrollBar horizontalBar = this.scrolledComposite.getHorizontalBar();
+		int viewPortY = verticalBar.isVisible() ? verticalBar.getSelection() : 0;
+		int viewPortX = horizontalBar.isVisible() ? horizontalBar.getSelection() : 0;
+		Point viewPortSize = this.scrolledComposite.getSize();
+		Rectangle viewPortRect = new Rectangle(viewPortX, viewPortY, viewPortSize.x, viewPortSize.y);
 		return viewPortRect;
 	}
 
-	public void highlight(final double x, final double y, final double width, final double height) {
+	public void highlight(double x, double y, double width, double height) {
 		Display.getCurrent().syncExec((Runnable) new Runnable() {
 			@Override
 			public void run() {
-				final double currentX = x * MobileDeviceDialog.this.hRatio;
-				final double currentY = y * MobileDeviceDialog.this.hRatio;
-				final double currentWidth = width * MobileDeviceDialog.this.hRatio;
-				final double currentHeight = height * MobileDeviceDialog.this.hRatio;
+				double currentX = x * MobileDeviceDialog.this.hRatio;
+				double currentY = y * MobileDeviceDialog.this.hRatio;
+				double currentWidth = width * MobileDeviceDialog.this.hRatio;
+				double currentHeight = height * MobileDeviceDialog.this.hRatio;
 				if (!MobileDeviceDialog.this.isElementOnScreen(currentX, currentY, currentWidth, currentHeight)) {
 					MobileDeviceDialog.this.scrollToElement(currentX, currentY);
 				}
 			}
 		});
-		final Thread highlightThread = new Thread(new Runnable() {
+		Thread highlightThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				for (int i = 0; i < 9; ++i) {
@@ -198,10 +186,9 @@ public class MobileDeviceDialog extends Dialog {
 		highlightThread.start();
 	}
 
-	private Image scaleImage(final Image image, final double newWidth, final double newHeight) {
-		final Image scaled = new Image((Device) Display.getDefault(), safeRoundDouble(newWidth),
-				safeRoundDouble(newHeight));
-		final GC gc = new GC((Drawable) scaled);
+	private Image scaleImage(Image image, double newWidth, double newHeight) {
+		Image scaled = new Image((Device) Display.getDefault(), safeRoundDouble(newWidth), safeRoundDouble(newHeight));
+		GC gc = new GC((Drawable) scaled);
 		gc.setAntialias(1);
 		gc.setInterpolation(2);
 		gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height, 0, 0, safeRoundDouble(newWidth),
@@ -237,36 +224,40 @@ public class MobileDeviceDialog extends Dialog {
 		this.handleShellCloseEvent();
 	}
 
-	public void highlightElement(final MobileElement selectedElement) {
-		final Map<String, String> attributes = selectedElement.getAttributes();
+	public void highlightElement(MobileElement selectedElement) {
+		Map<String, String> attributes = selectedElement.getAttributes();
 		if (attributes == null || !attributes.containsKey("x") || !attributes.containsKey("y")
 				|| !attributes.containsKey("width") || !attributes.containsKey("height")) {
 			return;
 		}
-		final double x = Double.parseDouble(attributes.get("x"));
-		final double y = Double.parseDouble(attributes.get("y"));
-		final double w = Double.parseDouble(attributes.get("width"));
-		final double h = Double.parseDouble(attributes.get("height"));
+		double x = Double.parseDouble(attributes.get("x"));
+		double y = Double.parseDouble(attributes.get("y"));
+		double w = Double.parseDouble(attributes.get("width"));
+		double h = Double.parseDouble(attributes.get("height"));
 		this.highlight(x, y, w, h);
 	}
 
-	public void refreshDialog(final File imageFile, final MobileElement root) {
-		/*
-		 * try { final ImageDescriptor imgDesc =
-		 * ImageDescriptor.createFromURL(imageFile.toURI().toURL()); final Image img =
-		 * imgDesc.createImage(); final Map<String, String> attributes; final Image
-		 * image; double rootHeight; final double imageRatio;
-		 * this.getShell().getDisplay().syncExec(() -> { attributes =
-		 * root.getAttributes(); rootHeight = image.getBounds().height; if
-		 * (attributes.containsKey("height")) { rootHeight =
-		 * Double.parseDouble(attributes.get("height")); } imageRatio = rootHeight /
-		 * image.getBounds().height; this.hRatio = this.canvas.getSize().y / rootHeight;
-		 * this.currentScreenShot = this.scaleImage(image, image.getBounds().width *
-		 * imageRatio * this.hRatio, image.getBounds().height * this.hRatio *
-		 * imageRatio); this.canvas.redraw(); return; }); this.refreshView(); } catch
-		 * (Exception ex) { ex.printStackTrace(); // added
-		 * LoggerSingleton.logError((Throwable) ex); }
-		 */
+	public void refreshDialog(File imageFile, MobileElement root) {
+		try {
+			ImageDescriptor imgDesc = ImageDescriptor.createFromURL(imageFile.toURI().toURL());
+			Image img = imgDesc.createImage();
+			this.getShell().getDisplay().syncExec(() -> {
+				Map<String, String> attributes = root.getAttributes();
+				double rootHeight = img.getBounds().height;
+				if (attributes.containsKey("height")) {
+					rootHeight = Double.parseDouble(attributes.get("height"));
+				}
+				double imageRatio = rootHeight / img.getBounds().height;
+				this.hRatio = this.canvas.getSize().y / rootHeight;
+				this.currentScreenShot = this.scaleImage(img, img.getBounds().width * imageRatio * this.hRatio,
+						img.getBounds().height * this.hRatio * imageRatio);
+				this.canvas.redraw();
+				return;
+			});
+			this.refreshView();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	private void refreshView() {
@@ -305,24 +296,24 @@ public class MobileDeviceDialog extends Dialog {
 		return this.initialLocation;
 	}
 
-	public static int safeRoundDouble(final double d) {
-		final long rounded = Math.round(d);
+	public static int safeRoundDouble(double d) {
+		long rounded = Math.round(d);
 		return (int) Math.max(-2147483648L, Math.min(2147483647L, rounded));
 	}
 
-	static void setCurrentX(final MobileDeviceDialog mobileDeviceDialog, final double currentX) {
+	static void setCurrentX(MobileDeviceDialog mobileDeviceDialog, double currentX) {
 		mobileDeviceDialog.currentX = currentX;
 	}
 
-	static void setCurrentY(final MobileDeviceDialog mobileDeviceDialog, final double currentY) {
+	static void setCurrentY(MobileDeviceDialog mobileDeviceDialog, double currentY) {
 		mobileDeviceDialog.currentY = currentY;
 	}
 
-	static void setCurrentWidth(final MobileDeviceDialog mobileDeviceDialog, final double currentWidth) {
+	static void setCurrentWidth(MobileDeviceDialog mobileDeviceDialog, double currentWidth) {
 		mobileDeviceDialog.currentWidth = currentWidth;
 	}
 
-	static void setCurrentHeight(final MobileDeviceDialog mobileDeviceDialog, final double currentHeight) {
+	static void setCurrentHeight(MobileDeviceDialog mobileDeviceDialog, double currentHeight) {
 		mobileDeviceDialog.currentHeight = currentHeight;
 	}
 }

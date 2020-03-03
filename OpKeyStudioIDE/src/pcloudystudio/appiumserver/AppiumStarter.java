@@ -33,19 +33,19 @@ public class AppiumStarter {
 			String port = new AppiumPortIpInfo().getPort();
 			String hostAddress = new AppiumPortIpInfo().getHost_Address();
 			if ((port != "" || port != null) && (hostAddress != "" || hostAddress != null)) {
-				driver = new AndroidDriver<WebElement>(new URL("http://" + hostAddress + ":" + port + "/wd/hub"),
-						capabilities);
-				AndroidDriverObject.setDriver(driver);
-				// Thread.sleep(20000);
-				// String page_source = AndroidDriverObject.getDriver().getPageSource();
+				if (AndroidDriverObject.getDriver() == null) {
+					driver = new AndroidDriver<WebElement>(new URL("http://" + hostAddress + ":" + port + "/wd/hub"),
+							capabilities);
+					AndroidDriverObject.getInstance().setDriver(driver);
+				}
 
 			}
 
 			else {
-
-				driver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-				AndroidDriverObject.getInstance();
-				AndroidDriverObject.setDriver(driver);
+				if (AndroidDriverObject.getDriver() == null) {
+					driver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+					AndroidDriverObject.getInstance().setDriver(driver);
+				}
 
 			}
 		} catch (Exception e) {
