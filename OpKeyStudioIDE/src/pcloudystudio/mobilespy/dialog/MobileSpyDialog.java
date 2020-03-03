@@ -5,8 +5,6 @@ package pcloudystudio.mobilespy.dialog;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -64,6 +62,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	private MobileDeviceDialog deviceView;
 	private Button btnCapture;
+	private Button btnHelp;
 
 	private ScrolledComposite allObjectsTreeScrolledComposite;
 	private ScrolledComposite objectPropertiesScrolledComposite;
@@ -79,7 +78,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		super(parent, style);
 		setText("SWT Dialog");
 		this.inspectorController = new MobileInspectorController();
-		this.elementsList = new ArrayList<TreeMobileElement>();
 	}
 
 	/**
@@ -120,14 +118,21 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		Composite toolsComposite = new Composite(shlSpyMobile, SWT.NONE);
 		toolsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_toolsComposite.heightHint = 43;
 		toolsComposite.setLayoutData(gd_toolsComposite);
 
 		Composite spyContainerComposite = new Composite(shlSpyMobile, SWT.NONE);
 		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_spyContainerComposite.heightHint = 732;
+		gd_spyContainerComposite.heightHint = 672;
 		gd_spyContainerComposite.widthHint = 988;
 		spyContainerComposite.setLayoutData(gd_spyContainerComposite);
 		spyContainerComposite.setLayout(new FillLayout());
+
+		Composite bottomComposite = new Composite(shlSpyMobile, SWT.NONE);
+		bottomComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_bottomComposite.heightHint = 38;
+		bottomComposite.setLayoutData(gd_bottomComposite);
 
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
 
@@ -169,6 +174,21 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 		btnCapture.setBounds(10, 10, 75, 25);
 		btnCapture.setText("Capture");
+
+		// -------------------------------------------------------------//
+		btnHelp = new Button(bottomComposite, SWT.NONE);
+		btnHelp.setToolTipText("Help");
+		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+
+		btnHelp.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+			}
+		});
+
+		btnHelp.setBounds(10, 10, 45, 22);
+		btnHelp.setText("Help");
 
 		sashForm.setWeights(new int[] { 3, 2 });
 	}
@@ -313,15 +333,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	@Override
 	public void setSelectedElementByLocation(int x, int y) {
-		System.out.println(this.appRootElement.getXpath());
 		if (this.appRootElement == null) {
 			return;
 		}
-
-		getAllMobileElementsList(this.appRootElement);
-
-		System.out.println("Elements list size is: " + elementsList.size());
-
 		TreeMobileElement foundElement = this.recursivelyFindElementByLocation(this.appRootElement, x, y);
 		if (foundElement == null) {
 			return;
@@ -335,18 +349,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				allObjectsCheckboxTreeViewer.setSelection((ISelection) new StructuredSelection((Object) foundElement));
 			}
 		});
-	}
-
-	private List<TreeMobileElement> elementsList;
-
-	private List<TreeMobileElement> getAllMobileElementsList(TreeMobileElement rootElement) {
-		for (TreeMobileElement childElement : rootElement.getChildrenElement()) {
-			for (int i = 0; i < rootElement.getChildrenElement().size(); i++) {
-				elementsList.add(rootElement.getChildrenElement().get(i));
-				getAllMobileElementsList(childElement);
-			}
-		}
-		return elementsList;
 	}
 
 	private TreeMobileElement recursivelyFindElementByLocation(TreeMobileElement currentElement, int x, int y) {
@@ -396,7 +398,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				MobileSpyDialog.this.checkMonitorCanceled(monitor);
 				this.refreshTreeElements(dialog);
 				String imgPath = this.captureImage();
-				System.out.println("imgPath: " + imgPath);
 				MobileSpyDialog.this.checkMonitorCanceled(monitor);
 				this.refreshDeviceView(imgPath);
 				Display.getDefault().syncExec((Runnable) new Runnable() {
