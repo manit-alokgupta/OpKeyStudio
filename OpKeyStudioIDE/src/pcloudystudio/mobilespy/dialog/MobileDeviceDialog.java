@@ -67,7 +67,7 @@ public class MobileDeviceDialog extends Dialog {
 		dialogAreaGridLayout.marginWidth = 0;
 		dialogAreaGridLayout.marginHeight = 0;
 		(this.scrolledComposite = new ScrollableComposite(dialogArea, SWT.H_SCROLL | SWT.V_SCROLL))
-		.setExpandHorizontal(true);
+				.setExpandHorizontal(true);
 		this.scrolledComposite.setExpandVertical(true);
 		this.scrolledComposite.setLayout((Layout) new GridLayout());
 		this.scrolledComposite.setLayoutData((Object) new GridData(4, 4, true, true));
@@ -199,7 +199,7 @@ public class MobileDeviceDialog extends Dialog {
 
 	@Override
 	protected Point getInitialSize() {
-		return new Point(400, 657);
+		return new Point(DIALOG_WIDTH, DIALOG_HEIGHT);
 	}
 
 	@Override

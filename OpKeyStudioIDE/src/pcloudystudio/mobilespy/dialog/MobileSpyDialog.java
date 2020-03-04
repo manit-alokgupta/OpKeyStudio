@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
@@ -62,10 +63,14 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private MobileDeviceDialog deviceView;
 	private Button btnCapture;
 	private Button btnHelp;
+	private Label lblAllObjects;
+	private Label lblAllObjectProperties;
 
 	private ScrolledComposite allObjectsTreeScrolledComposite;
 	private ScrolledComposite objectPropertiesScrolledComposite;
 	private CapturedObjectTableViewer capturedObjectsTableViewer;
+	private Composite compositeTreeHierarchy;
+	private Composite compositeObjectProperties;
 
 	/**
 	 * Create the dialog.
@@ -143,19 +148,44 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		 * All Objects Tree Hierarchy section
 		 *********************************************/
 
-		allObjectsTreeScrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		allObjectsTreeScrolledComposite.setExpandHorizontal(true);
-		allObjectsTreeScrolledComposite.setExpandVertical(true);
-
 		// this.createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
 
 		/*************************************************
 		 * Object Properties section
 		 ******************************************************/
 
-		objectPropertiesScrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		compositeTreeHierarchy = new Composite(sashForm, SWT.BORDER);
+		compositeTreeHierarchy.setLayout(new GridLayout(1, false));
+
+		lblAllObjects = new Label(compositeTreeHierarchy, SWT.NONE);
+		lblAllObjects.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
+		lblAllObjects.setText("ALL OBJECTS");
+
+		allObjectsTreeScrolledComposite = new ScrolledComposite(compositeTreeHierarchy,
+				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		GridData gd_allObjectsTreeScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_allObjectsTreeScrolledComposite.widthHint = 555;
+		gd_allObjectsTreeScrolledComposite.heightHint = 615;
+		allObjectsTreeScrolledComposite.setLayoutData(gd_allObjectsTreeScrolledComposite);
+		allObjectsTreeScrolledComposite.setExpandHorizontal(true);
+		allObjectsTreeScrolledComposite.setExpandVertical(true);
+
+		compositeObjectProperties = new Composite(sashForm, SWT.BORDER);
+		compositeObjectProperties.setLayout(new GridLayout(1, false));
+
+		lblAllObjectProperties = new Label(compositeObjectProperties, SWT.NONE);
+		lblAllObjectProperties.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
+		lblAllObjectProperties.setText("OBJECT PROPERTIES");
+
+		objectPropertiesScrolledComposite = new ScrolledComposite(compositeObjectProperties,
+				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		GridData gd_objectPropertiesScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_objectPropertiesScrolledComposite.heightHint = 339;
+		gd_objectPropertiesScrolledComposite.widthHint = 360;
+		objectPropertiesScrolledComposite.setLayoutData(gd_objectPropertiesScrolledComposite);
 		objectPropertiesScrolledComposite.setExpandHorizontal(true);
 		objectPropertiesScrolledComposite.setExpandVertical(true);
+		sashForm.setWeights(new int[] { 3, 2 });
 
 		// this.createObjectPropertiesTable(objectPropertiesScrolledComposite);
 
@@ -188,8 +218,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 		btnHelp.setBounds(10, 5, 45, 22);
 		btnHelp.setText("Help");
-
-		sashForm.setWeights(new int[] { 3, 2 });
 	}
 
 	static void setTreeRoot(MobileSpyDialog mobileSpyDialog, TreeMobileElement appRootElement) {
@@ -318,7 +346,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	private Point calculateInitPositionForDeviceViewDialog() {
 		Rectangle displayBounds = shlSpyMobile.getMonitor().getBounds();
-		Point dialogSize = new Point(400, 600);
+		Point dialogSize = new Point(MobileDeviceDialog.DIALOG_WIDTH, MobileDeviceDialog.DIALOG_HEIGHT);
 		Rectangle objectSpyViewBounds = shlSpyMobile.getBounds();
 		int startX = this.getDeviceViewStartXIfPlaceRight(objectSpyViewBounds);
 		if (this.isOutOfBound(displayBounds, dialogSize, startX)) {
@@ -378,7 +406,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
 		createObjectPropertiesTable(objectPropertiesScrolledComposite);
 
-		String appName = "Demo App Name";
+		String appName = "Shopping List SoftList_v2.3.6_apkpure.com.apk";
 		ProgressMonitorDialogWithThread dialog = new ProgressMonitorDialogWithThread(shlSpyMobile);
 		IRunnableWithProgress runnable = (IRunnableWithProgress) new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
