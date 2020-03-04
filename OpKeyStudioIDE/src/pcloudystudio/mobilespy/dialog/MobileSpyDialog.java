@@ -5,7 +5,6 @@ package pcloudystudio.mobilespy.dialog;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -15,8 +14,16 @@ import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
@@ -25,6 +32,11 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -37,27 +49,13 @@ import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
 import pcloudystudio.objectspy.viewer.CapturedObjectTableViewer;
 
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.layout.GridLayout;
-
 public class MobileSpyDialog extends Dialog implements MobileElementInspectorDialog {
 
 	protected Object result;
 	protected Shell shlSpyMobile;
 	private static Table objectPropertiesTable;
 	private MobileInspectorController inspectorController;
-	private CheckboxTreeViewer allObjectsCheckboxTreeViewer;
+	public static CheckboxTreeViewer allObjectsCheckboxTreeViewer;
 	public TreeMobileElement appRootElement;
 
 	private MobileDeviceDialog deviceView;
@@ -236,10 +234,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private void createAllObjectsTreeHierarchy(ScrolledComposite allObjectsTreeScrolledComposite) {
 		MobileElementTreeContentProvider contentProvider = new MobileElementTreeContentProvider();
 		MobileElementLabelProvider labelProvider = new MobileElementLabelProvider();
-		this.allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER);
-		Tree tree = this.allObjectsCheckboxTreeViewer.getTree();
-		this.allObjectsCheckboxTreeViewer.setContentProvider(contentProvider);
-		this.allObjectsCheckboxTreeViewer.setLabelProvider(labelProvider);
+		allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER);
+		Tree tree = allObjectsCheckboxTreeViewer.getTree();
+		allObjectsCheckboxTreeViewer.setContentProvider(contentProvider);
+		allObjectsCheckboxTreeViewer.setLabelProvider(labelProvider);
 
 		allObjectsTreeScrolledComposite.setContent(tree);
 		allObjectsTreeScrolledComposite.setMinSize(tree.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -373,7 +371,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			public void run() {
 				shlSpyMobile.setFocus();
 				allObjectsCheckboxTreeViewer.getTree().setFocus();
+				allObjectsCheckboxTreeViewer.setAllChecked(false);
 				allObjectsCheckboxTreeViewer.setSelection((ISelection) new StructuredSelection((Object) foundElement));
+				allObjectsCheckboxTreeViewer.setChecked(foundElement, true);
+				MobileSpyDialog.clearPropertiesTableData();
+				CustomCheckBoxTree.fillDataInObjectPropertiesTable(foundElement);
 			}
 		});
 	}
@@ -441,10 +443,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					@Override
 					public void run() {
 						dialog.setCancelable(false);
-						MobileSpyDialog.this.allObjectsCheckboxTreeViewer
+						allObjectsCheckboxTreeViewer
 						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
-						MobileSpyDialog.this.allObjectsCheckboxTreeViewer.refresh();
-						MobileSpyDialog.this.allObjectsCheckboxTreeViewer.expandAll();
+						allObjectsCheckboxTreeViewer.refresh();
+						allObjectsCheckboxTreeViewer.expandAll();
 						MobileSpyDialog.this
 						.verifyCapturedElementsStates(MobileSpyDialog.this.capturedObjectsTableViewer
 								.getCapturedElements().toArray(new CapturedMobileElement[0]));
@@ -495,12 +497,12 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				if (foundElement != null) {
 					needToVerify.setLink(foundElement);
 					foundElement.setCapturedElement(needToVerify);
-					this.allObjectsCheckboxTreeViewer.setChecked((Object) foundElement, true);
+					allObjectsCheckboxTreeViewer.setChecked((Object) foundElement, true);
 				}
 			}
 		}
-		this.allObjectsCheckboxTreeViewer.refresh();
-		this.capturedObjectsTableViewer.refresh();
+		allObjectsCheckboxTreeViewer.refresh();
+		capturedObjectsTableViewer.refresh();
 	}
 
 	private void clearAllObjectState(CapturedMobileElement[] elements) {
@@ -509,10 +511,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			if (treeElementLink != null) {
 				treeElementLink.setCapturedElement(null);
 				captured.setLink(null);
-				Tree elementTree = this.allObjectsCheckboxTreeViewer.getTree();
+				Tree elementTree = allObjectsCheckboxTreeViewer.getTree();
 				if (elementTree != null && !elementTree.isDisposed()
-						&& this.allObjectsCheckboxTreeViewer.getChecked((Object) treeElementLink)) {
-					this.allObjectsCheckboxTreeViewer.setChecked((Object) treeElementLink, false);
+						&& allObjectsCheckboxTreeViewer.getChecked((Object) treeElementLink)) {
+					allObjectsCheckboxTreeViewer.setChecked((Object) treeElementLink, false);
 				}
 			}
 		}
