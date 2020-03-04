@@ -252,11 +252,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		objectPropertiesScrolledComposite.setContent(objectPropertiesTable);
 
 		TableColumn tblclmnName = new TableColumn(objectPropertiesTable, SWT.NONE);
-		tblclmnName.setWidth(96);
+		tblclmnName.setWidth(100);
 		tblclmnName.setText("Name");
 
 		TableColumn tblclmnValue = new TableColumn(objectPropertiesTable, SWT.NONE);
-		tblclmnValue.setWidth(239);
+		tblclmnValue.setWidth(273);
 		tblclmnValue.setText("Value");
 
 		TableEditor editor = new TableEditor(objectPropertiesTable);
