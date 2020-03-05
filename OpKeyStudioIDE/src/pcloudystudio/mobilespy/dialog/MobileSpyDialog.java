@@ -43,11 +43,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
-import pcloudystudio.objectspy.element.impl.CapturedMobileElement;
 import pcloudystudio.objectspy.element.impl.dialog.ProgressMonitorDialogWithThread;
 import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
-import pcloudystudio.objectspy.viewer.CapturedObjectTableViewer;
 
 public class MobileSpyDialog extends Dialog implements MobileElementInspectorDialog {
 
@@ -67,7 +65,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	private ScrolledComposite allObjectsTreeScrolledComposite;
 	private ScrolledComposite objectPropertiesScrolledComposite;
-	private CapturedObjectTableViewer capturedObjectsTableViewer;
 	private Composite compositeTreeHierarchy;
 	private Composite compositeObjectProperties;
 	private Button btnStart;
@@ -492,9 +489,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 								.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
 						allObjectsCheckboxTreeViewer.refresh();
 						allObjectsCheckboxTreeViewer.expandAll();
-						MobileSpyDialog.this
-								.verifyCapturedElementsStates(MobileSpyDialog.this.capturedObjectsTableViewer
-										.getCapturedElements().toArray(new CapturedMobileElement[0]));
 						dialog.setCancelable(true);
 					}
 				});
@@ -531,37 +525,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private void checkMonitorCanceled(IProgressMonitor monitor) throws InterruptedException {
 		if (monitor.isCanceled()) {
 			throw new InterruptedException("ERROR_MSG_OPERATION_CANCELED");
-		}
-	}
-
-	private void verifyCapturedElementsStates(CapturedMobileElement[] elements) {
-		this.clearAllObjectState(elements);
-		if (this.appRootElement != null) {
-			for (CapturedMobileElement needToVerify : elements) {
-				TreeMobileElement foundElement = this.appRootElement.findBestMatch(needToVerify);
-				if (foundElement != null) {
-					needToVerify.setLink(foundElement);
-					foundElement.setCapturedElement(needToVerify);
-					allObjectsCheckboxTreeViewer.setChecked((Object) foundElement, true);
-				}
-			}
-		}
-		allObjectsCheckboxTreeViewer.refresh();
-		capturedObjectsTableViewer.refresh();
-	}
-
-	private void clearAllObjectState(CapturedMobileElement[] elements) {
-		for (CapturedMobileElement captured : elements) {
-			TreeMobileElement treeElementLink = captured.getLink();
-			if (treeElementLink != null) {
-				treeElementLink.setCapturedElement(null);
-				captured.setLink(null);
-				Tree elementTree = allObjectsCheckboxTreeViewer.getTree();
-				if (elementTree != null && !elementTree.isDisposed()
-						&& allObjectsCheckboxTreeViewer.getChecked((Object) treeElementLink)) {
-					allObjectsCheckboxTreeViewer.setChecked((Object) treeElementLink, false);
-				}
-			}
 		}
 	}
 }
