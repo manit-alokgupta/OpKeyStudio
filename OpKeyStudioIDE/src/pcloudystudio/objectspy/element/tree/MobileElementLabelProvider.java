@@ -5,8 +5,6 @@ package pcloudystudio.objectspy.element.tree;
 
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.StyledString;
-import org.eclipse.jface.viewers.ViewerCell;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
@@ -14,7 +12,6 @@ import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.widgets.Display;
 
 import pcloudystudio.objectspy.element.TreeMobileElement;
-import pcloudystudio.objectspy.element.impl.CapturedMobileElement;
 import pcloudystudio.objectspy.element.impl.providers.TypeCheckedStyleTreeCellLabelProvider;
 import pcloudystudio.objectspy.resources.image.ImageManager;
 
@@ -38,22 +35,8 @@ public class MobileElementLabelProvider extends TypeCheckedStyleTreeCellLabelPro
 	protected String getText(final TreeMobileElement element) {
 		return element.getName();
 	}
-
-	protected StyleRange[] getStyleRanges(final ViewerCell cell, final TreeMobileElement element) {
-		final CapturedMobileElement capturedElement = element.getCapturedElement();
-		if (capturedElement == null) {
-			return super.getStyleRanges(cell, (TreeMobileElement) element);
-		}
-		final String aliasName = capturedElement.getName();
-		final StyledString styledString = new StyledString().append(aliasName,
-				(StyledString.Styler) new BoldStyler(cell.getFont()));
-		if (!aliasName.equals(element.getName())) {
-			styledString.append(" " + element.getName() + " ", StyledString.DECORATIONS_STYLER);
-		}
-		cell.setText(styledString.getString());
-		return styledString.getStyleRanges();
-	}
-
+	
+	@SuppressWarnings("unused")
 	private class BoldStyler extends StyledString.Styler {
 		private Font currentFont;
 

@@ -23,7 +23,7 @@ public class ImageUtil {
 	}
 
 	public static Image loadImage(final Bundle bundle, final String imageURI) {
-		final URL url = FileLocator.find(bundle, (IPath) new Path(imageURI), (Map) null);
+		final URL url = FileLocator.find(bundle, (IPath) new Path(imageURI), (Map<String, String>) null);
 		final ImageDescriptor image = ImageDescriptor.createFromURL(url);
 		return image.createImage();
 	}
@@ -33,6 +33,6 @@ public class ImageUtil {
 	}
 
 	public static URL getImageURL(final Bundle bundle, final String imageURI) {
-		return FileLocator.find(bundle, (IPath) new Path(imageURI), (Map) null);
+		return FileLocator.find(bundle, (IPath) new Path(imageURI), (Map<String, String>) null);
 	}
 }

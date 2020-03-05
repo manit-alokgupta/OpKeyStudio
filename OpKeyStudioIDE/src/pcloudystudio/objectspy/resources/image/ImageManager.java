@@ -19,7 +19,7 @@ public class ImageManager {
 	private static ImageRegistry imageRegistry;
 
 	static {
-		currentBundle = FrameworkUtil.getBundle((Class) ImageManager.class);
+		currentBundle = FrameworkUtil.getBundle((Class<?>) ImageManager.class);
 		ImageManager.imageRegistry = JFaceResources.getImageRegistry();
 	}
 

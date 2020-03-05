@@ -11,12 +11,4 @@ public interface TreeMobileElement extends MobileElement {
 	TreeMobileElement getParentElement();
 
 	List<? extends TreeMobileElement> getChildrenElement();
-
-	CapturedMobileElement getCapturedElement();
-
-	CapturedMobileElement newCapturedElement();
-
-	void setCapturedElement(final CapturedMobileElement p0);
-
-	TreeMobileElement findBestMatch(final CapturedMobileElement p0);
 }
