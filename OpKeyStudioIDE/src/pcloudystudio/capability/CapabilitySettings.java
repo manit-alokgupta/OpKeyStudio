@@ -161,10 +161,10 @@ public class CapabilitySettings extends Dialog {
 		table_Capability.setLinesVisible(true);
 		TableColumn column_Name = new TableColumn(table_Capability, 0);
 		column_Name.setText("Name");
-		column_Name.setWidth(200);
+		column_Name.setWidth(362);
 		TableColumn column_Value = new TableColumn(table_Capability, 0);
 		column_Value.setText("Value");
-		column_Value.setWidth(200);
+		column_Value.setWidth(360);
 
 		Composite composite_1 = new Composite(composite_Capabilities, SWT.NONE);
 		composite_1.setBounds(391, 50, 561, 76);
