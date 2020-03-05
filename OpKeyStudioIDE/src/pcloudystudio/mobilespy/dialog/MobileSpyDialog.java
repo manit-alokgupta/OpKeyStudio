@@ -43,7 +43,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
-import pcloudystudio.objectspy.element.impl.dialog.ProgressMonitorDialogWithThread;
+import pcloudystudio.mobilespy.dialog.ProgressMonitorDialogWithThread;
 import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
 
