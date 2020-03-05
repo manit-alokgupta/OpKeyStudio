@@ -45,6 +45,7 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 		return false;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void checkStateChanged(CheckStateChangedEvent event) {
 		// TODO Auto-generated method stub

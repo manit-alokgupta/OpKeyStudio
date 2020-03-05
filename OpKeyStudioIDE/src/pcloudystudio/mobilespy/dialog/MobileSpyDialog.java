@@ -61,6 +61,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private MobileDeviceDialog deviceView;
 	private Button btnCapture;
 	private Button btnHelp;
+	private Button btnAdd;
 	private Label lblAllObjects;
 	private Label lblAllObjectProperties;
 
@@ -69,6 +70,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private CapturedObjectTableViewer capturedObjectsTableViewer;
 	private Composite compositeTreeHierarchy;
 	private Composite compositeObjectProperties;
+	private Button btnStart;
+	private Button btnStop;
 
 	/**
 	 * Create the dialog.
@@ -185,11 +188,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		objectPropertiesScrolledComposite.setExpandVertical(true);
 		sashForm.setWeights(new int[] { 3, 2 });
 
-		// this.createObjectPropertiesTable(objectPropertiesScrolledComposite);
-
 		// -------------------------------------------------------------//
 		btnCapture = new Button(toolsComposite, SWT.NONE);
-		btnCapture.setToolTipText("Capture");
+		btnCapture.setToolTipText("Capture Object");
+		// btnCapture.setEnabled(false);
 		btnCapture.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
 		btnCapture.addSelectionListener(new SelectionAdapter() {
@@ -199,10 +201,53 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			}
 		});
 
-		btnCapture.setBounds(10, 10, 75, 25);
-		btnCapture.setText("Capture");
+		btnCapture.setBounds(10, 10, 109, 25);
+		btnCapture.setText("Capture Object");
 
 		// -------------------------------------------------------------//
+
+		btnAdd = new Button(toolsComposite, SWT.NONE);
+		btnAdd.setToolTipText("Add to Object Repository");
+		btnAdd.setEnabled(false);
+		btnAdd.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		btnAdd.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		btnAdd.setBounds(799, 10, 172, 25);
+		btnAdd.setText("Add to Object Repository");
+
+		// -------------------------------------------------------------//
+
+		btnStart = new Button(toolsComposite, SWT.NONE);
+		btnStart.setToolTipText("Start");
+		btnStart.setEnabled(false);
+		btnStart.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		btnStart.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		btnStart.setBounds(125, 10, 75, 25);
+		btnStart.setText("Start");
+
+		// -------------------------------------------------------------//
+
+		btnStop = new Button(toolsComposite, SWT.NONE);
+		btnStop.setToolTipText("Stop");
+		btnStop.setEnabled(false);
+		btnStop.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		btnStop.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		btnStop.setBounds(206, 10, 75, 25);
+		btnStop.setText("Stop");
+
+		// -------------------------------------------------------------//
+
 		btnHelp = new Button(bottomComposite, SWT.NONE);
 		btnHelp.setToolTipText("Help");
 		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
@@ -213,7 +258,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 			}
 		});
-
 		btnHelp.setBounds(10, 5, 45, 22);
 		btnHelp.setText("Help");
 	}
@@ -318,7 +362,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			return;
 		}
 		(this.deviceView = new MobileDeviceDialog(shlSpyMobile, this, this.calculateInitPositionForDeviceViewDialog()))
-		.open();
+				.open();
 		setDeviceView(this.deviceView);
 	}
 
@@ -367,6 +411,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		}
 		this.highlightObject(foundElement);
 		getParent().getDisplay().syncExec(new Runnable() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				shlSpyMobile.setFocus();
@@ -444,12 +489,12 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					public void run() {
 						dialog.setCancelable(false);
 						allObjectsCheckboxTreeViewer
-						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+								.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
 						allObjectsCheckboxTreeViewer.refresh();
 						allObjectsCheckboxTreeViewer.expandAll();
 						MobileSpyDialog.this
-						.verifyCapturedElementsStates(MobileSpyDialog.this.capturedObjectsTableViewer
-								.getCapturedElements().toArray(new CapturedMobileElement[0]));
+								.verifyCapturedElementsStates(MobileSpyDialog.this.capturedObjectsTableViewer
+										.getCapturedElements().toArray(new CapturedMobileElement[0]));
 						dialog.setCancelable(true);
 					}
 				});

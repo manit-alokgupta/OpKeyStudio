@@ -1,5 +1,8 @@
 package pcloudystudio.mobilespy.dialog;
 
+//Created by Alok Gupta on 20/02/2020.
+//Copyright © 2020 SSTS Inc. All rights reserved.
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import java.io.File;
 import java.util.Map;
