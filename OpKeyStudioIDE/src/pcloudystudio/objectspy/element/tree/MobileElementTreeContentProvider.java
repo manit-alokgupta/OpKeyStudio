@@ -20,7 +20,7 @@ public class MobileElementTreeContentProvider extends TypeCheckedTreeContentProv
 			return (Object[]) inputElement;
 		}
 		if (inputElement instanceof List) {
-			return ((List) inputElement).toArray();
+			return ((List<?>) inputElement).toArray();
 		}
 		return null;
 	}
