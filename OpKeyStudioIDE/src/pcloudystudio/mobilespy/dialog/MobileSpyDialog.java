@@ -69,6 +69,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private Composite compositeObjectProperties;
 	private Button btnStart;
 	private Button btnStop;
+	private Composite composite;
 
 	/**
 	 * Create the dialog.
@@ -183,6 +184,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		objectPropertiesScrolledComposite.setLayoutData(gd_objectPropertiesScrolledComposite);
 		objectPropertiesScrolledComposite.setExpandHorizontal(true);
 		objectPropertiesScrolledComposite.setExpandVertical(true);
+
+		composite = new Composite(compositeObjectProperties, SWT.BORDER);
+		GridData gd_composite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_composite.heightHint = 266;
+		gd_composite.widthHint = 376;
+		composite.setLayoutData(gd_composite);
+
 		sashForm.setWeights(new int[] { 3, 2 });
 
 		// -------------------------------------------------------------//
@@ -359,7 +367,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			return;
 		}
 		(this.deviceView = new MobileDeviceDialog(shlSpyMobile, this, this.calculateInitPositionForDeviceViewDialog()))
-				.open();
+		.open();
 		setDeviceView(this.deviceView);
 	}
 
@@ -486,7 +494,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					public void run() {
 						dialog.setCancelable(false);
 						allObjectsCheckboxTreeViewer
-								.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
 						allObjectsCheckboxTreeViewer.refresh();
 						allObjectsCheckboxTreeViewer.expandAll();
 						dialog.setCancelable(true);

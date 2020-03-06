@@ -7,7 +7,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class MobileCapabilities {
 	private static MobileCapabilities object;
 	private static LinkedHashMap<String, String> mapOfCapabilities;
-	private static DesiredCapabilities userGivenCapabilities;
 
 	private MobileCapabilities() {
 	}
@@ -28,17 +27,16 @@ public class MobileCapabilities {
 	}
 
 	public static DesiredCapabilities getCapabilities() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
+		DesiredCapabilities capabilities = new DesiredCapabilities();
 		LinkedHashMap<String, String> caps_map = getMapOfCapabilities();
 
 		if (!caps_map.isEmpty()) {
 			caps_map.entrySet().forEach(entry -> {
 				capabilities.setCapability(entry.getKey(), entry.getValue());
-				// System.out.println(entry.getKey() + " => " + entry.getValue());
 			});
 		}
 
-	     return capabilities;
+		return capabilities;
 	}
 
 }
