@@ -1,6 +1,8 @@
 package pcloudystudio.capability;
 
+import java.net.URL;
 import java.util.LinkedHashMap;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -20,6 +22,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import io.appium.java_client.android.AndroidDriver;
 import pcloudystudio.appiumserver.AppiumServer;
 
 public class CapabilitySettings extends Dialog {
@@ -30,26 +36,16 @@ public class CapabilitySettings extends Dialog {
 	private Table table_Capability;
 	private Text text_CapabilityName;
 	private Text text_CapabilityValue;
-
-	private Combo combo_DeviceName;
+	private Composite composite_1;
+    private Combo combo_DeviceName;
 	private LinkedHashMap<String, String> capabilityMap = new LinkedHashMap<String, String>();
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
+
 	public CapabilitySettings(Shell parent, int style) {
 		super(parent, style);
 		setText("Capability Settings");
 	}
 
-	/**
-	 * Open the dialog.
-	 * 
-	 * @return the result
-	 */
 	public Object open() {
 		createContents();
 		shell.open();
@@ -62,10 +58,6 @@ public class CapabilitySettings extends Dialog {
 		}
 		return result;
 	}
-
-	/**
-	 * Create contents of the dialog.
-	 */
 	private void createContents() {
 		shell = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shell.setSize(988, 505);
@@ -86,6 +78,7 @@ public class CapabilitySettings extends Dialog {
 
 		combo_DeviceName = new Combo(composite, SWT.NONE);
 		combo_DeviceName.setBounds(199, 31, 581, 23);
+		combo_DeviceName.setText("Redmi Note 5");
 
 		Label lblApplication = new Label(composite, SWT.NONE);
 		lblApplication.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.ITALIC));
@@ -109,7 +102,7 @@ public class CapabilitySettings extends Dialog {
 					path = path.replace("\\", "/");
 					text_Application.setText(path);
 					TableItem row = new TableItem(table_Capability, 0);
-					row.setText(0, "App");
+					row.setText(0, "app");
 					row.setText(1, path);
 				}
 			}
@@ -131,6 +124,9 @@ public class CapabilitySettings extends Dialog {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+
+				composite_1.setVisible(true);
+
 			}
 
 		});
@@ -149,14 +145,14 @@ public class CapabilitySettings extends Dialog {
 			}
 		});
 		btnNewButton_1.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.ITALIC));
-		btnNewButton_1.setBounds(59, 101, 310, 25);
+		btnNewButton_1.setBounds(475, 50, 310, 25);
 		btnNewButton_1.setText("DeleteCapability");
 
 		table_Capability = new Table(composite_Capabilities, SWT.BORDER | SWT.FULL_SELECTION);
 		table_Capability.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
 		table_Capability.setHeaderBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
-		table_Capability.setForeground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_NORMAL_SHADOW));
-		table_Capability.setBounds(59, 149, 726, 152);
+		table_Capability.setForeground(SWTResourceManager.getColor(0, 0, 0));
+		table_Capability.setBounds(59, 159, 726, 152);
 		table_Capability.setHeaderVisible(true);
 		table_Capability.setLinesVisible(true);
 		TableColumn column_Name = new TableColumn(table_Capability, 0);
@@ -166,8 +162,9 @@ public class CapabilitySettings extends Dialog {
 		column_Value.setText("Value");
 		column_Value.setWidth(360);
 
-		Composite composite_1 = new Composite(composite_Capabilities, SWT.NONE);
-		composite_1.setBounds(391, 50, 561, 76);
+		composite_1 = new Composite(composite_Capabilities, SWT.NONE);
+		composite_1.setVisible(false);
+		composite_1.setBounds(59, 81, 726, 76);
 
 		Label lblName = new Label(composite_1, SWT.NONE);
 		lblName.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.ITALIC));
@@ -188,9 +185,9 @@ public class CapabilitySettings extends Dialog {
 				text_CapabilityName.setText(combo_CapabilityName.getText());
 			}
 		});
-		combo_CapabilityName.setBounds(234, 9, 157, 23);
-		String arrayOftext_CapabilityName[] = { "platformName", "launchTimeout", "newKeywordTimeout",
-		"automationName" };
+		combo_CapabilityName.setBounds(359, 9, 157, 23);
+		String arrayOftext_CapabilityName[] = { "platformName", "automationName", "launchTimeout",
+				"newCommandTimeout" };
 		combo_CapabilityName.setItems(arrayOftext_CapabilityName);
 		Label lblValue = new Label(composite_1, SWT.NONE);
 		lblValue.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.ITALIC));
@@ -203,7 +200,7 @@ public class CapabilitySettings extends Dialog {
 
 			}
 		});
-		text_CapabilityValue.setBounds(71, 45, 157, 21);
+		text_CapabilityValue.setBounds(71, 50, 157, 21);
 
 		Combo combo_CapabilityValue = new Combo(composite_1, SWT.NONE);
 		combo_CapabilityValue.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
@@ -212,8 +209,8 @@ public class CapabilitySettings extends Dialog {
 				text_CapabilityValue.setText(combo_CapabilityValue.getText());
 			}
 		});
-		combo_CapabilityValue.setBounds(234, 43, 157, 23);
-		String arrayOftext_CapabilityValue[] = { "Android", "IOS", "90000", "6000", "uiautomator2" };
+		combo_CapabilityValue.setBounds(359, 50, 157, 23);
+		String arrayOftext_CapabilityValue[] = { "Android", "IOS", "uiautomator2", "90000", "6000" };
 		combo_CapabilityValue.setItems(arrayOftext_CapabilityValue);
 
 		Button btn_SubmitCapability = new Button(composite_1, SWT.NONE);
@@ -223,16 +220,17 @@ public class CapabilitySettings extends Dialog {
 				String CapabilityName = text_CapabilityName.getText();
 				String CapabilityValue = text_CapabilityValue.getText();
 				TableItem row = new TableItem(table_Capability, 0);
-				if (CapabilityName != "" || CapabilityName != null && CapabilityValue != null
-						|| CapabilityValue != "") {
+				if ((CapabilityName != "" || CapabilityName != null)
+						&& (CapabilityValue != null || CapabilityValue != "")) {
 
 					row.setText(0, CapabilityName);
 					row.setText(1, CapabilityValue);
 				}
+				// composite_1.setVisible(false);
 			}
 		});
 		btn_SubmitCapability.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.ITALIC));
-		btn_SubmitCapability.setBounds(452, 24, 75, 31);
+		btn_SubmitCapability.setBounds(641, 23, 75, 31);
 		btn_SubmitCapability.setText("Submit");
 
 		Button btnFinalSubmit = new Button(composite_Capabilities, SWT.NONE);
@@ -270,21 +268,28 @@ public class CapabilitySettings extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				AppiumServer.startServer();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+				
+					e1.printStackTrace();
+				}
+
+				DesiredCapabilities mobile_capability = MobileCapabilities.getCapabilities();
+				mobile_capability.setCapability("deviceName", "Redmi Note 5");
+
+				try {
+					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
+							new URL("http://" + "127.0.0.1" + ":" + "4723" + "/wd/hub"), mobile_capability);
+					AndroidDriverObject.getInstance().setDriver(driver);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
 			}
 		});
 		btnLaunchapplication.setBounds(352, 0, 112, 25);
 		btnLaunchapplication.setText("Start Server");
-		
-		Button btnClose = new Button(composite_LaunchAnd_GotoSpy, SWT.CENTER);
-		btnClose.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.ITALIC));
-		btnClose.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) { 
-				shell.close();
-			}
-		});
-		btnClose.setBounds(548, 0, 112, 25);
-		btnClose.setText("Close");
 
 	}
 
