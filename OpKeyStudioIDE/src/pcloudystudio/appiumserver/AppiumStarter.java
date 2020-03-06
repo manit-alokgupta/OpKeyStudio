@@ -46,7 +46,6 @@ public class AppiumStarter {
 					driver = new AndroidDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 					AndroidDriverObject.getInstance().setDriver(driver);
 				}
-
 			}
 		} catch (Exception e) {
 			System.out.println("An Exception Occured See Exception Logs");

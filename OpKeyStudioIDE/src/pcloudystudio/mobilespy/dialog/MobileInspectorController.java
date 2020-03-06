@@ -13,9 +13,6 @@ import org.openqa.selenium.OutputType;
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
 import org.xml.sax.SAXParseException;
-
-import pcloudystudio.appiumserver.AppiumServer;
-import pcloudystudio.appiumserver.AppiumStarter;
 import pcloudystudio.capability.AndroidDriverObject;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.AndroidSnapshotMobileElement;
@@ -32,16 +29,10 @@ public class MobileInspectorController {
 
 	public TreeMobileElement getMobileObjectRoot() {
 		try {
+			String pageSource = null;
+			if (AndroidDriverObject.getDriver() != null)
+				pageSource = AndroidDriverObject.getDriver().getPageSource();
 
-			if (AndroidDriverObject.getDriver() == null) {
-				AppiumServer.stopServer();
-				Thread.sleep(4000);
-				new AppiumStarter("Nexus 5X",
-						"C:\\Users\\alok.gupta\\Desktop\\FollowMeInstrumentor_V3\\Original\\Shopping List SoftList_v2.3.6_apkpure.com.apk");
-				Thread.sleep(20000);
-			}
-
-			String pageSource = AndroidDriverObject.getDriver().getPageSource();
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = null;
 			try {

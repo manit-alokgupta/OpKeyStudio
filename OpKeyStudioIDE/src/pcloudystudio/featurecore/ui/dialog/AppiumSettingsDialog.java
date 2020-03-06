@@ -1,5 +1,10 @@
 package pcloudystudio.featurecore.ui.dialog;
 
+import java.io.File;
+import java.net.URL;
+import java.util.Map;
+import java.util.Map.Entry;
+
 // Created by Alok Gupta on 20/02/2020.
 // Copyright © 2020 SSTS Inc. All rights reserved.
 
@@ -8,21 +13,31 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
+import io.appium.java_client.android.AndroidDriver;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
+import pcloudystudio.appiumserver.AppiumServer;
+import pcloudystudio.capability.AndroidDefaultCapabilities;
+import pcloudystudio.capability.AndroidDriverObject;
+import pcloudystudio.core.mobile.AndroidDeviceUtil;
 
 public class AppiumSettingsDialog extends Dialog {
 
@@ -31,7 +46,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private Text serverAddress;
 	private Text portNumber;
 	private Text appiumDirectory;
-	
+
 	private Composite compositeTopHeading;
 	private Label lblHeading;
 	private CLabel clblLogo;
@@ -40,6 +55,16 @@ public class AppiumSettingsDialog extends Dialog {
 	private Label lblAppiumSettings;
 	private Composite compositeAppiumSettings;
 	private Composite compositeCapabilitySettings;
+	private Composite compositeConfiguration;
+	private Label lblDeviceConfiguration;
+	private Composite compositeDeviceCapabilities;
+	private Label lblDeviceCapability;
+	private Composite compositeConfigurationSettings;
+
+	private Map<String, String> devicesList;
+	private Combo devicesCombo;
+	private Text applicationPathText;
+	private Button btnStartServerAndLaunchApplication;
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, style);
@@ -72,7 +97,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM);
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlAppiumSettings.setSize(672, 748);
+		shlAppiumSettings.setSize(672, 803);
 		shlAppiumSettings.setText("Appium Settings");
 
 		Rectangle parentSize = getParent().getBounds();
@@ -95,18 +120,18 @@ public class AppiumSettingsDialog extends Dialog {
 		clblLogo.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		clblLogo.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/appium_logo.jpg"));
 		clblLogo.setBounds(523, 10, 113, 44);
-		
+
 		compositeAppiumSettingHeading = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeAppiumSettingHeading.setBounds(10, 95, 242, 32);
+		compositeAppiumSettingHeading.setBounds(10, 95, 164, 32);
 		compositeAppiumSettingHeading.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		
+
 		lblAppiumSettings = new Label(compositeAppiumSettingHeading, SWT.NONE);
-		lblAppiumSettings.setText("Provide Appium Host and Port for Appium server");
+		lblAppiumSettings.setText("PROVIDE APPIUM HOST AND PORT");
 		lblAppiumSettings.setFont(SWTResourceManager.getFont("Segoe UI", 7, SWT.NORMAL));
 		lblAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblAppiumSettings.setBounds(28, 10, 190, 15);
+		lblAppiumSettings.setBounds(10, 10, 145, 15);
 
-	    compositeAppiumSettings = new Composite(shlAppiumSettings, SWT.BORDER);
+		compositeAppiumSettings = new Composite(shlAppiumSettings, SWT.BORDER);
 		compositeAppiumSettings.setBounds(10, 133, 646, 181);
 
 		Label labelServerAddress = new Label(compositeAppiumSettings, SWT.NONE);
@@ -151,34 +176,34 @@ public class AppiumSettingsDialog extends Dialog {
 		Button btnBrowse = new Button(compositeAppiumSettings, SWT.NONE);
 		btnBrowse.setBounds(465, 113, 75, 25);
 		btnBrowse.setText("Browse");
-		
-				Button saveButton = new Button(compositeAppiumSettings, SWT.NONE);
-				saveButton.setBounds(384, 145, 75, 25);
-				saveButton.setToolTipText("Save");
-				saveButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-				
-						saveButton.addSelectionListener(new SelectionAdapter() {
-							@Override
-							public void widgetSelected(SelectionEvent e) {
-								String host = serverAddress.getText();
-								String port = portNumber.getText();
-								String appiumDirectoryPath = appiumDirectory.getText();
-								OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_host", host);
-								OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_port", port);
-								OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory", appiumDirectoryPath);
-								if (host.trim().equalsIgnoreCase("")) {
-									MessageDialog.openInformation(shlAppiumSettings, "Invalid Host", "Please enter Host URL");
-								}
-								if (port.trim().equalsIgnoreCase("")) {
-									MessageDialog.openInformation(shlAppiumSettings, "Invalid Port", "Please enter Port");
-								}
-								if (appiumDirectoryPath.trim().equalsIgnoreCase("")) {
-									MessageDialog.openInformation(shlAppiumSettings, "Invalid Directory",
-											"Please browse Appium Directory");
-								}
-							}
-						});
-						saveButton.setText("Save");
+
+		Button saveButton = new Button(compositeAppiumSettings, SWT.NONE);
+		saveButton.setBounds(384, 145, 75, 25);
+		saveButton.setToolTipText("Save");
+		saveButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+
+		saveButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String host = serverAddress.getText();
+				String port = portNumber.getText();
+				String appiumDirectoryPath = appiumDirectory.getText();
+				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_host", host);
+				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_port", port);
+				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory", appiumDirectoryPath);
+				if (host.trim().equalsIgnoreCase("")) {
+					MessageDialog.openInformation(shlAppiumSettings, "Invalid Host", "Please enter Host URL");
+				}
+				if (port.trim().equalsIgnoreCase("")) {
+					MessageDialog.openInformation(shlAppiumSettings, "Invalid Port", "Please enter Port");
+				}
+				if (appiumDirectoryPath.trim().equalsIgnoreCase("")) {
+					MessageDialog.openInformation(shlAppiumSettings, "Invalid Directory",
+							"Please browse Appium Directory");
+				}
+			}
+		});
+		saveButton.setText("Save");
 
 		btnBrowse.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -193,20 +218,165 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 			}
 		});
-		
-		Composite compositeDeviceCapabilities = new Composite(shlAppiumSettings, SWT.BORDER);
+
+		compositeConfiguration = new Composite(shlAppiumSettings, SWT.BORDER);
+		compositeConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		compositeConfiguration.setBounds(10, 320, 92, 32);
+
+		lblDeviceConfiguration = new Label(compositeConfiguration, SWT.NONE);
+		lblDeviceConfiguration.setText("CONFIGURATION");
+		lblDeviceConfiguration.setFont(SWTResourceManager.getFont("Segoe UI", 7, SWT.NORMAL));
+		lblDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		lblDeviceConfiguration.setBounds(10, 10, 78, 15);
+
+		compositeConfigurationSettings = new Composite(shlAppiumSettings, SWT.BORDER);
+		compositeConfigurationSettings.setBounds(10, 363, 646, 145);
+
+		Label lblDeviceName = new Label(compositeConfigurationSettings, SWT.NONE);
+		lblDeviceName.setBounds(29, 25, 76, 15);
+		lblDeviceName.setText("Device Name");
+
+		devicesCombo = new Combo(compositeConfigurationSettings, SWT.READ_ONLY);
+		devicesCombo.setBounds(150, 22, 309, 23);
+
+		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
+		btnRefresh.setBounds(465, 20, 75, 25);
+		btnRefresh.setText("Refresh");
+
+		btnRefresh.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					devicesList = AndroidDeviceUtil.getAndroidDevices();
+					devicesCombo.removeAll();
+					for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
+						devicesCombo.add(deviceEntry.getValue());
+					}
+					devicesCombo.select(0);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+
+		Label lblApplicationFile = new Label(compositeConfigurationSettings, SWT.NONE);
+		lblApplicationFile.setBounds(29, 64, 87, 15);
+		lblApplicationFile.setText("Application File");
+
+		applicationPathText = new Text(compositeConfigurationSettings, SWT.BORDER);
+		applicationPathText.setBounds(150, 61, 309, 21);
+
+		String appFilePath = OpKeyStudioPreferences.getPreferences().getBasicSettings("application_name");
+		if (appFilePath != null) {
+			applicationPathText.setText(appFilePath);
+		}
+		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
+		btnBrowseAPK.setBounds(465, 59, 75, 25);
+		btnBrowseAPK.setText("Browse");
+		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog dialog = new FileDialog(shlAppiumSettings, SWT.NULL);
+				String path = dialog.open();
+				if (path != null) {
+
+					File file = new File(path);
+					if (file.isFile())
+						displayFiles(new String[] { file.toString() });
+					else
+						displayFiles(file.list());
+				}
+			}
+		});
+
+		Button saveButtonConfiguration = new Button(compositeConfigurationSettings, SWT.NONE);
+		saveButtonConfiguration.setBounds(384, 88, 75, 25);
+		saveButtonConfiguration.setToolTipText("Save");
+		saveButtonConfiguration.setText("Save");
+		saveButtonConfiguration.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+
+		saveButtonConfiguration.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String applicationDirPathText = applicationPathText.getText();
+				String selectedDeviceID = getSelectedAndroidDeviceId(devicesCombo.getText());
+				OpKeyStudioPreferences.getPreferences().addBasicSettings("selected_applucation_apk_path",
+						applicationDirPathText);
+				OpKeyStudioPreferences.getPreferences().addBasicSettings("selected_device_id", selectedDeviceID);
+				if (applicationDirPathText.trim().equalsIgnoreCase("")) {
+					MessageDialog.openInformation(shlAppiumSettings, "Invalid Application file path",
+							"Please browse Application file");
+				}
+				if (selectedDeviceID.trim().equalsIgnoreCase("")) {
+					MessageDialog.openInformation(shlAppiumSettings, "Invalid Device selection!",
+							"Please Connect device to system!");
+				}
+			}
+		});
+
+		compositeDeviceCapabilities = new Composite(shlAppiumSettings, SWT.BORDER);
 		compositeDeviceCapabilities.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		compositeDeviceCapabilities.setBounds(10, 331, 143, 32);
-		
-		Label lblDeviceCapability = new Label(compositeDeviceCapabilities, SWT.NONE);
-		lblDeviceCapability.setText("Device Capabilities");
+		compositeDeviceCapabilities.setBounds(10, 514, 107, 32);
+
+		lblDeviceCapability = new Label(compositeDeviceCapabilities, SWT.NONE);
+		lblDeviceCapability.setText("DEVICE CAPABILITIES");
 		lblDeviceCapability.setFont(SWTResourceManager.getFont("Segoe UI", 7, SWT.NORMAL));
 		lblDeviceCapability.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblDeviceCapability.setBounds(33, 10, 78, 15);
-		
+		lblDeviceCapability.setBounds(10, 10, 93, 15);
+
 		compositeCapabilitySettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeCapabilitySettings.setBounds(10, 369, 646, 312);
-		
+		compositeCapabilitySettings.setBounds(10, 552, 646, 181);
+
+		btnStartServerAndLaunchApplication = new Button(shlAppiumSettings, SWT.NONE);
+		btnStartServerAndLaunchApplication.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					AppiumServer.stopServer();
+					Thread.sleep(4000);
+				} catch (InterruptedException e2) {
+					e2.printStackTrace();
+				}
+				AppiumServer.startServer();
+
+				DesiredCapabilities mobileCapability = (new AndroidDefaultCapabilities().getCapabilities());
+				String selectedDeviceID = OpKeyStudioPreferences.getPreferences()
+						.getBasicSettings("selected_device_id");
+				String selectedApplucationAPKPath = OpKeyStudioPreferences.getPreferences()
+						.getBasicSettings("selected_applucation_apk_path");
+				if (selectedDeviceID != null) {
+					String deviceModel = null;
+					try {
+						deviceModel = AndroidDeviceUtil.getDeviceName(selectedDeviceID);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					if (deviceModel != null)
+						mobileCapability.setCapability("deviceName", deviceModel);
+				}
+				if (selectedApplucationAPKPath != null) {
+					mobileCapability.setCapability("app", selectedApplucationAPKPath);
+				}
+
+				try {
+					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
+							new URL("http://" + "127.0.0.1" + ":" + "4723" + "/wd/hub"), mobileCapability);
+					AndroidDriverObject.getInstance().setDriver(driver);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+			}
+		});
+		btnStartServerAndLaunchApplication.setBounds(463, 739, 112, 25);
+		btnStartServerAndLaunchApplication.setText("Start Server");
+
 		closebutton = new Button(shlAppiumSettings, SWT.NONE);
 		closebutton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		closebutton.addSelectionListener(new SelectionAdapter() {
@@ -215,7 +385,27 @@ public class AppiumSettingsDialog extends Dialog {
 				shlAppiumSettings.close();
 			}
 		});
-		closebutton.setBounds(581, 687, 75, 25);
+		closebutton.setBounds(581, 739, 75, 25);
 		closebutton.setText("Close");
+	}
+
+	public void displayFiles(String[] files) {
+		for (int i = 0; files != null && i < files.length; i++) {
+			applicationPathText.setText(files[i]);
+			applicationPathText.setEditable(true);
+		}
+	}
+
+	private String getSelectedAndroidDeviceId(String selectedDeviceName) {
+		String deviceID = null;
+		if (selectedDeviceName != null || selectedDeviceName != "") {
+			for (Entry<String, String> entry : this.devicesList.entrySet()) {
+				if (entry.getValue().equals(selectedDeviceName)) {
+					deviceID = entry.getKey();
+					break;
+				}
+			}
+		}
+		return deviceID;
 	}
 }

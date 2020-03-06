@@ -2,6 +2,7 @@ package pcloudystudio.capability;
 
 import java.net.URL;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -9,6 +10,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -27,9 +29,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.android.AndroidDriver;
 import pcloudystudio.appiumserver.AppiumServer;
+import pcloudystudio.core.mobile.AndroidDeviceUtil;
 
 public class CapabilitySettings extends Dialog {
 
+	private Combo devicesCombo;
+	private Map<String, String> devicesList;
 	protected Object result;
 	protected Shell shell;
 	private Text text_Application;
@@ -76,9 +81,36 @@ public class CapabilitySettings extends Dialog {
 		DeviceName.setBounds(66, 31, 78, 25);
 		DeviceName.setText("DeviceName");
 
-		combo_DeviceName = new Combo(composite, SWT.NONE);
-		combo_DeviceName.setBounds(199, 31, 581, 23);
-		combo_DeviceName.setText("Redmi Note 5");
+		devicesCombo = new Combo(composite, SWT.READ_ONLY);
+		devicesCombo.setBounds(199, 30, 249, 23);
+		
+		Button btnRefresh = new Button(composite, SWT.NONE);
+		btnRefresh.setBounds(463, 28, 75, 25);
+		btnRefresh.setText("Refresh");
+
+		btnRefresh.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					devicesList = AndroidDeviceUtil.getAndroidDevices();
+					devicesCombo.removeAll();
+					System.out.println(devicesList.size());
+					for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
+						System.out.println("Key = " + deviceEntry.getKey() + ", Value = " + deviceEntry.getValue());
+						devicesCombo.add(deviceEntry.getValue());
+					}
+					devicesCombo.select(0);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
 
 		Label lblApplication = new Label(composite, SWT.NONE);
 		lblApplication.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.ITALIC));
@@ -86,7 +118,7 @@ public class CapabilitySettings extends Dialog {
 		lblApplication.setText("Application");
 
 		text_Application = new Text(composite, SWT.BORDER);
-		text_Application.setBounds(199, 71, 581, 21);
+		text_Application.setBounds(199, 71, 249, 21);
 
 		Button btnBrowse = new Button(composite, SWT.NONE);
 		btnBrowse.addSelectionListener(new SelectionAdapter() {
@@ -108,7 +140,7 @@ public class CapabilitySettings extends Dialog {
 			}
 		});
 		btnBrowse.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
-		btnBrowse.setBounds(841, 60, 75, 31);
+		btnBrowse.setBounds(463, 69, 75, 21);
 		btnBrowse.setText("Browse");
 
 		Composite composite_Capabilities = new Composite(shell, SWT.NONE);
@@ -144,6 +176,7 @@ public class CapabilitySettings extends Dialog {
 				}
 			}
 		});
+		
 		btnNewButton_1.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.ITALIC));
 		btnNewButton_1.setBounds(475, 50, 310, 25);
 		btnNewButton_1.setText("DeleteCapability");
