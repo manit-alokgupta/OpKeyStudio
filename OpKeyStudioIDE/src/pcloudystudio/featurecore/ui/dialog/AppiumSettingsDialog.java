@@ -38,6 +38,9 @@ import pcloudystudio.appiumserver.AppiumServer;
 import pcloudystudio.capability.AndroidDefaultCapabilities;
 import pcloudystudio.capability.AndroidDriverObject;
 import pcloudystudio.core.mobile.AndroidDeviceUtil;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.custom.ScrolledComposite;
 
 public class AppiumSettingsDialog extends Dialog {
 
@@ -65,6 +68,10 @@ public class AppiumSettingsDialog extends Dialog {
 	private Combo devicesCombo;
 	private Text applicationPathText;
 	private Button btnStartServerAndLaunchApplication;
+	private Table table;
+	
+	private Composite compositeAddCapability;
+	
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, style);
@@ -332,6 +339,27 @@ public class AppiumSettingsDialog extends Dialog {
 
 		compositeCapabilitySettings = new Composite(shlAppiumSettings, SWT.BORDER);
 		compositeCapabilitySettings.setBounds(10, 552, 646, 181);
+		
+		compositeAddCapability = new Composite(compositeCapabilitySettings, SWT.NONE);
+		compositeAddCapability.setBounds(10, 5, 622, 22);
+		
+		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setBounds(72, 33, 495, 135);
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+		
+		table = new Table(scrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setLinesVisible(true);
+		table.setHeaderVisible(true);
+		table.setBounds(0, 0, 495, 134);
+		
+		TableColumn tblclmnName = new TableColumn(table, SWT.NONE);
+		tblclmnName.setWidth(135);
+		tblclmnName.setText("Name");
+		
+		TableColumn tblclmnValue = new TableColumn(table, SWT.NONE);
+		tblclmnValue.setWidth(356);
+		tblclmnValue.setText("Value");
 
 		btnStartServerAndLaunchApplication = new Button(shlAppiumSettings, SWT.NONE);
 		btnStartServerAndLaunchApplication.addSelectionListener(new SelectionAdapter() {
