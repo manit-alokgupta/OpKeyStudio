@@ -40,9 +40,12 @@ import pcloudystudio.capability.AndroidDriverObject;
 import pcloudystudio.core.mobile.AndroidDeviceUtil;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 
 public class AppiumSettingsDialog extends Dialog {
+
+	private String capabilityNameList[] = { "platformName", "automationName", "launchTimeout", "newCommandTimeout" };
 
 	protected Object result;
 	protected Shell shlAppiumSettings;
@@ -63,15 +66,20 @@ public class AppiumSettingsDialog extends Dialog {
 	private Composite compositeDeviceCapabilities;
 	private Label lblDeviceCapability;
 	private Composite compositeConfigurationSettings;
+	private Composite addCapabilityComposite;
 
 	private Map<String, String> devicesList;
 	private Combo devicesCombo;
 	private Text applicationPathText;
 	private Button btnStartServerAndLaunchApplication;
-	private Table table;
-	
+	private Table capabilityTable;
+
 	private Composite compositeAddCapability;
-	
+	private Button btnDelete;
+	private Button btnAdd;
+	private Combo capabilityNameCombo;
+	private Text capabilityTextValue;
+	private Button btnAddToTable;
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, style);
@@ -128,18 +136,18 @@ public class AppiumSettingsDialog extends Dialog {
 		clblLogo.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/appium_logo.jpg"));
 		clblLogo.setBounds(523, 10, 113, 44);
 
-		compositeAppiumSettingHeading = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeAppiumSettingHeading.setBounds(10, 95, 164, 32);
+		compositeAppiumSettingHeading = new Composite(shlAppiumSettings, SWT.NONE);
+		compositeAppiumSettingHeading.setBounds(10, 80, 244, 32);
 		compositeAppiumSettingHeading.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 
 		lblAppiumSettings = new Label(compositeAppiumSettingHeading, SWT.NONE);
-		lblAppiumSettings.setText("PROVIDE APPIUM HOST AND PORT");
-		lblAppiumSettings.setFont(SWTResourceManager.getFont("Segoe UI", 7, SWT.NORMAL));
+		lblAppiumSettings.setText("Provide Appium Host and Port");
+		lblAppiumSettings.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblAppiumSettings.setBounds(10, 10, 145, 15);
+		lblAppiumSettings.setBounds(10, 10, 200, 15);
 
 		compositeAppiumSettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeAppiumSettings.setBounds(10, 133, 646, 181);
+		compositeAppiumSettings.setBounds(10, 118, 646, 181);
 
 		Label labelServerAddress = new Label(compositeAppiumSettings, SWT.NONE);
 		labelServerAddress.setText("Server Address");
@@ -226,18 +234,18 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 
-		compositeConfiguration = new Composite(shlAppiumSettings, SWT.BORDER);
+		compositeConfiguration = new Composite(shlAppiumSettings, SWT.NONE);
 		compositeConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		compositeConfiguration.setBounds(10, 320, 92, 32);
+		compositeConfiguration.setBounds(10, 305, 119, 32);
 
 		lblDeviceConfiguration = new Label(compositeConfiguration, SWT.NONE);
-		lblDeviceConfiguration.setText("CONFIGURATION");
-		lblDeviceConfiguration.setFont(SWTResourceManager.getFont("Segoe UI", 7, SWT.NORMAL));
+		lblDeviceConfiguration.setText("Configuration");
+		lblDeviceConfiguration.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblDeviceConfiguration.setBounds(10, 10, 78, 15);
+		lblDeviceConfiguration.setBounds(10, 10, 99, 15);
 
 		compositeConfigurationSettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeConfigurationSettings.setBounds(10, 363, 646, 145);
+		compositeConfigurationSettings.setBounds(10, 343, 646, 145);
 
 		Label lblDeviceName = new Label(compositeConfigurationSettings, SWT.NONE);
 		lblDeviceName.setBounds(29, 25, 76, 15);
@@ -327,39 +335,93 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 
-		compositeDeviceCapabilities = new Composite(shlAppiumSettings, SWT.BORDER);
+		compositeDeviceCapabilities = new Composite(shlAppiumSettings, SWT.NONE);
 		compositeDeviceCapabilities.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		compositeDeviceCapabilities.setBounds(10, 514, 107, 32);
+		compositeDeviceCapabilities.setBounds(10, 494, 135, 32);
 
 		lblDeviceCapability = new Label(compositeDeviceCapabilities, SWT.NONE);
-		lblDeviceCapability.setText("DEVICE CAPABILITIES");
-		lblDeviceCapability.setFont(SWTResourceManager.getFont("Segoe UI", 7, SWT.NORMAL));
+		lblDeviceCapability.setText("Device Capabilities");
+		lblDeviceCapability.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblDeviceCapability.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblDeviceCapability.setBounds(10, 10, 93, 15);
+		lblDeviceCapability.setBounds(10, 10, 115, 15);
 
 		compositeCapabilitySettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeCapabilitySettings.setBounds(10, 552, 646, 181);
-		
+		compositeCapabilitySettings.setBounds(10, 532, 646, 201);
+
 		compositeAddCapability = new Composite(compositeCapabilitySettings, SWT.NONE);
-		compositeAddCapability.setBounds(10, 5, 622, 22);
-		
-		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setBounds(72, 33, 495, 135);
+		compositeAddCapability.setBounds(10, 5, 622, 42);
+
+		btnAdd = new Button(compositeAddCapability, SWT.NONE);
+		btnAdd.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				addCapabilityComposite.setVisible(true);
+				capabilityNameCombo.removeAll();
+				capabilityNameCombo.setItems(capabilityNameList);
+				capabilityTextValue.setText("");
+			}
+		});
+		btnAdd.setBounds(71, 10, 20, 22);
+		btnAdd.setText("+");
+
+		btnDelete = new Button(compositeAddCapability, SWT.NONE);
+		btnDelete.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				addCapabilityComposite.setVisible(false);
+				if (capabilityTable.getItemCount() >= 1) {
+					capabilityTable.remove(capabilityTable.getSelectionIndex());
+				}
+			}
+		});
+		btnDelete.setBounds(97, 10, 20, 22);
+		btnDelete.setText("-");
+
+		addCapabilityComposite = new Composite(compositeAddCapability, SWT.BORDER);
+		addCapabilityComposite.setBounds(129, 0, 428, 42);
+		addCapabilityComposite.setVisible(false);
+
+		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
+		capabilityNameCombo.setBounds(10, 10, 154, 28);
+		capabilityNameCombo.setItems(capabilityNameList);
+
+		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
+		capabilityTextValue.setBounds(170, 10, 154, 23);
+
+		btnAddToTable = new Button(addCapabilityComposite, SWT.NONE);
+		btnAddToTable.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String capabilityName = capabilityNameCombo.getText();
+				String capabilityValue = capabilityTextValue.getText();
+				TableItem row = new TableItem(capabilityTable, 0);
+				if ((capabilityName != "" || capabilityName != null)
+						&& (capabilityValue != null || capabilityValue != "")) {
+					row.setText(0, capabilityName);
+					row.setText(1, capabilityValue);
+				}
+				addCapabilityComposite.setVisible(false);
+			}
+		});
+		btnAddToTable.setBounds(330, 8, 78, 25);
+		btnAddToTable.setText("Add to Table");
+
+		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
+				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setBounds(72, 53, 495, 135);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
-		
-		table = new Table(scrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLinesVisible(true);
-		table.setHeaderVisible(true);
-		table.setBounds(0, 0, 495, 134);
-		
-		TableColumn tblclmnName = new TableColumn(table, SWT.NONE);
-		tblclmnName.setWidth(135);
-		tblclmnName.setText("Name");
-		
-		TableColumn tblclmnValue = new TableColumn(table, SWT.NONE);
-		tblclmnValue.setWidth(356);
-		tblclmnValue.setText("Value");
+
+		capabilityTable = new Table(scrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		capabilityTable.setBounds(0, 0, 495, 135);
+		capabilityTable.setHeaderVisible(true);
+		capabilityTable.setLinesVisible(true);
+		TableColumn columnName = new TableColumn(capabilityTable, 0);
+		columnName.setText("Name");
+		columnName.setWidth(139);
+		TableColumn columnValue = new TableColumn(capabilityTable, 0);
+		columnValue.setText("Value");
+		columnValue.setWidth(350);
 
 		btnStartServerAndLaunchApplication = new Button(shlAppiumSettings, SWT.NONE);
 		btnStartServerAndLaunchApplication.addSelectionListener(new SelectionAdapter() {
@@ -402,7 +464,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 			}
 		});
-		btnStartServerAndLaunchApplication.setBounds(463, 739, 112, 25);
+		btnStartServerAndLaunchApplication.setBounds(462, 739, 112, 25);
 		btnStartServerAndLaunchApplication.setText("Start Server");
 
 		closebutton = new Button(shlAppiumSettings, SWT.NONE);
