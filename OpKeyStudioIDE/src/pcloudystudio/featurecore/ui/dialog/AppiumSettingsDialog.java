@@ -7,7 +7,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -318,10 +317,6 @@ public class AppiumSettingsDialog extends Dialog {
 		applicationPathText = new Text(compositeConfigurationSettings, SWT.BORDER);
 		applicationPathText.setBounds(150, 61, 309, 21);
 
-		String appFilePath = OpKeyStudioPreferences.getPreferences().getBasicSettings("application_name");
-		if (appFilePath != null) {
-			applicationPathText.setText(appFilePath);
-		}
 		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnBrowseAPK.setBounds(465, 59, 75, 25);
 		btnBrowseAPK.setText("Browse");
@@ -440,7 +435,7 @@ public class AppiumSettingsDialog extends Dialog {
 		columnName.setWidth(139);
 		TableColumn columnValue = new TableColumn(capabilityTable, 0);
 		columnValue.setText("Value");
-		columnValue.setWidth(350);
+		columnValue.setWidth(467);
 
 		TableEditor editor = new TableEditor(capabilityTable);
 		editor.horizontalAlignment = SWT.LEFT;
@@ -550,18 +545,5 @@ public class AppiumSettingsDialog extends Dialog {
 			applicationPathText.setText(files[i]);
 			applicationPathText.setEditable(true);
 		}
-	}
-
-	private String getSelectedAndroidDeviceId(String selectedDeviceName) {
-		String deviceID = null;
-		if (selectedDeviceName != null || selectedDeviceName != "") {
-			for (Entry<String, String> entry : this.devicesList.entrySet()) {
-				if (entry.getValue().equals(selectedDeviceName)) {
-					deviceID = entry.getKey();
-					break;
-				}
-			}
-		}
-		return deviceID;
 	}
 }
