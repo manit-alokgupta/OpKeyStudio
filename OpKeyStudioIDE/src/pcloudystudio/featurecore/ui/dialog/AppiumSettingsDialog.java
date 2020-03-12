@@ -22,8 +22,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
@@ -42,6 +44,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.TableEditor;
 
 public class AppiumSettingsDialog extends Dialog {
 
@@ -422,6 +425,61 @@ public class AppiumSettingsDialog extends Dialog {
 		TableColumn columnValue = new TableColumn(capabilityTable, 0);
 		columnValue.setText("Value");
 		columnValue.setWidth(350);
+
+		TableEditor editor = new TableEditor(capabilityTable);
+		editor.horizontalAlignment = SWT.LEFT;
+		editor.grabHorizontal = true;
+		capabilityTable.addListener(SWT.MouseDown, new Listener() {
+			public void handleEvent(Event event) {
+				Rectangle clientArea = capabilityTable.getClientArea();
+				Point pt = new Point(event.x, event.y);
+				int index = capabilityTable.getTopIndex();
+				while (index < capabilityTable.getItemCount()) {
+					boolean visible = false;
+					TableItem item = capabilityTable.getItem(index);
+					for (int i = 0; i < capabilityTable.getColumnCount(); i++) {
+						Rectangle rect = item.getBounds(i);
+						if (rect.contains(pt) && i == 1) {
+							int column = i;
+							Text text = new Text(capabilityTable, SWT.NONE);
+							Listener textListener = new Listener() {
+								public void handleEvent(Event e) {
+									switch (e.type) {
+									case SWT.FocusOut:
+										item.setText(column, text.getText());
+										text.dispose();
+										break;
+									case SWT.Traverse:
+										switch (e.detail) {
+										case SWT.TRAVERSE_RETURN:
+											item.setText(column, text.getText());
+											// FALL THROUGH
+										case SWT.TRAVERSE_ESCAPE:
+											text.dispose();
+											e.doit = false;
+										}
+										break;
+									}
+								}
+							};
+							text.addListener(SWT.FocusOut, textListener);
+							text.addListener(SWT.Traverse, textListener);
+							editor.setEditor(text, item, i);
+							text.setText(item.getText(i));
+							text.selectAll();
+							text.setFocus();
+							return;
+						}
+						if (!visible && rect.intersects(clientArea)) {
+							visible = true;
+						}
+					}
+					if (!visible)
+						return;
+					index++;
+				}
+			}
+		});
 
 		btnStartServerAndLaunchApplication = new Button(shlAppiumSettings, SWT.NONE);
 		btnStartServerAndLaunchApplication.addSelectionListener(new SelectionAdapter() {
