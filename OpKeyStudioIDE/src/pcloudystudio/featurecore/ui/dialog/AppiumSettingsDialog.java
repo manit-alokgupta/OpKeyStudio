@@ -2,6 +2,7 @@ package pcloudystudio.featurecore.ui.dialog;
 
 import java.io.File;
 import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -31,6 +32,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -39,6 +41,7 @@ import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.appiumserver.AppiumServer;
 import pcloudystudio.capability.AndroidDefaultCapabilities;
 import pcloudystudio.capability.AndroidDriverObject;
+import pcloudystudio.capability.MobileCapabilities;
 import pcloudystudio.core.mobile.AndroidDeviceUtil;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -266,6 +269,7 @@ public class AppiumSettingsDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
+					String previousDevice = devicesCombo.getText();
 					devicesList = AndroidDeviceUtil.getAndroidDevices();
 					devicesCombo.removeAll();
 					for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
@@ -276,9 +280,25 @@ public class AppiumSettingsDialog extends Dialog {
 					String selectedDeviceDetails = devicesCombo.getText();
 					String deviceManufacturerName = AndroidDeviceUtil
 							.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails));
+					if (capabilityTable.getItemCount() >= 0) {
+						int rowNumber = 0;
+						for (TableItem item : capabilityTable.getItems()) {
+							if (item.getText(0).equalsIgnoreCase("deviceName")) {
+								MessageDialog.openInformation(shlAppiumSettings, "Please Note",
+										"DeviceName will be overrided");
+								capabilityTable.remove(rowNumber);
+								break;
+							} else
+								rowNumber++;
+						}
+					}
+
 					TableItem row = new TableItem(capabilityTable, 0);
 					row.setText(0, "deviceName");
-					row.setText(1, deviceManufacturerName);
+					if (previousDevice.trim() != "")
+						row.setText(1, previousDevice );
+					else
+						row.setText(1, deviceManufacturerName);
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -507,6 +527,15 @@ public class AppiumSettingsDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
+				if(capabilityTable.getItemCount()>0) {
+					 LinkedHashMap<String, String> mapOfCapabilities=new LinkedHashMap<String, String>();
+					for(TableItem row :capabilityTable.getItems()) {
+					
+					mapOfCapabilities.put(row.getText(0), row.getText(1));
+					
+				}
+					MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+				}
 					AppiumServer.stopServer();
 					Thread.sleep(4000);
 				} catch (InterruptedException e2) {
@@ -514,24 +543,19 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 				AppiumServer.startServer();
 
-				DesiredCapabilities mobileCapability = (new AndroidDefaultCapabilities().getCapabilities());
-				String selectedDeviceID = OpKeyStudioPreferences.getPreferences()
-						.getBasicSettings("selected_device_id");
-				String selectedApplucationAPKPath = OpKeyStudioPreferences.getPreferences()
-						.getBasicSettings("selected_applucation_apk_path");
-				if (selectedDeviceID != null) {
-					String deviceModel = null;
-					try {
-						deviceModel = AndroidDeviceUtil.getDeviceName(selectedDeviceID);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-					if (deviceModel != null)
-						mobileCapability.setCapability("deviceName", deviceModel);
-				}
-				if (selectedApplucationAPKPath != null) {
-					mobileCapability.setCapability("app", selectedApplucationAPKPath);
-				}
+				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				/*
+				 * String selectedDeviceID = OpKeyStudioPreferences.getPreferences()
+				 * .getBasicSettings("selected_device_id"); String selectedApplucationAPKPath =
+				 * OpKeyStudioPreferences.getPreferences()
+				 * .getBasicSettings("selected_applucation_apk_path"); if (selectedDeviceID !=
+				 * null) { String deviceModel = null; try { deviceModel =
+				 * AndroidDeviceUtil.getDeviceName(selectedDeviceID); } catch (Exception e1) {
+				 * e1.printStackTrace(); } if (deviceModel != null)
+				 * mobileCapability.setCapability("deviceName", deviceModel); } if
+				 * (selectedApplucationAPKPath != null) { mobileCapability.setCapability("app",
+				 * selectedApplucationAPKPath); }
+				 */
 
 				try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
