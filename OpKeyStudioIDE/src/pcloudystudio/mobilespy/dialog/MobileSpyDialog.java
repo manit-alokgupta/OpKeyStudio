@@ -37,6 +37,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -44,6 +46,7 @@ import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
+import pcloudystudio.objectspy.element.impl.BasicMobileElement;
 import pcloudystudio.mobilespy.dialog.ProgressMonitorDialogWithThread;
 import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
@@ -60,7 +63,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private MobileDeviceDialog deviceView;
 	private Button btnCapture;
 	private Button btnHelp;
-	private Button btnAdd;
+	public static Button btnAdd;
 	private Label lblAllObjects;
 	private Label lblAllObjectProperties;
 
@@ -219,6 +222,17 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
+				Widget item = CustomCheckBoxTree.getCheckedItem(element);
+				if (!(item instanceof TreeItem)) {
+					System.out.println("Given Item is not an instance of TreeItem!");
+					return;
+				} else {
+					TreeItem treeItem = (TreeItem) item;
+					Object obj = treeItem.getData();
+					Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
+					System.out.println(mobileElementProps.get("class"));
+				}
 			}
 		});
 		btnAdd.setBounds(799, 10, 172, 25);
@@ -424,9 +438,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				allObjectsCheckboxTreeViewer.getTree().setFocus();
 				allObjectsCheckboxTreeViewer.setAllChecked(false);
 				allObjectsCheckboxTreeViewer.setSelection((ISelection) new StructuredSelection((Object) foundElement));
-				allObjectsCheckboxTreeViewer.setChecked(foundElement, true);
+				// allObjectsCheckboxTreeViewer.setChecked(foundElement, true);
 				MobileSpyDialog.clearPropertiesTableData();
 				CustomCheckBoxTree.fillDataInObjectPropertiesTable(foundElement);
+				btnAdd.setEnabled(false);
 			}
 		});
 	}

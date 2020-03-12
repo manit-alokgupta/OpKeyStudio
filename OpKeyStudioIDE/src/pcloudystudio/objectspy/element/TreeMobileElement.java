@@ -5,8 +5,6 @@ package pcloudystudio.objectspy.element;
 
 import java.util.List;
 
-import pcloudystudio.objectspy.element.impl.CapturedMobileElement;
-
 public interface TreeMobileElement extends MobileElement {
 	TreeMobileElement getParentElement();
 

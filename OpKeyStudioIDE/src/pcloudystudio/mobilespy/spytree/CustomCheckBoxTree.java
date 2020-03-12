@@ -21,6 +21,8 @@ import pcloudystudio.objectspy.element.impl.BasicMobileElement;
 
 public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStateListener, ICheckStateProvider {
 
+	public static Widget itemSelected;
+
 	public CustomCheckBoxTree(Composite parent, int style) {
 		super(parent, style);
 		// TODO Auto-generated constructor stub
@@ -53,9 +55,11 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 		MobileSpyDialog.allObjectsCheckboxTreeViewer.setAllChecked(false);
 		MobileSpyDialog.allObjectsCheckboxTreeViewer.setChecked(element, true);
 		MobileSpyDialog.allObjectsCheckboxTreeViewer
-				.setSelection((ISelection) new StructuredSelection((Object) element));
+		.setSelection((ISelection) new StructuredSelection((Object) element));
 
 		Widget item = findItem(element);
+
+		itemSelected = item;
 
 		if (!(item instanceof TreeItem)) {
 			System.out.println("Given Item is not an instance of TreeItem!");
@@ -66,11 +70,17 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 			Object obj = treeItem.getData();
 			fillDataInObjectPropertiesTable(obj);
 		}
+
+		MobileSpyDialog.btnAdd.setEnabled(true);
+	}
+
+	public static Widget getCheckedItem(Object element) {
+		return itemSelected;
 	}
 
 	public static void fillDataInObjectPropertiesTable(Object obj) {
 
-		final Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
+		Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
 		if (mobileElementProps.get("class") != null) {
 			MobileSpyDialog.addTableItemToPropertiesTableData("class", mobileElementProps.get("class"));
 		}
