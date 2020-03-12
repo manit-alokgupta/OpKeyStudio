@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
@@ -458,7 +459,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
 		createObjectPropertiesTable(objectPropertiesScrolledComposite);
 
-		String appName = "Shopping List SoftList_v2.3.6_apkpure.com.apk";
+		String appFilePath = OpKeyStudioPreferences.getPreferences().getBasicSettings("application_name");
+		String appName = this.getApplicationName(appFilePath);
+
 		ProgressMonitorDialogWithThread dialog = new ProgressMonitorDialogWithThread(shlSpyMobile);
 		IRunnableWithProgress runnable = (IRunnableWithProgress) new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
@@ -534,5 +537,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		if (monitor.isCanceled()) {
 			throw new InterruptedException("ERROR_MSG_OPERATION_CANCELED");
 		}
+	}
+
+	private String getApplicationName(String appPath) {
+		String appName = "";
+		if (appPath != null) {
+			appName = appPath.substring(appPath.lastIndexOf('\\') + 1);
+		}
+		return appName;
 	}
 }
