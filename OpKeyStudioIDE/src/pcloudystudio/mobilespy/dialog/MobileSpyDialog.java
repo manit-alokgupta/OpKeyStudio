@@ -382,7 +382,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			return;
 		}
 		(this.deviceView = new MobileDeviceDialog(shlSpyMobile, this, this.calculateInitPositionForDeviceViewDialog()))
-		.open();
+				.open();
 		setDeviceView(this.deviceView);
 	}
 
@@ -512,7 +512,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					public void run() {
 						dialog.setCancelable(false);
 						allObjectsCheckboxTreeViewer
-						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+								.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
 						allObjectsCheckboxTreeViewer.refresh();
 						allObjectsCheckboxTreeViewer.expandAll();
 						dialog.setCancelable(true);

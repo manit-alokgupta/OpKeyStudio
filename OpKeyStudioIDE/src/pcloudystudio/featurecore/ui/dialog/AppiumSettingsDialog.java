@@ -1,13 +1,13 @@
 package pcloudystudio.featurecore.ui.dialog;
 
+// Created by Alok Gupta on 20/02/2020.
+// Copyright © 2020 SSTS Inc. All rights reserved.
+
 import java.io.File;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-// Created by Alok Gupta on 20/02/2020.
-// Copyright © 2020 SSTS Inc. All rights reserved.
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -32,14 +32,12 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.android.AndroidDriver;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.appiumserver.AppiumServer;
-import pcloudystudio.capability.AndroidDefaultCapabilities;
 import pcloudystudio.capability.AndroidDriverObject;
 import pcloudystudio.capability.MobileCapabilities;
 import pcloudystudio.core.mobile.AndroidDeviceUtil;
@@ -296,7 +294,7 @@ public class AppiumSettingsDialog extends Dialog {
 					TableItem row = new TableItem(capabilityTable, 0);
 					row.setText(0, "deviceName");
 					if (previousDevice.trim() != "")
-						row.setText(1, previousDevice );
+						row.setText(1, previousDevice);
 					else
 						row.setText(1, deviceManufacturerName);
 
@@ -527,15 +525,16 @@ public class AppiumSettingsDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-				if(capabilityTable.getItemCount()>0) {
-					 LinkedHashMap<String, String> mapOfCapabilities=new LinkedHashMap<String, String>();
-					for(TableItem row :capabilityTable.getItems()) {
-					
-					mapOfCapabilities.put(row.getText(0), row.getText(1));
-					
-				}
-					MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
-				}
+					if (capabilityTable.getItemCount() > 0) {
+						LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
+						for (TableItem row : capabilityTable.getItems()) {
+
+							mapOfCapabilities.put(row.getText(0), row.getText(1));
+
+						}
+						MobileCapabilities.getinstance();
+						MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+					}
 					AppiumServer.stopServer();
 					Thread.sleep(4000);
 				} catch (InterruptedException e2) {
@@ -544,19 +543,6 @@ public class AppiumSettingsDialog extends Dialog {
 				AppiumServer.startServer();
 
 				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-				/*
-				 * String selectedDeviceID = OpKeyStudioPreferences.getPreferences()
-				 * .getBasicSettings("selected_device_id"); String selectedApplucationAPKPath =
-				 * OpKeyStudioPreferences.getPreferences()
-				 * .getBasicSettings("selected_applucation_apk_path"); if (selectedDeviceID !=
-				 * null) { String deviceModel = null; try { deviceModel =
-				 * AndroidDeviceUtil.getDeviceName(selectedDeviceID); } catch (Exception e1) {
-				 * e1.printStackTrace(); } if (deviceModel != null)
-				 * mobileCapability.setCapability("deviceName", deviceModel); } if
-				 * (selectedApplucationAPKPath != null) { mobileCapability.setCapability("app",
-				 * selectedApplucationAPKPath); }
-				 */
-
 				try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
 							new URL("http://" + "127.0.0.1" + ":" + "4723" + "/wd/hub"), mobileCapability);

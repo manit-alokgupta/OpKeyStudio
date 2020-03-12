@@ -22,7 +22,7 @@ public class MobileCapabilities {
 		return mapOfCapabilities;
 	}
 
-	public static void setMapOfCapabilities(LinkedHashMap<String, String> mapOfCapabilities) {
+	public void setMapOfCapabilities(LinkedHashMap<String, String> mapOfCapabilities) {
 		MobileCapabilities.mapOfCapabilities = mapOfCapabilities;
 	}
 

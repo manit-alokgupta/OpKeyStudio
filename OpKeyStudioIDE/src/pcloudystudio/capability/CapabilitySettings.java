@@ -42,9 +42,8 @@ public class CapabilitySettings extends Dialog {
 	private Text text_CapabilityName;
 	private Text text_CapabilityValue;
 	private Composite composite_1;
-    private Combo combo_DeviceName;
+	private Combo combo_DeviceName;
 	private LinkedHashMap<String, String> capabilityMap = new LinkedHashMap<String, String>();
-
 
 	public CapabilitySettings(Shell parent, int style) {
 		super(parent, style);
@@ -63,6 +62,7 @@ public class CapabilitySettings extends Dialog {
 		}
 		return result;
 	}
+
 	private void createContents() {
 		shell = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shell.setSize(988, 505);
@@ -83,7 +83,7 @@ public class CapabilitySettings extends Dialog {
 
 		devicesCombo = new Combo(composite, SWT.READ_ONLY);
 		devicesCombo.setBounds(199, 30, 249, 23);
-		
+
 		Button btnRefresh = new Button(composite, SWT.NONE);
 		btnRefresh.setBounds(463, 28, 75, 25);
 		btnRefresh.setText("Refresh");
@@ -176,7 +176,7 @@ public class CapabilitySettings extends Dialog {
 				}
 			}
 		});
-		
+
 		btnNewButton_1.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.ITALIC));
 		btnNewButton_1.setBounds(475, 50, 310, 25);
 		btnNewButton_1.setText("DeleteCapability");
@@ -220,7 +220,7 @@ public class CapabilitySettings extends Dialog {
 		});
 		combo_CapabilityName.setBounds(359, 9, 157, 23);
 		String arrayOftext_CapabilityName[] = { "platformName", "automationName", "launchTimeout",
-				"newCommandTimeout" };
+		"newCommandTimeout" };
 		combo_CapabilityName.setItems(arrayOftext_CapabilityName);
 		Label lblValue = new Label(composite_1, SWT.NONE);
 		lblValue.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.ITALIC));
@@ -285,7 +285,6 @@ public class CapabilitySettings extends Dialog {
 				}
 
 				MobileCapabilities.getinstance().setMapOfCapabilities(capabilityMap);
-				// MobileCapabilities.getCapabilities();
 			}
 		});
 		btnFinalSubmit.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.ITALIC));
@@ -304,7 +303,7 @@ public class CapabilitySettings extends Dialog {
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
-				
+
 					e1.printStackTrace();
 				}
 
