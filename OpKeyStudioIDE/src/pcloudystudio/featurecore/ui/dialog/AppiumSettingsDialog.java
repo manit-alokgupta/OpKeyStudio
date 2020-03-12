@@ -310,10 +310,21 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(shlAppiumSettings, SWT.NULL);
 				String path = dialog.open();
+				int rowNumber = 0;
 				if (path != null) {
-					TableItem row=new TableItem(capabilityTable, 0);
-					row.setText(0,"app");
-					row.setText(1,path);
+					for (TableItem item : capabilityTable.getItems()) {
+						if (item.getText(0).equalsIgnoreCase("app")) {
+							MessageDialog.openInformation(shlAppiumSettings, "Please Note",
+									"Application file will be overrided");
+							capabilityTable.remove(rowNumber);
+							break;
+						} else
+							rowNumber++;
+					}
+
+					TableItem row = new TableItem(capabilityTable, 0);
+					row.setText(0, "app");
+					row.setText(1, path);
 					File file = new File(path);
 					if (file.isFile())
 						displayFiles(new String[] { file.toString() });
