@@ -248,7 +248,7 @@ public class AppiumSettingsDialog extends Dialog {
 		lblDeviceConfiguration.setBounds(10, 10, 99, 15);
 
 		compositeConfigurationSettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeConfigurationSettings.setBounds(10, 343, 646, 145);
+		compositeConfigurationSettings.setBounds(10, 343, 646, 106);
 
 		Label lblDeviceName = new Label(compositeConfigurationSettings, SWT.NONE);
 		lblDeviceName.setBounds(29, 25, 76, 15);
@@ -353,34 +353,9 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 
-		Button saveButtonConfiguration = new Button(compositeConfigurationSettings, SWT.NONE);
-		saveButtonConfiguration.setBounds(384, 88, 75, 25);
-		saveButtonConfiguration.setToolTipText("Save");
-		saveButtonConfiguration.setText("Save");
-		saveButtonConfiguration.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-
-		saveButtonConfiguration.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String applicationDirPathText = applicationPathText.getText();
-				String selectedDeviceID = getSelectedAndroidDeviceId(devicesCombo.getText());
-				OpKeyStudioPreferences.getPreferences().addBasicSettings("selected_applucation_apk_path",
-						applicationDirPathText);
-				OpKeyStudioPreferences.getPreferences().addBasicSettings("selected_device_id", selectedDeviceID);
-				if (applicationDirPathText.trim().equalsIgnoreCase("")) {
-					MessageDialog.openInformation(shlAppiumSettings, "Invalid Application file path",
-							"Please browse Application file");
-				}
-				if (selectedDeviceID.trim().equalsIgnoreCase("")) {
-					MessageDialog.openInformation(shlAppiumSettings, "Invalid Device selection!",
-							"Please Connect device to system!");
-				}
-			}
-		});
-
 		compositeDeviceCapabilities = new Composite(shlAppiumSettings, SWT.NONE);
 		compositeDeviceCapabilities.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		compositeDeviceCapabilities.setBounds(10, 494, 135, 32);
+		compositeDeviceCapabilities.setBounds(10, 455, 135, 32);
 
 		lblDeviceCapability = new Label(compositeDeviceCapabilities, SWT.NONE);
 		lblDeviceCapability.setText("Device Capabilities");
@@ -389,10 +364,10 @@ public class AppiumSettingsDialog extends Dialog {
 		lblDeviceCapability.setBounds(10, 10, 115, 15);
 
 		compositeCapabilitySettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeCapabilitySettings.setBounds(10, 532, 646, 201);
+		compositeCapabilitySettings.setBounds(10, 493, 646, 201);
 
 		compositeAddCapability = new Composite(compositeCapabilitySettings, SWT.NONE);
-		compositeAddCapability.setBounds(10, 5, 622, 42);
+		compositeAddCapability.setBounds(20, 5, 612, 42);
 
 		btnAdd = new Button(compositeAddCapability, SWT.NONE);
 		btnAdd.addSelectionListener(new SelectionAdapter() {
@@ -404,7 +379,7 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityTextValue.setText("");
 			}
 		});
-		btnAdd.setBounds(71, 10, 20, 22);
+		btnAdd.setBounds(10, 10, 20, 22);
 		btnAdd.setText("+");
 
 		btnDelete = new Button(compositeAddCapability, SWT.NONE);
@@ -417,11 +392,11 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 			}
 		});
-		btnDelete.setBounds(97, 10, 20, 22);
+		btnDelete.setBounds(36, 10, 20, 22);
 		btnDelete.setText("-");
 
 		addCapabilityComposite = new Composite(compositeAddCapability, SWT.BORDER);
-		addCapabilityComposite.setBounds(129, 0, 428, 42);
+		addCapabilityComposite.setBounds(62, 0, 550, 42);
 		addCapabilityComposite.setVisible(false);
 
 		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
@@ -451,12 +426,12 @@ public class AppiumSettingsDialog extends Dialog {
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setBounds(72, 53, 495, 135);
+		scrolledComposite.setBounds(20, 53, 612, 135);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
 		capabilityTable = new Table(scrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
-		capabilityTable.setBounds(0, 0, 495, 135);
+		capabilityTable.setBounds(0, 0, 612, 135);
 		capabilityTable.setHeaderVisible(true);
 		capabilityTable.setLinesVisible(true);
 		TableColumn columnName = new TableColumn(capabilityTable, 0);
