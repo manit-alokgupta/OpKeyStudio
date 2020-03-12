@@ -1,10 +1,13 @@
 package pcloudystudio.appiumserver;
 
 public class AppiumPortIpInfo {
-	private String port = "4723";
-	private String host_Address = "127.0.0.1";
-	private String appium_Directory;
+	private static String port;
+	private static String host_Address;
+	private static String appium_Directory;
 	private static AppiumPortIpInfo appiumPortIp;
+
+	private AppiumPortIpInfo() {
+	}
 
 	public static AppiumPortIpInfo getInstance() {
 		if (appiumPortIp == null) {
@@ -13,36 +16,27 @@ public class AppiumPortIpInfo {
 		return appiumPortIp;
 	}
 
-	public AppiumPortIpInfo() {
-	}
-
-	public AppiumPortIpInfo(String port, String host_Address, String appium_Directory) {
-		this.port = port;
-		this.host_Address = host_Address;
-		this.appium_Directory = appium_Directory;
-	}
-
-	public String getPort() {
+	public static String getPort() {
 		return port;
 	}
 
-	public void setPort(String port) {
-		this.port = port;
+	public static void setPort(String port) {
+		AppiumPortIpInfo.port = port;
 	}
 
-	public String getHost_Address() {
+	public static String getHost_Address() {
 		return host_Address;
 	}
 
-	public void setHost_Address(String host_Address) {
-		this.host_Address = host_Address;
+	public static void setHost_Address(String host_Address) {
+		AppiumPortIpInfo.host_Address = host_Address;
 	}
 
-	public String getAppium_Directory() {
+	public static String getAppium_Directory() {
 		return appium_Directory;
 	}
 
-	public void setAppium_Directory(String appium_Directory) {
-		this.appium_Directory = appium_Directory;
+	public static void setAppium_Directory(String appium_Directory) {
+		AppiumPortIpInfo.appium_Directory = appium_Directory;
 	}
 }

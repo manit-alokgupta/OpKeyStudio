@@ -5,8 +5,8 @@ import java.net.ServerSocket;
 
 public class AppiumServer {
 	public static void startServer() {
-		String port = new AppiumPortIpInfo().getPort();
-		String hostAddress = new AppiumPortIpInfo().getHost_Address();
+		String port = AppiumPortIpInfo.getPort();
+		String hostAddress = AppiumPortIpInfo.getHost_Address();
 		Runtime runtime = Runtime.getRuntime();
 		try {
 			if (port != null && hostAddress != null) {

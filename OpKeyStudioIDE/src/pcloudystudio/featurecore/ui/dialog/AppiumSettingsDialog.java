@@ -36,6 +36,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.android.AndroidDriver;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
+import pcloudystudio.appiumserver.AppiumPortIpInfo;
 import pcloudystudio.appiumserver.AppiumServer;
 import pcloudystudio.capability.AndroidDriverObject;
 import pcloudystudio.capability.MobileCapabilities;
@@ -202,10 +203,10 @@ public class AppiumSettingsDialog extends Dialog {
 
 		saveButton.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String host = serverAddress.getText();
-				String port = portNumber.getText();
-				String appiumDirectoryPath = appiumDirectory.getText();
+			public void widgetSelected(SelectionEvent e) {   AppiumPortIpInfo.getInstance(); 
+				String host = serverAddress.getText(); if(host.trim()!="") {AppiumPortIpInfo.getInstance().setHost_Address(host);}
+				String port = portNumber.getText(); if(port.trim()!="") {AppiumPortIpInfo.setPort(port);}
+				String appiumDirectoryPath = appiumDirectory.getText(); if(appiumDirectoryPath.trim()!="") {AppiumPortIpInfo.setAppium_Directory(appiumDirectoryPath);}
 				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_host", host);
 				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_port", port);
 				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory", appiumDirectoryPath);
@@ -521,7 +522,7 @@ public class AppiumSettingsDialog extends Dialog {
 				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
 				try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
-							new URL("http://" + "127.0.0.1" + ":" + "4723" + "/wd/hub"), mobileCapability);
+							new URL("http://"+AppiumPortIpInfo.getHost_Address()+ ":"+AppiumPortIpInfo.getPort()+"/wd/hub"), mobileCapability);
 					AndroidDriverObject.getInstance().setDriver(driver);
 				} catch (Exception ex) {
 					ex.printStackTrace();
