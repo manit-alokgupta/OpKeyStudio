@@ -28,7 +28,7 @@ public class AppiumPortIpInfo {
 		return host_Address;
 	}
 
-	public static void setHost_Address(String host_Address) {
+	public void setHost_Address(String host_Address) {
 		AppiumPortIpInfo.host_Address = host_Address;
 	}
 
