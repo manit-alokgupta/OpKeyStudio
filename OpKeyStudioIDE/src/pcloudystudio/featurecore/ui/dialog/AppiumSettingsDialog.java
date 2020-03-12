@@ -14,7 +14,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
@@ -262,7 +261,7 @@ public class AppiumSettingsDialog extends Dialog {
 		btnRefresh.setBounds(465, 20, 75, 25);
 		btnRefresh.setText("Refresh");
 
-		btnRefresh.addSelectionListener(new SelectionListener() {
+		btnRefresh.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -276,14 +275,14 @@ public class AppiumSettingsDialog extends Dialog {
 					devicesCombo.select(0);
 
 					String selectedDeviceDetails = devicesCombo.getText();
-					String deviceManufacturerName = AndroidDeviceUtil
+					String newDeviceModelName = AndroidDeviceUtil
 							.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails));
 					if (capabilityTable.getItemCount() >= 0) {
 						int rowNumber = 0;
 						for (TableItem item : capabilityTable.getItems()) {
 							if (item.getText(0).equalsIgnoreCase("deviceName")) {
 								MessageDialog.openInformation(shlAppiumSettings, "Please Note",
-										"DeviceName will be overrided");
+										"deviceName will be overrided");
 								capabilityTable.remove(rowNumber);
 								break;
 							} else
@@ -293,10 +292,12 @@ public class AppiumSettingsDialog extends Dialog {
 
 					TableItem row = new TableItem(capabilityTable, 0);
 					row.setText(0, "deviceName");
-					if (previousDevice.trim() != "")
-						row.setText(1, previousDevice);
-					else
-						row.setText(1, deviceManufacturerName);
+					if (previousDevice.trim() != "") {
+						String previousDeviceModelName = AndroidDeviceUtil
+								.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice));
+						row.setText(1, previousDeviceModelName);
+					} else
+						row.setText(1, newDeviceModelName);
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
