@@ -303,7 +303,9 @@ public class AppiumSettingsDialog extends Dialog {
 				FileDialog dialog = new FileDialog(shlAppiumSettings, SWT.NULL);
 				String path = dialog.open();
 				if (path != null) {
-
+					TableItem row=new TableItem(capabilityTable, 0);
+					row.setText(0,"app");
+					row.setText(1,path);
 					File file = new File(path);
 					if (file.isFile())
 						displayFiles(new String[] { file.toString() });
