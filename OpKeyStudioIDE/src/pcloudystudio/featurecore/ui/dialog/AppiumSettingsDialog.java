@@ -272,6 +272,14 @@ public class AppiumSettingsDialog extends Dialog {
 						devicesCombo.add(deviceEntry.getValue());
 					}
 					devicesCombo.select(0);
+
+					String selectedDeviceDetails = devicesCombo.getText();
+					String deviceManufacturerName = AndroidDeviceUtil
+							.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails));
+					TableItem row = new TableItem(capabilityTable, 0);
+					row.setText(0, "deviceName");
+					row.setText(1, deviceManufacturerName);
+
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class AndroidDeviceUtil {
 	private static Map<String, String> devicesList;
@@ -72,7 +73,7 @@ public class AndroidDeviceUtil {
 			System.getenv("ANDROID_HOME");
 		if (adbPath != null) {
 			adbPath = String.valueOf(adbPath) + File.separator + "platform-tools" + File.separator + "adb";
-			String[] cmd = new String[] { adbPath, "-s", deviceID, "shell", "getprop", "ro.product.manufacturer" };
+			String[] cmd = new String[] { adbPath, "-s", deviceID, "shell", "getprop", "ro.product.model" };
 			ProcessBuilder pb = new ProcessBuilder(cmd);
 			pb.command(cmd);
 			Process process = pb.start();
@@ -82,5 +83,18 @@ public class AndroidDeviceUtil {
 			br.close();
 		}
 		return deviceName;
+	}
+
+	public static String getSelectedAndroidDeviceId(String selectedDeviceName) {
+		String deviceID = null;
+		if (selectedDeviceName != null || selectedDeviceName != "") {
+			for (Entry<String, String> entry : AndroidDeviceUtil.devicesList.entrySet()) {
+				if (entry.getValue().equals(selectedDeviceName)) {
+					deviceID = entry.getKey();
+					break;
+				}
+			}
+		}
+		return deviceID;
 	}
 }
