@@ -75,7 +75,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private Combo devicesCombo;
 	private Text applicationPathText;
 	private Button btnStartServerAndLaunchApplication;
-	private Table capabilityTable;
+	private static Table capabilityTable;
 
 	private Composite compositeAddCapability;
 	private Button btnDelete;
@@ -285,29 +285,35 @@ public class AppiumSettingsDialog extends Dialog {
 					devicesCombo.select(0);
 
 					String selectedDeviceDetails = devicesCombo.getText();
-					String newDeviceModelName = AndroidDeviceUtil
-							.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails));
+					String newDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails);
+					String newDeviceModelName = AndroidDeviceUtil.getDeviceName(newDeviceUDID);
 					if (capabilityTable.getItemCount() >= 0) {
 						int rowNumber = 0;
 						for (TableItem item : capabilityTable.getItems()) {
-							if (item.getText(0).equalsIgnoreCase("deviceName")) {
+							if (item.getText(0).equalsIgnoreCase("deviceName")
+									|| item.getText(0).equalsIgnoreCase("udid")) {
 								MessageDialog.openInformation(shlAppiumSettings, "Please Note",
-										"deviceName will be overrided");
+										"deviceName and udid will be overrided");
 								capabilityTable.remove(rowNumber);
-								break;
-							} else
-								rowNumber++;
+							}
+							rowNumber++;
 						}
 					}
 
-					TableItem row = new TableItem(capabilityTable, 0);
-					row.setText(0, "deviceName");
 					if (previousDevice.trim() != "") {
 						String previousDeviceModelName = AndroidDeviceUtil
 								.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice));
-						row.setText(1, previousDeviceModelName);
-					} else
-						row.setText(1, newDeviceModelName);
+						addTableItemToCapabilityTableData("deviceName", previousDeviceModelName);
+					} else {
+						addTableItemToCapabilityTableData("deviceName", newDeviceModelName);
+					}
+
+					if (previousDevice.trim() != "") {
+						String previousDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice);
+						addTableItemToCapabilityTableData("udid", previousDeviceUDID);
+					} else {
+						addTableItemToCapabilityTableData("udid", newDeviceUDID);
+					}
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -551,10 +557,15 @@ public class AppiumSettingsDialog extends Dialog {
 		closebutton.setText("Close");
 	}
 
-	public void displayFiles(String[] files) {
+	private void displayFiles(String[] files) {
 		for (int i = 0; files != null && i < files.length; i++) {
 			applicationPathText.setText(files[i]);
 			applicationPathText.setEditable(true);
 		}
+	}
+
+	private void addTableItemToCapabilityTableData(String key, String value) {
+		TableItem item = new TableItem(capabilityTable, SWT.NONE);
+		item.setText(new String[] { key, value });
 	}
 }

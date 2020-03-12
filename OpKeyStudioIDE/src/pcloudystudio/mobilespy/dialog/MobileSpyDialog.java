@@ -290,8 +290,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	}
 
 	public static void addTableItemToPropertiesTableData(String key, String value) {
-		TableItem item1 = new TableItem(objectPropertiesTable, SWT.NONE);
-		item1.setText(new String[] { key, value });
+		TableItem item = new TableItem(objectPropertiesTable, SWT.NONE);
+		item.setText(new String[] { key, value });
 	}
 
 	public static void clearPropertiesTableData() {
