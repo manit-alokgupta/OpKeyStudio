@@ -61,13 +61,13 @@ public class CTreeViewer extends TreeViewer implements CustomColumnViewer {
 		}
 		control.addMouseListener(this.mouseListener = (MouseListener) new MouseAdapter() {
 			public void mouseDown(final MouseEvent e) {
-				if (e.count != 2) {
+				if (e.count != SECOND_CLICK) {
 					CTreeViewer.this.handleMouseDown(e);
 				}
 			}
 
 			public void mouseDoubleClick(final MouseEvent e) {
-				if (e.count == 2) {
+				if (e.count == SECOND_CLICK) {
 					CTreeViewer.this.handleMouseDown(e);
 				}
 			}

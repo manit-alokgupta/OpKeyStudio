@@ -81,12 +81,12 @@ public abstract class TypeCheckedStyleCellLabelProvider<T> extends StyledCellLab
 
 	protected final int getLeftMargin() {
 		final CellLayoutInfo layoutInfo = this.getCellLayoutInfo();
-		return (layoutInfo != null) ? layoutInfo.getLeftMargin() : 0;
+		return (layoutInfo != null) ? layoutInfo.getLeftMargin() : DF_MARGIN;
 	}
 
 	protected final int getRightMargin() {
 		final CellLayoutInfo layoutInfo = this.getCellLayoutInfo();
-		return (layoutInfo != null) ? layoutInfo.getRightMargin() : 0;
+		return (layoutInfo != null) ? layoutInfo.getRightMargin() : DF_MARGIN;
 	}
 
 	protected boolean canNotDrawSafely(final Object element) {
