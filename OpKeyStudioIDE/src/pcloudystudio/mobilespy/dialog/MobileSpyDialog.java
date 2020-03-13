@@ -47,6 +47,7 @@ import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.BasicMobileElement;
+import pcloudystudio.capability.AndroidDriverObject;
 import pcloudystudio.mobilespy.dialog.ProgressMonitorDialogWithThread;
 import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
@@ -196,6 +197,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 		btnCapture.setBounds(10, 10, 109, 25);
 		btnCapture.setText("Capture Object");
+
+		if (AndroidDriverObject.getDriver() == null) {
+			btnCapture.setEnabled(false);
+		}
 
 		// -------------------------------------------------------------//
 
