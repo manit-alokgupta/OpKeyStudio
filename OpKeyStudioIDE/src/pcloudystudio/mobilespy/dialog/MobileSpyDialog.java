@@ -74,6 +74,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private Composite compositeObjectProperties;
 	private Composite composite;
 
+	public static Button btnClickAndMoveToNextScreen;
+
 	/**
 	 * Create the dialog.
 	 * 
@@ -224,11 +226,41 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					Object parentObj = ((TreeMobileElement) obj).getParentElement();
 					Map<String, String> mobileParentElementProps = ((BasicMobileElement) parentObj).getAttributes();
 					System.out.println("Parent: " + mobileParentElementProps.get("class"));
+
+					String currentActivity = null;
+					if (AndroidDriverObject.getDriver() != null)
+						currentActivity = AndroidDriverObject.getDriver().currentActivity();
+					System.out.println("Current Activity: " + currentActivity);
 				}
 			}
 		});
 		btnAdd.setBounds(799, 10, 172, 25);
 		btnAdd.setText("Add to Object Repository");
+
+		btnClickAndMoveToNextScreen = new Button(toolsComposite, SWT.NONE);
+		btnClickAndMoveToNextScreen.setEnabled(false);
+		btnClickAndMoveToNextScreen.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (AndroidDriverObject.getInstance() != null) {
+					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
+					Widget item = CustomCheckBoxTree.getCheckedItem(element);
+					if (!(item instanceof TreeItem)) {
+						System.out.println("Given Item is not an instance of TreeItem!");
+						return;
+					} else {
+						TreeItem treeItem = (TreeItem) item;
+						Object obj = treeItem.getData();
+						Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
+						System.out.println(mobileElementProps.get("xpath"));
+						AndroidDriverObject.getDriver().findElementByXPath(mobileElementProps.get("xpath")).click();
+						captureObjectAction();
+					}
+				}
+			}
+		});
+		btnClickAndMoveToNextScreen.setBounds(125, 10, 146, 25);
+		btnClickAndMoveToNextScreen.setText("Click and Update Spy");
 
 		// -------------------------------------------------------------//
 
@@ -406,6 +438,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				MobileSpyDialog.clearPropertiesTableData();
 				CustomCheckBoxTree.fillDataInObjectPropertiesTable(foundElement);
 				btnAdd.setEnabled(false);
+				btnClickAndMoveToNextScreen.setEnabled(false);
 			}
 		});
 	}

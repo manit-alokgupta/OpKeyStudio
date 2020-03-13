@@ -72,6 +72,7 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 		}
 
 		MobileSpyDialog.btnAdd.setEnabled(true);
+		MobileSpyDialog.btnClickAndMoveToNextScreen.setEnabled(true);
 	}
 
 	public static Widget getCheckedItem(Object element) {
