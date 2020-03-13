@@ -34,7 +34,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.android.AndroidDriver;
-import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.appiumserver.AppiumPortIpInfo;
 import pcloudystudio.appiumserver.AppiumServer;
 import pcloudystudio.capability.AndroidDriverObject;
@@ -171,20 +170,16 @@ public class AppiumSettingsDialog extends Dialog {
 		appiumDirectory = new Text(compositeAppiumSettings, SWT.BORDER);
 		appiumDirectory.setBounds(150, 115, 309, 24);
 
-		String server = OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_host");
-		String port = OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_port");
-		String appiumDir = OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory");
-
-		if (server != null) {
-			serverAddress.setText(server);
+		if (AppiumPortIpInfo.getHostAddress() != null) {
+			serverAddress.setText(AppiumPortIpInfo.getHostAddress());
 		}
 
-		if (port != null) {
-			portNumber.setText(port);
+		if (AppiumPortIpInfo.getPort() != null) {
+			portNumber.setText(AppiumPortIpInfo.getPort());
 		}
 
-		if (appiumDir != null) {
-			appiumDirectory.setText(appiumDir);
+		if (AppiumPortIpInfo.getAppiumDirectory() != null) {
+			appiumDirectory.setText(AppiumPortIpInfo.getAppiumDirectory());
 		}
 
 		Label label_2 = new Label(compositeAppiumSettings, SWT.NONE);
@@ -216,9 +211,6 @@ public class AppiumSettingsDialog extends Dialog {
 				if (appiumDirectoryPath.trim() != "") {
 					AppiumPortIpInfo.setAppiumDirectory(appiumDirectoryPath);
 				}
-				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_host", host);
-				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_port", port);
-				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory", appiumDirectoryPath);
 				if (host.trim().equalsIgnoreCase("")) {
 					MessageDialog.openInformation(shlAppiumSettings, "Invalid Host", "Please enter Host URL");
 				}
