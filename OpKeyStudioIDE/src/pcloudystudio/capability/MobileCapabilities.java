@@ -5,17 +5,16 @@ import java.util.LinkedHashMap;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class MobileCapabilities {
-	private static MobileCapabilities object;
+	private static MobileCapabilities instance;
 	private static LinkedHashMap<String, String> mapOfCapabilities;
 
 	private MobileCapabilities() {
 	}
 
 	public static MobileCapabilities getinstance() {
-
-		if (object == null)
+		if (instance == null)
 			return new MobileCapabilities();
-		return object;
+		return instance;
 	}
 
 	public static LinkedHashMap<String, String> getMapOfCapabilities() {

@@ -206,7 +206,7 @@ public class AppiumSettingsDialog extends Dialog {
 				AppiumPortIpInfo.getInstance();
 				String host = serverAddress.getText();
 				if (host.trim() != "") {
-					AppiumPortIpInfo.getInstance().setHost_Address(host);
+					AppiumPortIpInfo.getInstance().setHostAddress(host);
 				}
 				String port = portNumber.getText();
 				if (port.trim() != "") {
@@ -214,7 +214,7 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 				String appiumDirectoryPath = appiumDirectory.getText();
 				if (appiumDirectoryPath.trim() != "") {
-					AppiumPortIpInfo.setAppium_Directory(appiumDirectoryPath);
+					AppiumPortIpInfo.setAppiumDirectory(appiumDirectoryPath);
 				}
 				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_host", host);
 				OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_port", port);
@@ -533,7 +533,7 @@ public class AppiumSettingsDialog extends Dialog {
 				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
 				try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-							+ AppiumPortIpInfo.getHost_Address() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
 					AndroidDriverObject.getInstance().setDriver(driver);
 				} catch (Exception ex) {

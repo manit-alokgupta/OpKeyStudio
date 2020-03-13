@@ -2,18 +2,18 @@ package pcloudystudio.appiumserver;
 
 public class AppiumPortIpInfo {
 	private static String port;
-	private static String host_Address;
-	private static String appium_Directory;
-	private static AppiumPortIpInfo appiumPortIp;
+	private static String hostAddress;
+	private static String appiumDirectory;
+	private static AppiumPortIpInfo instance;
 
 	private AppiumPortIpInfo() {
 	}
 
 	public static AppiumPortIpInfo getInstance() {
-		if (appiumPortIp == null) {
+		if (instance == null) {
 			return new AppiumPortIpInfo();
 		}
-		return appiumPortIp;
+		return instance;
 	}
 
 	public static String getPort() {
@@ -24,19 +24,19 @@ public class AppiumPortIpInfo {
 		AppiumPortIpInfo.port = port;
 	}
 
-	public static String getHost_Address() {
-		return host_Address;
+	public static String getHostAddress() {
+		return hostAddress;
 	}
 
-	public void setHost_Address(String host_Address) {
-		AppiumPortIpInfo.host_Address = host_Address;
+	public void setHostAddress(String host_Address) {
+		AppiumPortIpInfo.hostAddress = host_Address;
 	}
 
-	public static String getAppium_Directory() {
-		return appium_Directory;
+	public static String getAppiumDirectory() {
+		return appiumDirectory;
 	}
 
-	public static void setAppium_Directory(String appium_Directory) {
-		AppiumPortIpInfo.appium_Directory = appium_Directory;
+	public static void setAppiumDirectory(String appium_Directory) {
+		AppiumPortIpInfo.appiumDirectory = appium_Directory;
 	}
 }

@@ -8,8 +8,7 @@ public class AndroidDriverObject {
 	private static AndroidDriver<WebElement> driver;
 	private static AndroidDriverObject instance;
 
-	private AndroidDriverObject() { // for singleton
-
+	private AndroidDriverObject() {
 	}
 
 	public static AndroidDriverObject getInstance() {

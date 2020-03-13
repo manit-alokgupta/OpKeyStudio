@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 public class AppiumServer {
 	public static void startServer() {
 		String port = AppiumPortIpInfo.getPort();
-		String hostAddress = AppiumPortIpInfo.getHost_Address();
+		String hostAddress = AppiumPortIpInfo.getHostAddress();
 		Runtime runtime = Runtime.getRuntime();
 		try {
 			if (port != null && hostAddress != null) {
@@ -35,7 +35,6 @@ public class AppiumServer {
 	}
 
 	public static Boolean isServerRunning(int port) {
-
 		boolean isServerRunning = false;
 		ServerSocket serverSocket;
 		try {
