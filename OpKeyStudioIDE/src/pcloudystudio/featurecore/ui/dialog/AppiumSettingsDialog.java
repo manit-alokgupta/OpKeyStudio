@@ -288,15 +288,10 @@ public class AppiumSettingsDialog extends Dialog {
 					String newDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails);
 					String newDeviceModelName = AndroidDeviceUtil.getDeviceName(newDeviceUDID);
 					if (capabilityTable.getItemCount() >= 0) {
-						int rowNumber = 0;
-						for (TableItem item : capabilityTable.getItems()) {
-							if (item.getText(0).equalsIgnoreCase("deviceName")
-									|| item.getText(0).equalsIgnoreCase("udid")) {
-								MessageDialog.openInformation(shlAppiumSettings, "Please Note",
-										"deviceName and udid will be overrided");
-								capabilityTable.remove(rowNumber);
-							}
-							rowNumber++;
+						for (int row = capabilityTable.getItemCount() - 1; row >= 0; row--) {
+							if (capabilityTable.getItem(row).getText(0).equalsIgnoreCase("deviceName")
+									|| (capabilityTable.getItem(row).getText(0).equalsIgnoreCase("udid")))
+								capabilityTable.remove(row);
 						}
 					}
 
