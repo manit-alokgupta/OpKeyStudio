@@ -387,7 +387,8 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				addCapabilityComposite.setVisible(false);
 				if (capabilityTable.getItemCount() >= 1) {
-					capabilityTable.remove(capabilityTable.getSelectionIndex());
+					if (capabilityTable.getSelectionIndex() != -1)
+						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
 			}
 		});
@@ -411,11 +412,9 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				String capabilityName = capabilityNameCombo.getText();
 				String capabilityValue = capabilityTextValue.getText();
-				TableItem row = new TableItem(capabilityTable, 0);
-				if ((capabilityName != "" || capabilityName != null)
-						&& (capabilityValue != null || capabilityValue != "")) {
-					row.setText(0, capabilityName);
-					row.setText(1, capabilityValue);
+				if ((capabilityName != "" && capabilityName != null)
+						&& (capabilityValue != null && capabilityValue != "")) {
+					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
 				}
 				addCapabilityComposite.setVisible(false);
 			}

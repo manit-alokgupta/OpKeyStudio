@@ -71,8 +71,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private ScrolledComposite objectPropertiesScrolledComposite;
 	private Composite compositeTreeHierarchy;
 	private Composite compositeObjectProperties;
-	private Button btnStart;
-	private Button btnStop;
 	private Composite composite;
 
 	/**
@@ -142,20 +140,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		bottomComposite.setLayoutData(gd_bottomComposite);
 
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
-
-		/*************************************************
-		 * Snapshot section
-		 ***************************************************************/
-
-		/*************************************************
-		 * All Objects Tree Hierarchy section
-		 *********************************************/
-
-		// this.createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
-
-		/*************************************************
-		 * Object Properties section
-		 ******************************************************/
 
 		compositeTreeHierarchy = new Composite(sashForm, SWT.BORDER);
 		compositeTreeHierarchy.setLayout(new GridLayout(1, false));
@@ -240,34 +224,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		});
 		btnAdd.setBounds(799, 10, 172, 25);
 		btnAdd.setText("Add to Object Repository");
-
-		// -------------------------------------------------------------//
-
-		btnStart = new Button(toolsComposite, SWT.NONE);
-		btnStart.setToolTipText("Start");
-		btnStart.setEnabled(false);
-		btnStart.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnStart.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-		btnStart.setBounds(125, 10, 75, 25);
-		btnStart.setText("Start");
-
-		// -------------------------------------------------------------//
-
-		btnStop = new Button(toolsComposite, SWT.NONE);
-		btnStop.setToolTipText("Stop");
-		btnStop.setEnabled(false);
-		btnStop.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnStop.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-		btnStop.setBounds(206, 10, 75, 25);
-		btnStop.setText("Stop");
 
 		// -------------------------------------------------------------//
 
