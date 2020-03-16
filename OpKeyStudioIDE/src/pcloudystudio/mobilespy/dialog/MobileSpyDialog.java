@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -271,7 +272,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				MessageDialog.openInformation(shlSpyMobile, "Help", "Please contact support@opkey.com");
 			}
 		});
 		btnHelp.setBounds(10, 5, 45, 22);
