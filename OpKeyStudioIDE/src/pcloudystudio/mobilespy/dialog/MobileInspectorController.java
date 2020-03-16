@@ -24,15 +24,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class MobileInspectorController {
 
+	public static String currentActivity = null;
+
 	public MobileInspectorController() {
 	}
 
 	public TreeMobileElement getMobileObjectRoot() {
 		try {
 			String pageSource = null;
-			if (AndroidDriverObject.getDriver() != null)
+			if (AndroidDriverObject.getDriver() != null) {
 				pageSource = AndroidDriverObject.getDriver().getPageSource();
-
+				MobileInspectorController.currentActivity = AndroidDriverObject.getDriver().currentActivity();
+			}
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = null;
 			try {

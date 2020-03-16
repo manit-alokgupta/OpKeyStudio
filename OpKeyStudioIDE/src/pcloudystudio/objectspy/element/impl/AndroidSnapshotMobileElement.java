@@ -6,8 +6,8 @@ package pcloudystudio.objectspy.element.impl;
 import java.util.Map;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import pcloudystudio.core.mobile.driver.MobileDriverType;
+import pcloudystudio.mobilespy.dialog.MobileInspectorController;
 
 import org.w3c.dom.Element;
 
@@ -45,6 +45,9 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 	public void convertXMLElementToWebElementForAndroid(final Element xmlElement) {
 
 		final Map<String, String> htmlMobileElementProps = this.getAttributes();
+
+		htmlMobileElementProps.put("activity", MobileInspectorController.currentActivity);
+
 		if (xmlElement.getAttribute("class") != null) {
 			htmlMobileElementProps.put("class", xmlElement.getAttribute("class"));
 		}

@@ -221,9 +221,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					return;
 				} else {
 					TreeItem treeItem = (TreeItem) item;
+
 					Object obj = treeItem.getData();
 					Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
 					System.out.println("Object: " + mobileElementProps.get("class"));
+
 					Object parentObj = ((TreeMobileElement) obj).getParentElement();
 					Map<String, String> mobileParentElementProps = ((BasicMobileElement) parentObj).getAttributes();
 					System.out.println("Parent: " + mobileParentElementProps.get("class"));
@@ -232,6 +234,14 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					if (AndroidDriverObject.getDriver() != null)
 						currentActivity = AndroidDriverObject.getDriver().currentActivity();
 					System.out.println("Current Activity: " + currentActivity);
+
+					String currentPackage = null;
+					if (AndroidDriverObject.getDriver() != null)
+						currentPackage = AndroidDriverObject.getDriver().getCurrentPackage();
+					System.out.println("Current Package: " + currentPackage);
+					String objectLinkedTo = currentPackage + currentActivity;
+
+					System.out.println("Object Linked to: " + objectLinkedTo);
 				}
 			}
 		});
@@ -253,7 +263,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 						TreeItem treeItem = (TreeItem) item;
 						Object obj = treeItem.getData();
 						Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
-						System.out.println(mobileElementProps.get("xpath"));
 						AndroidDriverObject.getDriver().findElementByXPath(mobileElementProps.get("xpath")).click();
 						captureObjectAction();
 					}
@@ -379,7 +388,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			return;
 		}
 		(this.deviceView = new MobileDeviceDialog(shlSpyMobile, this, this.calculateInitPositionForDeviceViewDialog()))
-		.open();
+				.open();
 		setDeviceView(this.deviceView);
 	}
 
@@ -510,7 +519,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					public void run() {
 						dialog.setCancelable(false);
 						allObjectsCheckboxTreeViewer
-						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+								.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
 						allObjectsCheckboxTreeViewer.refresh();
 						allObjectsCheckboxTreeViewer.expandAll();
 						dialog.setCancelable(true);
