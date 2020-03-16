@@ -75,6 +75,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private Composite compositeObjectProperties;
 	private Composite composite;
 
+	private Map<String, String> mobileElementProps;
+	private Map<String, String> mobileParentElementProps;
+
 	public static Button btnClickAndMoveToNextScreen;
 
 	/**
@@ -223,25 +226,17 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					TreeItem treeItem = (TreeItem) item;
 
 					Object obj = treeItem.getData();
-					Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
-					System.out.println("Object: " + mobileElementProps.get("class"));
+					setMobileElementProps(((BasicMobileElement) obj).getAttributes());
 
 					Object parentObj = ((TreeMobileElement) obj).getParentElement();
-					Map<String, String> mobileParentElementProps = ((BasicMobileElement) parentObj).getAttributes();
-					System.out.println("Parent: " + mobileParentElementProps.get("class"));
+					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
 
-					String currentActivity = null;
-					if (AndroidDriverObject.getDriver() != null)
-						currentActivity = AndroidDriverObject.getDriver().currentActivity();
-					System.out.println("Current Activity: " + currentActivity);
-
-					String currentPackage = null;
-					if (AndroidDriverObject.getDriver() != null)
-						currentPackage = AndroidDriverObject.getDriver().getCurrentPackage();
-					System.out.println("Current Package: " + currentPackage);
-					String objectLinkedTo = currentPackage + currentActivity;
-
-					System.out.println("Object Linked to: " + objectLinkedTo);
+					addToObjectRepositary(getMobileElementProps(), getMobileParentElementProps().get("text") != null
+							? getMobileParentElementProps().get("text")
+									: getMobileParentElementProps().get("id") != null ? getMobileParentElementProps().get("id")
+											: getMobileParentElementProps().get("class"),
+											getMobileParentElementProps(), getMobileParentElementProps().get("package")
+											+ getMobileParentElementProps().get("activity"));
 				}
 			}
 		});
@@ -388,7 +383,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			return;
 		}
 		(this.deviceView = new MobileDeviceDialog(shlSpyMobile, this, this.calculateInitPositionForDeviceViewDialog()))
-				.open();
+		.open();
 		setDeviceView(this.deviceView);
 	}
 
@@ -519,7 +514,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					public void run() {
 						dialog.setCancelable(false);
 						allObjectsCheckboxTreeViewer
-								.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
 						allObjectsCheckboxTreeViewer.refresh();
 						allObjectsCheckboxTreeViewer.expandAll();
 						dialog.setCancelable(true);
@@ -567,5 +562,26 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			appName = appPath.substring(appPath.lastIndexOf('\\') + 1);
 		}
 		return appName;
+	}
+
+	public Map<String, String> getMobileElementProps() {
+		return mobileElementProps;
+	}
+
+	public void setMobileElementProps(Map<String, String> mobileElementProps) {
+		this.mobileElementProps = mobileElementProps;
+	}
+
+	public Map<String, String> getMobileParentElementProps() {
+		return mobileParentElementProps;
+	}
+
+	public void setMobileParentElementProps(Map<String, String> mobileParentElementProps) {
+		this.mobileParentElementProps = mobileParentElementProps;
+	}
+
+	private void addToObjectRepositary(Map<String, String> objectProperties, String objectLogicalName,
+			Map<String, String> parentProperties, String parentLogicalName) {
+
 	}
 }
