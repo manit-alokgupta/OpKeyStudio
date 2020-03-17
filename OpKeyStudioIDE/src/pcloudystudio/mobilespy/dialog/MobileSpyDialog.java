@@ -539,6 +539,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		};
 		try {
 			this.btnCapture.setEnabled(false);
+			btnClickAndMoveToNextScreen.setEnabled(false);
 			this.openDeviceView();
 			dialog.run(true, true, runnable);
 		} catch (InterruptedException ex) {
