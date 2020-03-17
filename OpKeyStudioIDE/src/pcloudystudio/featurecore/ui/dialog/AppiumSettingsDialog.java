@@ -327,6 +327,7 @@ public class AppiumSettingsDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(shlAppiumSettings, SWT.NULL);
+				dialog.setFilterExtensions(new String[] { "*.apk" });
 				String path = dialog.open();
 				int rowNumber = 0;
 				if (path != null) {
