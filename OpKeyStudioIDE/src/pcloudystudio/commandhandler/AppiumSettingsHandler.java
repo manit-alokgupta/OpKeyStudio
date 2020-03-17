@@ -11,8 +11,8 @@ import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
 
 public class AppiumSettingsHandler {
 	@Execute
-	public void execute(Shell shell) {
-		AppiumSettingsDialog sdialog = new AppiumSettingsDialog(shell, SWT.CENTER);
+	public void execute(Shell parentShell) {
+		AppiumSettingsDialog sdialog = new AppiumSettingsDialog(parentShell, SWT.CENTER);
 		sdialog.open();
 	}
 }

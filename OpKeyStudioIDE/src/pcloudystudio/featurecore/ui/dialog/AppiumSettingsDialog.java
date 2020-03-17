@@ -112,7 +112,7 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	private void createContents() {
-		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM);
+		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(672, 803);
 		shlAppiumSettings.setText("Appium Settings");
