@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.openqa.selenium.WebElement;
 
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
@@ -252,14 +253,19 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
 					Widget item = CustomCheckBoxTree.getCheckedItem(element);
 					if (!(item instanceof TreeItem)) {
-						System.out.println("Given Item is not an instance of TreeItem!");
+						MessageDialog.openInformation(shlSpyMobile, "Message",
+								"Given Item is not an instance of TreeItem!");
 						return;
 					} else {
 						TreeItem treeItem = (TreeItem) item;
 						Object obj = treeItem.getData();
 						Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
-						AndroidDriverObject.getDriver().findElementByXPath(mobileElementProps.get("xpath")).click();
-						captureObjectAction();
+						WebElement foundElement = AndroidDriverObject.getDriver()
+								.findElementByXPath(mobileElementProps.get("xpath"));
+						if (foundElement != null) {
+							foundElement.click();
+							captureObjectAction();
+						}
 					}
 				}
 			}
