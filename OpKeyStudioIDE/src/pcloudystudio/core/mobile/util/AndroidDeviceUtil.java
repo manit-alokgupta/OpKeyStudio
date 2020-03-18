@@ -1,4 +1,4 @@
-package pcloudystudio.core.mobile;
+package pcloudystudio.core.mobile.util;
 
 //Created by Alok Gupta on 20/02/2020.
 //Copyright © 2020 SSTS Inc. All rights reserved.

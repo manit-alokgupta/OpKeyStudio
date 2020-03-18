@@ -1,4 +1,4 @@
-package pcloudystudio.mobilespy.dialog;
+package pcloudystudio.featurecore.ui.dialog;
 
 // Created by Alok Gupta on 20/02/2020.
 // Copyright © 2020 SSTS Inc. All rights reserved.
@@ -45,12 +45,15 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 
 import opkeystudio.core.utils.OpKeyStudioPreferences;
+import pcloudystudio.appium.AndroidDriverObject;
+import pcloudystudio.mobilespy.dialog.MobileDeviceDialog;
+import pcloudystudio.mobilespy.dialog.MobileElementInspectorDialog;
+import pcloudystudio.mobilespy.dialog.MobileInspectorController;
+import pcloudystudio.mobilespy.dialog.ProgressMonitorDialogWithThread;
 import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.BasicMobileElement;
-import pcloudystudio.appium.AndroidDriverObject;
-import pcloudystudio.mobilespy.dialog.ProgressMonitorDialogWithThread;
 import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
 

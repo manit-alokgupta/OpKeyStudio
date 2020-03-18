@@ -38,7 +38,8 @@ import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.appium.AppiumPortIpInfo;
 import pcloudystudio.appium.AppiumServer;
 import pcloudystudio.appium.MobileCapabilities;
-import pcloudystudio.core.mobile.AndroidDeviceUtil;
+import pcloudystudio.core.mobile.util.AndroidDeviceUtil;
+
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
