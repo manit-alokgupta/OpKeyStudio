@@ -1,4 +1,4 @@
-package pcloudystudio.appiumserver;
+package pcloudystudio.appium;
 
 public class AppiumPortIpInfo {
 	private static String port;

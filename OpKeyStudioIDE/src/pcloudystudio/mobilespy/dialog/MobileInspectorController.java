@@ -13,7 +13,8 @@ import org.openqa.selenium.OutputType;
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
 import org.xml.sax.SAXParseException;
-import pcloudystudio.capability.AndroidDriverObject;
+
+import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.AndroidSnapshotMobileElement;
 

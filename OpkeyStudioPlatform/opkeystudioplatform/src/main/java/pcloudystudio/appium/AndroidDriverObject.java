@@ -1,4 +1,4 @@
-package pcloudystudio.capability;
+package pcloudystudio.appium;
 
 import org.openqa.selenium.WebElement;
 

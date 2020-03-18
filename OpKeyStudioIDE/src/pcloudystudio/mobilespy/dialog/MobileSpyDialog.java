@@ -49,12 +49,15 @@ import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.BasicMobileElement;
-import pcloudystudio.capability.AndroidDriverObject;
+import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.mobilespy.dialog.ProgressMonitorDialogWithThread;
 import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
 
 public class MobileSpyDialog extends Dialog implements MobileElementInspectorDialog {
+
+	public static Point DIALOG_SIZE;
+	private static String DIALOG_TITLE;
 
 	protected Object result;
 	protected Shell shlSpyMobile;
@@ -80,6 +83,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private Map<String, String> mobileParentElementProps;
 
 	public static Button btnClickAndMoveToNextScreen;
+
+	static {
+		DIALOG_SIZE = new Point(800, 800);
+		DIALOG_TITLE = "Mobile Object Spy";
+	}
 
 	/**
 	 * Create the dialog.
@@ -118,8 +126,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		shlSpyMobile = new Shell(getParent(), SWT.DIALOG_TRIM);
 		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/mobile_spy.png"));
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlSpyMobile.setSize(1000, 800);
-		shlSpyMobile.setText("Mobile Object Spy");
+		shlSpyMobile.setSize(DIALOG_SIZE);
+		shlSpyMobile.setText(DIALOG_TITLE);
 
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlSpyMobile.getBounds();

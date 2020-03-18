@@ -34,10 +34,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.android.AndroidDriver;
-import pcloudystudio.appiumserver.AppiumPortIpInfo;
-import pcloudystudio.appiumserver.AppiumServer;
-import pcloudystudio.capability.AndroidDriverObject;
-import pcloudystudio.capability.MobileCapabilities;
+import pcloudystudio.appium.AndroidDriverObject;
+import pcloudystudio.appium.AppiumPortIpInfo;
+import pcloudystudio.appium.AppiumServer;
+import pcloudystudio.appium.MobileCapabilities;
 import pcloudystudio.core.mobile.AndroidDeviceUtil;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;

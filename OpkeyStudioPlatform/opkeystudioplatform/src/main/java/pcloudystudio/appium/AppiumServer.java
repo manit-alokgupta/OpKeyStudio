@@ -1,4 +1,4 @@
-package pcloudystudio.appiumserver;
+package pcloudystudio.appium;
 
 import java.io.IOException;
 import java.net.ServerSocket;
