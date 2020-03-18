@@ -380,6 +380,7 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityTextValue.setText("");
 			}
 		});
+		btnAdd.setToolTipText("Add Capability");
 		btnAdd.setBounds(10, 10, 20, 22);
 		btnAdd.setText("+");
 
@@ -394,6 +395,7 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 			}
 		});
+		btnDelete.setToolTipText("Delete Capability");
 		btnDelete.setBounds(36, 10, 20, 22);
 		btnDelete.setText("-");
 
