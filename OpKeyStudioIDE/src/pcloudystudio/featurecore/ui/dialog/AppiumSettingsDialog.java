@@ -11,6 +11,8 @@ import java.util.Map;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -378,6 +380,24 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.removeAll();
 				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
+				capabilityTextValue.addModifyListener(new ModifyListener() {
+					@Override
+					public void modifyText(ModifyEvent e) {
+						if (capabilityTextValue.getText().length() > 0
+								&& capabilityNameCombo.getSelectionIndex() != -1) {
+							btnAddToTable.setEnabled(true);
+						}
+					}
+				});
+				capabilityNameCombo.addModifyListener(new ModifyListener() {
+					@Override
+					public void modifyText(ModifyEvent e) {
+						if (capabilityTextValue.getText().length() > 0
+								&& capabilityNameCombo.getSelectionIndex() != -1) {
+							btnAddToTable.setEnabled(true);
+						}
+					}
+				});
 			}
 		});
 		btnAdd.setToolTipText("Add Capability");
@@ -393,6 +413,7 @@ public class AppiumSettingsDialog extends Dialog {
 					if (capabilityTable.getSelectionIndex() != -1)
 						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
+				btnAddToTable.setEnabled(false);
 			}
 		});
 		btnDelete.setToolTipText("Delete Capability");
@@ -421,10 +442,12 @@ public class AppiumSettingsDialog extends Dialog {
 					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
 				}
 				addCapabilityComposite.setVisible(false);
+				btnAddToTable.setEnabled(false);
 			}
 		});
 		btnAddToTable.setBounds(330, 8, 78, 25);
 		btnAddToTable.setText("Add to Table");
+		btnAddToTable.setEnabled(false);
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
