@@ -88,7 +88,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	public static Button btnClickAndMoveToNextScreen;
 
 	static {
-		DIALOG_SIZE = new Point(800, 800);
+		DIALOG_SIZE = new Point(800, 728);
 		DIALOG_TITLE = "Mobile Object Spy";
 	}
 
@@ -129,33 +129,35 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		shlSpyMobile = new Shell(getParent(), SWT.DIALOG_TRIM);
 		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/mobile_spy.png"));
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlSpyMobile.setSize(1000, 800);
+		shlSpyMobile.setSize(new Point(800, 721));
 		shlSpyMobile.setText(DIALOG_TITLE);
 
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlSpyMobile.getBounds();
-		int locationX = (parentSize.width - shellSize.width) / 2 + parentSize.x;
-		int locationY = (parentSize.height - shellSize.height) / 2 + parentSize.y;
+		int locationX = (parentSize.width - shellSize.width) / 4 + parentSize.x;
+		int locationY = (parentSize.height - shellSize.height) / 4 + parentSize.y;
 		shlSpyMobile.setLocation(new Point(locationX, locationY));
 		shlSpyMobile.setLayout(new GridLayout(1, false));
 
 		Composite toolsComposite = new Composite(shlSpyMobile, SWT.BORDER);
 		toolsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_toolsComposite.widthHint = 782;
 		gd_toolsComposite.heightHint = 43;
 		toolsComposite.setLayoutData(gd_toolsComposite);
 
 		Composite spyContainerComposite = new Composite(shlSpyMobile, SWT.NONE);
 		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_spyContainerComposite.heightHint = 670;
-		gd_spyContainerComposite.widthHint = 985;
+		gd_spyContainerComposite.heightHint = 599;
+		gd_spyContainerComposite.widthHint = 786;
 		spyContainerComposite.setLayoutData(gd_spyContainerComposite);
 		spyContainerComposite.setLayout(new FillLayout());
 
-		Composite bottomComposite = new Composite(shlSpyMobile, SWT.BORDER);
+		Composite bottomComposite = new Composite(shlSpyMobile, SWT.NONE);
 		bottomComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_bottomComposite.heightHint = 32;
+		gd_bottomComposite.widthHint = 400;
+		gd_bottomComposite.heightHint = 27;
 		bottomComposite.setLayoutData(gd_bottomComposite);
 
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
@@ -170,8 +172,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		allObjectsTreeScrolledComposite = new ScrolledComposite(compositeTreeHierarchy,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		GridData gd_allObjectsTreeScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_allObjectsTreeScrolledComposite.widthHint = 555;
-		gd_allObjectsTreeScrolledComposite.heightHint = 615;
+		gd_allObjectsTreeScrolledComposite.widthHint = 400;
+		gd_allObjectsTreeScrolledComposite.heightHint = 545;
 		allObjectsTreeScrolledComposite.setLayoutData(gd_allObjectsTreeScrolledComposite);
 		allObjectsTreeScrolledComposite.setExpandHorizontal(true);
 		allObjectsTreeScrolledComposite.setExpandVertical(true);
@@ -187,18 +189,17 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		GridData gd_objectPropertiesScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_objectPropertiesScrolledComposite.heightHint = 339;
-		gd_objectPropertiesScrolledComposite.widthHint = 360;
+		gd_objectPropertiesScrolledComposite.widthHint = 320;
 		objectPropertiesScrolledComposite.setLayoutData(gd_objectPropertiesScrolledComposite);
 		objectPropertiesScrolledComposite.setExpandHorizontal(true);
 		objectPropertiesScrolledComposite.setExpandVertical(true);
 
 		composite = new Composite(compositeObjectProperties, SWT.BORDER);
 		GridData gd_composite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_composite.heightHint = 266;
-		gd_composite.widthHint = 376;
+		gd_composite.heightHint = 196;
+		gd_composite.widthHint = 337;
 		composite.setLayoutData(gd_composite);
-
-		sashForm.setWeights(new int[] { 3, 2 });
+		sashForm.setWeights(new int[] { 431, 352 });
 
 		// -------------------------------------------------------------//
 		btnCapture = new Button(toolsComposite, SWT.NONE);
@@ -296,7 +297,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				MessageDialog.openInformation(shlSpyMobile, "Help", "Please contact support@opkey.com");
 			}
 		});
-		btnHelp.setBounds(10, 5, 45, 22);
+		btnHelp.setBounds(10, 5, 37, 17);
 		btnHelp.setText("Help");
 	}
 
