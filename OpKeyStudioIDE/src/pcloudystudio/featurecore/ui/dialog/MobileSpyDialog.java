@@ -129,7 +129,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		shlSpyMobile = new Shell(getParent(), SWT.DIALOG_TRIM);
 		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/mobile_spy.png"));
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlSpyMobile.setSize(DIALOG_SIZE);
+		shlSpyMobile.setSize(1000, 800);
 		shlSpyMobile.setText(DIALOG_TITLE);
 
 		Rectangle parentSize = getParent().getBounds();
