@@ -544,18 +544,24 @@ public class AppiumSettingsDialog extends Dialog {
 				} catch (InterruptedException e2) {
 					e2.printStackTrace();
 				}
-				AppiumServer.startServer();
+				java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
 
-				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-				try {
-					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
-							mobileCapability);
-					AndroidDriverObject.getInstance().setDriver(driver);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+					@Override
+					public void run() {
+						AppiumServer.startServer();
 
+						DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+
+						try {
+							AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
+									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+									mobileCapability);
+							AndroidDriverObject.getInstance().setDriver(driver);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 		btnStartServerAndLaunchApplication.setBounds(466, 600, 112, 25);
