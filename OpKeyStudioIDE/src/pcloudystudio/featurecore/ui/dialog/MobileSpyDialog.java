@@ -253,7 +253,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				}
 			}
 		});
-		btnAdd.setBounds(799, 10, 172, 25);
+		btnAdd.setBounds(600, 10, 172, 25);
 		btnAdd.setText("Add to Object Repository");
 
 		btnClickAndMoveToNextScreen = new Button(toolsComposite, SWT.NONE);
