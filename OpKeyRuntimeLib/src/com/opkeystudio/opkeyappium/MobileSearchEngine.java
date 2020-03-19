@@ -13,7 +13,6 @@ import com.opkeystudio.runtime.AndroidObject;
 import com.opkeystudio.runtime.ORObject;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 
 public class MobileSearchEngine {
 
@@ -27,13 +26,18 @@ public class MobileSearchEngine {
 	}
 
 	@SuppressWarnings("unchecked")
-	public WebElement findWebElement() {
-		List<MobileElement> elementsList;
+	public WebElement findMobileElement() {
 
 		/**** XPath ****/
-		elementsList = (List<MobileElement>) appiumDriver.findElementsByXPath(this.androidObject.getXpath());
-
-		return elementsList.size() > 0 ? (WebElement) elementsList.get(elementsList.size() - 1) : null;
+		if (this.androidObject.getXpath() != null) {
+			List<WebElement> elements = (List<WebElement>) appiumDriver
+					.findElementsByXPath(this.androidObject.getXpath());
+			if (elements.size() == 1) {
+				System.out.println(">>Element Found By Id " + this.androidObject.getXpath());
+				return elements.get(0);
+			}
+		}
+		return null;
 	}
 
 	private AndroidObject convertORObjectToMobileObject(ORObject orobject) {
