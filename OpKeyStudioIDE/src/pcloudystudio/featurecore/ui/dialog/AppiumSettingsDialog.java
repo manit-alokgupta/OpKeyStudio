@@ -117,7 +117,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlAppiumSettings.setSize(672, 660);
+		shlAppiumSettings.setSize(672, 702);
 		shlAppiumSettings.setText("Appium Settings");
 
 		Rectangle parentSize = getParent().getBounds();
@@ -133,7 +133,7 @@ public class AppiumSettingsDialog extends Dialog {
 		lblHeading = new Label(compositeTopHeading, SWT.NONE);
 		lblHeading.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
 		lblHeading.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblHeading.setBounds(29, 10, 164, 23);
+		lblHeading.setBounds(29, 10, 209, 33);
 		lblHeading.setText("Appium Settings");
 
 		clblLogo = new CLabel(compositeTopHeading, SWT.NONE);
@@ -142,36 +142,36 @@ public class AppiumSettingsDialog extends Dialog {
 		clblLogo.setBounds(519, 10, 113, 33);
 
 		compositeAppiumSettingHeading = new Composite(shlAppiumSettings, SWT.NONE);
-		compositeAppiumSettingHeading.setBounds(10, 63, 244, 32);
+		compositeAppiumSettingHeading.setBounds(10, 63, 291, 32);
 		compositeAppiumSettingHeading.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 
 		lblAppiumSettings = new Label(compositeAppiumSettingHeading, SWT.NONE);
 		lblAppiumSettings.setText("Provide Appium Host and Port");
 		lblAppiumSettings.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblAppiumSettings.setBounds(10, 10, 200, 15);
+		lblAppiumSettings.setBounds(10, 10, 246, 22);
 
 		compositeAppiumSettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeAppiumSettings.setBounds(10, 101, 646, 133);
+		compositeAppiumSettings.setBounds(10, 101, 646, 135);
 
 		Label labelServerAddress = new Label(compositeAppiumSettings, SWT.NONE);
 		labelServerAddress.setText("Server Address");
-		labelServerAddress.setBounds(30, 13, 80, 21);
+		labelServerAddress.setBounds(30, 13, 128, 25);
 
 		Label labelPort = new Label(compositeAppiumSettings, SWT.NONE);
 		labelPort.setText("Port");
-		labelPort.setBounds(30, 40, 60, 21);
+		labelPort.setBounds(28, 44, 60, 25);
 
 		serverAddress = new Text(compositeAppiumSettings, SWT.BORDER);
 		serverAddress.setToolTipText("Host");
-		serverAddress.setBounds(150, 10, 309, 24);
+		serverAddress.setBounds(205, 13, 309, 25);
 
 		portNumber = new Text(compositeAppiumSettings, SWT.BORDER);
 		portNumber.setToolTipText("Port");
-		portNumber.setBounds(150, 37, 309, 24);
+		portNumber.setBounds(205, 41, 309, 25);
 
 		appiumDirectory = new Text(compositeAppiumSettings, SWT.BORDER);
-		appiumDirectory.setBounds(150, 67, 309, 24);
+		appiumDirectory.setBounds(205, 72, 309, 25);
 
 		if (AppiumPortIpInfo.getHostAddress() != null) {
 			serverAddress.setText(AppiumPortIpInfo.getHostAddress());
@@ -187,14 +187,14 @@ public class AppiumSettingsDialog extends Dialog {
 
 		Label label_2 = new Label(compositeAppiumSettings, SWT.NONE);
 		label_2.setText("Appium Directory");
-		label_2.setBounds(29, 67, 100, 21);
+		label_2.setBounds(28, 70, 153, 25);
 
 		Button btnBrowse = new Button(compositeAppiumSettings, SWT.NONE);
-		btnBrowse.setBounds(465, 67, 75, 25);
+		btnBrowse.setBounds(520, 72, 75, 25);
 		btnBrowse.setText("Browse");
 
 		Button saveButton = new Button(compositeAppiumSettings, SWT.NONE);
-		saveButton.setBounds(384, 97, 75, 25);
+		saveButton.setBounds(439, 103, 75, 25);
 		saveButton.setToolTipText("Save");
 		saveButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
@@ -244,26 +244,26 @@ public class AppiumSettingsDialog extends Dialog {
 
 		compositeConfiguration = new Composite(shlAppiumSettings, SWT.NONE);
 		compositeConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		compositeConfiguration.setBounds(10, 240, 119, 32);
+		compositeConfiguration.setBounds(10, 240, 167, 32);
 
 		lblDeviceConfiguration = new Label(compositeConfiguration, SWT.NONE);
 		lblDeviceConfiguration.setText("Configuration");
 		lblDeviceConfiguration.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblDeviceConfiguration.setBounds(10, 10, 83, 15);
+		lblDeviceConfiguration.setBounds(10, 10, 129, 22);
 
 		compositeConfigurationSettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeConfigurationSettings.setBounds(10, 278, 646, 71);
+		compositeConfigurationSettings.setBounds(10, 278, 646, 92);
 
 		Label lblDeviceName = new Label(compositeConfigurationSettings, SWT.NONE);
-		lblDeviceName.setBounds(29, 10, 76, 15);
+		lblDeviceName.setBounds(26, 10, 121, 25);
 		lblDeviceName.setText("Device Name");
 
 		devicesCombo = new Combo(compositeConfigurationSettings, SWT.READ_ONLY);
-		devicesCombo.setBounds(150, 7, 309, 23);
+		devicesCombo.setBounds(203, 7, 309, 25);
 
 		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnRefresh.setBounds(465, 5, 75, 25);
+		btnRefresh.setBounds(529, 6, 75, 33);
 		btnRefresh.setText("Refresh");
 
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
@@ -317,14 +317,14 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 
 		Label lblApplicationFile = new Label(compositeConfigurationSettings, SWT.NONE);
-		lblApplicationFile.setBounds(29, 31, 87, 15);
+		lblApplicationFile.setBounds(26, 41, 143, 25);
 		lblApplicationFile.setText("Application File");
 
 		applicationPathText = new Text(compositeConfigurationSettings, SWT.BORDER);
-		applicationPathText.setBounds(150, 36, 309, 21);
+		applicationPathText.setBounds(203, 45, 309, 33);
 
 		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnBrowseAPK.setBounds(465, 36, 75, 25);
+		btnBrowseAPK.setBounds(529, 44, 75, 33);
 		btnBrowseAPK.setText("Browse");
 		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -358,16 +358,16 @@ public class AppiumSettingsDialog extends Dialog {
 
 		compositeDeviceCapabilities = new Composite(shlAppiumSettings, SWT.NONE);
 		compositeDeviceCapabilities.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		compositeDeviceCapabilities.setBounds(10, 355, 135, 32);
+		compositeDeviceCapabilities.setBounds(10, 376, 200, 32);
 
 		lblDeviceCapability = new Label(compositeDeviceCapabilities, SWT.NONE);
 		lblDeviceCapability.setText("Device Capabilities");
 		lblDeviceCapability.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblDeviceCapability.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblDeviceCapability.setBounds(10, 10, 103, 15);
+		lblDeviceCapability.setBounds(10, 10, 180, 22);
 
 		compositeCapabilitySettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeCapabilitySettings.setBounds(10, 393, 646, 201);
+		compositeCapabilitySettings.setBounds(10, 414, 646, 207);
 
 		compositeAddCapability = new Composite(compositeCapabilitySettings, SWT.NONE);
 		compositeAddCapability.setBounds(20, 5, 612, 42);
@@ -427,11 +427,11 @@ public class AppiumSettingsDialog extends Dialog {
 		addCapabilityComposite.setVisible(false);
 
 		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
-		capabilityNameCombo.setBounds(10, 10, 154, 28);
+		capabilityNameCombo.setBounds(10, 5, 154, 33);
 		capabilityNameCombo.setItems(capabilityNameList);
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
-		capabilityTextValue.setBounds(170, 10, 154, 23);
+		capabilityTextValue.setBounds(170, 5, 154, 33);
 
 		btnAddToTable = new Button(addCapabilityComposite, SWT.NONE);
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
@@ -447,7 +447,7 @@ public class AppiumSettingsDialog extends Dialog {
 				btnAddToTable.setEnabled(false);
 			}
 		});
-		btnAddToTable.setBounds(330, 8, 78, 25);
+		btnAddToTable.setBounds(330, 5, 124, 30);
 		btnAddToTable.setText("Add to Table");
 		btnAddToTable.setEnabled(false);
 
@@ -564,7 +564,7 @@ public class AppiumSettingsDialog extends Dialog {
 				});
 			}
 		});
-		btnStartServerAndLaunchApplication.setBounds(466, 600, 112, 25);
+		btnStartServerAndLaunchApplication.setBounds(463, 627, 112, 25);
 		btnStartServerAndLaunchApplication.setText("Start Server");
 
 		closebutton = new Button(shlAppiumSettings, SWT.NONE);
@@ -575,7 +575,7 @@ public class AppiumSettingsDialog extends Dialog {
 				shlAppiumSettings.close();
 			}
 		});
-		closebutton.setBounds(581, 600, 75, 25);
+		closebutton.setBounds(581, 627, 75, 25);
 		closebutton.setText("Close");
 	}
 
