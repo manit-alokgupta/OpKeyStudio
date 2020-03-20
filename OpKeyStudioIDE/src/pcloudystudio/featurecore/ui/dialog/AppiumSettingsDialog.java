@@ -528,40 +528,58 @@ public class AppiumSettingsDialog extends Dialog {
 		btnStartServerAndLaunchApplication.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					if (capabilityTable.getItemCount() > 0) {
-						LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
-						for (TableItem row : capabilityTable.getItems()) {
+				if (serverAddress.getText().isEmpty()) {
+					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "ServerAddress cannot be empty");
+				} else if (portNumber.getText().isEmpty()) {
+					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Port Cannot Be Empty");
+				} else if (appiumDirectory.getText().isEmpty()) {
+					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "AppiumDirectory Cannot Be Empty");
+				} else if (devicesCombo.getText().isEmpty()) {
+					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Device Cannot Be Empty");
+				} else if (applicationPathText.getText().isEmpty()) {
+					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Application Cannot Be Empty");
+				} 
+				else if (capabilityTable.getItemCount() != 0) {
+					try {
+						if (capabilityTable.getItemCount() > 0) {
+							LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
+							for (TableItem row : capabilityTable.getItems()) {
 
-							mapOfCapabilities.put(row.getText(0), row.getText(1));
+								mapOfCapabilities.put(row.getText(0), row.getText(1));
 
+							}
+
+							MobileCapabilities.getinstance();
+							MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
 						}
-						MobileCapabilities.getinstance();
-						MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+						AppiumServer.stopServer();
+						Thread.sleep(4000);
+					} catch (InterruptedException e2) {
+						e2.printStackTrace();
 					}
-					AppiumServer.stopServer();
-					Thread.sleep(4000);
-				} catch (InterruptedException e2) {
-					e2.printStackTrace();
+					java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
+
+						@Override
+						public void run() {
+							AppiumServer.startServer();
+
+							DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+
+							try {
+								AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
+										new URL("http://" + AppiumPortIpInfo.getHostAddress() + ":"
+												+ AppiumPortIpInfo.getPort() + "/wd/hub"),
+										mobileCapability);
+								AndroidDriverObject.getInstance().setDriver(driver);
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
+						}
+					});
+				} else {
+					MessageDialog.openInformation(shlAppiumSettings, "Please Note",
+							"You Have Not Provided Any Capability");
 				}
-				java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
-
-					@Override
-					public void run() {
-						AppiumServer.startServer();
-
-						DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-
-						try {
-							AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
-									mobileCapability);
-							AndroidDriverObject.getInstance().setDriver(driver);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-					}
-				});
 			}
 		});
 		btnStartServerAndLaunchApplication.setBounds(463, 627, 112, 25);
