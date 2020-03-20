@@ -129,7 +129,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		shlSpyMobile = new Shell(getParent(), SWT.DIALOG_TRIM);
 		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/mobile_spy.png"));
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlSpyMobile.setSize(new Point(800, 721));
+		shlSpyMobile.setSize(new Point(800, 750));
 		shlSpyMobile.setText(DIALOG_TITLE);
 
 		Rectangle parentSize = getParent().getBounds();
@@ -153,11 +153,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		spyContainerComposite.setLayoutData(gd_spyContainerComposite);
 		spyContainerComposite.setLayout(new FillLayout());
 
-		Composite bottomComposite = new Composite(shlSpyMobile, SWT.NONE);
+		Composite bottomComposite = new Composite(shlSpyMobile, SWT.BORDER);
 		bottomComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_bottomComposite.widthHint = 400;
-		gd_bottomComposite.heightHint = 27;
+		gd_bottomComposite.heightHint = 39;
 		bottomComposite.setLayoutData(gd_bottomComposite);
 
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
@@ -172,8 +172,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		allObjectsTreeScrolledComposite = new ScrolledComposite(compositeTreeHierarchy,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		GridData gd_allObjectsTreeScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_allObjectsTreeScrolledComposite.widthHint = 400;
-		gd_allObjectsTreeScrolledComposite.heightHint = 545;
+		gd_allObjectsTreeScrolledComposite.widthHint = 390;
+		gd_allObjectsTreeScrolledComposite.heightHint = 524;
 		allObjectsTreeScrolledComposite.setLayoutData(gd_allObjectsTreeScrolledComposite);
 		allObjectsTreeScrolledComposite.setExpandHorizontal(true);
 		allObjectsTreeScrolledComposite.setExpandVertical(true);
@@ -189,15 +189,15 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		GridData gd_objectPropertiesScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_objectPropertiesScrolledComposite.heightHint = 339;
-		gd_objectPropertiesScrolledComposite.widthHint = 320;
+		gd_objectPropertiesScrolledComposite.widthHint = 310;
 		objectPropertiesScrolledComposite.setLayoutData(gd_objectPropertiesScrolledComposite);
 		objectPropertiesScrolledComposite.setExpandHorizontal(true);
 		objectPropertiesScrolledComposite.setExpandVertical(true);
 
 		composite = new Composite(compositeObjectProperties, SWT.BORDER);
 		GridData gd_composite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_composite.heightHint = 196;
-		gd_composite.widthHint = 337;
+		gd_composite.heightHint = 176;
+		gd_composite.widthHint = 335;
 		composite.setLayoutData(gd_composite);
 		sashForm.setWeights(new int[] { 431, 352 });
 
@@ -214,7 +214,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			}
 		});
 
-		btnCapture.setBounds(10, 10, 109, 25);
+		btnCapture.setBounds(10, 10, 151, 25);
 		btnCapture.setText("Capture Object");
 
 		if (AndroidDriverObject.getDriver() == null) {
@@ -253,7 +253,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				}
 			}
 		});
-		btnAdd.setBounds(600, 10, 172, 25);
+		btnAdd.setBounds(549, 10, 223, 25);
 		btnAdd.setText("Add to Object Repository");
 
 		btnClickAndMoveToNextScreen = new Button(toolsComposite, SWT.NONE);
@@ -282,7 +282,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				}
 			}
 		});
-		btnClickAndMoveToNextScreen.setBounds(125, 10, 146, 25);
+		btnClickAndMoveToNextScreen.setBounds(178, 10, 188, 25);
 		btnClickAndMoveToNextScreen.setText("Click and Update Spy");
 
 		// -------------------------------------------------------------//
@@ -297,7 +297,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				MessageDialog.openInformation(shlSpyMobile, "Help", "Please contact support@opkey.com");
 			}
 		});
-		btnHelp.setBounds(10, 5, 37, 17);
+		btnHelp.setBounds(10, 10, 54, 24);
 		btnHelp.setText("Help");
 	}
 
