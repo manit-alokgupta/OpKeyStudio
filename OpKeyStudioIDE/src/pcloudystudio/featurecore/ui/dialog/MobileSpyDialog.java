@@ -75,7 +75,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	public static Button btnAdd;
 	private Label lblAllObjects;
 	private Label lblAllObjectProperties;
-
+	private Label lblObjectName;
+	public static Text textObjectName;
 	private ScrolledComposite allObjectsTreeScrolledComposite;
 	private ScrolledComposite objectPropertiesScrolledComposite;
 	private Composite compositeTreeHierarchy;
@@ -185,18 +186,29 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		lblAllObjectProperties.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
 		lblAllObjectProperties.setText("OBJECT PROPERTIES");
 
+		lblObjectName = new Label(compositeObjectProperties, SWT.NONE);
+		lblObjectName.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NONE));
+		lblObjectName.setText("Object Name");
+
+		textObjectName = new Text(compositeObjectProperties, SWT.BORDER);
+		GridData gd_textObjectName = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_textObjectName.widthHint = 322;
+		textObjectName.setLayoutData(gd_textObjectName);
+		textObjectName.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
+
 		objectPropertiesScrolledComposite = new ScrolledComposite(compositeObjectProperties,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		GridData gd_objectPropertiesScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_objectPropertiesScrolledComposite.heightHint = 339;
+		gd_objectPropertiesScrolledComposite.heightHint = 395;
 		gd_objectPropertiesScrolledComposite.widthHint = 310;
 		objectPropertiesScrolledComposite.setLayoutData(gd_objectPropertiesScrolledComposite);
 		objectPropertiesScrolledComposite.setExpandHorizontal(true);
 		objectPropertiesScrolledComposite.setExpandVertical(true);
+		new Label(compositeObjectProperties, SWT.NONE);
 
 		composite = new Composite(compositeObjectProperties, SWT.BORDER);
 		GridData gd_composite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_composite.heightHint = 176;
+		gd_composite.heightHint = 18;
 		gd_composite.widthHint = 335;
 		composite.setLayoutData(gd_composite);
 		sashForm.setWeights(new int[] { 431, 352 });
@@ -246,10 +258,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 					addToObjectRepositary(getMobileElementProps(), getMobileParentElementProps().get("text") != null
 							? getMobileParentElementProps().get("text")
-									: getMobileParentElementProps().get("id") != null ? getMobileParentElementProps().get("id")
-											: getMobileParentElementProps().get("class"),
-											getMobileParentElementProps(), getMobileParentElementProps().get("package")
-											+ getMobileParentElementProps().get("activity"));
+							: getMobileParentElementProps().get("id") != null ? getMobileParentElementProps().get("id")
+									: getMobileParentElementProps().get("class"),
+							getMobileParentElementProps(), getMobileParentElementProps().get("package")
+									+ getMobileParentElementProps().get("activity"));
 				}
 			}
 		});
@@ -401,7 +413,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			return;
 		}
 		(this.deviceView = new MobileDeviceDialog(shlSpyMobile, this, this.calculateInitPositionForDeviceViewDialog()))
-		.open();
+				.open();
 		setDeviceView(this.deviceView);
 	}
 
@@ -532,7 +544,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					public void run() {
 						dialog.setCancelable(false);
 						allObjectsCheckboxTreeViewer
-						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+								.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
 						allObjectsCheckboxTreeViewer.refresh();
 						allObjectsCheckboxTreeViewer.expandAll();
 						dialog.setCancelable(true);
