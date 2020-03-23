@@ -46,11 +46,7 @@ import org.openqa.selenium.WebElement;
 
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.appium.AndroidDriverObject;
-import pcloudystudio.mobilespy.dialog.MobileDeviceDialog;
-import pcloudystudio.mobilespy.dialog.MobileElementInspectorDialog;
-import pcloudystudio.mobilespy.dialog.MobileInspectorController;
-import pcloudystudio.mobilespy.dialog.ProgressMonitorDialogWithThread;
-import pcloudystudio.mobilespy.spytree.CustomCheckBoxTree;
+import pcloudystudio.objectspy.MobileInspectorController;
 import pcloudystudio.objectspy.element.MobileElement;
 import pcloudystudio.objectspy.element.TreeMobileElement;
 import pcloudystudio.objectspy.element.impl.BasicMobileElement;
@@ -226,7 +222,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			}
 		});
 
-		btnCapture.setBounds(10, 10, 151, 25);
+		btnCapture.setBounds(10, 10, 151, 28);
 		btnCapture.setText("Capture Object");
 
 		if (AndroidDriverObject.getDriver() == null) {
@@ -264,7 +260,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				}
 			}
 		});
-		btnAdd.setBounds(549, 10, 223, 25);
+		btnAdd.setBounds(549, 10, 223, 28);
 		btnAdd.setText("Add to Object Repository");
 
 		btnClickAndMoveToNextScreen = new Button(toolsComposite, SWT.NONE);
@@ -293,8 +289,18 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				}
 			}
 		});
-		btnClickAndMoveToNextScreen.setBounds(178, 10, 188, 25);
+		btnClickAndMoveToNextScreen.setBounds(178, 10, 188, 28);
 		btnClickAndMoveToNextScreen.setText("Click and Update Spy");
+
+		Button btnStop = new Button(toolsComposite, SWT.NONE);
+		btnStop.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+			}
+		});
+		btnStop.setBounds(374, 10, 58, 28);
+		btnStop.setText("Stop");
 
 		// -------------------------------------------------------------//
 
@@ -308,7 +314,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				MessageDialog.openInformation(shlSpyMobile, "Help", "Please contact support@opkey.com");
 			}
 		});
-		btnHelp.setBounds(10, 10, 54, 24);
+		btnHelp.setBounds(10, 10, 54, 28);
 		btnHelp.setText("Help");
 	}
 

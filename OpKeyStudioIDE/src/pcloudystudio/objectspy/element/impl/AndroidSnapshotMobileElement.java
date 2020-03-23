@@ -7,7 +7,7 @@ import java.util.Map;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import pcloudystudio.core.mobile.driver.MobileDriverType;
-import pcloudystudio.mobilespy.dialog.MobileInspectorController;
+import pcloudystudio.objectspy.MobileInspectorController;
 
 import org.w3c.dom.Element;
 
