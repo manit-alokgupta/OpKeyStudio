@@ -256,12 +256,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					Object parentObj = ((TreeMobileElement) obj).getParentElement();
 					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
 
-					addToObjectRepositary(getMobileElementProps(), getMobileParentElementProps().get("text") != null
-							? getMobileParentElementProps().get("text")
-							: getMobileParentElementProps().get("id") != null ? getMobileParentElementProps().get("id")
-									: getMobileParentElementProps().get("class"),
+					System.out.println("final selected object name is: " + textObjectName.getText().toString());
+
+					addToObjectRepositary(getMobileElementProps(), textObjectName.getText().toString(),
 							getMobileParentElementProps(), getMobileParentElementProps().get("package")
-									+ getMobileParentElementProps().get("activity"));
+							+ getMobileParentElementProps().get("activity"));
 				}
 			}
 		});
@@ -413,7 +412,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			return;
 		}
 		(this.deviceView = new MobileDeviceDialog(shlSpyMobile, this, this.calculateInitPositionForDeviceViewDialog()))
-				.open();
+		.open();
 		setDeviceView(this.deviceView);
 	}
 
@@ -544,7 +543,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					public void run() {
 						dialog.setCancelable(false);
 						allObjectsCheckboxTreeViewer
-								.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
 						allObjectsCheckboxTreeViewer.refresh();
 						allObjectsCheckboxTreeViewer.expandAll();
 						dialog.setCancelable(true);
