@@ -55,7 +55,7 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 		MobileSpyDialog.allObjectsCheckboxTreeViewer.setAllChecked(false);
 		MobileSpyDialog.allObjectsCheckboxTreeViewer.setChecked(element, true);
 		MobileSpyDialog.allObjectsCheckboxTreeViewer
-		.setSelection((ISelection) new StructuredSelection((Object) element));
+				.setSelection((ISelection) new StructuredSelection((Object) element));
 
 		Widget item = findItem(element);
 
@@ -82,6 +82,13 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 	public static void fillDataInObjectPropertiesTable(Object obj) {
 
 		Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
+
+		String objectName = mobileElementProps.get("text") != null ? mobileElementProps.get("text")
+				: mobileElementProps.get("resource-id") != null ? mobileElementProps.get("resource-id")
+						: mobileElementProps.get("class");
+
+		MobileSpyDialog.textObjectName.setText(objectName);
+
 		if (mobileElementProps.get("class") != null) {
 			MobileSpyDialog.addTableItemToPropertiesTableData("class", mobileElementProps.get("class"));
 		}
