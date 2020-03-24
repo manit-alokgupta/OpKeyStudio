@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.dtoMaker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -69,4 +70,11 @@ public class ORObjectMaker {
 		orobject.setObjectAttributesProperty(orprops);
 		return orobject;
 	}
+
+	public void addMobileObject(Artifact artifact, String orid, Map<String, String> objectProperties,
+			Map<String, String> parentProperties, String objectName, String parentObjectName, String objectType,
+			String parentObjectType, List<ORObject> allORObjects) {
+		System.out.println("Add Mobile Object Api Called");
+	}
+
 }
