@@ -1,9 +1,11 @@
 package opkeystudio.opkeystudiocore.core.dtoMaker;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
@@ -73,19 +75,37 @@ public class ORObjectMaker {
 
 	public void addMobileObject(Artifact artifact, String orid, Map<String, String> objectProperties,
 			Map<String, String> parentProperties, String objectName, String parentObjectName, String objectType,
-			String parentObjectType, List<ORObject> allORObjects) {
+			String parentObjectType, List<ORObject> allORObjects) throws SQLException {
+		List<ObjectAttributeProperty> parentAttributeProperties = new ArrayList<>();
+		List<ObjectAttributeProperty> objectAttributeProperties = new ArrayList<>();
 
-		System.out.println("Object Logical Name: " + objectName);
-		System.out.println("Object Properties: ");
-		for (String key : objectProperties.keySet()) {
-			System.out.println("Key: " + key + ", Value: " + objectProperties.get(key));
+		ORObject parentObject = getORObjectDTO(artifact, orid, null, parentObjectName, parentObjectType, allORObjects);
+		ORObject orobject = getORObjectDTO(artifact, orid, parentObject.getObject_id(), objectName, objectType,
+				allORObjects);
+
+		for (String propName : parentProperties.keySet()) {
+			String propValue = parentProperties.get(propName);
+			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(parentObject, parentAttributeProperties);
+			attrProp.setProperty(propName);
+			attrProp.setProperty(propValue);
+			parentAttributeProperties.add(attrProp);
 		}
 
-		System.out.println("Parent Object Logical Name: " + parentObjectName);
-		System.out.println("Parent Object Properties: ");
-		for (String key : parentProperties.keySet()) {
-			System.out.println("Key: " + key + ", Value: " + parentProperties.get(key));
+		for (String propName : objectProperties.keySet()) {
+			String propValue = objectProperties.get(propName);
+			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(orobject, objectAttributeProperties);
+			attrProp.setProperty(propName);
+			attrProp.setProperty(propValue);
+			objectAttributeProperties.add(attrProp);
 		}
+
+		parentObject.setObjectAttributesProperty(parentAttributeProperties);
+		orobject.setObjectAttributesProperty(objectAttributeProperties);
+
+		List<ORObject> orobjects = new ArrayList<ORObject>();
+		orobjects.add(parentObject);
+		orobjects.add(orobject);
+		new ObjectRepositoryApi().saveORObjects(artifact, orobjects);
 	}
 
 }

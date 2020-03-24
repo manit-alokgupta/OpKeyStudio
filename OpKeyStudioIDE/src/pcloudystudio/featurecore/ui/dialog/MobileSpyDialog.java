@@ -5,6 +5,7 @@ package pcloudystudio.featurecore.ui.dialog;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -262,13 +263,19 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					Object parentObj = ((TreeMobileElement) obj).getParentElement();
 					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
 
-					new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
-							getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
-							getMobileParentElementProps(), textObjectName.getText().toString(),
-							getMobileParentElementProps().get("package")
-									+ getMobileParentElementProps().get("activity"),
-							"Custom", "HTML Page",
-							getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
+					try {
+						new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
+								getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
+								getMobileParentElementProps(), textObjectName.getText().toString(),
+								getMobileParentElementProps().get("package")
+										+ getMobileParentElementProps().get("activity"),
+								"Custom", "HTML Page",
+								getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
+						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
