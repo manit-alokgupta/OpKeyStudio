@@ -262,6 +262,7 @@ public class ObjectRepositoryView extends Composite {
 		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		refreshObject.setToolTipText("Refresh");
 
+		new ToolItem(toolBar, SWT.SEPARATOR);
 		// Android Add TO or Will be here
 		androidAddtoOr = new ToolItem(toolBar, SWT.NONE);
 		androidAddtoOr.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOBILE_ADD_TO_OR_CAPTURED_IMAGE));
