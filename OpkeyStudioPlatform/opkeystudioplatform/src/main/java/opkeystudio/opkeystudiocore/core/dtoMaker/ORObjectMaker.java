@@ -74,7 +74,18 @@ public class ORObjectMaker {
 	public void addMobileObject(Artifact artifact, String orid, Map<String, String> objectProperties,
 			Map<String, String> parentProperties, String objectName, String parentObjectName, String objectType,
 			String parentObjectType, List<ORObject> allORObjects) {
-		System.out.println("Add Mobile Object Api Called");
+
+		System.out.println("Object Logical Name: " + objectName);
+		System.out.println("Object Properties: ");
+		for (String key : objectProperties.keySet()) {
+			System.out.println("Key: " + key + ", Value: " + objectProperties.get(key));
+		}
+
+		System.out.println("Parent Object Logical Name: " + parentObjectName);
+		System.out.println("Parent Object Properties: ");
+		for (String key : parentProperties.keySet()) {
+			System.out.println("Key: " + key + ", Value: " + parentProperties.get(key));
+		}
 	}
 
 }

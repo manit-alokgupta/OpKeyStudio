@@ -45,6 +45,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 
 import opkeystudio.core.utils.OpKeyStudioPreferences;
+import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.objectspy.MobileInspectorController;
 import pcloudystudio.objectspy.element.MobileElement;
@@ -252,11 +253,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					Object parentObj = ((TreeMobileElement) obj).getParentElement();
 					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
 
-					System.out.println("final selected object name is: " + textObjectName.getText().toString());
-
-					addToObjectRepositary(getMobileElementProps(), textObjectName.getText().toString(),
-							getMobileParentElementProps(), getMobileParentElementProps().get("package")
-							+ getMobileParentElementProps().get("activity"));
+					(new ORObjectMaker()).addMobileObject(null, null, getMobileElementProps(),
+							getMobileParentElementProps(), textObjectName.getText().toString(),
+							getMobileParentElementProps().get("package")
+							+ getMobileParentElementProps().get("activity"),
+							null, null, null);
 				}
 			}
 		});
@@ -614,10 +615,5 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	public void setMobileParentElementProps(Map<String, String> mobileParentElementProps) {
 		this.mobileParentElementProps = mobileParentElementProps;
-	}
-
-	private void addToObjectRepositary(Map<String, String> objectProperties, String objectLogicalName,
-			Map<String, String> parentProperties, String parentLogicalName) {
-
 	}
 }
