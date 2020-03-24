@@ -45,6 +45,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 
 import opkeystudio.core.utils.OpKeyStudioPreferences;
+import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.objectspy.MobileInspectorController;
@@ -55,6 +56,7 @@ import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
 import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
 
 public class MobileSpyDialog extends Dialog implements MobileElementInspectorDialog {
+	private ObjectRepositoryView parentObjectRepositoryView;
 
 	public static Point DIALOG_SIZE;
 	private static String DIALOG_TITLE;
@@ -98,6 +100,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 */
 	public MobileSpyDialog(Shell parent, int style) {
 		super(parent, style);
+		setText("SWT Dialog");
+		this.inspectorController = new MobileInspectorController();
+	}
+
+	public MobileSpyDialog(Shell parent, int style, ObjectRepositoryView parentObjectRepositoryView) {
+		super(parent, style);
+		this.setParentObjectRepositoryView(parentObjectRepositoryView);
 		setText("SWT Dialog");
 		this.inspectorController = new MobileInspectorController();
 	}
@@ -253,11 +262,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					Object parentObj = ((TreeMobileElement) obj).getParentElement();
 					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
 
-					(new ORObjectMaker()).addMobileObject(null, null, getMobileElementProps(),
+					new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
+							getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
 							getMobileParentElementProps(), textObjectName.getText().toString(),
 							getMobileParentElementProps().get("package")
-							+ getMobileParentElementProps().get("activity"),
-							null, null, null);
+									+ getMobileParentElementProps().get("activity"),
+							null, null,
+							getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
 				}
 			}
 		});
@@ -419,7 +430,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			return;
 		}
 		(this.deviceView = new MobileDeviceDialog(shlSpyMobile, this, this.calculateInitPositionForDeviceViewDialog()))
-		.open();
+				.open();
 		setDeviceView(this.deviceView);
 	}
 
@@ -550,7 +561,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					public void run() {
 						dialog.setCancelable(false);
 						allObjectsCheckboxTreeViewer
-						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+								.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
 						allObjectsCheckboxTreeViewer.refresh();
 						allObjectsCheckboxTreeViewer.expandAll();
 						dialog.setCancelable(true);
@@ -615,5 +626,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	public void setMobileParentElementProps(Map<String, String> mobileParentElementProps) {
 		this.mobileParentElementProps = mobileParentElementProps;
+	}
+
+	public ObjectRepositoryView getParentObjectRepositoryView() {
+		return parentObjectRepositoryView;
+	}
+
+	public void setParentObjectRepositoryView(ObjectRepositoryView parentObjectRepositoryView) {
+		this.parentObjectRepositoryView = parentObjectRepositoryView;
 	}
 }

@@ -19,6 +19,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -49,8 +50,11 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import pcloudystudio.featurecore.ui.dialog.MobileSpyDialog;
 
 public class ObjectRepositoryView extends Composite {
+	private Composite parent;
+
 	private ObjectAttributeTable objectAttributeTable;
 	private ObjectRepositoryTree objectRepositoryTree;
 	private ToolItem saveObject;
@@ -59,6 +63,7 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem refreshObject;
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
+	private ToolItem androidAddtoOr;
 	private MenuItem cutMenuItem;
 	private MenuItem copyMenuItem;
 	private MenuItem pasteMenuItem;
@@ -256,6 +261,11 @@ public class ObjectRepositoryView extends Composite {
 		refreshObject = new ToolItem(toolBar, SWT.NONE);
 		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		refreshObject.setToolTipText("Refresh");
+
+		// Android Add TO or Will be here
+		androidAddtoOr = new ToolItem(toolBar, SWT.NONE);
+		androidAddtoOr.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CONSOLE_ICON));
+		androidAddtoOr.setText("Add to OR");
 
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
 //		Tree tree = new Tree(composite_3, SWT.BORDER);
@@ -509,6 +519,17 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
+		androidAddtoOr.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				openAndroidAddtoORDialog();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
 		addObjectAttribute.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -638,6 +659,10 @@ public class ObjectRepositoryView extends Composite {
 
 	public void toggleDeleteMenuItem(boolean status) {
 		deleteMenuItem.setEnabled(status);
+	}
+
+	private void openAndroidAddtoORDialog() {
+		new MobileSpyDialog(this.getShell(), SWT.NONE, this).open();
 	}
 
 	public void renameFunction() {
