@@ -254,29 +254,29 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				if (!(item instanceof TreeItem)) {
 					System.out.println("Given Item is not an instance of TreeItem!");
 					return;
-				} else {
-					TreeItem treeItem = (TreeItem) item;
-
-					Object obj = treeItem.getData();
-					setMobileElementProps(((BasicMobileElement) obj).getAttributes());
-
-					Object parentObj = ((TreeMobileElement) obj).getParentElement();
-					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
-
-					try {
-						new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
-								getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
-								getMobileParentElementProps(), textObjectName.getText().toString(),
-								getMobileParentElementProps().get("package")
-										+ getMobileParentElementProps().get("activity"),
-								"Custom", "HTML Page",
-								getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
-						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 				}
+				TreeItem treeItem = (TreeItem) item;
+
+				Object obj = treeItem.getData();
+				setMobileElementProps(((BasicMobileElement) obj).getAttributes());
+
+				Object parentObj = ((TreeMobileElement) obj).getParentElement();
+				setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
+
+				try {
+					new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
+							getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
+							getMobileParentElementProps(), textObjectName.getText().toString(),
+							getMobileParentElementProps().get("package")
+									+ getMobileParentElementProps().get("activity"),
+							"Custom", "HTML Page",
+							getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
+					getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 			}
 		});
 		btnAdd.setBounds(549, 10, 223, 28);
