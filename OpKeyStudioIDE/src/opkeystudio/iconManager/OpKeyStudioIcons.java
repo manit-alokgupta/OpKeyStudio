@@ -80,5 +80,6 @@ public class OpKeyStudioIcons {
 	public static String CONSOLE_ICON = commonIconsDirPath + "consol.png";
 	
 	public static String MOBILE_SPY_CAPTURED_IMAGE = pcloudyStudioDirPath + "screencap.png";
+	public static String MOBILE_ADD_TO_OR_CAPTURED_IMAGE = pcloudyStudioDirPath + "androidaddtoor.png";
 
 }

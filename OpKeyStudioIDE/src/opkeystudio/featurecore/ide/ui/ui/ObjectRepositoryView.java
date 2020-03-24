@@ -264,8 +264,8 @@ public class ObjectRepositoryView extends Composite {
 
 		// Android Add TO or Will be here
 		androidAddtoOr = new ToolItem(toolBar, SWT.NONE);
-		androidAddtoOr.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CONSOLE_ICON));
-		androidAddtoOr.setText("Add to OR");
+		androidAddtoOr.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOBILE_ADD_TO_OR_CAPTURED_IMAGE));
+		androidAddtoOr.setToolTipText("Spy Android");
 
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
 //		Tree tree = new Tree(composite_3, SWT.BORDER);
