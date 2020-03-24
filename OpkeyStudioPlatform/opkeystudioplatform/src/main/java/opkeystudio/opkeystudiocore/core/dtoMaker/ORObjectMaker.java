@@ -87,7 +87,7 @@ public class ORObjectMaker {
 			String propValue = parentProperties.get(propName);
 			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(parentObject, parentAttributeProperties);
 			attrProp.setProperty(propName);
-			attrProp.setProperty(propValue);
+			attrProp.setValue(propValue);
 			parentAttributeProperties.add(attrProp);
 		}
 
@@ -95,7 +95,7 @@ public class ORObjectMaker {
 			String propValue = objectProperties.get(propName);
 			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(orobject, objectAttributeProperties);
 			attrProp.setProperty(propName);
-			attrProp.setProperty(propValue);
+			attrProp.setValue(propValue);
 			objectAttributeProperties.add(attrProp);
 		}
 
