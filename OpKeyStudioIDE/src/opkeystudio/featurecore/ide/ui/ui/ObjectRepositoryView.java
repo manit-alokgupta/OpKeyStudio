@@ -19,7 +19,6 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -53,7 +52,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.featurecore.ui.dialog.MobileSpyDialog;
 
 public class ObjectRepositoryView extends Composite {
-	private Composite parent;
+	private Artifact artifact;
 
 	private ObjectAttributeTable objectAttributeTable;
 	private ObjectRepositoryTree objectRepositoryTree;
@@ -90,6 +89,7 @@ public class ObjectRepositoryView extends Composite {
 	 */
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
+		initArtifact();
 		ObjectRepositoryUI();
 		toggleSaveButton(false);
 		toggleRenameButton(false);
@@ -758,10 +758,13 @@ public class ObjectRepositoryView extends Composite {
 
 	}
 
-	public Artifact getArtifact() {
+	public void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		return artifact;
+		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+	}
+
+	public Artifact getArtifact() {
+		return this.artifact;
 	}
 
 	@Override
