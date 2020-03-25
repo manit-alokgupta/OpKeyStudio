@@ -233,7 +233,6 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				DirectoryDialog dirDialog = new DirectoryDialog(shlAppiumSettings);
 				dirDialog.setFilterPath(appiumDirectory.getText());
-				dirDialog.setText("SWT's DirectoryDialog");
 				dirDialog.setMessage("Select a directory");
 				String dir = dirDialog.open();
 				if (dir != null) {
@@ -538,8 +537,7 @@ public class AppiumSettingsDialog extends Dialog {
 					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Device Cannot Be Empty");
 				} else if (applicationPathText.getText().isEmpty()) {
 					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Application Cannot Be Empty");
-				} 
-				else if (capabilityTable.getItemCount() != 0) {
+				} else if (capabilityTable.getItemCount() != 0) {
 					try {
 						if (capabilityTable.getItemCount() > 0) {
 							LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
