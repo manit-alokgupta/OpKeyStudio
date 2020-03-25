@@ -522,6 +522,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	}
 
 	private void captureObjectAction() {
+		if (textObjectName.getText().length() > 0)
+			textObjectName.setText("");
 		createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
 		createObjectPropertiesTable(objectPropertiesScrolledComposite);
 
