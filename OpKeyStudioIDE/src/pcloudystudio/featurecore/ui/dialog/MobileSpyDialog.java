@@ -290,20 +290,15 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				if (AndroidDriverObject.getInstance() != null) {
 					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
 					Widget item = CustomCheckBoxTree.getCheckedItem(element);
-					if (!(item instanceof TreeItem)) {
-						MessageDialog.openInformation(shlSpyMobile, "Message",
-								"Given Item is not an instance of TreeItem!");
-						return;
-					} else {
-						TreeItem treeItem = (TreeItem) item;
-						Object obj = treeItem.getData();
-						Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
-						WebElement foundElement = AndroidDriverObject.getDriver()
-								.findElementByXPath(mobileElementProps.get("xpath"));
-						if (foundElement != null) {
-							foundElement.click();
-							captureObjectAction();
-						}
+					TreeItem treeItem = (TreeItem) item;
+					Object obj = treeItem.getData();
+					Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
+					WebElement foundElement = AndroidDriverObject.getDriver()
+							.findElementByXPath(mobileElementProps.get("xpath"));
+					if (foundElement != null) {
+						foundElement.click();
+						btnAdd.setEnabled(false);
+						captureObjectAction();
 					}
 				}
 			}
