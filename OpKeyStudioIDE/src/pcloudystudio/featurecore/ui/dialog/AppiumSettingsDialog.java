@@ -328,11 +328,14 @@ public class AppiumSettingsDialog extends Dialog {
 		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				FileDialog dialog = new FileDialog(shlAppiumSettings, SWT.NULL);
+				FileDialog dialog = new FileDialog(shlAppiumSettings);
 				dialog.setFilterExtensions(new String[] { "*.apk" });
+				dialog.setFilterNames(new String[] { "APK File" });
+				dialog.setFilterPath(applicationPathText.getText());
 				String path = dialog.open();
+				File file = new File(path);
 				int rowNumber = 0;
-				if (path != null) {
+				if (path != null && file.exists()) {
 					for (TableItem item : capabilityTable.getItems()) {
 						if (item.getText(0).equalsIgnoreCase("app")) {
 							MessageDialog.openInformation(shlAppiumSettings, "Please Note",
@@ -346,11 +349,11 @@ public class AppiumSettingsDialog extends Dialog {
 					TableItem row = new TableItem(capabilityTable, 0);
 					row.setText(0, "app");
 					row.setText(1, path);
-					File file = new File(path);
-					if (file.isFile())
-						displayFiles(new String[] { file.toString() });
-					else
-						displayFiles(file.list());
+					applicationPathText.setText(file.toString());
+					applicationPathText.setEditable(true);
+				} else {
+					MessageDialog.openInformation(shlAppiumSettings, "Please Note",
+							"Application APK file you provided doesn't exist!");
 				}
 			}
 		});
@@ -593,13 +596,6 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		closebutton.setBounds(581, 627, 75, 25);
 		closebutton.setText("Close");
-	}
-
-	private void displayFiles(String[] files) {
-		for (int i = 0; files != null && i < files.length; i++) {
-			applicationPathText.setText(files[i]);
-			applicationPathText.setEditable(true);
-		}
 	}
 
 	private void addTableItemToCapabilityTableData(String key, String value) {
