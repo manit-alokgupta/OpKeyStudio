@@ -265,6 +265,12 @@ public class AppiumSettingsDialog extends Dialog {
 		btnRefresh.setBounds(529, 6, 75, 33);
 		btnRefresh.setText("Refresh");
 
+		devicesCombo.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				btnRefresh.setFocus();
+			}
+		});
+
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -307,7 +313,7 @@ public class AppiumSettingsDialog extends Dialog {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-
+				shlAppiumSettings.setFocus();
 			}
 
 			@Override
