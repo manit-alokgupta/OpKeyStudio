@@ -72,6 +72,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private MobileDeviceDialog deviceView;
 	private Button btnCapture;
 	private Button btnHelp;
+	private Button btnStop;
 	public static Button btnAdd;
 	private Label lblAllObjects;
 	private Label lblAllObjectProperties;
@@ -223,7 +224,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		// -------------------------------------------------------------//
 		btnCapture = new Button(toolsComposite, SWT.NONE);
 		btnCapture.setToolTipText("Capture Object");
-		// btnCapture.setEnabled(false);
 		btnCapture.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 
 		btnCapture.addSelectionListener(new SelectionAdapter() {
@@ -235,10 +235,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 		btnCapture.setBounds(10, 10, 151, 28);
 		btnCapture.setText("Capture Object");
-
-		if (AndroidDriverObject.getDriver() == null) {
-			btnCapture.setEnabled(false);
-		}
 
 		// -------------------------------------------------------------//
 
@@ -273,7 +269,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
 					getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -306,7 +301,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnClickAndMoveToNextScreen.setBounds(178, 10, 188, 28);
 		btnClickAndMoveToNextScreen.setText("Click and Update Spy");
 
-		Button btnStop = new Button(toolsComposite, SWT.NONE);
+		btnStop = new Button(toolsComposite, SWT.NONE);
 		btnStop.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -330,6 +325,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		});
 		btnHelp.setBounds(10, 10, 54, 28);
 		btnHelp.setText("Help");
+
+		if (AndroidDriverObject.getDriver() == null) {
+			btnCapture.setEnabled(false);
+			btnStop.setEnabled(false);
+		}
 	}
 
 	static void setTreeRoot(MobileSpyDialog mobileSpyDialog, TreeMobileElement appRootElement) {
