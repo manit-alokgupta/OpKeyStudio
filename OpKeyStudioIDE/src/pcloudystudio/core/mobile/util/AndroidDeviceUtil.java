@@ -19,7 +19,7 @@ public class AndroidDeviceUtil {
 	public static Map<String, String> getAndroidDevices() throws Exception {
 		String adbPath = System.getenv("ANDROID_SDK_HOME");
 		if (adbPath == null)
-			System.getenv("ANDROID_HOME");
+			adbPath=System.getenv("ANDROID_HOME");
 		if (adbPath != null) {
 			final List<String> deviceIds = new ArrayList<String>();
 			adbPath = String.valueOf(adbPath) + File.separator + "platform-tools" + File.separator + "adb";
