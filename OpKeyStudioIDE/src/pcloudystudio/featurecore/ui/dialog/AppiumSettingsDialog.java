@@ -35,7 +35,8 @@ import pcloudystudio.appium.MobileCapabilities;
 
 public class AppiumSettingsDialog extends Dialog {
 
-	private String capabilityNameList[] = { "platformName", "automationName", "launchTimeout", "newCommandTimeout" ,"platformVersion","appActivity","appPackage","enforceAppInstall","noSign"};
+	private String capabilityNameList[] = { "platformName", "automationName", "launchTimeout", "newCommandTimeout",
+			"platformVersion", "appActivity", "appPackage", "enforceAppInstall", "noSign" };
 
 	protected Object result;
 	protected Shell shlAppiumSettings;
@@ -62,7 +63,6 @@ public class AppiumSettingsDialog extends Dialog {
 	private Combo capabilityNameCombo;
 	private Text capabilityTextValue;
 	private Button btnAddToTable;
-	
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, style);
@@ -95,7 +95,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlAppiumSettings.setSize(669, 612);
+		shlAppiumSettings.setSize(669, 566);
 		shlAppiumSettings.setText("Appium Settings");
 
 		Rectangle parentSize = getParent().getBounds();
@@ -195,7 +195,7 @@ public class AppiumSettingsDialog extends Dialog {
 		lblDeviceCapability.setBounds(10, 10, 180, 22);
 
 		compositeCapabilitySettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeCapabilitySettings.setBounds(10, 293, 646, 235);
+		compositeCapabilitySettings.setBounds(10, 293, 646, 239);
 
 		compositeAddCapability = new Composite(compositeCapabilitySettings, SWT.NONE);
 		compositeAddCapability.setBounds(20, 5, 612, 42);
@@ -204,7 +204,7 @@ public class AppiumSettingsDialog extends Dialog {
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				addCapabilityComposite.setVisible(true);
+				// addCapabilityComposite.setVisible(true);
 				capabilityNameCombo.removeAll();
 				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
@@ -258,7 +258,7 @@ public class AppiumSettingsDialog extends Dialog {
 		capabilityNameCombo.setItems(capabilityNameList);
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
-		capabilityTextValue.setBounds(170, 5, 154, 27);
+		capabilityTextValue.setBounds(170, 5, 154, 28);
 
 		btnAddToTable = new Button(addCapabilityComposite, SWT.NONE);
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
@@ -274,12 +274,12 @@ public class AppiumSettingsDialog extends Dialog {
 				// btnAddToTable.setEnabled(false);
 			}
 		});
-		btnAddToTable.setBounds(330, 5, 124, 30);
+		btnAddToTable.setBounds(358, 5, 154, 28);
 		btnAddToTable.setText("Add to Table");
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setBounds(20, 53, 612, 135);
+		scrolledComposite.setBounds(20, 53, 612, 138);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
@@ -292,9 +292,30 @@ public class AppiumSettingsDialog extends Dialog {
 		columnName.setWidth(139);
 		TableColumn columnValue = new TableColumn(capabilityTable, 0);
 		columnValue.setText("Value");
-		columnValue.setWidth(467);
+		columnValue.setWidth(500);
 
 		TableEditor editor = new TableEditor(capabilityTable);
+
+		saveInfo = new Button(compositeCapabilitySettings, SWT.NONE);
+		saveInfo.setBounds(432, 206, 91, 25);
+		saveInfo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				validate();
+			}
+		});
+		saveInfo.setText("save");
+
+		closebutton = new Button(compositeCapabilitySettings, SWT.NONE);
+		closebutton.setBounds(541, 206, 91, 25);
+		closebutton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		closebutton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shlAppiumSettings.close();
+			}
+		});
+		closebutton.setText("Close");
 		editor.horizontalAlignment = SWT.LEFT;
 		editor.grabHorizontal = true;
 		capabilityTable.addListener(SWT.MouseDown, new Listener() {
@@ -349,27 +370,6 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 			}
 		});
-
-		saveInfo = new Button(shlAppiumSettings, SWT.NONE);
-		saveInfo.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				validate();
-			}
-		});
-		saveInfo.setBounds(447, 544, 112, 25);
-		saveInfo.setText("save");
-
-		closebutton = new Button(shlAppiumSettings, SWT.NONE);
-		closebutton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		closebutton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				shlAppiumSettings.close();
-			}
-		});
-		closebutton.setBounds(565, 544, 75, 25);
-		closebutton.setText("Close");
 	}
 
 	private void addTableItemToCapabilityTableData(String key, String value) {
