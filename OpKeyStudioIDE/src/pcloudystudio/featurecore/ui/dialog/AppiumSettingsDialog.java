@@ -1,16 +1,12 @@
 package pcloudystudio.featurecore.ui.dialog;
 
-// Created by Alok Gupta on 20/02/2020.
-// Copyright © 2020 SSTS Inc. All rights reserved.
-
-import java.io.File;
-import java.net.URL;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -24,29 +20,20 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
-import io.appium.java_client.android.AndroidDriver;
-import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.appium.AppiumPortIpInfo;
 import pcloudystudio.appium.AppiumServer;
 import pcloudystudio.appium.MobileCapabilities;
-import pcloudystudio.core.mobile.util.AndroidDeviceUtil;
-
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.TableEditor;
 
 public class AppiumSettingsDialog extends Dialog {
 
@@ -66,19 +53,11 @@ public class AppiumSettingsDialog extends Dialog {
 	private Label lblAppiumSettings;
 	private Composite compositeAppiumSettings;
 	private Composite compositeCapabilitySettings;
-	private Composite compositeConfiguration;
-	private Label lblDeviceConfiguration;
 	private Composite compositeDeviceCapabilities;
 	private Label lblDeviceCapability;
-	private Composite compositeConfigurationSettings;
 	private Composite addCapabilityComposite;
-
-	private Map<String, String> devicesList;
-	private Combo devicesCombo;
-	private Text applicationPathText;
-	private Button btnStartServerAndLaunchApplication;
+	private Button saveInfo;
 	private static Table capabilityTable;
-
 	private Composite compositeAddCapability;
 	private Button btnDelete;
 	private Button btnAdd;
@@ -117,7 +96,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlAppiumSettings.setSize(672, 702);
+		shlAppiumSettings.setSize(669, 612);
 		shlAppiumSettings.setText("Appium Settings");
 
 		Rectangle parentSize = getParent().getBounds();
@@ -193,41 +172,6 @@ public class AppiumSettingsDialog extends Dialog {
 		btnBrowse.setBounds(520, 72, 75, 25);
 		btnBrowse.setText("Browse");
 
-		Button saveButton = new Button(compositeAppiumSettings, SWT.NONE);
-		saveButton.setBounds(439, 103, 75, 25);
-		saveButton.setToolTipText("Save");
-		saveButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-
-		saveButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				AppiumPortIpInfo.getInstance();
-				String host = serverAddress.getText();
-				if (host.trim() != "") {
-					AppiumPortIpInfo.getInstance().setHostAddress(host);
-				}
-				String port = portNumber.getText();
-				if (port.trim() != "") {
-					AppiumPortIpInfo.setPort(port);
-				}
-				String appiumDirectoryPath = appiumDirectory.getText();
-				if (appiumDirectoryPath.trim() != "") {
-					AppiumPortIpInfo.setAppiumDirectory(appiumDirectoryPath);
-				}
-				if (host.trim().equalsIgnoreCase("")) {
-					MessageDialog.openInformation(shlAppiumSettings, "Invalid Host", "Please enter Host URL");
-				}
-				if (port.trim().equalsIgnoreCase("")) {
-					MessageDialog.openInformation(shlAppiumSettings, "Invalid Port", "Please enter Port");
-				}
-				if (appiumDirectoryPath.trim().equalsIgnoreCase("")) {
-					MessageDialog.openInformation(shlAppiumSettings, "Invalid Directory",
-							"Please browse Appium Directory");
-				}
-			}
-		});
-		saveButton.setText("Save");
-
 		btnBrowse.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -241,141 +185,18 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 
-		compositeConfiguration = new Composite(shlAppiumSettings, SWT.NONE);
-		compositeConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		compositeConfiguration.setBounds(10, 240, 167, 32);
-
-		lblDeviceConfiguration = new Label(compositeConfiguration, SWT.NONE);
-		lblDeviceConfiguration.setText("Configuration");
-		lblDeviceConfiguration.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
-		lblDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblDeviceConfiguration.setBounds(10, 10, 129, 22);
-
-		compositeConfigurationSettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeConfigurationSettings.setBounds(10, 278, 646, 92);
-
-		Label lblDeviceName = new Label(compositeConfigurationSettings, SWT.NONE);
-		lblDeviceName.setBounds(26, 10, 121, 25);
-		lblDeviceName.setText("Device Name");
-
-		devicesCombo = new Combo(compositeConfigurationSettings, SWT.READ_ONLY);
-		devicesCombo.setBounds(203, 7, 309, 25);
-
-		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnRefresh.setBounds(529, 6, 75, 33);
-		btnRefresh.setText("Refresh");
-
-		devicesCombo.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				btnRefresh.setFocus();
-			}
-		});
-
-		btnRefresh.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					String previousDevice = devicesCombo.getText();
-					devicesList = AndroidDeviceUtil.getAndroidDevices();
-					devicesCombo.removeAll();
-					for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
-						devicesCombo.add(deviceEntry.getValue());
-					}
-					devicesCombo.select(0);
-
-					String selectedDeviceDetails = devicesCombo.getText();
-					String newDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails);
-					String newDeviceModelName = AndroidDeviceUtil.getDeviceName(newDeviceUDID);
-					if (capabilityTable.getItemCount() >= 0) {
-						for (int row = capabilityTable.getItemCount() - 1; row >= 0; row--) {
-							if (capabilityTable.getItem(row).getText(0).equalsIgnoreCase("deviceName")
-									|| (capabilityTable.getItem(row).getText(0).equalsIgnoreCase("udid")))
-								capabilityTable.remove(row);
-						}
-					}
-
-					if (previousDevice.trim() != "") {
-						String previousDeviceModelName = AndroidDeviceUtil
-								.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice));
-						addTableItemToCapabilityTableData("deviceName", previousDeviceModelName);
-					} else {
-						addTableItemToCapabilityTableData("deviceName", newDeviceModelName);
-					}
-
-					if (previousDevice.trim() != "") {
-						String previousDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice);
-						addTableItemToCapabilityTableData("udid", previousDeviceUDID);
-					} else {
-						addTableItemToCapabilityTableData("udid", newDeviceUDID);
-					}
-
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				shlAppiumSettings.setFocus();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
-
-		Label lblApplicationFile = new Label(compositeConfigurationSettings, SWT.NONE);
-		lblApplicationFile.setBounds(26, 41, 143, 25);
-		lblApplicationFile.setText("Application File");
-
-		applicationPathText = new Text(compositeConfigurationSettings, SWT.BORDER);
-		applicationPathText.setBounds(203, 45, 309, 33);
-
-		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnBrowseAPK.setBounds(529, 44, 75, 33);
-		btnBrowseAPK.setText("Browse");
-		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				FileDialog dialog = new FileDialog(shlAppiumSettings);
-				dialog.setFilterExtensions(new String[] { "*.apk" });
-				dialog.setFilterNames(new String[] { "APK File" });
-				dialog.setFilterPath(applicationPathText.getText());
-				String path = dialog.open();
-				File file = new File(path);
-				int rowNumber = 0;
-				if (path != null && file.exists()) {
-					for (TableItem item : capabilityTable.getItems()) {
-						if (item.getText(0).equalsIgnoreCase("app")) {
-							MessageDialog.openInformation(shlAppiumSettings, "Please Note",
-									"Application file will be overrided");
-							capabilityTable.remove(rowNumber);
-							break;
-						} else
-							rowNumber++;
-					}
-
-					TableItem row = new TableItem(capabilityTable, 0);
-					row.setText(0, "app");
-					row.setText(1, path);
-					applicationPathText.setText(file.toString());
-					applicationPathText.setEditable(true);
-				} else {
-					MessageDialog.openInformation(shlAppiumSettings, "Please Note",
-							"Application APK file you provided doesn't exist!");
-				}
-			}
-		});
-
 		compositeDeviceCapabilities = new Composite(shlAppiumSettings, SWT.NONE);
 		compositeDeviceCapabilities.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		compositeDeviceCapabilities.setBounds(10, 376, 200, 32);
+		compositeDeviceCapabilities.setBounds(10, 255, 200, 32);
 
 		lblDeviceCapability = new Label(compositeDeviceCapabilities, SWT.NONE);
-		lblDeviceCapability.setText("Device Capabilities");
+		lblDeviceCapability.setText("Appium Capabilities");
 		lblDeviceCapability.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblDeviceCapability.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblDeviceCapability.setBounds(10, 10, 180, 22);
 
 		compositeCapabilitySettings = new Composite(shlAppiumSettings, SWT.BORDER);
-		compositeCapabilitySettings.setBounds(10, 414, 646, 207);
+		compositeCapabilitySettings.setBounds(10, 293, 646, 235);
 
 		compositeAddCapability = new Composite(compositeCapabilitySettings, SWT.NONE);
 		compositeAddCapability.setBounds(20, 5, 612, 42);
@@ -432,14 +253,13 @@ public class AppiumSettingsDialog extends Dialog {
 
 		addCapabilityComposite = new Composite(compositeAddCapability, SWT.BORDER);
 		addCapabilityComposite.setBounds(62, 0, 550, 42);
-		addCapabilityComposite.setVisible(false);
 
 		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
 		capabilityNameCombo.setBounds(10, 5, 154, 33);
 		capabilityNameCombo.setItems(capabilityNameList);
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
-		capabilityTextValue.setBounds(170, 5, 154, 33);
+		capabilityTextValue.setBounds(170, 5, 154, 27);
 
 		btnAddToTable = new Button(addCapabilityComposite, SWT.NONE);
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
@@ -451,13 +271,12 @@ public class AppiumSettingsDialog extends Dialog {
 						&& (capabilityValue != null && capabilityValue != "")) {
 					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
 				}
-				addCapabilityComposite.setVisible(false);
-				btnAddToTable.setEnabled(false);
+				// addCapabilityComposite.setVisible(false);
+				// btnAddToTable.setEnabled(false);
 			}
 		});
 		btnAddToTable.setBounds(330, 5, 124, 30);
 		btnAddToTable.setText("Add to Table");
-		btnAddToTable.setEnabled(false);
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -532,65 +351,15 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 
-		btnStartServerAndLaunchApplication = new Button(shlAppiumSettings, SWT.NONE);
-		btnStartServerAndLaunchApplication.addSelectionListener(new SelectionAdapter() {
+		saveInfo = new Button(shlAppiumSettings, SWT.NONE);
+		saveInfo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (serverAddress.getText().isEmpty()) {
-					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "ServerAddress cannot be empty");
-				} else if (portNumber.getText().isEmpty()) {
-					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Port Cannot Be Empty");
-				} else if (appiumDirectory.getText().isEmpty()) {
-					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "AppiumDirectory Cannot Be Empty");
-				} else if (devicesCombo.getText().isEmpty()) {
-					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Device Cannot Be Empty");
-				} else if (applicationPathText.getText().isEmpty()) {
-					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Application Cannot Be Empty");
-				} else if (capabilityTable.getItemCount() != 0) {
-					try {
-						if (capabilityTable.getItemCount() > 0) {
-							LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
-							for (TableItem row : capabilityTable.getItems()) {
-
-								mapOfCapabilities.put(row.getText(0), row.getText(1));
-
-							}
-
-							MobileCapabilities.getinstance();
-							MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
-						}
-						AppiumServer.stopServer();
-						Thread.sleep(4000);
-					} catch (InterruptedException e2) {
-						e2.printStackTrace();
-					}
-					java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
-
-						@Override
-						public void run() {
-							AppiumServer.startServer();
-
-							DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-
-							try {
-								AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
-										new URL("http://" + AppiumPortIpInfo.getHostAddress() + ":"
-												+ AppiumPortIpInfo.getPort() + "/wd/hub"),
-										mobileCapability);
-								AndroidDriverObject.getInstance().setDriver(driver);
-							} catch (Exception ex) {
-								ex.printStackTrace();
-							}
-						}
-					});
-				} else {
-					MessageDialog.openInformation(shlAppiumSettings, "Please Note",
-							"You Have Not Provided Any Capability");
-				}
+				validate();
 			}
 		});
-		btnStartServerAndLaunchApplication.setBounds(463, 627, 112, 25);
-		btnStartServerAndLaunchApplication.setText("Start Server");
+		saveInfo.setBounds(447, 544, 112, 25);
+		saveInfo.setText("save");
 
 		closebutton = new Button(shlAppiumSettings, SWT.NONE);
 		closebutton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
@@ -600,12 +369,44 @@ public class AppiumSettingsDialog extends Dialog {
 				shlAppiumSettings.close();
 			}
 		});
-		closebutton.setBounds(581, 627, 75, 25);
+		closebutton.setBounds(565, 544, 75, 25);
 		closebutton.setText("Close");
 	}
 
 	private void addTableItemToCapabilityTableData(String key, String value) {
 		TableItem item = new TableItem(capabilityTable, SWT.NONE);
 		item.setText(new String[] { key, value });
+	}
+
+	public void validate() {
+		if (serverAddress.getText().isEmpty()) {
+			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "ServerAddress cannot be empty");
+		} else if (portNumber.getText().isEmpty()) {
+			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Port Cannot Be Empty");
+		} else if (appiumDirectory.getText().isEmpty()) {
+			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "AppiumDirectory Cannot Be Empty");
+		} else if (capabilityTable.getItemCount() != 0) {
+			try {
+				if (capabilityTable.getItemCount() > 0) {
+					LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
+					for (TableItem row : capabilityTable.getItems()) {
+
+						mapOfCapabilities.put(row.getText(0), row.getText(1));
+
+					}
+
+					MobileCapabilities.getinstance();
+					MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+				}
+				AppiumServer.stopServer();
+				Thread.sleep(4000);
+			} catch (InterruptedException e2) {
+				e2.printStackTrace();
+			}
+
+		} else {
+			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "You Have Not Provided Any Capability");
+		}
+
 	}
 }
