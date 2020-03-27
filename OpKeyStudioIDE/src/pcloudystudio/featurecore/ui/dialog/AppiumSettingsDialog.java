@@ -30,14 +30,12 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
-
 import pcloudystudio.appium.AppiumPortIpInfo;
-import pcloudystudio.appium.AppiumServer;
 import pcloudystudio.appium.MobileCapabilities;
 
 public class AppiumSettingsDialog extends Dialog {
 
-	private String capabilityNameList[] = { "platformName", "automationName", "launchTimeout", "newCommandTimeout" };
+	private String capabilityNameList[] = { "platformName", "automationName", "launchTimeout", "newCommandTimeout" ,"platformVersion","appActivity","appPackage","enforceAppInstall","noSign"};
 
 	protected Object result;
 	protected Shell shlAppiumSettings;
@@ -64,6 +62,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private Combo capabilityNameCombo;
 	private Text capabilityTextValue;
 	private Button btnAddToTable;
+	
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, style);
@@ -398,9 +397,8 @@ public class AppiumSettingsDialog extends Dialog {
 					MobileCapabilities.getinstance();
 					MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
 				}
-				AppiumServer.stopServer();
-				Thread.sleep(4000);
-			} catch (InterruptedException e2) {
+
+			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 
