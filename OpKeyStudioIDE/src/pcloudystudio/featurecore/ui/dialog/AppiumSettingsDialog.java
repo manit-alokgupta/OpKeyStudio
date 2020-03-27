@@ -204,7 +204,7 @@ public class AppiumSettingsDialog extends Dialog {
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// addCapabilityComposite.setVisible(true);
+				
 				capabilityNameCombo.removeAll();
 				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
@@ -213,7 +213,7 @@ public class AppiumSettingsDialog extends Dialog {
 					public void modifyText(ModifyEvent e) {
 						if (capabilityTextValue.getText().length() > 0
 								&& capabilityNameCombo.getSelectionIndex() != -1) {
-							btnAddToTable.setEnabled(true);
+							
 						}
 					}
 				});
@@ -222,7 +222,7 @@ public class AppiumSettingsDialog extends Dialog {
 					public void modifyText(ModifyEvent e) {
 						if (capabilityTextValue.getText().length() > 0
 								&& capabilityNameCombo.getSelectionIndex() != -1) {
-							btnAddToTable.setEnabled(true);
+							
 						}
 					}
 				});
@@ -236,16 +236,16 @@ public class AppiumSettingsDialog extends Dialog {
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				addCapabilityComposite.setVisible(false);
+				
 				if (capabilityTable.getItemCount() >= 1) {
 					if (capabilityTable.getSelectionIndex() != -1)
 						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
-				btnAddToTable.setEnabled(false);
-				btnDelete.setEnabled(false);
+				
+				
 			}
 		});
-		btnDelete.setEnabled(false);
+		btnDelete.setEnabled(true);
 		btnDelete.setToolTipText("Delete Capability");
 		btnDelete.setBounds(36, 10, 20, 22);
 		btnDelete.setText("-");
@@ -289,10 +289,10 @@ public class AppiumSettingsDialog extends Dialog {
 		capabilityTable.setLinesVisible(true);
 		TableColumn columnName = new TableColumn(capabilityTable, 0);
 		columnName.setText("Name");
-		columnName.setWidth(139);
+		columnName.setWidth(250);
 		TableColumn columnValue = new TableColumn(capabilityTable, 0);
 		columnValue.setText("Value");
-		columnValue.setWidth(500);
+		columnValue.setWidth(350);
 
 		TableEditor editor = new TableEditor(capabilityTable);
 
