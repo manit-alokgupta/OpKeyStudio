@@ -77,7 +77,7 @@ public class VncStarter {
 	}
 
 	public void startMobicast() throws IOException, InterruptedException {
-
+		if (VncUtils.checkIfDeviceIsConnected(deviceId)) {
 		VncUtils.installInputServiceApk(deviceId);
 
 		VncUtils.StartInputService(deviceId);
@@ -85,6 +85,6 @@ public class VncStarter {
 		VncUtils.PortForward(deviceId, port);
 
 		VncUtils.LunchVnc(deviceId, deviceName, port);
-	}
+	} }
 
 }
