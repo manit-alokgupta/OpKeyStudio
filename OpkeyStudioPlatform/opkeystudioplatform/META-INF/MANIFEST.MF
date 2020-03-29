@@ -184,4 +184,5 @@ Export-Package: com.fasterxml.jackson.core,
  org.jboss.forge.roaster.model.source,
  org.openqa.selenium,
  org.openqa.selenium.remote,
- pcloudystudio.appium
+ pcloudystudio.appium,
+ pcloudystudio.core.vncutils
