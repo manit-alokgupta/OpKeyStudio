@@ -14,7 +14,7 @@ public class VncUtils {
 	private static String DeviceSdkCommand = "adb shell getprop ro.build.version.sdk";
 	private static String DeviceAbiCommand = "adb shell getprop ro.product.cpu.abi";
 	private static String DeviceReleaseCommand = "adb shell getprop ro.build.version.release";
-	private static String PreCompiledDirectory = " E:/vncserver/PreCompiled_libs/libs/";
+	private static String PreCompiledDirectory = " E:/vncserver/PreCompiled_libs";
 	private static String ResourceDirectory = "E:/vncserver/resources/";
 	private static String MobilielibDirectory = "/data/local/tmp/pcloudy-libs";
 
@@ -271,7 +271,7 @@ public class VncUtils {
 	public static void givePermissionToDirectory() throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("Granting permission to Lib directory");
-		String command = "adb shell chmod 777 " +MobilielibDirectory;
+		String command = "adb shell chmod 777 " + MobilielibDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
 		process.waitFor();
@@ -291,7 +291,7 @@ public class VncUtils {
 	public static void pushVncServer(String abi) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("pushing vnc server");
-		String command = "adb push" + VncUtils.PreCompiledDirectory + abi + "/androidvncserver" + " "
+		String command = "adb push" + VncUtils.PreCompiledDirectory + "/libs/" + abi + "/androidvncserver" + " "
 				+ VncUtils.MobilielibDirectory; // give the source for precompiled directory
 		System.out.println("command is  " + command);
 		StringBuilder builder = new StringBuilder();
@@ -333,7 +333,7 @@ public class VncUtils {
 	public static void pushScreenshotMinicap(String abi) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("pushing minicap file");
-		String command = "adb push E:/vncserver/PreCompiled_libs/screenshot/" + abi + "/minicap" + "  "
+		String command = "adb push  " + VncUtils.PreCompiledDirectory + "/screenshot/" + abi + "/minicap" + "  "
 				+ MobilielibDirectory;
 		System.out.println("command is  " + command);
 		StringBuilder builder = new StringBuilder();
@@ -374,8 +374,8 @@ public class VncUtils {
 	public static void pushScreenshotMinicapSo(String sdk, String abi) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("pushing minicapso file");
-		String command = "adb  push  E:/vncserver/PreCompiled_libs/aosp/android-" + sdk + "/" + abi + "/minicap.so"
-				+ "   " + MobilielibDirectory;
+		String command = "adb  push  " + VncUtils.PreCompiledDirectory + "/aosp/android-" + sdk + "/" + abi
+				+ "/minicap.so" + "   " + MobilielibDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
 		process.waitFor();
@@ -418,7 +418,7 @@ public class VncUtils {
 				+ "/";
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
-		//process.waitFor();
+		// process.waitFor();
 		String line;
 		BufferedReader stdError = new BufferedReader(
 				new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
@@ -491,10 +491,10 @@ public class VncUtils {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("Launching Vnc");
 		String command = "java -jar " + ResourceDirectory + "opkeyvnc.jar" + " " + port + " " + deviceName + " "
-				+ serialNo + " " + "E:/vncserver/resources/";
+				+ serialNo + " " + ResourceDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
-		//process.waitFor();
+		process.waitFor();
 		String line;
 		BufferedReader stdError = new BufferedReader(
 				new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
@@ -510,10 +510,11 @@ public class VncUtils {
 	public static void StartInputService(String serialNo) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("starting input service");
-		String command = "adb -s " + serialNo + " shell export CLASSPATH=/data/app/com.pcloudy.inputservice-1/base.apk; exec app_process /system/bin com.pcloudy.inputservice.Agent";
+		String command = "adb -s " + serialNo
+				+ " shell export CLASSPATH=/data/app/com.pcloudy.inputservice-1/base.apk; exec app_process /system/bin com.pcloudy.inputservice.Agent";
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
-		//process.waitFor();
+		process.waitFor();
 		String line;
 		BufferedReader stdError = new BufferedReader(
 				new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
@@ -556,6 +557,7 @@ public class VncUtils {
 		String command = "adb shell ls " + MobilielibDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
+		process.waitFor();
 		String line;
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
@@ -580,6 +582,7 @@ public class VncUtils {
 		String command = "adb shell ls " + MobilielibDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
+		process.waitFor();
 		String line;
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
@@ -603,6 +606,7 @@ public class VncUtils {
 		String command = "adb shell ls " + MobilielibDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
+		process.waitFor();
 		String line;
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
@@ -627,6 +631,7 @@ public class VncUtils {
 		String command = "adb shell rm -r " + MobilielibDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
+		process.waitFor();
 		String line;
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
@@ -646,6 +651,7 @@ public class VncUtils {
 		String command = "adb shell ls " + MobilielibDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
+		process.waitFor();
 		String line;
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
