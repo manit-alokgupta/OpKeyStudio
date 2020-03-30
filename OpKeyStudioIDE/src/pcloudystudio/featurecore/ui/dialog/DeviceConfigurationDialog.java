@@ -2,7 +2,9 @@ package pcloudystudio.featurecore.ui.dialog;
 
 //Created by Alok Gupta on 20/02/2020.
 //Copyright © 2020 SSTS Inc. All rights reserved.
+
 import java.io.File;
+import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,8 +23,16 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import io.appium.java_client.android.AndroidDriver;
+
 import org.eclipse.swt.widgets.FileDialog;
 
+import pcloudystudio.appium.AndroidDriverObject;
+import pcloudystudio.appium.AppiumPortIpInfo;
+import pcloudystudio.appium.AppiumServer;
 import pcloudystudio.appium.MobileCapabilities;
 import pcloudystudio.core.mobile.util.AndroidDeviceUtil;
 
@@ -179,6 +189,37 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnNext.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if (devicesCombo.getText().isEmpty()) {
+					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note", "Device Cannot Be Empty");
+				} else if (applicationPathText.getText().isEmpty()) {
+					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note", "Application Cannot Be Empty");
+				} else {
+					try {
+						AppiumServer.stopServer();
+						Thread.sleep(4000);
+					} catch (InterruptedException e2) {
+						e2.printStackTrace();
+					}
+					java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
+
+						@Override
+						public void run() {
+							AppiumServer.startServer();
+
+							DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+
+							try {
+								AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
+										new URL("http://" + AppiumPortIpInfo.getHostAddress() + ":"
+												+ AppiumPortIpInfo.getPort() + "/wd/hub"),
+										mobileCapability);
+								AndroidDriverObject.getInstance().setDriver(driver);
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
+						}
+					});
+				}
 			}
 		});
 		btnNext.setBounds(438, 175, 105, 33);

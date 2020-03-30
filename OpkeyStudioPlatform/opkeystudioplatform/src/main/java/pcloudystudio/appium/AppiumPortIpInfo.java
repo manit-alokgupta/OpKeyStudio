@@ -20,7 +20,7 @@ public class AppiumPortIpInfo {
 		return port;
 	}
 
-	public static void setPort(String port) {
+	public void setPort(String port) {
 		AppiumPortIpInfo.port = port;
 	}
 
@@ -36,7 +36,7 @@ public class AppiumPortIpInfo {
 		return appiumDirectory;
 	}
 
-	public static void setAppiumDirectory(String appium_Directory) {
+	public void setAppiumDirectory(String appium_Directory) {
 		AppiumPortIpInfo.appiumDirectory = appium_Directory;
 	}
 }

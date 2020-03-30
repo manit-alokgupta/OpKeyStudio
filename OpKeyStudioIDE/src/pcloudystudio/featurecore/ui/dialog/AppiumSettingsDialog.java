@@ -304,6 +304,9 @@ public class AppiumSettingsDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				validate();
+				AppiumPortIpInfo.getInstance().setHostAddress(serverAddress.getText());
+				AppiumPortIpInfo.getInstance().setPort(portNumber.getText());
+				AppiumPortIpInfo.getInstance().setAppiumDirectory(appiumDirectory.getText());
 			}
 		});
 		saveInfo.setText("save");
