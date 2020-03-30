@@ -2,7 +2,6 @@ package pcloudystudio.featurecore.ui.dialog;
 
 //Created by Alok Gupta on 20/02/2020.
 //Copyright © 2020 SSTS Inc. All rights reserved.
-
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -203,15 +202,20 @@ public class DeviceConfigurationDialog extends Dialog {
 				dialog.setFilterNames(new String[] { "APK File" });
 				dialog.setFilterPath(applicationPathText.getText());
 				String path = dialog.open();
-				File file = new File(path);
-				if (path != null && file.exists()) {
-					if (MobileCapabilities.getinstance().getMapOfCapabilities().containsKey("app")) {
-						MobileCapabilities.getinstance().getMapOfCapabilities().replace("app", path);
+				if (path != null) {
+					File file = new File(path);
+					if (file.exists()) {
+						if (MobileCapabilities.getinstance().getMapOfCapabilities().containsKey("app")) {
+							MobileCapabilities.getinstance().getMapOfCapabilities().replace("app", path);
+						} else {
+							MobileCapabilities.getinstance().getMapOfCapabilities().put("app", path);
+						}
+						applicationPathText.setText(file.toString());
+						applicationPathText.setEditable(true);
 					} else {
-						MobileCapabilities.getinstance().getMapOfCapabilities().put("app", path);
+						MessageDialog.openInformation(shlDeviceConfiguration, "Please Note",
+								"Application APK file you provided doesn't exist!");
 					}
-					applicationPathText.setText(file.toString());
-					applicationPathText.setEditable(true);
 				} else {
 					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note",
 							"Application APK file you provided doesn't exist!");
