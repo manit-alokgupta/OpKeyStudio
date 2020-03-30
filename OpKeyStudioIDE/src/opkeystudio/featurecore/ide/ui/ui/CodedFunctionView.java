@@ -60,14 +60,32 @@ public class CodedFunctionView extends Composite {
 
 	private String artifactAssociatedLibraryPath;
 	private Artifact artifact;
+	private TestCaseView parentTestCaseView;
+	private boolean embeddedInsideTestCaseView = false;
+
+	public CodedFunctionView(Composite parent, int style, TestCaseView parentTestCaseView) {
+		super(parent, SWT.BORDER);
+		setEmbeddedInsideTestCaseView(true);
+		initArtifact();
+		Utilities.getInstance().setPluginName("Web");
+		setLayout(new GridLayout(1, false));
+		initCFUI();
+		initListeners();
+	}
 
 	public CodedFunctionView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
-		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		initArtifact();
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
+		initCFUI();
+		initListeners();
+		renderCFLCode();
+		bottomFactoryUi.getCFLInputTable().renderCFLInputParameters();
+		bottomFactoryUi.getCFLOutputTable().renderCFLOutputParameters();
+	}
 
+	private void initCFUI() {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
@@ -91,9 +109,14 @@ public class CodedFunctionView extends Composite {
 		toggleSaveButton(false);
 
 		editor.convertOpKeyVariablesToCode();
-		bottomFactoryUi = new CodedFunctionBottomFactoryUI(this, SWT.NONE, this);
-		bottomFactoryUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		bottomFactoryUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		if (isEmbeddedInsideTestCaseView() == false) {
+			bottomFactoryUi = new CodedFunctionBottomFactoryUI(this, SWT.NONE, this);
+			bottomFactoryUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+			bottomFactoryUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		}
+	}
+
+	private void initListeners() {
 
 		runButton.addSelectionListener(new SelectionListener() {
 
@@ -111,7 +134,7 @@ public class CodedFunctionView extends Composite {
 				}
 
 				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog_2(parent.getShell(), "Please Wait Execution is on Progress...", true,
+				msd.openProgressDialog_2(getParent().getShell(), "Please Wait Execution is on Progress...", true,
 						new IRunnableWithProgress() {
 
 							@Override
@@ -194,9 +217,6 @@ public class CodedFunctionView extends Composite {
 
 			}
 		});
-		renderCFLCode();
-		bottomFactoryUi.getCFLInputTable().renderCFLInputParameters();
-		bottomFactoryUi.getCFLOutputTable().renderCFLOutputParameters();
 	}
 
 	public void refreshIntellisense(boolean reinit) {
@@ -306,6 +326,11 @@ public class CodedFunctionView extends Composite {
 		}
 	}
 
+	private void initArtifact() {
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+	}
+
 	public Artifact getArtifact() {
 		return this.artifact;
 	}
@@ -341,5 +366,21 @@ public class CodedFunctionView extends Composite {
 
 	public void setArtifactAssociatedLibraryPath(String artifactAssociatedLibraryPath) {
 		this.artifactAssociatedLibraryPath = artifactAssociatedLibraryPath;
+	}
+
+	public TestCaseView getParentTestCaseView() {
+		return parentTestCaseView;
+	}
+
+	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
+		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public boolean isEmbeddedInsideTestCaseView() {
+		return embeddedInsideTestCaseView;
+	}
+
+	public void setEmbeddedInsideTestCaseView(boolean embeddedInsideTestCaseView) {
+		this.embeddedInsideTestCaseView = embeddedInsideTestCaseView;
 	}
 }
