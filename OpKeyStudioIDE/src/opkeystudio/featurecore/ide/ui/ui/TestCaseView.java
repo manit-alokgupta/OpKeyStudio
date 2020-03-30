@@ -449,23 +449,10 @@ public class TestCaseView extends Composite {
 		globalVariableTable.setHeaderVisible(true);
 		globalVariableTable.setLinesVisible(true);
 
-		/*
-		 * TabItem autoDataGenTabItem = new TabItem(datasTabHolder, SWT.NONE);
-		 * autoDataGenTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/autodata.png"));
-		 * autoDataGenTabItem.setText("Auto Data Generation");
-		 * autoDataGenTabItem.setToolTipText("Auto Data Generation");
-		 * 
-		 * autoDataGenTable = new Table(datasTabHolder, SWT.BORDER |
-		 * SWT.FULL_SELECTION); autoDataGenTabItem.setControl(autoDataGenTable);
-		 * autoDataGenTable.setHeaderVisible(true);
-		 */
-
 		sashForm_2.setWeights(new int[] { 1, 1 });
 
 		TabItem outputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		outputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
-		// outputDataTabItem.setText("Output Data");
 		outputDataTabItem.setToolTipText("Output Data");
 
 		Composite composite_4 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
@@ -474,7 +461,6 @@ public class TestCaseView extends Composite {
 
 		outputDataTable = new OutputDataTable(composite_4, SWT.BORDER | SWT.FULL_SELECTION, this,
 				TABLE_TYPE.INPUTTABLE);
-//		outputDataTable = new Table(composite_4, SWT.BORDER | SWT.FULL_SELECTION);
 		outputDataTable.setHeaderVisible(true);
 		outputDataTable.setLinesVisible(true);
 
@@ -488,6 +474,17 @@ public class TestCaseView extends Composite {
 
 		// Source Code Editor Will Be added here
 		// sourceCodeTabItem.setControl(sourceCodeEditor);
+
+		TabItem sourceCodeTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
+		sourceCodeTabItem.setText("SourceCode");
+		sourceCodeTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		Composite sourceCodeHolder = new Composite(mainTestCaseTabFolder, SWT.NONE);
+		sourceCodeHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		sourceCodeTabItem.setControl(sourceCodeHolder);
+		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		new CodedFunctionView(sourceCodeHolder, SWT.NONE, this);
+
 		cursor.setMenu(flowStepTable.getMenu());
 		cursor.addSelectionListener(new SelectionListener() {
 
