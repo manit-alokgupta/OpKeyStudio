@@ -31,12 +31,12 @@ import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import opkeystudio.core.utils.DtoToCodeConverter;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
+import opkeystudio.opkeystudiocore.core.converter.ArtifactConverter;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -311,7 +311,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 		getCodeFunctionView().setArtifactOpkeyDataLibraryPath(file.getAbsolutePath());
 		getCodeFunctionView().setArtifactAssociatedLibraryPath(file1.getAbsolutePath());
-		JavaClassSource gvClassSource = new DtoToCodeConverter().getJavaClassOfGlobalVariables();
+		JavaClassSource gvClassSource = new ArtifactConverter().getJavaClassOfGlobalVariables();
 		File gvJavaFile = new File(file.getAbsolutePath() + File.separator + gvClassSource.getName() + ".java");
 		try {
 			writeToFile(gvJavaFile, gvClassSource.toString());

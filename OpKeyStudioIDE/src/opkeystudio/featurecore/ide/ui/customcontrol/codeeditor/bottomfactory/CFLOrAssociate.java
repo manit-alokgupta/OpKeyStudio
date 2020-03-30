@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.ResourceManager;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import opkeystudio.core.utils.DtoToCodeConverter;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
@@ -31,6 +30,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
+import opkeystudio.opkeystudiocore.core.converter.ArtifactConverter;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class CFLOrAssociate extends CustomTable {
@@ -116,7 +116,7 @@ public class CFLOrAssociate extends CustomTable {
 						object.setObjectAttributesProperty(attributeProps);
 					}
 
-					JavaClassSource classSource = new DtoToCodeConverter().getJavaClassORObjects(artifact,
+					JavaClassSource classSource = new ArtifactConverter().getJavaClassORObjects(artifact,
 							allOrObjects);
 					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
 							.getArtifactOpkeyDataLibraryPath();
