@@ -102,7 +102,6 @@ public class TestCaseView extends Composite {
 	private ExpandItem expanditemTestObject;
 	private TabItem addStepTabItem;
 	private GenericTree allDataTreeView;
-//	private Tree allDataTreeView;
 	private Label stepInfoImage;
 	private StyledText stepInfoLabel;
 	private FlowStep selectedFlowStep;
@@ -185,7 +184,6 @@ public class TestCaseView extends Composite {
 		itemMoveup = new ToolItem(toolBar_1, SWT.NONE);
 		itemMoveup.setEnabled(false);
 		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
-		// itemMoveup.setText("Move up");
 		itemMoveup.setToolTipText("Move Step Up");
 
 		seperator4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
@@ -193,7 +191,6 @@ public class TestCaseView extends Composite {
 		itemMovedown = new ToolItem(toolBar_1, SWT.NONE);
 		itemMovedown.setEnabled(false);
 		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
-		// itemMovedown.setText("Move Down");
 		itemMovedown.setToolTipText("Move Step Down");
 
 		seperator5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
@@ -201,7 +198,6 @@ public class TestCaseView extends Composite {
 		itemDelete = new ToolItem(toolBar_1, SWT.NONE);
 		itemDelete.setEnabled(false);
 		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
-		// itemDelete.setText("Delete");
 		itemDelete.setToolTipText(" Delete Test Step");
 
 		seperator6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
@@ -209,18 +205,15 @@ public class TestCaseView extends Composite {
 		itemSave = new ToolItem(toolBar_1, SWT.NONE);
 		itemSave.setEnabled(false);
 		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
-		// itemSave.setText("Save");
 		itemSave.setToolTipText("Save");
 
 		seperator7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemRefresh = new ToolItem(toolBar_1, SWT.NONE);
 		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
-		// itemRefresh.setText("Refresh");
 		itemRefresh.setToolTipText("Refresh");
 
 		flowStepTable = new FlowStepTable(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		flowStepTable = new Table(testCaseStepsHolder, SWT.BORDER | SWT.FULL_SELECTION);
 		flowStepTable.setLinesVisible(true);
 		flowStepTable.setHeaderVisible(true);
 		flowStepTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -234,7 +227,6 @@ public class TestCaseView extends Composite {
 		testCaseArgumentsTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		testCaseSashForm.setWeights(new int[] { 7, 3 });
 		stepDetailsTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
-		// stepDetailsTabItem.setText("Step Details");
 		stepDetailsTabItem.setToolTipText("Step Details");
 		stepDetailsTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.STEP_DETAILS_ICON));
 
@@ -269,7 +261,6 @@ public class TestCaseView extends Composite {
 
 		addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_NEW_ICON));
-		// addStepTabItem.setText("Add Step");
 		addStepTabItem.setToolTipText("Add Step");
 		SashForm sashForm_3 = new SashForm(testCaseArgumentsTabFolder, SWT.NONE);
 		sashForm_3.setOrientation(SWT.VERTICAL);
@@ -353,14 +344,12 @@ public class TestCaseView extends Composite {
 		});
 
 		allDataTreeView = new GenericTree(composite_10, SWT.BORDER, this);
-//		allDataTreeView = new Tree(composite_10, SWT.BORDER);
 		allDataTreeView.setLinesVisible(true);
 		allDataTreeView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm_3.setWeights(new int[] { 0, 1 });
 
 		TabItem testObjectTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		testObjectTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
-		// testObjectTabItem.setText("Test Object");
 		testObjectTabItem.setToolTipText("Test Object");
 		Composite composite_2 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
 		testObjectTabItem.setControl(composite_2);
@@ -370,21 +359,18 @@ public class TestCaseView extends Composite {
 		sashForm_1.setOrientation(SWT.VERTICAL);
 
 		testObjectTable = new TestObjectTable(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		testObjectTable = new Table(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
 		testObjectTable.setLinesVisible(true);
 		testObjectTable.setHeaderVisible(true);
 		testObjectTable.setLinesVisible(true);
 		testObjectTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		testObjectTree = new ObjectRepositoryTree(sashForm_1, SWT.BORDER, this);
-//		testObjectTree = new Tree(sashForm_1, SWT.BORDER);
 		testObjectTree.setLinesVisible(true);
 		testObjectTree.setHeaderVisible(true);
 		sashForm_1.setWeights(new int[] { 1, 1 });
 
 		TabItem inputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		inputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
-		// inputDataTabItem.setText("Input Data");
 		inputDataTabItem.setToolTipText("Input Data");
 		Composite composite_3 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
 		inputDataTabItem.setControl(composite_3);
@@ -397,7 +383,6 @@ public class TestCaseView extends Composite {
 		composite_13.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		inputDataTable = new InputDataTable(composite_13, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		inputDataTable = new Table(composite_13, SWT.BORDER | SWT.FULL_SELECTION);
 		inputDataTable.setHeaderVisible(true);
 		inputDataTable.setLinesVisible(true);
 
@@ -821,10 +806,6 @@ public class TestCaseView extends Composite {
 							return;
 						}
 
-						// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-						// notification.setDelayClose(200L);
-						// notification.open();
-
 						new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
 						try {
 							flowStepTable.renderFlowSteps();
@@ -832,7 +813,6 @@ public class TestCaseView extends Composite {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-//						toggleSaveButton(false);
 					}
 
 					flowStepTable.renderFlowSteps();
@@ -878,30 +858,6 @@ public class TestCaseView extends Composite {
 			}
 		});
 
-		/*
-		 * serviceRepoButton.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * allDataTreeView.initSeriveRepo(); }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) { // TODO
-		 * Auto-generated method stub
-		 * 
-		 * } });
-		 */
-
-		/*
-		 * codedFunLibraryButton.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * allDataTreeView.initCodedFunction(); }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) { // TODO
-		 * Auto-generated method stub
-		 * 
-		 * } });
-		 */
-
 		globalVariableTable.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -932,11 +888,6 @@ public class TestCaseView extends Composite {
 	}
 
 	public void saveAll() {
-
-		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-		// notification.setDelayClose(200L);
-		// notification.open();
-
 		new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
 		try {
 			flowStepTable.renderFlowSteps();
