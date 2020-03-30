@@ -29,7 +29,7 @@ public class TestCasePart {
 	@Focus
 	public void onFocus() {
 		System.out.println("Focused");
-		ArtifactTree tree =(ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
+		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 		Artifact artifact = getArtifact();
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());

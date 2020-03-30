@@ -28,7 +28,7 @@ public class ObjectRepositoryPart {
 
 	@Focus
 	public void onFocus() {
-		ArtifactTree tree =(ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
+		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 		Artifact artifact = getArtifact();
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
@@ -42,6 +42,6 @@ public class ObjectRepositoryPart {
 
 	@Persist
 	public void save() {
-		
+
 	}
 }

@@ -283,8 +283,7 @@ public class InputDataTable extends CustomTable {
 					CustomButton button = new CustomButton(this, SWT.NONE);
 					button.setText(cia.getName());
 					button.setToolTipText(cia.getName());
-					button.setImage(
-							ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
+					button.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
 					button.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 					button.addMouseListener(new MouseListener() {
 

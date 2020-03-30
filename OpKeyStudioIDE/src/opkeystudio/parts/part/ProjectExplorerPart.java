@@ -23,11 +23,11 @@ public class ProjectExplorerPart {
 
 	@Focus
 	public void onFocus() {
-		
+
 	}
 
 	@Persist
 	public void save() {
-		
+
 	}
 }

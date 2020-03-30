@@ -47,7 +47,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite.setLayout(new GridLayout(1, false));
-		
+
 		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
 		expandBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
@@ -56,7 +56,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		item.setText("Bottom Factory");
 		item.setHeight(400);
 		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
-		
+
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
 		item.setControl(grpMenu);

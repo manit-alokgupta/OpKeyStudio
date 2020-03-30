@@ -79,7 +79,7 @@ public class BottomFactoryTestCaseUi extends Composite {
 		item.setText("Bottom Factory");
 		item.setHeight(400);
 		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
-		
+
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
 		item.setControl(grpMenu);

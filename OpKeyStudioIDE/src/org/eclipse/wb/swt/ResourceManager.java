@@ -41,7 +41,7 @@ import org.osgi.framework.Bundle;
  * 
  * Even though this class can be used to manage these resources, if they are
  * here for the duration of the application and not used then you still have an
- * effective resource leak. 
+ * effective resource leak.
  * 
  * Application code must explicitly invoke the <code>dispose()</code> method to
  * release the operating system resources managed by cached objects when those
@@ -57,7 +57,7 @@ import org.osgi.framework.Bundle;
 public class ResourceManager extends SWTResourceManager {
 
 	/**
-	 * The map where we store our images. 
+	 * The map where we store our images.
 	 */
 	private static Map<ImageDescriptor, Image> m_descriptorImageMap = new HashMap<ImageDescriptor, Image>();
 
@@ -126,12 +126,9 @@ public class ResourceManager extends SWTResourceManager {
 	/**
 	 * Returns an {@link Image} composed of a base image decorated by another image.
 	 * 
-	 * @param baseImage
-	 *            the base {@link Image} that should be decorated.
-	 * @param decorator
-	 *            the {@link Image} to decorate the base image.
-	 * @param corner
-	 *            the corner to place decorator image.
+	 * @param baseImage the base {@link Image} that should be decorated.
+	 * @param decorator the {@link Image} to decorate the base image.
+	 * @param corner    the corner to place decorator image.
 	 * @return the resulting decorated {@link Image}.
 	 */
 	public static Image decorateImage(final Image baseImage, final Image decorator, final int corner) {
@@ -159,15 +156,17 @@ public class ResourceManager extends SWTResourceManager {
 				protected void drawCompositeImage(int width, int height) {
 					drawImage(createCachedImageDataProvider(baseImage), 0, 0);
 					if (corner == TOP_LEFT) {
-						drawImage(getUnzoomedImageDataProvider(decorator.getImageData()) , 0, 0);
+						drawImage(getUnzoomedImageDataProvider(decorator.getImageData()), 0, 0);
 					} else if (corner == TOP_RIGHT) {
 						drawImage(getUnzoomedImageDataProvider(decorator.getImageData()), bib.width - dib.width, 0);
 					} else if (corner == BOTTOM_LEFT) {
 						drawImage(getUnzoomedImageDataProvider(decorator.getImageData()), 0, bib.height - dib.height);
 					} else if (corner == BOTTOM_RIGHT) {
-						drawImage(getUnzoomedImageDataProvider(decorator.getImageData()), bib.width - dib.width, bib.height - dib.height);
+						drawImage(getUnzoomedImageDataProvider(decorator.getImageData()), bib.width - dib.width,
+								bib.height - dib.height);
 					}
 				}
+
 				@Override
 				protected Point getSize() {
 					return baseImageSize;
@@ -179,11 +178,10 @@ public class ResourceManager extends SWTResourceManager {
 		}
 		return result;
 	}
-	
+
 	private static ImageDataProvider getUnzoomedImageDataProvider(ImageData imageData) {
 		return zoom -> zoom == 100 ? imageData : null;
 	}
-
 
 	/**
 	 * Dispose all of the cached images.

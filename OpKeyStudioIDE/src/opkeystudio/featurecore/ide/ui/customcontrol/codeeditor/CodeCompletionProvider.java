@@ -51,13 +51,15 @@ public class CodeCompletionProvider {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog(null, "Please wait initializing Intellisense...",false,new IRunnableWithProgress() {
-					
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						new EditorTools(cview).initIntellisense(true);	
-					}
-				});
+				msd.openProgressDialog(null, "Please wait initializing Intellisense...", false,
+						new IRunnableWithProgress() {
+
+							@Override
+							public void run(IProgressMonitor monitor)
+									throws InvocationTargetException, InterruptedException {
+								new EditorTools(cview).initIntellisense(true);
+							}
+						});
 				msd.closeProgressDialog();
 			}
 		});
@@ -186,7 +188,8 @@ public class CodeCompletionProvider {
 		try {
 			@SuppressWarnings("rawtypes")
 			Constructor[] _constructors = _class.getConstructors();
-			for (@SuppressWarnings("rawtypes") Constructor constructor : _constructors) {
+			for (@SuppressWarnings("rawtypes")
+			Constructor constructor : _constructors) {
 				Parameter[] parameters = constructor.getParameters();
 				String parametersString = "";
 				String argumentsString = "";

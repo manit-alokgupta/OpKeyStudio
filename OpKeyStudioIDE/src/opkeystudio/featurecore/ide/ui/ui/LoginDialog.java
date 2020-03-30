@@ -142,7 +142,8 @@ public class LoginDialog extends Dialog {
 					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
 							"Please check your credential");
 				} catch (Exception e2) {
-					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed", "Wrong Domain Url provided. Please check.");
+					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
+							"Wrong Domain Url provided. Please check.");
 				}
 			}
 		});

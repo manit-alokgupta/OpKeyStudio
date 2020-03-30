@@ -27,7 +27,7 @@ public class OpKeyStudioPreferences {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getBasicSettings(String key) {
 		IEclipsePreferences preferences = InstanceScope.INSTANCE
 				.getNode("opkeystudio.core.utils.OpKeyStudioPreferences");
@@ -35,5 +35,5 @@ public class OpKeyStudioPreferences {
 		org.osgi.service.prefs.Preferences sub1 = preferences.node("basicSettings");
 		return sub1.get(key, null);
 	}
-	
+
 }

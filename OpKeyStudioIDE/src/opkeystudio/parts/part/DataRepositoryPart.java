@@ -29,7 +29,7 @@ public class DataRepositoryPart {
 
 	@Focus
 	public void onFocus() {
-		ArtifactTree tree =(ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
+		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 		Artifact artifact = getArtifact();
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
