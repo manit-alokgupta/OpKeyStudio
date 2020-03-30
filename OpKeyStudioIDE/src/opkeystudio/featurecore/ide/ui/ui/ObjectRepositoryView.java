@@ -50,6 +50,7 @@ import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
+import pcloudystudio.featurecore.ui.dialog.MobileSpyDialog;
 
 public class ObjectRepositoryView extends Composite {
 	private Artifact artifact;
@@ -62,6 +63,7 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem refreshObject;
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
+	private ToolItem androidDeviceConfiguration;
 	private ToolItem androidAddtoOr;
 	private MenuItem cutMenuItem;
 	private MenuItem copyMenuItem;
@@ -261,6 +263,12 @@ public class ObjectRepositoryView extends Composite {
 		refreshObject = new ToolItem(toolBar, SWT.NONE);
 		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		refreshObject.setToolTipText("Refresh");
+
+		new ToolItem(toolBar, SWT.SEPARATOR);
+		androidDeviceConfiguration = new ToolItem(toolBar, SWT.NONE);
+		androidDeviceConfiguration
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
+		androidDeviceConfiguration.setToolTipText("Device Configuration");
 
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		// Android Add TO or Will be here
@@ -521,6 +529,18 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
+		androidDeviceConfiguration.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				openDeviceConfigurationDialog();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
 		androidAddtoOr.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -663,9 +683,12 @@ public class ObjectRepositoryView extends Composite {
 		deleteMenuItem.setEnabled(status);
 	}
 
-	private void openAndroidAddtoORDialog() {
-		// new MobileSpyDialog(this.getShell(), SWT.NONE, this).open();
+	private void openDeviceConfigurationDialog() {
 		new DeviceConfigurationDialog(this.getShell(), SWT.NONE).open();
+	}
+
+	private void openAndroidAddtoORDialog() {
+		new MobileSpyDialog(this.getShell(), SWT.NONE, this).open();
 	}
 
 	public void renameFunction() {

@@ -225,15 +225,15 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnNext.setBounds(438, 175, 105, 33);
 		btnNext.setText("Next");
 
-		Button btnCancel = new Button(shlDeviceConfiguration, SWT.NONE);
-		btnCancel.addSelectionListener(new SelectionAdapter() {
+		Button btnClose = new Button(shlDeviceConfiguration, SWT.NONE);
+		btnClose.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				shlDeviceConfiguration.close();
 			}
 		});
-		btnCancel.setBounds(551, 175, 105, 33);
-		btnCancel.setText("Cancel");
+		btnClose.setBounds(551, 175, 105, 33);
+		btnClose.setText("Close");
 		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("static-access")
 			@Override
