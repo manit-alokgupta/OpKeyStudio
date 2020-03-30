@@ -1,5 +1,8 @@
 package pcloudystudio.featurecore.ui.dialog;
 
+//Created by Alok Gupta on 20/02/2020.
+//Copyright © 2020 SSTS Inc. All rights reserved.
+
 import java.util.LinkedHashMap;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -204,7 +207,7 @@ public class AppiumSettingsDialog extends Dialog {
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				capabilityNameCombo.removeAll();
 				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
@@ -213,7 +216,7 @@ public class AppiumSettingsDialog extends Dialog {
 					public void modifyText(ModifyEvent e) {
 						if (capabilityTextValue.getText().length() > 0
 								&& capabilityNameCombo.getSelectionIndex() != -1) {
-							
+
 						}
 					}
 				});
@@ -222,7 +225,7 @@ public class AppiumSettingsDialog extends Dialog {
 					public void modifyText(ModifyEvent e) {
 						if (capabilityTextValue.getText().length() > 0
 								&& capabilityNameCombo.getSelectionIndex() != -1) {
-							
+
 						}
 					}
 				});
@@ -236,13 +239,12 @@ public class AppiumSettingsDialog extends Dialog {
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				if (capabilityTable.getItemCount() >= 1) {
 					if (capabilityTable.getSelectionIndex() != -1)
 						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
-				
-				
+
 			}
 		});
 		btnDelete.setEnabled(true);

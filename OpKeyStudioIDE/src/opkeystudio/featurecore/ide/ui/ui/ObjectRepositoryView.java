@@ -49,7 +49,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
-import pcloudystudio.featurecore.ui.dialog.MobileSpyDialog;
+import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 
 public class ObjectRepositoryView extends Composite {
 	private Artifact artifact;
@@ -265,15 +265,16 @@ public class ObjectRepositoryView extends Composite {
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		// Android Add TO or Will be here
 		androidAddtoOr = new ToolItem(toolBar, SWT.NONE);
-		androidAddtoOr.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOBILE_ADD_TO_OR_CAPTURED_IMAGE));
+		androidAddtoOr.setImage(
+				ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOBILE_ADD_TO_OR_CAPTURED_IMAGE));
 		androidAddtoOr.setToolTipText("Spy Android");
 
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
-//		Tree tree = new Tree(composite_3, SWT.BORDER);
+		// Tree tree = new Tree(composite_3, SWT.BORDER);
 		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectRepositoryTree.setBounds(0, 0, 85, 85);
 
-//		bottomFactoryORUi = new BottomFactoryORUi(composite_3, SWT.BORDER);
+		// bottomFactoryORUi = new BottomFactoryORUi(composite_3, SWT.BORDER);
 		// bottomFactoryORUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		// bottomFactoryORUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		// 1, 1));
@@ -663,7 +664,8 @@ public class ObjectRepositoryView extends Composite {
 	}
 
 	private void openAndroidAddtoORDialog() {
-		new MobileSpyDialog(this.getShell(), SWT.NONE, this).open();
+		// new MobileSpyDialog(this.getShell(), SWT.NONE, this).open();
+		new DeviceConfigurationDialog(this.getShell(), SWT.NONE).open();
 	}
 
 	public void renameFunction() {
