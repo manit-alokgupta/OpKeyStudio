@@ -65,8 +65,8 @@ public class ArtifactTranspiler {
 				continue;
 			}
 			File file = createArtifactFile(artifact);
-			new ORTranspiler().getJavaClassOfOrObjectArtifact(artifact, file);
-			new DRTranspiler().getJavaClassOfDataRepository(artifact, file);
+			new ORTranspiler().transpile(artifact, file);
+			new DRTranspiler().transpile(artifact, file);
 		}
 	}
 

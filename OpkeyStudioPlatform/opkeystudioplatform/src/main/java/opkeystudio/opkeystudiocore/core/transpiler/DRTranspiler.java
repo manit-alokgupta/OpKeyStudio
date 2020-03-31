@@ -7,8 +7,10 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 
-public class DRTranspiler {
-	public void getJavaClassOfDataRepository(Artifact artifact, File outputFile) {
+public class DRTranspiler implements Transpiler {
+
+	@Override
+	public void transpile(Artifact artifact, File outputFile) {
 		if (artifact.getFile_type_enum() != MODULETYPE.DataRepository) {
 			return;
 		}
