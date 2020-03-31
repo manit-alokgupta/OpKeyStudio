@@ -64,7 +64,6 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
 	private ToolItem androidDeviceConfiguration;
-	private ToolItem androidAddtoOr;
 	private MenuItem cutMenuItem;
 	private MenuItem copyMenuItem;
 	private MenuItem pasteMenuItem;
@@ -266,16 +265,9 @@ public class ObjectRepositoryView extends Composite {
 
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		androidDeviceConfiguration = new ToolItem(toolBar, SWT.NONE);
-		androidDeviceConfiguration
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
-		androidDeviceConfiguration.setToolTipText("Device Configuration");
-
-		new ToolItem(toolBar, SWT.SEPARATOR);
-		// Android Add TO or Will be here
-		androidAddtoOr = new ToolItem(toolBar, SWT.NONE);
-		androidAddtoOr.setImage(
+		androidDeviceConfiguration.setImage(
 				ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOBILE_ADD_TO_OR_CAPTURED_IMAGE));
-		androidAddtoOr.setToolTipText("Spy Android");
+		androidDeviceConfiguration.setToolTipText("Device Configuration and Spy Android");
 
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
 		// Tree tree = new Tree(composite_3, SWT.BORDER);
@@ -541,17 +533,7 @@ public class ObjectRepositoryView extends Composite {
 
 			}
 		});
-		androidAddtoOr.addSelectionListener(new SelectionListener() {
 
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				openAndroidAddtoORDialog();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
 		addObjectAttribute.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -685,10 +667,6 @@ public class ObjectRepositoryView extends Composite {
 
 	private void openDeviceConfigurationDialog() {
 		new DeviceConfigurationDialog(this.getShell(), SWT.NONE, this).open();
-	}
-
-	private void openAndroidAddtoORDialog() {
-		new MobileSpyDialog(this.getShell(), SWT.NONE, this).open();
 	}
 
 	public void renameFunction() {
