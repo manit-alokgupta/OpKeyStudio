@@ -4,7 +4,6 @@ package pcloudystudio.featurecore.ui.dialog;
 //Copyright © 2020 SSTS Inc. All rights reserved.
 
 import java.io.File;
-import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -23,16 +22,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import io.appium.java_client.android.AndroidDriver;
+import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 
 import org.eclipse.swt.widgets.FileDialog;
-
-import pcloudystudio.appium.AndroidDriverObject;
-import pcloudystudio.appium.AppiumPortIpInfo;
-import pcloudystudio.appium.AppiumServer;
 import pcloudystudio.appium.MobileCapabilities;
 import pcloudystudio.core.mobile.util.AndroidDeviceUtil;
 
@@ -40,6 +32,7 @@ public class DeviceConfigurationDialog extends Dialog {
 
 	protected Object result;
 	protected Shell shlDeviceConfiguration;
+	private ObjectRepositoryView parentObjectRepositoryView;
 
 	private Composite compositeConfiguration;
 	private Label lblDeviceConfiguration;
@@ -57,6 +50,12 @@ public class DeviceConfigurationDialog extends Dialog {
 	 */
 	public DeviceConfigurationDialog(Shell parent, int style) {
 		super(parent, style);
+		setText("SWT Dialog");
+	}
+
+	public DeviceConfigurationDialog(Shell parent, int style, ObjectRepositoryView objectRepositoryView) {
+		super(parent, style);
+		this.setParentObjectRepositoryView(objectRepositoryView);
 		setText("SWT Dialog");
 	}
 
@@ -194,51 +193,8 @@ public class DeviceConfigurationDialog extends Dialog {
 				} else if (applicationPathText.getText().isEmpty()) {
 					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note", "Application Cannot Be Empty");
 				} else {
-					Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
-					System.out.println("server status is " + " " + serverStatus);
-					if (serverStatus) { // if server is already started on given port.Making driver object
-						java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
-
-							@Override
-							public void run() {
-
-								DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-
-								try {
-									AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
-											new URL("http://" + AppiumPortIpInfo.getHostAddress() + ":"
-													+ AppiumPortIpInfo.getPort() + "/wd/hub"),
-											mobileCapability);
-									AndroidDriverObject.getInstance().setDriver(driver);
-								} catch (Exception ex) {
-									ex.printStackTrace();
-								}
-							}
-						});
-
-					} else { // starting new server and making new driver object on it
-
-						java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
-
-							@Override
-							public void run() {
-
-								AppiumServer.startServer();
-
-								DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-
-								try {
-									AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
-											new URL("http://" + AppiumPortIpInfo.getHostAddress() + ":"
-													+ AppiumPortIpInfo.getPort() + "/wd/hub"),
-											mobileCapability);
-									AndroidDriverObject.getInstance().setDriver(driver);
-								} catch (Exception ex) {
-									ex.printStackTrace();
-								}
-							}
-						});
-					}
+					shlDeviceConfiguration.close();
+					new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
 				}
 			}
 		});
@@ -283,6 +239,15 @@ public class DeviceConfigurationDialog extends Dialog {
 				}
 			}
 		});
+
+	}
+
+	public ObjectRepositoryView getParentObjectRepositoryView() {
+		return parentObjectRepositoryView;
+	}
+
+	public void setParentObjectRepositoryView(ObjectRepositoryView parentObjectRepositoryView) {
+		this.parentObjectRepositoryView = parentObjectRepositoryView;
 
 	}
 }
