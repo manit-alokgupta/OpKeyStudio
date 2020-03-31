@@ -1,5 +1,7 @@
 package pcloudystudio.featurecore.ui.dialog;
 
+import java.io.File;
+
 //Created by Alok Gupta on 20/02/2020.
 //Copyright © 2020 SSTS Inc. All rights reserved.
 
@@ -25,6 +27,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -183,6 +186,16 @@ public class AppiumSettingsDialog extends Dialog {
 				String dir = dirDialog.open();
 				if (dir != null) {
 					appiumDirectory.setText(dir);
+
+				}
+
+				if (!appiumDirectory.getText()
+						.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
+
+					MessageDialog.openError(shlAppiumSettings, "Please Note",
+							"Invalid Directory.Please Select Valid Appium Directory");
+					appiumDirectory.setText("");
+
 				}
 			}
 		});
@@ -303,10 +316,33 @@ public class AppiumSettingsDialog extends Dialog {
 		saveInfo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				validate();
+			Boolean status=validate();
+			   if (status) {
 				AppiumPortIpInfo.getInstance().setHostAddress(serverAddress.getText());
 				AppiumPortIpInfo.getInstance().setPort(portNumber.getText());
 				AppiumPortIpInfo.getInstance().setAppiumDirectory(appiumDirectory.getText());
+				if (capabilityTable.getItemCount() != 0) {
+					try {
+						if (capabilityTable.getItemCount() > 0) {
+							LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
+							for (TableItem row : capabilityTable.getItems()) {
+
+								mapOfCapabilities.put(row.getText(0), row.getText(1));
+
+							}
+
+							MobileCapabilities.getinstance();
+							MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+						}
+
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+
+				}
+
+				MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Settings Saved Successfully");
+			   } 
 			}
 		});
 		saveInfo.setText("save");
@@ -382,34 +418,40 @@ public class AppiumSettingsDialog extends Dialog {
 		item.setText(new String[] { key, value });
 	}
 
-	public void validate() {
+	public Boolean validate() {
 		if (serverAddress.getText().isEmpty()) {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "ServerAddress cannot be empty");
+			return false;
 		} else if (portNumber.getText().isEmpty()) {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Port Cannot Be Empty");
-		} else if (appiumDirectory.getText().isEmpty()) {
+			return false;
+		} else if (appiumDirectory.getText().isEmpty() || appiumDirectory.getText().equals("")) {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "AppiumDirectory Cannot Be Empty");
-		} else if (capabilityTable.getItemCount() != 0) {
-			try {
-				if (capabilityTable.getItemCount() > 0) {
-					LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
-					for (TableItem row : capabilityTable.getItems()) {
+			return false;
 
-						mapOfCapabilities.put(row.getText(0), row.getText(1));
+		} else if (!appiumDirectory.getText()
+				.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
+			MessageDialog.openError(shlAppiumSettings, "Please Note",
+					"Invalid Directory.Please Select valid Appium Directory");
+			return false;
+		}
 
-					}
-
-					MobileCapabilities.getinstance();
-					MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
-				}
-
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
+		else if (capabilityTable.getItemCount() == 0) {
+			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "You Have Not Provided Any Capability");
 
 		} else {
-			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "You Have Not Provided Any Capability");
+			return true;
+
 		}
+		return false;
+
+	}
+
+	public void showDialog(String str) {
+		MessageBox dialog = new MessageBox(shlAppiumSettings, SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
+		dialog.setText(" Info");
+		dialog.setMessage(str);
+		dialog.open();
 
 	}
 }
