@@ -135,12 +135,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlSpyMobile = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
+		shlSpyMobile = new Shell(getParent(), SWT.DIALOG_TRIM);
 		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/mobile_spy.png"));
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlSpyMobile.setSize(new Point(800, 750));
 		shlSpyMobile.setText(DIALOG_TITLE);
-		shlSpyMobile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlSpyMobile.getBounds();
@@ -150,22 +149,22 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		shlSpyMobile.setLayout(new GridLayout(1, false));
 
 		Composite toolsComposite = new Composite(shlSpyMobile, SWT.BORDER);
-		toolsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		toolsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_toolsComposite.widthHint = 782;
 		gd_toolsComposite.heightHint = 43;
 		toolsComposite.setLayoutData(gd_toolsComposite);
 
 		Composite spyContainerComposite = new Composite(shlSpyMobile, SWT.NONE);
-		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_spyContainerComposite.heightHint = 599;
 		gd_spyContainerComposite.widthHint = 786;
 		spyContainerComposite.setLayoutData(gd_spyContainerComposite);
 		spyContainerComposite.setLayout(new FillLayout());
 
 		Composite bottomComposite = new Composite(shlSpyMobile, SWT.BORDER);
-		bottomComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		bottomComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_bottomComposite.widthHint = 400;
 		gd_bottomComposite.heightHint = 39;
 		bottomComposite.setLayoutData(gd_bottomComposite);
@@ -173,8 +172,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
 
 		compositeTreeHierarchy = new Composite(sashForm, SWT.BORDER);
-		compositeTreeHierarchy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		compositeTreeHierarchy.setLayout(new GridLayout(1, true));
+		compositeTreeHierarchy.setLayout(new GridLayout(1, false));
 
 		lblAllObjects = new Label(compositeTreeHierarchy, SWT.NONE);
 		lblAllObjects.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
@@ -182,7 +180,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 		allObjectsTreeScrolledComposite = new ScrolledComposite(compositeTreeHierarchy,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_allObjectsTreeScrolledComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		GridData gd_allObjectsTreeScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_allObjectsTreeScrolledComposite.widthHint = 390;
 		gd_allObjectsTreeScrolledComposite.heightHint = 524;
 		allObjectsTreeScrolledComposite.setLayoutData(gd_allObjectsTreeScrolledComposite);
@@ -190,7 +188,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		allObjectsTreeScrolledComposite.setExpandVertical(true);
 
 		compositeObjectProperties = new Composite(sashForm, SWT.BORDER);
-		compositeObjectProperties.setLayout(new GridLayout(1, true));
+		compositeObjectProperties.setLayout(new GridLayout(1, false));
 
 		lblAllObjectProperties = new Label(compositeObjectProperties, SWT.NONE);
 		lblAllObjectProperties.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
@@ -201,14 +199,14 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		lblObjectName.setText("Object Name");
 
 		textObjectName = new Text(compositeObjectProperties, SWT.BORDER);
-		GridData gd_textObjectName = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
+		GridData gd_textObjectName = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_textObjectName.widthHint = 322;
 		textObjectName.setLayoutData(gd_textObjectName);
 		textObjectName.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
 
 		objectPropertiesScrolledComposite = new ScrolledComposite(compositeObjectProperties,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_objectPropertiesScrolledComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		GridData gd_objectPropertiesScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_objectPropertiesScrolledComposite.heightHint = 395;
 		gd_objectPropertiesScrolledComposite.widthHint = 310;
 		objectPropertiesScrolledComposite.setLayoutData(gd_objectPropertiesScrolledComposite);
@@ -217,7 +215,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		new Label(compositeObjectProperties, SWT.NONE);
 
 		composite = new Composite(compositeObjectProperties, SWT.BORDER);
-		GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		GridData gd_composite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_composite.heightHint = 18;
 		gd_composite.widthHint = 335;
 		composite.setLayoutData(gd_composite);
@@ -332,7 +330,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			btnCapture.setEnabled(false);
 			btnStop.setEnabled(false);
 		}
-		captureObjectAction();
 	}
 
 	static void setTreeRoot(MobileSpyDialog mobileSpyDialog, TreeMobileElement appRootElement) {
@@ -594,7 +591,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		try {
 			this.btnCapture.setEnabled(false);
 			btnClickAndMoveToNextScreen.setEnabled(false);
-			this.shlSpyMobile.setVisible(true);
 			this.openDeviceView();
 			dialog.run(true, true, runnable);
 		} catch (InterruptedException ex) {
