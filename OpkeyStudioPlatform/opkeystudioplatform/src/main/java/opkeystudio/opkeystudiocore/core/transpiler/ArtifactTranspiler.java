@@ -8,20 +8,13 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
-import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.AbstractTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
-import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class ArtifactTranspiler extends AbstractTranspiler {
+public class ArtifactTranspiler {
 
-
-	public ArtifactTranspiler() {
-		setFileExtension(".java");
-		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
-	}
 
 	public void setPackageProperties() {
 		List<Artifact> allArtifacts = GlobalLoader.getInstance().getAllArtifacts();

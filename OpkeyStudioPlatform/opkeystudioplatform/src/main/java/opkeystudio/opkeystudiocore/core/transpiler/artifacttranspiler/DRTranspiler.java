@@ -8,9 +8,13 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.transpiler.GlobalTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class DRTranspiler extends AbstractTranspiler {
-
+	public DRTranspiler() {
+		setFileExtension(".java");
+		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
+	}
 	@Override
 	public void transpile(Artifact artifact) {
 		if (artifact.getFile_type_enum() != MODULETYPE.DataRepository) {
