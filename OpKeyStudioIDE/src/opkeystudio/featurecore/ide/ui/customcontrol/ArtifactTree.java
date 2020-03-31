@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.ArtifactTranspilerAsync;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
@@ -199,7 +200,7 @@ public class ArtifactTree extends CustomTree {
 		expandAll(rootNode);
 		GlobalLoader.getInstance().initAllArguments();
 		new ArtifactTranspiler().setPackageProperties();
-		new ArtifactTranspiler().transpileAllArtifacts();
+		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 	}
 
 	public void highlightArtifact(String artifactId) {

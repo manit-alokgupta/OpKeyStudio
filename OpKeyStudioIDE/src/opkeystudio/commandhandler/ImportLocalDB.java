@@ -60,9 +60,6 @@ public class ImportLocalDB {
 		SQLiteCommunicator.getOpKeyDBCommunicator(sqlComm);
 		List<Project> projects = new ProjectDataApi().getProjectList();
 		ServiceRepository.getInstance().setDefaultProject(projects.get(0));
-		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
-		tree.renderArtifacts();
-
 	}
 
 }
