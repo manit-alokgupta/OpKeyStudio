@@ -39,7 +39,13 @@ public class GlobalTranspiler {
 		return false;
 	}
 
-	public JavaClassSource getJavaClassORObjects(Artifact artifact, List<ORObject> orObjects) {
+	public JavaClassSource getJavaClassORObjects(Artifact artifact) {
+		List<ORObject> orObjects = GlobalLoader.getInstance().getAllOrObjects(artifact.getId());
+		for (ORObject object : orObjects) {
+			List<ObjectAttributeProperty> attributeProps = GlobalLoader.getInstance()
+					.getORObjectAttributeProperty(object.getObject_id());
+			object.setObjectAttributesProperty(attributeProps);
+		}
 		String classBody = "public class %s{%s}";
 		String staticBody = "%s static {%s}";
 		String staticVariableBody = "public static ORObject %s;";
@@ -58,7 +64,7 @@ public class GlobalTranspiler {
 					String varName = variableName + String.valueOf(count);
 					boolean contains = isVariableAlreadyAdded(variableNames, varName);
 					if (contains == false) {
-						//Need to Fix this
+						// Need to Fix this
 						orobject.setVariableName(varName);
 						break;
 					}
@@ -97,13 +103,17 @@ public class GlobalTranspiler {
 
 		String staticBodyData = String.format(staticBody, staticVariableDatas, variabledeclarationdata);
 		String classBodyData = String.format(classBody, artifact.getVariableName(), staticBodyData);
-		System.out.println(classBodyData);
 		JavaClassSource outClass = (JavaClassSource) Roaster.parse(classBodyData);
 		outClass.addImport("com.opkeystudio.runtime.ORObject");
 		return outClass;
 	}
 
-	public JavaClassSource getJavaClassDRObjects(Artifact artifact, List<DRColumnAttributes> drColumns) {
+	public JavaClassSource getJavaClassDRObjects(Artifact artifact) {
+		List<DRColumnAttributes> drColumns = GlobalLoader.getInstance().getAllDRColumns(artifact.getId());
+		for (DRColumnAttributes drColumn : drColumns) {
+			List<DRCellAttributes> drCells = GlobalLoader.getInstance().getDRColumnCells(drColumn.getColumn_id());
+			drColumn.setDrCellAttributes(drCells);
+		}
 		String classBody = "public class %s{%s}";
 		String staticBody = "%s static {%s}";
 

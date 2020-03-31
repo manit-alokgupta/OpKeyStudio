@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -64,7 +66,34 @@ public class ArtifactTranspiler {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
 				continue;
 			}
-			createArtifactFile(artifact);
+			File file = createArtifactFile(artifact);
+			getJavaClassOfOrObjectArtifact(artifact, file);
+			getJavaClassOfDataRepository(artifact, file);
+		}
+	}
+
+	private void getJavaClassOfOrObjectArtifact(Artifact artifact, File outputFile) {
+		if (artifact.getFile_type_enum() != MODULETYPE.ObjectRepository) {
+			return;
+		}
+		JavaClassSource classSource = new GlobalTranspiler().getJavaClassORObjects(artifact);
+		writeCodeToFile(outputFile, classSource);
+	}
+
+	private void getJavaClassOfDataRepository(Artifact artifact, File outputFile) {
+		if (artifact.getFile_type_enum() != MODULETYPE.DataRepository) {
+			return;
+		}
+		JavaClassSource classSource = new GlobalTranspiler().getJavaClassDRObjects(artifact);
+		writeCodeToFile(outputFile, classSource);
+	}
+
+	private void writeCodeToFile(File file, JavaClassSource classSource) {
+		try {
+			Utilities.getInstance().writeToFile(file, classSource.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
