@@ -24,11 +24,18 @@ public class ArtifactTranspiler {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
 				continue;
 			}
+			int count = 0;
 			String packagePath = "";
 			String packageName = "";
 			Artifact tempArtfact = artifact;
 			List<String> variableNames = new ArrayList<String>();
 			while (tempArtfact != null) {
+				if (count == 0) {
+					count++;
+					tempArtfact = tempArtfact.getParentArtifact();
+					continue;
+				}
+
 				variableNames.add(tempArtfact.getVariableName());
 				tempArtfact = tempArtfact.getParentArtifact();
 			}
@@ -50,6 +57,7 @@ public class ArtifactTranspiler {
 	}
 
 	public void transpileAllArtifacts() {
+		String transpiledDataFolder = getTranspiledDataFolder();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		for (Artifact artifact : artifacts) {
 			System.out.println("Artifact Package Path " + artifact.getPackagePath() + "   " + artifact.getName());
