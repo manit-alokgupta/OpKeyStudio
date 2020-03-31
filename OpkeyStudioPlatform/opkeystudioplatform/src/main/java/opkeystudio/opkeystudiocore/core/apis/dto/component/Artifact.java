@@ -46,6 +46,8 @@ public class Artifact extends Modified {
 	@DBField
 	private String state_id;
 
+	private Artifact parentArtifact;
+
 	public String getModified_on() {
 		return modified_on;
 	}
@@ -189,5 +191,13 @@ public class Artifact extends Modified {
 			return "unknownVar";
 		}
 		return varName;
+	}
+
+	public Artifact getParentArtifact() {
+		return parentArtifact;
+	}
+
+	public void setParentArtifact(Artifact parentArtifact) {
+		this.parentArtifact = parentArtifact;
 	}
 }
