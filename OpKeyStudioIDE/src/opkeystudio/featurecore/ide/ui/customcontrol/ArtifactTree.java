@@ -198,6 +198,7 @@ public class ArtifactTree extends CustomTree {
 		}
 		expandAll(rootNode);
 		GlobalLoader.getInstance().initAllArguments();
+		new ArtifactTranspiler().setPackageProperties();
 		new ArtifactTranspiler().transpileAllArtifacts();
 	}
 
