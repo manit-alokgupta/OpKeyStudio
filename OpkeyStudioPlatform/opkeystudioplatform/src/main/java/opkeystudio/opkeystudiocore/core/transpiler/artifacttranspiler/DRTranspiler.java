@@ -9,14 +9,15 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.transpiler.GlobalTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 
-public class DRTranspiler implements Transpiler {
+public class DRTranspiler extends AbstractTranspiler {
 
 	@Override
-	public void transpile(Artifact artifact, File outputFile) {
+	public void transpile(Artifact artifact) {
 		if (artifact.getFile_type_enum() != MODULETYPE.DataRepository) {
 			return;
 		}
+		File file = createArtifactFile(artifact);
 		JavaClassSource classSource = new GlobalTranspiler().getJavaClassDRObjects(artifact);
-		new TranspilerUtilities().writeCodeToFile(outputFile, classSource);
+		new TranspilerUtilities().writeCodeToFile(file, classSource);
 	}
 }
