@@ -9,6 +9,8 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactTranspiler {

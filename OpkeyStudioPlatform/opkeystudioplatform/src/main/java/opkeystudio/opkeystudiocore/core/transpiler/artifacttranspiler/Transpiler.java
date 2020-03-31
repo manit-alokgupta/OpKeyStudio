@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.transpiler;
+package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler;
 
 import java.io.File;
 
