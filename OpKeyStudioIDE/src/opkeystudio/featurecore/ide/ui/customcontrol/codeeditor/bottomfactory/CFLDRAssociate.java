@@ -109,20 +109,10 @@ public class CFLDRAssociate extends CustomTable {
 				setSelection(item);
 				Artifact artifact = (Artifact) item.getControlData();
 				if (associateOR.getSelection() == true) {
-					List<DRColumnAttributes> allDRColumns = GlobalLoader.getInstance()
-							.getAllDRColumns(artifact.getId());
-					for (DRColumnAttributes drColumn : allDRColumns) {
-						List<DRCellAttributes> drCells = GlobalLoader.getInstance()
-								.getDRColumnCells(drColumn.getColumn_id());
-						drColumn.setDrCellAttributes(drCells);
-					}
-
-					JavaClassSource classSource = new GlobalTranspiler().getJavaClassDRObjects(artifact,
-							allDRColumns);
+					JavaClassSource classSource = new GlobalTranspiler().getJavaClassDRObjects(artifact);
 					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
 							.getArtifactOpkeyDataLibraryPath();
-					File file = new File(
-							dataLibraryPath + File.separator + artifact.getVariableName() + ".java");
+					File file = new File(dataLibraryPath + File.separator + artifact.getVariableName() + ".java");
 					BufferedWriter bw;
 					try {
 						bw = new BufferedWriter(new FileWriter(file));
@@ -140,10 +130,8 @@ public class CFLDRAssociate extends CustomTable {
 					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense(false);
 				}
 				if (associateOR.getSelection() == false) {
-					File file1 = new File(
-							dataLibraryPath + File.separator + artifact.getVariableName() + ".class");
-					File file2 = new File(
-							dataLibraryPath + File.separator + artifact.getVariableName() + ".java");
+					File file1 = new File(dataLibraryPath + File.separator + artifact.getVariableName() + ".class");
+					File file2 = new File(dataLibraryPath + File.separator + artifact.getVariableName() + ".java");
 					if (file1.exists()) {
 						try {
 							Files.delete(file1.toPath());
