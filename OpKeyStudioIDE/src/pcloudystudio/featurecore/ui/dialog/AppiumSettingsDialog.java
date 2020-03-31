@@ -316,33 +316,33 @@ public class AppiumSettingsDialog extends Dialog {
 		saveInfo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-			Boolean status=validate();
-			   if (status) {
-				AppiumPortIpInfo.getInstance().setHostAddress(serverAddress.getText());
-				AppiumPortIpInfo.getInstance().setPort(portNumber.getText());
-				AppiumPortIpInfo.getInstance().setAppiumDirectory(appiumDirectory.getText());
-				if (capabilityTable.getItemCount() != 0) {
-					try {
-						if (capabilityTable.getItemCount() > 0) {
-							LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
-							for (TableItem row : capabilityTable.getItems()) {
+				Boolean status = validate();
+				if (status) {
+					AppiumPortIpInfo.getInstance().setHostAddress(serverAddress.getText());
+					AppiumPortIpInfo.getInstance().setPort(portNumber.getText());
+					AppiumPortIpInfo.getInstance().setAppiumDirectory(appiumDirectory.getText());
+					if (capabilityTable.getItemCount() != 0) {
+						try {
+							if (capabilityTable.getItemCount() > 0) {
+								LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
+								for (TableItem row : capabilityTable.getItems()) {
 
-								mapOfCapabilities.put(row.getText(0), row.getText(1));
+									mapOfCapabilities.put(row.getText(0), row.getText(1));
 
+								}
+
+								MobileCapabilities.getinstance();
+								MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
 							}
 
-							MobileCapabilities.getinstance();
-							MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+						} catch (Exception e2) {
+							e2.printStackTrace();
 						}
 
-					} catch (Exception e2) {
-						e2.printStackTrace();
 					}
 
+					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Settings Saved Successfully");
 				}
-
-				MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Settings Saved Successfully");
-			   } 
 			}
 		});
 		saveInfo.setText("save");
@@ -438,12 +438,12 @@ public class AppiumSettingsDialog extends Dialog {
 
 		else if (capabilityTable.getItemCount() == 0) {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "You Have Not Provided Any Capability");
+			return false;
 
 		} else {
 			return true;
 
 		}
-		return false;
 
 	}
 
