@@ -50,7 +50,6 @@ import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
-import pcloudystudio.featurecore.ui.dialog.MobileSpyDialog;
 
 public class ObjectRepositoryView extends Composite {
 	private Artifact artifact;
