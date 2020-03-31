@@ -77,11 +77,21 @@ public class Utilities {
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "TranspiledArtifacts";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
 	}
 
 	public String getDefaultInstallDir() {
-		 return "E:\\OpKeyEResources";
-		//return defaultInstallDir;
+		return "E:\\OpKeyEResources";
+		// return defaultInstallDir;
+	}
+
+	public String getTranspiledArtifactsFolder() {
+		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "TranspiledArtifacts";
 	}
 
 	public String getDefaultPluginBaseDir() {
