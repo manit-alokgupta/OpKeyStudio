@@ -10,7 +10,9 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactTranspiler {
@@ -66,9 +68,20 @@ public class ArtifactTranspiler {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
 				continue;
 			}
+			if (artifact.getFile_type_enum() == MODULETYPE.CodedFunction) {
+				continue;
+			}
+			if (artifact.getFile_type_enum() == MODULETYPE.MBT) {
+				continue;
+			}
+			if (artifact.getFile_type_enum() == MODULETYPE.ServiceRepository) {
+				continue;
+			}
 			File file = createArtifactFile(artifact);
 			new ORTranspiler().transpile(artifact, file);
 			new DRTranspiler().transpile(artifact, file);
+			new TCTranspiler().transpile(artifact, file);
+			new FLTranspiler().transpile(artifact, file);
 		}
 	}
 
