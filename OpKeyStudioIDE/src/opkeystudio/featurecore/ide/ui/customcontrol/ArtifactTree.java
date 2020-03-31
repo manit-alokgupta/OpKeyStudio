@@ -20,6 +20,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class ArtifactTree extends CustomTree {
 	private TestSuiteView parentTestSuiteView;
@@ -197,6 +198,7 @@ public class ArtifactTree extends CustomTree {
 		}
 		expandAll(rootNode);
 		GlobalLoader.getInstance().initAllArguments();
+		new ArtifactTranspiler().transpileAllArtifacts();
 	}
 
 	public void highlightArtifact(String artifactId) {

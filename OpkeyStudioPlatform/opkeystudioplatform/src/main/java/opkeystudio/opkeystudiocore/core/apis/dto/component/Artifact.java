@@ -47,6 +47,8 @@ public class Artifact extends Modified {
 	private String state_id;
 
 	private Artifact parentArtifact;
+	private String packagePath;
+	private String packageName;
 
 	public String getModified_on() {
 		return modified_on;
@@ -199,5 +201,21 @@ public class Artifact extends Modified {
 
 	public void setParentArtifact(Artifact parentArtifact) {
 		this.parentArtifact = parentArtifact;
+	}
+
+	public String getPackagePath() {
+		return packagePath;
+	}
+
+	public void setPackagePath(String packagePath) {
+		this.packagePath = packagePath;
+	}
+
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
 	}
 }
