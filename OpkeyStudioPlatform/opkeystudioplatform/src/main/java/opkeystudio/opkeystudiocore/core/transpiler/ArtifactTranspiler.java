@@ -7,8 +7,17 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactTranspiler {
+	private String fileExtension;
+	private String transpiledDataFolder;
+
+	public ArtifactTranspiler() {
+		setFileExtension(".java");
+		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
+	}
+
 	public void setPackageProperties() {
 		List<Artifact> allArtifacts = GlobalLoader.getInstance().getAllArtifacts();
 		for (Artifact artifact : allArtifacts) {
@@ -46,5 +55,21 @@ public class ArtifactTranspiler {
 			System.out.println("Artifact Package Path " + artifact.getPackagePath() + "   " + artifact.getName());
 			System.out.println("Artifact Package Name " + artifact.getPackageName() + "   " + artifact.getName());
 		}
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
+
+	public String getTranspiledDataFolder() {
+		return transpiledDataFolder;
+	}
+
+	public void setTranspiledDataFolder(String transpiledDataFolder) {
+		this.transpiledDataFolder = transpiledDataFolder;
 	}
 }
