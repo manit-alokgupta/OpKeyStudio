@@ -46,8 +46,6 @@ public class Artifact extends Modified {
 	@DBField
 	private String state_id;
 
-	private String artifactVariableName;
-
 	public String getModified_on() {
 		return modified_on;
 	}
@@ -186,6 +184,10 @@ public class Artifact extends Modified {
 
 	public String getArtifactVariableName() {
 		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
-		return varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		varName = varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		if (varName.trim().isEmpty()) {
+			return "unknownVar";
+		}
+		return varName;
 	}
 }
