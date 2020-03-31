@@ -114,6 +114,7 @@ public class ArtifactTree extends CustomTree {
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getParentid() != null) {
 				if (artifact.getParentid().equals(artifactId)) {
+					artifact.setParentArtifact(rootNode.getArtifact());
 					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
 					artitreeitem.setText(artifact.getName());
 					artitreeitem.setArtifact(artifact);
@@ -128,6 +129,7 @@ public class ArtifactTree extends CustomTree {
 		String artifactId = rootNode.getArtifact().getId();
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getParentid() != null) {
+				artifact.setParentArtifact(rootNode.getArtifact());
 				if (artifact.isVisible()) {
 					if (artifact.getParentid().equals(artifactId)) {
 						ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
