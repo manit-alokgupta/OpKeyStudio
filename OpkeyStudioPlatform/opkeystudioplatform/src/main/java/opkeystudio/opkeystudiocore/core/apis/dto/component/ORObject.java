@@ -40,6 +40,7 @@ public class ORObject extends Modified implements Cloneable {
 	@DBField
 	private String parent_object_id;
 
+	private String variableName;
 	private List<ObjectAttributeProperty> objectAttributesProperty = new ArrayList<>();
 
 	public String getOr_id() {

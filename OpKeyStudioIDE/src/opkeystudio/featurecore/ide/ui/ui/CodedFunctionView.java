@@ -297,7 +297,7 @@ public class CodedFunctionView extends Composite {
 			if (cflcode.getImportpackages() != null) {
 				imports = cflcode.getImportpackages();
 			}
-			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
+			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
 					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, inputParams, outputParams);
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
@@ -314,7 +314,7 @@ public class CodedFunctionView extends Composite {
 			cflcode.setUsercode("");
 			cflcode.setLanguage("JAVA");
 			cflcode.setPluginid("2626b33a-a06c-408c-8f69-f8f1490a49bb");
-			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getArtifactVariableName(),
+			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
 					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "", inputParams, outputParams);
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);

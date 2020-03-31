@@ -91,7 +91,7 @@ public class CFLOrAssociate extends CustomTable {
 				.getAllFiles(new File(dataLibraryPath), ".class");
 		boolean flag = false;
 		Artifact artifact = (Artifact) item.getControlData();
-		String artifactVariableName = artifact.getArtifactVariableName() + ".class";
+		String artifactVariableName = artifact.getVariableName() + ".class";
 		for (File file : files) {
 			System.out.println(file.getName() + "     " + artifactVariableName);
 			if (file.getName().equals(artifactVariableName)) {
@@ -121,7 +121,7 @@ public class CFLOrAssociate extends CustomTable {
 					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
 							.getArtifactOpkeyDataLibraryPath();
 					File file = new File(
-							dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".java");
+							dataLibraryPath + File.separator + artifact.getVariableName() + ".java");
 					BufferedWriter bw;
 					try {
 						bw = new BufferedWriter(new FileWriter(file));
@@ -140,9 +140,9 @@ public class CFLOrAssociate extends CustomTable {
 				}
 				if (associateOR.getSelection() == false) {
 					File file1 = new File(
-							dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".class");
+							dataLibraryPath + File.separator + artifact.getVariableName() + ".class");
 					File file2 = new File(
-							dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".java");
+							dataLibraryPath + File.separator + artifact.getVariableName() + ".java");
 					if (file1.exists()) {
 						try {
 							Files.delete(file1.toPath());
@@ -191,7 +191,7 @@ public class CFLOrAssociate extends CustomTable {
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
 		for (Artifact artifact : artifacts) {
 			CustomTableItem item = new CustomTableItem(this, 0);
-			item.setText(new String[] { "", artifact.getArtifactVariableName() });
+			item.setText(new String[] { "", artifact.getVariableName() });
 			item.setControlData(artifact);
 			item.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 			addTableEditor(item);

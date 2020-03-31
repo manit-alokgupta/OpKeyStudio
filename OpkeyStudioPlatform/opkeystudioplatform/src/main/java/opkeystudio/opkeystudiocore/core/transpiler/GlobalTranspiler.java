@@ -58,6 +58,7 @@ public class GlobalTranspiler {
 					String varName = variableName + String.valueOf(count);
 					boolean contains = isVariableAlreadyAdded(variableNames, varName);
 					if (contains == false) {
+						//Need to Fix this
 						orobject.setVariableName(varName);
 						break;
 					}
@@ -95,7 +96,7 @@ public class GlobalTranspiler {
 		}
 
 		String staticBodyData = String.format(staticBody, staticVariableDatas, variabledeclarationdata);
-		String classBodyData = String.format(classBody, artifact.getArtifactVariableName(), staticBodyData);
+		String classBodyData = String.format(classBody, artifact.getVariableName(), staticBodyData);
 		System.out.println(classBodyData);
 		JavaClassSource outClass = (JavaClassSource) Roaster.parse(classBodyData);
 		outClass.addImport("com.opkeystudio.runtime.ORObject");
@@ -123,7 +124,7 @@ public class GlobalTranspiler {
 		}
 
 		String staticBodyData = String.format(staticBody, getDRObjectBody(), staticVariableDatas);
-		String classBodyData = String.format(classBody, artifact.getArtifactVariableName(), staticBodyData);
+		String classBodyData = String.format(classBody, artifact.getVariableName(), staticBodyData);
 		JavaClassSource outClass = (JavaClassSource) Roaster.parse(classBodyData);
 		outClass.addImport("java.util.ArrayList");
 		outClass.addImport("java.util.HashMap");

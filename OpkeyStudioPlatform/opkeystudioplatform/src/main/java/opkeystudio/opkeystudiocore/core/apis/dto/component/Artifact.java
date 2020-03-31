@@ -182,7 +182,7 @@ public class Artifact extends Modified {
 		this.isautocreated = isautocreated;
 	}
 
-	public String getArtifactVariableName() {
+	public String getVariableName() {
 		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
 		varName = varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
 		if (varName.trim().isEmpty()) {

@@ -251,8 +251,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		}
 		String codes = this.getText();
 		String sourceCodeDirPath = Utilities.getInstance().getDefaultSourceCodeDirPath();
-		String codeFilePath = sourceCodeDirPath + File.separator + getArtifact().getArtifactVariableName() + ".java";
-		String compiledCodedFLPath = sourceCodeDirPath + File.separator + getArtifact().getArtifactVariableName()
+		String codeFilePath = sourceCodeDirPath + File.separator + getArtifact().getVariableName() + ".java";
+		String compiledCodedFLPath = sourceCodeDirPath + File.separator + getArtifact().getVariableName()
 				+ ".class";
 		BufferedWriter bw;
 		try {
@@ -295,9 +295,9 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		String defaultSourceCodeLibsPath = Utilities.getInstance().getDefaultCodedFLOpKeyLibrariesDirPath();
 		String defaultAssociatedLibsPath = Utilities.getInstance().getDefaultCodedFLAssociatedLibrariesDirPath();
 		String defArtifactSourceCodeLibsPath = defaultSourceCodeLibsPath + File.separator
-				+ artifact.getArtifactVariableName();
+				+ artifact.getVariableName();
 		String defArtifactassolibsPath = defaultAssociatedLibsPath + File.separator
-				+ artifact.getArtifactVariableName();
+				+ artifact.getVariableName();
 
 		File file = new File(defArtifactSourceCodeLibsPath);
 		if (!file.exists()) {
