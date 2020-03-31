@@ -684,7 +684,7 @@ public class ObjectRepositoryView extends Composite {
 	}
 
 	private void openDeviceConfigurationDialog() {
-		new DeviceConfigurationDialog(this.getShell(), SWT.NONE).open();
+		new DeviceConfigurationDialog(this.getShell(), SWT.NONE, this).open();
 	}
 
 	private void openAndroidAddtoORDialog() {
