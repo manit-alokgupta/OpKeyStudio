@@ -30,8 +30,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
-import opkeystudio.opkeystudiocore.core.converter.ArtifactConverter;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import opkeystudio.opkeystudiocore.core.transpiler.GlobalTranspiler;
 
 public class CFLOrAssociate extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -116,7 +116,7 @@ public class CFLOrAssociate extends CustomTable {
 						object.setObjectAttributesProperty(attributeProps);
 					}
 
-					JavaClassSource classSource = new ArtifactConverter().getJavaClassORObjects(artifact,
+					JavaClassSource classSource = new GlobalTranspiler().getJavaClassORObjects(artifact,
 							allOrObjects);
 					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
 							.getArtifactOpkeyDataLibraryPath();

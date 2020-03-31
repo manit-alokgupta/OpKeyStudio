@@ -36,9 +36,9 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctio
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
-import opkeystudio.opkeystudiocore.core.converter.ArtifactConverter;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
+import opkeystudio.opkeystudiocore.core.transpiler.GlobalTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class JavaCodeEditor extends RSyntaxTextArea {
@@ -311,7 +311,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 		getCodeFunctionView().setArtifactOpkeyDataLibraryPath(file.getAbsolutePath());
 		getCodeFunctionView().setArtifactAssociatedLibraryPath(file1.getAbsolutePath());
-		JavaClassSource gvClassSource = new ArtifactConverter().getJavaClassOfGlobalVariables();
+		JavaClassSource gvClassSource = new GlobalTranspiler().getJavaClassOfGlobalVariables();
 		File gvJavaFile = new File(file.getAbsolutePath() + File.separator + gvClassSource.getName() + ".java");
 		try {
 			writeToFile(gvJavaFile, gvClassSource.toString());

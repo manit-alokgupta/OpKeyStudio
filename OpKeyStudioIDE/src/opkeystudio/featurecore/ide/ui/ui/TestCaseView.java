@@ -71,20 +71,7 @@ public class TestCaseView extends Composite {
 	private GenericTree drTree;
 	private GlobalVariableTable globalVariableTable;
 	private Text searchBox;
-	@SuppressWarnings("unused")
-	private ToolItem seperator1;
-	@SuppressWarnings("unused")
-	private ToolItem seperator2;
-	@SuppressWarnings("unused")
-	private ToolItem seperator3;
-	@SuppressWarnings("unused")
-	private ToolItem seperator4;
-	@SuppressWarnings("unused")
-	private ToolItem seperator5;
-	@SuppressWarnings("unused")
-	private ToolItem seperator6;
-	@SuppressWarnings("unused")
-	private ToolItem seperator7;
+	private ToolItem itemRun;
 	private ToolItem itemMoveup;
 	private ToolItem itemAdd;
 	private ToolItem itemMovedown;
@@ -174,40 +161,44 @@ public class TestCaseView extends Composite {
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 
+		itemRun = new ToolItem(toolBar_1, SWT.NONE);
+		itemRun.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
+		itemRun.setToolTipText("Run");
+
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 		itemAdd = new ToolItem(toolBar_1, SWT.NONE);
 		itemAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_NEW_ICON));
-		// itemAdd.setText("Add");
 		itemAdd.setToolTipText("Add Test Step");
 
-		seperator3 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemMoveup = new ToolItem(toolBar_1, SWT.NONE);
 		itemMoveup.setEnabled(false);
 		itemMoveup.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 		itemMoveup.setToolTipText("Move Step Up");
 
-		seperator4 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemMovedown = new ToolItem(toolBar_1, SWT.NONE);
 		itemMovedown.setEnabled(false);
 		itemMovedown.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		itemMovedown.setToolTipText("Move Step Down");
 
-		seperator5 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemDelete = new ToolItem(toolBar_1, SWT.NONE);
 		itemDelete.setEnabled(false);
 		itemDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		itemDelete.setToolTipText(" Delete Test Step");
 
-		seperator6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemSave = new ToolItem(toolBar_1, SWT.NONE);
 		itemSave.setEnabled(false);
 		itemSave.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 		itemSave.setToolTipText("Save");
 
-		seperator7 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		itemRefresh = new ToolItem(toolBar_1, SWT.NONE);
 		itemRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));

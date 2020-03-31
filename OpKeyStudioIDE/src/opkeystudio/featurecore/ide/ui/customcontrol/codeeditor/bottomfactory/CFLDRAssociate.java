@@ -30,8 +30,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
-import opkeystudio.opkeystudiocore.core.converter.ArtifactConverter;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import opkeystudio.opkeystudiocore.core.transpiler.GlobalTranspiler;
 
 public class CFLDRAssociate extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -117,7 +117,7 @@ public class CFLDRAssociate extends CustomTable {
 						drColumn.setDrCellAttributes(drCells);
 					}
 
-					JavaClassSource classSource = new ArtifactConverter().getJavaClassDRObjects(artifact,
+					JavaClassSource classSource = new GlobalTranspiler().getJavaClassDRObjects(artifact,
 							allDRColumns);
 					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
 							.getArtifactOpkeyDataLibraryPath();
