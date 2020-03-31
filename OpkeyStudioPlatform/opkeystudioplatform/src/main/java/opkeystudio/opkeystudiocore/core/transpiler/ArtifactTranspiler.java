@@ -1,5 +1,7 @@
 package opkeystudio.opkeystudiocore.core.transpiler;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +45,7 @@ public class ArtifactTranspiler {
 			Collections.reverse(variableNames);
 			for (String varName : variableNames) {
 				if (!packagePath.isEmpty()) {
-					packagePath += "\\";
+					packagePath += File.separator;
 				}
 				if (!packageName.isEmpty()) {
 					packageName += ".";
@@ -51,18 +53,38 @@ public class ArtifactTranspiler {
 				packagePath += varName;
 				packageName += varName;
 			}
-			artifact.setPackagePath(packagePath);
-			artifact.setPackageName(packageName);
+			artifact.setPackagePath(packagePath.toLowerCase());
+			artifact.setPackageName(packageName.toLowerCase());
 		}
 	}
 
 	public void transpileAllArtifacts() {
-		String transpiledDataFolder = getTranspiledDataFolder();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		for (Artifact artifact : artifacts) {
-			System.out.println("Artifact Package Path " + artifact.getPackagePath() + "   " + artifact.getName());
-			System.out.println("Artifact Package Name " + artifact.getPackageName() + "   " + artifact.getName());
+			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
+				continue;
+			}
+			createArtifactFile(artifact);
 		}
+	}
+
+	private File createArtifactFile(Artifact artifact) {
+		String filePath = getTranspiledDataFolder() + File.separator + artifact.getPackagePath();
+		File file1 = new File(filePath);
+		if (!file1.exists()) {
+			file1.mkdirs();
+		}
+		filePath = getTranspiledDataFolder() + File.separator + artifact.getPackagePath() + File.separator
+				+ artifact.getVariableName() + getFileExtension();
+		File file2 = new File(filePath);
+		if (!file2.exists()) {
+			try {
+				file2.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return file2;
 	}
 
 	public String getFileExtension() {
