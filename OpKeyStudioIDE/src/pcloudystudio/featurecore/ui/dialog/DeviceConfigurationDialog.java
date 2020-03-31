@@ -194,31 +194,51 @@ public class DeviceConfigurationDialog extends Dialog {
 				} else if (applicationPathText.getText().isEmpty()) {
 					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note", "Application Cannot Be Empty");
 				} else {
-					try {
-						AppiumServer.stopServer();
-						Thread.sleep(4000);
-					} catch (InterruptedException e2) {
-						e2.printStackTrace();
-					}
-					java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
+					Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
+					System.out.println("server status is " + " " + serverStatus);
+					if (serverStatus) { // if server is already started on given port.Making driver object
+						java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
 
-						@Override
-						public void run() {
-							AppiumServer.startServer();
+							@Override
+							public void run() {
 
-							DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+								DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
 
-							try {
-								AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
-										new URL("http://" + AppiumPortIpInfo.getHostAddress() + ":"
-												+ AppiumPortIpInfo.getPort() + "/wd/hub"),
-										mobileCapability);
-								AndroidDriverObject.getInstance().setDriver(driver);
-							} catch (Exception ex) {
-								ex.printStackTrace();
+								try {
+									AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
+											new URL("http://" + AppiumPortIpInfo.getHostAddress() + ":"
+													+ AppiumPortIpInfo.getPort() + "/wd/hub"),
+											mobileCapability);
+									AndroidDriverObject.getInstance().setDriver(driver);
+								} catch (Exception ex) {
+									ex.printStackTrace();
+								}
 							}
-						}
-					});
+						});
+
+					} else { // starting new server and making new driver object on it
+
+						java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
+
+							@Override
+							public void run() {
+
+								AppiumServer.startServer();
+
+								DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+
+								try {
+									AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(
+											new URL("http://" + AppiumPortIpInfo.getHostAddress() + ":"
+													+ AppiumPortIpInfo.getPort() + "/wd/hub"),
+											mobileCapability);
+									AndroidDriverObject.getInstance().setDriver(driver);
+								} catch (Exception ex) {
+									ex.printStackTrace();
+								}
+							}
+						});
+					}
 				}
 			}
 		});
