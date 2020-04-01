@@ -330,6 +330,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			btnCapture.setEnabled(false);
 			btnStop.setEnabled(false);
 		}
+		captureObjectAction();
 	}
 
 	static void setTreeRoot(MobileSpyDialog mobileSpyDialog, TreeMobileElement appRootElement) {
@@ -591,6 +592,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		try {
 			this.btnCapture.setEnabled(false);
 			btnClickAndMoveToNextScreen.setEnabled(false);
+			this.shlSpyMobile.setVisible(true);
 			this.openDeviceView();
 			dialog.run(true, true, runnable);
 		} catch (InterruptedException ex) {
