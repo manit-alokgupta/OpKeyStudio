@@ -220,7 +220,7 @@ public class AppiumSettingsDialog extends Dialog {
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				addCapabilityComposite.setVisible(true);
 				capabilityNameCombo.removeAll();
 				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
@@ -290,7 +290,7 @@ public class AppiumSettingsDialog extends Dialog {
 				btnAddToTable.setEnabled(false);
 			}
 		});
-		btnAddToTable.setBounds(330, 5, 124, 30);
+		btnAddToTable.setBounds(330, 4, 135, 33);
 		btnAddToTable.setText("Add to Table");
 		btnAddToTable.setEnabled(false);
 
