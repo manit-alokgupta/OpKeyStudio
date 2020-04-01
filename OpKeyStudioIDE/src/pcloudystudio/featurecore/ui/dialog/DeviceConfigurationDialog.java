@@ -52,6 +52,8 @@ public class DeviceConfigurationDialog extends Dialog {
 	private Text applicationPathText;
 	private Map<String, String> devicesList;
 	private LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
+	private Label lblDeviceRequiredMessage;
+	private Label lblApplicationIsRequiredMessage;
 
 	/**
 	 * Create the dialog.
@@ -94,7 +96,7 @@ public class DeviceConfigurationDialog extends Dialog {
 	private void createContents() {
 		shlDeviceConfiguration = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlDeviceConfiguration.setSize(672, 260);
+		shlDeviceConfiguration.setSize(672, 315);
 		shlDeviceConfiguration.setText("Configuration Dashboard");
 
 		Rectangle parentSize = getParent().getBounds();
@@ -118,17 +120,17 @@ public class DeviceConfigurationDialog extends Dialog {
 		lblDeviceConfiguration.setBounds(10, 10, 228, 22);
 
 		compositeConfigurationSettings = new Composite(shlDeviceConfiguration, SWT.BORDER);
-		compositeConfigurationSettings.setBounds(10, 58, 646, 92);
+		compositeConfigurationSettings.setBounds(10, 54, 646, 166);
 
 		Label lblDeviceName = new Label(compositeConfigurationSettings, SWT.NONE);
-		lblDeviceName.setBounds(44, 10, 121, 25);
+		lblDeviceName.setBounds(44, 29, 121, 25);
 		lblDeviceName.setText("Device");
 
 		devicesCombo = new Combo(compositeConfigurationSettings, SWT.READ_ONLY);
-		devicesCombo.setBounds(203, 7, 309, 25);
+		devicesCombo.setBounds(203, 26, 309, 25);
 
 		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnRefresh.setBounds(529, 6, 75, 33);
+		btnRefresh.setBounds(529, 25, 75, 33);
 		btnRefresh.setText("Refresh");
 
 		devicesCombo.addSelectionListener(new SelectionAdapter() {
@@ -145,6 +147,13 @@ public class DeviceConfigurationDialog extends Dialog {
 				try {
 					String previousDevice = devicesCombo.getText();
 					devicesList = AndroidDeviceUtil.getAndroidDevices();
+
+					if (devicesList.size() > 0) {
+						lblDeviceRequiredMessage.setVisible(false);
+					} else {
+						lblDeviceRequiredMessage.setVisible(true);
+					}
+
 					devicesCombo.removeAll();
 					for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
 						devicesCombo.add(deviceEntry.getValue());
@@ -185,28 +194,42 @@ public class DeviceConfigurationDialog extends Dialog {
 		});
 
 		Label lblApplicationFile = new Label(compositeConfigurationSettings, SWT.NONE);
-		lblApplicationFile.setBounds(44, 49, 121, 25);
+		lblApplicationFile.setBounds(44, 95, 121, 25);
 		lblApplicationFile.setText("Application");
 
 		applicationPathText = new Text(compositeConfigurationSettings, SWT.BORDER);
-		applicationPathText.setBounds(203, 46, 309, 33);
+		applicationPathText.setBounds(203, 92, 309, 33);
 
 		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnBrowseAPK.setBounds(529, 44, 75, 33);
+		btnBrowseAPK.setBounds(529, 91, 75, 33);
 		btnBrowseAPK.setText("Browse");
+
+		lblDeviceRequiredMessage = new Label(compositeConfigurationSettings, SWT.NONE);
+		lblDeviceRequiredMessage.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		lblDeviceRequiredMessage.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
+		lblDeviceRequiredMessage.setBounds(203, 65, 309, 21);
+		lblDeviceRequiredMessage.setText("Device is required!");
+		lblDeviceRequiredMessage.setVisible(false);
+
+		lblApplicationIsRequiredMessage = new Label(compositeConfigurationSettings, SWT.NONE);
+		lblApplicationIsRequiredMessage.setText("Application is required!");
+		lblApplicationIsRequiredMessage.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		lblApplicationIsRequiredMessage.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
+		lblApplicationIsRequiredMessage.setBounds(203, 131, 309, 21);
+		lblApplicationIsRequiredMessage.setVisible(false);
 
 		Button btnNext = new Button(shlDeviceConfiguration, SWT.NONE);
 		btnNext.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (devicesCombo.getText().isEmpty()) {
-					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note", "Device Cannot Be Empty");
+					lblDeviceRequiredMessage.setVisible(true);
 				} else if (applicationPathText.getText().isEmpty()) {
-					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note", "Application Cannot Be Empty");
+					lblApplicationIsRequiredMessage.setVisible(true);
 				} else {
 					shlDeviceConfiguration.setVisible(false);
 					showProgressDialog();
-					if (AndroidDriverObject.getDriver().getSessionId() != null) { // dont go to spy if session is not
+					if (AndroidDriverObject.getDriver().getSessionId() != null) { // don't go to spy if session is not
 						// generated
 						shlDeviceConfiguration.close();
 						new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
@@ -214,7 +237,7 @@ public class DeviceConfigurationDialog extends Dialog {
 				}
 			}
 		});
-		btnNext.setBounds(438, 175, 105, 33);
+		btnNext.setBounds(440, 232, 105, 33);
 		btnNext.setText("Next");
 
 		Button btnClose = new Button(shlDeviceConfiguration, SWT.NONE);
@@ -224,7 +247,7 @@ public class DeviceConfigurationDialog extends Dialog {
 				shlDeviceConfiguration.close();
 			}
 		});
-		btnClose.setBounds(551, 175, 105, 33);
+		btnClose.setBounds(551, 232, 105, 33);
 		btnClose.setText("Close");
 		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("static-access")
@@ -268,46 +291,9 @@ public class DeviceConfigurationDialog extends Dialog {
 	}
 
 	public void startServer() {
-
-		if (AndroidDriverObject.getDriver() == null) { // if application is starting first time
+		if (AndroidDriverObject.getDriver() == null) {
 			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
-			System.out.println("server status is " + " " + serverStatus);
-			if (serverStatus) { // if server is already on try driver object on the server
-				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-				try {
-					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
-							mobileCapability);
-
-					AndroidDriverObject.getInstance().setDriver(driver);
-					Thread.sleep(2000);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			} else { // if control comes here server is off .Now starting server.
-				AppiumServer.startServer();
-				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-				try {
-					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
-							mobileCapability);
-
-					AndroidDriverObject.getInstance().setDriver(driver);
-					Thread.sleep(2000);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			} // else end here Driver == null part ends here
-		} else {
-			AndroidDriverObject.getDriver().quit();
-			try {
-				Thread.sleep(2000);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
-			System.out.println("server status is " + " " + serverStatus);
-			if (serverStatus) { // if server is already on try driver object on the server
+			if (serverStatus) {
 				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
 				try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
@@ -326,7 +312,39 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
+					AndroidDriverObject.getInstance().setDriver(driver);
+					Thread.sleep(2000);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		} else {
+			AndroidDriverObject.getDriver().quit();
+			try {
+				Thread.sleep(2000);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
+			if (serverStatus) {
+				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				try {
+					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
+							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							mobileCapability);
 
+					AndroidDriverObject.getInstance().setDriver(driver);
+					Thread.sleep(2000);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			} else {
+				AppiumServer.startServer();
+				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				try {
+					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
+							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							mobileCapability);
 					AndroidDriverObject.getInstance().setDriver(driver);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
@@ -338,7 +356,6 @@ public class DeviceConfigurationDialog extends Dialog {
 
 	private void showProgressDialog() {
 		final ProgressMonitorDialog dialog = new ProgressMonitorDialog(shlDeviceConfiguration) {
-
 			@Override
 			public boolean close() {
 				return super.close();
@@ -346,23 +363,18 @@ public class DeviceConfigurationDialog extends Dialog {
 		};
 		dialog.setBlockOnOpen(false);
 		try {
-			dialog.run(true, false, new IRunnableWithProgress() { // false for cancel to not show
-
+			dialog.run(true, false, new IRunnableWithProgress() {
 				@Override
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 					monitor.beginTask("Please Wait. Launching Application", 3);
-
 					for (int i = 1; !monitor.isCanceled() && i <= 3; i++) {
 						monitor.worked(1);
 						Thread.sleep(1000);
 					}
-
 					dialog.getShell().getDisplay().syncExec(new Runnable() {
 						@Override
 						public void run() {
-
 							startServer();
-
 						}
 					});
 					monitor.done();
