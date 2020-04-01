@@ -489,11 +489,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				allObjectsCheckboxTreeViewer.getTree().setFocus();
 				allObjectsCheckboxTreeViewer.setAllChecked(false);
 				allObjectsCheckboxTreeViewer.setSelection((ISelection) new StructuredSelection((Object) foundElement));
-				// allObjectsCheckboxTreeViewer.setChecked(foundElement, true);
-				MobileSpyDialog.clearPropertiesTableData();
-				CustomCheckBoxTree.fillDataInObjectPropertiesTable(foundElement);
 				btnAdd.setEnabled(false);
 				btnClickAndMoveToNextScreen.setEnabled(false);
+				// allObjectsCheckboxTreeViewer.setChecked(foundElement, true);
+				// MobileSpyDialog.clearPropertiesTableData();
+				// CustomCheckBoxTree.fillDataInObjectPropertiesTable(foundElement);
 			}
 		});
 	}
