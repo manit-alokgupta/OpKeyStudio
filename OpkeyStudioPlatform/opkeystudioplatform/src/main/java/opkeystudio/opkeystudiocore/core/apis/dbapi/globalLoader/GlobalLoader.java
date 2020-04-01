@@ -156,7 +156,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllFlowInputArguments() {
-		String query = "SELECT * FROM flow_step_input_arguments ORDER BY position asc";
+		String query = "SELECT * FROM flow_step_input_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowInputArgument.class);
@@ -171,7 +171,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllFlowOutputArguments() {
-		String query = "SELECT * FROM flow_step_output_arguments ORDER BY position asc";
+		String query = "SELECT * FROM flow_step_output_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
@@ -186,7 +186,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllComponentFlowInputArguments() {
-		String query = "SELECT * FROM component_step_input_args ORDER BY position asc";
+		String query = "SELECT * FROM component_step_input_args";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowInputArgument.class);
@@ -201,7 +201,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllComponentFlowOutputArguments() {
-		String query = "SELECT * FROM component_step_output_arguments ORDER BY position asc";
+		String query = "SELECT * FROM component_step_output_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);

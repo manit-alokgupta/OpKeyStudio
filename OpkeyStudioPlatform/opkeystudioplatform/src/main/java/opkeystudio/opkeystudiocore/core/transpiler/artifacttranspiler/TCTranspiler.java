@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.MethodSource;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -44,10 +45,7 @@ public class TCTranspiler extends AbstractTranspiler {
 		class1.setName(artifact.getVariableName()).setPublic();
 		List<FlowStep> flowSteps = new FlowApi().getAllFlowSteps(artifact.getId());
 		for (FlowStep flowStep : flowSteps) {
-			if (flowStep.getKeyword() != null) {
-				System.out.println(flowStep.getKeyword().getAssociatedmethod() + "    "
-						+ flowStep.getFlowInputArgs().get(0).getKeywordInputArgument().getDatatype() + "    " + flowStep.getFlowOutputArgs().size());
-			}
+
 		}
 		return class1;
 	}
