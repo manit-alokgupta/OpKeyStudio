@@ -13,11 +13,11 @@ import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 public class ProgressMonitorDialogWithThread extends ProgressMonitorDialog {
 	private Thread thread;
 
-	public ProgressMonitorDialogWithThread(final Shell parent) {
+	public ProgressMonitorDialogWithThread(Shell parent) {
 		super(parent);
 	}
 
-	private void setThread(final Thread thread) {
+	private void setThread(Thread thread) {
 		this.thread = thread;
 	}
 
@@ -37,8 +37,8 @@ public class ProgressMonitorDialogWithThread extends ProgressMonitorDialog {
 		}
 	}
 
-	public <V> V runAndWait(final Callable<V> callable) throws InterruptedException, InvocationTargetException {
-		final FutureTask<V> futureTask = new FutureTask<V>(callable);
+	public <V> V runAndWait(Callable<V> callable) throws InterruptedException, InvocationTargetException {
+		FutureTask<V> futureTask = new FutureTask<V>(callable);
 		this.setThread(new Thread(futureTask));
 		try {
 			this.startThreadAndWait();

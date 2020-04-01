@@ -60,7 +60,7 @@ public class MobileInspectorController {
 					ex.printStackTrace();
 				}
 			}
-			
+
 			pageSource = AndroidDriverObject.getDriver().getPageSource();
 			MobileInspectorController.currentActivity = AndroidDriverObject.getDriver().currentActivity();
 

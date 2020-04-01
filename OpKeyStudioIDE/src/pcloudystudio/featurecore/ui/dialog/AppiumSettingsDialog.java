@@ -345,7 +345,7 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 			}
 		});
-		saveInfo.setText("save");
+		saveInfo.setText("Save");
 
 		closebutton = new Button(shlAppiumSettings, SWT.NONE);
 		closebutton.setBounds(565, 540, 91, 33);
@@ -437,8 +437,9 @@ public class AppiumSettingsDialog extends Dialog {
 		}
 
 		else if (capabilityTable.getItemCount() == 0) {
-			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "You Have Not Provided Any Capability");
-			return false;
+			MessageDialog.openInformation(shlAppiumSettings, "Please Note",
+					"You have not provided any default capabilities!");
+			return true;
 
 		} else {
 			return true;
