@@ -229,7 +229,7 @@ public class AppiumSettingsDialog extends Dialog {
 					public void modifyText(ModifyEvent e) {
 						if (capabilityTextValue.getText().length() > 0
 								&& capabilityNameCombo.getSelectionIndex() != -1) {
-
+							btnAddToTable.setEnabled(true);
 						}
 					}
 				});
@@ -238,7 +238,7 @@ public class AppiumSettingsDialog extends Dialog {
 					public void modifyText(ModifyEvent e) {
 						if (capabilityTextValue.getText().length() > 0
 								&& capabilityNameCombo.getSelectionIndex() != -1) {
-
+							btnAddToTable.setEnabled(true);
 						}
 					}
 				});
@@ -252,15 +252,16 @@ public class AppiumSettingsDialog extends Dialog {
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				addCapabilityComposite.setVisible(false);
 				if (capabilityTable.getItemCount() >= 1) {
 					if (capabilityTable.getSelectionIndex() != -1)
 						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
-
+				btnAddToTable.setEnabled(false);
+				btnDelete.setEnabled(false);
 			}
 		});
-		btnDelete.setEnabled(true);
+		btnDelete.setEnabled(false);
 		btnDelete.setToolTipText("Delete Capability");
 		btnDelete.setBounds(36, 10, 20, 22);
 		btnDelete.setText("-");
@@ -285,12 +286,13 @@ public class AppiumSettingsDialog extends Dialog {
 						&& (capabilityValue != null && capabilityValue != "")) {
 					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
 				}
-				// addCapabilityComposite.setVisible(false);
-				// btnAddToTable.setEnabled(false);
+				addCapabilityComposite.setVisible(false);
+				btnAddToTable.setEnabled(false);
 			}
 		});
-		btnAddToTable.setBounds(358, 5, 154, 33);
+		btnAddToTable.setBounds(330, 5, 124, 30);
 		btnAddToTable.setText("Add to Table");
+		btnAddToTable.setEnabled(false);
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
