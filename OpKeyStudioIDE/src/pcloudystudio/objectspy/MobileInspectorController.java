@@ -41,26 +41,9 @@ public class MobileInspectorController {
 	public TreeMobileElement getMobileObjectRoot() {
 		try {
 			String pageSource = null;
-			if (AndroidDriverObject.getDriver() == null) {
-				try {
-					AppiumServer.stopServer();
-					Thread.sleep(4000);
-				} catch (InterruptedException e2) {
-					e2.printStackTrace();
-				}
-				AppiumServer.startServer();
-				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-				try {
-					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
-							mobileCapability);
-					AndroidDriverObject.getInstance().setDriver(driver);
-					Thread.sleep(2000);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-
+		
+			
+		
 			pageSource = AndroidDriverObject.getDriver().getPageSource();
 			MobileInspectorController.currentActivity = AndroidDriverObject.getDriver().currentActivity();
 
@@ -82,7 +65,7 @@ public class MobileInspectorController {
 			return htmlMobileElementRootNode;
 		} catch (
 
-				Exception ex) {
+		Exception ex) {
 			ex.printStackTrace();
 			return null;
 		}

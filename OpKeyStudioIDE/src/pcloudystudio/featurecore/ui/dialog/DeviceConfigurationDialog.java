@@ -4,10 +4,15 @@ package pcloudystudio.featurecore.ui.dialog;
 //Copyright © 2020 SSTS Inc. All rights reserved.
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -18,13 +23,19 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
-import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
-import org.eclipse.swt.widgets.FileDialog;
+import io.appium.java_client.android.AndroidDriver;
+import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
+import pcloudystudio.appium.AndroidDriverObject;
+import pcloudystudio.appium.AppiumPortIpInfo;
+import pcloudystudio.appium.AppiumServer;
 import pcloudystudio.appium.MobileCapabilities;
 import pcloudystudio.core.mobile.util.AndroidDeviceUtil;
 
@@ -193,8 +204,13 @@ public class DeviceConfigurationDialog extends Dialog {
 				} else if (applicationPathText.getText().isEmpty()) {
 					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note", "Application Cannot Be Empty");
 				} else {
-					shlDeviceConfiguration.close();
-					new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
+					shlDeviceConfiguration.setVisible(false);
+					showProgressDialog();
+					if (AndroidDriverObject.getDriver().getSessionId() != null) { // dont go to spy if session is not
+						// generated
+						shlDeviceConfiguration.close();
+						new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
+					}
 				}
 			}
 		});
@@ -249,5 +265,112 @@ public class DeviceConfigurationDialog extends Dialog {
 	public void setParentObjectRepositoryView(ObjectRepositoryView parentObjectRepositoryView) {
 		this.parentObjectRepositoryView = parentObjectRepositoryView;
 
+	}
+
+	public void startServer() {
+
+		if (AndroidDriverObject.getDriver() == null) { // if application is starting first time
+			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
+			System.out.println("server status is " + " " + serverStatus);
+			if (serverStatus) { // if server is already on try driver object on the server
+				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				try {
+					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
+							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							mobileCapability);
+
+					AndroidDriverObject.getInstance().setDriver(driver);
+					Thread.sleep(2000);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			} else { // if control comes here server is off .Now starting server.
+				AppiumServer.startServer();
+				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				try {
+					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
+							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							mobileCapability);
+
+					AndroidDriverObject.getInstance().setDriver(driver);
+					Thread.sleep(2000);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			} // else end here Driver == null part ends here
+		} else {
+			AndroidDriverObject.getDriver().quit();
+			try {
+				Thread.sleep(2000);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
+			System.out.println("server status is " + " " + serverStatus);
+			if (serverStatus) { // if server is already on try driver object on the server
+				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				try {
+					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
+							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							mobileCapability);
+
+					AndroidDriverObject.getInstance().setDriver(driver);
+					Thread.sleep(2000);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			} else {
+				AppiumServer.startServer();
+				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				try {
+					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
+							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							mobileCapability);
+
+					AndroidDriverObject.getInstance().setDriver(driver);
+					Thread.sleep(2000);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void showProgressDialog() {
+		final ProgressMonitorDialog dialog = new ProgressMonitorDialog(shlDeviceConfiguration) {
+
+			@Override
+			public boolean close() {
+				return super.close();
+			}
+		};
+		dialog.setBlockOnOpen(false);
+		try {
+			dialog.run(true, false, new IRunnableWithProgress() { // false for cancel to not show
+
+				@Override
+				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+					monitor.beginTask("Please Wait. Launching Application", 3);
+
+					for (int i = 1; !monitor.isCanceled() && i <= 3; i++) {
+						monitor.worked(1);
+						Thread.sleep(1000);
+					}
+
+					dialog.getShell().getDisplay().syncExec(new Runnable() {
+						@Override
+						public void run() {
+
+							startServer();
+
+						}
+					});
+					monitor.done();
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			MessageDialog.openError(shlDeviceConfiguration, "Error", e.getMessage());
+		}
 	}
 }
