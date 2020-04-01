@@ -215,6 +215,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		compositeAddCapability = new Composite(compositeCapabilitySettings, SWT.NONE);
 		compositeAddCapability.setBounds(20, 5, 612, 42);
+		
 
 		btnAdd = new Button(compositeAddCapability, SWT.NONE);
 		btnAdd.addSelectionListener(new SelectionAdapter() {
@@ -268,6 +269,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		addCapabilityComposite = new Composite(compositeAddCapability, SWT.NONE);
 		addCapabilityComposite.setBounds(62, 0, 550, 42);
+		addCapabilityComposite.setVisible(false);
 
 		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
 		capabilityNameCombo.setBounds(10, 5, 154, 33);
