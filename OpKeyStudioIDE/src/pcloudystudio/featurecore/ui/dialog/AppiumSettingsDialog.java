@@ -215,7 +215,6 @@ public class AppiumSettingsDialog extends Dialog {
 
 		compositeAddCapability = new Composite(compositeCapabilitySettings, SWT.NONE);
 		compositeAddCapability.setBounds(20, 5, 612, 42);
-		
 
 		btnAdd = new Button(compositeAddCapability, SWT.NONE);
 		btnAdd.addSelectionListener(new SelectionAdapter() {
@@ -225,21 +224,13 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.removeAll();
 				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
-				capabilityTextValue.addModifyListener(new ModifyListener() {
-					@Override
-					public void modifyText(ModifyEvent e) {
-						if (capabilityTextValue.getText().length() > 0
-								&& capabilityNameCombo.getSelectionIndex() != -1) {
-							btnAddToTable.setEnabled(true);
-						}
-					}
-				});
+
 				capabilityNameCombo.addModifyListener(new ModifyListener() {
 					@Override
 					public void modifyText(ModifyEvent e) {
 						if (capabilityTextValue.getText().length() > 0
 								&& capabilityNameCombo.getSelectionIndex() != -1) {
-							btnAddToTable.setEnabled(true);
+							// btnAddToTable.setEnabled(true);
 						}
 					}
 				});
@@ -253,12 +244,12 @@ public class AppiumSettingsDialog extends Dialog {
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				addCapabilityComposite.setVisible(false);
+				// addCapabilityComposite.setVisible(false);
 				if (capabilityTable.getItemCount() >= 1) {
 					if (capabilityTable.getSelectionIndex() != -1)
 						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
-				btnAddToTable.setEnabled(false);
+				// btnAddToTable.setEnabled(false);
 				btnDelete.setEnabled(false);
 			}
 		});
@@ -269,7 +260,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		addCapabilityComposite = new Composite(compositeAddCapability, SWT.NONE);
 		addCapabilityComposite.setBounds(62, 0, 550, 42);
-		addCapabilityComposite.setVisible(false);
+		addCapabilityComposite.setVisible(true);
 
 		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
 		capabilityNameCombo.setBounds(10, 5, 154, 33);
@@ -277,6 +268,14 @@ public class AppiumSettingsDialog extends Dialog {
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
 		capabilityTextValue.setBounds(170, 5, 154, 33);
+		capabilityTextValue.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				if (capabilityTextValue.getText().length() > 0 && capabilityNameCombo.getSelectionIndex() != -1) {
+					btnAddToTable.setEnabled(true);
+				}
+			}
+		});
 
 		btnAddToTable = new Button(addCapabilityComposite, SWT.NONE);
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
@@ -288,7 +287,7 @@ public class AppiumSettingsDialog extends Dialog {
 						&& (capabilityValue != null && capabilityValue != "")) {
 					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
 				}
-				addCapabilityComposite.setVisible(false);
+				// addCapabilityComposite.setVisible(false);
 				btnAddToTable.setEnabled(false);
 			}
 		});
