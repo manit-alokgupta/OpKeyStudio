@@ -78,6 +78,9 @@ public class ObjectRepositoryView extends Composite {
 	 * @param parent
 	 * @param style
 	 */
+
+	private CodedFunctionView codedFunctionView;
+
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
 		ObjectRepositoryUI();
@@ -313,7 +316,8 @@ public class ObjectRepositoryView extends Composite {
 		sourceCodeHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		sourceCodeTabItem.setControl(sourceCodeHolder);
 		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
-		new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		CodedFunctionView codedFunctionView = new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		setCodedFunctionView(codedFunctionView);
 
 		objectRepositoryTree.addSelectionListener(new SelectionListener() {
 
@@ -442,13 +446,13 @@ public class ObjectRepositoryView extends Composite {
 					new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
 					toggleSaveButton(false);
 					objectRepositoryTree.renderObjectRepositories();
-
 					toggleSaveButton(false);
 				}
 
 				toggleDeleteAttributeButton(false);
 				toggleAddAttributeButton(false);
 				objectRepositoryTree.renderObjectRepositories();
+				getCodedFunctionView().refreshORCode();
 
 			}
 
@@ -694,7 +698,7 @@ public class ObjectRepositoryView extends Composite {
 		new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
 		toggleSaveButton(false);
 		objectRepositoryTree.renderObjectRepositories();
-
+		getCodedFunctionView().refreshORCode();
 	}
 
 	public Artifact getArtifact() {
@@ -718,5 +722,13 @@ public class ObjectRepositoryView extends Composite {
 
 	public void setOrId(String orId) {
 		this.orId = orId;
+	}
+
+	public CodedFunctionView getCodedFunctionView() {
+		return codedFunctionView;
+	}
+
+	public void setCodedFunctionView(CodedFunctionView codedFunctionView) {
+		this.codedFunctionView = codedFunctionView;
 	}
 }

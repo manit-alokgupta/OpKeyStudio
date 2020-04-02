@@ -326,13 +326,13 @@ public class CodedFunctionView extends Composite {
 		});
 	}
 
-	private void refreshORCode() {
+	public void refreshORCode() {
 		Artifact artifact = getParentObjectRepositoryView().getArtifact();
 		new ORTranspiler().transpile(artifact);
 		initObjectRepositoryCode();
 	}
 
-	private void refreshDRCode() {
+	public void refreshDRCode() {
 		Artifact artifact = getParentDataRepositoryView().getArtifact();
 		new DRTranspiler().transpile(artifact);
 		initDataRepositoryCode();

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -48,6 +47,7 @@ public class DataRepositoryView extends Composite {
 	private ToolItem moveRowUpToolItm;
 	private ToolItem moveRowDownToolItm;
 	private ToolItem saveToolItm;
+	private CodedFunctionView codedFunctionView;
 
 	/**
 	 * Create the composite.
@@ -156,7 +156,6 @@ public class DataRepositoryView extends Composite {
 
 		colCount = dataRepositoryTable.getColumnCount();
 		rowCount = dataRepositoryTable.getItemCount();
-		init();
 		addButtonListner();
 
 		TabItem sourceCodeTabItem = new TabItem(tabFolder, SWT.NONE);
@@ -167,11 +166,8 @@ public class DataRepositoryView extends Composite {
 		sourceCodeTabItem.setControl(sourceCodeHolder);
 		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
-	}
-
-	private void init() {
-
+		CodedFunctionView codedFunctionView = new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		setCodedFunctionView(codedFunctionView);
 	}
 
 	private void addButtonListner() {
@@ -304,6 +300,8 @@ public class DataRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				saveDR();
+				dataRepositoryTable.renderAllDRDetails();
+				getCodedFunctionView().refreshDRCode();
 			}
 
 			@Override
@@ -323,13 +321,8 @@ public class DataRepositoryView extends Composite {
 						saveDR();
 					}
 				}
-				try {
-					dataRepositoryTable.renderAllDRDetails();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
+				dataRepositoryTable.renderAllDRDetails();
+				getCodedFunctionView().refreshDRCode();
 			}
 
 			@Override
@@ -344,12 +337,6 @@ public class DataRepositoryView extends Composite {
 		List<DRColumnAttributes> drColumns = dataRepositoryTable.getDrColumnAttributes();
 		new DataRepositoryConstructApi().saveAllDRColumns(drColumns);
 		toggleSaveButton(false);
-		try {
-			dataRepositoryTable.renderAllDRDetails();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	}
 
 	public Artifact getArtifact() {
@@ -405,5 +392,13 @@ public class DataRepositoryView extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public CodedFunctionView getCodedFunctionView() {
+		return codedFunctionView;
+	}
+
+	public void setCodedFunctionView(CodedFunctionView codedFunctionView) {
+		this.codedFunctionView = codedFunctionView;
 	}
 }
