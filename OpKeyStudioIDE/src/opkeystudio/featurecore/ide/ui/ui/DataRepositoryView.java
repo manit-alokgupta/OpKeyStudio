@@ -5,12 +5,15 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -60,10 +63,19 @@ public class DataRepositoryView extends Composite {
 			throws JsonParseException, JsonMappingException, IOException {
 		super(parent, SWT.BORDER);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
+		TabFolder tabFolder = new TabFolder(this, SWT.BOTTOM);
 
-		Composite composite = new Composite(this, SWT.BORDER);
+		Composite drDataHolder = new Composite(tabFolder, SWT.NONE);
+		drDataHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		drDataHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Data Repository");
+		tabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
+		tabItem.setControl(drDataHolder);
+
+		Composite composite = new Composite(drDataHolder, SWT.BORDER);
 		composite.setLayout(new GridLayout(1, false));
-
 		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -146,6 +158,16 @@ public class DataRepositoryView extends Composite {
 		rowCount = dataRepositoryTable.getItemCount();
 		init();
 		addButtonListner();
+
+		TabItem sourceCodeTabItem = new TabItem(tabFolder, SWT.NONE);
+		sourceCodeTabItem.setText("SourceCode");
+		sourceCodeTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		Composite sourceCodeHolder = new Composite(tabFolder, SWT.NONE);
+		sourceCodeHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		sourceCodeTabItem.setControl(sourceCodeHolder);
+		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
 	}
 
 	private void init() {
