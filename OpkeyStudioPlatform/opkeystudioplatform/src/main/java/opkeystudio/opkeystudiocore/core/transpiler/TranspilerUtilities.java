@@ -16,4 +16,10 @@ public class TranspilerUtilities {
 			e.printStackTrace();
 		}
 	}
+
+	public void addDefaultImports(JavaClassSource classSource) {
+		for (String packageName : ArtifactTranspiler.getInstance().getAllPackagesNames()) {
+			classSource.addImport(packageName + ".*");
+		}
+	}
 }

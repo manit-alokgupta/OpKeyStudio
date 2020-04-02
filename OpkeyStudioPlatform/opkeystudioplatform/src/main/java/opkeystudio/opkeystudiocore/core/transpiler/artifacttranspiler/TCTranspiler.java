@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
-import org.jboss.forge.roaster.model.source.MethodSource;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -33,6 +32,7 @@ public class TCTranspiler extends AbstractTranspiler {
 		File file = createArtifactFile(artifact);
 		try {
 			JavaClassSource classSource = getJavaClassOfTestCase(artifact);
+			new TranspilerUtilities().addDefaultImports(classSource);
 			new TranspilerUtilities().writeCodeToFile(file, classSource);
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
@@ -44,10 +44,39 @@ public class TCTranspiler extends AbstractTranspiler {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(artifact.getVariableName()).setPublic();
 		List<FlowStep> flowSteps = new FlowApi().getAllFlowSteps(artifact.getId());
+		String methodBodyCode = "";
 		for (FlowStep flowStep : flowSteps) {
+			String flowStepCode = convertToFunctionCode(flowStep);
+			methodBodyCode += flowStepCode;
+		}
+
+		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
+		return class1;
+	}
+
+	public String convertToFunctionCode(FlowStep flowStep) {
+		if (isKeywordType(flowStep)) {
+			//return flowStep.getKeyword().getAssociatedmethod() + "();";
+			return "";
+		}
+		if (isFunctionLibraryType(flowStep)) {
 
 		}
-		return class1;
+		return null;
+	}
+
+	private boolean isKeywordType(FlowStep flowStep) {
+		if (flowStep.getKeyword() != null) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isFunctionLibraryType(FlowStep flowStep) {
+		if (flowStep.getFunctionLibraryComponent() != null) {
+			return true;
+		}
+		return false;
 	}
 
 }
