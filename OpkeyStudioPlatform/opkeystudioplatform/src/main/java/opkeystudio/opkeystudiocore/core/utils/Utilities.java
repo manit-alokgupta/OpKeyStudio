@@ -2,11 +2,13 @@ package opkeystudio.opkeystudiocore.core.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -218,6 +220,24 @@ public class Utilities {
 			return "E:\\OpKeyEJars";
 		}
 		return path;
+	}
+
+	public String readTextFile(File file) {
+		BufferedReader br;
+		String outData = "";
+		String data = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+			while ((data = br.readLine()) != null) {
+				outData += data;
+			}
+			br.close();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return outData;
 	}
 
 	public void extractZipFolder(String zipFile, String extractFolder) {

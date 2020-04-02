@@ -82,6 +82,11 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		return this.autoCompletion;
 	}
 
+	public void setArtifactJavaCode(String javaCode) {
+		String formatedCode = new EditorTools(getCodeFunctionView()).formatJavaSourceCode(javaCode);
+		this.setText(formatedCode);
+	}
+
 	public void setJavaCode(String javaCode) {
 		String formatedCode = new EditorTools(getCodeFunctionView()).formatJavaSourceCode(javaCode);
 		this.setText(formatedCode);
@@ -252,8 +257,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		String codes = this.getText();
 		String sourceCodeDirPath = Utilities.getInstance().getDefaultSourceCodeDirPath();
 		String codeFilePath = sourceCodeDirPath + File.separator + getArtifact().getVariableName() + ".java";
-		String compiledCodedFLPath = sourceCodeDirPath + File.separator + getArtifact().getVariableName()
-				+ ".class";
+		String compiledCodedFLPath = sourceCodeDirPath + File.separator + getArtifact().getVariableName() + ".class";
 		BufferedWriter bw;
 		try {
 			bw = new BufferedWriter(new FileWriter(new File(codeFilePath)));
@@ -294,10 +298,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		Artifact artifact = getArtifact();
 		String defaultSourceCodeLibsPath = Utilities.getInstance().getDefaultCodedFLOpKeyLibrariesDirPath();
 		String defaultAssociatedLibsPath = Utilities.getInstance().getDefaultCodedFLAssociatedLibrariesDirPath();
-		String defArtifactSourceCodeLibsPath = defaultSourceCodeLibsPath + File.separator
-				+ artifact.getVariableName();
-		String defArtifactassolibsPath = defaultAssociatedLibsPath + File.separator
-				+ artifact.getVariableName();
+		String defArtifactSourceCodeLibsPath = defaultSourceCodeLibsPath + File.separator + artifact.getVariableName();
+		String defArtifactassolibsPath = defaultAssociatedLibsPath + File.separator + artifact.getVariableName();
 
 		File file = new File(defArtifactSourceCodeLibsPath);
 		if (!file.exists()) {

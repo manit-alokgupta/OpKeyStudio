@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -65,12 +66,14 @@ public class CodedFunctionView extends Composite {
 
 	public CodedFunctionView(Composite parent, int style, TestCaseView parentTestCaseView) {
 		super(parent, SWT.BORDER);
+		setParentTestCaseView(parentTestCaseView);
 		setEmbeddedInsideTestCaseView(true);
 		initArtifact();
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
 		initCFUI();
 		initListeners();
+		initTestCaseCode();
 	}
 
 	public CodedFunctionView(Composite parent, int style) {
@@ -83,6 +86,16 @@ public class CodedFunctionView extends Composite {
 		renderCFLCode();
 		bottomFactoryUi.getCFLInputTable().renderCFLInputParameters();
 		bottomFactoryUi.getCFLOutputTable().renderCFLOutputParameters();
+	}
+
+	private void initTestCaseCode() {
+		Artifact artifact = getParentTestCaseView().getArtifact();
+		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				+ artifact.getVariableName() + ".java";
+		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.readTextFile(new File(codeFilePath));
+		getJavaEditor().setArtifactJavaCode(codeData);
 	}
 
 	private void initCFUI() {
