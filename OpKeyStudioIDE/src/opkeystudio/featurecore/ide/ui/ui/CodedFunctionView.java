@@ -41,6 +41,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
 
 public class CodedFunctionView extends Composite {
 
@@ -77,7 +79,6 @@ public class CodedFunctionView extends Composite {
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
 		initCFUI();
-		initListeners();
 		initTestCaseCode();
 		getJavaEditor().setEditable(editable);
 	}
@@ -88,10 +89,8 @@ public class CodedFunctionView extends Composite {
 		setParentObjectRepositoryView(parentObjectRepositoryView);
 		setEmbeddedInsideObjectRepositoryView(true);
 		initArtifact();
-		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
-		initCFUI();
-		initListeners();
+		initORUI();
 		initObjectRepositoryCode();
 		getJavaEditor().setEditable(editable);
 	}
@@ -102,10 +101,8 @@ public class CodedFunctionView extends Composite {
 		setParentDataRepositoryView(parentDataRepositoryView);
 		setEmbeddedInsideDataRepositoryView(true);
 		initArtifact();
-		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
-		initCFUI();
-		initListeners();
+		initDRUI();
 		initDataRepositoryCode();
 		getJavaEditor().setEditable(editable);
 	}
@@ -113,10 +110,8 @@ public class CodedFunctionView extends Composite {
 	public CodedFunctionView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
 		initArtifact();
-		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
 		initCFUI();
-		initListeners();
 		renderCFLCode();
 		bottomFactoryUi.getCFLInputTable().renderCFLInputParameters();
 		bottomFactoryUi.getCFLOutputTable().renderCFLOutputParameters();
@@ -171,7 +166,7 @@ public class CodedFunctionView extends Composite {
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		refreshButton.setToolTipText("Refresh");
 
-		editor = new JavaCodeEditor(this, this);
+		editor = new JavaCodeEditor(this, this, true);
 		editor.setArtifact(getArtifact());
 		toggleSaveButton(false);
 
@@ -182,9 +177,6 @@ public class CodedFunctionView extends Composite {
 			bottomFactoryUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 			bottomFactoryUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		}
-	}
-
-	private void initListeners() {
 
 		runButton.addSelectionListener(new SelectionListener() {
 
@@ -285,6 +277,65 @@ public class CodedFunctionView extends Composite {
 
 			}
 		});
+	}
+
+	private void initORUI() {
+		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
+		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		refreshButton = new ToolItem(toolBar, SWT.NONE);
+		refreshButton.setText("Refresh Code");
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
+		refreshButton.setToolTipText("Refresh Object Repository Code");
+
+		editor = new JavaCodeEditor(this, this, false);
+		editor.setArtifact(getArtifact());
+		refreshButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				refreshORCode();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+	}
+
+	private void initDRUI() {
+		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
+		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		refreshButton = new ToolItem(toolBar, SWT.NONE);
+		refreshButton.setText("Refresh Code");
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
+		refreshButton.setToolTipText("Refresh Data Repository Code");
+		editor = new JavaCodeEditor(this, this, false);
+		editor.setArtifact(getArtifact());
+		refreshButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				refreshDRCode();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+	}
+
+	private void refreshORCode() {
+		Artifact artifact = getParentObjectRepositoryView().getArtifact();
+		new ORTranspiler().transpile(artifact);
+		initObjectRepositoryCode();
+	}
+
+	private void refreshDRCode() {
+		Artifact artifact = getParentDataRepositoryView().getArtifact();
+		new DRTranspiler().transpile(artifact);
+		initDataRepositoryCode();
 	}
 
 	public void refreshIntellisense(boolean reinit) {

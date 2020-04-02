@@ -55,7 +55,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private CodedFunctionView codeFunctionView;
 	private JavaAutoCompletion autoCompletion;
 
-	public JavaCodeEditor(Composite parent, CodedFunctionView parentView) {
+	public JavaCodeEditor(Composite parent, CodedFunctionView parentView, boolean enableIntellisense) {
 
 		super();
 		System.out.println("JC 1");
@@ -67,15 +67,15 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (UnsupportedLookAndFeelException e) {
-			// handle exception
 		} catch (ClassNotFoundException e) {
-			// handle exception
 		} catch (InstantiationException e) {
-			// handle exception
 		} catch (IllegalAccessException e) {
-			// handle exception
 		}
-		init(SWT_AWT.new_Frame(composite));
+		if (enableIntellisense) {
+			initWithIntellisense(SWT_AWT.new_Frame(composite));
+		} else {
+			initWithoutIntellisense(SWT_AWT.new_Frame(composite));
+		}
 	}
 
 	public JavaAutoCompletion getAutoCompletion() {
@@ -116,7 +116,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 	static boolean saveToggled = false;
 
-	private void init(Frame frame) {
+	private void initWithIntellisense(Frame frame) {
 		JPanel mainEditorPanel = new JPanel(new BorderLayout());
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.setCodeFoldingEnabled(true);
@@ -199,6 +199,18 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			}
 		});
 		includeOpKeyRuntimeLib();
+	}
+
+	private void initWithoutIntellisense(Frame frame) {
+		JPanel mainEditorPanel = new JPanel(new BorderLayout());
+		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+		this.setCodeFoldingEnabled(true);
+		this.setAutoIndentEnabled(true);
+		this.setMarkAllOnOccurrenceSearches(true);
+		this.setMarkOccurrences(true);
+		RTextScrollPane textScrollPane = new RTextScrollPane(this);
+		mainEditorPanel.add(textScrollPane);
+		frame.add(mainEditorPanel);
 	}
 
 	private void createIntellisenseDataFromCurrentText() throws BadLocationException {
