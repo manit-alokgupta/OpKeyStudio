@@ -1,12 +1,9 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -34,18 +31,22 @@ public class FunctionLibraryApi {
 		return flowApi;
 	}
 
-	private List<FlowStep> getAllSteps(String flowId)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
+	private List<FlowStep> getAllSteps(String flowId) {
 		String query = String
 				.format("SELECT * FROM component_design_steps where component_id='%s' ORDER BY position asc", flowId);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowStep.class);
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<FlowStep>();
 	}
 
-	private List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
+	private List<FlowInputArgument> getFlowStepInputArguments(FlowStep flowStep) {
 		List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
 		List<FlowInputArgument> inputArguments = GlobalLoader.getInstance().getComponentflowInputArguments();
 		for (FlowInputArgument flowInputArgument : inputArguments) {
@@ -56,8 +57,7 @@ public class FunctionLibraryApi {
 		return flowInputArgs;
 	}
 
-	private List<FlowOutputArgument> getFlowStepOutputArguments(FlowStep flowStep)
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
+	private List<FlowOutputArgument> getFlowStepOutputArguments(FlowStep flowStep) {
 		List<FlowOutputArgument> flowInputArgs = new ArrayList<FlowOutputArgument>();
 		List<FlowOutputArgument> inputArguments = GlobalLoader.getInstance().getComponentflowOutputArguments();
 		for (FlowOutputArgument flowInputArgument : inputArguments) {
@@ -68,8 +68,7 @@ public class FunctionLibraryApi {
 		return flowInputArgs;
 	}
 
-	private List<ORObject> getORObjectsArguments(FlowStep flowStep)
-			throws JsonParseException, JsonMappingException, SQLException, IOException {
+	private List<ORObject> getORObjectsArguments(FlowStep flowStep) {
 		List<ORObject> allORObjects = new ArrayList<ORObject>();
 		List<FlowInputArgument> inputArguments = flowStep.getFlowInputArgs();
 		for (FlowInputArgument inputArgument : inputArguments) {
@@ -86,8 +85,7 @@ public class FunctionLibraryApi {
 
 	}
 
-	public List<FlowStep> getAllFlowSteps(String flowId)
-			throws JsonParseException, JsonMappingException, SQLException, IOException {
+	public List<FlowStep> getAllFlowSteps(String flowId) {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.getKeywordid() != null) {
