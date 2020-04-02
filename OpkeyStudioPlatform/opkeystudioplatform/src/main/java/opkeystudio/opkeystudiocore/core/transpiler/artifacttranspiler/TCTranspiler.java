@@ -1,15 +1,10 @@
 package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -30,17 +25,12 @@ public class TCTranspiler extends AbstractTranspiler {
 			return;
 		}
 		File file = createArtifactFile(artifact);
-		try {
-			JavaClassSource classSource = getJavaClassOfTestCase(artifact);
-			new TranspilerUtilities().addDefaultImports(classSource);
-			new TranspilerUtilities().writeCodeToFile(file, classSource);
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
-		}
+		JavaClassSource classSource = getJavaClassOfTestCase(artifact);
+		new TranspilerUtilities().addDefaultImports(classSource);
+		new TranspilerUtilities().writeCodeToFile(file, classSource);
 	}
 
-	public JavaClassSource getJavaClassOfTestCase(Artifact artifact)
-			throws JsonParseException, JsonMappingException, SQLException, IOException {
+	public JavaClassSource getJavaClassOfTestCase(Artifact artifact) {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(artifact.getVariableName()).setPublic();
 		List<FlowStep> flowSteps = new FlowApi().getAllFlowSteps(artifact.getId());

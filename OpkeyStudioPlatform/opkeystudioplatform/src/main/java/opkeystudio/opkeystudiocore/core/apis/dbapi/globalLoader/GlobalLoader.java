@@ -1,7 +1,6 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,12 +85,7 @@ public class GlobalLoader {
 	}
 
 	public void initGlobalVariables() {
-		try {
-			this.globalVaribles = new GlobalVariableApi().getAllGlobalVariables();
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.globalVaribles = new GlobalVariableApi().getAllGlobalVariables();
 	}
 
 	public void initAllDRColumns() {
