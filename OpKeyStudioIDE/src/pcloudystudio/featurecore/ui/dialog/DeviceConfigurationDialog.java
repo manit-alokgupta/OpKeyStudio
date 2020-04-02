@@ -32,9 +32,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.service.local.AppiumServiceBuilder;
-import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.appium.AppiumPortIpInfo;
@@ -151,12 +148,6 @@ public class DeviceConfigurationDialog extends Dialog {
 					String previousDevice = devicesCombo.getText();
 					devicesList = AndroidDeviceUtil.getAndroidDevices();
 
-					if (devicesList.size() > 0) {
-						lblDeviceRequiredMessage.setVisible(false);
-					} else {
-						lblDeviceRequiredMessage.setVisible(true);
-					}
-
 					devicesCombo.removeAll();
 					for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
 						devicesCombo.add(deviceEntry.getValue());
@@ -225,18 +216,13 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnNext.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (devicesCombo.getText().isEmpty()) {
-					lblDeviceRequiredMessage.setVisible(true);
-				} else if (applicationPathText.getText().isEmpty()) {
-					lblApplicationIsRequiredMessage.setVisible(true);
+				if (devicesCombo.getText().isEmpty() || applicationPathText.getText().isEmpty()) {
+					lblDeviceRequiredMessage.setVisible(devicesCombo.getText().isEmpty() ? true : false);
+					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
 				} else {
 					shlDeviceConfiguration.setVisible(false);
 					showProgressDialog();
-					if (AndroidDriverObject.getDriver() == null) {
-						MessageDialog.openInformation(shlDeviceConfiguration, "Please Note", "Please Try Again");
-					}
-					if (AndroidDriverObject.getDriver().getSessionId() != null) { // don't go to spy if session is not
-						// generated
+					if (AndroidDriverObject.getDriver().getSessionId() != null) {
 						shlDeviceConfiguration.close();
 						new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
 					}
@@ -325,9 +311,8 @@ public class DeviceConfigurationDialog extends Dialog {
 				}
 			}
 		} else {
-
+			AndroidDriverObject.getDriver().quit();
 			try {
-				AndroidDriverObject.getDriver().quit();
 				Thread.sleep(2000);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -346,19 +331,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					ex.printStackTrace();
 				}
 			} else {
-				try {
-					AppiumServiceBuilder builder = new AppiumServiceBuilder();
-					builder.withIPAddress(AppiumPortIpInfo.getHostAddress());
-					builder.usingPort(Integer.parseInt(AppiumPortIpInfo.getPort()));
-					builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
-					builder.withArgument(GeneralServerFlag.LOG_LEVEL, "error");
-					AppiumDriverLocalService service = AppiumDriverLocalService.buildService(builder);
-					service.stop();
-					Thread.sleep(2000);
-					AppiumServer.startServer();
-				} catch (Exception e) {
-				}
-
+				AppiumServer.startServer();
 				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
 				try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
@@ -388,7 +361,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					monitor.beginTask("Please Wait. Launching Application", 3);
 					for (int i = 1; !monitor.isCanceled() && i <= 3; i++) {
 						monitor.worked(1);
-						Thread.sleep(300);
+						Thread.sleep(1000);
 					}
 					dialog.getShell().getDisplay().syncExec(new Runnable() {
 						@Override
