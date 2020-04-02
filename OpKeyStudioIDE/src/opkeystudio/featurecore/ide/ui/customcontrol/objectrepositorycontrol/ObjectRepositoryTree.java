@@ -1,7 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,33 +114,27 @@ public class ObjectRepositoryTree extends CustomTree {
 		MPart mpart = Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		getParentORView().setOrId(artifact.getId());
-		try {
-
-			ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
-			rootNode.setText(artifact.getName());
-			rootNode.setExpanded(true);
-			addIcon(rootNode);
-			List<ORObject> objectRepositories = new ObjectRepositoryApi().getAllObjects(artifact.getId().trim());
-			setObjectRepositoriesData(objectRepositories);
-			List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
-			for (ORObject objectRepository : objectRepositories) {
-				if (objectRepository.getParent_object_id() == null) {
-					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
-					orTreeItem.setText(objectRepository.getName());
-					orTreeItem.setArtifact(objectRepository);
-					topMostNodes.add(orTreeItem);
-					addIcon(orTreeItem);
-				}
+		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
+		rootNode.setText(artifact.getName());
+		rootNode.setExpanded(true);
+		addIcon(rootNode);
+		List<ORObject> objectRepositories = new ObjectRepositoryApi().getAllObjects(artifact.getId().trim());
+		setObjectRepositoriesData(objectRepositories);
+		List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
+		for (ORObject objectRepository : objectRepositories) {
+			if (objectRepository.getParent_object_id() == null) {
+				ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
+				orTreeItem.setText(objectRepository.getName());
+				orTreeItem.setArtifact(objectRepository);
+				topMostNodes.add(orTreeItem);
+				addIcon(orTreeItem);
 			}
-
-			for (ObjectRepositoryTreeItem topMostNode : topMostNodes) {
-				renderAllArtifactTree(topMostNode, objectRepositories);
-			}
-			expandAll(rootNode);
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+
+		for (ObjectRepositoryTreeItem topMostNode : topMostNodes) {
+			renderAllArtifactTree(topMostNode, objectRepositories);
+		}
+		expandAll(rootNode);
 		getParentORView().toggleDeleteButton(false);
 		getParentORView().toggleChildObjectToolItem(false);
 		getParentORView().toggleRenameButton(false);

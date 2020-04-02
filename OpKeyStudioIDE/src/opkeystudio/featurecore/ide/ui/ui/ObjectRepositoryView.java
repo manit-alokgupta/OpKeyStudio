@@ -1,7 +1,5 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -31,9 +29,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTable;
@@ -440,19 +435,10 @@ public class ObjectRepositoryView extends Composite {
 						objectRepositoryTree.renderObjectRepositories();
 						return;
 					}
-
-					// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-					// notification.setDelayClose(200L);
-					// notification.open();
-
 					List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
-					try {
-						new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
-						toggleSaveButton(false);
-						objectRepositoryTree.renderObjectRepositories();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
+					new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
+					toggleSaveButton(false);
+					objectRepositoryTree.renderObjectRepositories();
 
 					toggleSaveButton(false);
 				}
@@ -696,40 +682,21 @@ public class ObjectRepositoryView extends Composite {
 	private void renderObjectAttributeProperty(ObjectRepositoryTreeItem item) {
 		if (item.getObjectRepository() != null) {
 			String objectId = item.getObjectRepository().getObject_id();
-			try {
-				if (item.getObjectRepository().getObjectAttributesProperty().size() == 0) {
-					System.out.println("Executing Object Property Fetch");
-					item.getObjectRepository().setObjectAttributesProperty(
-							new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
-				}
-				objectAttributeTable.setControlData(item.getObjectRepository().getObjectAttributesProperty());
-				objectAttributeTable.renderObjectAttributes();
-			} catch (JsonParseException e1) {
-				e1.printStackTrace();
-			} catch (JsonMappingException e1) {
-				e1.printStackTrace();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			if (item.getObjectRepository().getObjectAttributesProperty().size() == 0) {
+				System.out.println("Executing Object Property Fetch");
+				item.getObjectRepository().setObjectAttributesProperty(
+						new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
+			objectAttributeTable.setControlData(item.getObjectRepository().getObjectAttributesProperty());
+			objectAttributeTable.renderObjectAttributes();
 		}
 	}
 
 	public void saving() {
-
-		// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-		// notification.setDelayClose(200L);
-		// notification.open();
-
 		List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
-		try {
-			new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
-			toggleSaveButton(false);
-			objectRepositoryTree.renderObjectRepositories();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
+		toggleSaveButton(false);
+		objectRepositoryTree.renderObjectRepositories();
 
 	}
 
