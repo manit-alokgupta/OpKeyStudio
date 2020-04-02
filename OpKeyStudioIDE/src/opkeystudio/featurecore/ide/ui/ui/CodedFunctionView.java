@@ -62,9 +62,14 @@ public class CodedFunctionView extends Composite {
 	private String artifactAssociatedLibraryPath;
 	private Artifact artifact;
 	private TestCaseView parentTestCaseView;
-	private boolean embeddedInsideTestCaseView = false;
+	private ObjectRepositoryView parentObjectRepositoryView;
+	private DataRepositoryView parentDataRepositoryView;
 
-	public CodedFunctionView(Composite parent, int style, TestCaseView parentTestCaseView) {
+	private boolean embeddedInsideTestCaseView = false;
+	private boolean embeddedInsideObjectRepositoryView = false;
+	private boolean embeddedInsideDataRepositoryView = false;
+
+	public CodedFunctionView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
 		super(parent, SWT.BORDER);
 		setParentTestCaseView(parentTestCaseView);
 		setEmbeddedInsideTestCaseView(true);
@@ -74,6 +79,35 @@ public class CodedFunctionView extends Composite {
 		initCFUI();
 		initListeners();
 		initTestCaseCode();
+		getJavaEditor().setEditable(editable);
+	}
+
+	public CodedFunctionView(Composite parent, int style, ObjectRepositoryView parentObjectRepositoryView,
+			boolean editable) {
+		super(parent, SWT.BORDER);
+		setParentObjectRepositoryView(parentObjectRepositoryView);
+		setEmbeddedInsideObjectRepositoryView(true);
+		initArtifact();
+		Utilities.getInstance().setPluginName("Web");
+		setLayout(new GridLayout(1, false));
+		initCFUI();
+		initListeners();
+		initObjectRepositoryCode();
+		getJavaEditor().setEditable(editable);
+	}
+
+	public CodedFunctionView(Composite parent, int style, DataRepositoryView parentDataRepositoryView,
+			boolean editable) {
+		super(parent, SWT.BORDER);
+		setParentDataRepositoryView(parentDataRepositoryView);
+		setEmbeddedInsideDataRepositoryView(true);
+		initArtifact();
+		Utilities.getInstance().setPluginName("Web");
+		setLayout(new GridLayout(1, false));
+		initCFUI();
+		initListeners();
+		initDataRepositoryCode();
+		getJavaEditor().setEditable(editable);
 	}
 
 	public CodedFunctionView(Composite parent, int style) {
@@ -90,6 +124,26 @@ public class CodedFunctionView extends Composite {
 
 	private void initTestCaseCode() {
 		Artifact artifact = getParentTestCaseView().getArtifact();
+		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				+ artifact.getVariableName() + ".java";
+		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.readTextFile(new File(codeFilePath));
+		getJavaEditor().setArtifactJavaCode(codeData);
+	}
+
+	private void initObjectRepositoryCode() {
+		Artifact artifact = getParentObjectRepositoryView().getArtifact();
+		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				+ artifact.getVariableName() + ".java";
+		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.readTextFile(new File(codeFilePath));
+		getJavaEditor().setArtifactJavaCode(codeData);
+	}
+
+	private void initDataRepositoryCode() {
+		Artifact artifact = getParentDataRepositoryView().getArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -395,5 +449,37 @@ public class CodedFunctionView extends Composite {
 
 	public void setEmbeddedInsideTestCaseView(boolean embeddedInsideTestCaseView) {
 		this.embeddedInsideTestCaseView = embeddedInsideTestCaseView;
+	}
+
+	public ObjectRepositoryView getParentObjectRepositoryView() {
+		return parentObjectRepositoryView;
+	}
+
+	public void setParentObjectRepositoryView(ObjectRepositoryView parentObjectRepositoryView) {
+		this.parentObjectRepositoryView = parentObjectRepositoryView;
+	}
+
+	public DataRepositoryView getParentDataRepositoryView() {
+		return parentDataRepositoryView;
+	}
+
+	public void setParentDataRepositoryView(DataRepositoryView parentDataRepositoryView) {
+		this.parentDataRepositoryView = parentDataRepositoryView;
+	}
+
+	public boolean isEmbeddedInsideObjectRepositoryView() {
+		return embeddedInsideObjectRepositoryView;
+	}
+
+	public void setEmbeddedInsideObjectRepositoryView(boolean embeddedInsideObjectRepositoryView) {
+		this.embeddedInsideObjectRepositoryView = embeddedInsideObjectRepositoryView;
+	}
+
+	public boolean isEmbeddedInsideDataRepositoryView() {
+		return embeddedInsideDataRepositoryView;
+	}
+
+	public void setEmbeddedInsideDataRepositoryView(boolean embeddedInsideDataRepositoryView) {
+		this.embeddedInsideDataRepositoryView = embeddedInsideDataRepositoryView;
 	}
 }
