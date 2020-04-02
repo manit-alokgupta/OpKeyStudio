@@ -41,7 +41,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 
@@ -82,7 +81,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private ScrolledComposite objectPropertiesScrolledComposite;
 	private Composite compositeTreeHierarchy;
 	private Composite compositeObjectProperties;
-	private Composite composite;
 
 	private Map<String, String> mobileElementProps;
 	private Map<String, String> mobileParentElementProps;
@@ -135,11 +133,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlSpyMobile = new Shell(getParent(), SWT.DIALOG_TRIM);
-		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/mobile_spy.png"));
+		shlSpyMobile = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
+		// shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+		// "icons/pcloudystudio/mobile_spy.png"));
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlSpyMobile.setSize(new Point(800, 750));
 		shlSpyMobile.setText(DIALOG_TITLE);
+		shlSpyMobile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlSpyMobile.getBounds();
@@ -149,30 +149,29 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		shlSpyMobile.setLayout(new GridLayout(1, false));
 
 		Composite toolsComposite = new Composite(shlSpyMobile, SWT.BORDER);
-		toolsComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_toolsComposite.widthHint = 782;
-		gd_toolsComposite.heightHint = 43;
+		gd_toolsComposite.heightHint = 58;
 		toolsComposite.setLayoutData(gd_toolsComposite);
 
 		Composite spyContainerComposite = new Composite(shlSpyMobile, SWT.NONE);
-		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_spyContainerComposite.heightHint = 599;
 		gd_spyContainerComposite.widthHint = 786;
 		spyContainerComposite.setLayoutData(gd_spyContainerComposite);
 		spyContainerComposite.setLayout(new FillLayout());
 
 		Composite bottomComposite = new Composite(shlSpyMobile, SWT.BORDER);
-		bottomComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_bottomComposite.widthHint = 400;
-		gd_bottomComposite.heightHint = 39;
+		gd_bottomComposite.heightHint = 63;
 		bottomComposite.setLayoutData(gd_bottomComposite);
 
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
 
 		compositeTreeHierarchy = new Composite(sashForm, SWT.BORDER);
-		compositeTreeHierarchy.setLayout(new GridLayout(1, false));
+		compositeTreeHierarchy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		compositeTreeHierarchy.setLayout(new GridLayout(1, true));
 
 		lblAllObjects = new Label(compositeTreeHierarchy, SWT.NONE);
 		lblAllObjects.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
@@ -180,7 +179,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 		allObjectsTreeScrolledComposite = new ScrolledComposite(compositeTreeHierarchy,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_allObjectsTreeScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_allObjectsTreeScrolledComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_allObjectsTreeScrolledComposite.widthHint = 390;
 		gd_allObjectsTreeScrolledComposite.heightHint = 524;
 		allObjectsTreeScrolledComposite.setLayoutData(gd_allObjectsTreeScrolledComposite);
@@ -188,7 +187,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		allObjectsTreeScrolledComposite.setExpandVertical(true);
 
 		compositeObjectProperties = new Composite(sashForm, SWT.BORDER);
-		compositeObjectProperties.setLayout(new GridLayout(1, false));
+		compositeObjectProperties.setLayout(new GridLayout(1, true));
 
 		lblAllObjectProperties = new Label(compositeObjectProperties, SWT.NONE);
 		lblAllObjectProperties.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
@@ -199,26 +198,19 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		lblObjectName.setText("Object Name");
 
 		textObjectName = new Text(compositeObjectProperties, SWT.BORDER);
-		GridData gd_textObjectName = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_textObjectName = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
 		gd_textObjectName.widthHint = 322;
 		textObjectName.setLayoutData(gd_textObjectName);
 		textObjectName.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
 
 		objectPropertiesScrolledComposite = new ScrolledComposite(compositeObjectProperties,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_objectPropertiesScrolledComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_objectPropertiesScrolledComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_objectPropertiesScrolledComposite.heightHint = 395;
 		gd_objectPropertiesScrolledComposite.widthHint = 310;
 		objectPropertiesScrolledComposite.setLayoutData(gd_objectPropertiesScrolledComposite);
 		objectPropertiesScrolledComposite.setExpandHorizontal(true);
 		objectPropertiesScrolledComposite.setExpandVertical(true);
-		new Label(compositeObjectProperties, SWT.NONE);
-
-		composite = new Composite(compositeObjectProperties, SWT.BORDER);
-		GridData gd_composite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_composite.heightHint = 18;
-		gd_composite.widthHint = 335;
-		composite.setLayoutData(gd_composite);
 		sashForm.setWeights(new int[] { 431, 352 });
 
 		// -------------------------------------------------------------//
@@ -274,7 +266,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 			}
 		});
-		btnAdd.setBounds(549, 10, 223, 28);
+		btnAdd.setBounds(531, 10, 223, 28);
 		btnAdd.setText("Add to Object Repository");
 
 		btnClickAndMoveToNextScreen = new Button(toolsComposite, SWT.NONE);
@@ -362,15 +354,18 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		objectPropertiesTable = new Table(objectPropertiesScrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
 		objectPropertiesTable.setHeaderVisible(true);
 		objectPropertiesTable.setLinesVisible(true);
+		objectPropertiesTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		objectPropertiesScrolledComposite.setContent(objectPropertiesTable);
 
 		TableColumn tblclmnName = new TableColumn(objectPropertiesTable, SWT.NONE);
 		tblclmnName.setWidth(100);
 		tblclmnName.setText("Name");
+		tblclmnName.setResizable(true);
 
 		TableColumn tblclmnValue = new TableColumn(objectPropertiesTable, SWT.NONE);
-		tblclmnValue.setWidth(273);
+		tblclmnValue.setWidth(220);
 		tblclmnValue.setText("Value");
+		tblclmnValue.setResizable(true);
 
 		TableEditor editor = new TableEditor(objectPropertiesTable);
 		editor.horizontalAlignment = SWT.LEFT;
