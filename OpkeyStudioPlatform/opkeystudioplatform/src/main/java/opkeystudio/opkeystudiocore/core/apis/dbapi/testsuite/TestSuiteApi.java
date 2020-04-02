@@ -1,10 +1,9 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -16,23 +15,27 @@ import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class TestSuiteApi {
-	private List<TestSuiteStep> getAllTestSuitesStep(String testSuiteId)
-			throws JsonParseException, JsonMappingException, IOException {
+	private List<TestSuiteStep> getAllTestSuitesStep(String testSuiteId) {
 		String query = String.format("SELECT * FROM suite_design_steps where suite_id='%s' ORDER BY position",
 				testSuiteId);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, TestSuiteStep.class);
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<TestSuiteStep>();
 	}
 
-	private Artifact getArtifact(String id) throws JsonParseException, JsonMappingException, IOException {
+	private Artifact getArtifact(String id) {
 
 		return new ArtifactApi().getArtifact(id).get(0);
 	}
 
-	public List<TestSuiteStep> getAllTestSuitesStepsWithArtifact(String testSuiteId)
-			throws JsonParseException, JsonMappingException, IOException {
+	public List<TestSuiteStep> getAllTestSuitesStepsWithArtifact(String testSuiteId) {
 		List<TestSuiteStep> testSuites = getAllTestSuitesStep(testSuiteId);
 		for (TestSuiteStep suite : testSuites) {
 			Artifact artifact = getArtifact(suite.getFlow_id());

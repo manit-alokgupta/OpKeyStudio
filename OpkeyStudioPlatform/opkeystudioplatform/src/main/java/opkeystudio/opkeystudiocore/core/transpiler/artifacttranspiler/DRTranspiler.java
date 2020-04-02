@@ -22,6 +22,7 @@ public class DRTranspiler extends AbstractTranspiler {
 		}
 		File file = createArtifactFile(artifact);
 		JavaClassSource classSource = new GlobalTranspiler().getJavaClassDRObjects(artifact);
+		new TranspilerUtilities().addPackageName(artifact, classSource);
 		new TranspilerUtilities().addDefaultImports(classSource);
 		new TranspilerUtilities().writeCodeToFile(file, classSource);
 	}

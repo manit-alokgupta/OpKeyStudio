@@ -26,6 +26,7 @@ public class TCTranspiler extends AbstractTranspiler {
 		}
 		File file = createArtifactFile(artifact);
 		JavaClassSource classSource = getJavaClassOfTestCase(artifact);
+		new TranspilerUtilities().addPackageName(artifact, classSource);
 		new TranspilerUtilities().addDefaultImports(classSource);
 		new TranspilerUtilities().writeCodeToFile(file, classSource);
 	}
@@ -40,7 +41,7 @@ public class TCTranspiler extends AbstractTranspiler {
 			methodBodyCode += flowStepCode;
 		}
 
-		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
+	//	class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
 		return class1;
 	}
 

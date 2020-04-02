@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class TranspilerUtilities {
@@ -21,5 +22,15 @@ public class TranspilerUtilities {
 		for (String packageName : ArtifactTranspiler.getInstance().getAllPackagesNames()) {
 			classSource.addImport(packageName + ".*");
 		}
+	}
+
+	public void addPackageName(Artifact artifact, JavaClassSource classSource) {
+		if (artifact.getPackageName() == null) {
+			return;
+		}
+		if (artifact.getPackageName().trim().isEmpty()) {
+			return;
+		}
+		classSource.setPackage(artifact.getPackageName());
 	}
 }

@@ -22,6 +22,7 @@ public class ORTranspiler extends AbstractTranspiler {
 		}
 		File file = createArtifactFile(artifact);
 		JavaClassSource classSource = new GlobalTranspiler().getJavaClassORObjects(artifact);
+		new TranspilerUtilities().addPackageName(artifact, classSource);
 		new TranspilerUtilities().addDefaultImports(classSource);
 		new TranspilerUtilities().writeCodeToFile(file, classSource);
 	}
