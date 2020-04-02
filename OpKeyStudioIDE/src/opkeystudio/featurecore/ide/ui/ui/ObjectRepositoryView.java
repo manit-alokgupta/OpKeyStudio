@@ -253,14 +253,8 @@ public class ObjectRepositoryView extends Composite {
 		refreshObject.setToolTipText("Refresh");
 
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
-//		Tree tree = new Tree(composite_3, SWT.BORDER);
 		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectRepositoryTree.setBounds(0, 0, 85, 85);
-
-//		bottomFactoryORUi = new BottomFactoryORUi(composite_3, SWT.BORDER);
-		// bottomFactoryORUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		// bottomFactoryORUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-		// 1, 1));
 
 		ServiceRepository.getInstance().setProjectTreeObject(objectRepositoryTree);
 		Menu menu = new Menu(objectRepositoryTree);
@@ -311,6 +305,15 @@ public class ObjectRepositoryView extends Composite {
 		objectAttributeTable.setHeaderVisible(true);
 		objectAttributeTable.setLinesVisible(true);
 		sashForm.setWeights(new int[] { 2, 1 });
+
+		TabItem sourceCodeTabItem = new TabItem(tabFolder, SWT.NONE);
+		sourceCodeTabItem.setText("SourceCode");
+		sourceCodeTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		Composite sourceCodeHolder = new Composite(tabFolder, SWT.NONE);
+		sourceCodeHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		sourceCodeTabItem.setControl(sourceCodeHolder);
+		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+		new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
 
 		objectRepositoryTree.addSelectionListener(new SelectionListener() {
 
@@ -476,12 +479,6 @@ public class ObjectRepositoryView extends Composite {
 				if (!result) {
 					return;
 				}
-
-				// AbstractNotificationPopup notification = new
-				// DeleteNotificationPopup(display);
-				// notification.setDelayClose(200L);
-				// notification.open();
-
 				ObjectAttributeProperty selectedProperty = objectAttributeTable.getSelectedObjectAttributeProperty();
 				System.out.println("Deleting " + selectedProperty.getOr_id());
 				selectedProperty.setDeleted(true);
@@ -684,8 +681,8 @@ public class ObjectRepositoryView extends Composite {
 			String objectId = item.getObjectRepository().getObject_id();
 			if (item.getObjectRepository().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
-				item.getObjectRepository().setObjectAttributesProperty(
-						new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+				item.getObjectRepository()
+						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getObjectRepository().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();

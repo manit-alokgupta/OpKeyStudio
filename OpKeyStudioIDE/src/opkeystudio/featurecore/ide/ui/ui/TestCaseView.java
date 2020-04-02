@@ -459,7 +459,7 @@ public class TestCaseView extends Composite {
 		sourceCodeTabItem.setControl(sourceCodeHolder);
 		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, true);
 
 		cursor.setMenu(flowStepTable.getMenu());
 		cursor.addSelectionListener(new SelectionListener() {
