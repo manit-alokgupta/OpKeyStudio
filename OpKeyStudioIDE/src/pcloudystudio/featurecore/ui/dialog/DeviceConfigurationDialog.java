@@ -219,6 +219,12 @@ public class DeviceConfigurationDialog extends Dialog {
 				if (devicesCombo.getText().isEmpty() || applicationPathText.getText().isEmpty()) {
 					lblDeviceRequiredMessage.setVisible(devicesCombo.getText().isEmpty() ? true : false);
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
+				} else if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getPort().length() == 0
+						|| AppiumPortIpInfo.getHostAddress() == null || AppiumPortIpInfo.getHostAddress().length() == 0
+						|| AppiumPortIpInfo.getAppiumDirectory() == null
+						|| AppiumPortIpInfo.getAppiumDirectory().length() == 0) {
+					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note",
+							"Appium Settings are not configured! Go-To: Tools->Appium Settings.");
 				} else {
 					shlDeviceConfiguration.setVisible(false);
 					showProgressDialog();
