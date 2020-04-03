@@ -584,6 +584,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			};
 			try {
 				this.btnCapture.setEnabled(false);
+				this.btnStop.setEnabled(false);
 				btnClickAndMoveToNextScreen.setEnabled(false);
 				this.shlSpyMobile.setVisible(true);
 				this.openDeviceView();
@@ -594,8 +595,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			} finally {
 				this.btnCapture.setEnabled(true);
 				this.btnCapture.setFocus();
+				this.btnStop.setEnabled(true);
 			}
 			this.btnCapture.setEnabled(true);
+			this.btnStop.setEnabled(true);
 			this.btnCapture.setFocus();
 		}
 	}
