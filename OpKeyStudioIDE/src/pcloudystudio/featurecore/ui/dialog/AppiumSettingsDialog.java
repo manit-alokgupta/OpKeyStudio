@@ -288,7 +288,7 @@ public class AppiumSettingsDialog extends Dialog {
 					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
 				}
 				// addCapabilityComposite.setVisible(false);
-				btnAddToTable.setEnabled(false);
+				btnAddToTable.setEnabled(true);
 			}
 		});
 		btnAddToTable.setBounds(330, 4, 135, 33);
