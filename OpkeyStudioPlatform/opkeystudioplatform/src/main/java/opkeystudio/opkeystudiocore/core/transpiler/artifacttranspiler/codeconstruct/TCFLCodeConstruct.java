@@ -38,6 +38,7 @@ public class TCFLCodeConstruct {
 
 	private String getConstructFlowKeywordCode(FlowStep flowStep) {
 		String keywordName = flowStep.getKeyword().getName();
+		System.out.println("Keyword "+keywordName);
 		if (keywordName.equals("For")) {
 			FlowInputArgument inputArg = flowStep.getFlowInputArgs().get(0);
 			String value = inputArg.getStaticvalue();
