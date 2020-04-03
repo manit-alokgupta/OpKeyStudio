@@ -41,19 +41,20 @@ public class TCTranspiler extends AbstractTranspiler {
 			methodBodyCode += flowStepCode;
 		}
 
-	//	class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
+		// class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
 		return class1;
 	}
 
 	public String convertToFunctionCode(FlowStep flowStep) {
 		if (isKeywordType(flowStep)) {
-			//return flowStep.getKeyword().getAssociatedmethod() + "();";
-			return "";
+			if (isConstructFlowKeyword(flowStep)) {
+				return getConstructFlowKeywordCode(flowStep);
+			}
 		}
 		if (isFunctionLibraryType(flowStep)) {
 
 		}
-		return null;
+		return "";
 	}
 
 	private boolean isKeywordType(FlowStep flowStep) {
@@ -61,6 +62,48 @@ public class TCTranspiler extends AbstractTranspiler {
 			return true;
 		}
 		return false;
+	}
+
+	private boolean isConstructFlowKeyword(FlowStep flowStep) {
+		if (flowStep.getKeyword().getKeywordtype().equals("ControlFlowConstruct")) {
+			return true;
+		}
+		return false;
+	}
+
+	private String getConstructFlowKeywordCode(FlowStep flowStep) {
+		String keywordName = flowStep.getKeyword().getName();
+		if (keywordName.equals("For")) {
+			return "for(;;){";
+		}
+		if (keywordName.equals("Next")) {
+			return "}";
+		}
+		if (keywordName.equals("Else")) {
+			return "else{";
+		}
+		if (keywordName.equals("EndIf")) {
+			return "}";
+		}
+		if (keywordName.equals("Sleep")) {
+			return "Thread.sleep(1000)";
+		}
+		if (keywordName.equals("Comment")) {
+			return "// My Comment";
+		}
+		if (keywordName.equals("PauseExecution")) {
+
+		}
+		if (keywordName.equals("StopExecution")) {
+			return "System.exit(0)";
+		}
+		if (keywordName.equals("ExitLoop")) {
+			return "break;";
+		}
+		if (keywordName.equals("If")) {
+			return "if(true){";
+		}
+		return "";
 	}
 
 	private boolean isFunctionLibraryType(FlowStep flowStep) {
