@@ -353,6 +353,16 @@ public class GlobalLoader {
 		return typeArtifacts;
 	}
 
+	public Artifact getArtifactById(String id) {
+		List<Artifact> artifacts = getAllArtifacts();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getId().toString().equals(id)) {
+				return artifact;
+			}
+		}
+		return null;
+	}
+
 	public List<ObjectAttributeProperty> getObjectAttributeProperties() {
 		return objectAttributeProperties;
 	}
