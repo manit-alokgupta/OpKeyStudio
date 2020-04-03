@@ -28,7 +28,7 @@ public class MobileCapabilities {
 	public static DesiredCapabilities getCapabilities() {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		LinkedHashMap<String, String> caps_map = getMapOfCapabilities();
-
+		capabilities.setCapability("newCommandTimeout", 0);
 		if (!caps_map.isEmpty()) {
 			caps_map.entrySet().forEach(entry -> {
 				capabilities.setCapability(entry.getKey(), entry.getValue());
