@@ -4,6 +4,7 @@ import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.keyword.KeywordConstructApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -21,6 +22,8 @@ public class FlowConstruct {
 		System.out.println("Saving " + artifact.getFile_type_enum());
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			new FunctionLibraryConstruct().saveAllComponentSteps(allFlowSteps);
+			GlobalLoader.getInstance().initAllComponentFlowInputArguments();
+			GlobalLoader.getInstance().initAllComponentFlowOutputArguments();
 			return;
 		}
 
@@ -31,6 +34,8 @@ public class FlowConstruct {
 			saveFlowInputArguments(flowStep.getFlowInputArgs());
 			saveFlowOutputArguments(flowStep.getFlowOutputArgs());
 			saveFlowStep(flowStep);
+			GlobalLoader.getInstance().initAllFlowInputArguments();
+			GlobalLoader.getInstance().initAllFlowOutputArguments();
 		}
 	}
 

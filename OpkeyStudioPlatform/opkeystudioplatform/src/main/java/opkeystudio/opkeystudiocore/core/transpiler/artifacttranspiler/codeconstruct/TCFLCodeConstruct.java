@@ -62,6 +62,7 @@ public class TCFLCodeConstruct {
 		if (keywordName.equals("Sleep")) {
 			FlowInputArgument inputArg = flowStep.getFlowInputArgs().get(0);
 			String value = inputArg.getStaticvalue();
+			System.out.println(">>Value is "+value);
 			if (value == null) {
 				value = "";
 			}
