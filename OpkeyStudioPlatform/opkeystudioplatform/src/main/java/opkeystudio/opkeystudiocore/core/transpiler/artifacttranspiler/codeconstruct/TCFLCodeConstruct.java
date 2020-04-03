@@ -1,5 +1,8 @@
 package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
@@ -119,5 +122,12 @@ public class TCFLCodeConstruct {
 			return true;
 		}
 		return false;
+	}
+
+	public List<String> getDefaultKeywordsClassVariables() {
+		ArrayList<String> variables = new ArrayList<String>();
+		variables.add("OpKeyGenericKeywords genericKeywords=new OpKeyGenericKeywords();");
+		variables.add("OpKeySystemKeywords systemKeywords=new OpKeySystemKeywords();");
+		return variables;
 	}
 }
