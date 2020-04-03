@@ -22,7 +22,7 @@ public class FLTranspiler extends AbstractTranspiler {
 
 	@Override
 	public void transpile(Artifact artifact) {
-		if (artifact.getFile_type_enum() != MODULETYPE.Flow) {
+		if (artifact.getFile_type_enum() != MODULETYPE.Component) {
 			return;
 		}
 		File file = createArtifactFile(artifact);
