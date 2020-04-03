@@ -3,11 +3,16 @@ package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconst
 import java.util.ArrayList;
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
 public class TCFLCodeConstruct {
 	private String newLineChar = "\n";
+
+	public String convertToFunctionCode(Artifact artifact, FlowStep flowStep) {
+		return convertToFunctionCode(flowStep);
+	}
 
 	public String convertToFunctionCode(FlowStep flowStep) {
 		if (isKeywordType(flowStep)) {

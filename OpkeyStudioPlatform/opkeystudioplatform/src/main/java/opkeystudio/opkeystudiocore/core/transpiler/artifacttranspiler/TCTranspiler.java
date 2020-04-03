@@ -15,6 +15,7 @@ import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstr
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class TCTranspiler extends AbstractTranspiler {
+	private String newLineChar = "\n";
 
 	public TCTranspiler() {
 		setFileExtension(".java");
@@ -38,8 +39,11 @@ public class TCTranspiler extends AbstractTranspiler {
 		class1.setName(artifact.getVariableName()).setPublic();
 		List<FlowStep> flowSteps = new FlowApi().getAllFlowSteps(artifact.getId());
 		String methodBodyCode = "";
+		for (String varName : new TCFLCodeConstruct().getDefaultKeywordsClassVariables()) {
+			methodBodyCode += newLineChar + varName + newLineChar;
+		}
 		for (FlowStep flowStep : flowSteps) {
-			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(flowStep);
+			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(artifact, flowStep);
 			methodBodyCode += flowStepCode;
 		}
 		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
