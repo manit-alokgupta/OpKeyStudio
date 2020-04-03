@@ -8,12 +8,15 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class TCTranspiler extends AbstractTranspiler {
+	private String newLineChar = "\n";
+
 	public TCTranspiler() {
 		setFileExtension(".java");
 		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
@@ -38,16 +41,18 @@ public class TCTranspiler extends AbstractTranspiler {
 		String methodBodyCode = "";
 		for (FlowStep flowStep : flowSteps) {
 			String flowStepCode = convertToFunctionCode(flowStep);
+			System.out.println("Inline Code " + flowStepCode);
 			methodBodyCode += flowStepCode;
 		}
-
-		// class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
+		System.out.println("Code " + methodBodyCode);
+		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
 		return class1;
 	}
 
 	public String convertToFunctionCode(FlowStep flowStep) {
 		if (isKeywordType(flowStep)) {
 			if (isConstructFlowKeyword(flowStep)) {
+				System.out.println("Inside Construct Flow");
 				return getConstructFlowKeywordCode(flowStep);
 			}
 		}
@@ -73,35 +78,52 @@ public class TCTranspiler extends AbstractTranspiler {
 
 	private String getConstructFlowKeywordCode(FlowStep flowStep) {
 		String keywordName = flowStep.getKeyword().getName();
+		System.out.println("Keyword Name " + keywordName);
 		if (keywordName.equals("For")) {
-			return "for(;;){";
+			FlowInputArgument inputArg = flowStep.getFlowInputArgs().get(0);
+			String value = inputArg.getStaticvalue();
+			if (value == null) {
+				value = "";
+			}
+			if (value.isEmpty()) {
+				value = "0";
+			}
+			return newLineChar + "for(int i=0;i<" + value + ";i++){";
 		}
 		if (keywordName.equals("Next")) {
-			return "}";
+			return newLineChar + "}";
 		}
 		if (keywordName.equals("Else")) {
-			return "else{";
+			return newLineChar + "} else{";
 		}
 		if (keywordName.equals("EndIf")) {
-			return "}";
+			return newLineChar + "}";
 		}
 		if (keywordName.equals("Sleep")) {
-			return "Thread.sleep(1000)";
+			FlowInputArgument inputArg = flowStep.getFlowInputArgs().get(0);
+			String value = inputArg.getStaticvalue();
+			if (value == null) {
+				value = "";
+			}
+			if (value.isEmpty()) {
+				value = "0";
+			}
+			return newLineChar + "Thread.sleep(" + value + ");";
 		}
 		if (keywordName.equals("Comment")) {
-			return "// My Comment";
+			return newLineChar + "// My Comment";
 		}
 		if (keywordName.equals("PauseExecution")) {
 
 		}
 		if (keywordName.equals("StopExecution")) {
-			return "System.exit(0)";
+			return newLineChar + "System.exit(0);";
 		}
 		if (keywordName.equals("ExitLoop")) {
-			return "break;";
+			return newLineChar + "break;";
 		}
 		if (keywordName.equals("If")) {
-			return "if(true){";
+			return newLineChar + "if(true){";
 		}
 		return "";
 	}
