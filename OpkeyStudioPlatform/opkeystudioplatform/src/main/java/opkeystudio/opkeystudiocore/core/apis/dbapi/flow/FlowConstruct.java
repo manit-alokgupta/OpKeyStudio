@@ -34,9 +34,9 @@ public class FlowConstruct {
 			saveFlowInputArguments(flowStep.getFlowInputArgs());
 			saveFlowOutputArguments(flowStep.getFlowOutputArgs());
 			saveFlowStep(flowStep);
-			GlobalLoader.getInstance().initAllFlowInputArguments();
-			GlobalLoader.getInstance().initAllFlowOutputArguments();
 		}
+		GlobalLoader.getInstance().initAllFlowInputArguments();
+		GlobalLoader.getInstance().initAllFlowOutputArguments();
 	}
 
 	private void saveFlowStep(FlowStep flowStep) {

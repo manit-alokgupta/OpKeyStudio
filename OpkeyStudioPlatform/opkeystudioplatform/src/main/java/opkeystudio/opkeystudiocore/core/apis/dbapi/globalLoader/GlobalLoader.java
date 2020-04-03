@@ -55,6 +55,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllArguments() {
+		System.out.println("Called InitAllArguments");
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
@@ -89,6 +90,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllDRColumns() {
+		System.out.println(">>Called initAllDRColumns");
 		String query = "select * from dr_columns ORDER BY position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -104,6 +106,7 @@ public class GlobalLoader {
 	}
 
 	public void initALLDRCells() {
+		System.out.println(">>Called initALLDRCells");
 		String query = "select * from dr_cell ORDER BY position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -119,6 +122,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllORObjects() {
+		System.out.println(">>Called initAllORObjects");
 		String query = "select * from or_objects order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -134,6 +138,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllORObjectsObjectProperties() {
+		System.out.println(">>Called initAllORObjectsObjectProperties");
 		String query = "select * from or_object_properties order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -150,6 +155,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllFlowInputArguments() {
+		System.out.println(">>Called initAllFlowInputArguments");
 		String query = "SELECT * FROM flow_step_input_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -165,6 +171,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllFlowOutputArguments() {
+		System.out.println(">>Called initAllFlowOutputArguments");
 		String query = "SELECT * FROM flow_step_output_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -180,6 +187,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllComponentFlowInputArguments() {
+		System.out.println(">>Called initAllComponentFlowInputArguments");
 		String query = "SELECT * FROM component_step_input_args";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -195,6 +203,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllComponentFlowOutputArguments() {
+		System.out.println(">>Called initAllComponentFlowOutputArguments");
 		String query = "SELECT * FROM component_step_output_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();

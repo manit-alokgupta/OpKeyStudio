@@ -444,8 +444,7 @@ public class FlowStepTable extends CustomTable {
 			return;
 		}
 		String artifactId = artifact.getId();
-		List<FlowStep> flowSteps = null;
-		GlobalLoader.getInstance().initAllArguments();
+		List<FlowStep> flowSteps = new ArrayList<FlowStep>();
 		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 			flowSteps = FlowApi.getInstance().getAllFlowSteps(artifactId);
 		}

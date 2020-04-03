@@ -16,6 +16,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FLTranspiler extends AbstractTranspiler {
 	private String newLineChar = "\n";
+
 	public FLTranspiler() {
 		setFileExtension(".java");
 		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
@@ -36,13 +37,13 @@ public class FLTranspiler extends AbstractTranspiler {
 	public JavaClassSource getJavaClassOfTestCase(Artifact artifact) {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(artifact.getVariableName()).setPublic();
-		List<FlowStep> flowSteps = new FunctionLibraryApi().getAllFlowSteps(artifact.getId());
+		List<FlowStep> flowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(artifact.getId());
 		String methodBodyCode = "";
 		for (String varName : new TCFLCodeConstruct().getDefaultKeywordsClassVariables()) {
 			methodBodyCode += newLineChar + varName + newLineChar;
 		}
 		for (FlowStep flowStep : flowSteps) {
-			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(artifact,flowStep);
+			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(artifact, flowStep);
 			methodBodyCode += flowStepCode;
 		}
 		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");

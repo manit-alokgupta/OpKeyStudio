@@ -37,7 +37,7 @@ public class TCTranspiler extends AbstractTranspiler {
 	public JavaClassSource getJavaClassOfTestCase(Artifact artifact) {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(artifact.getVariableName()).setPublic();
-		List<FlowStep> flowSteps = new FlowApi().getAllFlowSteps(artifact.getId());
+		List<FlowStep> flowSteps = FlowApi.getInstance().getAllFlowSteps(artifact.getId());
 		String methodBodyCode = "";
 		for (String varName : new TCFLCodeConstruct().getDefaultKeywordsClassVariables()) {
 			methodBodyCode += newLineChar + varName + newLineChar;
