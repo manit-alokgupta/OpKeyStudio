@@ -3,10 +3,32 @@ package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconst
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 
-public class TCCodeConstruct {
+public class TCFLCodeConstruct {
 	private String newLineChar = "\n";
 
-	public String getConstructFlowKeywordCode(FlowStep flowStep) {
+	public String convertToFunctionCode(FlowStep flowStep) {
+		if (isKeywordType(flowStep)) {
+			if (isConstructFlowKeyword(flowStep)) {
+				return getConstructFlowKeywordCode(flowStep);
+			}
+			if (isOpKeyGenericKeyword(flowStep)) {
+
+			}
+			if (isSystemKeyword(flowStep)) {
+
+			}
+			if (isPluginSpecificKeyword(flowStep)) {
+
+			}
+		}
+
+		if (new TCFLCodeConstruct().isFunctionLibraryType(flowStep)) {
+
+		}
+		return "";
+	}
+
+	private String getConstructFlowKeywordCode(FlowStep flowStep) {
 		String keywordName = flowStep.getKeyword().getName();
 		if (keywordName.equals("For")) {
 			FlowInputArgument inputArg = flowStep.getFlowInputArgs().get(0);
@@ -55,5 +77,47 @@ public class TCCodeConstruct {
 			return newLineChar + "if(true){";
 		}
 		return "";
+	}
+
+	private boolean isKeywordType(FlowStep flowStep) {
+		if (flowStep.getKeyword() != null) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isConstructFlowKeyword(FlowStep flowStep) {
+		if (flowStep.getKeyword().getKeywordtype().equals("ControlFlowConstruct")) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isOpKeyGenericKeyword(FlowStep flowStep) {
+		if (flowStep.getKeyword().getKeywordtype().equals("OpKeyGenericKeyword")) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isSystemKeyword(FlowStep flowStep) {
+		if (flowStep.getKeyword().getKeywordtype().equals("SystemKeyword")) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isPluginSpecificKeyword(FlowStep flowStep) {
+		if (flowStep.getKeyword().getKeywordtype().equals("PluginSpecificKeyword")) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isFunctionLibraryType(FlowStep flowStep) {
+		if (flowStep.getFunctionLibraryComponent() != null) {
+			return true;
+		}
+		return false;
 	}
 }
