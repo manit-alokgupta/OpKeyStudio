@@ -43,6 +43,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
 
 public class CodedFunctionView extends Composite {
 
@@ -78,7 +79,7 @@ public class CodedFunctionView extends Composite {
 		initArtifact();
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
-		initCFUI();
+		initTCFLUI();
 		initTestCaseCode();
 		getJavaEditor().setEditable(editable);
 	}
@@ -279,6 +280,50 @@ public class CodedFunctionView extends Composite {
 		});
 	}
 
+	private void initTCFLUI() {
+		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
+		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+
+		runButton = new ToolItem(toolBar, SWT.NONE);
+		runButton.setText("Run");
+		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
+		runButton.setToolTipText("Run");
+
+		refreshButton = new ToolItem(toolBar, SWT.NONE);
+		refreshButton.setText("Refresh Code");
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
+		refreshButton.setToolTipText("Refresh TC/FL Code");
+
+		editor = new JavaCodeEditor(this, this, false);
+		editor.setArtifact(getArtifact());
+		refreshButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				refreshTCFLCode();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+		runButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+
 	private void initORUI() {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
@@ -324,6 +369,12 @@ public class CodedFunctionView extends Composite {
 
 			}
 		});
+	}
+
+	public void refreshTCFLCode() {
+		Artifact artifact = getParentTestCaseView().getArtifact();
+		new TCTranspiler().transpile(artifact);
+		initTestCaseCode();
 	}
 
 	public void refreshORCode() {
