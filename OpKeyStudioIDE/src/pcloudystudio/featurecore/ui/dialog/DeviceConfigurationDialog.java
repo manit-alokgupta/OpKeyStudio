@@ -32,6 +32,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.appium.AppiumPortIpInfo;
@@ -228,9 +231,18 @@ public class DeviceConfigurationDialog extends Dialog {
 				} else {
 					shlDeviceConfiguration.setVisible(false);
 					showProgressDialog();
-					if (AndroidDriverObject.getDriver().getSessionId() != null) {
-						shlDeviceConfiguration.close();
-						new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
+
+					if (AndroidDriverObject.getDriver() == null) {
+						MessageDialog.openInformation(shlDeviceConfiguration, "Information",
+								"Error In Application Installation");
+					}
+
+					else {
+						if ((AndroidDriverObject.getDriver() != null)
+								&& (AndroidDriverObject.getDriver().getSessionId() != null)) {
+							shlDeviceConfiguration.close();
+							new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
+						}
 					}
 				}
 			}
@@ -337,9 +349,19 @@ public class DeviceConfigurationDialog extends Dialog {
 					ex.printStackTrace();
 				}
 			} else {
-				AppiumServer.startServer();
-				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
 				try {
+					AppiumServiceBuilder builder = new AppiumServiceBuilder();
+					builder.withIPAddress(AppiumPortIpInfo.getHostAddress());
+					builder.usingPort(Integer.parseInt(AppiumPortIpInfo.getPort()));
+					builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
+					builder.withArgument(GeneralServerFlag.LOG_LEVEL, "error");
+					AppiumDriverLocalService service = AppiumDriverLocalService.buildService(builder);
+					service.stop();
+					Thread.sleep(2000);
+
+					AppiumServer.startServer();
+					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
