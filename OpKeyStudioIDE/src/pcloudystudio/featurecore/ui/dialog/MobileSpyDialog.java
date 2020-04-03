@@ -290,12 +290,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnStop.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				AndroidDriverObject.getDriver().quit();
+				deviceView.close();
 				btnStop.setEnabled(false);
 				btnCapture.setEnabled(false);
 				btnClickAndMoveToNextScreen.setEnabled(false);
 				btnAdd.setEnabled(false);
-				captureObjectAction();
+				allObjectsCheckboxTreeViewer.getTree().removeAll();
+				clearPropertiesTableData();
 			}
 		});
 		btnStop.setBounds(374, 10, 58, 28);
@@ -518,89 +519,89 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private void captureObjectAction() {
 		if (textObjectName.getText().length() > 0)
 			textObjectName.setText("");
+
 		createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
 		createObjectPropertiesTable(objectPropertiesScrolledComposite);
-		if (AndroidDriverObject.getDriver() != null) {
-			String appFilePath = OpKeyStudioPreferences.getPreferences().getBasicSettings("application_name");
-			String appName = this.getApplicationName(appFilePath);
 
-			ProgressMonitorDialogWithThread dialog = new ProgressMonitorDialogWithThread(shlSpyMobile);
-			IRunnableWithProgress runnable = (IRunnableWithProgress) new IRunnableWithProgress() {
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					monitor.beginTask("Starting Application for Spy ...", -1);
-					dialog.runAndWait((Callable<Object>) new Callable<Object>() {
-						@Override
-						public Object call() throws Exception {
-							MobileSpyDialog.setTreeRoot(MobileSpyDialog.this,
-									MobileSpyDialog.this.inspectorController.getMobileObjectRoot());
-							if (MobileSpyDialog.this.appRootElement != null) {
-								MobileSpyDialog.this.appRootElement.setName(appName);
-							}
-							return null;
-						}
-					});
-					MobileSpyDialog.this.checkMonitorCanceled(monitor);
-					this.refreshTreeElements(dialog);
-					String imgPath = this.captureImage();
-					MobileSpyDialog.this.checkMonitorCanceled(monitor);
-					this.refreshDeviceView(imgPath);
-					Display.getDefault().syncExec((Runnable) new Runnable() {
-						@Override
-						public void run() {
-							MobileSpyDialog.this.deviceView.getShell().forceActive();
-						}
-					});
-					monitor.done();
-				}
+		String appFilePath = OpKeyStudioPreferences.getPreferences().getBasicSettings("application_name");
+		String appName = this.getApplicationName(appFilePath);
 
-				private void refreshTreeElements(ProgressMonitorDialogWithThread dialog) {
-					Display.getDefault().syncExec((Runnable) new Runnable() {
-						@Override
-						public void run() {
-							dialog.setCancelable(false);
-							allObjectsCheckboxTreeViewer
-							.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
-							allObjectsCheckboxTreeViewer.refresh();
-							allObjectsCheckboxTreeViewer.expandAll();
-							dialog.setCancelable(true);
+		ProgressMonitorDialogWithThread dialog = new ProgressMonitorDialogWithThread(shlSpyMobile);
+		IRunnableWithProgress runnable = (IRunnableWithProgress) new IRunnableWithProgress() {
+			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				monitor.beginTask("Starting Application for Spy ...", -1);
+				dialog.runAndWait((Callable<Object>) new Callable<Object>() {
+					@Override
+					public Object call() throws Exception {
+						MobileSpyDialog.setTreeRoot(MobileSpyDialog.this,
+								MobileSpyDialog.this.inspectorController.getMobileObjectRoot());
+						if (MobileSpyDialog.this.appRootElement != null) {
+							MobileSpyDialog.this.appRootElement.setName(appName);
 						}
-					});
-				}
-
-				private void refreshDeviceView(String imgPath) {
-					File imgFile = new File(imgPath);
-					if (imgFile.exists()) {
-						MobileSpyDialog.this.deviceView.refreshDialog(imgFile, MobileSpyDialog.this.appRootElement);
+						return null;
 					}
-				}
-
-				private String captureImage() throws InvocationTargetException {
-					try {
-						return MobileSpyDialog.this.inspectorController.captureScreenshot();
-					} catch (Exception e) {
-						throw new InvocationTargetException(e);
+				});
+				MobileSpyDialog.this.checkMonitorCanceled(monitor);
+				this.refreshTreeElements(dialog);
+				String imgPath = this.captureImage();
+				MobileSpyDialog.this.checkMonitorCanceled(monitor);
+				this.refreshDeviceView(imgPath);
+				Display.getDefault().syncExec((Runnable) new Runnable() {
+					@Override
+					public void run() {
+						MobileSpyDialog.this.deviceView.getShell().forceActive();
 					}
-				}
-			};
-			try {
-				this.btnCapture.setEnabled(false);
-				this.btnStop.setEnabled(false);
-				btnClickAndMoveToNextScreen.setEnabled(false);
-				this.shlSpyMobile.setVisible(true);
-				this.openDeviceView();
-				dialog.run(true, true, runnable);
-			} catch (InterruptedException ex) {
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} finally {
-				this.btnCapture.setEnabled(true);
-				this.btnCapture.setFocus();
-				this.btnStop.setEnabled(true);
+				});
+				monitor.done();
 			}
+
+			private void refreshTreeElements(ProgressMonitorDialogWithThread dialog) {
+				Display.getDefault().syncExec((Runnable) new Runnable() {
+					@Override
+					public void run() {
+						dialog.setCancelable(false);
+						allObjectsCheckboxTreeViewer
+						.setInput((Object) new Object[] { MobileSpyDialog.this.appRootElement });
+						allObjectsCheckboxTreeViewer.refresh();
+						allObjectsCheckboxTreeViewer.expandAll();
+						dialog.setCancelable(true);
+					}
+				});
+			}
+
+			private void refreshDeviceView(String imgPath) {
+				File imgFile = new File(imgPath);
+				if (imgFile.exists()) {
+					MobileSpyDialog.this.deviceView.refreshDialog(imgFile, MobileSpyDialog.this.appRootElement);
+				}
+			}
+
+			private String captureImage() throws InvocationTargetException {
+				try {
+					return MobileSpyDialog.this.inspectorController.captureScreenshot();
+				} catch (Exception e) {
+					throw new InvocationTargetException(e);
+				}
+			}
+		};
+		try {
+			this.btnCapture.setEnabled(false);
+			this.btnStop.setEnabled(false);
+			btnClickAndMoveToNextScreen.setEnabled(false);
+			this.shlSpyMobile.setVisible(true);
+			this.openDeviceView();
+			dialog.run(true, true, runnable);
+		} catch (InterruptedException ex) {
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} finally {
 			this.btnCapture.setEnabled(true);
-			this.btnStop.setEnabled(true);
 			this.btnCapture.setFocus();
+			this.btnStop.setEnabled(true);
 		}
+		this.btnCapture.setEnabled(true);
+		this.btnStop.setEnabled(true);
+		this.btnCapture.setFocus();
 	}
 
 	private void checkMonitorCanceled(IProgressMonitor monitor) throws InterruptedException {
