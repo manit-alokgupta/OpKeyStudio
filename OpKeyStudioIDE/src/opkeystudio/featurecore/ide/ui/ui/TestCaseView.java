@@ -111,6 +111,9 @@ public class TestCaseView extends Composite {
 	 * @param parent
 	 * @param style
 	 */
+
+	private CodedFunctionView codedFunctionView;
+
 	public TestCaseView(Composite parent, int style) {
 		super(parent, style);
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
@@ -459,7 +462,8 @@ public class TestCaseView extends Composite {
 		sourceCodeTabItem.setControl(sourceCodeHolder);
 		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, true);
+		CodedFunctionView codedFunctionView = new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, true);
+		setCodedFunctionView(codedFunctionView);
 
 		cursor.setMenu(flowStepTable.getMenu());
 		cursor.addSelectionListener(new SelectionListener() {
@@ -560,12 +564,7 @@ public class TestCaseView extends Composite {
 
 			}
 		});
-		try {
-			flowStepTable.renderFlowSteps();
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		flowStepTable.renderFlowSteps();
 
 		itemAdd.addSelectionListener(new SelectionListener() {
 
@@ -774,6 +773,7 @@ public class TestCaseView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				saveAll();
+				getCodedFunctionView().refreshTCFLCode();
 			}
 
 			@Override
@@ -787,31 +787,15 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					if (itemSave.isEnabled()) {
-						toggleSaveButton(false);
-						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-								"Do you want to Save changes?");
-						if (!status) {
-							flowStepTable.renderFlowSteps();
-							return;
-						}
-
+				if (itemSave.isEnabled()) {
+					toggleSaveButton(false);
+					boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
+					if (status) {
 						new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
-						try {
-							flowStepTable.renderFlowSteps();
-						} catch (SQLException | IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
 					}
-
-					flowStepTable.renderFlowSteps();
-
-				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
+				flowStepTable.renderFlowSteps();
+				getCodedFunctionView().refreshTCFLCode();
 			}
 
 			@Override
@@ -880,12 +864,7 @@ public class TestCaseView extends Composite {
 
 	public void saveAll() {
 		new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
-		try {
-			flowStepTable.renderFlowSteps();
-		} catch (SQLException | IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		flowStepTable.renderFlowSteps();
 		toggleSaveButton(false);
 	}
 
@@ -924,5 +903,13 @@ public class TestCaseView extends Composite {
 
 	public StyledText getStepDetailLabel() {
 		return this.stepInfoLabel;
+	}
+
+	public CodedFunctionView getCodedFunctionView() {
+		return codedFunctionView;
+	}
+
+	public void setCodedFunctionView(CodedFunctionView codedFunctionView) {
+		this.codedFunctionView = codedFunctionView;
 	}
 }

@@ -435,7 +435,7 @@ public class FlowStepTable extends CustomTable {
 		}
 	}
 
-	public void renderFlowSteps() throws SQLException, IOException {
+	public void renderFlowSteps() {
 		disposeAllTableEditors();
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
