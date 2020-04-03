@@ -234,7 +234,7 @@ public class DeviceConfigurationDialog extends Dialog {
 
 					if (AndroidDriverObject.getDriver() == null) {
 						MessageDialog.openInformation(shlDeviceConfiguration, "Information",
-								"Error In Application Installation");
+								"Error In Application Installation.Please Try Again");
 					}
 
 					else {
@@ -329,8 +329,9 @@ public class DeviceConfigurationDialog extends Dialog {
 				}
 			}
 		} else {
-			AndroidDriverObject.getDriver().quit();
+			
 			try {
+				AndroidDriverObject.getDriver().quit();
 				Thread.sleep(2000);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -358,10 +359,12 @@ public class DeviceConfigurationDialog extends Dialog {
 					AppiumDriverLocalService service = AppiumDriverLocalService.buildService(builder);
 					service.stop();
 					Thread.sleep(2000);
-
 					AppiumServer.startServer();
-					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+					}catch(Exception e) {e.printStackTrace();}
 
+					
+					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+                    try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
@@ -389,7 +392,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					monitor.beginTask("Please Wait. Launching Application", 3);
 					for (int i = 1; !monitor.isCanceled() && i <= 3; i++) {
 						monitor.worked(1);
-						Thread.sleep(1000);
+						Thread.sleep(300);
 					}
 					dialog.getShell().getDisplay().syncExec(new Runnable() {
 						@Override
