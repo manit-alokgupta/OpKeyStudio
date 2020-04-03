@@ -39,9 +39,11 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
 
@@ -309,17 +311,17 @@ public class CodedFunctionView extends Composite {
 			}
 		});
 		runButton.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
@@ -373,7 +375,11 @@ public class CodedFunctionView extends Composite {
 
 	public void refreshTCFLCode() {
 		Artifact artifact = getParentTestCaseView().getArtifact();
-		new TCTranspiler().transpile(artifact);
+		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+			new FLTranspiler().transpile(artifact);
+		} else if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
+			new TCTranspiler().transpile(artifact);
+		}
 		initTestCaseCode();
 	}
 
