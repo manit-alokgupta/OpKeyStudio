@@ -23,6 +23,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -37,6 +39,7 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 
 public class TestSuiteView extends Composite {
 	private SuiteTestCaseTree testCaseTree;
@@ -76,7 +79,18 @@ public class TestSuiteView extends Composite {
 		display = getParent().getDisplay();
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		Composite composite = new Composite(this, SWT.NONE);
+		TabFolder mainTestCaseTabFolder = new TabFolder(this, SWT.BORDER | SWT.BOTTOM);
+		mainTestCaseTabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+
+		TabItem testCaseTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
+		testCaseTabItem.setText("Test Suite");
+		testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
+		Composite testCaseHolder = new Composite(mainTestCaseTabFolder, SWT.NONE);
+		testCaseHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		testCaseTabItem.setControl(testCaseHolder);
+		testCaseHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		Composite composite = new Composite(testCaseHolder, SWT.NONE);
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		SashForm sashForm = new SashForm(composite, SWT.NONE);
@@ -224,6 +238,8 @@ public class TestSuiteView extends Composite {
 		testCaseTree.setLinesVisible(true);
 		testCaseTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm.setWeights(new int[] { 2, 1 });
+
+		// Sorce Code will be here
 
 		toolDropDown.addSelectionListener(new SelectionListener() {
 

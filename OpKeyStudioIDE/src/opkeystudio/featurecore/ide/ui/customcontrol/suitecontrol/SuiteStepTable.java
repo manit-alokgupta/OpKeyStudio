@@ -474,8 +474,7 @@ public class SuiteStepTable extends CustomTable {
 	public void renderAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
 		disposeAllTableEditors();
 		this.removeAll();
-		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		Artifact artifact = getParentTestSuiteView().getArtifact();
 		List<TestSuiteStep> testSuites = new TestSuiteApi().getAllTestSuitesStepsWithArtifact(artifact.getId());
 		setTestSuiteData(testSuites);
 		for (TestSuiteStep testSuite : testSuites) {
