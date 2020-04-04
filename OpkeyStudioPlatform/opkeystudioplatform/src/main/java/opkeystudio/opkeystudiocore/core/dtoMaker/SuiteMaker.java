@@ -9,6 +9,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class SuiteMaker {
 	public TestSuiteStep createTestSuite(Artifact artifact, Artifact testSuiteArtifact, TestSuiteStep selectedTestSuite,
 			List<TestSuiteStep> testSuiteSteps) {
+		System.out.println("TestSuiteSteps " + testSuiteSteps.size());
 		int selectedTestSuiteIndex = testSuiteSteps.indexOf(selectedTestSuite);
 		int selectedTestSuitePosition = 0;
 		if (selectedTestSuite != null) {

@@ -47,6 +47,7 @@ public class SuiteStepTable extends CustomTable {
 	private MenuItem movedownMenuItem;
 	private MenuItem setToRunMenuItem;
 	private MenuItem skipfromRunMenuItem;
+	private List<TestSuiteStep> testSuiteSteps = new ArrayList<TestSuiteStep>();
 
 	public SuiteStepTable(Composite parent, int style, TestSuiteView parentView) {
 		super(parent, style);
@@ -363,12 +364,12 @@ public class SuiteStepTable extends CustomTable {
 	}
 
 	public void setTestSuiteData(List<TestSuiteStep> testSuite) {
-		super.setControlData(testSuite);
+		this.testSuiteSteps = testSuite;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<TestSuiteStep> getTestSuiteData() {
-		return (List<TestSuiteStep>) super.getControlData();
+		return this.testSuiteSteps;
 	}
 
 	private TableEditor getTableEditor() {
