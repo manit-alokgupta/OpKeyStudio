@@ -34,8 +34,8 @@ public class TCFLCodeConstruct {
 			}
 		}
 
-		if (new TCFLCodeConstruct().isFunctionLibraryType(flowStep)) {
-
+		if (isFunctionLibraryType(flowStep)) {
+			return getFunctionLibraryCode(flowStep);
 		}
 		return "";
 	}
@@ -91,6 +91,12 @@ public class TCFLCodeConstruct {
 		methodcode += argumentCall;
 		methodcode += ");";
 		return methodcode;
+	}
+
+	private String getFunctionLibraryCode(FlowStep flowStep) {
+		Artifact artifact = flowStep.getFunctionLibraryComponent();
+		String code = newLineChar + " new " + artifact.getVariableName() + "().execute();";
+		return code;
 	}
 
 	private String formatDataType(String dataType, String data) {
