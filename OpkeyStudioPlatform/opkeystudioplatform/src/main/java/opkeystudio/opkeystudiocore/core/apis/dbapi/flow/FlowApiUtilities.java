@@ -11,6 +11,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -42,7 +43,7 @@ public class FlowApiUtilities {
 			}
 		}
 		if (!outData.isEmpty()) {
-			return "Output: " + "<"+outData+">";
+			return "Output: " + "<" + outData + ">";
 		}
 		return "Output: <>";
 	}
@@ -62,7 +63,7 @@ public class FlowApiUtilities {
 			}
 		}
 		if (!outData.isEmpty()) {
-			return "Input: " + "<"+outData+">";
+			return "Input: " + "<" + outData + ">";
 		}
 		return "Input: <>";
 	}
@@ -133,6 +134,50 @@ public class FlowApiUtilities {
 			flowInputArgument.setIp_id(data);
 			flowInputArgument.setModified(true);
 		}
+	}
+
+	public List<FlowInputObject> getAllFlowInputObject(Artifact artifact, List<FlowInputArgument> flowInputArguments) {
+		List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
+		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
+			for (FlowInputArgument flowInputArgument : flowInputArguments) {
+				FlowInputObject flowInputObject = new FlowInputObject();
+				flowInputObject.setDataSource(flowInputArgument.getDatasource());
+				if (flowInputArgument.getDatasource() == DataSource.StaticValue
+						&& flowInputArgument.getStaticobjectid() == null) {
+					flowInputObject.setStaticValueData(flowInputArgument.getStaticvalue());
+				}
+				if (flowInputArgument.getDatasource() == DataSource.ValueFromGlobalVariable) {
+					flowInputObject.setGlobalVariableData(flowInputArgument.getGlobalvariable_id());
+				}
+				if (flowInputArgument.getDatasource() == DataSource.ValueFromDataRepository) {
+					flowInputObject.setDataRepositoryColumnData(flowInputArgument.getDatarepositorycolumnid());
+				}
+				if (flowInputArgument.getDatasource() == DataSource.ValueFromOutputArgument) {
+					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
+				}
+
+				flowInputObjects.add(flowInputObject);
+			}
+		}
+		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+			for (FlowInputArgument flowInputArgument : flowInputArguments) {
+				FlowInputObject flowInputObject = new FlowInputObject();
+				flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
+				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
+						&& flowInputArgument.getStaticobjectid() == null) {
+					flowInputObject.setStaticValueData(flowInputArgument.getStaticvalue());
+				}
+				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromGlobalVariable) {
+					flowInputObject.setGlobalVariableData(flowInputArgument.getGlobalvariable_id());
+				}
+				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromOutputArgument) {
+					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
+				}
+
+				flowInputObjects.add(flowInputObject);
+			}
+		}
+		return flowInputObjects;
 	}
 
 }

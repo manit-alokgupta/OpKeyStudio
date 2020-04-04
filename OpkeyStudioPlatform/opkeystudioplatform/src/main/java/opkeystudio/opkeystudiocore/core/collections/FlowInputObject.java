@@ -1,5 +1,11 @@
 package opkeystudio.opkeystudiocore.core.collections;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
+
 public class FlowInputObject {
 	private boolean staticValueDataExist;
 	private boolean flowOutputDataExist;
@@ -12,6 +18,9 @@ public class FlowInputObject {
 	private String staticObjectData;
 	private String globalVariableData;
 	private String dataRepositoryColumnData;
+
+	private DataSource dataSource;
+	private List<ORObject> orObjects = new ArrayList<>();
 
 	public boolean isStaticValueDataExist() {
 		return staticValueDataExist;
@@ -91,5 +100,21 @@ public class FlowInputObject {
 
 	public void setDataRepositoryColumnData(String dataRepositoryColumnData) {
 		this.dataRepositoryColumnData = dataRepositoryColumnData;
+	}
+
+	public DataSource getDataSource() {
+		return dataSource;
+	}
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	public List<ORObject> getOrObjects() {
+		return orObjects;
+	}
+
+	public void setOrObjects(List<ORObject> orObjects) {
+		this.orObjects = orObjects;
 	}
 }
