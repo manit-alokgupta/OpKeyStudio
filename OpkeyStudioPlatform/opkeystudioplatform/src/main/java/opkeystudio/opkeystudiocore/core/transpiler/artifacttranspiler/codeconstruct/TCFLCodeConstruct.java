@@ -3,10 +3,13 @@ package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconst
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fife.ui.rsyntaxtextarea.modes.DartTokenMaker;
+
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -48,6 +51,7 @@ public class TCFLCodeConstruct {
 			if (!argumentCall.isEmpty()) {
 				argumentCall += ", ";
 			}
+
 			if (flowInputObject.getDataType().equals("ORObject")) {
 				if (flowStep.getOrObject().size() == 0) {
 					argumentCall += "null";
@@ -65,11 +69,21 @@ public class TCFLCodeConstruct {
 				argumentCall += value;
 				continue;
 			}
+
 			if (flowInputObject.isGlobalVariableDataExist()) {
 				GlobalVariable globalVariable = GlobalLoader.getInstance()
 						.getGlobalVariableById(flowInputObject.getGlobalVariableData());
 
-				argumentCall += globalVariable.getVariableName();
+				argumentCall += "GlobalVariables." + globalVariable.getVariableName();
+				continue;
+			}
+
+			if (flowInputObject.isDataRepositoryColumnDataExist()) {
+				String columnId = flowInputObject.getDataRepositoryColumnData();
+				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
+				String columnName = drColumn.getName();
+				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
+				argumentCall += drArtifact.getVariableName() + "." + columnName;
 				continue;
 			}
 		}

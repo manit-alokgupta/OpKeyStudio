@@ -430,6 +430,16 @@ public class GlobalLoader {
 		return retObjectAttributes;
 	}
 
+	public DRColumnAttributes getDRColumn(String columnId) {
+		List<DRColumnAttributes> allDrColumnAttributes = getAllDRColumns();
+		for (DRColumnAttributes drColumn : allDrColumnAttributes) {
+			if (drColumn.getColumn_id().equals(columnId)) {
+				return drColumn;
+			}
+		}
+		return null;
+	}
+
 	public List<DRColumnAttributes> getAllDRColumns() {
 		return allColumns;
 	}
