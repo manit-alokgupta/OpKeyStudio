@@ -13,6 +13,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.SuiteTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
 
 public class ArtifactTranspiler {
@@ -74,6 +75,7 @@ public class ArtifactTranspiler {
 			new DRTranspiler().transpile(artifact);
 			new TCTranspiler().transpile(artifact);
 			new FLTranspiler().transpile(artifact);
+			new SuiteTranspiler().transpile(artifact);
 		}
 	}
 
