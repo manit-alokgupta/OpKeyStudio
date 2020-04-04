@@ -12,6 +12,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
+import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
@@ -189,4 +190,15 @@ public class FlowApiUtilities {
 		return flowInputObjects;
 	}
 
+	public List<FlowOutputObject> getAllFlowOutputObject(Artifact artifact, FlowStep flowStep) {
+		List<FlowOutputObject> flowOutputObjects = new ArrayList<FlowOutputObject>();
+		for (FlowOutputArgument flowOutputArgument : flowStep.getFlowOutputArgs()) {
+			FlowOutputObject flowOutPutObject = new FlowOutputObject();
+			flowOutPutObject.setDataType(flowStep.getKeyword().getOutputtype());
+			flowOutPutObject.setOutputVariableName(flowOutputArgument.getOutputvariablename());
+			flowOutputObjects.add(flowOutPutObject);
+		}
+		return flowOutputObjects;
+
+	}
 }

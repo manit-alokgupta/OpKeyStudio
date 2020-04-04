@@ -517,4 +517,18 @@ public class GlobalLoader {
 		}
 		return outputParams;
 	}
+
+	public FlowOutputArgument getFlowOutputArgumentById(String outPutId) {
+		for (FlowOutputArgument flowOutputArgument : getFlowOutputArguments()) {
+			if (flowOutputArgument.getFlow_step_oa_id().equals(outPutId)) {
+				return flowOutputArgument;
+			}
+		}
+		for (FlowOutputArgument flowOutputArgument : getComponentflowOutputArguments()) {
+			if (flowOutputArgument.getFlow_step_oa_id().equals(outPutId)) {
+				return flowOutputArgument;
+			}
+		}
+		return null;
+	}
 }
