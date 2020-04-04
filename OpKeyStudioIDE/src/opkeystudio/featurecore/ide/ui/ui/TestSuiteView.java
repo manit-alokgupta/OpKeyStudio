@@ -66,6 +66,7 @@ public class TestSuiteView extends Composite {
 	private BottomFactoryTestSuiteUi bottomFactory;
 	@SuppressWarnings("unused")
 	private Display display;
+	private CodedFunctionView codedFunctionView;
 
 	/**
 	 * Create the composite.
@@ -89,7 +90,7 @@ public class TestSuiteView extends Composite {
 		testCaseHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		testCaseTabItem.setControl(testCaseHolder);
 		testCaseHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
+
 		Composite composite = new Composite(testCaseHolder, SWT.NONE);
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -241,6 +242,16 @@ public class TestSuiteView extends Composite {
 
 		// Sorce Code will be here
 
+		TabItem sourceCodeTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
+		sourceCodeTabItem.setText("Source Code");
+		sourceCodeTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		Composite sourceCodeHolder = new Composite(mainTestCaseTabFolder, SWT.NONE);
+		sourceCodeHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		sourceCodeTabItem.setControl(sourceCodeHolder);
+		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		CodedFunctionView codedFunctionView = new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		setCodedFunctionView(codedFunctionView);
 		toolDropDown.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -540,5 +551,13 @@ public class TestSuiteView extends Composite {
 
 	public Button getAddTestCaseButton() {
 		return this.addTestCaseButton;
+	}
+
+	public CodedFunctionView getCodedFunctionView() {
+		return codedFunctionView;
+	}
+
+	public void setCodedFunctionView(CodedFunctionView codedFunctionView) {
+		this.codedFunctionView = codedFunctionView;
 	}
 }

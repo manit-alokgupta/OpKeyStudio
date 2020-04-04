@@ -83,8 +83,8 @@ public class CodedFunctionView extends Composite {
 		initArtifact();
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
-		initTSUI();
-		initTestSuiteCode();
+		initTCFLUI();
+		initTestCaseCode();
 		getJavaEditor().setEditable(editable);
 	}
 
@@ -95,8 +95,8 @@ public class CodedFunctionView extends Composite {
 		initArtifact();
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
-		initTCFLUI();
-		initTestCaseCode();
+		initTSUI();
+		initTestSuiteCode();
 		getJavaEditor().setEditable(editable);
 	}
 
