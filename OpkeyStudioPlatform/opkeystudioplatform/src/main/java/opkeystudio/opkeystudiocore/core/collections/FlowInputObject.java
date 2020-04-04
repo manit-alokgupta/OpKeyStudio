@@ -1,4 +1,4 @@
-package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct;
+package opkeystudio.opkeystudiocore.core.collections;
 
 public class FlowInputObject {
 	private boolean staticValueDataExist;
