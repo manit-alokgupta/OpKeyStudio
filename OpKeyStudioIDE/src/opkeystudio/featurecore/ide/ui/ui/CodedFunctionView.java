@@ -45,6 +45,7 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.SuiteTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
 
 public class CodedFunctionView extends Composite {
@@ -69,15 +70,28 @@ public class CodedFunctionView extends Composite {
 	private TestCaseView parentTestCaseView;
 	private ObjectRepositoryView parentObjectRepositoryView;
 	private DataRepositoryView parentDataRepositoryView;
-
+	private TestSuiteView parentTestSuiteView;
 	private boolean embeddedInsideTestCaseView = false;
 	private boolean embeddedInsideObjectRepositoryView = false;
 	private boolean embeddedInsideDataRepositoryView = false;
+	private boolean embeddedInsideTestSuiteView = false;
 
 	public CodedFunctionView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
 		super(parent, SWT.BORDER);
 		setParentTestCaseView(parentTestCaseView);
 		setEmbeddedInsideTestCaseView(true);
+		initArtifact();
+		Utilities.getInstance().setPluginName("Web");
+		setLayout(new GridLayout(1, false));
+		initTSUI();
+		initTestSuiteCode();
+		getJavaEditor().setEditable(editable);
+	}
+
+	public CodedFunctionView(Composite parent, int style, TestSuiteView parentTestCaseView, boolean editable) {
+		super(parent, SWT.BORDER);
+		setParentTestSuiteView(parentTestCaseView);
+		setEmbeddedInsideTestSuiteView(true);
 		initArtifact();
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
@@ -122,6 +136,16 @@ public class CodedFunctionView extends Composite {
 
 	private void initTestCaseCode() {
 		Artifact artifact = getParentTestCaseView().getArtifact();
+		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				+ artifact.getVariableName() + ".java";
+		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.readTextFile(new File(codeFilePath));
+		getJavaEditor().setArtifactJavaCode(codeData);
+	}
+
+	private void initTestSuiteCode() {
+		Artifact artifact = getParentTestSuiteView().getArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -326,6 +350,50 @@ public class CodedFunctionView extends Composite {
 		});
 	}
 
+	private void initTSUI() {
+		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
+		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+
+		runButton = new ToolItem(toolBar, SWT.NONE);
+		runButton.setText("Run");
+		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
+		runButton.setToolTipText("Run");
+
+		refreshButton = new ToolItem(toolBar, SWT.NONE);
+		refreshButton.setText("Refresh Code");
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
+		refreshButton.setToolTipText("Refresh Suite Code");
+
+		editor = new JavaCodeEditor(this, this, false);
+		editor.setArtifact(getArtifact());
+		refreshButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				refreshTSCode();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+		runButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
 	private void initORUI() {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
@@ -381,6 +449,12 @@ public class CodedFunctionView extends Composite {
 			new TCTranspiler().transpile(artifact);
 		}
 		initTestCaseCode();
+	}
+
+	public void refreshTSCode() {
+		Artifact artifact = getParentTestSuiteView().getArtifact();
+		new SuiteTranspiler().transpile(artifact);
+		initTestSuiteCode();
 	}
 
 	public void refreshORCode() {
@@ -590,5 +664,21 @@ public class CodedFunctionView extends Composite {
 
 	public void setEmbeddedInsideDataRepositoryView(boolean embeddedInsideDataRepositoryView) {
 		this.embeddedInsideDataRepositoryView = embeddedInsideDataRepositoryView;
+	}
+
+	public TestSuiteView getParentTestSuiteView() {
+		return parentTestSuiteView;
+	}
+
+	public void setParentTestSuiteView(TestSuiteView parentTestSuiteView) {
+		this.parentTestSuiteView = parentTestSuiteView;
+	}
+
+	public boolean isEmbeddedInsideTestSuiteView() {
+		return embeddedInsideTestSuiteView;
+	}
+
+	public void setEmbeddedInsideTestSuiteView(boolean embeddedInsideTestSuiteView) {
+		this.embeddedInsideTestSuiteView = embeddedInsideTestSuiteView;
 	}
 }
