@@ -141,18 +141,21 @@ public class FlowApiUtilities {
 		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 			for (FlowInputArgument flowInputArgument : flowInputArguments) {
 				FlowInputObject flowInputObject = new FlowInputObject();
-				flowInputObject.setDataSource(flowInputArgument.getDatasource());
 				if (flowInputArgument.getDatasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
 					flowInputObject.setStaticValueData(flowInputArgument.getStaticvalue());
 				}
 				if (flowInputArgument.getDatasource() == DataSource.ValueFromGlobalVariable) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
 					flowInputObject.setGlobalVariableData(flowInputArgument.getGlobalvariable_id());
 				}
 				if (flowInputArgument.getDatasource() == DataSource.ValueFromDataRepository) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
 					flowInputObject.setDataRepositoryColumnData(flowInputArgument.getDatarepositorycolumnid());
 				}
 				if (flowInputArgument.getDatasource() == DataSource.ValueFromOutputArgument) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
 					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
 				}
 
@@ -162,15 +165,17 @@ public class FlowApiUtilities {
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			for (FlowInputArgument flowInputArgument : flowInputArguments) {
 				FlowInputObject flowInputObject = new FlowInputObject();
-				flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
 				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
+					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
 					flowInputObject.setStaticValueData(flowInputArgument.getStaticvalue());
 				}
 				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromGlobalVariable) {
+					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
 					flowInputObject.setGlobalVariableData(flowInputArgument.getGlobalvariable_id());
 				}
 				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromOutputArgument) {
+					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
 					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
 				}
 
