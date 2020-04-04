@@ -5,6 +5,7 @@ import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
+import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -63,6 +64,13 @@ public class TCFLCodeConstruct {
 			if (flowInputObject.isStaticValueDataExist()) {
 				String value = formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
 				argumentCall += value;
+				continue;
+			}
+			if (flowInputObject.isGlobalVariableDataExist()) {
+				GlobalVariable globalVariable = GlobalLoader.getInstance()
+						.getGlobalVariableById(flowInputObject.getGlobalVariableData());
+
+				argumentCall += globalVariable.getVariableName();
 				continue;
 			}
 		}

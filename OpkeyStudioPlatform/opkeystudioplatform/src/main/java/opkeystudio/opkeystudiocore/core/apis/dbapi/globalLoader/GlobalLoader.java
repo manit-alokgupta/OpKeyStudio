@@ -342,6 +342,15 @@ public class GlobalLoader {
 		this.allArtifacts = allArtifacts;
 	}
 
+	public GlobalVariable getGlobalVariableById(String gvid) {
+		for (GlobalVariable globalVariable : getGlobalVaribles()) {
+			if (globalVariable.getGv_id().equals(gvid)) {
+				return globalVariable;
+			}
+		}
+		return null;
+	}
+
 	public List<Artifact> getAllArtifactByType(String type) {
 		List<Artifact> typeArtifacts = new ArrayList<Artifact>();
 		List<Artifact> artifacts = getAllArtifacts();
