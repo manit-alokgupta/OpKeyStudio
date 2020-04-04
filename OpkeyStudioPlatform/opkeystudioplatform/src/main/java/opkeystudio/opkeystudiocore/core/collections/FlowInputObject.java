@@ -22,6 +22,8 @@ public class FlowInputObject {
 	private DataSource dataSource;
 	private List<ORObject> orObjects = new ArrayList<>();
 
+	private String dataType;
+
 	public boolean isStaticValueDataExist() {
 		return staticValueDataExist;
 	}
@@ -116,5 +118,13 @@ public class FlowInputObject {
 
 	public void setOrObjects(List<ORObject> orObjects) {
 		this.orObjects = orObjects;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
 	}
 }

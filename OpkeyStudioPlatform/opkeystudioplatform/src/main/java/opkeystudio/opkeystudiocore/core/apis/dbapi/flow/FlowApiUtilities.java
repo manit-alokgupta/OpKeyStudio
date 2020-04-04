@@ -12,6 +12,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -138,9 +139,12 @@ public class FlowApiUtilities {
 
 	public List<FlowInputObject> getAllFlowInputObject(Artifact artifact, List<FlowInputArgument> flowInputArguments) {
 		List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
-		if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
-			for (FlowInputArgument flowInputArgument : flowInputArguments) {
+
+		for (FlowInputArgument flowInputArgument : flowInputArguments) {
+			KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
+			if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 				FlowInputObject flowInputObject = new FlowInputObject();
+				flowInputObject.setDataType(keywordInputArgument.getDatatype());
 				if (flowInputArgument.getDatasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
@@ -158,13 +162,12 @@ public class FlowApiUtilities {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
 					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
 				}
-
 				flowInputObjects.add(flowInputObject);
 			}
-		}
-		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-			for (FlowInputArgument flowInputArgument : flowInputArguments) {
+
+			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 				FlowInputObject flowInputObject = new FlowInputObject();
+				flowInputObject.setDataType(keywordInputArgument.getDatatype());
 				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
@@ -178,7 +181,6 @@ public class FlowApiUtilities {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
 					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
 				}
-
 				flowInputObjects.add(flowInputObject);
 			}
 		}
