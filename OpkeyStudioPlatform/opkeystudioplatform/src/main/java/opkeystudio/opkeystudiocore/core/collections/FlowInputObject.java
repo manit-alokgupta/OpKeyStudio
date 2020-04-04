@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class FlowInputObject {
@@ -23,6 +24,7 @@ public class FlowInputObject {
 	private List<ORObject> orObjects = new ArrayList<>();
 
 	private String dataType;
+	private KeyWordInputArgument keywordInputArgument;
 
 	public boolean isStaticValueDataExist() {
 		return staticValueDataExist;
@@ -131,5 +133,13 @@ public class FlowInputObject {
 
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
+	}
+
+	public KeyWordInputArgument getKeywordInputArgument() {
+		return keywordInputArgument;
+	}
+
+	public void setKeywordInputArgument(KeyWordInputArgument keywordInputArgument) {
+		this.keywordInputArgument = keywordInputArgument;
 	}
 }

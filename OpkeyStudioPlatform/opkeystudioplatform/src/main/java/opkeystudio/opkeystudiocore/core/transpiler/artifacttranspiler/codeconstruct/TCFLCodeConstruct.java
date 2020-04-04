@@ -3,11 +3,13 @@ package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconst
 import java.util.ArrayList;
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 
 public class TCFLCodeConstruct {
@@ -38,19 +40,15 @@ public class TCFLCodeConstruct {
 	private String getOpKeyGenericFlowKeywordCode(Artifact artifact, FlowStep flowStep) {
 		String keywordName = flowStep.getKeyword().getName();
 		String methodcode = newLineChar + "genericKeywords." + keywordName + "(";
-		List<KeyWordInputArgument> keywordInputArguments = new ArrayList<KeyWordInputArgument>();
 		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
-		for (FlowInputArgument fia : flowInputArguments) {
-			keywordInputArguments.add(fia.getKeywordInputArgument());
-		}
+		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
+				flowInputArguments);
 		String argumentCall = "";
-		for (int i = 0; i < flowInputArguments.size(); i++) {
+		for (FlowInputObject flowInputObject : flowInputObjects) {
 			if (!argumentCall.isEmpty()) {
 				argumentCall += ", ";
 			}
-			FlowInputArgument flowInputAargument = flowInputArguments.get(i);
-			KeyWordInputArgument keywordInputArgument = keywordInputArguments.get(i);
-			if (keywordInputArgument.getDatatype().equals("ORObject")) {
+			if (flowInputObject.getDataType().equals("ORObject")) {
 				if (flowStep.getOrObject().size() == 0) {
 					argumentCall += "null";
 					continue;
@@ -59,12 +57,29 @@ public class TCFLCodeConstruct {
 				Artifact orartifact = GlobalLoader.getInstance().getArtifactById(orobject.getOr_id());
 				String varName = orartifact.getVariableName() + "." + orobject.getVariableName();
 				argumentCall += varName;
+				continue;
+			}
+
+			if (flowInputObject.isStaticValueDataExist()) {
+				String value = formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
+				argumentCall += value;
+				continue;
 			}
 		}
 
 		methodcode += argumentCall;
 		methodcode += ");";
 		return methodcode;
+	}
+
+	private String formatDataType(String dataType, String data) {
+		if (dataType.equals("String")) {
+			if (data == null) {
+				data = "";
+			}
+			return "\"" + data + "\"";
+		}
+		return data;
 	}
 
 	private String getConstructFlowKeywordCode(Artifact artifact, FlowStep flowStep) {

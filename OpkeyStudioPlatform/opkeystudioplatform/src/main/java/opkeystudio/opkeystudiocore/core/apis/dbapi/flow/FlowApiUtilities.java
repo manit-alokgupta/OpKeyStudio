@@ -145,6 +145,7 @@ public class FlowApiUtilities {
 			if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(keywordInputArgument.getDatatype());
+				flowInputObject.setKeywordInputArgument(keywordInputArgument);
 				if (flowInputArgument.getDatasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
@@ -168,6 +169,7 @@ public class FlowApiUtilities {
 			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(keywordInputArgument.getDatatype());
+				flowInputObject.setKeywordInputArgument(keywordInputArgument);
 				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
