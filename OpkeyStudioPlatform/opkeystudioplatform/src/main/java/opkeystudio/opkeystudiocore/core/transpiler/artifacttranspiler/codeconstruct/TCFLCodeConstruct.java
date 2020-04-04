@@ -11,7 +11,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
-import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 
 public class TCFLCodeConstruct {
 	private String newLineChar = "\n";
@@ -22,10 +21,10 @@ public class TCFLCodeConstruct {
 				return getConstructFlowKeywordCode(artifact, flowStep);
 			}
 			if (isOpKeyGenericKeyword(flowStep)) {
-				return getOpKeyGenericFlowKeywordCode(artifact, flowStep);
+				return getKeywordCode(artifact, flowStep, "genericKeywords");
 			}
 			if (isSystemKeyword(flowStep)) {
-
+				return getKeywordCode(artifact, flowStep, "systemKeywords");
 			}
 			if (isPluginSpecificKeyword(flowStep)) {
 
@@ -38,9 +37,9 @@ public class TCFLCodeConstruct {
 		return "";
 	}
 
-	private String getOpKeyGenericFlowKeywordCode(Artifact artifact, FlowStep flowStep) {
+	private String getKeywordCode(Artifact artifact, FlowStep flowStep, String refvarName) {
 		String keywordName = flowStep.getKeyword().getName();
-		String methodcode = newLineChar + "genericKeywords." + keywordName + "(";
+		String methodcode = newLineChar + refvarName + "." + keywordName + "(";
 		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
 				flowInputArguments);
@@ -87,6 +86,18 @@ public class TCFLCodeConstruct {
 			}
 			return "\"" + data + "\"";
 		}
+		if (dataType.equals("Integer")) {
+			if (data == null) {
+				data = "0";
+			}
+			return data;
+		}
+		if (dataType.equals("Boolean")) {
+			if (data == null) {
+				data = "false";
+			}
+			return data;
+		}
 		return data;
 	}
 
@@ -94,8 +105,9 @@ public class TCFLCodeConstruct {
 		String keywordName = flowStep.getKeyword().getName();
 		System.out.println("Keyword " + keywordName);
 		if (keywordName.equals("For")) {
-			FlowInputArgument inputArg = flowStep.getFlowInputArgs().get(0);
-			String value = inputArg.getStaticvalue();
+			List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
+					flowStep.getFlowInputArgs());
+			String value = flowInputObjects.get(0).getStaticValueData();
 			if (value == null) {
 				value = "";
 			}
@@ -114,8 +126,9 @@ public class TCFLCodeConstruct {
 			return newLineChar + "}";
 		}
 		if (keywordName.equals("Sleep")) {
-			FlowInputArgument inputArg = flowStep.getFlowInputArgs().get(0);
-			String value = inputArg.getStaticvalue();
+			List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
+					flowStep.getFlowInputArgs());
+			String value = flowInputObjects.get(0).getStaticValueData();
 			System.out.println(">>Value is " + value);
 			if (value == null) {
 				value = "";
@@ -187,8 +200,8 @@ public class TCFLCodeConstruct {
 
 	public List<String> getDefaultKeywordsClassVariables() {
 		ArrayList<String> variables = new ArrayList<String>();
-		variables.add("OpKeyGenericKeywords genericKeywords=new OpKeyGenericKeywords();");
-		variables.add("OpKeySystemKeywords systemKeywords=new OpKeySystemKeywords();");
+		variables.add("OpKeyGenericKeywords genericKeywords= new OpKeyGenericKeywords();");
+		variables.add("OpKeySystemKeywords systemKeywords= new OpKeySystemKeywords();");
 		return variables;
 	}
 }
