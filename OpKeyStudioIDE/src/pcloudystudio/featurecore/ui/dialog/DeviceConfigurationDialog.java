@@ -11,7 +11,6 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -35,6 +34,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.appium.AppiumPortIpInfo;
@@ -329,7 +329,7 @@ public class DeviceConfigurationDialog extends Dialog {
 				}
 			}
 		} else {
-			
+
 			try {
 				AndroidDriverObject.getDriver().quit();
 				Thread.sleep(2000);
@@ -360,11 +360,12 @@ public class DeviceConfigurationDialog extends Dialog {
 					service.stop();
 					Thread.sleep(2000);
 					AppiumServer.startServer();
-					}catch(Exception e) {e.printStackTrace();}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-					
-					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-                    try {
+				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
@@ -378,34 +379,20 @@ public class DeviceConfigurationDialog extends Dialog {
 	}
 
 	private void showProgressDialog() {
-		final ProgressMonitorDialog dialog = new ProgressMonitorDialog(shlDeviceConfiguration) {
+
+		MessageDialogs msd = new MessageDialogs();
+		msd.openProgressDialog(getParent(), "Launching Application. Please Wait", true, new IRunnableWithProgress() {
+
 			@Override
-			public boolean close() {
-				return super.close();
-			}
-		};
-		dialog.setBlockOnOpen(false);
-		try {
-			dialog.run(true, false, new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					monitor.beginTask("Please Wait. Launching Application", 3);
-					for (int i = 1; !monitor.isCanceled() && i <= 3; i++) {
-						monitor.worked(1);
-						Thread.sleep(300);
-					}
-					dialog.getShell().getDisplay().syncExec(new Runnable() {
-						@Override
-						public void run() {
-							startServer();
-						}
-					});
-					monitor.done();
+			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				try {
+					startServer();
+				} catch (Exception e) {
+					MessageDialog.openError(shlDeviceConfiguration, "Error", e.getMessage());
 				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-			MessageDialog.openError(shlDeviceConfiguration, "Error", e.getMessage());
-		}
+			}
+		});
+		msd.closeProgressDialog();
+
 	}
 }
