@@ -6,6 +6,7 @@ import java.io.File;
 //Copyright © 2020 SSTS Inc. All rights reserved.
 
 import java.util.LinkedHashMap;
+import java.util.regex.Pattern;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -423,12 +424,26 @@ public class AppiumSettingsDialog extends Dialog {
 
 	public Boolean validate() {
 		if (serverAddress.getText().isEmpty()) {
-			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "ServerAddress cannot be empty");
+			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "LocalHost Address cannot be empty");
+			serverAddress.setFocus();
 			return false;
-		} else if (portNumber.getText().isEmpty()) {
+		} else if (!ValidateLocalHost(serverAddress.getText())) {
+			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Invalid LocalHost Address");
+			serverAddress.setFocus();
+			return false;
+		} 
+		else if (portNumber.getText().isEmpty()) {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Port Cannot Be Empty");
+			portNumber.setFocus();
 			return false;
-		} else if (appiumDirectory.getText().isEmpty() || appiumDirectory.getText().equals("")) {
+		}else if (!ValidatePort(portNumber.getText())) {
+			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Invalid Port Number");
+			portNumber.setText("");
+			portNumber.setFocus();
+			
+			return false;
+		}  
+		else if (appiumDirectory.getText().isEmpty() || appiumDirectory.getText().equals("")) {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "AppiumDirectory Cannot Be Empty");
 			return false;
 
@@ -457,5 +472,20 @@ public class AppiumSettingsDialog extends Dialog {
 		dialog.setMessage(str);
 		dialog.open();
 
+	}
+	
+	public Boolean ValidatePort(String str) {
+		 final String portRegex = "^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[2-9]\\d{3}|1[1-9]\\d{2}|10[3-9]\\d|102[4-9])$";
+		 Pattern VALID_PORT_PATTERN = Pattern.compile(portRegex, Pattern.CASE_INSENSITIVE);
+		 return VALID_PORT_PATTERN.matcher(str).matches();
+		
+	}
+	public Boolean ValidateLocalHost(String str) {
+		 final  String ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
+		 Pattern VALID_IPV4_PATTERN = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE);
+		if(str.trim().equals("localhost"))
+			return true;
+		 return VALID_IPV4_PATTERN.matcher(str).matches();
+		
 	}
 }
