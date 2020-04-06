@@ -253,6 +253,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							"Custom", "HTML Page",
 							getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
 					getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
+					MessageDialog.openInformation(shlSpyMobile, "Please Note", "Object has been added successifully!");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
