@@ -297,6 +297,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				btnAdd.setEnabled(false);
 				allObjectsCheckboxTreeViewer.getTree().removeAll();
 				clearPropertiesTableData();
+				textObjectName.setText("");
 				AndroidDriverObject.getDriver().closeApp();
 			}
 		});
@@ -487,9 +488,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				allObjectsCheckboxTreeViewer.setSelection((ISelection) new StructuredSelection((Object) foundElement));
 				btnAdd.setEnabled(false);
 				btnClickAndMoveToNextScreen.setEnabled(false);
-				// allObjectsCheckboxTreeViewer.setChecked(foundElement, true);
-				// MobileSpyDialog.clearPropertiesTableData();
+				MobileSpyDialog.clearPropertiesTableData();
 				// CustomCheckBoxTree.fillDataInObjectPropertiesTable(foundElement);
+				// allObjectsCheckboxTreeViewer.setChecked(foundElement, true);
 			}
 		});
 	}

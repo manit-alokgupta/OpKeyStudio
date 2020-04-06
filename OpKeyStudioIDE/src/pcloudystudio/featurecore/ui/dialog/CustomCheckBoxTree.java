@@ -16,7 +16,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 
-import pcloudystudio.featurecore.ui.dialog.MobileSpyDialog;
 import pcloudystudio.objectspy.element.impl.BasicMobileElement;
 
 public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStateListener, ICheckStateProvider {
@@ -25,7 +24,6 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 
 	public CustomCheckBoxTree(Composite parent, int style) {
 		super(parent, style);
-		// TODO Auto-generated constructor stub
 		ColumnViewerToolTipSupport.enableFor(this);
 		initializeTree();
 	}
@@ -37,42 +35,48 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 
 	@Override
 	public boolean isChecked(Object element) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isGrayed(Object element) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void checkStateChanged(CheckStateChangedEvent event) {
-		// TODO Auto-generated method stub
 		Object element = event.getElement();
-		MobileSpyDialog.allObjectsCheckboxTreeViewer.setAllChecked(false);
-		MobileSpyDialog.allObjectsCheckboxTreeViewer.setChecked(element, true);
-		MobileSpyDialog.allObjectsCheckboxTreeViewer
-		.setSelection((ISelection) new StructuredSelection((Object) element));
+		MobileSpyDialog.clearPropertiesTableData();
 
-		Widget item = findItem(element);
+		if (!MobileSpyDialog.allObjectsCheckboxTreeViewer.getChecked(element)) {
+			MobileSpyDialog.allObjectsCheckboxTreeViewer.setAllChecked(false);
+			MobileSpyDialog.allObjectsCheckboxTreeViewer.setChecked(element, false);
+			MobileSpyDialog.allObjectsCheckboxTreeViewer
+			.setSelection((ISelection) new StructuredSelection((Object) element));
 
-		itemSelected = item;
-
-		if (!(item instanceof TreeItem)) {
-			System.out.println("Given Item is not an instance of TreeItem!");
-			return;
+			MobileSpyDialog.btnAdd.setEnabled(false);
+			MobileSpyDialog.btnClickAndMoveToNextScreen.setEnabled(false);
+			MobileSpyDialog.textObjectName.setText("");
+			itemSelected = null;
 		} else {
-			MobileSpyDialog.clearPropertiesTableData();
+			MobileSpyDialog.allObjectsCheckboxTreeViewer.setAllChecked(false);
+			MobileSpyDialog.allObjectsCheckboxTreeViewer.setChecked(element, true);
+
+			MobileSpyDialog.allObjectsCheckboxTreeViewer
+			.setSelection((ISelection) new StructuredSelection((Object) element));
+
+			Widget item = findItem(element);
+
+			itemSelected = item;
+
 			TreeItem treeItem = (TreeItem) item;
 			Object obj = treeItem.getData();
 			fillDataInObjectPropertiesTable(obj);
-		}
 
-		MobileSpyDialog.btnAdd.setEnabled(true);
-		MobileSpyDialog.btnClickAndMoveToNextScreen.setEnabled(true);
+			MobileSpyDialog.btnAdd.setEnabled(true);
+			MobileSpyDialog.btnClickAndMoveToNextScreen.setEnabled(true);
+		}
 	}
 
 	public static Widget getCheckedItem(Object element) {
