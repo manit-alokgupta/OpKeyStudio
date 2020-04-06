@@ -1,10 +1,10 @@
 package pcloudystudio.appium;
 
 public class AppiumPortIpInfo {
-	private static String port = "4723";
-	private static String hostAddress = "127.0.0.1";
-	private static String appiumDirectory = "C:\\Users\\alok.gupta\\AppData\\Roaming\\npm\\node_modules\\appium";
-	
+	private static String port;
+	private static String hostAddress;
+	private static String appiumDirectory;
+
 	private static AppiumPortIpInfo instance;
 
 	private AppiumPortIpInfo() {
