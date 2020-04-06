@@ -128,7 +128,7 @@ public class DeviceConfigurationDialog extends Dialog {
 
 		Label lblDeviceName = new Label(compositeConfigurationSettings, SWT.NONE);
 		lblDeviceName.setBounds(44, 29, 121, 25);
-		lblDeviceName.setText("Device");
+		lblDeviceName.setText("Device *");
 
 		devicesCombo = new Combo(compositeConfigurationSettings, SWT.READ_ONLY);
 		devicesCombo.setBounds(203, 26, 309, 25);
@@ -193,7 +193,7 @@ public class DeviceConfigurationDialog extends Dialog {
 
 		Label lblApplicationFile = new Label(compositeConfigurationSettings, SWT.NONE);
 		lblApplicationFile.setBounds(44, 95, 121, 25);
-		lblApplicationFile.setText("Application");
+		lblApplicationFile.setText("Application *");
 
 		applicationPathText = new Text(compositeConfigurationSettings, SWT.BORDER);
 		applicationPathText.setBounds(203, 92, 309, 33);
