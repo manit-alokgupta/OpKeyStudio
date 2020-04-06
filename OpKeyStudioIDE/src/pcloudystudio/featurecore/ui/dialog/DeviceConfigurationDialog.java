@@ -97,10 +97,10 @@ public class DeviceConfigurationDialog extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlDeviceConfiguration = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
+		shlDeviceConfiguration = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL | SWT.BORDER);
 		shlDeviceConfiguration
 		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
-		shlDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		shlDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shlDeviceConfiguration.setSize(672, 315);
 		shlDeviceConfiguration.setText("Configuration Dashboard");
 
@@ -114,15 +114,15 @@ public class DeviceConfigurationDialog extends Dialog {
 			MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
 
 		}
-		compositeConfiguration = new Composite(shlDeviceConfiguration, SWT.NONE);
+		compositeConfiguration = new Composite(shlDeviceConfiguration, SWT.BORDER);
 		compositeConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		compositeConfiguration.setBounds(10, 10, 315, 38);
+		compositeConfiguration.setBounds(10, 10, 234, 33);
 
 		lblDeviceConfiguration = new Label(compositeConfiguration, SWT.NONE);
 		lblDeviceConfiguration.setText("Device Configuration");
-		lblDeviceConfiguration.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
+		lblDeviceConfiguration.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		lblDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblDeviceConfiguration.setBounds(10, 10, 228, 22);
+		lblDeviceConfiguration.setBounds(10, 0, 228, 32);
 
 		compositeConfigurationSettings = new Composite(shlDeviceConfiguration, SWT.BORDER);
 		compositeConfigurationSettings.setBounds(10, 54, 646, 166);
@@ -284,9 +284,6 @@ public class DeviceConfigurationDialog extends Dialog {
 						MessageDialog.openError(shlDeviceConfiguration, "Error",
 								"Application APK file you provided doesn't exist!");
 					}
-				} else {
-					MessageDialog.openError(shlDeviceConfiguration, "Error",
-							"Application APK file you provided doesn't exist!");
 				}
 			}
 		});

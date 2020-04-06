@@ -1,10 +1,9 @@
 package pcloudystudio.featurecore.ui.dialog;
 
-import java.io.File;
-
 //Created by Alok Gupta on 20/02/2020.
 //Copyright © 2020 SSTS Inc. All rights reserved.
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 
@@ -101,6 +100,8 @@ public class AppiumSettingsDialog extends Dialog {
 
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
+		shlAppiumSettings
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -308,9 +309,9 @@ public class AppiumSettingsDialog extends Dialog {
 		scrolledComposite.setExpandVertical(true);
 
 		capabilityTable = new Table(scrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		capabilityTable.setLinesVisible(true);
 		capabilityTable.setBounds(0, 0, 612, 135);
 		capabilityTable.setHeaderVisible(true);
-		capabilityTable.setLinesVisible(true);
 		TableColumn columnName = new TableColumn(capabilityTable, 0);
 		columnName.setText("Name");
 		columnName.setWidth(250);
@@ -319,7 +320,6 @@ public class AppiumSettingsDialog extends Dialog {
 		columnValue.setWidth(356);
 
 		TableEditor editor = new TableEditor(capabilityTable);
-
 		saveInfo = new Button(shlAppiumSettings, SWT.NONE);
 		saveInfo.setBounds(465, 540, 91, 33);
 		saveInfo.addSelectionListener(new SelectionAdapter() {
