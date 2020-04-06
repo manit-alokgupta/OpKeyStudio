@@ -57,6 +57,7 @@ public class DeviceConfigurationDialog extends Dialog {
 	private LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
 	private Label lblDeviceRequiredMessage;
 	private Label lblApplicationIsRequiredMessage;
+	private Label lblNoDeviceConnected;
 
 	/**
 	 * Create the dialog.
@@ -131,8 +132,31 @@ public class DeviceConfigurationDialog extends Dialog {
 		lblDeviceName.setBounds(44, 29, 121, 25);
 		lblDeviceName.setText("Device *");
 
+		lblNoDeviceConnected = new Label(compositeConfigurationSettings, SWT.NONE);
+		lblNoDeviceConnected.setVisible(false);
+		lblNoDeviceConnected.setText("No device connected?");
+		lblNoDeviceConnected.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		lblNoDeviceConnected.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
+		lblNoDeviceConnected.setBounds(203, 65, 238, 21);
+		lblNoDeviceConnected.setVisible(false);
+
 		devicesCombo = new Combo(compositeConfigurationSettings, SWT.READ_ONLY);
 		devicesCombo.setBounds(203, 26, 309, 25);
+		try {
+			devicesList = AndroidDeviceUtil.getAndroidDevices();
+			if (devicesList.size() == 0) {
+				lblNoDeviceConnected.setVisible(true);
+				devicesCombo.removeAll();
+			} else {
+				lblNoDeviceConnected.setVisible(false);
+				devicesCombo.removeAll();
+				for (Map.Entry<String, String> deviceEntry : devicesList.entrySet())
+					devicesCombo.add(deviceEntry.getValue());
+				devicesCombo.select(0);
+			}
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
 
 		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnRefresh.setBounds(529, 25, 75, 33);
@@ -153,34 +177,40 @@ public class DeviceConfigurationDialog extends Dialog {
 					String previousDevice = devicesCombo.getText();
 					devicesList = AndroidDeviceUtil.getAndroidDevices();
 
-					devicesCombo.removeAll();
-					for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
-						devicesCombo.add(deviceEntry.getValue());
-					}
-					devicesCombo.select(0);
-
-					String selectedDeviceDetails = devicesCombo.getText();
-					String newDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails);
-					String newDeviceModelName = AndroidDeviceUtil.getDeviceName(newDeviceUDID);
-
-					MobileCapabilities.getinstance();
-
-					if (previousDevice.trim() != "") {
-						String previousDeviceModelName = AndroidDeviceUtil
-								.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice));
-						MobileCapabilities.getinstance().getMapOfCapabilities().replace("deviceName",
-								previousDeviceModelName);
+					if (devicesList.size() == 0) {
+						devicesCombo.removeAll();
+						lblNoDeviceConnected.setVisible(true);
 					} else {
-						MobileCapabilities.getinstance().getMapOfCapabilities().put("deviceName", newDeviceModelName);
-					}
+						lblNoDeviceConnected.setVisible(false);
+						devicesCombo.removeAll();
+						for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
+							devicesCombo.add(deviceEntry.getValue());
+						}
+						devicesCombo.select(0);
 
-					if (previousDevice.trim() != "") {
-						String previousDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice);
-						MobileCapabilities.getinstance().getMapOfCapabilities().replace("udid", previousDeviceUDID);
-					} else {
-						MobileCapabilities.getinstance().getMapOfCapabilities().put("udid", newDeviceUDID);
-					}
+						String selectedDeviceDetails = devicesCombo.getText();
+						String newDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails);
+						String newDeviceModelName = AndroidDeviceUtil.getDeviceName(newDeviceUDID);
 
+						MobileCapabilities.getinstance();
+
+						if (previousDevice.trim() != "") {
+							String previousDeviceModelName = AndroidDeviceUtil
+									.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice));
+							MobileCapabilities.getinstance().getMapOfCapabilities().replace("deviceName",
+									previousDeviceModelName);
+						} else {
+							MobileCapabilities.getinstance().getMapOfCapabilities().put("deviceName",
+									newDeviceModelName);
+						}
+
+						if (previousDevice.trim() != "") {
+							String previousDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice);
+							MobileCapabilities.getinstance().getMapOfCapabilities().replace("udid", previousDeviceUDID);
+						} else {
+							MobileCapabilities.getinstance().getMapOfCapabilities().put("udid", newDeviceUDID);
+						}
+					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -221,6 +251,8 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnNext.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				File apkFile = new File(applicationPathText.getText());
+				boolean exists = apkFile.exists();
 				if (devicesCombo.getText().isEmpty() || applicationPathText.getText().isEmpty()) {
 					lblDeviceRequiredMessage.setVisible(devicesCombo.getText().isEmpty() ? true : false);
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
@@ -230,6 +262,10 @@ public class DeviceConfigurationDialog extends Dialog {
 						|| AppiumPortIpInfo.getAppiumDirectory().length() == 0) {
 					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note",
 							"Appium Settings are not configured! Go-To: Tools->Appium Settings.");
+				} else if (!exists) {
+					MessageDialog.openError(shlDeviceConfiguration, "Error",
+							"Application file you entered is not valid!");
+					lblApplicationIsRequiredMessage.setVisible(false);
 				} else {
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("application_name",
 							applicationPathText.getText());
