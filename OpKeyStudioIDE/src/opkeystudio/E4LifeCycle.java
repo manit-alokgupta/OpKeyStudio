@@ -8,6 +8,7 @@ import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
 import org.eclipse.e4.ui.workbench.lifecycle.ProcessAdditions;
 import org.eclipse.e4.ui.workbench.lifecycle.ProcessRemovals;
 
+import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -21,7 +22,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class E4LifeCycle {
 
 	@PostContextCreate
-	void postContextCreate(IEclipseContext workbenchContext) {
+	void postContextCreate(IEclipseContext workbenchContext) throws SetupConfigurationException {
 		Utilities.getInstance().setDefaultInstallDir(new File("").getAbsolutePath());
 		Utilities.getInstance().initializeOpKeyStudioPath();
 		KeywordManager.getInstance().loadAllKeywords();

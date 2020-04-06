@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -32,7 +33,7 @@ public class KeywordManager {
 		}
 	}
 
-	public void loadAllKeywords() {
+	public void loadAllKeywords() throws SetupConfigurationException {
 		String keywordDirPath = Utilities.getInstance().getDefaultInstallDir() + File.separator + "resources"
 				+ File.separator + "GenericDB";
 		if (!new File(keywordDirPath).exists()) {
@@ -40,6 +41,9 @@ public class KeywordManager {
 		}
 		File keywordDirFolder = new File(keywordDirPath);
 		File[] keywordsDBFiles = keywordDirFolder.listFiles();
+		if(keywordsDBFiles == null)
+			throw new SetupConfigurationException("Keywords Db Dir empty? " + keywordDirPath);
+		
 		for (File keywordsDBFile : keywordsDBFiles) {
 			List<KeyWordInputArgument> allKeywordInputArguments = new KeywordLoader()
 					.loadAllKeywordInputArguments(keywordsDBFile.getAbsolutePath());
