@@ -13,10 +13,12 @@
 	* Now go back to the Overview Tab and click on the Launch an Eclipse application option
 	
 ## To Export the package:
-    * Go to the Launching TabCheck the 'Bundle JRE for this environment with the product' option
-	* Make sure you dont have the "-vm jdk/bin/javaw.exe" option set in Program Arguments
-	* Save the configuration
-	* Come back to the Overview Tab
-    * Inside the Exporting option click the 'Eclipse Product Export Wizard'
-	* Set RootDirectory to be 'OpKeyStudio'
-	* Click on Finish
+* Go to the Launching TabCheck the 'Bundle JRE for this environment with the product' option
+* Make sure you dont have the "-vm jdk/bin/javaw.exe" option set in Program Arguments
+* Save the configuration
+* Come back to the Overview Tab
+* Inside the Exporting option click the 'Eclipse Product Export Wizard'
+* Set RootDirectory to be 'OpKeyStudio'
+* Click on Finish
+
+***
