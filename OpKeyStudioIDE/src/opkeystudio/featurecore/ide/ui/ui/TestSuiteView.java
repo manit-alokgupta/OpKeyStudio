@@ -67,6 +67,7 @@ public class TestSuiteView extends Composite {
 	@SuppressWarnings("unused")
 	private Display display;
 	private CodedFunctionView codedFunctionView;
+	private Artifact artifact;
 
 	/**
 	 * Create the composite.
@@ -77,6 +78,7 @@ public class TestSuiteView extends Composite {
 	@SuppressWarnings("unused")
 	public TestSuiteView(Composite parent, int style) {
 		super(parent, style);
+		initArtifact();
 		display = getParent().getDisplay();
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -543,10 +545,13 @@ public class TestSuiteView extends Composite {
 		return this.testSuiteTable;
 	}
 
-	public Artifact getArtifact() {
+	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		return artifact;
+		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+	}
+
+	public Artifact getArtifact() {
+		return this.artifact;
 	}
 
 	public Button getAddTestCaseButton() {
