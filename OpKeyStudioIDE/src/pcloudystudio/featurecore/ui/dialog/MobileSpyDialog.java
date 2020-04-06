@@ -297,6 +297,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				btnAdd.setEnabled(false);
 				allObjectsCheckboxTreeViewer.getTree().removeAll();
 				clearPropertiesTableData();
+				AndroidDriverObject.getDriver().closeApp();
 			}
 		});
 		btnStop.setBounds(374, 10, 58, 28);
