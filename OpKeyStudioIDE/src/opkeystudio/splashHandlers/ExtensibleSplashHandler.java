@@ -24,9 +24,9 @@ import org.eclipse.ui.splash.AbstractSplashHandler;
  */
 public class ExtensibleSplashHandler extends AbstractSplashHandler {
 
-	private ArrayList fImageList;
+	private ArrayList<Image> fImageList;
 
-	private ArrayList fTooltipList;
+	private ArrayList<String> fTooltipList;
 
 	private final static String F_SPLASH_EXTENSION_ID = "OpKeyStudio.splashExtension"; // NON-NLS-1
 
@@ -48,8 +48,8 @@ public class ExtensibleSplashHandler extends AbstractSplashHandler {
 	 * 
 	 */
 	public ExtensibleSplashHandler() {
-		fImageList = new ArrayList();
-		fTooltipList = new ArrayList();
+		fImageList = new ArrayList<Image>();
+		fTooltipList = new ArrayList<String>();
 		fIconPanel = null;
 	}
 
