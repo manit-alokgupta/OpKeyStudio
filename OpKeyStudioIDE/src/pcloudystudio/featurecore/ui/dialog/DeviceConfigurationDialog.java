@@ -26,16 +26,15 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.Setting;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.service.local.AppiumServiceBuilder;
-import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.appium.AppiumPortIpInfo;
@@ -99,6 +98,8 @@ public class DeviceConfigurationDialog extends Dialog {
 	 */
 	private void createContents() {
 		shlDeviceConfiguration = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
+		shlDeviceConfiguration
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlDeviceConfiguration.setSize(672, 315);
 		shlDeviceConfiguration.setText("Configuration Dashboard");
@@ -230,15 +231,15 @@ public class DeviceConfigurationDialog extends Dialog {
 					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note",
 							"Appium Settings are not configured! Go-To: Tools->Appium Settings.");
 				} else {
+					OpKeyStudioPreferences.getPreferences().addBasicSettings("application_name",
+							applicationPathText.getText());
 					shlDeviceConfiguration.setVisible(false);
 					showProgressDialog();
 
 					if (AndroidDriverObject.getDriver() == null) {
 						MessageDialog.openInformation(shlDeviceConfiguration, "Information",
 								"Error In Application Installation.Please Try Again");
-					}
-
-					else {
+					} else {
 						if ((AndroidDriverObject.getDriver() != null)
 								&& (AndroidDriverObject.getDriver().getSessionId() != null)) {
 							shlDeviceConfiguration.close();
@@ -377,7 +378,8 @@ public class DeviceConfigurationDialog extends Dialog {
 	private void showProgressDialog() {
 
 		MessageDialogs msd = new MessageDialogs();
-		msd.openProgressDialog(getParent(), "Launching Application. Please Wait", true, new IRunnableWithProgress() {
+		msd.openProgressDialog(getParent(), "Launching Application, Please Wait ...", true,
+				new IRunnableWithProgress() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {

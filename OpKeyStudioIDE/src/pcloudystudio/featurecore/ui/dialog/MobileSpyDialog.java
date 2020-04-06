@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 
@@ -134,8 +135,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 */
 	private void createContents() {
 		shlSpyMobile = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		// shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		// "icons/pcloudystudio/mobile_spy.png"));
+		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlSpyMobile.setSize(new Point(800, 750));
 		shlSpyMobile.setText(DIALOG_TITLE);
@@ -592,6 +592,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			this.btnCapture.setEnabled(false);
 			this.btnStop.setEnabled(false);
 			btnClickAndMoveToNextScreen.setEnabled(false);
+			btnAdd.setEnabled(false);
 			this.shlSpyMobile.setVisible(true);
 			this.openDeviceView();
 			dialog.run(true, true, runnable);
