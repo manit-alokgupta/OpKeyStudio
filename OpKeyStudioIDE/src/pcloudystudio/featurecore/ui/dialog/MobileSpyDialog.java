@@ -320,8 +320,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		if (AndroidDriverObject.getDriver() == null) {
 			btnCapture.setEnabled(false);
 			btnStop.setEnabled(false);
+		} else {
+			captureObjectAction();
 		}
-		captureObjectAction();
 	}
 
 	static void setTreeRoot(MobileSpyDialog mobileSpyDialog, TreeMobileElement appRootElement) {
@@ -533,6 +534,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				dialog.runAndWait((Callable<Object>) new Callable<Object>() {
 					@Override
 					public Object call() throws Exception {
+						Thread.sleep(2000);
 						MobileSpyDialog.setTreeRoot(MobileSpyDialog.this,
 								MobileSpyDialog.this.inspectorController.getMobileObjectRoot());
 						if (MobileSpyDialog.this.appRootElement != null) {
@@ -541,6 +543,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 						return null;
 					}
 				});
+
 				MobileSpyDialog.this.checkMonitorCanceled(monitor);
 				this.refreshTreeElements(dialog);
 				String imgPath = this.captureImage();
