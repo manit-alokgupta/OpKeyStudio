@@ -30,6 +30,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import io.appium.java_client.Setting;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
@@ -311,6 +312,7 @@ public class DeviceConfigurationDialog extends Dialog {
 							mobileCapability);
 
 					AndroidDriverObject.getInstance().setDriver(driver);
+					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -323,6 +325,7 @@ public class DeviceConfigurationDialog extends Dialog {
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
 					AndroidDriverObject.getInstance().setDriver(driver);
+					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -345,6 +348,7 @@ public class DeviceConfigurationDialog extends Dialog {
 							mobileCapability);
 
 					AndroidDriverObject.getInstance().setDriver(driver);
+					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -370,6 +374,7 @@ public class DeviceConfigurationDialog extends Dialog {
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
 					AndroidDriverObject.getInstance().setDriver(driver);
+					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
 					ex.printStackTrace();
