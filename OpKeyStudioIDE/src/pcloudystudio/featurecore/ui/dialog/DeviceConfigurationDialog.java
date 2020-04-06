@@ -355,21 +355,12 @@ public class DeviceConfigurationDialog extends Dialog {
 				}
 			} else {
 				try {
-					AppiumServiceBuilder builder = new AppiumServiceBuilder();
-					builder.withIPAddress(AppiumPortIpInfo.getHostAddress());
-					builder.usingPort(Integer.parseInt(AppiumPortIpInfo.getPort()));
-					builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
-					builder.withArgument(GeneralServerFlag.LOG_LEVEL, "error");
-					AppiumDriverLocalService service = AppiumDriverLocalService.buildService(builder);
-					service.stop();
-					Thread.sleep(2000);
-					AppiumServer.startServer();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 
-				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-				try {
+					Thread.sleep(10000);
+					AppiumServer.startServer();
+
+					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
