@@ -286,7 +286,10 @@ public class AppiumSettingsDialog extends Dialog {
 				String capabilityValue = capabilityTextValue.getText();
 				if ((capabilityName != "" && capabilityName != null)
 						&& (capabilityValue != null && capabilityValue != "")) {
-					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
+					if (ValidateCapabilityValue(capabilityValue))
+						addTableItemToCapabilityTableData(capabilityName, capabilityValue);
+					else
+						showDialog("Invalid Capability Value");
 				}
 				// addCapabilityComposite.setVisible(false);
 				btnAddToTable.setEnabled(false);
@@ -433,19 +436,17 @@ public class AppiumSettingsDialog extends Dialog {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Invalid LocalHost Address");
 			serverAddress.setFocus();
 			return false;
-		} 
-		else if (portNumber.getText().isEmpty()) {
+		} else if (portNumber.getText().isEmpty()) {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Port Cannot Be Empty");
 			portNumber.setFocus();
 			return false;
-		}else if (!ValidatePort(portNumber.getText())) {
+		} else if (!ValidatePort(portNumber.getText())) {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Invalid Port Number");
 			portNumber.setText("");
 			portNumber.setFocus();
-			
+
 			return false;
-		}  
-		else if (appiumDirectory.getText().isEmpty() || appiumDirectory.getText().equals("")) {
+		} else if (appiumDirectory.getText().isEmpty() || appiumDirectory.getText().equals("")) {
 			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "AppiumDirectory Cannot Be Empty");
 			return false;
 
@@ -475,19 +476,35 @@ public class AppiumSettingsDialog extends Dialog {
 		dialog.open();
 
 	}
-	
+
 	public Boolean ValidatePort(String str) {
-		 final String portRegex = "^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[2-9]\\d{3}|1[1-9]\\d{2}|10[3-9]\\d|102[4-9])$";
-		 Pattern VALID_PORT_PATTERN = Pattern.compile(portRegex, Pattern.CASE_INSENSITIVE);
-		 return VALID_PORT_PATTERN.matcher(str).matches();
-		
+		final String portRegex = "^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[2-9]\\d{3}|1[1-9]\\d{2}|10[3-9]\\d|102[4-9])$";
+		Pattern VALID_PORT_PATTERN = Pattern.compile(portRegex, Pattern.CASE_INSENSITIVE);
+		return VALID_PORT_PATTERN.matcher(str).matches();
+
 	}
+
 	public Boolean ValidateLocalHost(String str) {
-		 final  String ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
-		 Pattern VALID_IPV4_PATTERN = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE);
-		if(str.trim().equals("localhost"))             // driver throwing exception invalid host and port address.
+		final String ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
+		Pattern VALID_IPV4_PATTERN = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE);
+		if (str.trim().equals("localhost")) // driver throwing exception invalid host and port address.
 			return true;
-		 return VALID_IPV4_PATTERN.matcher(str).matches();
-		
+		return VALID_IPV4_PATTERN.matcher(str).matches();
+
+	}
+
+	public Boolean ValidateCapabilityValue(String str) {
+
+		if (str.matches("^[a-zA-Z]*${20}")) {
+			return true;
+		}
+		if (str.matches("^[1-9]*([0-9]{5}|)$")) {
+			return true;
+		}
+		if (str.matches("^[a-zA-Z0-9]*${20}")) {
+			return true;
+		}
+		return false;
+
 	}
 }
