@@ -280,11 +280,11 @@ public class DeviceConfigurationDialog extends Dialog {
 						applicationPathText.setText(file.toString());
 						applicationPathText.setEditable(true);
 					} else {
-						MessageDialog.openInformation(shlDeviceConfiguration, "Please Note",
+						MessageDialog.openError(shlDeviceConfiguration, "Error",
 								"Application APK file you provided doesn't exist!");
 					}
 				} else {
-					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note",
+					MessageDialog.openError(shlDeviceConfiguration, "Error",
 							"Application APK file you provided doesn't exist!");
 				}
 			}
