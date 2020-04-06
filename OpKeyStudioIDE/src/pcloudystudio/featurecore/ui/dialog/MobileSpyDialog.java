@@ -151,7 +151,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		Composite toolsComposite = new Composite(shlSpyMobile, SWT.BORDER);
 		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_toolsComposite.widthHint = 782;
-		gd_toolsComposite.heightHint = 58;
+		gd_toolsComposite.heightHint = 50;
 		toolsComposite.setLayoutData(gd_toolsComposite);
 
 		Composite spyContainerComposite = new Composite(shlSpyMobile, SWT.NONE);
@@ -164,7 +164,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		Composite bottomComposite = new Composite(shlSpyMobile, SWT.BORDER);
 		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_bottomComposite.widthHint = 400;
-		gd_bottomComposite.heightHint = 63;
+		gd_bottomComposite.heightHint = 46;
 		bottomComposite.setLayoutData(gd_bottomComposite);
 
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
