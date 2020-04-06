@@ -483,8 +483,8 @@ public class AppiumSettingsDialog extends Dialog {
 	public Boolean ValidateLocalHost(String str) {
 		 final  String ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
 		 Pattern VALID_IPV4_PATTERN = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE);
-		if(str.trim().equals("localhost"))
-			return true;
+		//if(str.trim().equals("localhost"))             // driver throwing exception invalid host and port address.
+			//return true;
 		 return VALID_IPV4_PATTERN.matcher(str).matches();
 		
 	}
