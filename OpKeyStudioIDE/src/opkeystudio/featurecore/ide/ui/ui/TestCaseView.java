@@ -104,7 +104,6 @@ public class TestCaseView extends Composite {
 	private ArtifactTreeItem artifactTreeItem;
 	private TabFolder datasTabHolder;
 	private Artifact artifact;
-
 	/**
 	 * Create the composite.
 	 * 
@@ -565,6 +564,22 @@ public class TestCaseView extends Composite {
 			}
 		});
 		flowStepTable.renderFlowSteps();
+
+		itemRun.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell());
+				executionWizard.createDialogArea(getParent());
+				executionWizard.open();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		itemAdd.addSelectionListener(new SelectionListener() {
 
