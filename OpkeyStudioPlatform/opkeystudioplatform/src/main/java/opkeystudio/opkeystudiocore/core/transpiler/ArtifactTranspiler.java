@@ -12,6 +12,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.GlobalVariablesTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.SuiteTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
@@ -69,6 +70,7 @@ public class ArtifactTranspiler {
 	}
 
 	public void transpileAllArtifacts() {
+		new GlobalVariablesTranspiler().transpile();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		for (Artifact artifact : artifacts) {
 			new ORTranspiler().transpile(artifact);
