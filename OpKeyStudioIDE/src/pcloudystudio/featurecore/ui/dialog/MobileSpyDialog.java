@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.WebElement;
@@ -284,9 +285,19 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							btnAdd.setEnabled(false);
 							captureObjectAction();
 						}
-					} catch (NoSuchElementException ex) {
-						MessageDialog.openError(shlSpyMobile, "Error",
-								"org.openqa.selenium.NoSuchElementException: An element could not be located on the page!");
+					} catch (Exception ex) {
+						if (ex instanceof NoSuchElementException)
+							MessageDialog.openError(shlSpyMobile, "Error",
+									"org.openqa.selenium.NoSuchElementException: An element could not be located on the page!");
+						else if (ex instanceof InvalidSelectorException)
+							MessageDialog.openError(shlSpyMobile, "Error",
+									"org.openqa.selenium.InvalidSelectorException: An element could not be located on the page!");
+						else if (ex instanceof NoSuchSessionException) {
+							MessageDialog.openError(shlSpyMobile, "Error",
+									"org.openqa.selenium.NoSuchSessionException: A session is either terminated or not started!");
+						} else {
+							ex.printStackTrace();
+						}
 					}
 				}
 			}
