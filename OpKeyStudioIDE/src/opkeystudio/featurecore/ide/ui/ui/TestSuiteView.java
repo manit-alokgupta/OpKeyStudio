@@ -39,7 +39,6 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 
 public class TestSuiteView extends Composite {
 	private SuiteTestCaseTree testCaseTree;
@@ -289,6 +288,12 @@ public class TestSuiteView extends Composite {
 
 	}
 
+	private void openExecutionWizard() {
+		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
+		executionWizard.createDialogArea(getParent());
+		executionWizard.open();
+	}
+	
 	public void populateTestSuiteData(TestSuiteStep testSuite) {
 		if (testSuite != null) {
 			setSelectedTEstSuite(testSuite);
@@ -391,8 +396,7 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				openExecutionWizard();
 			}
 
 			@Override

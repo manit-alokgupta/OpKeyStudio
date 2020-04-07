@@ -569,9 +569,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell());
-				executionWizard.createDialogArea(getParent());
-				executionWizard.open();
+				openExecutionWizard();
 			}
 
 			@Override
@@ -597,6 +595,12 @@ public class TestCaseView extends Composite {
 
 		addButtonListeners();
 		populateInputTabData();
+	}
+
+	private void openExecutionWizard() {
+		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
+		executionWizard.createDialogArea(getParent());
+		executionWizard.open();
 	}
 
 	private void populateFlowStepsData(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
