@@ -69,6 +69,10 @@ public class AppiumSettingsDialog extends Dialog {
 	private Combo capabilityNameCombo;
 	private Text capabilityTextValue;
 	private Button btnAddToTable;
+	private Composite manuallyAddCapabilityComposite2;
+	private Text manuallyCapabilityName;
+	private Text manuallyCapabilityValue;
+	private Button addToTable2;
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, SWT.DIALOG_TRIM);
@@ -101,7 +105,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -222,7 +226,8 @@ public class AppiumSettingsDialog extends Dialog {
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				addCapabilityComposite.setVisible(true);
+				addCapabilityComposite.setVisible(false);
+				manuallyAddCapabilityComposite2.setVisible(true);
 				capabilityNameCombo.removeAll();
 				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
@@ -269,7 +274,7 @@ public class AppiumSettingsDialog extends Dialog {
 		capabilityNameCombo.setItems(capabilityNameList);
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
-		capabilityTextValue.setBounds(170, 5, 154, 33);
+		capabilityTextValue.setBounds(170, 5, 154, 28);
 		capabilityTextValue.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -298,9 +303,46 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.setText("");
 			}
 		});
-		btnAddToTable.setBounds(330, 4, 135, 33);
+		btnAddToTable.setBounds(330, 4, 135, 30);
 		btnAddToTable.setText("Add to Table");
 		btnAddToTable.setEnabled(false);
+
+		manuallyAddCapabilityComposite2 = new Composite(compositeAddCapability, SWT.NONE);
+		manuallyAddCapabilityComposite2.setBounds(62, 0, 550, 42);
+		manuallyAddCapabilityComposite2.setVisible(false);
+
+		manuallyCapabilityName = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
+		manuallyCapabilityName.setBounds(10, 5, 154, 28);
+
+		manuallyCapabilityValue = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
+		manuallyCapabilityValue.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				addToTable2.setEnabled(true);
+			}
+		});
+		manuallyCapabilityValue.setBounds(170, 5, 154, 28);
+
+		addToTable2 = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
+		addToTable2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				String cap_name = manuallyCapabilityName.getText();
+				String cap_value = manuallyCapabilityValue.getText();
+				if ((cap_name != "" || cap_name != null) && (cap_value != "" || cap_value != null)) {
+					if (ValidateCapabilityValue(cap_value))
+						addTableItemToCapabilityTableData(cap_name, cap_value);
+				}
+				manuallyCapabilityName.setText("");
+				manuallyCapabilityValue.setText("");
+				manuallyAddCapabilityComposite2.setVisible(false);
+				addToTable2.setEnabled(false);
+				addCapabilityComposite.setVisible(true);
+			}
+		});
+		addToTable2.setBounds(330, 4, 135, 30);
+		addToTable2.setText("Add To Table");
+		addToTable2.setEnabled(false);
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
