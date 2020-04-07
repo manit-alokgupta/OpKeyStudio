@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.compiler.ArtifactCompiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactExecutor {
@@ -26,19 +27,21 @@ public class ArtifactExecutor {
 		System.out.println(">>Session Id " + session.getSessionId());
 		System.out.println(">>Session Name " + session.getSessionName());
 		System.out.println(">>Plugin Name " + session.getPluginName());
+		String pluginName = session.getPluginName();
 		Artifact artifact = session.getArtifact();
 
 		String transpiledFilesDir = Utilities.getInstance().getTranspiledArtifactsFolder();
 
 		createExecutionSession(session.getSessionName());
-		String artifactCodesDirPath=getSessionArtifacCodesFolder(session.getSessionName());
+		String artifactCodesDirPath = getSessionArtifacCodesFolder(session.getSessionName());
 		FileUtils.copyDirectory(new File(transpiledFilesDir), new File(artifactCodesDirPath));
 		String sourceFilePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + getSorceFileExt();
 		String compileFilePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + getCompileFileExt();
-		System.out.println(">>Artifact Source File Name "+sourceFilePath);
-		System.out.println(">>Artifact Compiled File Name "+compileFilePath);
+		System.out.println(">>Artifact Source File Name " + sourceFilePath);
+		System.out.println(">>Artifact Compiled File Name " + compileFilePath);
+		new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath, pluginName);
 	}
 
 	private void createExecutionSession(String sessionName) {
