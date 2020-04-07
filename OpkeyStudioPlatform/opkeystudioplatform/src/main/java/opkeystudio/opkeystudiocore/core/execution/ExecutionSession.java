@@ -6,8 +6,17 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class ExecutionSession {
 	private String sessionId;
 	private String sessionName;
+	private String buildName;
 	private String pluginName;
 	private Artifact artifact;
+
+	public ExecutionSession(String sessionName, String buildName) {
+		this.setSessionName((sessionName + "_" + Utilities.getInstance().getCurrentDateTime()).replaceAll(" ", "_")
+				.replaceAll(":", "_"));
+		this.setBuildName((buildName + "_" + Utilities.getInstance().getCurrentDateTime()).replaceAll(" ", "_")
+				.replaceAll(":", "_"));
+		this.setSessionId(Utilities.getInstance().getUniqueUUID(sessionName));
+	}
 
 	public ExecutionSession(String sessionName, String pluginName, Artifact artifact) {
 		this.setSessionName(sessionName);
@@ -46,5 +55,13 @@ public class ExecutionSession {
 
 	public void setArtifact(Artifact artifact) {
 		this.artifact = artifact;
+	}
+
+	public String getBuildName() {
+		return buildName;
+	}
+
+	public void setBuildName(String buildName) {
+		this.buildName = buildName;
 	}
 }

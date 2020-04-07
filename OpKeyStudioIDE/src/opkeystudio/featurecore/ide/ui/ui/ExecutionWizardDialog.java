@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -33,6 +34,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Text sessionNameTextField;
 	private Text buildNameTextField;
 
+	private ExecutionSession executionSession;
+
 	/**
 	 * Create the dialog.
 	 * 
@@ -44,13 +47,15 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		this.setParentTestCaseView(parentTestCaseView);
 		this.setExecutingFromTestCaseView(true);
 		setHelpAvailable(false);
+		initExecutionSession(parentTestCaseView.getArtifact());
 	}
 
-	public ExecutionWizardDialog(Shell parentShell, TestSuiteView parentTestCaseView) {
+	public ExecutionWizardDialog(Shell parentShell, TestSuiteView parentTestSuiteView) {
 		super(parentShell);
-		this.setParentTestSuiteView(parentTestCaseView);
+		this.setParentTestSuiteView(parentTestSuiteView);
 		this.setExecutingFromTestSuiteView(true);
 		setHelpAvailable(false);
+		initExecutionSession(parentTestSuiteView.getArtifact());
 	}
 
 	/**
@@ -96,6 +101,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 		sessionNameTextField = new Text(container, SWT.BORDER);
 		sessionNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
+		sessionNameTextField.setText(getExecutionSession().getSessionName());
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 
@@ -107,6 +113,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 		buildNameTextField = new Text(container, SWT.BORDER);
 		buildNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
+		buildNameTextField.setText(getExecutionSession().getBuildName());
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 
@@ -127,6 +134,11 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		setTitle("Execution Wizard");
 		initPluginNames();
 		return area;
+	}
+
+	private void initExecutionSession(Artifact artifact) {
+		ExecutionSession eSession = new ExecutionSession(artifact.getName() + "_", "Build_");
+		setExecutionSession(eSession);
 	}
 
 	private void initPluginNames() {
@@ -227,5 +239,13 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 	public void setExecutingFromTestSuiteView(boolean executingFromTestSuiteView) {
 		this.executingFromTestSuiteView = executingFromTestSuiteView;
+	}
+
+	public ExecutionSession getExecutionSession() {
+		return executionSession;
+	}
+
+	public void setExecutionSession(ExecutionSession executionSession) {
+		this.executionSession = executionSession;
 	}
 }
