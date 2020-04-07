@@ -100,7 +100,7 @@ public class Utilities {
 		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "Sessions";
 	}
-	
+
 	public String getTranspiledArtifactsFolder() {
 		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "TranspiledArtifacts";
@@ -109,6 +109,16 @@ public class Utilities {
 	public String getDefaultPluginBaseDir() {
 		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
 				+ "PluginBase";
+	}
+
+	public String getDefaultPluginRunnerDir() {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
+				+ "PluginRunner";
+	}
+
+	public String getPluginRunnerDir(String pluginRunnerName) {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
+				+ "PluginRunner" + File.separator + pluginRunnerName;
 	}
 
 	public String getDefaultPluginsDir() {
