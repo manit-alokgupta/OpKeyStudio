@@ -14,17 +14,24 @@ import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Text;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
 	private TestCaseView parentTestCaseView;
 	private TestSuiteView parentTestSuiteView;
 	private boolean executingFromTestCaseView;
 	private boolean executingFromTestSuiteView;
+	private Text text_1;
+	private Text text_2;
 
 	/**
 	 * Create the dialog.
 	 * 
 	 * @param parentShell
+	 * @wbp.parser.constructor
 	 */
 	public ExecutionWizardDialog(Shell parentShell, TestCaseView parentTestCaseView) {
 		super(parentShell);
@@ -49,7 +56,67 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
+		container.setLayout(new GridLayout(22, false));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		
+		Label lblNewLabel = new Label(container, SWT.NONE);
+		lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 20, 1));
+		lblNewLabel.setText("Session Name:");
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		
+		text_1 = new Text(container, SWT.BORDER);
+		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		
+		Label lblNewLabel_1 = new Label(container, SWT.NONE);
+		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 20, 1));
+		lblNewLabel_1.setText("Build Name:");
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		
+		text_2 = new Text(container, SWT.BORDER);
+		text_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		
+		Label lblNewLabel_2 = new Label(container, SWT.NONE);
+		lblNewLabel_2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 20, 1));
+		lblNewLabel_2.setText("Plugin:");
+		new Label(container, SWT.NONE);
+		
+		Composite composite_1 = new Composite(container, SWT.NONE);
+		composite_1.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
+		
+		Combo combo = new Combo(container, SWT.NONE);
+		combo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 20, 1));
+		
+		Composite composite = new Composite(container, SWT.NONE);
+		composite.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
 		// setMessage("Select The Plugin, and Click \"Run\"");
 		setTitle("Execution Wizard");
 		return area;
@@ -141,5 +208,4 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	public void setExecutingFromTestSuiteView(boolean executingFromTestSuiteView) {
 		this.executingFromTestSuiteView = executingFromTestSuiteView;
 	}
-
 }
