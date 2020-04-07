@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.WebElement;
 
 import opkeystudio.core.utils.OpKeyStudioPreferences;
@@ -521,6 +522,22 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	}
 
 	private void captureObjectAction() {
+		try {
+			AndroidDriverObject.getDriver().getSessionDetails();
+		} catch (NoSuchSessionException ex) {
+			deviceView.close();
+			btnStop.setEnabled(false);
+			btnCapture.setEnabled(false);
+			btnClickAndMoveToNextScreen.setEnabled(false);
+			btnAdd.setEnabled(false);
+			allObjectsCheckboxTreeViewer.getTree().removeAll();
+			clearPropertiesTableData();
+			textObjectName.setText("");
+			MessageDialog.openError(shlSpyMobile, "Error",
+					"org.openqa.selenium.NoSuchSessionException: A session is either terminated or not started!");
+			return;
+		}
+
 		if (textObjectName.getText().length() > 0)
 			textObjectName.setText("");
 
