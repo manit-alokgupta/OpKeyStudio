@@ -19,7 +19,11 @@ public class ArtifactExecutor {
 		System.out.println(">>Session Name " + session.getSessionName());
 		System.out.println(">>Plugin Name " + session.getPluginName());
 		Artifact artifact = session.getArtifact();
+
 		String transpiledFilesDir = Utilities.getInstance().getTranspiledArtifactsFolder();
+
+		String sessionsFolderPath = Utilities.getInstance().getSessionsFolder();
+
 		String sourceFilePath = transpiledFilesDir + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + getSorceFileExt();
 		String compileFilePath = transpiledFilesDir + File.separator + artifact.getPackagePath() + File.separator
@@ -27,6 +31,7 @@ public class ArtifactExecutor {
 		System.out.println(sourceFilePath);
 	}
 
+	
 	public String getSorceFileExt() {
 		return sorceFileExt;
 	}
