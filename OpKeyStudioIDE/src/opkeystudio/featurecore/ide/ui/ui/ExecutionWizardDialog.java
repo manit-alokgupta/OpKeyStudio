@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
+import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
 	private TestCaseView parentTestCaseView;
@@ -68,11 +69,12 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (isExecutingFromTestCaseView()) {
-					new ArtifactExecutor().execute(getParentTestCaseView().getArtifact());
+					new ArtifactExecutor().execute(new ExecutionSession("", "", getParentTestCaseView().getArtifact()));
 					return;
 				}
 				if (isExecutingFromTestSuiteView()) {
-					new ArtifactExecutor().execute(getParentTestSuiteView().getArtifact());
+					new ArtifactExecutor()
+							.execute(new ExecutionSession("", "", getParentTestSuiteView().getArtifact()));
 					return;
 				}
 			}

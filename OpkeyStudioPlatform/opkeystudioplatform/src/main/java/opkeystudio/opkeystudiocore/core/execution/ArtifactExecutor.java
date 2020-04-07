@@ -9,8 +9,8 @@ public class ArtifactExecutor {
 	private String sorceFileExt = ".java";
 	private String compileFileExt = ".class";
 
-	public void execute(Artifact artifact) {
-		initExecute(artifact);
+	public void execute(ExecutionSession session) {
+		initExecute(session.getArtifact());
 	}
 
 	private void initExecute(Artifact artifact) {

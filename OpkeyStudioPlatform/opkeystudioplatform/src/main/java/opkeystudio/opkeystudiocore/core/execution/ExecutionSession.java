@@ -1,22 +1,26 @@
 package opkeystudio.opkeystudiocore.core.execution;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ExecutionSession {
 	private String sessionId;
 	private String sessionName;
 	private String pluginName;
-	private String artifact;
+	private Artifact artifact;
 
 	public ExecutionSession(String sessionName, String pluginName, Artifact artifact) {
-
+		this.setSessionName(sessionName);
+		this.setPluginName(pluginName);
+		this.setArtifact(artifact);
+		this.setSessionId(Utilities.getInstance().getUniqueUUID(sessionName));
 	}
 
 	public String getSessionId() {
 		return sessionId;
 	}
 
-	public void setSessionId(String sessionId) {
+	private void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
 
@@ -36,11 +40,11 @@ public class ExecutionSession {
 		this.pluginName = pluginName;
 	}
 
-	public String getArtifact() {
+	public Artifact getArtifact() {
 		return artifact;
 	}
 
-	public void setArtifact(String artifact) {
+	public void setArtifact(Artifact artifact) {
 		this.artifact = artifact;
 	}
 }
