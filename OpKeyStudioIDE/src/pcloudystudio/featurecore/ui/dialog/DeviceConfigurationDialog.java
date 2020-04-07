@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -255,8 +256,10 @@ public class DeviceConfigurationDialog extends Dialog {
 					showProgressDialog();
 
 					if (AndroidDriverObject.getDriver() == null) {
-						MessageDialog.openInformation(shlDeviceConfiguration, "Information",
-								"Error In Application Installation.Please Try Again");
+						MessageDialog.openError(shlDeviceConfiguration, "Error",
+								"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
+										+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort()
+										+ "\n Please try again!");
 					} else {
 						if ((AndroidDriverObject.getDriver() != null)
 								&& (AndroidDriverObject.getDriver().getSessionId() != null)) {
@@ -344,6 +347,10 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
+				} catch (SessionNotCreatedException ex) {
+					MessageDialog.openError(shlDeviceConfiguration, "Error",
+							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
+									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -394,7 +401,7 @@ public class DeviceConfigurationDialog extends Dialog {
 	private void showProgressDialog() {
 
 		MessageDialogs msd = new MessageDialogs();
-		msd.openProgressDialog(getParent(), "Launching Application, Please Wait ...", true,
+		msd.openProgressDialog(getParent(), "Launching Application! - Please Wait ...", true,
 				new IRunnableWithProgress() {
 
 			@Override
