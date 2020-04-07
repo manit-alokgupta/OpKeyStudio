@@ -154,11 +154,6 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnRefresh.setBounds(470, 22, 75, 33);
 		btnRefresh.setText("Refresh");
 
-		devicesCombo.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
