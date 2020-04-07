@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.WebElement;
 
@@ -275,12 +276,17 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					TreeItem treeItem = (TreeItem) item;
 					Object obj = treeItem.getData();
 					Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
-					WebElement foundElement = AndroidDriverObject.getDriver()
-							.findElementByXPath(mobileElementProps.get("xpath"));
-					if (foundElement != null) {
-						foundElement.click();
-						btnAdd.setEnabled(false);
-						captureObjectAction();
+					try {
+						WebElement foundElement = AndroidDriverObject.getDriver()
+								.findElementByXPath(mobileElementProps.get("xpath"));
+						if (foundElement != null) {
+							foundElement.click();
+							btnAdd.setEnabled(false);
+							captureObjectAction();
+						}
+					} catch (NoSuchElementException ex) {
+						MessageDialog.openError(shlSpyMobile, "Error",
+								"org.openqa.selenium.NoSuchElementException: An element could not be located on the page!");
 					}
 				}
 			}
