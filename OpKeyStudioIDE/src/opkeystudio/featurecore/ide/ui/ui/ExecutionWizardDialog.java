@@ -127,7 +127,24 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 		pluginSelectionDropDown = new Combo(container, SWT.DROP_DOWN | SWT.READ_ONLY);
 		pluginSelectionDropDown.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 20, 1));
+		pluginSelectionDropDown.addSelectionListener(new SelectionListener() {
 
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int index = pluginSelectionDropDown.getSelectionIndex();
+				if (index == 0) {
+					return;
+				}
+				String pluginName = pluginSelectionDropDown.getItem(index);
+				getExecutionSession().setPluginName(pluginName);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
 		// setMessage("Select The Plugin, and Click \"Run\"");
@@ -138,6 +155,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 	private void initExecutionSession(Artifact artifact) {
 		ExecutionSession eSession = new ExecutionSession(artifact.getName() + "_", "Build_");
+		eSession.setArtifact(artifact);
 		setExecutionSession(eSession);
 	}
 
@@ -168,12 +186,11 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (isExecutingFromTestCaseView()) {
-					new ArtifactExecutor().execute(new ExecutionSession("", "", getParentTestCaseView().getArtifact()));
+					new ArtifactExecutor().execute(getExecutionSession());
 					return;
 				}
 				if (isExecutingFromTestSuiteView()) {
-					new ArtifactExecutor()
-							.execute(new ExecutionSession("", "", getParentTestSuiteView().getArtifact()));
+					new ArtifactExecutor().execute(getExecutionSession());
 					return;
 				}
 			}

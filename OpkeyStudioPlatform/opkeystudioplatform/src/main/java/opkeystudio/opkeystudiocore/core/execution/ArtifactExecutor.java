@@ -10,10 +10,15 @@ public class ArtifactExecutor {
 	private String compileFileExt = ".class";
 
 	public void execute(ExecutionSession session) {
-		initExecute(session.getArtifact());
+		initExecute(session);
 	}
 
-	private void initExecute(Artifact artifact) {
+	private void initExecute(ExecutionSession session) {
+		System.out.println(">> Initiating Execution ");
+		System.out.println(">>Session Id " + session.getSessionId());
+		System.out.println(">>Session Name " + session.getSessionName());
+		System.out.println(">>Plugin Name " + session.getPluginName());
+		Artifact artifact = session.getArtifact();
 		String transpiledFilesDir = Utilities.getInstance().getTranspiledArtifactsFolder();
 		String sourceFilePath = transpiledFilesDir + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + getSorceFileExt();

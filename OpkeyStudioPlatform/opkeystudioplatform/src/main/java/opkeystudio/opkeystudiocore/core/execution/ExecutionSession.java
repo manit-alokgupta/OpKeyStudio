@@ -22,7 +22,7 @@ public class ExecutionSession {
 		this.setSessionName(sessionName);
 		this.setPluginName(pluginName);
 		this.setArtifact(artifact);
-		this.setSessionId(Utilities.getInstance().getUniqueUUID(sessionName));
+		this.setSessionId(Utilities.getInstance().getUniqueUUID(""));
 	}
 
 	public String getSessionId() {
@@ -46,6 +46,8 @@ public class ExecutionSession {
 	}
 
 	public void setPluginName(String pluginName) {
+		pluginName = pluginName.toUpperCase();
+		System.out.println(">>Plugin Changed to " + pluginName);
 		this.pluginName = pluginName;
 	}
 
