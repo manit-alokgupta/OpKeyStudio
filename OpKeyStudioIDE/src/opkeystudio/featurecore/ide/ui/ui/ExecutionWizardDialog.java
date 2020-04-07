@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Combo pluginSelectionDropDown;
-
+	private Button runButton;
 	private TestCaseView parentTestCaseView;
 	private TestSuiteView parentTestSuiteView;
 	private boolean executingFromTestCaseView;
@@ -133,10 +133,12 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			public void widgetSelected(SelectionEvent e) {
 				int index = pluginSelectionDropDown.getSelectionIndex();
 				if (index == 0) {
+					runButton.setEnabled(false);
 					return;
 				}
 				String pluginName = pluginSelectionDropDown.getItem(index);
 				getExecutionSession().setPluginName(pluginName);
+				runButton.setEnabled(true);
 			}
 
 			@Override
@@ -179,7 +181,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		Button runButton = createButton(parent, IDialogConstants.OK_ID, "Run", true);
+		runButton = createButton(parent, IDialogConstants.OK_ID, "Run", true);
+		runButton.setEnabled(false);
 		Button cancelButton = createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 		runButton.addSelectionListener(new SelectionListener() {
 
