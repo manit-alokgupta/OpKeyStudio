@@ -111,7 +111,6 @@ public class DeviceConfigurationDialog extends Dialog {
 
 		if (MobileCapabilities.getMapOfCapabilities() == null) {
 			MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
-
 		}
 
 		compositeConfigurationSettings = new Composite(shlDeviceConfiguration, SWT.BORDER);
@@ -134,7 +133,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		devicesCombo.setBounds(155, 23, 309, 25);
 		GridData gd_combo = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		devicesCombo.setLayoutData(gd_combo);
-		
+
 		try {
 			devicesList = AndroidDeviceUtil.getAndroidDevices();
 			if (devicesList.size() == 0) {
@@ -157,17 +156,14 @@ public class DeviceConfigurationDialog extends Dialog {
 
 		devicesCombo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				btnRefresh.setFocus();
 			}
 		});
 
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
-
-			@SuppressWarnings("static-access")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					String previousDevice = devicesCombo.getText();
+					devicesList.clear();
 					devicesList = AndroidDeviceUtil.getAndroidDevices();
 
 					if (devicesList.size() == 0) {
@@ -180,29 +176,6 @@ public class DeviceConfigurationDialog extends Dialog {
 							devicesCombo.add(deviceEntry.getValue());
 						}
 						devicesCombo.select(0);
-
-						String selectedDeviceDetails = devicesCombo.getText();
-						String newDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDeviceDetails);
-						String newDeviceModelName = AndroidDeviceUtil.getDeviceName(newDeviceUDID);
-
-						MobileCapabilities.getinstance();
-
-						if (previousDevice.trim() != "") {
-							String previousDeviceModelName = AndroidDeviceUtil
-									.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice));
-							MobileCapabilities.getinstance().getMapOfCapabilities().replace("deviceName",
-									previousDeviceModelName);
-						} else {
-							MobileCapabilities.getinstance().getMapOfCapabilities().put("deviceName",
-									newDeviceModelName);
-						}
-
-						if (previousDevice.trim() != "") {
-							String previousDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(previousDevice);
-							MobileCapabilities.getinstance().getMapOfCapabilities().replace("udid", previousDeviceUDID);
-						} else {
-							MobileCapabilities.getinstance().getMapOfCapabilities().put("udid", newDeviceUDID);
-						}
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -261,8 +234,28 @@ public class DeviceConfigurationDialog extends Dialog {
 							"Application file you entered is not valid!");
 					lblApplicationIsRequiredMessage.setVisible(false);
 				} else {
+					try {
+						String selectedDevice = devicesCombo.getText();
+						String selectedDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice);
+						if (MobileCapabilities.getMapOfCapabilities().containsKey("udid")
+								&& MobileCapabilities.getMapOfCapabilities().containsKey("deviceName")) {
+							MobileCapabilities.getMapOfCapabilities().replace("udid", selectedDeviceUDID);
+							String previousDeviceModelName = AndroidDeviceUtil
+									.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice));
+							MobileCapabilities.getMapOfCapabilities().replace("deviceName", previousDeviceModelName);
+						} else {
+							MobileCapabilities.getMapOfCapabilities().put("udid", selectedDeviceUDID);
+							String previousDeviceModelName = AndroidDeviceUtil
+									.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice));
+							MobileCapabilities.getMapOfCapabilities().put("deviceName", previousDeviceModelName);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("application_name",
 							applicationPathText.getText());
+
 					shlDeviceConfiguration.setVisible(false);
 					showProgressDialog();
 
@@ -315,6 +308,7 @@ public class DeviceConfigurationDialog extends Dialog {
 								"Application APK file you provided doesn't exist!");
 					}
 				}
+				shlDeviceConfiguration.setFocus();
 			}
 		});
 
