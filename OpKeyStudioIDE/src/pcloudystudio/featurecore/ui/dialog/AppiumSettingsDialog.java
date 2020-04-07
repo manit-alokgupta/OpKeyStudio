@@ -73,6 +73,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private Text manuallyCapabilityName;
 	private Text manuallyCapabilityValue;
 	private Button addToTable2;
+	private Button manuallyCancel;
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, SWT.DIALOG_TRIM);
@@ -274,6 +275,7 @@ public class AppiumSettingsDialog extends Dialog {
 		capabilityNameCombo.setItems(capabilityNameList);
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
+		capabilityTextValue.setToolTipText("Please Enter Capability Value");
 		capabilityTextValue.setBounds(170, 5, 154, 28);
 		capabilityTextValue.addModifyListener(new ModifyListener() {
 			@Override
@@ -312,9 +314,11 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyAddCapabilityComposite2.setVisible(false);
 
 		manuallyCapabilityName = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
+		manuallyCapabilityName.setToolTipText("Please Enter Capability Name ");
 		manuallyCapabilityName.setBounds(10, 5, 154, 28);
 
 		manuallyCapabilityValue = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
+		manuallyCapabilityValue.setToolTipText("Please Enter Capability Value ");
 		manuallyCapabilityValue.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				addToTable2.setEnabled(true);
@@ -340,9 +344,23 @@ public class AppiumSettingsDialog extends Dialog {
 				addCapabilityComposite.setVisible(true);
 			}
 		});
-		addToTable2.setBounds(330, 4, 135, 30);
+		addToTable2.setBounds(330, 4, 110, 30);
 		addToTable2.setText("Add To Table");
 		addToTable2.setEnabled(false);
+
+		manuallyCancel = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
+		manuallyCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				manuallyCapabilityName.setText("");
+				manuallyCapabilityValue.setText("");
+				manuallyAddCapabilityComposite2.setVisible(false);
+				addCapabilityComposite.setVisible(true);
+			}
+		});
+		manuallyCancel.setBounds(440, 4, 110, 30);
+		manuallyCancel.setText("Cancel");
+		
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
