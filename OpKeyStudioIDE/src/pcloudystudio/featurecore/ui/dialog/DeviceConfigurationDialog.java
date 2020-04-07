@@ -98,7 +98,7 @@ public class DeviceConfigurationDialog extends Dialog {
 	private void createContents() {
 		shlDeviceConfiguration = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL | SWT.BORDER);
 		shlDeviceConfiguration
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shlDeviceConfiguration.setSize(624, 262);
 		shlDeviceConfiguration.setText("Configuration Dashboard");
@@ -229,21 +229,15 @@ public class DeviceConfigurationDialog extends Dialog {
 							"Application file you entered is not valid!");
 					lblApplicationIsRequiredMessage.setVisible(false);
 				} else {
+
 					try {
 						String selectedDevice = devicesCombo.getText();
 						String selectedDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice);
-						if (MobileCapabilities.getMapOfCapabilities().containsKey("udid")
-								&& MobileCapabilities.getMapOfCapabilities().containsKey("deviceName")) {
-							MobileCapabilities.getMapOfCapabilities().replace("udid", selectedDeviceUDID);
-							String previousDeviceModelName = AndroidDeviceUtil
-									.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice));
-							MobileCapabilities.getMapOfCapabilities().replace("deviceName", previousDeviceModelName);
-						} else {
-							MobileCapabilities.getMapOfCapabilities().put("udid", selectedDeviceUDID);
-							String previousDeviceModelName = AndroidDeviceUtil
-									.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice));
-							MobileCapabilities.getMapOfCapabilities().put("deviceName", previousDeviceModelName);
-						}
+						DesiredCapabilities obj = MobileCapabilities.getCapabilities();
+						obj.setCapability("udid", selectedDeviceUDID);
+						String previousDeviceModelName = AndroidDeviceUtil
+								.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice));
+						obj.setCapability("deviceName", previousDeviceModelName);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
@@ -397,15 +391,15 @@ public class DeviceConfigurationDialog extends Dialog {
 		msd.openProgressDialog(getParent(), "Launching Application, Please Wait ...", true,
 				new IRunnableWithProgress() {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				try {
-					startServer();
-				} catch (Exception e) {
-					MessageDialog.openError(shlDeviceConfiguration, "Error", e.getMessage());
-				}
-			}
-		});
+					@Override
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						try {
+							startServer();
+						} catch (Exception e) {
+							MessageDialog.openError(shlDeviceConfiguration, "Error", e.getMessage());
+						}
+					}
+				});
 		msd.closeProgressDialog();
 
 	}
