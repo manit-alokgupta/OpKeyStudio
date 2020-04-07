@@ -1,11 +1,14 @@
 package opkeystudio.opkeystudiocore.core.transpiler;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.io.FileUtils;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -16,6 +19,7 @@ import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.GlobalVari
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.SuiteTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactTranspiler {
 
@@ -70,6 +74,7 @@ public class ArtifactTranspiler {
 	}
 
 	public void transpileAllArtifacts() {
+		resetTranspiledArtifactsFolder();
 		new GlobalVariablesTranspiler().transpile();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		for (Artifact artifact : artifacts) {
@@ -79,6 +84,10 @@ public class ArtifactTranspiler {
 			new FLTranspiler().transpile(artifact);
 			new SuiteTranspiler().transpile(artifact);
 		}
+	}
+
+	private void resetTranspiledArtifactsFolder() {
+		
 	}
 
 	public Set<String> getAllPackagesNames() {

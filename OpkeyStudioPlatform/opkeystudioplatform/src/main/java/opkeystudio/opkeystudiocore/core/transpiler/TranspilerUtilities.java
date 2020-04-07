@@ -19,6 +19,7 @@ public class TranspilerUtilities {
 	}
 
 	public void addDefaultImports(JavaClassSource classSource) {
+		classSource.addImport("OpKeyGlobalVariables");
 		for (String packageName : ArtifactTranspiler.getInstance().getAllPackagesNames()) {
 			classSource.addImport(packageName + ".*");
 		}
