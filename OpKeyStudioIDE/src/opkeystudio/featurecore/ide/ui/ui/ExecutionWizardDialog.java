@@ -1,5 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.File;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -14,18 +16,22 @@ import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
+
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
+	private Combo pluginSelectionDropDown;
+
 	private TestCaseView parentTestCaseView;
 	private TestSuiteView parentTestSuiteView;
 	private boolean executingFromTestCaseView;
 	private boolean executingFromTestSuiteView;
-	private Text text_1;
-	private Text text_2;
+	private Text sessionNameTextField;
+	private Text buildNameTextField;
 
 	/**
 	 * Create the dialog.
@@ -81,45 +87,59 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
-		
+
 		Label lblNewLabel = new Label(container, SWT.NONE);
 		lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 20, 1));
 		lblNewLabel.setText("Session Name:");
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
-		
-		text_1 = new Text(container, SWT.BORDER);
-		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
+
+		sessionNameTextField = new Text(container, SWT.BORDER);
+		sessionNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
-		
+
 		Label lblNewLabel_1 = new Label(container, SWT.NONE);
 		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 20, 1));
 		lblNewLabel_1.setText("Build Name:");
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
-		
-		text_2 = new Text(container, SWT.BORDER);
-		text_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
+
+		buildNameTextField = new Text(container, SWT.BORDER);
+		buildNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
-		
+
 		Label lblNewLabel_2 = new Label(container, SWT.NONE);
 		lblNewLabel_2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 20, 1));
 		lblNewLabel_2.setText("Plugin:");
 		new Label(container, SWT.NONE);
-		
+
 		Composite composite_1 = new Composite(container, SWT.NONE);
 		composite_1.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
-		
-		Combo combo = new Combo(container, SWT.NONE);
-		combo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 20, 1));
-		
+
+		pluginSelectionDropDown = new Combo(container, SWT.DROP_DOWN | SWT.READ_ONLY);
+		pluginSelectionDropDown.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 20, 1));
+
 		Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
 		// setMessage("Select The Plugin, and Click \"Run\"");
 		setTitle("Execution Wizard");
+		initPluginNames();
 		return area;
+	}
+
+	private void initPluginNames() {
+		pluginSelectionDropDown.removeAll();
+		pluginSelectionDropDown.add("Select Plugin");
+		String pluginDir = Utilities.getInstance().getDefaultPluginsDir();
+		File pluginDirObject = new File(pluginDir);
+		for (File file : pluginDirObject.listFiles()) {
+			if (file.isDirectory()) {
+				pluginSelectionDropDown.add(file.getName());
+			}
+		}
+		pluginSelectionDropDown.select(0);
 	}
 
 	/**
