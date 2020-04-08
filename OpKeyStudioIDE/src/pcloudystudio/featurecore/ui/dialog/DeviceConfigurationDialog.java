@@ -259,12 +259,18 @@ public class DeviceConfigurationDialog extends Dialog {
 									.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice));
 							MobileCapabilities.getMapOfCapabilities().put("deviceName", previousDeviceModelName);
 						}
+
+						OpKeyStudioPreferences.getPreferences().addBasicSettings("application_name",
+								applicationPathText.getText());
+						String path = applicationPathText.getText();
+						if (MobileCapabilities.getMapOfCapabilities().containsKey("app")) {
+							MobileCapabilities.getMapOfCapabilities().replace("app", path);
+						} else {
+							MobileCapabilities.getMapOfCapabilities().put("app", path);
+						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
-
-					OpKeyStudioPreferences.getPreferences().addBasicSettings("application_name",
-							applicationPathText.getText());
 
 					shlDeviceConfiguration.setVisible(false);
 					showProgressDialog();
@@ -311,11 +317,6 @@ public class DeviceConfigurationDialog extends Dialog {
 				if (path != null) {
 					File file = new File(path);
 					if (file.exists()) {
-						if (MobileCapabilities.getinstance().getMapOfCapabilities().containsKey("app")) {
-							MobileCapabilities.getinstance().getMapOfCapabilities().replace("app", path);
-						} else {
-							MobileCapabilities.getinstance().getMapOfCapabilities().put("app", path);
-						}
 						applicationPathText.setText(file.toString());
 						applicationPathText.setEditable(true);
 					} else {
