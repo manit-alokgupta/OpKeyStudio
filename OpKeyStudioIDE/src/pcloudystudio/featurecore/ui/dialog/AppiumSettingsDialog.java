@@ -35,6 +35,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.appium.AppiumPortIpInfo;
 import pcloudystudio.appium.MobileCapabilities;
 
@@ -163,16 +165,23 @@ public class AppiumSettingsDialog extends Dialog {
 		appiumDirectory = new Text(compositeAppiumSettings, SWT.BORDER);
 		appiumDirectory.setBounds(205, 88, 309, 33);
 
+		AppiumPortIpInfo.getInstance();
 		if (AppiumPortIpInfo.getHostAddress() != null) {
 			serverAddress.setText(AppiumPortIpInfo.getHostAddress());
-		}
-
-		if (AppiumPortIpInfo.getPort() != null) {
 			portNumber.setText(AppiumPortIpInfo.getPort());
-		}
-
-		if (AppiumPortIpInfo.getAppiumDirectory() != null) {
 			appiumDirectory.setText(AppiumPortIpInfo.getAppiumDirectory());
+		} else {
+			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
+				AppiumPortIpInfo.getInstance()
+				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+				AppiumPortIpInfo.getInstance()
+				.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+				AppiumPortIpInfo.getInstance().setAppiumDirectory(
+						OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
+				appiumDirectory.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
+			}
 		}
 
 		Label label_2 = new Label(compositeAppiumSettings, SWT.NONE);
@@ -389,27 +398,26 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				Boolean status = validate();
 				if (status) {
+					OpKeyStudioPreferences.getPreferences().addBasicSettings("host_address", serverAddress.getText());
 					AppiumPortIpInfo.getInstance().setHostAddress(serverAddress.getText());
+					OpKeyStudioPreferences.getPreferences().addBasicSettings("port_number", portNumber.getText());
 					AppiumPortIpInfo.getInstance().setPort(portNumber.getText());
+					OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory",
+							appiumDirectory.getText());
 					AppiumPortIpInfo.getInstance().setAppiumDirectory(appiumDirectory.getText());
 					if (capabilityTable.getItemCount() != 0) {
 						try {
 							if (capabilityTable.getItemCount() > 0) {
 								LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
 								for (TableItem row : capabilityTable.getItems()) {
-
 									mapOfCapabilities.put(row.getText(0), row.getText(1));
-
 								}
-
 								MobileCapabilities.getinstance();
 								MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
 							}
-
 						} catch (Exception e2) {
 							e2.printStackTrace();
 						}
-
 					}
 					MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
