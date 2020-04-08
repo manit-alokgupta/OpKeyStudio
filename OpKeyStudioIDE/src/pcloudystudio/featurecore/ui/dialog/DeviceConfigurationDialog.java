@@ -334,13 +334,18 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
+				}catch (SessionNotCreatedException ex) {
+					MessageDialog.openError(shlDeviceConfiguration, "Error",
+							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
+									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			} else {
 				AppiumServer.startServer();
+				
 				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-				try {
+				try {   Thread.sleep(2000);
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
@@ -374,7 +379,11 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
-				} catch (Exception ex) {
+				} catch (SessionNotCreatedException ex) {
+					MessageDialog.openError(shlDeviceConfiguration, "Error",
+							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
+									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
+				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			} else {
@@ -391,7 +400,11 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
-				} catch (Exception ex) {
+				} catch (SessionNotCreatedException ex) {
+					MessageDialog.openError(shlDeviceConfiguration, "Error",
+							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
+									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
+				}catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
