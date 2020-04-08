@@ -6,12 +6,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
+
 public class VncUtils {
 
 	private static VncUtils obj;
 	private static String DeviceidCommand = "adb get-serialno";
-	private static String PreCompiledLibDirectory = " E:/vncserver/PreCompiled_libs";
-	private static String ResourceDirectory = "E:/vncserver/Resources/";
+	private static String PreCompiledLibDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator
+			+ "VncServer" + File.separator + "vncserver" + File.separator + "PreCompiled_libs"; // "
+	
+	private static String ResourceDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator
+			+ "VncServer" + File.separator + "vncserver" + File.separator + "Resources"+File.separator ; 
 	private static String MobileLibDirectory = "/data/local/tmp/pcloudy-libs";
 
 	private VncUtils() {
@@ -286,7 +291,7 @@ public class VncUtils {
 	public static void pushVncServer(String id, String abi) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("pushing vnc server");
-		String command = "adb -s " + id + " push" + VncUtils.PreCompiledLibDirectory + "/libs/" + abi
+		String command = "adb -s " + id + " push " + VncUtils.PreCompiledLibDirectory + "/libs/" + abi
 				+ "/androidvncserver" + " " + VncUtils.MobileLibDirectory; // give the source for precompiled directory
 		System.out.println("command is  " + command);
 		StringBuilder builder = new StringBuilder();
@@ -667,5 +672,14 @@ public class VncUtils {
 		else
 			return false;
 
+	}
+
+	public static boolean checkIfDirectoryExist(String path) {
+
+		File file = new File(path);
+		if (file.isDirectory())
+			return true;
+		else
+			return false;
 	}
 }

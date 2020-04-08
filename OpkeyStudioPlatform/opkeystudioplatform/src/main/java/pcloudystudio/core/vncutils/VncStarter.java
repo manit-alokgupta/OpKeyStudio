@@ -16,6 +16,11 @@ public class VncStarter {
 	private String deviceSdk;
 	private String deviceName;
 	private String port = "5801";
+	private String VncDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "VncServer"
+			+ File.separator + "vncserver" + File.separator + "PreCompiled_libs";
+	private String zipPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "VncServer"
+			+ File.separator + "vncserver.zip";
+	private String zipExtractPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "VncServer";
 
 	public VncStarter() throws IOException, InterruptedException {
 		VncUtils.getInstance();
@@ -26,6 +31,19 @@ public class VncStarter {
 	}
 
 	public void startVncServer() throws IOException, InterruptedException {
+
+		Boolean directoryStatus = VncUtils.checkIfDirectoryExist(VncDirectory);
+		if (!directoryStatus) {
+			try {
+				copyZip();
+				//Thread.sleep(2000);
+				Utilities.getInstance().extractZipFolder(zipPath, zipExtractPath);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
 
 		if (VncUtils.checkIfDeviceIsConnected(deviceId)) {
 
@@ -85,6 +103,7 @@ public class VncStarter {
 	}
 
 	public void startMobicast() throws IOException, InterruptedException {
+		 
 		if (VncUtils.checkIfDeviceIsConnected(deviceId)) {
 			VncUtils.installInputServiceApk(deviceId);
 
@@ -102,7 +121,7 @@ public class VncStarter {
 		try {
 			url = new URL("platform:/plugin/OpKeyStudio/resources/vncserver.zip");
 			InputStream inputStream = url.openConnection().getInputStream();
-			File targetFile = new File(copyToPath + "\\package.zip");
+			File targetFile = new File(copyToPath + "\\vncserver.zip");
 			java.nio.file.Files.copy(inputStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			IOUtils.closeQuietly(inputStream);
 		} catch (Exception e) {
