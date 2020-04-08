@@ -78,7 +78,7 @@ public class TCFLCodeConstruct {
 				GlobalVariable globalVariable = GlobalLoader.getInstance()
 						.getGlobalVariableById(flowInputObject.getGlobalVariableData());
 
-				argumentCall += "OpKeyGlobalVariables." + globalVariable.getVariableName();
+				argumentCall += "OpKeyGlobalVariables." + globalVariable.getName().replaceAll(" ", "_");
 				continue;
 			}
 

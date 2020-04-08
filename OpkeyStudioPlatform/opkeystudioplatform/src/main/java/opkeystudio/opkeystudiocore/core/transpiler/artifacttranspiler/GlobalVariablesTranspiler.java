@@ -18,6 +18,7 @@ public class GlobalVariablesTranspiler extends AbstractTranspiler {
 	public void transpile() {
 		File file = createGlobalVariableFile();
 		JavaClassSource classSource = new GlobalTranspiler().getJavaClassOfGlobalVariables();
+		classSource.setPackage("allartifacts");
 		new TranspilerUtilities().writeCodeToFile(file, classSource);
 	}
 
