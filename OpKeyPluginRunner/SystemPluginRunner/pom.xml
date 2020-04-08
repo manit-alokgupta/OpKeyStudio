@@ -4,7 +4,7 @@
 
   <groupId>com.opkey</groupId>
   <artifactId>SystemPluginRunner</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>jar</packaging>
 
   <name>SystemPluginRunner</name>
@@ -12,6 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <pluginName>System</pluginName>
   </properties>
 
   <dependencies>
