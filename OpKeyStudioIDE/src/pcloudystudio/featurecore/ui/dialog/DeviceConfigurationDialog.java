@@ -352,7 +352,10 @@ public class DeviceConfigurationDialog extends Dialog {
 									1, 0, "OK");
 					mDialog.open();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							ex.getMessage(), 1, 0, "OK");
+					mDialog.open();
 				}
 			} else {
 				AppiumServer.startServer();
@@ -381,7 +384,10 @@ public class DeviceConfigurationDialog extends Dialog {
 							1, 0, "OK");
 					mDialog.open();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							ex.getMessage(), 1, 0, "OK");
+					mDialog.open();
 				}
 			}
 		} else {
@@ -390,7 +396,10 @@ public class DeviceConfigurationDialog extends Dialog {
 				AndroidDriverObject.getDriver().quit();
 				Thread.sleep(2000);
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+						ex.getMessage(), 1, 0, "OK");
+				mDialog.open();
 			}
 			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
 			if (serverStatus) {
@@ -411,14 +420,15 @@ public class DeviceConfigurationDialog extends Dialog {
 									1, 0, "OK");
 					mDialog.open();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							ex.getMessage(), 1, 0, "OK");
+					mDialog.open();
 				}
 			} else {
 				try {
-
 					Thread.sleep(10000);
 					AppiumServer.startServer();
-
 					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
 
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
@@ -435,7 +445,10 @@ public class DeviceConfigurationDialog extends Dialog {
 									1, 0, "OK");
 					mDialog.open();
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							ex.getMessage(), 1, 0, "OK");
+					mDialog.open();
 				}
 			}
 		}

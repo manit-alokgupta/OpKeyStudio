@@ -297,9 +297,9 @@ public class AppiumSettingsDialog extends Dialog {
 					if (validateCapabilityValue(capabilityValue))
 						addTableItemToCapabilityTableData(capabilityName, capabilityValue);
 					else {
-						MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+						MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
 								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-								"Invalid Capability Value!", 2, 0, "OK");
+								"Invalid Capability Value!", 1, 0, "OK");
 						mDialog.open();
 					}
 				}
@@ -500,9 +500,9 @@ public class AppiumSettingsDialog extends Dialog {
 			serverAddress.setFocus();
 			return false;
 		} else if (!validateLocalHost(serverAddress.getText())) {
-			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
 					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-					"Invalid Host Address!", 2, 0, "OK");
+					"Invalid Host Address!", 1, 0, "OK");
 			mDialog.open();
 			serverAddress.setFocus();
 			return false;
@@ -514,9 +514,9 @@ public class AppiumSettingsDialog extends Dialog {
 			portNumber.setFocus();
 			return false;
 		} else if (!validatePort(portNumber.getText())) {
-			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
 					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-					"Invalid Port!", 2, 0, "OK");
+					"Invalid Port!", 1, 0, "OK");
 			mDialog.open();
 			portNumber.setText("");
 			portNumber.setFocus();
