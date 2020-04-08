@@ -41,8 +41,8 @@ public class ArtifactTranspiler {
 				continue;
 			}
 			int count = 0;
-			String packagePath = "";
-			String packageName = "";
+			String packagePath = "allartifacts";
+			String packageName = "allartifacts";
 			Artifact tempArtfact = artifact;
 			List<String> variableNames = new ArrayList<String>();
 			while (tempArtfact != null) {
@@ -71,6 +71,7 @@ public class ArtifactTranspiler {
 			artifact.setPackageName(packageName.toLowerCase());
 			ArtifactTranspiler.getInstance().addPackageName(artifact.getPackageName());
 		}
+		ArtifactTranspiler.getInstance().addPackageName("allartifacts");
 	}
 
 	public void transpileAllArtifacts() {
@@ -87,7 +88,13 @@ public class ArtifactTranspiler {
 	}
 
 	private void resetTranspiledArtifactsFolder() {
-		
+		try {
+			FileUtils.deleteDirectory(
+					new File(Utilities.getInstance().getTranspiledArtifactsFolder() + File.separator + "allartifacts"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Set<String> getAllPackagesNames() {

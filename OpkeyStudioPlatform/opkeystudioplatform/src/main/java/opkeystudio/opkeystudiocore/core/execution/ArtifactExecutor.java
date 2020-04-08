@@ -34,7 +34,9 @@ public class ArtifactExecutor {
 
 		createExecutionSession(session.getSessionName());
 		String artifactCodesDirPath = getSessionArtifacCodesFolder(session.getSessionName());
+
 		FileUtils.copyDirectory(new File(transpiledFilesDir), new File(artifactCodesDirPath));
+
 		String sourceFilePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + getSorceFileExt();
 		String compileFilePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator

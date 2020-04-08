@@ -22,7 +22,11 @@ public class GlobalVariablesTranspiler extends AbstractTranspiler {
 	}
 
 	public File createGlobalVariableFile() {
-		String filePath = getTranspiledDataFolder() + File.separator + "OpKeyGlobalVariables.java";
+		String folderPath = getTranspiledDataFolder() + File.separator + "allartifacts";
+		if (!new File(folderPath).exists()) {
+			new File(folderPath).mkdir();
+		}
+		String filePath = folderPath + File.separator + "OpKeyGlobalVariables.java";
 		File file = new File(filePath);
 		if (!file.exists()) {
 			try {
