@@ -257,7 +257,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							"Custom", "HTML Page",
 							getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
 					getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
-					MessageDialog.openInformation(shlSpyMobile, "Please Note", "Object has been added successifully!");
+					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Please Note",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							"Object has been added successifully!", 2, 0, "OK");
+					mDialog.open();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -287,17 +290,32 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							captureObjectAction();
 						}
 					} catch (Exception ex) {
-						if (ex instanceof NoSuchElementException)
-							MessageDialog.openError(shlSpyMobile, "Error",
-									"org.openqa.selenium.NoSuchElementException: An element could not be located on the page!");
-						else if (ex instanceof InvalidSelectorException)
-							MessageDialog.openError(shlSpyMobile, "Error",
-									"org.openqa.selenium.InvalidSelectorException: An element could not be located on the page!");
-						else if (ex instanceof NoSuchSessionException) {
-							MessageDialog.openError(shlSpyMobile, "Error",
-									"org.openqa.selenium.NoSuchSessionException: A session is either terminated or not started!");
+						if (ex instanceof NoSuchElementException) {
+							MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+									ResourceManager.getPluginImage("OpKeyStudio",
+											"icons/pcloudystudio/opkey-16x16.png"),
+									"org.openqa.selenium.NoSuchElementException: An element could not be located on the page!",
+									1, 0, "OK");
+							mDialog.open();
+						} else if (ex instanceof InvalidSelectorException) {
+							MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+									ResourceManager.getPluginImage("OpKeyStudio",
+											"icons/pcloudystudio/opkey-16x16.png"),
+									"org.openqa.selenium.InvalidSelectorException: An element could not be located on the page!",
+									1, 0, "OK");
+							mDialog.open();
+						} else if (ex instanceof NoSuchSessionException) {
+							MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+									ResourceManager.getPluginImage("OpKeyStudio",
+											"icons/pcloudystudio/opkey-16x16.png"),
+									"org.openqa.selenium.NoSuchSessionException: A session is either terminated or not started!",
+									1, 0, "OK");
+							mDialog.open();
 						} else {
-							ex.printStackTrace();
+							MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error", ResourceManager
+									.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+									ex.getMessage(), 1, 0, "OK");
+							mDialog.open();
 						}
 					}
 				}
@@ -333,7 +351,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(shlSpyMobile, "Help", "Please contact support@opkey.com");
+				MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Help",
+						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+						"Please contact support@opkey.com", 2, 0, "OK");
+				mDialog.open();
 			}
 		});
 		btnHelp.setBounds(10, 10, 54, 28);
@@ -552,8 +573,11 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			allObjectsCheckboxTreeViewer.getTree().removeAll();
 			clearPropertiesTableData();
 			textObjectName.setText("");
-			MessageDialog.openError(shlSpyMobile, "Error",
-					"org.openqa.selenium.NoSuchSessionException: A session is either terminated or not started!");
+			MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"org.openqa.selenium.NoSuchSessionException: A session is either terminated or not started!", 1, 0,
+					"OK");
+			mDialog.open();
 			return;
 		} catch (WebDriverException ex) {
 			deviceView.close();
@@ -564,8 +588,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			allObjectsCheckboxTreeViewer.getTree().removeAll();
 			clearPropertiesTableData();
 			textObjectName.setText("");
-			MessageDialog.openError(shlSpyMobile, "Error",
-					"org.openqa.selenium.WebDriverException: Connection refused: connect!");
+			MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"org.openqa.selenium.WebDriverException: Connection refused: connect!", 1, 0, "OK");
+			mDialog.open();
 			return;
 		}
 
