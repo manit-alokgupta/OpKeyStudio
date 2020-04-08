@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.SessionNotCreatedException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -261,8 +262,8 @@ public class DeviceConfigurationDialog extends Dialog {
 										+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort()
 										+ "\n Please try again!");
 					} else {
-						if ((AndroidDriverObject.getDriver() != null)
-								&& (AndroidDriverObject.getDriver().getSessionId() != null)) {
+						if (AndroidDriverObject.getDriver() != null
+								&& AndroidDriverObject.getDriver().getSessionId() != null) {
 							shlDeviceConfiguration.close();
 							new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
 						}
@@ -355,7 +356,11 @@ public class DeviceConfigurationDialog extends Dialog {
 				} catch (SessionNotCreatedException ex) {
 					MessageDialog.openError(shlDeviceConfiguration, "Error",
 							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
-									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
+									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort()
+									+ "\\n Check Appium logs!");
+				} catch (WebDriverException ex) {
+					MessageDialog.openError(shlDeviceConfiguration, "Error",
+							"\"org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. \n Original error: Error occurred while starting App. \n Check Appium logs!");
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
