@@ -25,6 +25,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.wb.swt.ResourceManager;
+
 import pcloudystudio.objectspy.element.MobileElement;
 
 import org.eclipse.swt.SWT;
@@ -36,7 +38,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.dialogs.Dialog;
 
 public class MobileDeviceDialog extends Dialog {
-	private static String DIALOG_TITLE = "Mobile Device";
+	private static String DIALOG_TITLE = "Mobile View";
 	private Image currentScreenShot;
 	private Canvas canvas;
 	public static int DIALOG_WIDTH = 400;
@@ -70,7 +72,7 @@ public class MobileDeviceDialog extends Dialog {
 		dialogAreaGridLayout.marginWidth = 0;
 		dialogAreaGridLayout.marginHeight = 0;
 		(this.scrolledComposite = new ScrollableComposite(dialogArea, SWT.H_SCROLL | SWT.V_SCROLL))
-				.setExpandHorizontal(true);
+		.setExpandHorizontal(true);
 		this.scrolledComposite.setExpandVertical(true);
 		this.scrolledComposite.setLayout((Layout) new GridLayout());
 		this.scrolledComposite.setLayoutData((Object) new GridData(4, 4, true, true));
@@ -209,6 +211,7 @@ public class MobileDeviceDialog extends Dialog {
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(DIALOG_TITLE);
+		shell.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 	}
 
 	@Override
