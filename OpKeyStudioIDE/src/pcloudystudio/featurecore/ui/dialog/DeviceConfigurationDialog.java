@@ -215,6 +215,17 @@ public class DeviceConfigurationDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				File apkFile = new File(applicationPathText.getText());
 				boolean exists = apkFile.exists();
+
+				if (AppiumPortIpInfo.getHostAddress() == null
+						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
+					AppiumPortIpInfo.getInstance()
+					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+					AppiumPortIpInfo.getInstance()
+					.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					AppiumPortIpInfo.getInstance().setAppiumDirectory(
+							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
+				}
+
 				if (devicesCombo.getText().isEmpty() || applicationPathText.getText().isEmpty()) {
 					lblDeviceRequiredMessage.setVisible(devicesCombo.getText().isEmpty() ? true : false);
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
