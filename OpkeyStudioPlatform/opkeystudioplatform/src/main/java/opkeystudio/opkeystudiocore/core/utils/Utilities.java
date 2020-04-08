@@ -77,6 +77,11 @@ public class Utilities {
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "VncServer" ;
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
 	}
 
 	public String getDefaultInstallDir() {
