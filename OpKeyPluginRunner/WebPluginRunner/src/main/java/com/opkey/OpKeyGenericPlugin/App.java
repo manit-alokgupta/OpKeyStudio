@@ -1,4 +1,4 @@
-package com.opkey.OpKeyGeneric;
+package com.opkey.OpKeyGenericPlugin;
 
 /**
  * Hello world!
