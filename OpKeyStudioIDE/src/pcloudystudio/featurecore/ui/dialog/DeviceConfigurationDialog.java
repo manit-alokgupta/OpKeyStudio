@@ -29,8 +29,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.openqa.selenium.SessionNotCreatedException;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -344,13 +342,6 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
-				} catch (SessionNotCreatedException ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
-									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort(),
-									1, 0, "OK");
-					mDialog.open();
 				} catch (Exception ex) {
 					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
@@ -369,20 +360,6 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
-				} catch (SessionNotCreatedException ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
-									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort()
-									+ "\\n Check Appium logs!",
-									1, 0, "OK");
-					mDialog.open();
-				} catch (WebDriverException ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. \n Original error: Error occurred while starting App. \n Check Appium logs!",
-							1, 0, "OK");
-					mDialog.open();
 				} catch (Exception ex) {
 					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
@@ -412,13 +389,6 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
-				} catch (SessionNotCreatedException ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
-									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort(),
-									1, 0, "OK");
-					mDialog.open();
 				} catch (Exception ex) {
 					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
@@ -437,13 +407,6 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
-				} catch (SessionNotCreatedException ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
-									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort(),
-									1, 0, "OK");
-					mDialog.open();
 				} catch (Exception ex) {
 					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
@@ -471,6 +434,5 @@ public class DeviceConfigurationDialog extends Dialog {
 			}
 		});
 		msd.closeProgressDialog();
-
 	}
 }
