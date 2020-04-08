@@ -518,8 +518,7 @@ public class AppiumSettingsDialog extends Dialog {
 		}
 
 		else if (capabilityTable.getItemCount() == 0) {
-			MessageDialog.openInformation(shlAppiumSettings, "Please Note",
-					"You have not provided any default capabilities!");
+			
 			return true;
 
 		} else {
