@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -106,7 +105,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -199,10 +198,11 @@ public class AppiumSettingsDialog extends Dialog {
 				if (!appiumDirectory.getText()
 						.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
 
-					MessageDialog.openError(shlAppiumSettings, "Please Note",
-							"Invalid Directory.Please Select Valid Appium Directory");
+					MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							"Invalid Appium Directory! Please select valid Appium Directory.", 1, 0, "OK");
+					mDialog.open();
 					appiumDirectory.setText("");
-
 				}
 			}
 		});
@@ -294,12 +294,15 @@ public class AppiumSettingsDialog extends Dialog {
 				String capabilityValue = capabilityTextValue.getText();
 				if ((capabilityName != "" && capabilityName != null)
 						&& (capabilityValue != null && capabilityValue != "")) {
-					if (ValidateCapabilityValue(capabilityValue))
+					if (validateCapabilityValue(capabilityValue))
 						addTableItemToCapabilityTableData(capabilityName, capabilityValue);
-					else
-						showDialog("Invalid Capability Value");
+					else {
+						MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+								"Invalid Capability Value!", 2, 0, "OK");
+						mDialog.open();
+					}
 				}
-				// addCapabilityComposite.setVisible(false);
 				btnAddToTable.setEnabled(false);
 				capabilityTextValue.setText("");
 				capabilityNameCombo.setText("");
@@ -334,7 +337,7 @@ public class AppiumSettingsDialog extends Dialog {
 				String cap_name = manuallyCapabilityName.getText();
 				String cap_value = manuallyCapabilityValue.getText();
 				if ((cap_name != "" || cap_name != null) && (cap_value != "" || cap_value != null)) {
-					if (ValidateCapabilityValue(cap_value))
+					if (validateCapabilityValue(cap_value))
 						addTableItemToCapabilityTableData(cap_name, cap_value);
 				}
 				manuallyCapabilityName.setText("");
@@ -360,7 +363,6 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		manuallyCancel.setBounds(440, 4, 110, 30);
 		manuallyCancel.setText("Cancel");
-		
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -409,8 +411,10 @@ public class AppiumSettingsDialog extends Dialog {
 						}
 
 					}
-
-					MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Settings Saved Successfully");
+					MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							"Settings Saved Successfully!", 2, 0, "OK");
+					mDialog.open();
 				}
 			}
 		});
@@ -489,70 +493,71 @@ public class AppiumSettingsDialog extends Dialog {
 
 	public Boolean validate() {
 		if (serverAddress.getText().isEmpty()) {
-			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "LocalHost Address cannot be empty");
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"Host Address can't be empty!", 2, 0, "OK");
+			mDialog.open();
 			serverAddress.setFocus();
 			return false;
-		} else if (!ValidateLocalHost(serverAddress.getText())) {
-			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Invalid LocalHost Address");
+		} else if (!validateLocalHost(serverAddress.getText())) {
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"Invalid Host Address!", 2, 0, "OK");
+			mDialog.open();
 			serverAddress.setFocus();
 			return false;
 		} else if (portNumber.getText().isEmpty()) {
-			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Port Cannot Be Empty");
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"Port can't be empty!", 2, 0, "OK");
+			mDialog.open();
 			portNumber.setFocus();
 			return false;
-		} else if (!ValidatePort(portNumber.getText())) {
-			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "Invalid Port Number");
+		} else if (!validatePort(portNumber.getText())) {
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"Invalid Port!", 2, 0, "OK");
+			mDialog.open();
 			portNumber.setText("");
 			portNumber.setFocus();
-
 			return false;
 		} else if (appiumDirectory.getText().isEmpty() || appiumDirectory.getText().equals("")) {
-			MessageDialog.openInformation(shlAppiumSettings, "Please Note", "AppiumDirectory Cannot Be Empty");
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"Appium Directory can't be empty!", 2, 0, "OK");
+			mDialog.open();
 			return false;
-
 		} else if (!appiumDirectory.getText()
 				.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-			MessageDialog.openError(shlAppiumSettings, "Please Note",
-					"Invalid Directory.Please Select valid Appium Directory");
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"Invalid Appium Directory! Please select valid Appium Directory.", 1, 0, "OK");
+			mDialog.open();
 			return false;
 		}
 
 		else if (capabilityTable.getItemCount() == 0) {
-			
 			return true;
-
 		} else {
 			return true;
-
 		}
-
 	}
 
-	public void showDialog(String str) {
-		MessageBox dialog = new MessageBox(shlAppiumSettings, SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
-		dialog.setText(" Info");
-		dialog.setMessage(str);
-		dialog.open();
-
-	}
-
-	public Boolean ValidatePort(String str) {
+	public Boolean validatePort(String str) {
 		final String portRegex = "^(6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[2-9]\\d{3}|1[1-9]\\d{2}|10[3-9]\\d|102[4-9])$";
 		Pattern VALID_PORT_PATTERN = Pattern.compile(portRegex, Pattern.CASE_INSENSITIVE);
 		return VALID_PORT_PATTERN.matcher(str).matches();
-
 	}
 
-	public Boolean ValidateLocalHost(String str) {
+	public Boolean validateLocalHost(String str) {
 		final String ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
 		Pattern VALID_IPV4_PATTERN = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE);
 		if (str.trim().equals("localhost")) // driver throwing exception invalid host and port address.
 			return true;
 		return VALID_IPV4_PATTERN.matcher(str).matches();
-
 	}
 
-	public Boolean ValidateCapabilityValue(String str) {
+	public Boolean validateCapabilityValue(String str) {
 
 		if (str.matches("^[a-zA-Z]*${20}")) {
 			return true;
@@ -564,6 +569,5 @@ public class AppiumSettingsDialog extends Dialog {
 			return true;
 		}
 		return false;
-
 	}
 }
