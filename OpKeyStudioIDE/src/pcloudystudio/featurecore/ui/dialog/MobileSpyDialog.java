@@ -374,8 +374,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	private void createObjectPropertiesTable(ScrolledComposite objectPropertiesScrolledComposite) {
 		objectPropertiesTable = new Table(objectPropertiesScrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
-		objectPropertiesTable.setHeaderVisible(true);
 		objectPropertiesTable.setLinesVisible(true);
+		objectPropertiesTable.setHeaderVisible(true);
+		objectPropertiesTable.setHeaderBackground(SWTResourceManager.getColor(248, 248, 245));
 		objectPropertiesTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		objectPropertiesScrolledComposite.setContent(objectPropertiesTable);
 
