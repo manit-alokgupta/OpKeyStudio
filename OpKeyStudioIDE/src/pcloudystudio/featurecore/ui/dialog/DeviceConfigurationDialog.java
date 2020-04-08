@@ -224,11 +224,15 @@ public class DeviceConfigurationDialog extends Dialog {
 						|| AppiumPortIpInfo.getHostAddress() == null || AppiumPortIpInfo.getHostAddress().length() == 0
 						|| AppiumPortIpInfo.getAppiumDirectory() == null
 						|| AppiumPortIpInfo.getAppiumDirectory().length() == 0) {
-					MessageDialog.openInformation(shlDeviceConfiguration, "Please Note",
-							"Appium Settings are not configured! Go-To: Tools->Appium Settings.");
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Please Note",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							"Appium Settings are not configured! Go-To: Tools->Appium Settings.", 2, 0, "OK");
+					mDialog.open();
 				} else if (!exists) {
-					MessageDialog.openError(shlDeviceConfiguration, "Error",
-							"Application file you entered is not valid!");
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							"Application file you entered is not valid!", 1, 0, "OK");
+					mDialog.open();
 					lblApplicationIsRequiredMessage.setVisible(false);
 				} else {
 					try {
@@ -257,10 +261,13 @@ public class DeviceConfigurationDialog extends Dialog {
 					showProgressDialog();
 
 					if (AndroidDriverObject.getDriver() == null) {
-						MessageDialog.openError(shlDeviceConfiguration, "Error",
+						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
 								"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
 										+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort()
-										+ "\n Please try again!");
+										+ "\n Please try again!",
+										1, 0, "OK");
+						mDialog.open();
 					} else {
 						if (AndroidDriverObject.getDriver() != null
 								&& AndroidDriverObject.getDriver().getSessionId() != null) {
@@ -303,8 +310,10 @@ public class DeviceConfigurationDialog extends Dialog {
 						applicationPathText.setText(file.toString());
 						applicationPathText.setEditable(true);
 					} else {
-						MessageDialog.openError(shlDeviceConfiguration, "Error",
-								"Application APK file you provided doesn't exist!");
+						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+								"Application APK file you provided doesn't exist!", 1, 0, "OK");
+						mDialog.open();
 					}
 				}
 				shlDeviceConfiguration.setFocus();
@@ -335,18 +344,22 @@ public class DeviceConfigurationDialog extends Dialog {
 					AndroidDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
-				}catch (SessionNotCreatedException ex) {
-					MessageDialog.openError(shlDeviceConfiguration, "Error",
+				} catch (SessionNotCreatedException ex) {
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
 							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
-									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
+									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort(),
+									1, 0, "OK");
+					mDialog.open();
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			} else {
 				AppiumServer.startServer();
-				
+
 				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-				try {   Thread.sleep(2000);
+				try {
+					Thread.sleep(2000);
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
@@ -354,13 +367,19 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (SessionNotCreatedException ex) {
-					MessageDialog.openError(shlDeviceConfiguration, "Error",
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
 							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
 									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort()
-									+ "\\n Check Appium logs!");
+									+ "\\n Check Appium logs!",
+									1, 0, "OK");
+					mDialog.open();
 				} catch (WebDriverException ex) {
-					MessageDialog.openError(shlDeviceConfiguration, "Error",
-							"\"org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. \n Original error: Error occurred while starting App. \n Check Appium logs!");
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							"org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. \n Original error: Error occurred while starting App. \n Check Appium logs!",
+							1, 0, "OK");
+					mDialog.open();
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -385,10 +404,13 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (SessionNotCreatedException ex) {
-					MessageDialog.openError(shlDeviceConfiguration, "Error",
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
 							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
-									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
-				}catch (Exception ex) {
+									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort(),
+									1, 0, "OK");
+					mDialog.open();
+				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			} else {
@@ -406,10 +428,13 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (SessionNotCreatedException ex) {
-					MessageDialog.openError(shlDeviceConfiguration, "Error",
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
 							"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
-									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
-				}catch (Exception ex) {
+									+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort(),
+									1, 0, "OK");
+					mDialog.open();
+				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
@@ -417,17 +442,18 @@ public class DeviceConfigurationDialog extends Dialog {
 	}
 
 	private void showProgressDialog() {
-
 		MessageDialogs msd = new MessageDialogs();
 		msd.openProgressDialog(getParent(), "Launching Application! - Please Wait ...", true,
 				new IRunnableWithProgress() {
-
 			@Override
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 				try {
 					startServer();
 				} catch (Exception e) {
-					MessageDialog.openError(shlDeviceConfiguration, "Error", e.getMessage());
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error", ResourceManager
+							.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							e.getMessage(), 1, 0, "OK");
+					mDialog.open();
 				}
 			}
 		});
