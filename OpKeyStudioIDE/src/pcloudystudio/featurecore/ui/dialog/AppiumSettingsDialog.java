@@ -390,6 +390,8 @@ public class AppiumSettingsDialog extends Dialog {
 		columnValue.setText("Value");
 		columnValue.setWidth(356);
 
+		fillDataInCapabilityTable();
+
 		TableEditor editor = new TableEditor(capabilityTable);
 		saveInfo = new Button(shlAppiumSettings, SWT.NONE);
 		saveInfo.setBounds(465, 540, 91, 33);
@@ -405,16 +407,14 @@ public class AppiumSettingsDialog extends Dialog {
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory",
 							appiumDirectory.getText());
 					AppiumPortIpInfo.getInstance().setAppiumDirectory(appiumDirectory.getText());
-					if (capabilityTable.getItemCount() != 0) {
+					if (capabilityTable.getItemCount() > 0) {
 						try {
-							if (capabilityTable.getItemCount() > 0) {
-								LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
-								for (TableItem row : capabilityTable.getItems()) {
-									mapOfCapabilities.put(row.getText(0), row.getText(1));
-								}
-								MobileCapabilities.getinstance();
-								MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+							LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
+							for (TableItem row : capabilityTable.getItems()) {
+								mapOfCapabilities.put(row.getText(0), row.getText(1));
 							}
+							MobileCapabilities.getinstance();
+							MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
 						} catch (Exception e2) {
 							e2.printStackTrace();
 						}
@@ -577,5 +577,15 @@ public class AppiumSettingsDialog extends Dialog {
 			return true;
 		}
 		return false;
+	}
+
+	private void fillDataInCapabilityTable() {
+		LinkedHashMap<String, String> mapOfCapabilities = MobileCapabilities.getMapOfCapabilities();
+		if (mapOfCapabilities != null) {
+			for (String capabilityName : mapOfCapabilities.keySet()) {
+				String capabilityValue = mapOfCapabilities.get(capabilityName);
+				addTableItemToCapabilityTableData(capabilityName, capabilityValue);
+			}
+		}
 	}
 }
