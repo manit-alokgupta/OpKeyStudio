@@ -1,6 +1,14 @@
 package pcloudystudio.core.vncutils;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.StandardCopyOption;
+
+import org.apache.commons.io.IOUtils;
+
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class VncStarter {
 	private String deviceId;
@@ -78,13 +86,27 @@ public class VncStarter {
 
 	public void startMobicast() throws IOException, InterruptedException {
 		if (VncUtils.checkIfDeviceIsConnected(deviceId)) {
-		VncUtils.installInputServiceApk(deviceId);
+			VncUtils.installInputServiceApk(deviceId);
 
-		VncUtils.StartInputService(deviceId);
+			VncUtils.StartInputService(deviceId);
 
-		VncUtils.PortForward(deviceId, port);
+			VncUtils.PortForward(deviceId, port);
 
-		VncUtils.LunchVnc(deviceId, deviceName, port);
-	} }
+			VncUtils.LunchVnc(deviceId, deviceName, port);
+		}
+	}
 
+	public void copyZip() {
+		URL url;
+		String copyToPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "VncServer";
+		try {
+			url = new URL("platform:/plugin/OpKeyStudio/resources/vncserver.zip");
+			InputStream inputStream = url.openConnection().getInputStream();
+			File targetFile = new File(copyToPath + "\\package.zip");
+			java.nio.file.Files.copy(inputStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			IOUtils.closeQuietly(inputStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
