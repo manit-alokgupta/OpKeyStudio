@@ -301,16 +301,15 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				String capabilityName = capabilityNameCombo.getText();
 				String capabilityValue = capabilityTextValue.getText();
-				if ((capabilityName != "" && capabilityName != null)
-						&& (capabilityValue != null && capabilityValue != "")) {
-					if (validateCapabilityValue(capabilityValue))
-						addTableItemToCapabilityTableData(capabilityName, capabilityValue);
-					else {
-						MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
-								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-								"Invalid Capability Value!", 1, 0, "OK");
-						mDialog.open();
-					}
+				if (validateCapabilityValue(capabilityValue))
+					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
+				else {
+					MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							capabilityValue.length() == 0 ? "Capability Value can't be empty!"
+									: "Invalid Capability Value!",
+									1, 0, "OK");
+					mDialog.open();
 				}
 				btnAddToTable.setEnabled(false);
 				capabilityNameCombo.removeAll();
@@ -343,12 +342,20 @@ public class AppiumSettingsDialog extends Dialog {
 		addToTable2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				String cap_name = manuallyCapabilityName.getText();
-				String cap_value = manuallyCapabilityValue.getText();
-				if ((cap_name != "" || cap_name != null) && (cap_value != "" || cap_value != null)) {
-					if (validateCapabilityValue(cap_value))
-						addTableItemToCapabilityTableData(cap_name, cap_value);
+				String capabilityName = manuallyCapabilityName.getText();
+				String capabilityValue = manuallyCapabilityValue.getText();
+				if (capabilityName.length() > 0 && validateCapabilityValue(capabilityValue))
+					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
+				else {
+					MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							(capabilityName.length() == 0 && capabilityValue.length() == 0)
+							? "Capability Name and Value can't be empty!"
+									: capabilityValue.length() == 0 ? "Capability Value can't be empty!"
+											: capabilityName.length() == 0 ? "Capability Name can't be empty!"
+													: "Invalid Capability Value!",
+													1, 0, "OK");
+					mDialog.open();
 				}
 				manuallyCapabilityName.setText("");
 				manuallyCapabilityValue.setText("");
@@ -567,7 +574,9 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	public Boolean validateCapabilityValue(String str) {
-
+		if (str.length() == 0) {
+			return false;
+		}
 		if (str.matches("^[a-zA-Z]*${20}")) {
 			return true;
 		}
