@@ -107,7 +107,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -173,10 +173,10 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumPortIpInfo.getInstance()
-				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumPortIpInfo.getInstance()
-				.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+						.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				AppiumPortIpInfo.getInstance().setAppiumDirectory(
 						OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
@@ -584,7 +584,8 @@ public class AppiumSettingsDialog extends Dialog {
 		if (mapOfCapabilities != null) {
 			for (String capabilityName : mapOfCapabilities.keySet()) {
 				String capabilityValue = mapOfCapabilities.get(capabilityName);
-				addTableItemToCapabilityTableData(capabilityName, capabilityValue);
+				if (!capabilityName.equalsIgnoreCase("deviceName") || !capabilityName.equalsIgnoreCase("udid"))
+					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
 			}
 		}
 	}
