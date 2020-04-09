@@ -504,8 +504,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				btnAdd.setEnabled(false);
 				btnClickAndMoveToNextScreen.setEnabled(false);
 				MobileSpyDialog.clearPropertiesTableData();
-				// CustomCheckBoxTree.fillDataInObjectPropertiesTable(foundElement);
-				// allObjectsCheckboxTreeViewer.setChecked(foundElement, true);
+				textObjectName.setText("");
 			}
 		});
 	}
@@ -535,10 +534,15 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	}
 
 	private void captureObjectAction() {
+		if (textObjectName.getText().length() > 0)
+			textObjectName.setText("");
+
+		createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
+		createObjectPropertiesTable(objectPropertiesScrolledComposite);
+
 		try {
 			AndroidDriverObject.getDriver().getSessionDetails();
 		} catch (Exception ex) {
-			deviceView.close();
 			btnStop.setEnabled(false);
 			btnCapture.setEnabled(false);
 			btnClickAndMoveToNextScreen.setEnabled(false);
@@ -546,18 +550,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			allObjectsCheckboxTreeViewer.getTree().removeAll();
 			clearPropertiesTableData();
 			textObjectName.setText("");
+			deviceView.close();
 			MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
 					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
 					ex.getMessage(), 1, 0, "OK");
 			mDialog.open();
 			return;
 		}
-
-		if (textObjectName.getText().length() > 0)
-			textObjectName.setText("");
-
-		createAllObjectsTreeHierarchy(allObjectsTreeScrolledComposite);
-		createObjectPropertiesTable(objectPropertiesScrolledComposite);
 
 		String appFilePath = OpKeyStudioPreferences.getPreferences().getBasicSettings("application_name");
 		String appName = this.getApplicationName(appFilePath);
