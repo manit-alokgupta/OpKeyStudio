@@ -125,6 +125,14 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 		}
 		this.setName(guiName);
 		htmlMobileElementProps.put("xpath", this.makeXpath());
+
+		String objectName = htmlMobileElementProps.get("text") != null ? htmlMobileElementProps.get("text")
+				: htmlMobileElementProps.get("resource-id") != null ? htmlMobileElementProps.get("resource-id")
+						: htmlMobileElementProps.get("content-desc") != null
+						? htmlMobileElementProps.get("content-desc")
+								: htmlMobileElementProps.get("class");
+
+						htmlMobileElementProps.put("name", objectName);
 	}
 
 	@Override

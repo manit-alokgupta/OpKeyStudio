@@ -88,6 +88,9 @@ public class ORObjectMaker {
 			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(parentObject, parentAttributeProperties);
 			attrProp.setProperty(propName);
 			attrProp.setValue(propValue);
+			if (propName.equalsIgnoreCase("xpath") || propName.equalsIgnoreCase("resource-id")
+					|| propName.equalsIgnoreCase("name") || propName.equalsIgnoreCase("class"))
+				attrProp.setIsused(true);
 			parentAttributeProperties.add(attrProp);
 		}
 
@@ -96,6 +99,9 @@ public class ORObjectMaker {
 			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(orobject, objectAttributeProperties);
 			attrProp.setProperty(propName);
 			attrProp.setValue(propValue);
+			if (propName.equalsIgnoreCase("xpath") || propName.equalsIgnoreCase("resource-id")
+					|| propName.equalsIgnoreCase("name") || propName.equalsIgnoreCase("class"))
+				attrProp.setIsused(true);
 			objectAttributeProperties.add(attrProp);
 		}
 

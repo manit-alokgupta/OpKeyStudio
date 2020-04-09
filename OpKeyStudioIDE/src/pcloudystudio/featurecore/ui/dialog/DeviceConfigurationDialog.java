@@ -306,7 +306,6 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnClose.setBounds(533, 182, 75, 33);
 		btnClose.setText("Close");
 		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(shlDeviceConfiguration);
