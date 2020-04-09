@@ -40,6 +40,7 @@ public class CompilerUtilities {
 	public List<File> getAllAssocitedLibraries(String pluginName) {
 		List<File> allFiles = new ArrayList<File>();
 		allFiles.addAll(getPluginBaseLibraries());
+		allFiles.addAll(getPluginRunnerJar(pluginName));
 		allFiles.addAll(getPluginsLibraries(pluginName));
 		return allFiles;
 	}

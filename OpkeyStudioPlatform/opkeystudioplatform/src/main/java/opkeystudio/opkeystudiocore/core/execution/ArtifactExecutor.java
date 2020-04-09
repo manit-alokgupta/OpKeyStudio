@@ -44,6 +44,8 @@ public class ArtifactExecutor {
 		System.out.println(">>Artifact Source File Name " + sourceFilePath);
 		System.out.println(">>Artifact Compiled File Name " + compileFilePath);
 		new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath, pluginName);
+		String className = artifact.getPackageName() + "." + artifact.getVariableName();
+		new ArtifactExecutorUtilities().executeCodedFl(className, pluginName);
 	}
 
 	private void createExecutionSession(String sessionName) {
