@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.execution;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -37,7 +38,37 @@ public class ArtifactExecutor {
 
 		FileUtils.copyDirectory(new File(transpiledFilesDir), new File(artifactCodesDirPath));
 		new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath, pluginName);
-		new ArtifactExecutorUtilities().executeArtifact(artifact, pluginName);
+		executeArtifact(artifactCodesDirPath, artifact, pluginName);
+	}
+
+	private void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
+		ArtifactExecutorUtilities executor = new ArtifactExecutorUtilities();
+		executor.executeArtifact(sessionRootDir, artifact, pluginName);
+		Thread thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					ByteArrayOutputStream standardOutPut = executor.getStandardOutput();
+					ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
+					String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
+							+ standardErrorOutput.toString();
+					System.out.println(">>Logs " + consoleOutPut);
+					System.out.println(">>Execution Status " + executor.isExecutionCompleted());
+					if (executor.isExecutionCompleted()) {
+						break;
+					}
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		});
+		 thread.start();
 	}
 
 	private void createExecutionSession(String sessionName) {

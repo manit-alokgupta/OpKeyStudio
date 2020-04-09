@@ -18,8 +18,9 @@ public class ArtifactExecutorUtilities {
 	private ByteArrayOutputStream standardErrorOutput;
 	private boolean executionCompleted = false;
 
-	public void executeArtifact(Artifact artifact, String pluginName) {
+	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
 		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
+		System.out.println(">>Artifact Code Folder " + sessionRootDir);
 		System.out.println(">>Executing Artifact " + artifactClassName);
 		Thread executionThread = new Thread(new Runnable() {
 
@@ -33,7 +34,7 @@ public class ArtifactExecutorUtilities {
 				setStandardOutput(standrdout);
 				setStandardErrorOutput(errorout);
 				try {
-					execute(artifactClassName, pluginName);
+					execute(sessionRootDir, artifactClassName, pluginName);
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
 						| InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
@@ -45,19 +46,18 @@ public class ArtifactExecutorUtilities {
 		executionThread.start();
 	}
 
-	private void execute(String codedFLFileName, String pluginName)
+	private void execute(String sessionRootDir, String artifactClassNAME, String pluginName)
 			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		List<File> allLibs = new CompilerUtilities().getAllAssocitedLibraries(pluginName);
-		File codedflfile = new File(codedFLFileName);
-		allLibs.add(codedflfile.getParentFile());
+		allLibs.add(new File(sessionRootDir));
 		URL[] allJarsAndClasses = new URL[allLibs.size()];
 		for (int i = 0; i < allLibs.size(); i++) {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
 		}
 		URLClassLoader child = new URLClassLoader(allJarsAndClasses, ArtifactExecutorUtilities.class.getClassLoader());
 		@SuppressWarnings("rawtypes")
-		Class classToLoad = Class.forName(codedflfile.getName().replaceAll(".class", ""), true, child);
+		Class classToLoad = Class.forName(artifactClassNAME, true, child);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("execute");
 		Object result = method.invoke(instance);
