@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 
 public class ArtifactExecutorUtilities {
@@ -17,8 +18,9 @@ public class ArtifactExecutorUtilities {
 	private ByteArrayOutputStream standardErrorOutput;
 	private boolean executionCompleted = false;
 
-	public void executeCodedFl(String codedString, String pluginName) {
-
+	public void executeArtifact(Artifact artifact, String pluginName) {
+		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
+		System.out.println(">>Executing Artifact " + artifactClassName);
 		Thread executionThread = new Thread(new Runnable() {
 
 			@Override
@@ -31,7 +33,7 @@ public class ArtifactExecutorUtilities {
 				setStandardOutput(standrdout);
 				setStandardErrorOutput(errorout);
 				try {
-					execute(codedString, pluginName);
+					execute(artifactClassName, pluginName);
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
 						| InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
@@ -46,7 +48,7 @@ public class ArtifactExecutorUtilities {
 	private void execute(String codedFLFileName, String pluginName)
 			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		List<File> allLibs =new CompilerUtilities().getAllAssocitedLibraries(pluginName);
+		List<File> allLibs = new CompilerUtilities().getAllAssocitedLibraries(pluginName);
 		File codedflfile = new File(codedFLFileName);
 		allLibs.add(codedflfile.getParentFile());
 		URL[] allJarsAndClasses = new URL[allLibs.size()];

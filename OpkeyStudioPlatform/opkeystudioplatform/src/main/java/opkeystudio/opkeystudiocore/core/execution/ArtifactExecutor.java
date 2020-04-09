@@ -36,16 +36,8 @@ public class ArtifactExecutor {
 		String artifactCodesDirPath = getSessionArtifacCodesFolder(session.getSessionName());
 
 		FileUtils.copyDirectory(new File(transpiledFilesDir), new File(artifactCodesDirPath));
-
-		String sourceFilePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + getSorceFileExt();
-		String compileFilePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + getCompileFileExt();
-		System.out.println(">>Artifact Source File Name " + sourceFilePath);
-		System.out.println(">>Artifact Compiled File Name " + compileFilePath);
 		new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath, pluginName);
-		String className = artifact.getPackageName() + "." + artifact.getVariableName();
-		new ArtifactExecutorUtilities().executeCodedFl(className, pluginName);
+		new ArtifactExecutorUtilities().executeArtifact(artifact, pluginName);
 	}
 
 	private void createExecutionSession(String sessionName) {
