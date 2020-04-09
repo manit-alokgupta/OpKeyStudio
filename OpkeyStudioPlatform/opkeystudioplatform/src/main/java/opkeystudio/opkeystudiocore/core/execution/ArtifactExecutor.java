@@ -68,7 +68,7 @@ public class ArtifactExecutor {
 
 			}
 		});
-		 thread.start();
+		// thread.start();
 	}
 
 	private void createExecutionSession(String sessionName) {

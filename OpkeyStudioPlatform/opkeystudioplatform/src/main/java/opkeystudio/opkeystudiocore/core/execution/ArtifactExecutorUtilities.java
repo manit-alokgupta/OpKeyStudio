@@ -27,12 +27,12 @@ public class ArtifactExecutorUtilities {
 			@Override
 			public void run() {
 				setExecutionCompleted(false);
-				java.io.ByteArrayOutputStream standrdout = new java.io.ByteArrayOutputStream();
-				java.io.ByteArrayOutputStream errorout = new java.io.ByteArrayOutputStream();
-				System.setOut(new java.io.PrintStream(standrdout));
-				System.setErr(new java.io.PrintStream(errorout));
-				setStandardOutput(standrdout);
-				setStandardErrorOutput(errorout);
+			//	java.io.ByteArrayOutputStream standrdout = new java.io.ByteArrayOutputStream();
+		//		java.io.ByteArrayOutputStream errorout = new java.io.ByteArrayOutputStream();
+		//		System.setOut(new java.io.PrintStream(standrdout));
+		//		System.setErr(new java.io.PrintStream(errorout));
+		//		setStandardOutput(standrdout);
+		//		setStandardErrorOutput(errorout);
 				try {
 					execute(sessionRootDir, artifactClassName, pluginName);
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
