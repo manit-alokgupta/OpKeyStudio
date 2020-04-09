@@ -107,7 +107,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -173,10 +173,10 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumPortIpInfo.getInstance()
-						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumPortIpInfo.getInstance()
-						.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+				.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				AppiumPortIpInfo.getInstance().setAppiumDirectory(
 						OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
@@ -241,16 +241,6 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.removeAll();
 				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
-
-				capabilityNameCombo.addModifyListener(new ModifyListener() {
-					@Override
-					public void modifyText(ModifyEvent e) {
-						if (capabilityTextValue.getText().length() > 0
-								&& capabilityNameCombo.getSelectionIndex() != -1) {
-							// btnAddToTable.setEnabled(true);
-						}
-					}
-				});
 			}
 		});
 		btnAdd.setToolTipText("Add Capability");
@@ -283,9 +273,19 @@ public class AppiumSettingsDialog extends Dialog {
 		capabilityNameCombo.setBounds(10, 5, 154, 33);
 		capabilityNameCombo.setItems(capabilityNameList);
 
+		capabilityNameCombo.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				if (capabilityTextValue.getText().length() > 0 && capabilityNameCombo.getSelectionIndex() != -1) {
+					btnAddToTable.setEnabled(true);
+				}
+			}
+		});
+
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
 		capabilityTextValue.setToolTipText("Please Enter Capability Value");
 		capabilityTextValue.setBounds(170, 5, 154, 28);
+
 		capabilityTextValue.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -313,8 +313,9 @@ public class AppiumSettingsDialog extends Dialog {
 					}
 				}
 				btnAddToTable.setEnabled(false);
+				capabilityNameCombo.removeAll();
+				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
-				capabilityNameCombo.setText("");
 			}
 		});
 		btnAddToTable.setBounds(330, 4, 135, 30);
