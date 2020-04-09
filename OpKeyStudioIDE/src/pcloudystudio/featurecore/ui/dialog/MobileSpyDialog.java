@@ -301,15 +301,15 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnStop.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				deviceView.close();
-				btnStop.setEnabled(false);
+				AndroidDriverObject.getDriver().quit();
 				btnCapture.setEnabled(false);
 				btnClickAndMoveToNextScreen.setEnabled(false);
+				btnStop.setEnabled(false);
 				btnAdd.setEnabled(false);
 				allObjectsCheckboxTreeViewer.getTree().removeAll();
 				clearPropertiesTableData();
 				textObjectName.setText("");
-				AndroidDriverObject.getDriver().closeApp();
+				deviceView.close();
 			}
 		});
 		btnStop.setBounds(374, 10, 58, 28);
