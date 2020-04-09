@@ -357,7 +357,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private void createAllObjectsTreeHierarchy(ScrolledComposite allObjectsTreeScrolledComposite) {
 		MobileElementTreeContentProvider contentProvider = new MobileElementTreeContentProvider();
 		MobileElementLabelProvider labelProvider = new MobileElementLabelProvider();
-		allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER);
+		allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER, this);
 		Tree tree = allObjectsCheckboxTreeViewer.getTree();
 		allObjectsCheckboxTreeViewer.setContentProvider(contentProvider);
 		allObjectsCheckboxTreeViewer.setLabelProvider(labelProvider);
