@@ -1,7 +1,6 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +55,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllArguments() {
+		System.out.println("Called InitAllArguments");
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
@@ -86,15 +86,11 @@ public class GlobalLoader {
 	}
 
 	public void initGlobalVariables() {
-		try {
-			this.globalVaribles = new GlobalVariableApi().getAllGlobalVariables();
-		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.globalVaribles = new GlobalVariableApi().getAllGlobalVariables();
 	}
 
 	public void initAllDRColumns() {
+		System.out.println(">>Called initAllDRColumns");
 		String query = "select * from dr_columns ORDER BY position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -110,6 +106,7 @@ public class GlobalLoader {
 	}
 
 	public void initALLDRCells() {
+		System.out.println(">>Called initALLDRCells");
 		String query = "select * from dr_cell ORDER BY position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -125,6 +122,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllORObjects() {
+		System.out.println(">>Called initAllORObjects");
 		String query = "select * from or_objects order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -140,6 +138,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllORObjectsObjectProperties() {
+		System.out.println(">>Called initAllORObjectsObjectProperties");
 		String query = "select * from or_object_properties order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -156,6 +155,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllFlowInputArguments() {
+		System.out.println(">>Called initAllFlowInputArguments");
 		String query = "SELECT * FROM flow_step_input_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -171,6 +171,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllFlowOutputArguments() {
+		System.out.println(">>Called initAllFlowOutputArguments");
 		String query = "SELECT * FROM flow_step_output_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -186,6 +187,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllComponentFlowInputArguments() {
+		System.out.println(">>Called initAllComponentFlowInputArguments");
 		String query = "SELECT * FROM component_step_input_args";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -201,6 +203,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllComponentFlowOutputArguments() {
+		System.out.println(">>Called initAllComponentFlowOutputArguments");
 		String query = "SELECT * FROM component_step_output_arguments";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -246,7 +249,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllCFLInputParameters() {
-		String query = "select * from cf_input_parameters";
+		String query = "select * from cf_input_parameters order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLInputParameter.class);
@@ -262,7 +265,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllCFLOutputParameters() {
-		String query = "select * from cf_output_parameters";
+		String query = "select * from cf_output_parameters order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLOutputParameter.class);
@@ -339,6 +342,15 @@ public class GlobalLoader {
 		this.allArtifacts = allArtifacts;
 	}
 
+	public GlobalVariable getGlobalVariableById(String gvid) {
+		for (GlobalVariable globalVariable : getGlobalVaribles()) {
+			if (globalVariable.getGv_id().equals(gvid)) {
+				return globalVariable;
+			}
+		}
+		return null;
+	}
+
 	public List<Artifact> getAllArtifactByType(String type) {
 		List<Artifact> typeArtifacts = new ArrayList<Artifact>();
 		List<Artifact> artifacts = getAllArtifacts();
@@ -348,6 +360,16 @@ public class GlobalLoader {
 			}
 		}
 		return typeArtifacts;
+	}
+
+	public Artifact getArtifactById(String id) {
+		List<Artifact> artifacts = getAllArtifacts();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getId().toString().equals(id)) {
+				return artifact;
+			}
+		}
+		return null;
 	}
 
 	public List<ObjectAttributeProperty> getObjectAttributeProperties() {
@@ -408,6 +430,16 @@ public class GlobalLoader {
 		return retObjectAttributes;
 	}
 
+	public DRColumnAttributes getDRColumn(String columnId) {
+		List<DRColumnAttributes> allDrColumnAttributes = getAllDRColumns();
+		for (DRColumnAttributes drColumn : allDrColumnAttributes) {
+			if (drColumn.getColumn_id().equals(columnId)) {
+				return drColumn;
+			}
+		}
+		return null;
+	}
+
 	public List<DRColumnAttributes> getAllDRColumns() {
 		return allColumns;
 	}
@@ -462,5 +494,41 @@ public class GlobalLoader {
 
 	public void setAllMainFileStoreDtos(List<MainFileStoreDTO> allMainFileStoreDtos) {
 		this.allMainFileStoreDtos = allMainFileStoreDtos;
+	}
+
+	public List<CFLInputParameter> getCFLInputParameters(Artifact cfartifact) {
+		List<CFLInputParameter> inputParams = new ArrayList<CFLInputParameter>();
+		List<CFLInputParameter> cflInputParameters = GlobalLoader.getInstance().getAllCFLInputParameters();
+		for (CFLInputParameter cflInputParam : cflInputParameters) {
+			if (cflInputParam.getCf_id().equals(cfartifact.getId())) {
+				inputParams.add(cflInputParam);
+			}
+		}
+		return inputParams;
+	}
+
+	public List<CFLOutputParameter> getCFLOutputParameters(Artifact cfartifact) {
+		List<CFLOutputParameter> outputParams = new ArrayList<CFLOutputParameter>();
+		List<CFLOutputParameter> cflOutputParameters = GlobalLoader.getInstance().getAllCFLOutputParameters();
+		for (CFLOutputParameter cflOutputParam : cflOutputParameters) {
+			if (cflOutputParam.getCf_id().equals(cfartifact.getId())) {
+				outputParams.add(cflOutputParam);
+			}
+		}
+		return outputParams;
+	}
+
+	public FlowOutputArgument getFlowOutputArgumentById(String outPutId) {
+		for (FlowOutputArgument flowOutputArgument : getFlowOutputArguments()) {
+			if (flowOutputArgument.getFlow_step_oa_id().equals(outPutId)) {
+				return flowOutputArgument;
+			}
+		}
+		for (FlowOutputArgument flowOutputArgument : getComponentflowOutputArguments()) {
+			if (flowOutputArgument.getFlow_step_oa_id().equals(outPutId)) {
+				return flowOutputArgument;
+			}
+		}
+		return null;
 	}
 }

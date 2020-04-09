@@ -5,8 +5,6 @@ import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -19,7 +17,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -47,7 +44,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		composite.setLayout(new GridLayout(1, false));
-		
+
 		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
 		expandBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
@@ -56,7 +53,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 		item.setText("Bottom Factory");
 		item.setHeight(400);
 		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
-		
+
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
 		item.setControl(grpMenu);

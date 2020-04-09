@@ -73,13 +73,15 @@ public class OpKeyStudioIcons {
 	public static String SET_TO_RUN_ICON = commonIconsDirPath + "set to run.png";
 	public static String SKIP_FROM_RUN_ICON = commonIconsDirPath + "skipfrom.png";
 	public static String UPDATE_ICON = commonIconsDirPath + "update.png";
-	
-	
+
 	public static String ASSOCIATE_LIBRARY_ICON = commonIconsDirPath + "assosiate library.png";
 	public static String COMPILATION_ICON = commonIconsDirPath + "compilation.png";
 	public static String CONSOLE_ICON = commonIconsDirPath + "consol.png";
 	
 	public static String MOBILE_SPY_CAPTURED_IMAGE = pcloudyStudioDirPath + "screencap.png";
 	public static String MOBILE_ADD_TO_OR_CAPTURED_IMAGE = pcloudyStudioDirPath + "androidaddtoor.png";
+
+	public static String GREEN_FLAG_ICON = commonIconsDirPath + "greenflag.png";
+	public static String DARK_GREEN_FLAG_ICON = commonIconsDirPath + "darkgreenflag.png";
 
 }

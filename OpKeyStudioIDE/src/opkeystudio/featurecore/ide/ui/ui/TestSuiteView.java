@@ -23,6 +23,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -63,6 +65,8 @@ public class TestSuiteView extends Composite {
 	private BottomFactoryTestSuiteUi bottomFactory;
 	@SuppressWarnings("unused")
 	private Display display;
+	private CodedFunctionView codedFunctionView;
+	private Artifact artifact;
 
 	/**
 	 * Create the composite.
@@ -73,10 +77,22 @@ public class TestSuiteView extends Composite {
 	@SuppressWarnings("unused")
 	public TestSuiteView(Composite parent, int style) {
 		super(parent, style);
+		initArtifact();
 		display = getParent().getDisplay();
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		Composite composite = new Composite(this, SWT.NONE);
+		TabFolder mainTestCaseTabFolder = new TabFolder(this, SWT.BORDER | SWT.BOTTOM);
+		mainTestCaseTabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+
+		TabItem testCaseTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
+		testCaseTabItem.setText("Test Suite");
+		testCaseTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
+		Composite testCaseHolder = new Composite(mainTestCaseTabFolder, SWT.NONE);
+		testCaseHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		testCaseTabItem.setControl(testCaseHolder);
+		testCaseHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		Composite composite = new Composite(testCaseHolder, SWT.NONE);
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		SashForm sashForm = new SashForm(composite, SWT.NONE);
@@ -225,6 +241,18 @@ public class TestSuiteView extends Composite {
 		testCaseTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm.setWeights(new int[] { 2, 1 });
 
+		// Sorce Code will be here
+
+		TabItem sourceCodeTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
+		sourceCodeTabItem.setText("Source Code");
+		sourceCodeTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		Composite sourceCodeHolder = new Composite(mainTestCaseTabFolder, SWT.NONE);
+		sourceCodeHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		sourceCodeTabItem.setControl(sourceCodeHolder);
+		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		CodedFunctionView codedFunctionView = new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		setCodedFunctionView(codedFunctionView);
 		toolDropDown.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -260,6 +288,12 @@ public class TestSuiteView extends Composite {
 
 	}
 
+	private void openExecutionWizard() {
+		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
+		executionWizard.createDialogArea(getParent());
+		executionWizard.open();
+	}
+	
 	public void populateTestSuiteData(TestSuiteStep testSuite) {
 		if (testSuite != null) {
 			setSelectedTEstSuite(testSuite);
@@ -362,8 +396,7 @@ public class TestSuiteView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				openExecutionWizard();
 			}
 
 			@Override
@@ -516,13 +549,24 @@ public class TestSuiteView extends Composite {
 		return this.testSuiteTable;
 	}
 
-	public Artifact getArtifact() {
+	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		return artifact;
+		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+	}
+
+	public Artifact getArtifact() {
+		return this.artifact;
 	}
 
 	public Button getAddTestCaseButton() {
 		return this.addTestCaseButton;
+	}
+
+	public CodedFunctionView getCodedFunctionView() {
+		return codedFunctionView;
+	}
+
+	public void setCodedFunctionView(CodedFunctionView codedFunctionView) {
+		this.codedFunctionView = codedFunctionView;
 	}
 }

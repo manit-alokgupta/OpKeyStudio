@@ -29,7 +29,7 @@ public class TestSuitePart {
 
 	@Focus
 	public void onFocus() {
-		ArtifactTree tree =(ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
+		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 		Artifact artifact = getArtifact();
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
@@ -43,6 +43,6 @@ public class TestSuitePart {
 
 	@Persist
 	public void save() {
-		
+
 	}
 }

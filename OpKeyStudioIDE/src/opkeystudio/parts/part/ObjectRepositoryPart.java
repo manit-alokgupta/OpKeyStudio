@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class ObjectRepositoryPart {
@@ -29,7 +28,7 @@ public class ObjectRepositoryPart {
 
 	@Focus
 	public void onFocus() {
-		ArtifactTree tree =(ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
+		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 		Artifact artifact = getArtifact();
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
@@ -43,6 +42,6 @@ public class ObjectRepositoryPart {
 
 	@Persist
 	public void save() {
-		
+
 	}
 }

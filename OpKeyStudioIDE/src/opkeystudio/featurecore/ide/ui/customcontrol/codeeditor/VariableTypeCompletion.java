@@ -5,7 +5,7 @@ import org.fife.ui.autocomplete.VariableCompletion;
 
 public class VariableTypeCompletion extends VariableCompletion {
 	private String textToEnter;
-	
+
 	public VariableTypeCompletion(CompletionProvider provider, String name, String type) {
 		super(provider, name, type);
 	}

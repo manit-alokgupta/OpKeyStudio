@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.ArtifactTranspilerAsync;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
@@ -20,6 +21,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class ArtifactTree extends CustomTree {
 	private TestSuiteView parentTestSuiteView;
@@ -114,6 +116,7 @@ public class ArtifactTree extends CustomTree {
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getParentid() != null) {
 				if (artifact.getParentid().equals(artifactId)) {
+					artifact.setParentArtifact(rootNode.getArtifact());
 					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
 					artitreeitem.setText(artifact.getName());
 					artitreeitem.setArtifact(artifact);
@@ -128,6 +131,7 @@ public class ArtifactTree extends CustomTree {
 		String artifactId = rootNode.getArtifact().getId();
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getParentid() != null) {
+				artifact.setParentArtifact(rootNode.getArtifact());
 				if (artifact.isVisible()) {
 					if (artifact.getParentid().equals(artifactId)) {
 						ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
@@ -195,6 +199,8 @@ public class ArtifactTree extends CustomTree {
 		}
 		expandAll(rootNode);
 		GlobalLoader.getInstance().initAllArguments();
+		new ArtifactTranspiler().setPackageProperties();
+		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 	}
 
 	public void highlightArtifact(String artifactId) {

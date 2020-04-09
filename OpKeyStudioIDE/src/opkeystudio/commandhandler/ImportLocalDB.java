@@ -54,16 +54,12 @@ public class ImportLocalDB {
 		try {
 			sqlComm.connect();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		new Utilities().closeAllMparts();
 		SQLiteCommunicator.getOpKeyDBCommunicator(sqlComm);
 		List<Project> projects = new ProjectDataApi().getProjectList();
 		ServiceRepository.getInstance().setDefaultProject(projects.get(0));
-		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
-		tree.renderArtifacts();
-
 	}
 
 }

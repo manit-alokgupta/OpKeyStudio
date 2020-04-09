@@ -118,7 +118,8 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 	}
 
 	@Override
-	public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList arg0, Object arg1, int arg2, boolean arg3, boolean arg4) {
+	public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList arg0, Object arg1, int arg2,
+			boolean arg3, boolean arg4) {
 
 		return super.getListCellRendererComponent(arg0, arg1, arg2, arg3, arg4);
 	}
@@ -136,8 +137,8 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 	}
 
 	@Override
-	protected void prepareForFunctionCompletion(@SuppressWarnings("rawtypes") JList arg0, FunctionCompletion arg1, int arg2, boolean arg3,
-			boolean arg4) {
+	protected void prepareForFunctionCompletion(@SuppressWarnings("rawtypes") JList arg0, FunctionCompletion arg1,
+			int arg2, boolean arg3, boolean arg4) {
 
 		super.prepareForFunctionCompletion(arg0, arg1, arg2, arg3, arg4);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/green dot.ico");
@@ -147,14 +148,15 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 	}
 
 	@Override
-	protected void prepareForMarkupTagCompletion(@SuppressWarnings("rawtypes") JList list, MarkupTagCompletion mc, int index, boolean selected,
-			boolean hasFocus) {
+	protected void prepareForMarkupTagCompletion(@SuppressWarnings("rawtypes") JList list, MarkupTagCompletion mc,
+			int index, boolean selected, boolean hasFocus) {
 
 		super.prepareForMarkupTagCompletion(list, mc, index, selected, hasFocus);
 	}
 
 	@Override
-	protected void prepareForOtherCompletion(@SuppressWarnings("rawtypes") JList arg0, Completion arg1, int arg2, boolean arg3, boolean arg4) {
+	protected void prepareForOtherCompletion(@SuppressWarnings("rawtypes") JList arg0, Completion arg1, int arg2,
+			boolean arg3, boolean arg4) {
 		super.prepareForOtherCompletion(arg0, arg1, arg2, arg3, arg4);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/class.ico");
 		BufferedImage image = convertToAWT(img.getImageData());
@@ -163,15 +165,15 @@ public class JavaCellRenderer extends CompletionCellRenderer {
 	}
 
 	@Override
-	protected void prepareForTemplateCompletion(@SuppressWarnings("rawtypes") JList list, TemplateCompletion tc, int index, boolean selected,
-			boolean hasFocus) {
+	protected void prepareForTemplateCompletion(@SuppressWarnings("rawtypes") JList list, TemplateCompletion tc,
+			int index, boolean selected, boolean hasFocus) {
 
 		super.prepareForTemplateCompletion(list, tc, index, selected, hasFocus);
 	}
 
 	@Override
-	protected void prepareForVariableCompletion(@SuppressWarnings("rawtypes") JList list, VariableCompletion vc, int index, boolean selected,
-			boolean hasFocus) {
+	protected void prepareForVariableCompletion(@SuppressWarnings("rawtypes") JList list, VariableCompletion vc,
+			int index, boolean selected, boolean hasFocus) {
 
 		super.prepareForVariableCompletion(list, vc, index, selected, hasFocus);
 		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/yellow dot.ico");

@@ -2,11 +2,13 @@ package opkeystudio.opkeystudiocore.core.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -82,16 +84,47 @@ public class Utilities {
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
+
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "TranspiledArtifacts";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
+		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "Sessions";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
 	}
 
 	public String getDefaultInstallDir() {
-		// return "E:\\OpKeyEResources";
-		return defaultInstallDir;
+		return "E:\\OpKeyEResources";
+		// return defaultInstallDir;
+	}
+
+	public String getSessionsFolder() {
+		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "Sessions";
+	}
+
+	public String getTranspiledArtifactsFolder() {
+		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
+				+ File.separator + "TranspiledArtifacts";
 	}
 
 	public String getDefaultPluginBaseDir() {
 		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
 				+ "PluginBase";
+	}
+
+	public String getDefaultPluginRunnerDir() {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
+				+ "PluginRunner";
+	}
+
+	public String getPluginRunnerDir(String pluginRunnerName) {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
+				+ "PluginRunner" + File.separator + pluginRunnerName;
 	}
 
 	public String getDefaultPluginsDir() {
@@ -174,7 +207,6 @@ public class Utilities {
 		return dateString;
 	}
 
-	@SuppressWarnings("deprecation")
 	public String getUpdateCurrentDateTime() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
@@ -214,6 +246,24 @@ public class Utilities {
 			return "E:\\OpKeyEJars";
 		}
 		return path;
+	}
+
+	public String readTextFile(File file) {
+		BufferedReader br;
+		String outData = "";
+		String data = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+			while ((data = br.readLine()) != null) {
+				outData += data;
+			}
+			br.close();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return outData;
 	}
 
 	public void extractZipFolder(String zipFile, String extractFolder) {
@@ -260,6 +310,7 @@ public class Utilities {
 				}
 
 			}
+			zip.close();
 		} catch (Exception e) {
 		}
 

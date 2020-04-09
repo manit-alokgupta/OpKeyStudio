@@ -11,6 +11,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -45,6 +47,7 @@ public class DataRepositoryView extends Composite {
 	private ToolItem moveRowUpToolItm;
 	private ToolItem moveRowDownToolItm;
 	private ToolItem saveToolItm;
+	private CodedFunctionView codedFunctionView;
 
 	/**
 	 * Create the composite.
@@ -60,10 +63,19 @@ public class DataRepositoryView extends Composite {
 			throws JsonParseException, JsonMappingException, IOException {
 		super(parent, SWT.BORDER);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
+		TabFolder tabFolder = new TabFolder(this, SWT.BOTTOM);
 
-		Composite composite = new Composite(this, SWT.BORDER);
+		Composite drDataHolder = new Composite(tabFolder, SWT.NONE);
+		drDataHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		drDataHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Data Repository");
+		tabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
+		tabItem.setControl(drDataHolder);
+
+		Composite composite = new Composite(drDataHolder, SWT.BORDER);
 		composite.setLayout(new GridLayout(1, false));
-
 		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -144,12 +156,18 @@ public class DataRepositoryView extends Composite {
 
 		colCount = dataRepositoryTable.getColumnCount();
 		rowCount = dataRepositoryTable.getItemCount();
-		init();
 		addButtonListner();
-	}
 
-	private void init() {
+		TabItem sourceCodeTabItem = new TabItem(tabFolder, SWT.NONE);
+		sourceCodeTabItem.setText("SourceCode");
+		sourceCodeTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		Composite sourceCodeHolder = new Composite(tabFolder, SWT.NONE);
+		sourceCodeHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		sourceCodeTabItem.setControl(sourceCodeHolder);
+		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 
+		CodedFunctionView codedFunctionView = new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		setCodedFunctionView(codedFunctionView);
 	}
 
 	private void addButtonListner() {
@@ -282,6 +300,8 @@ public class DataRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				saveDR();
+				dataRepositoryTable.renderAllDRDetails();
+				getCodedFunctionView().refreshDRCode();
 			}
 
 			@Override
@@ -301,13 +321,8 @@ public class DataRepositoryView extends Composite {
 						saveDR();
 					}
 				}
-				try {
-					dataRepositoryTable.renderAllDRDetails();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
+				dataRepositoryTable.renderAllDRDetails();
+				getCodedFunctionView().refreshDRCode();
 			}
 
 			@Override
@@ -322,12 +337,6 @@ public class DataRepositoryView extends Composite {
 		List<DRColumnAttributes> drColumns = dataRepositoryTable.getDrColumnAttributes();
 		new DataRepositoryConstructApi().saveAllDRColumns(drColumns);
 		toggleSaveButton(false);
-		try {
-			dataRepositoryTable.renderAllDRDetails();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	}
 
 	public Artifact getArtifact() {
@@ -383,5 +392,13 @@ public class DataRepositoryView extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public CodedFunctionView getCodedFunctionView() {
+		return codedFunctionView;
+	}
+
+	public void setCodedFunctionView(CodedFunctionView codedFunctionView) {
+		this.codedFunctionView = codedFunctionView;
 	}
 }

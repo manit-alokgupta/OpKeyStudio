@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.PaintEvent;
@@ -47,6 +46,7 @@ public class SuiteStepTable extends CustomTable {
 	private MenuItem movedownMenuItem;
 	private MenuItem setToRunMenuItem;
 	private MenuItem skipfromRunMenuItem;
+	private List<TestSuiteStep> testSuiteSteps = new ArrayList<TestSuiteStep>();
 
 	public SuiteStepTable(Composite parent, int style, TestSuiteView parentView) {
 		super(parent, style);
@@ -363,12 +363,11 @@ public class SuiteStepTable extends CustomTable {
 	}
 
 	public void setTestSuiteData(List<TestSuiteStep> testSuite) {
-		super.setControlData(testSuite);
+		this.testSuiteSteps = testSuite;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<TestSuiteStep> getTestSuiteData() {
-		return (List<TestSuiteStep>) super.getControlData();
+		return this.testSuiteSteps;
 	}
 
 	private TableEditor getTableEditor() {
@@ -473,8 +472,7 @@ public class SuiteStepTable extends CustomTable {
 	public void renderAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
 		disposeAllTableEditors();
 		this.removeAll();
-		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		Artifact artifact = getParentTestSuiteView().getArtifact();
 		List<TestSuiteStep> testSuites = new TestSuiteApi().getAllTestSuitesStepsWithArtifact(artifact.getId());
 		setTestSuiteData(testSuites);
 		for (TestSuiteStep testSuite : testSuites) {

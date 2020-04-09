@@ -12,7 +12,6 @@ public class KeywordConstructApi {
 		}
 		String query = new QueryMaker().createInsertQuery(keyword, "main_keywords", "");
 		query = query.replaceAll(" class1,", " class,");
-		System.out.println(query);
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 		for (KeyWordInputArgument keyInput : keyword.getKeywordInputArguments()) {
 			String inpquery = new QueryMaker().createInsertQuery(keyInput, "main_keywordarguments", "");

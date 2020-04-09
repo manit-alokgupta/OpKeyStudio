@@ -361,12 +361,10 @@ public class InputTable extends CustomTable {
 	}
 
 	public ComponentInputArgument getNextInputParemeter() {
-		if(this.getSelectionIndices()==null)
-		{
+		if (this.getSelectionIndices() == null) {
 			return null;
 		}
-		if(this.getSelectionIndices().length==0)
-		{
+		if (this.getSelectionIndices().length == 0) {
 			return null;
 		}
 		int selectedIndex = this.getSelectionIndices()[0];

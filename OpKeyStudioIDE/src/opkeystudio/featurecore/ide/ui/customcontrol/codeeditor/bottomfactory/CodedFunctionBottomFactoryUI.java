@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.apache.commons.io.FileUtils;
-import org.assertj.core.util.Files;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
@@ -192,114 +190,103 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		associatedr.setHeaderVisible(true);
 		associatedr.setLinesVisible(true);
 
-		/*
-		 * inputTabItem = new TabItem(tabFolder, SWT.NONE);
-		 * inputTabItem.setText("Input"); inputTabItem.setToolTipText("Output");
-		 * 
-		 * Composite composite_11 = new Composite(tabFolder, SWT.NONE);
-		 * inputTabItem.setControl(composite_11); composite_11.setLayout(new
-		 * GridLayout(1, false));
-		 * 
-		 * ToolBar inputTabToolBar = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
-		 * inputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-		 * 1, 1));
-		 * inputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		 * 
-		 * addInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		 * addInputItem.setToolTipText("Add");
-		 * addInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/add_icon.png"));
-		 * 
-		 * ToolItem toolItem = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-		 * 
-		 * deleteInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		 * deleteInputItem.setToolTipText("Delete");
-		 * deleteInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/delete_icon.png")); deleteInputItem.setEnabled(false);
-		 * 
-		 * ToolItem toolItem_1 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-		 * 
-		 * moveUpInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		 * moveUpInputItem.setToolTipText("Move Up");
-		 * moveUpInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/moveup_icon.png")); moveUpInputItem.setEnabled(false);
-		 * 
-		 * ToolItem toolItem_2 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-		 * 
-		 * moveDownInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		 * moveDownInputItem.setToolTipText("Move Down"); moveDownInputItem
-		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/movedown_icon.png"));
-		 * moveDownInputItem.setEnabled(false);
-		 * 
-		 * ToolItem toolItem_3 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
-		 * 
-		 * refreshInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
-		 * refreshInputItem.setToolTipText("Refresh"); refreshInputItem
-		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/refresh_icon.png"));
-		 * 
-		 * inputTable = new CFLInputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION,
-		 * this); // inputTable = new Table(composite_11, SWT.BORDER |
-		 * SWT.FULL_SELECTION); inputTable.setLayoutData(new GridData(SWT.FILL,
-		 * SWT.FILL, true, true, 1, 1)); inputTable.setHeaderVisible(true);
-		 * inputTable.setLinesVisible(true);
-		 */
+		inputTabItem = new TabItem(tabFolder, SWT.NONE);
+		inputTabItem.setText("Input");
+		inputTabItem.setToolTipText("Input");
+		inputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
 
-		/*
-		 * outputTabItem = new TabItem(tabFolder, SWT.NONE);
-		 * outputTabItem.setText("Output"); outputTabItem.setToolTipText("Output");
-		 * 
-		 * Composite composite_12 = new Composite(tabFolder, SWT.NONE);
-		 * outputTabItem.setControl(composite_12); composite_12.setLayout(new
-		 * GridLayout(1, false));
-		 * 
-		 * ToolBar outputTabToolBar = new ToolBar(composite_12, SWT.FLAT | SWT.RIGHT);
-		 * outputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-		 * 1, 1));
-		 * outputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		 * 
-		 * addOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		 * addOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/add_icon.png")); addOutputItem.setToolTipText("Add");
-		 * 
-		 * ToolItem toolItem_4 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-		 * 
-		 * deleteOutputItem = new ToolItem(outputTabToolBar, SWT.NONE); deleteOutputItem
-		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/delete_icon.png"));
-		 * deleteOutputItem.setToolTipText("Delete");
-		 * deleteOutputItem.setEnabled(false);
-		 * 
-		 * ToolItem toolItem_5 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-		 * 
-		 * moveUpOutputItem = new ToolItem(outputTabToolBar, SWT.NONE); moveUpOutputItem
-		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/moveup_icon.png"));
-		 * moveUpOutputItem.setToolTipText("Move Up");
-		 * moveUpOutputItem.setEnabled(false);
-		 * 
-		 * ToolItem toolItem_6 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-		 * 
-		 * moveDownOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		 * moveDownOutputItem .setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/movedown_icon.png"));
-		 * moveDownOutputItem.setToolTipText("Move Down");
-		 * moveDownOutputItem.setEnabled(false);
-		 * 
-		 * ToolItem toolItem_7 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
-		 * 
-		 * refreshOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
-		 * refreshOutputItem.setToolTipText("Refresh"); refreshOutputItem
-		 * .setImage(ResourceManager.getPluginImage("OpKeyStudio",
-		 * "icons/testcase_icons/refresh_icon.png"));
-		 * 
-		 * outputTable = new CFLOutputTable(composite_12, SWT.BORDER |
-		 * SWT.FULL_SELECTION, this); // outputTable = new Table(composite_12,
-		 * SWT.BORDER | SWT.FULL_SELECTION); outputTable.setLayoutData(new
-		 * GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		 * outputTable.setHeaderVisible(true); outputTable.setLinesVisible(true);
-		 */
+		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
+		inputTabItem.setControl(composite_11);
+		composite_11.setLayout(new GridLayout(1, false));
+
+		ToolBar inputTabToolBar = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
+		inputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		inputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+
+		addInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		addInputItem.setToolTipText("Add");
+		addInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
+
+		ToolItem toolItem = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+
+		deleteInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		deleteInputItem.setToolTipText("Delete");
+		deleteInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		deleteInputItem.setEnabled(false);
+
+		ToolItem toolItem_1 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+
+		moveUpInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		moveUpInputItem.setToolTipText("Move Up");
+		moveUpInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
+		moveUpInputItem.setEnabled(false);
+
+		ToolItem toolItem_2 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+
+		moveDownInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		moveDownInputItem.setToolTipText("Move Down");
+		moveDownInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
+		moveDownInputItem.setEnabled(false);
+
+		ToolItem toolItem_3 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+
+		refreshInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		refreshInputItem.setToolTipText("Refresh");
+		refreshInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
+
+		inputTable = new CFLInputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION, this);
+		inputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		inputTable.setHeaderVisible(true);
+		inputTable.setLinesVisible(true);
+
+		outputTabItem = new TabItem(tabFolder, SWT.NONE);
+		outputTabItem.setText("Output");
+		outputTabItem.setToolTipText("Output");
+		outputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+		Composite composite_12 = new Composite(tabFolder, SWT.NONE);
+		outputTabItem.setControl(composite_12);
+		composite_12.setLayout(new GridLayout(1, false));
+
+		ToolBar outputTabToolBar = new ToolBar(composite_12, SWT.FLAT | SWT.RIGHT);
+		outputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		outputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+
+		addOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		addOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
+		addOutputItem.setToolTipText("Add");
+
+		ToolItem toolItem_4 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+
+		deleteOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		deleteOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		deleteOutputItem.setToolTipText("Delete");
+		deleteOutputItem.setEnabled(false);
+
+		ToolItem toolItem_5 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+
+		moveUpOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		moveUpOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
+		moveUpOutputItem.setToolTipText("Move Up");
+		moveUpOutputItem.setEnabled(false);
+
+		ToolItem toolItem_6 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+
+		moveDownOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		moveDownOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
+		moveDownOutputItem.setToolTipText("Move Down");
+		moveDownOutputItem.setEnabled(false);
+
+		ToolItem toolItem_7 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+
+		refreshOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		refreshOutputItem.setToolTipText("Refresh");
+		refreshOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
+
+		outputTable = new CFLOutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION, this);
+		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		outputTable.setHeaderVisible(true);
+		outputTable.setLinesVisible(true);
+
 		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setText("Compilation Results");
 		compilationResultsTabItem
@@ -633,5 +620,13 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 	public void setConsoleLogTextView(StyledText consoleLogTextView) {
 		this.consoleLogTextView = consoleLogTextView;
+	}
+
+	public CFLInputTable getCFLInputTable() {
+		return this.inputTable;
+	}
+
+	public CFLOutputTable getCFLOutputTable() {
+		return this.outputTable;
 	}
 }

@@ -31,13 +31,14 @@ import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import opkeystudio.core.utils.DtoToCodeConverter;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
+import opkeystudio.opkeystudiocore.core.transpiler.GlobalTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class JavaCodeEditor extends RSyntaxTextArea {
@@ -50,10 +51,11 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private static final long serialVersionUID = 1L;
 	private List<Object> highlightedLines = new ArrayList<>();
 	private Artifact artifact;
+	private CodedFunctionArtifact codedFunctionArtifact;
 	private CodedFunctionView codeFunctionView;
 	private JavaAutoCompletion autoCompletion;
 
-	public JavaCodeEditor(Composite parent, CodedFunctionView parentView) {
+	public JavaCodeEditor(Composite parent, CodedFunctionView parentView, boolean enableIntellisense) {
 
 		super();
 		System.out.println("JC 1");
@@ -65,19 +67,24 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (UnsupportedLookAndFeelException e) {
-			// handle exception
 		} catch (ClassNotFoundException e) {
-			// handle exception
 		} catch (InstantiationException e) {
-			// handle exception
 		} catch (IllegalAccessException e) {
-			// handle exception
 		}
-		init(SWT_AWT.new_Frame(composite));
+		if (enableIntellisense) {
+			initWithIntellisense(SWT_AWT.new_Frame(composite));
+		} else {
+			initWithoutIntellisense(SWT_AWT.new_Frame(composite));
+		}
 	}
 
 	public JavaAutoCompletion getAutoCompletion() {
 		return this.autoCompletion;
+	}
+
+	public void setArtifactJavaCode(String javaCode) {
+		String formatedCode = new EditorTools(getCodeFunctionView()).formatJavaSourceCode(javaCode);
+		this.setText(formatedCode);
 	}
 
 	public void setJavaCode(String javaCode) {
@@ -109,7 +116,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 	static boolean saveToggled = false;
 
-	private void init(Frame frame) {
+	private void initWithIntellisense(Frame frame) {
 		JPanel mainEditorPanel = new JPanel(new BorderLayout());
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.setCodeFoldingEnabled(true);
@@ -194,6 +201,18 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		includeOpKeyRuntimeLib();
 	}
 
+	private void initWithoutIntellisense(Frame frame) {
+		JPanel mainEditorPanel = new JPanel(new BorderLayout());
+		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+		this.setCodeFoldingEnabled(true);
+		this.setAutoIndentEnabled(true);
+		this.setMarkAllOnOccurrenceSearches(true);
+		this.setMarkOccurrences(true);
+		RTextScrollPane textScrollPane = new RTextScrollPane(this);
+		mainEditorPanel.add(textScrollPane);
+		frame.add(mainEditorPanel);
+	}
+
 	private void createIntellisenseDataFromCurrentText() throws BadLocationException {
 		try {
 			int lineCount = this.getLineCount();
@@ -249,9 +268,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		}
 		String codes = this.getText();
 		String sourceCodeDirPath = Utilities.getInstance().getDefaultSourceCodeDirPath();
-		String codeFilePath = sourceCodeDirPath + File.separator + getArtifact().getArtifactVariableName() + ".java";
-		String compiledCodedFLPath = sourceCodeDirPath + File.separator + getArtifact().getArtifactVariableName()
-				+ ".class";
+		String codeFilePath = sourceCodeDirPath + File.separator + getArtifact().getVariableName() + ".java";
+		String compiledCodedFLPath = sourceCodeDirPath + File.separator + getArtifact().getVariableName() + ".class";
 		BufferedWriter bw;
 		try {
 			bw = new BufferedWriter(new FileWriter(new File(codeFilePath)));
@@ -292,10 +310,8 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		Artifact artifact = getArtifact();
 		String defaultSourceCodeLibsPath = Utilities.getInstance().getDefaultCodedFLOpKeyLibrariesDirPath();
 		String defaultAssociatedLibsPath = Utilities.getInstance().getDefaultCodedFLAssociatedLibrariesDirPath();
-		String defArtifactSourceCodeLibsPath = defaultSourceCodeLibsPath + File.separator
-				+ artifact.getArtifactVariableName();
-		String defArtifactassolibsPath = defaultAssociatedLibsPath + File.separator
-				+ artifact.getArtifactVariableName();
+		String defArtifactSourceCodeLibsPath = defaultSourceCodeLibsPath + File.separator + artifact.getVariableName();
+		String defArtifactassolibsPath = defaultAssociatedLibsPath + File.separator + artifact.getVariableName();
 
 		File file = new File(defArtifactSourceCodeLibsPath);
 		if (!file.exists()) {
@@ -309,7 +325,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 		getCodeFunctionView().setArtifactOpkeyDataLibraryPath(file.getAbsolutePath());
 		getCodeFunctionView().setArtifactAssociatedLibraryPath(file1.getAbsolutePath());
-		JavaClassSource gvClassSource = new DtoToCodeConverter().getJavaClassOfGlobalVariables();
+		JavaClassSource gvClassSource = new GlobalTranspiler().getJavaClassOfGlobalVariables();
 		File gvJavaFile = new File(file.getAbsolutePath() + File.separator + gvClassSource.getName() + ".java");
 		try {
 			writeToFile(gvJavaFile, gvClassSource.toString());
@@ -375,5 +391,13 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 
 	public void setCflCode(CFLCode cflCode) {
 		this.cflCode = cflCode;
+	}
+
+	public CodedFunctionArtifact getCodedFunctionArtifact() {
+		return codedFunctionArtifact;
+	}
+
+	public void setCodedFunctionArtifact(CodedFunctionArtifact codedFunctionArtifact) {
+		this.codedFunctionArtifact = codedFunctionArtifact;
 	}
 }

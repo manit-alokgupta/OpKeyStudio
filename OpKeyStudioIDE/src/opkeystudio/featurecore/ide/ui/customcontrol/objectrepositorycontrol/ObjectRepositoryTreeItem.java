@@ -15,7 +15,7 @@ public class ObjectRepositoryTreeItem extends CustomTreeItem {
 	public ObjectRepositoryTreeItem(TreeItem parent, int style) {
 		super(parent, style);
 	}
-	
+
 	public ORObject getObjectRepository() {
 		return (ORObject) super.getControlData();
 	}

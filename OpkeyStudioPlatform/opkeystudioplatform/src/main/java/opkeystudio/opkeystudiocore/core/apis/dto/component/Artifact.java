@@ -46,7 +46,9 @@ public class Artifact extends Modified {
 	@DBField
 	private String state_id;
 
-	private String artifactVariableName;
+	private Artifact parentArtifact;
+	private String packagePath;
+	private String packageName;
 
 	public String getModified_on() {
 		return modified_on;
@@ -184,8 +186,36 @@ public class Artifact extends Modified {
 		this.isautocreated = isautocreated;
 	}
 
-	public String getArtifactVariableName() {
+	public String getVariableName() {
 		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
-		return varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		varName = varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		if (varName.trim().isEmpty()) {
+			return "unknownVar";
+		}
+		return varName;
+	}
+
+	public Artifact getParentArtifact() {
+		return parentArtifact;
+	}
+
+	public void setParentArtifact(Artifact parentArtifact) {
+		this.parentArtifact = parentArtifact;
+	}
+
+	public String getPackagePath() {
+		return packagePath;
+	}
+
+	public void setPackagePath(String packagePath) {
+		this.packagePath = packagePath;
+	}
+
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
 	}
 }

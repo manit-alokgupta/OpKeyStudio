@@ -1,7 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -10,26 +10,34 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
-import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariableApi {
-	public List<GlobalVariable> getAllGlobalVariables()
-			throws SQLException, JsonParseException, JsonMappingException, IOException {
+	public List<GlobalVariable> getAllGlobalVariables() {
 		String result = QueryExecutor.getInstance().executeQuery("select * from global_variables");
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, GlobalVariable.class);
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<GlobalVariable>();
 	}
 
-	private List<GlobalVariable> getAllGlobalVariable(String gv_id)
-			throws JsonParseException, JsonMappingException, IOException {
+	private List<GlobalVariable> getAllGlobalVariable(String gv_id) {
 		String query = String.format("SELECT * FROM global_variables WHERE gv_id='%s'", gv_id);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, GlobalVariable.class);
-		return mapper.readValue(result, type);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<GlobalVariable>();
 	}
 
 	public GlobalVariable getGlobalVariable(String gv_id) throws JsonParseException, JsonMappingException, IOException {

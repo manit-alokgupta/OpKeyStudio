@@ -264,14 +264,14 @@ public class DataRepositoryTable extends CustomTable {
 		}
 	}
 
-	public void renderAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
+	public void renderAllDRDetails() {
 		Artifact artifact = getParentDataRepositoryView().getArtifact();
 		List<DRColumnAttributes> drDatas = new DataRepositoryApi().getAllDRDatas(artifact.getId());
 		renderDRDatas(drDatas);
 		selectDefaultRow();
 	}
 
-	public void refreshAllDRDetails() throws JsonParseException, JsonMappingException, IOException {
+	public void refreshAllDRDetails() {
 		List<DRColumnAttributes> drDatas = getDrColumnAttributes();
 		renderDRDatas(drDatas);
 		selectDefaultRow();
@@ -281,12 +281,7 @@ public class DataRepositoryTable extends CustomTable {
 		setSelectedRowIndex(getSelectedRowIndex() + 1);
 		new DRMaker().addDRRow(getParentDataRepositoryView().getArtifact(), this.getSelectedDRRow(),
 				getDrColumnAttributes());
-		try {
-			refreshAllDRDetails();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refreshAllDRDetails();
 	}
 
 	public void renameDRColumn() {
@@ -305,12 +300,7 @@ public class DataRepositoryTable extends CustomTable {
 		}
 		drColumn.setName(data);
 		drColumn.setModified(true);
-		try {
-			refreshAllDRDetails();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
@@ -328,12 +318,7 @@ public class DataRepositoryTable extends CustomTable {
 		drColumn.setName(data);
 		System.out.println("DR Cell Size " + drColumn.getDrCellAttributes().size());
 		getDrColumnAttributes().add(drColumn);
-		try {
-			refreshAllDRDetails();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
@@ -343,12 +328,7 @@ public class DataRepositoryTable extends CustomTable {
 		for (DRCellAttributes drCellAttribute : drCellAttributes) {
 			drCellAttribute.setDeleted(true);
 		}
-		try {
-			this.refreshAllDRDetails();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		this.refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
@@ -357,12 +337,7 @@ public class DataRepositoryTable extends CustomTable {
 		for (DRCellAttributes drCellAttribute : drcellattributes) {
 			drCellAttribute.setDeleted(true);
 		}
-		try {
-			this.refreshAllDRDetails();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		this.refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
@@ -384,12 +359,7 @@ public class DataRepositoryTable extends CustomTable {
 			this.setSelectedRowIndex(this.getSelectionIndex() + 1);
 		}
 
-		try {
-			refreshAllDRDetails();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
@@ -410,12 +380,7 @@ public class DataRepositoryTable extends CustomTable {
 			previousDRCell.setModified(true);
 			this.setSelectedRowIndex(this.getSelectionIndex() - 1);
 		}
-		try {
-			refreshAllDRDetails();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
@@ -432,12 +397,7 @@ public class DataRepositoryTable extends CustomTable {
 
 		selectedDRColumn.setModified(true);
 		nextDRColumn.setModified(true);
-		try {
-			refreshAllDRDetails();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
@@ -455,12 +415,7 @@ public class DataRepositoryTable extends CustomTable {
 
 		selectedDRColumn.setModified(true);
 		previousDRColumn.setModified(true);
-		try {
-			refreshAllDRDetails();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 

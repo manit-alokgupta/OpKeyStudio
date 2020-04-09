@@ -11,11 +11,9 @@ public class LoginHandler {
 	@Execute
 	public void execute(Shell shell) {
 		LoginDialog ldialog = new LoginDialog(shell, SWT.CENTER);
-		
+
 		ldialog.open();
-		
+
 	}
-	
-	
 
 }

@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.ResourceManager;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import opkeystudio.core.utils.DtoToCodeConverter;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
@@ -29,9 +28,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import opkeystudio.opkeystudiocore.core.transpiler.GlobalTranspiler;
 
 public class CFLDRAssociate extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -91,7 +89,7 @@ public class CFLDRAssociate extends CustomTable {
 				.getAllFiles(new File(dataLibraryPath), ".class");
 		boolean flag = false;
 		Artifact artifact = (Artifact) item.getControlData();
-		String artifactVariableName = artifact.getArtifactVariableName() + ".class";
+		String artifactVariableName = artifact.getVariableName() + ".class";
 		for (File file : files) {
 			System.out.println(file.getName() + "     " + artifactVariableName);
 			if (file.getName().equals(artifactVariableName)) {
@@ -109,20 +107,10 @@ public class CFLDRAssociate extends CustomTable {
 				setSelection(item);
 				Artifact artifact = (Artifact) item.getControlData();
 				if (associateOR.getSelection() == true) {
-					List<DRColumnAttributes> allDRColumns = GlobalLoader.getInstance()
-							.getAllDRColumns(artifact.getId());
-					for (DRColumnAttributes drColumn : allDRColumns) {
-						List<DRCellAttributes> drCells = GlobalLoader.getInstance()
-								.getDRColumnCells(drColumn.getColumn_id());
-						drColumn.setDrCellAttributes(drCells);
-					}
-
-					JavaClassSource classSource = new DtoToCodeConverter().getJavaClassDRObjects(artifact,
-							allDRColumns);
+					JavaClassSource classSource = new GlobalTranspiler().getJavaClassDRObjects(artifact);
 					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
 							.getArtifactOpkeyDataLibraryPath();
-					File file = new File(
-							dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".java");
+					File file = new File(dataLibraryPath + File.separator + artifact.getVariableName() + ".java");
 					BufferedWriter bw;
 					try {
 						bw = new BufferedWriter(new FileWriter(file));
@@ -140,10 +128,8 @@ public class CFLDRAssociate extends CustomTable {
 					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense(false);
 				}
 				if (associateOR.getSelection() == false) {
-					File file1 = new File(
-							dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".class");
-					File file2 = new File(
-							dataLibraryPath + File.separator + artifact.getArtifactVariableName() + ".java");
+					File file1 = new File(dataLibraryPath + File.separator + artifact.getVariableName() + ".class");
+					File file2 = new File(dataLibraryPath + File.separator + artifact.getVariableName() + ".java");
 					if (file1.exists()) {
 						try {
 							Files.delete(file1.toPath());
@@ -192,7 +178,7 @@ public class CFLDRAssociate extends CustomTable {
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("DataRepository");
 		for (Artifact artifact : artifacts) {
 			CustomTableItem item = new CustomTableItem(this, 0);
-			item.setText(new String[] { "", artifact.getArtifactVariableName() });
+			item.setText(new String[] { "", artifact.getVariableName() });
 			item.setControlData(artifact);
 			item.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
 			addTableEditor(item);

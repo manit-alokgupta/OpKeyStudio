@@ -4,6 +4,7 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -15,7 +16,7 @@ public class ImageViewer extends Dialog {
 	protected Object result;
 	protected Shell shell;
 	private Label lblNewLabel;
-	
+
 	private Image image;
 
 	/**
@@ -24,7 +25,7 @@ public class ImageViewer extends Dialog {
 	 * @param parent
 	 * @param style
 	 */
-	public ImageViewer(Shell parent,Image image, int style) {
+	public ImageViewer(Shell parent, Image image, int style) {
 		super(parent, style);
 		setText("Image Viewer");
 		setImage(image);
@@ -63,6 +64,7 @@ public class ImageViewer extends Dialog {
 		int locationY = (parentSize.height - shellSize.height) / 2 + parentSize.y;
 		shell.setLocation(new Point(locationX, locationY));
 		lblNewLabel = new Label(shell, SWT.NONE);
+		lblNewLabel.setBackground(new Color(lblNewLabel.getDisplay(), 0, 0, 0));
 		lblNewLabel.setImage(getImage());
 	}
 

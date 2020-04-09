@@ -11,9 +11,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 
 public class CFLOutputTable extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -47,13 +45,12 @@ public class CFLOutputTable extends CustomTable {
 				}
 			}
 		});
-		renderCFLOutputParameters();
 	}
 
 	public void renderCFLOutputParameters() {
 		this.removeAll();
-		Artifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifact();
-		List<CFLOutputParameter> outputParameters = new CodedFunctionApi().getCodedFLOutputParameters(artifact);
+		List<CFLOutputParameter> outputParameters = getParentBottomFactoryUI().getParentCodedFunctionView()
+				.getJavaEditor().getCodedFunctionArtifact().getCflOutputParameters();
 		this.setCflOutputParameters(outputParameters);
 		for (CFLOutputParameter cfloutputparam : outputParameters) {
 			CustomTableItem cti = new CustomTableItem(this, 0);
