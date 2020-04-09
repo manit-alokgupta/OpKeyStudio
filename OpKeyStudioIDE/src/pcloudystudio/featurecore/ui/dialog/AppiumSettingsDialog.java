@@ -251,12 +251,10 @@ public class AppiumSettingsDialog extends Dialog {
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// addCapabilityComposite.setVisible(false);
 				if (capabilityTable.getItemCount() >= 1) {
-					if (capabilityTable.getSelectionIndex() != -1)
+					while (capabilityTable.getSelectionIndex() != -1)
 						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
-				// btnAddToTable.setEnabled(false);
 				btnDelete.setEnabled(false);
 			}
 		});
@@ -387,7 +385,7 @@ public class AppiumSettingsDialog extends Dialog {
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
-		capabilityTable = new Table(scrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		capabilityTable = new Table(scrolledComposite, SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION);
 		capabilityTable.setLinesVisible(true);
 		capabilityTable.setBounds(0, 0, 612, 135);
 		capabilityTable.setHeaderVisible(true);
