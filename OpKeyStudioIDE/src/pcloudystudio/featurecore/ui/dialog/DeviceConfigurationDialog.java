@@ -278,9 +278,9 @@ public class DeviceConfigurationDialog extends Dialog {
 					if (AndroidDriverObject.getDriver() == null) {
 						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-								"org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
-										+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort()
-										+ "\n Please try again!",
+								"Unable to start Application: Please check the Appium Server logs for more ... \n"
+										+ "org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
+										+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort(),
 										1, 0, "OK");
 						mDialog.open();
 					} else {
@@ -356,7 +356,9 @@ public class DeviceConfigurationDialog extends Dialog {
 				} catch (Exception ex) {
 					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							ex.getMessage(), 1, 0, "OK");
+							"Unable to start Application: Please check the Appium Server logs for more ... \n"
+									+ ex.getMessage(),
+									1, 0, "OK");
 					mDialog.open();
 				}
 			} else {
@@ -374,7 +376,9 @@ public class DeviceConfigurationDialog extends Dialog {
 				} catch (Exception ex) {
 					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							ex.getMessage(), 1, 0, "OK");
+							"Unable to start Application: Please check the Appium Server logs for more ... \n"
+									+ ex.getMessage(),
+									1, 0, "OK");
 					mDialog.open();
 				}
 			}
@@ -386,7 +390,9 @@ public class DeviceConfigurationDialog extends Dialog {
 			} catch (Exception ex) {
 				MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-						ex.getMessage(), 1, 0, "OK");
+						"Unable to start Application: Please check the Appium Server logs for more ... \n"
+								+ ex.getMessage(),
+								1, 0, "OK");
 				mDialog.open();
 			}
 			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
@@ -403,7 +409,9 @@ public class DeviceConfigurationDialog extends Dialog {
 				} catch (Exception ex) {
 					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							ex.getMessage(), 1, 0, "OK");
+							"Unable to start Application: Please check the Appium Server logs for more ... \n"
+									+ ex.getMessage(),
+									1, 0, "OK");
 					mDialog.open();
 				}
 			} else {
@@ -421,7 +429,9 @@ public class DeviceConfigurationDialog extends Dialog {
 				} catch (Exception ex) {
 					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							ex.getMessage(), 1, 0, "OK");
+							"Unable to start Application: Please check the Appium Server logs for more ... \n"
+									+ ex.getMessage(),
+									1, 0, "OK");
 					mDialog.open();
 				}
 			}
@@ -437,9 +447,12 @@ public class DeviceConfigurationDialog extends Dialog {
 				try {
 					startServer();
 				} catch (Exception e) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error", ResourceManager
-							.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							e.getMessage(), 1, 0, "OK");
+					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio",
+									"icons/pcloudystudio/opkey-16x16.png"),
+							"Unable to start Application: Please check the Appium Server logs for more ... \n"
+									+ e.getMessage(),
+									1, 0, "OK");
 					mDialog.open();
 				}
 			}
