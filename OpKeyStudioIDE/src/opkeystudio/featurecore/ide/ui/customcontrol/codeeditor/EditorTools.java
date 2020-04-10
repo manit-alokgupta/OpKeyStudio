@@ -31,6 +31,9 @@ public class EditorTools {
 	private boolean executionCompleted = false;
 	private static List<String> alreadyScannedClasses = new ArrayList<String>();
 
+	public EditorTools() {
+	}
+
 	public EditorTools(CodedFunctionView codedFuntionView) {
 		this.setParentCodedFunctionView(codedFuntionView);
 	}
