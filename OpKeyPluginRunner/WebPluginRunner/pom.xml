@@ -14,7 +14,10 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<pluginName>Web</pluginName>
-		<opkeyruntimejarpath>C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpKeyStudioIDE\resources\libraries\PluginBase\opkeyeruntimeJar.jar</opkeyruntimejarpath>
+		<opkeyStudioLibrariesDirPath>C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpKeyStudioIDE\resources\libraries</opkeyStudioLibrariesDirPath>
+		<opkeyruntimejarpath>${opkeyStudioLibrariesDirPath}\PluginBase\opkeyeruntimeJar.jar</opkeyruntimejarpath>
+		<opkeyPluginBaseLibPath>${opkeyStudioLibrariesDirPath}\PluginBase\opkey-pluginbase-v2.0-jar-with-dependencies.jar</opkeyPluginBaseLibPath>
+		<opkeyWebPluginJar>${opkeyStudioLibrariesDirPath}\Plugins\Web\Web-3.141.59.jar</opkeyWebPluginJar>
 	</properties>
 
 	<dependencies>
@@ -30,6 +33,20 @@
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${opkeyruntimejarpath}</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.crestech.opkey</groupId>
+			<artifactId>plugin</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${opkeyPluginBaseLibPath}</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com</groupId>
+			<artifactId>com</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${opkeyWebPluginJar}</systemPath>
 		</dependency>
 	</dependencies>
 </project>
