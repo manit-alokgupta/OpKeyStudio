@@ -4,12 +4,14 @@ import java.io.ByteArrayOutputStream;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.iconManager.OpKeyStudioIcons;
@@ -26,9 +28,10 @@ public class ExecutionResultView extends Composite {
 	 * @param style
 	 */
 
-	private ToolItem runButton;
-	private ToolItem saveButton;
+	private ToolItem pauseButton;
+	private ToolItem stopButton;
 	private ToolItem refreshButton;
+	private StyledText logTextView;
 	private ExecutionSession executionSession;
 
 	public ExecutionResultView(Composite parent, int style) {
@@ -63,6 +66,7 @@ public class ExecutionResultView extends Composite {
 						String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
 								+ standardErrorOutput.toString();
 						System.out.println(">>Logs " + consoleOutPut);
+						logTextView.setText(consoleOutPut);
 						break;
 					}
 					try {
@@ -80,20 +84,25 @@ public class ExecutionResultView extends Composite {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
-		runButton = new ToolItem(toolBar, SWT.NONE);
-		runButton.setText("Run");
-		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
-		runButton.setToolTipText("Run");
+		pauseButton = new ToolItem(toolBar, SWT.NONE);
+		// pauseButton.setText("Run");
+		pauseButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OPEN_ICON));
+		pauseButton.setToolTipText("Pause");
 
-		saveButton = new ToolItem(toolBar, SWT.NONE);
-		saveButton.setText("Save");
-		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_TOOL_ICON));
-		saveButton.setToolTipText("Save");
+		stopButton = new ToolItem(toolBar, SWT.NONE);
+		// stopButton.setText("Save");
+		stopButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
+		stopButton.setToolTipText("Stop");
 
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
-		refreshButton.setText("Refresh");
+		// refreshButton.setText("Refresh");
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		refreshButton.setToolTipText("Refresh");
+
+		logTextView = new StyledText(this, SWT.BORDER);
+		logTextView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		logTextView.setEditable(true);
+		logTextView.setAlwaysShowScrollBars(true);
 	}
 
 	public ExecutionResultView getInstance() {
@@ -101,11 +110,11 @@ public class ExecutionResultView extends Composite {
 	}
 
 	public void toggleRunButton(boolean status) {
-		this.runButton.setEnabled(status);
+		this.pauseButton.setEnabled(status);
 	}
 
 	public void toggleSaveButton(boolean status) {
-		this.saveButton.setEnabled(status);
+		this.stopButton.setEnabled(status);
 	}
 
 	public void toggleRefreshButton(boolean status) {
