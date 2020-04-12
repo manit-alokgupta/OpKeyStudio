@@ -2,6 +2,9 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.File;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -14,6 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
@@ -188,14 +192,14 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (isExecutingFromTestCaseView()) {
-					new ArtifactExecutor().execute(getExecutionSession());
-					return;
-				}
-				if (isExecutingFromTestSuiteView()) {
-					new ArtifactExecutor().execute(getExecutionSession());
-					return;
-				}
+				new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+					@Override
+					public void run() {
+						executeSession();
+					}
+				});
+				close();
 			}
 
 			@Override
@@ -219,6 +223,16 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			}
 		});
+	}
+
+	private void executeSession() {
+		ExecutionSession executionSession = getExecutionSession();
+		EPartService partService = opkeystudio.core.utils.Utilities.getInstance().getEpartService();
+		MPart part = partService.createPart("opkeystudio.partdescriptor.executionResultPart");
+		part.setLabel(executionSession.getSessionName());
+		part.setTooltip(executionSession.getSessionName());
+		part.getTransientData().put("opkeystudio.executionSessionData", executionSession);
+		partService.showPart(part, PartState.ACTIVATE);
 	}
 
 	/**
