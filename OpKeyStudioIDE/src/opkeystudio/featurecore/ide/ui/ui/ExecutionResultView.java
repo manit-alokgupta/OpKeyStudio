@@ -5,19 +5,20 @@ import java.io.ByteArrayOutputStream;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.iconManager.OpKeyStudioIcons;
-import opkeystudio.opkeystudiocore.core.execution.ExecutionSessionExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
+import opkeystudio.opkeystudiocore.core.execution.ExecutionSessionExecutor;
 
 public class ExecutionResultView extends Composite {
 
@@ -33,6 +34,7 @@ public class ExecutionResultView extends Composite {
 	private ToolItem refreshButton;
 	private StyledText logTextView;
 	private ExecutionSession executionSession;
+	private ArtifactExecutor artifactExecutor;
 
 	public ExecutionResultView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
@@ -49,8 +51,9 @@ public class ExecutionResultView extends Composite {
 
 	private void startExecutionSession() {
 		ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
-		ArtifactExecutor executorUtilities = exeutor.execute(getExecutionSession());
-		startExecutionLogsFetch(executorUtilities);
+		ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
+		setArtifactExecutor(executorExecutor);
+		startExecutionLogsFetch(executorExecutor);
 	}
 
 	private void startExecutionLogsFetch(ArtifactExecutor executor) {
@@ -84,11 +87,6 @@ public class ExecutionResultView extends Composite {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
-		pauseButton = new ToolItem(toolBar, SWT.NONE);
-		// pauseButton.setText("Run");
-		pauseButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OPEN_ICON));
-		pauseButton.setToolTipText("Pause");
-
 		stopButton = new ToolItem(toolBar, SWT.NONE);
 		// stopButton.setText("Save");
 		stopButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
@@ -103,6 +101,21 @@ public class ExecutionResultView extends Composite {
 		logTextView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		logTextView.setEditable(true);
 		logTextView.setAlwaysShowScrollBars(true);
+
+		stopButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				getArtifactExecutor().stopExecution();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	public ExecutionResultView getInstance() {
@@ -132,5 +145,13 @@ public class ExecutionResultView extends Composite {
 
 	public void setExecutionSession(ExecutionSession executionSession) {
 		this.executionSession = executionSession;
+	}
+
+	public ArtifactExecutor getArtifactExecutor() {
+		return artifactExecutor;
+	}
+
+	public void setArtifactExecutor(ArtifactExecutor artifactExecutor) {
+		this.artifactExecutor = artifactExecutor;
 	}
 }

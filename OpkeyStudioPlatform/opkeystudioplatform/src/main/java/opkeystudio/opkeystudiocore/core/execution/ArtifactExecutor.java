@@ -16,6 +16,7 @@ import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 public class ArtifactExecutor {
 	private ByteArrayOutputStream standardOutput;
 	private ByteArrayOutputStream standardErrorOutput;
+	private URLClassLoader classLoader;
 	private boolean executionCompleted = false;
 
 	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
@@ -56,13 +57,18 @@ public class ArtifactExecutor {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
 		}
 		URLClassLoader child = new URLClassLoader(allJarsAndClasses, ArtifactExecutor.class.getClassLoader());
+		setClassLoader(child);
 		@SuppressWarnings("rawtypes")
 		Class classToLoad = Class.forName(artifactClassNAME, true, child);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("execute");
 		Object result = method.invoke(instance);
+		stopExecution();
+	}
+
+	public void stopExecution() {
 		try {
-			child.close();
+			getClassLoader().close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,5 +97,13 @@ public class ArtifactExecutor {
 
 	public void setStandardOutput(ByteArrayOutputStream standardOutput) {
 		this.standardOutput = standardOutput;
+	}
+
+	public URLClassLoader getClassLoader() {
+		return classLoader;
+	}
+
+	public void setClassLoader(URLClassLoader classLoader) {
+		this.classLoader = classLoader;
 	}
 }

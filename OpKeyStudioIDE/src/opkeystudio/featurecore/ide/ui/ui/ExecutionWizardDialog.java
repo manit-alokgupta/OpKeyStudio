@@ -12,21 +12,19 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.execution.ExecutionSessionExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
-
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Text;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Combo pluginSelectionDropDown;
