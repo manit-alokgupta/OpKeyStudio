@@ -39,6 +39,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Text buildNameTextField;
 
 	private ExecutionSession executionSession;
+	private Composite container;
+	private Composite area;
 
 	/**
 	 * Create the dialog.
@@ -69,8 +71,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		Composite area = (Composite) super.createDialogArea(parent);
-		Composite container = new Composite(area, SWT.NONE);
+		area = (Composite) super.createDialogArea(parent);
+		container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout(22, false));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 		new Label(container, SWT.NONE);
@@ -199,6 +201,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 						executeSession();
 					}
 				});
+				container.dispose();
+				area.dispose();
 				close();
 			}
 
