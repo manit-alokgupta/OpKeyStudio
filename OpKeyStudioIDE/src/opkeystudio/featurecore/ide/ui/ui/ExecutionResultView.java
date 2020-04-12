@@ -1,5 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.ByteArrayOutputStream;
+
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -9,8 +11,10 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.iconManager.OpKeyStudioIcons;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.execution.ExecutionSessionExecutor;
+import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 
 public class ExecutionResultView extends Composite {
@@ -32,11 +36,44 @@ public class ExecutionResultView extends Composite {
 		setLayout(new GridLayout(1, false));
 		initExecutionSession();
 		initUI();
+		startExecutionSession();
 	}
 
 	private void initExecutionSession() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		this.executionSession = (ExecutionSession) mpart.getTransientData().get("opkeystudio.executionSessionData");
+	}
+
+	private void startExecutionSession() {
+		ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
+		ArtifactExecutor executorUtilities = exeutor.execute(getExecutionSession());
+		startExecutionLogsFetch(executorUtilities);
+	}
+
+	private void startExecutionLogsFetch(ArtifactExecutor executor) {
+		new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					ByteArrayOutputStream standardOutPut = executor.getStandardOutput();
+					ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
+					System.out.println(">>Execution Status " + executor.isExecutionCompleted());
+					if (executor.isExecutionCompleted()) {
+						String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
+								+ standardErrorOutput.toString();
+						System.out.println(">>Logs " + consoleOutPut);
+						break;
+					}
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 
 	private void initUI() {
