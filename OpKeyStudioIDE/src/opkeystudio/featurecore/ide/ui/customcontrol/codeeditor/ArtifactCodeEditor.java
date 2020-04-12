@@ -15,6 +15,7 @@ import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -55,7 +56,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 		} catch (IllegalAccessException e) {
 		}
 		if (enableIntellisense) {
-			initWithIntellisense(SWT_AWT.new_Frame(composite));
+			init(SWT_AWT.new_Frame(composite));
 		} else {
 			initWithoutIntellisense(SWT_AWT.new_Frame(composite));
 		}
@@ -70,20 +71,22 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 		this.setText(formatedCode);
 	}
 
-
 	public JTextComponent getTextComponent() {
 		return this;
 	}
 
 	static boolean saveToggled = false;
 
-	private void initWithIntellisense(Frame frame) {
+	private void init(Frame frame) {
 		JPanel mainEditorPanel = new JPanel(new BorderLayout());
 		this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.setCodeFoldingEnabled(true);
 		this.setAutoIndentEnabled(true);
 		this.setMarkAllOnOccurrenceSearches(true);
 		this.setMarkOccurrences(true);
+		CompletionProvider provider = ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView())
+				.getCompletionProvider();
+		autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setListCellRenderer(new JavaCellRenderer());
 		autoCompletion.setChoicesWindowSize(350, 200);
 		autoCompletion.setDescriptionWindowSize(350, 250);

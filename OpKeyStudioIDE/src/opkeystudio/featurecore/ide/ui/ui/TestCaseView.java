@@ -461,7 +461,7 @@ public class TestCaseView extends Composite {
 		sourceCodeTabItem.setControl(sourceCodeHolder);
 		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, false);
+		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, true);
 		setCodedFunctionView(codedFunctionView);
 
 		cursor.setMenu(flowStepTable.getMenu());
