@@ -125,10 +125,9 @@ public class ArtifactExporting {
 		String artifactFilePath = artifactDownloadFolder + File.separator + downloadFileId + ".zip";
 		try {
 			downloadUsingStream(fileDownloadURL, artifactFilePath);
-			Utilities.getInstance().extractZipFolder(artifactFilePath,
-					artifactDownloadFolder + File.separator + downloadFileId);
+			Utilities.getInstance().extractZipFolder(artifactFilePath, artifactDownloadFolder);
 
-			File dbFilesFolder = new File(artifactDownloadFolder + File.separator + downloadFileId);
+			File dbFilesFolder = new File(artifactDownloadFolder);
 			File[] dbFiles = dbFilesFolder.listFiles();
 			for (File dbFile : dbFiles) {
 				if (dbFile.getName().endsWith(".db")) {
@@ -138,6 +137,7 @@ public class ArtifactExporting {
 					break;
 				}
 			}
+			new File(artifactFilePath).delete();
 		} catch (IOException e) {
 			e.printStackTrace();
 			if (counter == 2) {

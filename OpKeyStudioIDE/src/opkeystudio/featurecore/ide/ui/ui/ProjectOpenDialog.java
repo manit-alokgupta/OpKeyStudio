@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.commandhandler.ProjectImporter;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.ProjectFile;
@@ -212,6 +213,15 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ProjectFile projectFile = getSelectedProject();
+				File projectDir = new File(
+						Utilities.getInstance().getProjectsFolder() + File.separator + projectFile.getProjectName());
+				File[] files = projectDir.listFiles();
+				for (File file : files) {
+					if (file.getName().endsWith(".db")) {
+						new ProjectImporter().importProjectDB(file.getAbsolutePath());
+						break;
+					}
+				}
 			}
 
 			@Override
