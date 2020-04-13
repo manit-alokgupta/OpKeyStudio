@@ -602,7 +602,6 @@ public class TestCaseView extends Composite {
 
 	private void openExecutionWizard() {
 		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
-		executionWizard.createDialogArea(getParent());
 		executionWizard.open();
 	}
 
