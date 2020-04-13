@@ -16,7 +16,7 @@ public class ObjectFormatter {
 
 	private Object convertORObjectToOpKeyObject(ORObject orobject) {
 		Object object = new Object();
-		object.setLogicalName("Neon");
+		object.setLogicalName(getLogicalNameOfORObject(orobject));
 
 		Map<String, String> allProperties = orobject.getAllProperties();
 		Set<String> propertyNames = allProperties.keySet();
@@ -30,5 +30,15 @@ public class ObjectFormatter {
 			object.getProperties().getProperty().add(property);
 		}
 		return object;
+	}
+
+	private String getLogicalNameOfORObject(ORObject orobject) {
+		Map<String, String> allProperties = orobject.getAllProperties();
+		for (String key : allProperties.keySet()) {
+			if (key.toLowerCase().equals("logicalname")) {
+				return allProperties.get(key);
+			}
+		}
+		return "";
 	}
 }
