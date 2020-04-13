@@ -16,6 +16,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
@@ -39,6 +40,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.appium.AppiumPortIpInfo;
 import pcloudystudio.appium.MobileCapabilities;
+import org.eclipse.swt.events.VerifyListener;
 
 public class AppiumSettingsDialog extends Dialog {
 
@@ -159,6 +161,11 @@ public class AppiumSettingsDialog extends Dialog {
 		serverAddress.setBounds(205, 10, 309, 33);
 
 		portNumber = new Text(compositeAppiumSettings, SWT.BORDER);
+		portNumber.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent e) {
+				restrictInputOnPort(e);
+			}
+		});
 		portNumber.setToolTipText("Port");
 		portNumber.setBounds(205, 49, 309, 33);
 
@@ -596,5 +603,24 @@ public class AppiumSettingsDialog extends Dialog {
 					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
 			}
 		}
+	}
+
+	protected void restrictInputOnPort(VerifyEvent event) {
+		String allowedCharactersInteger = "0123456789";
+		String text = event.text;
+
+		for (int index = 0; index < text.length(); index++) {
+			char character = text.charAt(index);
+			boolean isAllowed = allowedCharactersInteger.indexOf(character) > -1;
+			if (portNumber.getText().length() > 4) {
+				event.doit = false;
+				return;
+			}
+			if (!isAllowed) {
+				event.doit = false;
+				return;
+			}
+		}
+
 	}
 }
