@@ -7,7 +7,7 @@
         <children xsi:type="basic:PartSashContainer" xmi:id="_9ST-ENVrEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.0" containerData="" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_94DvcNVrEemLeZBMchgvxw" elementId="opkeystudio.partstack.explorertreepartstack" containerData="150">
             <children xsi:type="basic:Part" xmi:id="_IndRYNVsEemLeZBMchgvxw" elementId="opkeystudio.part.explorertreepart" containerData="" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.ProjectExplorerPart" label="Project Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/project explorar.png"/>
-            <children xsi:type="basic:Part" xmi:id="_trPIwHyyEeqmNalJcwi6fg" elementId="opkeystudio.part.codeexplorer" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.CodeExplorerPart" label="Code Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/artifacts/cfl.png"/>
+            <children xsi:type="basic:Part" xmi:id="_trPIwHyyEeqmNalJcwi6fg" elementId="opkeystudio.part.codeexplorer" visible="false" contributionURI="bundleclass://OpKeyStudio/opkeystudio.parts.part.CodeExplorerPart" label="Code Explorer" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/artifacts/cfl.png"/>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_Cu7-0NVsEemLeZBMchgvxw" elementId="opkeystudio.partsashcontainer.1" containerData="600" selectedElement="_EfD4oNVsEemLeZBMchgvxw">
             <children xsi:type="basic:PartStack" xmi:id="_EfD4oNVsEemLeZBMchgvxw" elementId="opkeystudio.partstack.workbenchpartstack" containerData="600">
@@ -26,6 +26,7 @@
     </children>
     <mainMenu xmi:id="_6wlLicgZEeSyMNYR5xypkQ" elementId="opkeystudio.menu.mainmenu">
       <children xsi:type="menu:Menu" xmi:id="_iijzYNVqEemLeZBMchgvxw" elementId="opkeystudio.menu.project" label="Project">
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_ZmKwUH1UEeqMr9RFPi3YXQ" elementId="opkeystudio.directmenuitem.createblankproject" label="Create Blank Project" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/project explorar.png" tooltip="Create Blank Project"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_X8-2wPsEEemvU7QvzW07xw" elementId="opkeystudio.directmenuitem.importdb" label="Import From OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/import.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportDBFromOpKeyCommand"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_WlEAgD2-Eeq5-OQK1h73hw" elementId="opkeystudio.directmenuitem.importlocaldb" label="Import Local DB" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/importdb.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ImportLocalDB"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_N4_UEEDmEeqJe4vmkghIxQ" elementId="opkeystudio.directmenuitem.exporttoopkeysaas" label="Export to OpKey SAAS" iconURI="platform:/plugin/OpKeyStudio/icons/opkey/commonicons/export.png" contributionURI="bundleclass://OpKeyStudio/opkeystudio.commandhandler.ExportToSaas"/>
