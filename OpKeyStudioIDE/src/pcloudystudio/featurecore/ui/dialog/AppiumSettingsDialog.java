@@ -610,15 +610,10 @@ public class AppiumSettingsDialog extends Dialog {
 		if (str.length() == 0) {
 			return false;
 		}
-		if (str.matches("^[a-zA-Z]*${20}")) {
+		if (str instanceof String) {
 			return true;
 		}
-		if (str.matches("^[1-9]*([0-9]{5}|)$")) {
-			return true;
-		}
-		if (str.matches("^[a-zA-Z0-9]*${20}")) {
-			return true;
-		}
+
 		return false;
 	}
 
@@ -664,15 +659,46 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	protected void restrictInputString(VerifyEvent event, String type) {
-		String allowedCharactersInteger = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.1234567890";
+		String allowedCharactersInteger = "1234567890";
+		String allowedCharactersBoolean = "truefalse01";
+		String allowedCharactersString = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890.\\-+/@$%^&*(){}<>";
 		String text = event.text;
 
-		for (int index = 0; index < text.length(); index++) {
-			char character = text.charAt(index);
-			boolean isAllowed = allowedCharactersInteger.indexOf(character) > -1;
-			if (!isAllowed) {
-				event.doit = false;
-				return;
+		switch (type) {
+		case "int":
+			for (int index = 0; index < text.length(); index++) {
+				char character = text.charAt(index);
+				boolean isAllowed = allowedCharactersInteger.indexOf(character) > -1;
+				if (!isAllowed) {
+					event.doit = false;
+					return;
+				}
+			}
+			break;
+
+		case "boolean":
+			for (int index = 0; index < text.length(); index++) {
+				char character = text.charAt(index);
+				boolean isAllowed = allowedCharactersBoolean.indexOf(character) > -1;
+				if (!isAllowed) {
+					event.doit = false;
+					return;
+				}
+			}
+
+			break;
+
+		default:
+			if (capabilityTextValue.getText().length() >= 0) {
+				for (int index = 0; index < text.length(); index++) {
+					char character = text.charAt(index);
+					boolean isAllowed = allowedCharactersString.indexOf(character) > -1;
+					if (!isAllowed) {
+						event.doit = false;
+						return;
+					}
+				}
+
 			}
 		}
 
