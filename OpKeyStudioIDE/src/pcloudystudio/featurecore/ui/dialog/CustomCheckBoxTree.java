@@ -51,6 +51,10 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 		Object element = event.getElement();
 		MobileSpyDialog.clearPropertiesTableData();
 
+		if (MobileSpyDialog.lblAddToORConfirmation.isVisible()) {
+			MobileSpyDialog.lblAddToORConfirmation.setVisible(false);
+		}
+
 		if (!MobileSpyDialog.allObjectsCheckboxTreeViewer.getChecked(element)) {
 			MobileSpyDialog.allObjectsCheckboxTreeViewer.setAllChecked(false);
 			MobileSpyDialog.allObjectsCheckboxTreeViewer.setChecked(element, false);

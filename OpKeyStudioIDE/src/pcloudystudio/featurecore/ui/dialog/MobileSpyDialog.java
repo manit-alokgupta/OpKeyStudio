@@ -87,6 +87,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private Map<String, String> mobileParentElementProps;
 
 	public static Button btnClickAndMoveToNextScreen;
+	static Label lblAddToORConfirmation;
 
 	static {
 		DIALOG_TITLE = "Mobile Object Spy";
@@ -166,6 +167,29 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		gd_bottomComposite.heightHint = 30;
 		bottomComposite.setLayoutData(gd_bottomComposite);
 
+		lblAddToORConfirmation = new Label(bottomComposite, SWT.NONE);
+		lblAddToORConfirmation.setVisible(false);
+		lblAddToORConfirmation.setText("Object has been added successifully!");
+		lblAddToORConfirmation.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		lblAddToORConfirmation.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
+		lblAddToORConfirmation.setBounds(489, 6, 265, 20);
+		lblAddToORConfirmation.setVisible(false);
+
+		btnHelp = new Button(bottomComposite, SWT.NONE);
+		btnHelp.setToolTipText("Help");
+		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		btnHelp.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/help_16.png"));
+		btnHelp.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Help",
+						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+						"Please contact support@opkey.com", 2, 0, "OK");
+				mDialog.open();
+			}
+		});
+		btnHelp.setBounds(5, 5, 20, 20);
+
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
 
 		compositeTreeHierarchy = new Composite(sashForm, SWT.BORDER);
@@ -224,13 +248,14 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnCapture.setBounds(5, 5, 142, 28);
 		btnCapture.setText("Capture Object");
 
-		btnAdd = new Button(toolsComposite, SWT.RIGHT_TO_LEFT);
+		btnAdd = new Button(toolsComposite, SWT.NONE);
 		btnAdd.setToolTipText("Add to Object Repository");
 		btnAdd.setEnabled(false);
 		btnAdd.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				lblAddToORConfirmation.setVisible(false);
 				Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
 				Widget item = CustomCheckBoxTree.getCheckedItem(element);
 				TreeItem treeItem = (TreeItem) item;
@@ -247,10 +272,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							"Custom", "HTML Page",
 							getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
 					getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
-					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Please Note",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Object has been added successifully!", 2, 0, "OK");
-					mDialog.open();
+					lblAddToORConfirmation.setVisible(true);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -264,6 +286,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnClickAndMoveToNextScreen.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				lblAddToORConfirmation.setVisible(false);
 				if (AndroidDriverObject.getInstance() != null) {
 					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
 					Widget item = CustomCheckBoxTree.getCheckedItem(element);
@@ -296,6 +319,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			public void widgetSelected(SelectionEvent e) {
 				AndroidDriverObject.getDriver().quit();
 				btnCapture.setEnabled(false);
+				lblAddToORConfirmation.setVisible(false);
 				btnClickAndMoveToNextScreen.setEnabled(false);
 				btnStop.setEnabled(false);
 				btnAdd.setEnabled(false);
@@ -307,21 +331,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		});
 		btnStop.setBounds(347, 5, 58, 28);
 		btnStop.setText("Stop");
-
-		btnHelp = new Button(bottomComposite, SWT.NONE);
-		btnHelp.setToolTipText("Help");
-		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnHelp.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/help_16.png"));
-		btnHelp.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Help",
-						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-						"Please contact support@opkey.com", 2, 0, "OK");
-				mDialog.open();
-			}
-		});
-		btnHelp.setBounds(5, 5, 20, 20);
 
 		if (AndroidDriverObject.getDriver() == null) {
 			btnCapture.setEnabled(false);
@@ -524,6 +533,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	}
 
 	private void captureObjectAction() {
+		lblAddToORConfirmation.setVisible(false);
 		if (textObjectName.getText().length() > 0)
 			textObjectName.setText("");
 
