@@ -17,10 +17,8 @@ public class ObjectConverter {
 		try {
 			return new ObjectFormatter().formatObjectToWebDriverObject(_object);
 		} catch (ObjectPropertiesNotSufficientException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
