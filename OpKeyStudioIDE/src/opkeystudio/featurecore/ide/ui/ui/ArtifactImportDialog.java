@@ -348,8 +348,8 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 		this.selectedArtifactTreeNode = selectedArtifactTreeNode;
 	}
 
-	private void exportArtifact(ArtifactTreeNode artifactTreeNode) throws IOException {
-		boolean status = new ArtifactExporting().exportArtifactFromOpKey(artifactTreeNode);
+	private void exportArtifact(ArtifactTreeNode artifactTreeNode, Project project) throws IOException {
+		boolean status = new ArtifactExporting().exportArtifactFromOpKey(artifactTreeNode, project);
 		if (status == false) {
 			new MessageDialogs().executeDisplayAsync(new Runnable() {
 
@@ -376,6 +376,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ArtifactTreeNode selectedArtifact = getSelectedArtifactTreeNode();
+				Project project = getSelectedProject();
 				MessageDialogs msd = new MessageDialogs();
 				msd.openProgressDialog(getParentshell(), "Importing from OpKey SAAS. Please Wait", true,
 						new IRunnableWithProgress() {
@@ -384,7 +385,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 							public void run(IProgressMonitor monitor)
 									throws InvocationTargetException, InterruptedException {
 								try {
-									exportArtifact(selectedArtifact);
+									exportArtifact(selectedArtifact, project);
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
