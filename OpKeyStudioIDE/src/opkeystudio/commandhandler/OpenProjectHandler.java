@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.ui.ProjectOpenDialog;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.project.ProjectDataApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
@@ -24,6 +25,7 @@ public class OpenProjectHandler {
 	@Execute
 	public void execute(Shell shell) {
 		Utilities.getInstance().setDefaultShell(shell);
+		new ProjectOpenDialog(shell).open();
 		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
 		dialog.setFilterExtensions(filterExt);
 		dialog.open();

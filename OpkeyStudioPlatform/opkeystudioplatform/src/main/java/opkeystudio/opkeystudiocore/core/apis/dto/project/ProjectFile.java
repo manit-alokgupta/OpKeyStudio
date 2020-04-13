@@ -1,12 +1,11 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.project;
 
-import java.io.File;
+public class ProjectFile {
+	private boolean visible = true;
+	private String projectName;
 
-public class ProjectFile extends File {
-	private boolean visible;
-
-	public ProjectFile(String pathname) {
-		super(pathname);
+	public ProjectFile(String projectName) {
+		this.setProjectName(projectName);
 	}
 
 	public boolean isVisible() {
@@ -15,6 +14,14 @@ public class ProjectFile extends File {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 }

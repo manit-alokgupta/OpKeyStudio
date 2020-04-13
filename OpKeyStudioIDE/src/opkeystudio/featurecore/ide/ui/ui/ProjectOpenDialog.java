@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.ProjectFile;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ProjectOpenDialog extends TitleAreaDialog {
 
@@ -62,8 +64,8 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		setMessage("Select a Project And Select The Artifact to Import");
-		setTitle("Import From OpKey SAAS");
+		setMessage("Select a Project to Open");
+		setTitle("Open Project");
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -81,7 +83,7 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		sashForm.setWeights(new int[] { 2, 2 });
+		sashForm.setWeights(new int[] { 1 });
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(table, 0);
 			column.setText(header);
@@ -97,7 +99,7 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 			public void paintControl(PaintEvent arg0) {
 				Table table_0 = (Table) arg0.getSource();
 				for (TableColumn column : table_0.getColumns()) {
-					column.setWidth(table_0.getBounds().width / 2);
+					column.setWidth(table_0.getBounds().width);
 				}
 			}
 		});
@@ -108,11 +110,13 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 			public void widgetSelected(SelectionEvent e) {
 				TableItem tableItem = table.getSelection()[0];
 				if (tableItem == null) {
+					toggleOpenButton(false);
 					return;
 				}
 				CustomTableItem cti = (CustomTableItem) tableItem;
 				ProjectFile sproject = (ProjectFile) cti.getControlData();
 				setSelectedProject(sproject);
+				toggleOpenButton(true);
 			}
 
 			@Override
@@ -145,17 +149,25 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		return area;
 	}
 
-	private void toggleExportButton(boolean status) {
+	private void toggleOpenButton(boolean status) {
 		this.openButton.setEnabled(status);
 	}
 
 	public void renderProjectList() throws IOException {
 		table.removeAll();
 		List<ProjectFile> projects = new ArrayList<ProjectFile>();
+		String projectFolderPath = Utilities.getInstance().getProjectsFolder();
+		File[] projectFolders = new File(projectFolderPath).listFiles();
+		for (File projectFolder : projectFolders) {
+			if (projectFolder.isDirectory()) {
+				ProjectFile proFile = new ProjectFile(projectFolder.getName().trim());
+				projects.add(proFile);
+			}
+		}
 		setAllProjects(projects);
 		for (ProjectFile project : projects) {
 			CustomTableItem tableItem = new CustomTableItem(table, 0);
-			tableItem.setText(new String[] { project.getName() });
+			tableItem.setText(new String[] { project.getProjectName() });
 			tableItem.setControlData(project);
 
 		}
@@ -163,12 +175,11 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 
 	public void refreshProject() {
 		table.removeAll();
-		List<ProjectFile> projects = new ArrayList<ProjectFile>();
-		setAllProjects(projects);
+		List<ProjectFile> projects = getAllProjects();
 		for (ProjectFile project : projects) {
 			if (project.isVisible()) {
 				CustomTableItem tableItem = new CustomTableItem(table, 0);
-				tableItem.setText(new String[] { project.getName() });
+				tableItem.setText(new String[] { project.getProjectName() });
 				tableItem.setControlData(project);
 			}
 
@@ -178,7 +189,7 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 	public void filterProjectTable(String searchValue) {
 		List<ProjectFile> projects = getAllProjects();
 		for (ProjectFile project : projects) {
-			if (project.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
+			if (project.getProjectName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
 				project.setVisible(true);
 			} else {
 				project.setVisible(false);
@@ -194,13 +205,13 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		openButton = createButton(parent, IDialogConstants.OK_ID, "Import", true);
+		openButton = createButton(parent, IDialogConstants.OK_ID, "Open", true);
 		openButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.IMPORT_ICON));
 		openButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				ProjectFile projectFile = getSelectedProject();
 			}
 
 			@Override
@@ -209,7 +220,7 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 
 			}
 		});
-		toggleExportButton(false);
+		toggleOpenButton(false);
 	}
 
 	/**
