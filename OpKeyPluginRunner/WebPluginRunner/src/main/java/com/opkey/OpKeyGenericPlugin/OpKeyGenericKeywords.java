@@ -1,5 +1,7 @@
 package com.opkey.OpKeyGenericPlugin;
 
+import com.crestech.opkey.plugin.webdriver.object.WebDriverObject;
+import com.opkey.ObjectFromatter.ObjectConverter;
 import com.opkeystudio.runtime.ORObject;
 
 public class OpKeyGenericKeywords {
@@ -78,7 +80,8 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called Click");
 
 		// Method_ObjectClick
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		System.out.println(">>Tag Name " + object.getTagName());
 		return false;
 
 	}
@@ -2522,13 +2525,13 @@ public class OpKeyGenericKeywords {
 
 	public boolean ClickImageByTitleAlt(String arg0, int arg1, boolean arg2) {
 
-			System.out.println(">>Keyword Called ClickImageByTitle/Alt");
+		System.out.println(">>Keyword Called ClickImageByTitle/Alt");
 
-			//Method_clickImageByAltText
+		// Method_clickImageByAltText
 
-			return false;
+		return false;
 
-			}
+	}
 
 	public boolean Web_SelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, String arg4,
 			ORObject arg5) {
