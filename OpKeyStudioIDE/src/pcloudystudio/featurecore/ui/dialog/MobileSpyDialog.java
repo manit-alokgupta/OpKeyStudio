@@ -89,7 +89,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	public static Button btnClickAndMoveToNextScreen;
 
 	static {
-		DIALOG_SIZE = new Point(800, 728);
 		DIALOG_TITLE = "Mobile Object Spy";
 	}
 
@@ -137,7 +136,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		shlSpyMobile = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		shlSpyMobile.setSize(new Point(800, 750));
+		shlSpyMobile.setSize(new Point(800, 700));
 		shlSpyMobile.setText(DIALOG_TITLE);
 		shlSpyMobile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
@@ -151,20 +150,20 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		Composite toolsComposite = new Composite(shlSpyMobile, SWT.BORDER);
 		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_toolsComposite.widthHint = 782;
-		gd_toolsComposite.heightHint = 50;
+		gd_toolsComposite.heightHint = 38;
 		toolsComposite.setLayoutData(gd_toolsComposite);
 
 		Composite spyContainerComposite = new Composite(shlSpyMobile, SWT.NONE);
 		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_spyContainerComposite.heightHint = 599;
-		gd_spyContainerComposite.widthHint = 786;
+		gd_spyContainerComposite.heightHint = 600;
+		gd_spyContainerComposite.widthHint = 785;
 		spyContainerComposite.setLayoutData(gd_spyContainerComposite);
 		spyContainerComposite.setLayout(new FillLayout());
 
 		Composite bottomComposite = new Composite(shlSpyMobile, SWT.BORDER);
 		GridData gd_bottomComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_bottomComposite.widthHint = 400;
-		gd_bottomComposite.heightHint = 46;
+		gd_bottomComposite.heightHint = 30;
 		bottomComposite.setLayoutData(gd_bottomComposite);
 
 		SashForm sashForm = new SashForm(spyContainerComposite, SWT.NONE);
@@ -222,10 +221,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				captureObjectAction();
 			}
 		});
-		btnCapture.setBounds(10, 10, 151, 28);
+		btnCapture.setBounds(5, 5, 142, 28);
 		btnCapture.setText("Capture Object");
 
-		btnAdd = new Button(toolsComposite, SWT.NONE);
+		btnAdd = new Button(toolsComposite, SWT.RIGHT_TO_LEFT);
 		btnAdd.setToolTipText("Add to Object Repository");
 		btnAdd.setEnabled(false);
 		btnAdd.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
@@ -255,10 +254,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-
 			}
 		});
-		btnAdd.setBounds(531, 10, 223, 28);
+		btnAdd.setBounds(515, 5, 239, 28);
 		btnAdd.setText("Add to Object Repository");
 
 		btnClickAndMoveToNextScreen = new Button(toolsComposite, SWT.NONE);
@@ -289,7 +287,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				}
 			}
 		});
-		btnClickAndMoveToNextScreen.setBounds(178, 10, 188, 28);
+		btnClickAndMoveToNextScreen.setBounds(153, 5, 188, 28);
 		btnClickAndMoveToNextScreen.setText("Click and Update Spy");
 
 		btnStop = new Button(toolsComposite, SWT.NONE);
@@ -307,7 +305,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				deviceView.close();
 			}
 		});
-		btnStop.setBounds(374, 10, 58, 28);
+		btnStop.setBounds(347, 5, 58, 28);
 		btnStop.setText("Stop");
 
 		btnHelp = new Button(bottomComposite, SWT.NONE);
@@ -323,7 +321,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				mDialog.open();
 			}
 		});
-		btnHelp.setBounds(10, 10, 28, 28);
+		btnHelp.setBounds(5, 5, 20, 20);
 
 		if (AndroidDriverObject.getDriver() == null) {
 			btnCapture.setEnabled(false);
