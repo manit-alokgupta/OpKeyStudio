@@ -1,16 +1,28 @@
 package com.opkey.ObjectFromatter;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Properties.Property;
+import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ObjectPropertiesNotSufficientException;
+import com.crestech.opkey.plugin.webdriver.object.ObjectFormatter;
 import com.crestech.opkey.plugin.webdriver.object.WebDriverObject;
 import com.opkeystudio.runtime.ORObject;
 
-public class ObjectFormatter {
+public class ObjectConverter {
 	public WebDriverObject formatObject(ORObject orobject) {
 		Object _object = convertORObjectToOpKeyObject(orobject);
+		try {
+			return new ObjectFormatter().formatObjectToWebDriverObject(_object);
+		} catch (ObjectPropertiesNotSufficientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
