@@ -59,7 +59,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
-import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable flowStepTable;
