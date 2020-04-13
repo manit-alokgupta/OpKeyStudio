@@ -48,8 +48,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree.
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
-import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
@@ -59,6 +59,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class TestCaseView extends Composite {
 	private FlowStepTable flowStepTable;
@@ -115,10 +116,8 @@ public class TestCaseView extends Composite {
 
 	public TestCaseView(Composite parent, int style) {
 		super(parent, style);
-		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		this.setArtifact(artifact);
-		TestCaseUI();
+		initArtifact();
+		initTestCaseUI();
 		toggleMovedownButton(false);
 		toggleMoveupButton(false);
 		toggleDeleteButton(false);
@@ -126,8 +125,14 @@ public class TestCaseView extends Composite {
 
 	}
 
+	private void initArtifact() {
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		this.setArtifact(artifact);
+	}
+
 	@SuppressWarnings("unused")
-	public void TestCaseUI() {
+	public void initTestCaseUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		display = getParent().getDisplay();
 		TabFolder mainTestCaseTabFolder = new TabFolder(this, SWT.BORDER | SWT.BOTTOM);
