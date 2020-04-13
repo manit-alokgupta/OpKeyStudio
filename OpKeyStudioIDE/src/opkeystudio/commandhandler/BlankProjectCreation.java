@@ -26,7 +26,6 @@ public class BlankProjectCreation {
 		String projectName = new MessageDialogs().openInputDialogAandGetValue("OpKey",
 				"Please Provide The Project Name", "");
 		if (projectName == null) {
-			new MessageDialogs().openErrorDialog("OpKey", "Project name Should not be blank.");
 			return;
 		}
 		if (projectName.isEmpty()) {
