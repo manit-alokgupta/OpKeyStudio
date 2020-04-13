@@ -213,22 +213,17 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		objectPropertiesScrolledComposite.setExpandVertical(true);
 		sashForm.setWeights(new int[] { 431, 352 });
 
-		// -------------------------------------------------------------//
 		btnCapture = new Button(toolsComposite, SWT.NONE);
 		btnCapture.setToolTipText("Capture Object");
 		btnCapture.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-
 		btnCapture.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				captureObjectAction();
 			}
 		});
-
 		btnCapture.setBounds(10, 10, 151, 28);
 		btnCapture.setText("Capture Object");
-
-		// -------------------------------------------------------------//
 
 		btnAdd = new Button(toolsComposite, SWT.NONE);
 		btnAdd.setToolTipText("Add to Object Repository");
@@ -315,12 +310,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnStop.setBounds(374, 10, 58, 28);
 		btnStop.setText("Stop");
 
-		// -------------------------------------------------------------//
-
 		btnHelp = new Button(bottomComposite, SWT.NONE);
 		btnHelp.setToolTipText("Help");
 		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-
+		btnHelp.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/help_16.png"));
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -330,8 +323,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				mDialog.open();
 			}
 		});
-		btnHelp.setBounds(10, 10, 54, 28);
-		btnHelp.setText("Help");
+		btnHelp.setBounds(10, 10, 28, 28);
 
 		if (AndroidDriverObject.getDriver() == null) {
 			btnCapture.setEnabled(false);
@@ -644,7 +636,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	private void checkMonitorCanceled(IProgressMonitor monitor) throws InterruptedException {
 		if (monitor.isCanceled()) {
-			throw new InterruptedException("ERROR_MSG_OPERATION_CANCELED");
+			throw new InterruptedException("Operation Canceled!");
 		}
 	}
 
