@@ -488,7 +488,7 @@ public class AppiumSettingsDialog extends Dialog {
 					TableItem item = capabilityTable.getItem(index);
 					for (int i = 0; i < capabilityTable.getColumnCount(); i++) {
 						Rectangle rect = item.getBounds(i);
-						if (rect.contains(pt) && i == 1) {
+						if (rect.contains(pt) && i == 2) {
 							int column = i;
 							Text text = new Text(capabilityTable, SWT.NONE);
 							Listener textListener = new Listener() {
@@ -624,14 +624,22 @@ public class AppiumSettingsDialog extends Dialog {
 
 	private void fillDataInCapabilityTable() {
 		LinkedHashMap<String, String> mapOfCapabilities = MobileCapabilities.getMapOfCapabilities();
+		String udid = "udid";
+		String app = "app";
+		String deviceName = "deviceName";
 		if (mapOfCapabilities != null) {
-			for (String capabilityName : mapOfCapabilities.keySet()) {
-				String capabilityType = getType(capabilityName);
-				String capabilityValue = mapOfCapabilities.get(capabilityName);
+			if (mapOfCapabilities.containsKey(deviceName))
+				mapOfCapabilities.remove(deviceName);
+			if (mapOfCapabilities.containsKey(app))
+				mapOfCapabilities.remove(app);
+			if (mapOfCapabilities.containsKey(udid))
+				mapOfCapabilities.remove(udid);
 
-				if (!(capabilityName.equalsIgnoreCase("deviceName")) || !(capabilityName.equalsIgnoreCase("udid"))) {
-					addTableItemToCapabilityTableData(capabilityName, capabilityType, capabilityValue);
-				}
+			for (String capabilityName : mapOfCapabilities.keySet()) {
+				String capabilityType = getType(capabilityName).trim();
+				String capabilityValue = mapOfCapabilities.get(capabilityName).trim();
+				addTableItemToCapabilityTableData(capabilityName, capabilityType, capabilityValue);
+
 			}
 		}
 	}
