@@ -119,7 +119,7 @@ public class ArtifactExporting {
 			e1.printStackTrace();
 		}
 		String downloadFileId = Utilities.getInstance().getUniqueUUID("");
-		String artifactsDownloadFolder = Utilities.getInstance().getArtifactsDownloadFolder();
+		String artifactsDownloadFolder = Utilities.getInstance().getProjectsFolder();
 		String artifactFilePath = artifactsDownloadFolder + File.separator + downloadFileId + ".zip";
 		try {
 			downloadUsingStream(fileDownloadURL, artifactFilePath);
