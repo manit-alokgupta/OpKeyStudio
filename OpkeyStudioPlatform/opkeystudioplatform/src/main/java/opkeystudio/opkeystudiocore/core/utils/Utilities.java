@@ -116,6 +116,15 @@ public class Utilities {
 				+ "PluginRunner";
 	}
 
+	public String getCommonsFolder() {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "commons";
+	}
+
+	public String getCommons_DBStructureFolder() {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "commons" + File.separator
+				+ "DBStructure";
+	}
+
 	public String getPluginRunnerDir(String pluginRunnerName) {
 		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
 				+ "PluginRunner" + File.separator + pluginRunnerName;
