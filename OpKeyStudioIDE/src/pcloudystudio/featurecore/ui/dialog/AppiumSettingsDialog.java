@@ -77,6 +77,9 @@ public class AppiumSettingsDialog extends Dialog {
 	private Text manuallyCapabilityValue;
 	private Button addToTable2;
 	private Button manuallyCancel;
+	private Combo combo_DataType;
+	private Combo combo_ManualType;
+	String Types[] = { "int", "String", "boolean" };
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, SWT.DIALOG_TRIM);
@@ -109,7 +112,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -157,7 +160,7 @@ public class AppiumSettingsDialog extends Dialog {
 		labelPort.setBounds(30, 52, 60, 33);
 
 		serverAddress = new Text(compositeAppiumSettings, SWT.BORDER);
-		serverAddress.setToolTipText("Host");
+		serverAddress.setToolTipText("Please Provide LocalHost Address");
 		serverAddress.setBounds(205, 10, 309, 33);
 
 		portNumber = new Text(compositeAppiumSettings, SWT.BORDER);
@@ -166,7 +169,7 @@ public class AppiumSettingsDialog extends Dialog {
 				restrictInputOnPort(e);
 			}
 		});
-		portNumber.setToolTipText("Port");
+		portNumber.setToolTipText("Please Provide Port ");
 		portNumber.setBounds(205, 49, 309, 33);
 
 		appiumDirectory = new Text(compositeAppiumSettings, SWT.BORDER);
@@ -180,10 +183,10 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumPortIpInfo.getInstance()
-				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumPortIpInfo.getInstance()
-				.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+						.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				AppiumPortIpInfo.getInstance().setAppiumDirectory(
 						OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
@@ -275,6 +278,7 @@ public class AppiumSettingsDialog extends Dialog {
 		addCapabilityComposite.setVisible(true);
 
 		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
+		capabilityNameCombo.setToolTipText("Please Select DataType");
 		capabilityNameCombo.setBounds(10, 5, 154, 33);
 		capabilityNameCombo.setItems(capabilityNameList);
 
@@ -289,7 +293,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
 		capabilityTextValue.setToolTipText("Please Enter Capability Value");
-		capabilityTextValue.setBounds(170, 5, 154, 28);
+		capabilityTextValue.setBounds(310, 5, 127, 28);
 
 		capabilityTextValue.addModifyListener(new ModifyListener() {
 			@Override
@@ -299,32 +303,46 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 			}
 		});
+		capabilityTextValue.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent e) {
+				String type = combo_DataType.getText();
+				btnAddToTable.setEnabled(true);
+				restrictInputString(e, type);
+			}
+		});
 
 		btnAddToTable = new Button(addCapabilityComposite, SWT.NONE);
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String capabilityName = capabilityNameCombo.getText();
+				String capabilityType = combo_DataType.getText();
 				String capabilityValue = capabilityTextValue.getText();
-				if (validateCapabilityValue(capabilityValue))
-					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
-				else {
-					MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							capabilityValue.length() == 0 ? "Capability Value can't be empty!"
-									: "Invalid Capability Value!",
-									1, 0, "OK");
-					mDialog.open();
+				if ((capabilityName != "" && capabilityName != null) && (capabilityType != "" && capabilityType != null)
+						&& (capabilityValue != null && capabilityValue != "")) {
+					if (validateCapabilityValue(capabilityValue))
+						addTableItemToCapabilityTableData(capabilityName, capabilityType, capabilityValue);
+					else {
+						MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+								"Invalid Capability Value!", 1, 0, "OK");
+						mDialog.open();
+					}
 				}
 				btnAddToTable.setEnabled(false);
-				capabilityNameCombo.removeAll();
-				capabilityNameCombo.setItems(capabilityNameList);
 				capabilityTextValue.setText("");
+				capabilityNameCombo.setText("");
 			}
 		});
-		btnAddToTable.setBounds(330, 4, 135, 30);
+		btnAddToTable.setBounds(443, 3, 97, 30);
 		btnAddToTable.setText("Add to Table");
 		btnAddToTable.setEnabled(false);
+
+		combo_DataType = new Combo(addCapabilityComposite, SWT.READ_ONLY); // change to if want to modifiable
+		combo_DataType.setToolTipText("Please Select DataType ");
+		combo_DataType.setBounds(170, 5, 134, 28);
+		combo_DataType.setItems(Types);
+		combo_DataType.setText("String");
 
 		manuallyAddCapabilityComposite2 = new Composite(compositeAddCapability, SWT.NONE);
 		manuallyAddCapabilityComposite2.setBounds(62, 0, 550, 42);
@@ -332,7 +350,12 @@ public class AppiumSettingsDialog extends Dialog {
 
 		manuallyCapabilityName = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
 		manuallyCapabilityName.setToolTipText("Please Enter Capability Name ");
-		manuallyCapabilityName.setBounds(10, 5, 154, 28);
+		manuallyCapabilityName.setBounds(10, 5, 102, 28);
+
+		combo_ManualType = new Combo(manuallyAddCapabilityComposite2, SWT.NONE);
+		combo_ManualType.setToolTipText("Please Select DataType ");
+		combo_ManualType.setBounds(120, 5, 102, 28);
+		combo_ManualType.setItems(Types);
 
 		manuallyCapabilityValue = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
 		manuallyCapabilityValue.setToolTipText("Please Enter Capability Value ");
@@ -341,26 +364,20 @@ public class AppiumSettingsDialog extends Dialog {
 				addToTable2.setEnabled(true);
 			}
 		});
-		manuallyCapabilityValue.setBounds(170, 5, 154, 28);
+		manuallyCapabilityValue.setBounds(230, 5, 137, 28);
 
 		addToTable2 = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
 		addToTable2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String capabilityName = manuallyCapabilityName.getText();
-				String capabilityValue = manuallyCapabilityValue.getText();
-				if (capabilityName.length() > 0 && validateCapabilityValue(capabilityValue))
-					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
-				else {
-					MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							(capabilityName.length() == 0 && capabilityValue.length() == 0)
-							? "Capability Name and Value can't be empty!"
-									: capabilityValue.length() == 0 ? "Capability Value can't be empty!"
-											: capabilityName.length() == 0 ? "Capability Name can't be empty!"
-													: "Invalid Capability Value!",
-													1, 0, "OK");
-					mDialog.open();
+
+				String cap_name = manuallyCapabilityName.getText();
+				String cap_value = manuallyCapabilityValue.getText();
+				String cap_type = combo_ManualType.getText();
+				if ((cap_name != "" || cap_name != null) && (cap_value != "" || cap_value != null)
+						&& (cap_type != "" || cap_type != null)) {
+					if (validateCapabilityValue(cap_value))
+						addTableItemToCapabilityTableData(cap_name, cap_type, cap_value);
 				}
 				manuallyCapabilityName.setText("");
 				manuallyCapabilityValue.setText("");
@@ -369,7 +386,7 @@ public class AppiumSettingsDialog extends Dialog {
 				addCapabilityComposite.setVisible(true);
 			}
 		});
-		addToTable2.setBounds(330, 4, 110, 30);
+		addToTable2.setBounds(379, 4, 86, 30);
 		addToTable2.setText("Add To Table");
 		addToTable2.setEnabled(false);
 
@@ -383,7 +400,7 @@ public class AppiumSettingsDialog extends Dialog {
 				addCapabilityComposite.setVisible(true);
 			}
 		});
-		manuallyCancel.setBounds(440, 4, 110, 30);
+		manuallyCancel.setBounds(469, 4, 81, 30);
 		manuallyCancel.setText("Cancel");
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
@@ -398,10 +415,13 @@ public class AppiumSettingsDialog extends Dialog {
 		capabilityTable.setHeaderVisible(true);
 		TableColumn columnName = new TableColumn(capabilityTable, 0);
 		columnName.setText("Name");
-		columnName.setWidth(250);
+		columnName.setWidth(201);
+		TableColumn columnType = new TableColumn(capabilityTable, 0);
+		columnType.setText("Data Type");
+		columnType.setWidth(227);
 		TableColumn columnValue = new TableColumn(capabilityTable, 0);
 		columnValue.setText("Value");
-		columnValue.setWidth(356);
+		columnValue.setWidth(178);
 
 		fillDataInCapabilityTable();
 
@@ -423,11 +443,15 @@ public class AppiumSettingsDialog extends Dialog {
 					if (capabilityTable.getItemCount() > 0) {
 						try {
 							LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
+							LinkedHashMap<String, String> mapOfCapabilityValueType = new LinkedHashMap<String, String>();
 							for (TableItem row : capabilityTable.getItems()) {
-								mapOfCapabilities.put(row.getText(0), row.getText(1));
+								mapOfCapabilities.put(row.getText(0), row.getText(2));
+								mapOfCapabilityValueType.put(row.getText(0), row.getText(1));
 							}
+
 							MobileCapabilities.getinstance();
 							MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+							MobileCapabilities.setMapOfCapabilityNameType(mapOfCapabilityValueType);
 						} catch (Exception e2) {
 							e2.printStackTrace();
 						}
@@ -507,9 +531,13 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 	}
 
-	private void addTableItemToCapabilityTableData(String key, String value) {
+	private void addTableItemToCapabilityTableData(String key, String type, String value) {
 		TableItem item = new TableItem(capabilityTable, SWT.NONE);
-		item.setText(new String[] { key, value });
+		item.setText(0, key);
+		item.setText(1, type);
+		item.setText(2, value);
+		btnAddToTable.setEnabled(false);
+		// item.setText(new String[] { key, value });
 	}
 
 	public Boolean validate() {
@@ -598,9 +626,12 @@ public class AppiumSettingsDialog extends Dialog {
 		LinkedHashMap<String, String> mapOfCapabilities = MobileCapabilities.getMapOfCapabilities();
 		if (mapOfCapabilities != null) {
 			for (String capabilityName : mapOfCapabilities.keySet()) {
+				String capabilityType = getType(capabilityName);
 				String capabilityValue = mapOfCapabilities.get(capabilityName);
-				if (!capabilityName.equalsIgnoreCase("deviceName") || !capabilityName.equalsIgnoreCase("udid"))
-					addTableItemToCapabilityTableData(capabilityName, capabilityValue);
+
+				if (!(capabilityName.equalsIgnoreCase("deviceName")) || !(capabilityName.equalsIgnoreCase("udid"))) {
+					addTableItemToCapabilityTableData(capabilityName, capabilityType, capabilityValue);
+				}
 			}
 		}
 	}
@@ -623,4 +654,33 @@ public class AppiumSettingsDialog extends Dialog {
 		}
 
 	}
+
+	protected void restrictInputString(VerifyEvent event, String type) {
+		String allowedCharactersInteger = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.1234567890";
+		String text = event.text;
+
+		for (int index = 0; index < text.length(); index++) {
+			char character = text.charAt(index);
+			boolean isAllowed = allowedCharactersInteger.indexOf(character) > -1;
+			if (!isAllowed) {
+				event.doit = false;
+				return;
+			}
+		}
+
+	}
+
+	private String getType(String capName) {
+
+		LinkedHashMap<String, String> mapOfCapabilityNameType = new LinkedHashMap<String, String>();
+		mapOfCapabilityNameType = MobileCapabilities.getMapOfCapabilityNameType();
+		if (mapOfCapabilityNameType != null) {
+			if (mapOfCapabilityNameType.containsKey(capName)) {
+				return mapOfCapabilityNameType.get(capName);
+			}
+		}
+
+		return "String";
+	}
+
 }
