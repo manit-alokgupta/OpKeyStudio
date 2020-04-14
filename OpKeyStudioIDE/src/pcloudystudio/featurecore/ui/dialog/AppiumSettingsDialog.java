@@ -627,21 +627,21 @@ public class AppiumSettingsDialog extends Dialog {
 		if (capName.isEmpty() || capName.equals("")) {
 			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
 					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-					"Capability Name Cannot Be Empty", 1, 0, "OK");
+					"Capability Name can't be empty!", 1, 0, "OK");
 			mDialog.open();
 			return false;
 		}
 		if (capValue.isEmpty() || capValue.equals("")) {
 			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
 					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-					"Capability Value Cannot Be Empty", 1, 0, "OK");
+					"Capability Value can't be empty! \nProvide capability value first.", 1, 0, "OK");
 			mDialog.open();
 			return false;
 		}
 		if (capType.isEmpty() || capType.equals("")) {
 			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
 					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-					"Capability Type Cannot Be Empty", 1, 0, "OK");
+					"Capability data type can't be empty!", 1, 0, "OK");
 			mDialog.open();
 			return false;
 		}
