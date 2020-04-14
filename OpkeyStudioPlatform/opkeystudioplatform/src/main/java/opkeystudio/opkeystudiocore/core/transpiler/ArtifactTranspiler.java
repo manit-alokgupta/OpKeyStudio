@@ -64,6 +64,9 @@ public class ArtifactTranspiler {
 				if (!packageName.isEmpty()) {
 					packageName += ".";
 				}
+				if (checkPackageNameIsValid(varName) == false) {
+					varName = "opkeyPackage" + varName;
+				}
 				packagePath += varName;
 				packageName += varName;
 			}
@@ -74,6 +77,17 @@ public class ArtifactTranspiler {
 		ArtifactTranspiler.getInstance().addPackageName("allartifacts");
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.OpKeyGenericPlugin");
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
+	}
+
+	private boolean checkPackageNameIsValid(String packagename) {
+		try {
+			Integer.parseInt(packagename);
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return true;
 	}
 
 	public void transpileAllArtifacts() {
