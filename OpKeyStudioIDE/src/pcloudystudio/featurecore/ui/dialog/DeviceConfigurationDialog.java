@@ -157,10 +157,9 @@ public class DeviceConfigurationDialog extends Dialog {
 		}
 
 		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnRefresh.setBounds(470, 22, 33, 33);
+		btnRefresh.setToolTipText("Refresh");
+		btnRefresh.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
-		
-
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -189,6 +188,7 @@ public class DeviceConfigurationDialog extends Dialog {
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
+		btnRefresh.setBounds(470, 22, 33, 33);
 
 		Label lblApplicationFile = new Label(compositeConfigurationSettings, SWT.NONE);
 		lblApplicationFile.setBounds(44, 95, 105, 25);
@@ -199,9 +199,33 @@ public class DeviceConfigurationDialog extends Dialog {
 		applicationPathText.setBounds(155, 89, 309, 33);
 
 		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnBrowseAPK.setBounds(470, 88,33, 33);
+		btnBrowseAPK.setToolTipText("Browse Application");
+		btnBrowseAPK.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnBrowseAPK.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browseicon.png"));
-		
+		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog dialog = new FileDialog(shlDeviceConfiguration);
+				dialog.setFilterExtensions(new String[] { "*.apk" });
+				dialog.setFilterNames(new String[] { "APK File" });
+				dialog.setFilterPath(applicationPathText.getText());
+				String path = dialog.open();
+				if (path != null) {
+					File file = new File(path);
+					if (file.exists()) {
+						applicationPathText.setText(file.toString());
+						applicationPathText.setEditable(true);
+					} else {
+						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+								"Application APK file you provided doesn't exist!", 1, 0, "OK");
+						mDialog.open();
+					}
+				}
+				shlDeviceConfiguration.setFocus();
+			}
+		});
+		btnBrowseAPK.setBounds(470, 88, 33, 33);
 
 		Button btnNext = new Button(shlDeviceConfiguration, SWT.NONE);
 		btnNext.addSelectionListener(new SelectionAdapter() {
@@ -311,30 +335,6 @@ public class DeviceConfigurationDialog extends Dialog {
 		});
 		btnClose.setBounds(533, 182, 75, 33);
 		btnClose.setText("Close");
-		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				FileDialog dialog = new FileDialog(shlDeviceConfiguration);
-				dialog.setFilterExtensions(new String[] { "*.apk" });
-				dialog.setFilterNames(new String[] { "APK File" });
-				dialog.setFilterPath(applicationPathText.getText());
-				String path = dialog.open();
-				if (path != null) {
-					File file = new File(path);
-					if (file.exists()) {
-						applicationPathText.setText(file.toString());
-						applicationPathText.setEditable(true);
-					} else {
-						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-								"Application APK file you provided doesn't exist!", 1, 0, "OK");
-						mDialog.open();
-					}
-				}
-				shlDeviceConfiguration.setFocus();
-			}
-		});
-
 	}
 
 	public ObjectRepositoryView getParentObjectRepositoryView() {
