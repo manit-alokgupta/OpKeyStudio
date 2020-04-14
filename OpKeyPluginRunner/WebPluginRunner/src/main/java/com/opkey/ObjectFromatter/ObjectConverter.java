@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object;
+import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Properties;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Properties.Property;
 import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ObjectPropertiesNotSufficientException;
 import com.crestech.opkey.plugin.webdriver.object.ObjectFormatter;
@@ -27,7 +28,9 @@ public class ObjectConverter {
 	private Object convertORObjectToOpKeyObject(ORObject orobject) {
 		Object object = new Object();
 		object.setLogicalName(getLogicalNameOfORObject(orobject));
-
+		Properties props=new Properties();
+		object.setProperties(props);
+		
 		Map<String, String> allProperties = orobject.getAllProperties();
 		Set<String> propertyNames = allProperties.keySet();
 		for (String propertyName : propertyNames) {

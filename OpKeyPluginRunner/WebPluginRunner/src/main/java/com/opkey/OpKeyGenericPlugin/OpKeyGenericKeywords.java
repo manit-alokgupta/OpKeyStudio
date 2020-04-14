@@ -1,5 +1,8 @@
 package com.opkey.OpKeyGenericPlugin;
 
+import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
+import com.crestech.opkey.plugin.webdriver.keywords.Button;
+import com.crestech.opkey.plugin.webdriver.keywords.WebObjects;
 import com.crestech.opkey.plugin.webdriver.object.WebDriverObject;
 import com.opkey.ObjectFromatter.ObjectConverter;
 import com.opkeystudio.runtime.ORObject;
@@ -75,13 +78,17 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean Click(ORObject arg0) {
+	public boolean Click(ORObject arg0) throws Exception {
 
 		System.out.println(">>Keyword Called Click");
-
-		// Method_ObjectClick
-		WebDriverObject object = new ObjectConverter().formatObject(arg0);
-		System.out.println(">>Tag Name " + object.getTagName());
+		try {
+			// Method_ObjectClick
+			WebDriverObject object = new ObjectConverter().formatObject(arg0);
+			System.out.println(">>Tag Name " + object.getTagName());
+			FunctionResult fr = new WebObjects().Method_ObjectClick(object);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return false;
 
 	}
