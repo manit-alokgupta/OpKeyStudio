@@ -93,7 +93,7 @@ public class Utilities {
 
 	public String getDefaultInstallDir() {
 		return "E:\\OpKeyEResources";
-		// return defaultInstallDir;
+		 //return defaultInstallDir;
 	}
 
 	public String getSessionsFolder() {

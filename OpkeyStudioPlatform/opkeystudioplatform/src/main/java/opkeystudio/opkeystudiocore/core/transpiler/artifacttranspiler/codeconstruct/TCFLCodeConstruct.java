@@ -46,6 +46,7 @@ public class TCFLCodeConstruct {
 
 	private String getKeywordCode(Artifact artifact, FlowStep flowStep, String refvarName) {
 		String keywordName = flowStep.getKeyword().getName();
+		System.out.println(">>Keyword Name "+keywordName);
 		String methodcode = newLineChar + refvarName + "." + keywordName + "(";
 		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
@@ -101,6 +102,7 @@ public class TCFLCodeConstruct {
 
 		methodcode += argumentCall;
 		methodcode += ");";
+		System.out.println(">>Method Body "+methodcode);
 		return methodcode;
 	}
 
@@ -115,7 +117,7 @@ public class TCFLCodeConstruct {
 			if (data == null) {
 				data = "";
 			}
-			return "\"" + data + "\"";
+			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
 		if (dataType.equals("Integer")) {
 			if (data == null) {
@@ -127,7 +129,13 @@ public class TCFLCodeConstruct {
 			if (data == null) {
 				data = "false";
 			}
-			return data;
+			return data.toLowerCase();
+		}
+		if (dataType.equals("File")) {
+			if (data == null) {
+				data = "";
+			}
+			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
 		return data;
 	}
@@ -225,6 +233,7 @@ public class TCFLCodeConstruct {
 	}
 
 	private boolean isOpKeyGenericKeyword(FlowStep flowStep) {
+		System.out.println(flowStep.getKeyword().getName() + "    " + flowStep.getKeyword().getKeywordtype());
 		if (flowStep.getKeyword().getKeywordtype().equals("OpKeyGenericKeyword")) {
 			return true;
 		}

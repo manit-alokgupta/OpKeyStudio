@@ -46,6 +46,7 @@ public class FLTranspiler extends AbstractTranspiler {
 			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(artifact, flowStep);
 			methodBodyCode += flowStepCode;
 		}
+		System.out.println(methodBodyCode);
 		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
 		return class1;
 	}
