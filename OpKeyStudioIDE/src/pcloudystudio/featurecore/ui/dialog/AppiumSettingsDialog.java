@@ -326,16 +326,10 @@ public class AppiumSettingsDialog extends Dialog {
 				String capabilityName = capabilityNameCombo.getText();
 				String capabilityType = combo_DataType.getText();
 				String capabilityValue = capabilityTextValue.getText();
-				if ((capabilityName != "" && capabilityName != null) && (capabilityType != "" && capabilityType != null)
-						&& (capabilityValue != null && capabilityValue != "")) {
-					if (validateCapabilityValue(capabilityValue))
-						addTableItemToCapabilityTableData(capabilityName, capabilityType, capabilityValue);
-					else {
-						MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
-								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-								"Invalid Capability Value!", 1, 0, "OK");
-						mDialog.open();
-					}
+
+				if (validateCapabilityNameAndValue(capabilityName, capabilityValue, capabilityType)) {
+					addTableItemToCapabilityTableData(capabilityName, capabilityType, capabilityValue);
+
 				}
 				btnAddToTable.setEnabled(false);
 				capabilityTextValue.setText("");
@@ -360,16 +354,24 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyCapabilityName.setToolTipText("Please Enter Capability Name ");
 		manuallyCapabilityName.setBounds(10, 5, 102, 28);
 
-		combo_ManualType = new Combo(manuallyAddCapabilityComposite2, SWT.NONE);
+		combo_ManualType = new Combo(manuallyAddCapabilityComposite2, SWT.READ_ONLY);
 		combo_ManualType.setToolTipText("Please Select DataType ");
 		combo_ManualType.setBounds(120, 5, 102, 28);
 		combo_ManualType.setItems(Types);
+		combo_ManualType.setText("String");
 
 		manuallyCapabilityValue = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
 		manuallyCapabilityValue.setToolTipText("Please Enter Capability Value ");
 		manuallyCapabilityValue.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				addToTable2.setEnabled(true);
+			}
+		});
+		manuallyCapabilityValue.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent e) {
+				String type = combo_ManualType.getText();
+				addToTable2.setEnabled(true);
+				restrictInputString(e, type);
 			}
 		});
 		manuallyCapabilityValue.setBounds(230, 5, 137, 28);
@@ -382,10 +384,9 @@ public class AppiumSettingsDialog extends Dialog {
 				String cap_name = manuallyCapabilityName.getText();
 				String cap_value = manuallyCapabilityValue.getText();
 				String cap_type = combo_ManualType.getText();
-				if ((cap_name != "" || cap_name != null) && (cap_value != "" || cap_value != null)
-						&& (cap_type != "" || cap_type != null)) {
-					if (validateCapabilityValue(cap_value))
-						addTableItemToCapabilityTableData(cap_name, cap_type, cap_value);
+
+				if (validateCapabilityNameAndValue(cap_name, cap_value, cap_type)) {
+					addTableItemToCapabilityTableData(cap_name, cap_type, cap_value);
 				}
 				manuallyCapabilityName.setText("");
 				manuallyCapabilityValue.setText("");
@@ -622,15 +623,30 @@ public class AppiumSettingsDialog extends Dialog {
 		return VALID_IPV4_PATTERN.matcher(str).matches();
 	}
 
-	public Boolean validateCapabilityValue(String str) {
-		if (str.length() == 0) {
+	public Boolean validateCapabilityNameAndValue(String capName, String capValue, String capType) {
+		if (capName.isEmpty() || capName.equals("")) {
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"Capability Name Cannot Be Empty", 1, 0, "OK");
+			mDialog.open();
 			return false;
 		}
-		if (str instanceof String) {
-			return true;
+		if (capValue.isEmpty() || capValue.equals("")) {
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"Capability Value Cannot Be Empty", 1, 0, "OK");
+			mDialog.open();
+			return false;
+		}
+		if (capType.isEmpty() || capType.equals("")) {
+			MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
+					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					"Capability Type Cannot Be Empty", 1, 0, "OK");
+			mDialog.open();
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private void fillDataInCapabilityTable() {
