@@ -64,7 +64,6 @@ public class ExecutionResultView extends Composite {
 				while (true) {
 					ByteArrayOutputStream standardOutPut = executor.getStandardOutput();
 					ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
-					System.out.println(">>Execution Status " + executor.isExecutionCompleted());
 					if (executor.isExecutionCompleted()) {
 						String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
 								+ standardErrorOutput.toString();
