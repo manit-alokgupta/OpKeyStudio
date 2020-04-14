@@ -26,8 +26,10 @@ public class Main {
 		OpKeyGenericKeywords genericKeyword = new OpKeyGenericKeywords();
 		genericKeyword.OpenBrowser("chrome", "http://sstsinc.com");
 		long startTime = System.currentTimeMillis();
+		genericKeyword.RefreshBrowser();
 		genericKeyword.Click(Home);
 		genericKeyword.Click(Company);
+		genericKeyword.Click(Home);
 		long endTime = System.currentTimeMillis() - startTime;
 		System.out.println(">>Completed in " + endTime);
 		genericKeyword.CloseAllBrowsers();

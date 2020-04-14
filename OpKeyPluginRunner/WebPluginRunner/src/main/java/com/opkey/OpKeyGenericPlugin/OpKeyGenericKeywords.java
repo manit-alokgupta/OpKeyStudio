@@ -140,10 +140,12 @@ public class OpKeyGenericKeywords {
 			FunctionResult fr = new WebObjects().Method_ObjectClick(object);
 			System.out.println("Keyword Output " + fr.getOutput());
 			return false;
-		} catch (RetryKeywordAgainException e) {
-			return Click(arg0);
+		} catch (Exception e) {
+			if (e instanceof RetryKeywordAgainException) {
+				return Click(arg0);
+			}
 		}
-
+		return false;
 	}
 
 	public boolean DoubleClick(ORObject arg0) {
