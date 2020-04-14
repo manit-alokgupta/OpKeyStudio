@@ -1,19 +1,24 @@
 package com.opkey.OpKeyGenericPlugin;
 
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
-import com.crestech.opkey.plugin.webdriver.keywords.Button;
+import com.crestech.opkey.plugin.webdriver.keywords.Browser;
 import com.crestech.opkey.plugin.webdriver.keywords.WebObjects;
 import com.crestech.opkey.plugin.webdriver.object.WebDriverObject;
 import com.opkey.ObjectFromatter.ObjectConverter;
+import com.opkey.context.ContextInitiator;
 import com.opkeystudio.runtime.ORObject;
 
 public class OpKeyGenericKeywords {
+	public OpKeyGenericKeywords() {
+		new ContextInitiator().initContext();
+	}
+
 	public boolean TypeTextOnEditBox(ORObject arg0, String arg1) {
 
 		System.out.println(">>Keyword Called TypeTextOnEditBox");
 
 		// Method_typeTextOnEditBox
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		return false;
 
 	}
@@ -23,7 +28,7 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called TypeKeysOnEditBox");
 
 		// Method_typeKeysOnEditBox
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		return false;
 
 	}
@@ -38,12 +43,12 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean OpenBrowser(String arg0, String arg1) {
-
+	public boolean OpenBrowser(String arg0, String arg1) throws Exception {
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		System.out.println(">>Keyword Called OpenBrowser");
 
 		// Method_WebBrowserOpen
-
+		new Browser().Method_WebBrowserOpen(arg0, arg1);
 		return false;
 
 	}
@@ -81,14 +86,11 @@ public class OpKeyGenericKeywords {
 	public boolean Click(ORObject arg0) throws Exception {
 
 		System.out.println(">>Keyword Called Click");
-		try {
-			// Method_ObjectClick
-			WebDriverObject object = new ObjectConverter().formatObject(arg0);
-			System.out.println(">>Tag Name " + object.getTagName());
-			FunctionResult fr = new WebObjects().Method_ObjectClick(object);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+
+		// Method_ObjectClick
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		System.out.println(">>Tag Name " + object.getTagName());
+		FunctionResult fr = new WebObjects().Method_ObjectClick(object);
 		return false;
 
 	}
@@ -98,7 +100,7 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called DoubleClick");
 
 		// Method_dblClick
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		return false;
 
 	}
@@ -768,7 +770,7 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called ClickButton");
 
 		// Method_clickButton
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		return false;
 
 	}
