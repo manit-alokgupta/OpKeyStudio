@@ -444,8 +444,17 @@ public class AppiumSettingsDialog extends Dialog {
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory",
 							appiumDirectory.getText());
 					AppiumPortIpInfo.getInstance().setAppiumDirectory(appiumDirectory.getText());
-					if (capabilityTable.getItemCount() > 0) {
+					if (capabilityTable.getItemCount() >= 0) {
 						try {
+							MobileCapabilities.getinstance();
+							if (MobileCapabilities.getMapOfCapabilities() != null) {
+								MobileCapabilities.getinstance().setMapOfCapabilities(null);
+
+							}
+							if (MobileCapabilities.getMapOfCapabilityNameType() != null) {
+								MobileCapabilities.setMapOfCapabilityNameType(null);
+
+							}
 							LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
 							LinkedHashMap<String, String> mapOfCapabilityValueType = new LinkedHashMap<String, String>();
 							for (TableItem row : capabilityTable.getItems()) {
@@ -453,7 +462,6 @@ public class AppiumSettingsDialog extends Dialog {
 								mapOfCapabilityValueType.put(row.getText(0), row.getText(1));
 							}
 
-							MobileCapabilities.getinstance();
 							MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
 							MobileCapabilities.setMapOfCapabilityNameType(mapOfCapabilityValueType);
 						} catch (Exception e2) {
