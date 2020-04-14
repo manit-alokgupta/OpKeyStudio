@@ -157,8 +157,9 @@ public class DeviceConfigurationDialog extends Dialog {
 		}
 
 		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnRefresh.setBounds(470, 22, 75, 33);
-		btnRefresh.setText("Refresh");
+		btnRefresh.setBounds(470, 22, 33, 33);
+		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		
 
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -198,8 +199,9 @@ public class DeviceConfigurationDialog extends Dialog {
 		applicationPathText.setBounds(155, 89, 309, 33);
 
 		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
-		btnBrowseAPK.setBounds(470, 88, 75, 33);
-		btnBrowseAPK.setText("Browse");
+		btnBrowseAPK.setBounds(470, 88,33, 33);
+		btnBrowseAPK.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browseicon.png"));
+		
 
 		Button btnNext = new Button(shlDeviceConfiguration, SWT.NONE);
 		btnNext.addSelectionListener(new SelectionAdapter() {
