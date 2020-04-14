@@ -39,6 +39,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.OpKeyStudioPreferences;
+import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AppiumPortIpInfo;
 import pcloudystudio.appium.MobileCapabilities;
 
@@ -81,8 +82,16 @@ public class AppiumSettingsDialog extends Dialog {
 	private Combo combo_ManualType;
 	String Types[] = { "int", "String", "boolean" };
 
+	private ObjectRepositoryView parentObjectRepositoryView;
+
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, SWT.DIALOG_TRIM);
+		setText("SWT Dialog");
+	}
+
+	public AppiumSettingsDialog(Shell parent, int style, ObjectRepositoryView objectRepositoryView) {
+		super(parent, style);
+		this.setParentObjectRepositoryView(objectRepositoryView);
 		setText("SWT Dialog");
 	}
 
@@ -182,13 +191,12 @@ public class AppiumSettingsDialog extends Dialog {
 			appiumDirectory.setText(AppiumPortIpInfo.getAppiumDirectory());
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
-				AppiumPortIpInfo.getInstance()
+				AppiumPortIpInfo
 				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
-				AppiumPortIpInfo.getInstance()
-				.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+				AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
-				AppiumPortIpInfo.getInstance().setAppiumDirectory(
+				AppiumPortIpInfo.setAppiumDirectory(
 						OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				appiumDirectory.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 			}
@@ -441,14 +449,15 @@ public class AppiumSettingsDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Boolean status = validate();
+				AppiumPortIpInfo.getInstance();
 				if (status) {
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("host_address", serverAddress.getText());
-					AppiumPortIpInfo.getInstance().setHostAddress(serverAddress.getText());
+					AppiumPortIpInfo.setHostAddress(serverAddress.getText());
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("port_number", portNumber.getText());
-					AppiumPortIpInfo.getInstance().setPort(portNumber.getText());
+					AppiumPortIpInfo.setPort(portNumber.getText());
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory",
 							appiumDirectory.getText());
-					AppiumPortIpInfo.getInstance().setAppiumDirectory(appiumDirectory.getText());
+					AppiumPortIpInfo.setAppiumDirectory(appiumDirectory.getText());
 					if (capabilityTable.getItemCount() >= 0) {
 						try {
 							MobileCapabilities.getinstance();
@@ -473,10 +482,16 @@ public class AppiumSettingsDialog extends Dialog {
 							e2.printStackTrace();
 						}
 					}
-					MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Settings Saved Successfully!", 2, 0, "OK");
-					mDialog.open();
+
+					if (getParentObjectRepositoryView() != null) {
+						shlAppiumSettings.close();
+						openDeviceConfigurationDialog();
+					} else {
+						MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Please Note",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+								"Settings Saved Successfully!", 2, 0, "OK");
+						mDialog.open();
+					}
 				}
 			}
 		});
@@ -749,4 +764,16 @@ public class AppiumSettingsDialog extends Dialog {
 		return "String";
 	}
 
+	public ObjectRepositoryView getParentObjectRepositoryView() {
+		return parentObjectRepositoryView;
+	}
+
+	public void setParentObjectRepositoryView(ObjectRepositoryView parentObjectRepositoryView) {
+		this.parentObjectRepositoryView = parentObjectRepositoryView;
+	}
+
+	private void openDeviceConfigurationDialog() {
+		new DeviceConfigurationDialog(this.getParentObjectRepositoryView().getShell(), SWT.NONE,
+				this.parentObjectRepositoryView).open();
+	}
 }

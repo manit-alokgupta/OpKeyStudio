@@ -234,23 +234,21 @@ public class DeviceConfigurationDialog extends Dialog {
 				File apkFile = new File(applicationPathText.getText());
 				boolean exists = apkFile.exists();
 
+				AppiumPortIpInfo.getInstance();
 				if (AppiumPortIpInfo.getHostAddress() == null
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
-					AppiumPortIpInfo.getInstance()
+					AppiumPortIpInfo
 					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
-					AppiumPortIpInfo.getInstance()
-					.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
-					AppiumPortIpInfo.getInstance().setAppiumDirectory(
+					AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					AppiumPortIpInfo.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				}
 
 				if (devicesCombo.getText().isEmpty() || applicationPathText.getText().isEmpty()) {
 					lblNoDeviceConnected.setVisible(devicesCombo.getText().isEmpty() ? true : false);
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
-				} else if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getPort().length() == 0
-						|| AppiumPortIpInfo.getHostAddress() == null || AppiumPortIpInfo.getHostAddress().length() == 0
-						|| AppiumPortIpInfo.getAppiumDirectory() == null
-						|| AppiumPortIpInfo.getAppiumDirectory().length() == 0) {
+				} else if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getHostAddress() == null
+						|| AppiumPortIpInfo.getAppiumDirectory() == null) {
 					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Please Note",
 							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
 							"Appium Settings are not configured! Go-To: Tools->Appium Settings.", 2, 0, "OK");
@@ -343,7 +341,6 @@ public class DeviceConfigurationDialog extends Dialog {
 
 	public void setParentObjectRepositoryView(ObjectRepositoryView parentObjectRepositoryView) {
 		this.parentObjectRepositoryView = parentObjectRepositoryView;
-
 	}
 
 	public void startServer() {

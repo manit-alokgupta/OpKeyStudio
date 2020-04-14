@@ -31,6 +31,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
@@ -44,6 +45,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import pcloudystudio.appium.AppiumPortIpInfo;
+import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
 import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 
 public class ObjectRepositoryView extends Composite {
@@ -517,7 +520,22 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				openDeviceConfigurationDialog();
+				AppiumPortIpInfo.getInstance();
+				if (AppiumPortIpInfo.getHostAddress() == null
+						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
+					AppiumPortIpInfo
+					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+					AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					AppiumPortIpInfo.setAppiumDirectory(
+							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
+				}
+
+				if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getHostAddress() == null
+						|| AppiumPortIpInfo.getAppiumDirectory() == null) {
+					openAppiumSettingDialog();
+				} else {
+					openDeviceConfigurationDialog();
+				}
 			}
 
 			@Override
@@ -657,6 +675,10 @@ public class ObjectRepositoryView extends Composite {
 		deleteMenuItem.setEnabled(status);
 	}
 
+	private void openAppiumSettingDialog() {
+		new AppiumSettingsDialog(this.getShell(), SWT.NONE, this).open();
+	}
+
 	private void openDeviceConfigurationDialog() {
 		new DeviceConfigurationDialog(this.getShell(), SWT.NONE, this).open();
 	}
@@ -720,7 +742,7 @@ public class ObjectRepositoryView extends Composite {
 			if (item.getObjectRepository().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
 				item.getObjectRepository()
-						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+				.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getObjectRepository().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();
