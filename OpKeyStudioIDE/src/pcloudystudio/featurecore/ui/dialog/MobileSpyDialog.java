@@ -6,6 +6,7 @@ package pcloudystudio.featurecore.ui.dialog;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -256,11 +257,23 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				lblAddToORConfirmation.setVisible(false);
+
 				Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
 				Widget item = CustomCheckBoxTree.getCheckedItem(element);
 				TreeItem treeItem = (TreeItem) item;
 				Object obj = treeItem.getData();
-				setMobileElementProps(((BasicMobileElement) obj).getAttributes());
+
+				if (objectPropertiesTable.getItemCount() > 0) {
+					try {
+						LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
+						for (TableItem row : objectPropertiesTable.getItems())
+							mapOfObjectProperties.put(row.getText(0), row.getText(1));
+						setMobileElementProps(mapOfObjectProperties);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+
 				Object parentObj = ((TreeMobileElement) obj).getParentElement();
 				setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
 				try {
