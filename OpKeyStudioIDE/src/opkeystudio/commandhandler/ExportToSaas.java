@@ -25,7 +25,10 @@ public class ExportToSaas {
 		if (loginRequired) {
 			LoginDialog dialog = new LoginDialog(shell, 0);
 			dialog.open();
-
+		}
+		loginRequired = new ArtifactUpload().isLoginToSaasRequired();
+		if (loginRequired) {
+			return;
 		}
 		MessageDialogs msd = new MessageDialogs();
 		msd.openProgressDialog(shell, "Exporting Artifact to SAAS. Please wait....", true, new IRunnableWithProgress() {
