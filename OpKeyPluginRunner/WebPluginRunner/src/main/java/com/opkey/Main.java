@@ -10,10 +10,7 @@ public class Main {
 		orobject.addProperty("tag", "A").addProperty("name", "123").addProperty("id", "abc");
 		OpKeyGenericKeywords genericKeyword=new OpKeyGenericKeywords();
 		genericKeyword.OpenBrowser("chrome", "http://sstsinc.com");
-	//	new OpKeyGenericKeywords().Click(orobject);
-	//	new OpKeyGenericKeywords().Click(orobject);
-	//	new OpKeyGenericKeywords().Click(orobject);
-	//	new OpKeyGenericKeywords().Click(orobject);
+		genericKeyword.Click(orobject);
 	}
 
 }

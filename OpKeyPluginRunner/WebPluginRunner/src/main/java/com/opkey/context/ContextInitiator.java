@@ -9,6 +9,8 @@ import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCa
 import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.Function;
 import com.crestech.opkey.plugin.contexts.Context;
 import com.crestech.opkey.plugin.contexts.InvocationContext;
+import com.crestech.opkey.plugin.webdriver.WebDriverDispatcher;
+import com.crestech.opkey.plugin.webdriver.pluginSpecific.Context.CurrentKeyword;
 
 public class ContextInitiator {
 	public void initContext() {
@@ -17,6 +19,7 @@ public class ContextInitiator {
 		fc.getFunction().setCallTimeoutInMillis(30000);
 		Context.set(new InvocationContext(fc));
 		initSettings();
+		initHacks_Jugaad();
 	}
 
 	public static void addDataRgumentsInFunctionCall(String... args) {
@@ -55,7 +58,8 @@ public class ContextInitiator {
 		settingsMap.put("_DefaultStepTimeout", "90");
 		settingsMap.put("_HighlightObject", "false");
 		settingsMap.put("_ObjectVisibilityCheck", "false");
-		settingsMap.put("________ignore________", "NOTE: Below items can also be fetched through invocation arguments defined in plugin descriptor. Ignore the underscore edges in names");
+		settingsMap.put("________ignore________",
+				"NOTE: Below items can also be fetched through invocation arguments defined in plugin descriptor. Ignore the underscore edges in names");
 		settingsMap.put("_CommunicationEndpoint_", "");
 		settingsMap.put("_ScreenshotsDirectory_", "");
 		settingsMap.put("_EnginePID_", "");
@@ -67,14 +71,19 @@ public class ContextInitiator {
 		settingsMap.put("_DebugMode_", "false");
 		settingsMap.put("_LogSinkEndpoint_", "");
 		settingsMap.put("_AdbDirectory_", "");
-		
-		settingsMap.put("_DefaultPluginLocation_", "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE\\resources\\libraries\\Plugins\\Web");
-		
+
+		settingsMap.put("_DefaultPluginLocation_",
+				"C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE\\resources\\libraries\\Plugins\\Web");
+
 		settingsMap.put("_IOSDirectory_", "");
 		settingsMap.put("_PluginID_", "");
 		settingsMap.put("_RunningViaSpockAgent_", "false");
 		settingsMap.put("_TimeDifferenceBetweenAgentAndPlugin_", "0");
 		settingsMap.put("_SessionID_", "");
 		return settingsMap;
+	}
+
+	private void initHacks_Jugaad() {
+		WebDriverDispatcher.currentKeyword = new CurrentKeyword();
 	}
 }
