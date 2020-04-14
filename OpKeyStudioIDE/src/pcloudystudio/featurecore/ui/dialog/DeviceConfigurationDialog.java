@@ -265,7 +265,19 @@ public class DeviceConfigurationDialog extends Dialog {
 					}
 
 					shlDeviceConfiguration.setVisible(false);
-					showProgressDialog();
+
+					try {
+						showProgressDialog();
+					} catch (org.openqa.selenium.WebDriverException ex) {
+
+						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+								"Unable to start Application: Please check the Appium Server logs for more ... \n"
+										+ ex.getMessage(),
+										1, 0, "OK");
+						mDialog.open();
+
+					}
 
 					if (AndroidDriverObject.getDriver() == null) {
 						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
@@ -346,12 +358,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+					ex.printStackTrace();
 				}
 			} else {
 				AppiumServer.startServer();
@@ -366,26 +373,16 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+					ex.printStackTrace();
 				}
 			}
 		} else {
 
 			try {
-				AndroidDriverObject.getDriver().quit();
+				AndroidDriverObject.getInstance().setDriver(null);
 				Thread.sleep(2000);
 			} catch (Exception ex) {
-				MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-						"Unable to start Application: Please check the Appium Server logs for more ... \n"
-								+ ex.getMessage(),
-								1, 0, "OK");
-				mDialog.open();
+				ex.printStackTrace();
 			}
 			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
 			if (serverStatus) {
@@ -399,16 +396,11 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+					ex.printStackTrace();
 				}
 			} else {
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(5000);
 					AppiumServer.startServer();
 					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
 
@@ -419,12 +411,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -436,17 +423,8 @@ public class DeviceConfigurationDialog extends Dialog {
 				new IRunnableWithProgress() {
 			@Override
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				try {
-					startServer();
-				} catch (Exception e) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio",
-									"icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ e.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
-				}
+				startServer(); // Dont open any dailog here ,in background thread we cannot open ui or main
+				// thread component .
 			}
 		});
 		msd.closeProgressDialog();
