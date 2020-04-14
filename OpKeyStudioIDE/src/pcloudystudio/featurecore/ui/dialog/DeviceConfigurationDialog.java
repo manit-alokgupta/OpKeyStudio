@@ -53,7 +53,6 @@ public class DeviceConfigurationDialog extends Dialog {
 	private Text applicationPathText;
 	private Map<String, String> devicesList;
 	private LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
-	private Label lblDeviceRequiredMessage;
 	private Label lblApplicationIsRequiredMessage;
 	private Label lblNoDeviceConnected;
 
@@ -134,6 +133,13 @@ public class DeviceConfigurationDialog extends Dialog {
 		GridData gd_combo = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		devicesCombo.setLayoutData(gd_combo);
 
+		lblApplicationIsRequiredMessage = new Label(compositeConfigurationSettings, SWT.NONE);
+		lblApplicationIsRequiredMessage.setText("Application is required!");
+		lblApplicationIsRequiredMessage.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		lblApplicationIsRequiredMessage.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
+		lblApplicationIsRequiredMessage.setBounds(155, 128, 230, 21);
+		lblApplicationIsRequiredMessage.setVisible(false);
+
 		try {
 			devicesList = AndroidDeviceUtil.getAndroidDevices();
 			if (devicesList.size() == 0) {
@@ -165,12 +171,12 @@ public class DeviceConfigurationDialog extends Dialog {
 						devicesCombo.removeAll();
 						lblNoDeviceConnected.setVisible(true);
 					} else {
-						lblNoDeviceConnected.setVisible(false);
 						devicesCombo.removeAll();
 						for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
 							devicesCombo.add(deviceEntry.getValue());
 						}
 						devicesCombo.select(0);
+						lblNoDeviceConnected.setVisible(false);
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -195,20 +201,6 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnBrowseAPK.setBounds(470, 88, 75, 33);
 		btnBrowseAPK.setText("Browse");
 
-		lblDeviceRequiredMessage = new Label(compositeConfigurationSettings, SWT.NONE);
-		lblDeviceRequiredMessage.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		lblDeviceRequiredMessage.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
-		lblDeviceRequiredMessage.setBounds(155, 62, 230, 21);
-		lblDeviceRequiredMessage.setText("Device is required!");
-		lblDeviceRequiredMessage.setVisible(false);
-
-		lblApplicationIsRequiredMessage = new Label(compositeConfigurationSettings, SWT.NONE);
-		lblApplicationIsRequiredMessage.setText("Application is required!");
-		lblApplicationIsRequiredMessage.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		lblApplicationIsRequiredMessage.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
-		lblApplicationIsRequiredMessage.setBounds(155, 128, 230, 21);
-		lblApplicationIsRequiredMessage.setVisible(false);
-
 		Button btnNext = new Button(shlDeviceConfiguration, SWT.NONE);
 		btnNext.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -227,7 +219,7 @@ public class DeviceConfigurationDialog extends Dialog {
 				}
 
 				if (devicesCombo.getText().isEmpty() || applicationPathText.getText().isEmpty()) {
-					lblDeviceRequiredMessage.setVisible(devicesCombo.getText().isEmpty() ? true : false);
+					lblNoDeviceConnected.setVisible(devicesCombo.getText().isEmpty() ? true : false);
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
 				} else if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getPort().length() == 0
 						|| AppiumPortIpInfo.getHostAddress() == null || AppiumPortIpInfo.getHostAddress().length() == 0
@@ -273,7 +265,19 @@ public class DeviceConfigurationDialog extends Dialog {
 					}
 
 					shlDeviceConfiguration.setVisible(false);
-					showProgressDialog();
+
+					try {
+						showProgressDialog();
+					} catch (org.openqa.selenium.WebDriverException ex) {
+
+						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+								"Unable to start Application: Please check the Appium Server logs for more ... \n"
+										+ ex.getMessage(),
+										1, 0, "OK");
+						mDialog.open();
+
+					}
 
 					if (AndroidDriverObject.getDriver() == null) {
 						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
@@ -354,12 +358,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+					ex.printStackTrace();
 				}
 			} else {
 				AppiumServer.startServer();
@@ -374,26 +373,16 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+					ex.printStackTrace();
 				}
 			}
 		} else {
 
 			try {
-				AndroidDriverObject.getDriver().quit();
+				AndroidDriverObject.getInstance().setDriver(null);
 				Thread.sleep(2000);
 			} catch (Exception ex) {
-				MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-						"Unable to start Application: Please check the Appium Server logs for more ... \n"
-								+ ex.getMessage(),
-								1, 0, "OK");
-				mDialog.open();
+				ex.printStackTrace();
 			}
 			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
 			if (serverStatus) {
@@ -407,16 +396,11 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+					ex.printStackTrace();
 				}
 			} else {
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(5000);
 					AppiumServer.startServer();
 					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
 
@@ -427,12 +411,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -444,17 +423,8 @@ public class DeviceConfigurationDialog extends Dialog {
 				new IRunnableWithProgress() {
 			@Override
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				try {
-					startServer();
-				} catch (Exception e) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio",
-									"icons/pcloudystudio/opkey-16x16.png"),
-							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ e.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
-				}
+				startServer(); // Dont open any dailog here ,in background thread we cannot open ui or main
+				// thread component .
 			}
 		});
 		msd.closeProgressDialog();
