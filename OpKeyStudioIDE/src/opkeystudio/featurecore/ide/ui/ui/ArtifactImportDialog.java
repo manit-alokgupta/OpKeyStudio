@@ -99,10 +99,6 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 
 		Composite composite_1 = new Composite(sashForm, SWT.BORDER);
 		composite_1.setLayout(new GridLayout(1, false));
-
-		// text_1 = new Text(composite_1, SWT.BORDER);
-		// text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		// text_1.setMessage("Search Artifact");
 		tree = new Tree(composite_1, SWT.BORDER);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm.setWeights(new int[] { 2, 2 });
@@ -348,8 +344,8 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 		this.selectedArtifactTreeNode = selectedArtifactTreeNode;
 	}
 
-	private void exportArtifact(ArtifactTreeNode artifactTreeNode) throws IOException {
-		boolean status = new ArtifactExporting().exportArtifactFromOpKey(artifactTreeNode);
+	private void exportArtifact(ArtifactTreeNode artifactTreeNode, Project project) throws IOException {
+		boolean status = new ArtifactExporting().exportArtifactFromOpKey(artifactTreeNode, project);
 		if (status == false) {
 			new MessageDialogs().executeDisplayAsync(new Runnable() {
 
@@ -376,6 +372,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ArtifactTreeNode selectedArtifact = getSelectedArtifactTreeNode();
+				Project project = getSelectedProject();
 				MessageDialogs msd = new MessageDialogs();
 				msd.openProgressDialog(getParentshell(), "Importing from OpKey SAAS. Please Wait", true,
 						new IRunnableWithProgress() {
@@ -384,7 +381,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 							public void run(IProgressMonitor monitor)
 									throws InvocationTargetException, InterruptedException {
 								try {
-									exportArtifact(selectedArtifact);
+									exportArtifact(selectedArtifact, project);
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();

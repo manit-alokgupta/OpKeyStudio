@@ -40,13 +40,22 @@ public class CompilerUtilities {
 	public List<File> getAllAssocitedLibraries(String pluginName) {
 		List<File> allFiles = new ArrayList<File>();
 		allFiles.addAll(getPluginBaseLibraries());
+		allFiles.addAll(getPluginRunnerJar("System"));
+		allFiles.addAll(getPluginRunnerJar(pluginName));
 		allFiles.addAll(getPluginsLibraries(pluginName));
 		return allFiles;
+	}
+
+	private List<File> getPluginRunnerJar(String pluginName) {
+		String pluginRunnerDir = Utilities.getInstance().getPluginRunnerDir(pluginName);
+		return getAllFiles(new File(pluginRunnerDir), ".jar");
 	}
 
 	public String getClassPathOFAllAssociatedLibs(String pluginName) {
 		String classPath = "";
 		List<File> files = getPluginBaseLibraries();
+		files.addAll(getPluginRunnerJar("System"));
+		files.addAll(getPluginRunnerJar(pluginName));
 		files.addAll(getPluginsLibraries(pluginName));
 		for (File file : files) {
 			if (!classPath.isEmpty()) {

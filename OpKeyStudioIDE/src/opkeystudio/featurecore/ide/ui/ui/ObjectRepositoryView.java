@@ -83,7 +83,7 @@ public class ObjectRepositoryView extends Composite {
 	 * @param style
 	 */
 
-	private CodedFunctionView codedFunctionView;
+	private ArtifactCodeView codedFunctionView;
 
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
@@ -333,7 +333,7 @@ public class ObjectRepositoryView extends Composite {
 		sourceCodeHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		sourceCodeTabItem.setControl(sourceCodeHolder);
 		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
-		CodedFunctionView codedFunctionView = new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, false);
 		setCodedFunctionView(codedFunctionView);
 
 		objectRepositoryTree.addSelectionListener(new SelectionListener() {
@@ -761,11 +761,11 @@ public class ObjectRepositoryView extends Composite {
 		this.orId = orId;
 	}
 
-	public CodedFunctionView getCodedFunctionView() {
+	public ArtifactCodeView getCodedFunctionView() {
 		return codedFunctionView;
 	}
 
-	public void setCodedFunctionView(CodedFunctionView codedFunctionView) {
+	public void setCodedFunctionView(ArtifactCodeView codedFunctionView) {
 		this.codedFunctionView = codedFunctionView;
 	}
 }

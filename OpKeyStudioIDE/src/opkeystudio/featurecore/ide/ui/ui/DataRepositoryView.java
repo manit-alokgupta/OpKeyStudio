@@ -47,7 +47,7 @@ public class DataRepositoryView extends Composite {
 	private ToolItem moveRowUpToolItm;
 	private ToolItem moveRowDownToolItm;
 	private ToolItem saveToolItm;
-	private CodedFunctionView codedFunctionView;
+	private ArtifactCodeView codedFunctionView;
 
 	/**
 	 * Create the composite.
@@ -166,7 +166,7 @@ public class DataRepositoryView extends Composite {
 		sourceCodeTabItem.setControl(sourceCodeHolder);
 		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		CodedFunctionView codedFunctionView = new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, false);
 		setCodedFunctionView(codedFunctionView);
 	}
 
@@ -394,11 +394,11 @@ public class DataRepositoryView extends Composite {
 		// Disable the check that prevents subclassing of SWT components
 	}
 
-	public CodedFunctionView getCodedFunctionView() {
+	public ArtifactCodeView getCodedFunctionView() {
 		return codedFunctionView;
 	}
 
-	public void setCodedFunctionView(CodedFunctionView codedFunctionView) {
+	public void setCodedFunctionView(ArtifactCodeView codedFunctionView) {
 		this.codedFunctionView = codedFunctionView;
 	}
 }

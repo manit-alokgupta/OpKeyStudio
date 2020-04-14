@@ -2,6 +2,9 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.File;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -9,20 +12,19 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
-
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Text;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Combo pluginSelectionDropDown;
@@ -35,6 +37,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Text buildNameTextField;
 
 	private ExecutionSession executionSession;
+	private Composite container;
+	private Composite area;
 
 	/**
 	 * Create the dialog.
@@ -65,8 +69,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		Composite area = (Composite) super.createDialogArea(parent);
-		Composite container = new Composite(area, SWT.NONE);
+		area = (Composite) super.createDialogArea(parent);
+		container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout(22, false));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 		new Label(container, SWT.NONE);
@@ -188,14 +192,16 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (isExecutingFromTestCaseView()) {
-					new ArtifactExecutor().execute(getExecutionSession());
-					return;
-				}
-				if (isExecutingFromTestSuiteView()) {
-					new ArtifactExecutor().execute(getExecutionSession());
-					return;
-				}
+				new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+					@Override
+					public void run() {
+						executeSession();
+					}
+				});
+				container.dispose();
+				area.dispose();
+				close();
 			}
 
 			@Override
@@ -219,6 +225,16 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			}
 		});
+	}
+
+	private void executeSession() {
+		ExecutionSession executionSession = getExecutionSession();
+		EPartService partService = opkeystudio.core.utils.Utilities.getInstance().getEpartService();
+		MPart part = partService.createPart("opkeystudio.partdescriptor.executionResultPart");
+		part.setLabel(executionSession.getSessionName());
+		part.setTooltip(executionSession.getSessionName());
+		part.getTransientData().put("opkeystudio.executionSessionData", executionSession);
+		partService.showPart(part, PartState.ACTIVATE);
 	}
 
 	/**

@@ -1,88 +1,109 @@
 package opkeystudio.opkeystudiocore.core.execution;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-
-import org.apache.commons.io.FileUtils;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.compiler.ArtifactCompiler;
-import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 
 public class ArtifactExecutor {
-	private String sorceFileExt = ".java";
-	private String compileFileExt = ".class";
+	private ByteArrayOutputStream standardOutput;
+	private ByteArrayOutputStream standardErrorOutput;
+	private URLClassLoader classLoader;
+	private boolean executionCompleted = false;
 
-	public void execute(ExecutionSession session) {
+	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
+		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
+		System.out.println(">>Artifact Code Folder " + sessionRootDir);
+		System.out.println(">>Executing Artifact " + artifactClassName);
+		Thread executionThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				setExecutionCompleted(false);
+				java.io.ByteArrayOutputStream standrdout = new java.io.ByteArrayOutputStream();
+				java.io.ByteArrayOutputStream errorout = new java.io.ByteArrayOutputStream();
+				System.setOut(new java.io.PrintStream(standrdout));
+				System.setErr(new java.io.PrintStream(errorout));
+				setStandardOutput(standrdout);
+				setStandardErrorOutput(errorout);
+				try {
+					execute(sessionRootDir, artifactClassName, pluginName);
+				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
+						| InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				setExecutionCompleted(true);
+			}
+		});
+		executionThread.start();
+	}
+
+	private void execute(String sessionRootDir, String artifactClassNAME, String pluginName)
+			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
+			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		List<File> allLibs = new CompilerUtilities().getAllAssocitedLibraries(pluginName);
+		allLibs.add(new File(sessionRootDir));
+		URL[] allJarsAndClasses = new URL[allLibs.size()];
+		for (int i = 0; i < allLibs.size(); i++) {
+			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
+		}
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses, ArtifactExecutor.class.getClassLoader());
+		setClassLoader(child);
+		@SuppressWarnings("rawtypes")
+		Class classToLoad = Class.forName(artifactClassNAME, true, child);
+		Object instance = classToLoad.newInstance();
+		Method method = instance.getClass().getDeclaredMethod("execute");
+		Object result = method.invoke(instance);
+		stopExecution();
+	}
+
+	public void stopExecution() {
 		try {
-			initExecute(session);
+			getClassLoader().close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void initExecute(ExecutionSession session) throws IOException {
-		System.out.println(">> Initiating Execution ");
-		System.out.println(">>Session Id " + session.getSessionId());
-		System.out.println(">>Session Name " + session.getSessionName());
-		System.out.println(">>Plugin Name " + session.getPluginName());
-		String pluginName = session.getPluginName();
-		Artifact artifact = session.getArtifact();
-
-		String transpiledFilesDir = Utilities.getInstance().getTranspiledArtifactsFolder();
-
-		createExecutionSession(session.getSessionName());
-		String artifactCodesDirPath = getSessionArtifacCodesFolder(session.getSessionName());
-
-		FileUtils.copyDirectory(new File(transpiledFilesDir), new File(artifactCodesDirPath));
-
-		String sourceFilePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + getSorceFileExt();
-		String compileFilePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + getCompileFileExt();
-		System.out.println(">>Artifact Source File Name " + sourceFilePath);
-		System.out.println(">>Artifact Compiled File Name " + compileFilePath);
-		new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath, pluginName);
+	public boolean isExecutionCompleted() {
+		return executionCompleted;
 	}
 
-	private void createExecutionSession(String sessionName) {
-		File file = new File(Utilities.getInstance().getSessionsFolder() + File.separator + sessionName);
-		if (!file.exists()) {
-			file.mkdir();
-		}
-		File file1 = new File(file.getAbsolutePath() + File.separator + "ArtifactCodes");
-		if (!file1.exists()) {
-			file1.mkdir();
-		}
-		File file2 = new File(file.getAbsolutePath() + File.separator + "logs");
-		if (!file2.exists()) {
-			file2.mkdir();
-		}
+	public void setExecutionCompleted(boolean executionCompleted) {
+		this.executionCompleted = executionCompleted;
 	}
 
-	private String getSessionArtifacCodesFolder(String sessionName) {
-		return Utilities.getInstance().getSessionsFolder() + File.separator + sessionName + File.separator
-				+ "ArtifactCodes";
+	public ByteArrayOutputStream getStandardErrorOutput() {
+		return standardErrorOutput;
 	}
 
-	private String getSessionLogsFolder(String sessionName) {
-		return Utilities.getInstance().getSessionsFolder() + File.separator + sessionName + File.separator + "logs";
+	public void setStandardErrorOutput(ByteArrayOutputStream standardErrorOutput) {
+		this.standardErrorOutput = standardErrorOutput;
 	}
 
-	public String getSorceFileExt() {
-		return sorceFileExt;
+	public ByteArrayOutputStream getStandardOutput() {
+		return standardOutput;
 	}
 
-	public void setSorceFileExt(String sorceFileExt) {
-		this.sorceFileExt = sorceFileExt;
+	public void setStandardOutput(ByteArrayOutputStream standardOutput) {
+		this.standardOutput = standardOutput;
 	}
 
-	public String getCompileFileExt() {
-		return compileFileExt;
+	public URLClassLoader getClassLoader() {
+		return classLoader;
 	}
 
-	public void setCompileFileExt(String compileFileExt) {
-		this.compileFileExt = compileFileExt;
+	public void setClassLoader(URLClassLoader classLoader) {
+		this.classLoader = classLoader;
 	}
 }

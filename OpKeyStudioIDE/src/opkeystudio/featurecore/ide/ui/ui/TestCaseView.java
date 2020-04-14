@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-//import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
@@ -48,8 +47,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.GenericTree.
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
-import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
@@ -111,14 +110,12 @@ public class TestCaseView extends Composite {
 	 * @param style
 	 */
 
-	private CodedFunctionView codedFunctionView;
+	private ArtifactCodeView codedFunctionView;
 
 	public TestCaseView(Composite parent, int style) {
 		super(parent, style);
-		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		this.setArtifact(artifact);
-		TestCaseUI();
+		initArtifact();
+		initTestCaseUI();
 		toggleMovedownButton(false);
 		toggleMoveupButton(false);
 		toggleDeleteButton(false);
@@ -126,8 +123,14 @@ public class TestCaseView extends Composite {
 
 	}
 
+	private void initArtifact() {
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		this.setArtifact(artifact);
+	}
+
 	@SuppressWarnings("unused")
-	public void TestCaseUI() {
+	public void initTestCaseUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		display = getParent().getDisplay();
 		TabFolder mainTestCaseTabFolder = new TabFolder(this, SWT.BORDER | SWT.BOTTOM);
@@ -461,7 +464,7 @@ public class TestCaseView extends Composite {
 		sourceCodeTabItem.setControl(sourceCodeHolder);
 		sourceCodeHolder.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		CodedFunctionView codedFunctionView = new CodedFunctionView(sourceCodeHolder, SWT.NONE, this, false);
+		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, true);
 		setCodedFunctionView(codedFunctionView);
 
 		cursor.setMenu(flowStepTable.getMenu());
@@ -599,7 +602,6 @@ public class TestCaseView extends Composite {
 
 	private void openExecutionWizard() {
 		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
-		executionWizard.createDialogArea(getParent());
 		executionWizard.open();
 	}
 
@@ -924,11 +926,11 @@ public class TestCaseView extends Composite {
 		return this.stepInfoLabel;
 	}
 
-	public CodedFunctionView getCodedFunctionView() {
+	public ArtifactCodeView getCodedFunctionView() {
 		return codedFunctionView;
 	}
 
-	public void setCodedFunctionView(CodedFunctionView codedFunctionView) {
+	public void setCodedFunctionView(ArtifactCodeView codedFunctionView) {
 		this.codedFunctionView = codedFunctionView;
 	}
 }

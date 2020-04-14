@@ -57,7 +57,7 @@ public class Utilities {
 		}
 
 		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
-				+ File.separator + "Artifacts";
+				+ File.separator + "Projects";
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
@@ -122,6 +122,15 @@ public class Utilities {
 				+ "PluginRunner";
 	}
 
+	public String getCommonsFolder() {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "commons";
+	}
+
+	public String getCommons_DBStructureFolder() {
+		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "commons" + File.separator
+				+ "DBStructure";
+	}
+
 	public String getPluginRunnerDir(String pluginRunnerName) {
 		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
 				+ "PluginRunner" + File.separator + pluginRunnerName;
@@ -132,9 +141,9 @@ public class Utilities {
 				+ "Plugins";
 	}
 
-	public String getArtifactsDownloadFolder() {
+	public String getProjectsFolder() {
 		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
-				+ File.separator + "Artifacts";
+				+ File.separator + "Projects";
 	}
 
 	public String getDefaultWorkSpacePath() {
