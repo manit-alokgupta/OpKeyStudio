@@ -39,7 +39,7 @@ public class ContextInitiator {
 
 	public static void addFunction(String functionName) {
 		Function function = new Function();
-		function.setCallTimeoutInMillis(30000);
+		function.setCallTimeoutInMillis(90000);
 		function.setMethodName(functionName);
 		Context.current().getFunctionCall().setFunction(function);
 	}

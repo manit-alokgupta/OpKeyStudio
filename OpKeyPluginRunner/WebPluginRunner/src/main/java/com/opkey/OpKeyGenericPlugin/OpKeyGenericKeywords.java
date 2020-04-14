@@ -1,7 +1,9 @@
 package com.opkey.OpKeyGenericPlugin;
 
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
+import com.crestech.opkey.plugin.exceptionhandling.RetryKeywordAgainException;
 import com.crestech.opkey.plugin.webdriver.keywords.Browser;
+import com.crestech.opkey.plugin.webdriver.keywords.Utils;
 import com.crestech.opkey.plugin.webdriver.keywords.WebObjects;
 import com.crestech.opkey.plugin.webdriver.object.WebDriverObject;
 import com.opkey.ObjectFromatter.ObjectConverter;
@@ -91,13 +93,15 @@ public class OpKeyGenericKeywords {
 
 		// Method_ObjectClick
 		try {
+			new Utils().waitForPageLoadAndOtherAjax();
 			WebDriverObject object = new ObjectConverter().formatObject(arg0);
 			System.out.println(">>Tag Name " + object.getTagName());
 			FunctionResult fr = new WebObjects().Method_ObjectClick(object);
-		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("Keyword Output " + fr.getOutput());
+			return false;
+		} catch (RetryKeywordAgainException e) {
+			return Click(arg0);
 		}
-		return false;
 
 	}
 
