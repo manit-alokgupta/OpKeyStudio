@@ -15,8 +15,6 @@ import com.crestech.opkey.plugin.webdriver.pluginSpecific.Context.CurrentKeyword
 public class ContextInitiator {
 	public void initContext() {
 		FunctionCall fc = new FunctionCall();
-		fc.setFunction(new Function());
-		fc.getFunction().setCallTimeoutInMillis(30000);
 		Context.set(new InvocationContext(fc));
 		initSettings();
 		initHacks_Jugaad();
@@ -37,6 +35,13 @@ public class ContextInitiator {
 
 	private void initSettings() {
 		Context.session().setSettings(getSettings());
+	}
+
+	public static void addFunction(String functionName) {
+		Function function = new Function();
+		function.setCallTimeoutInMillis(30000);
+		function.setMethodName(functionName);
+		Context.current().getFunctionCall().setFunction(function);
 	}
 
 	private Map<String, String> getSettings() {

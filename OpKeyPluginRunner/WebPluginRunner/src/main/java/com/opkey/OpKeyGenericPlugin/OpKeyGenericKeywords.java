@@ -14,7 +14,8 @@ public class OpKeyGenericKeywords {
 	}
 
 	public boolean TypeTextOnEditBox(ORObject arg0, String arg1) {
-
+		ContextInitiator.addFunction("TypeTextOnEditBox");
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called TypeTextOnEditBox");
 
 		// Method_typeTextOnEditBox
@@ -24,7 +25,8 @@ public class OpKeyGenericKeywords {
 	}
 
 	public boolean TypeKeysOnEditBox(ORObject arg0, String arg1) {
-
+		ContextInitiator.addFunction("TypeKeysOnEditBox");
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called TypeKeysOnEditBox");
 
 		// Method_typeKeysOnEditBox
@@ -34,7 +36,7 @@ public class OpKeyGenericKeywords {
 	}
 
 	public boolean VerifyEditBoxText(ORObject arg0, String arg1) {
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called VerifyEditBoxText");
 
 		// Method_verifyeditboxtext
@@ -44,6 +46,7 @@ public class OpKeyGenericKeywords {
 	}
 
 	public boolean OpenBrowser(String arg0, String arg1) throws Exception {
+		ContextInitiator.addFunction("OpenBrowser");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		System.out.println(">>Keyword Called OpenBrowser");
 
@@ -54,7 +57,7 @@ public class OpKeyGenericKeywords {
 	}
 
 	public boolean SelectDropDownItem(ORObject arg0, String arg1) {
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called SelectDropDownItem");
 
 		// Method_selectDropDownItem
@@ -64,7 +67,7 @@ public class OpKeyGenericKeywords {
 	}
 
 	public boolean SelectCheckBox(ORObject arg0, String arg1) {
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called SelectCheckBox");
 
 		// Method_selectCheckBox
@@ -74,7 +77,6 @@ public class OpKeyGenericKeywords {
 	}
 
 	public boolean SelectRadioButton(ORObject arg0, int arg1) {
-
 		System.out.println(">>Keyword Called SelectRadioButton");
 
 		// Method_SelectRadio
@@ -84,13 +86,17 @@ public class OpKeyGenericKeywords {
 	}
 
 	public boolean Click(ORObject arg0) throws Exception {
-
+		ContextInitiator.addFunction("Click");
 		System.out.println(">>Keyword Called Click");
 
 		// Method_ObjectClick
-		WebDriverObject object = new ObjectConverter().formatObject(arg0);
-		System.out.println(">>Tag Name " + object.getTagName());
-		FunctionResult fr = new WebObjects().Method_ObjectClick(object);
+		try {
+			WebDriverObject object = new ObjectConverter().formatObject(arg0);
+			System.out.println(">>Tag Name " + object.getTagName());
+			FunctionResult fr = new WebObjects().Method_ObjectClick(object);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return false;
 
 	}
@@ -136,7 +142,7 @@ public class OpKeyGenericKeywords {
 	}
 
 	public String FetchBrowserTitle(String arg0) {
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		System.out.println(">>Keyword Called FetchBrowserTitle");
 
 		// Method_fetchBrowserTitle
@@ -515,12 +521,12 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean CloseBrowser(String arg0) {
-
+	public boolean CloseBrowser(String arg0) throws Exception {
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		System.out.println(">>Keyword Called CloseBrowser");
 
 		// Method_CloseBrowser
-
+		new Browser().Method_CloseBrowser(arg0);
 		return false;
 
 	}
@@ -645,12 +651,12 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean CloseAllBrowsers() {
+	public boolean CloseAllBrowsers() throws Exception {
 
 		System.out.println(">>Keyword Called CloseAllBrowsers");
 
 		// Method_CloseAllBrowsers
-
+		new Browser().Method_CloseAllBrowsers();
 		return false;
 
 	}
