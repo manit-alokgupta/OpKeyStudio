@@ -16,7 +16,9 @@ public class ObjectConverter {
 	public WebDriverObject formatObject(ORObject orobject) {
 		Object _object = convertORObjectToOpKeyObject(orobject);
 		try {
-			return new ObjectFormatter().formatObjectToWebDriverObject(_object);
+			WebDriverObject webdriverobject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
+			System.out.println(">>Object " + webdriverobject.toString());
+			return webdriverobject;
 		} catch (ObjectPropertiesNotSufficientException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -28,9 +30,9 @@ public class ObjectConverter {
 	private Object convertORObjectToOpKeyObject(ORObject orobject) {
 		Object object = new Object();
 		object.setLogicalName(getLogicalNameOfORObject(orobject));
-		Properties props=new Properties();
+		Properties props = new Properties();
 		object.setProperties(props);
-		
+
 		Map<String, String> allProperties = orobject.getAllProperties();
 		Set<String> propertyNames = allProperties.keySet();
 		for (String propertyName : propertyNames) {
