@@ -17,6 +17,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
@@ -40,7 +41,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import pcloudystudio.appium.AppiumPortIpInfo;
 import pcloudystudio.appium.MobileCapabilities;
-import org.eclipse.swt.events.VerifyListener;
 
 public class AppiumSettingsDialog extends Dialog {
 
@@ -211,18 +211,22 @@ public class AppiumSettingsDialog extends Dialog {
 				String dir = dirDialog.open();
 				if (dir != null) {
 					appiumDirectory.setText(dir);
+					if (!appiumDirectory.getText()
+							.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
+
+						MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+								"Invalid Appium Directory! Please select valid Appium Directory.", 1, 0, "OK");
+						mDialog.open();
+						appiumDirectory.setText("");
+					}
 
 				}
 
-				if (!appiumDirectory.getText()
-						.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-
-					MessageDialog mDialog = new MessageDialog(shlAppiumSettings, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Invalid Appium Directory! Please select valid Appium Directory.", 1, 0, "OK");
-					mDialog.open();
-					appiumDirectory.setText("");
+				if (dir == null) {
+					appiumDirectory.setFocus();
 				}
+
 			}
 		});
 
