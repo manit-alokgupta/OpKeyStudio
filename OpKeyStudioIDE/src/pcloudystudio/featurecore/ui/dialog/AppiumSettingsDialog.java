@@ -112,7 +112,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -183,10 +183,10 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumPortIpInfo.getInstance()
-						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumPortIpInfo.getInstance()
-						.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+				.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				AppiumPortIpInfo.getInstance().setAppiumDirectory(
 						OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
@@ -261,7 +261,10 @@ public class AppiumSettingsDialog extends Dialog {
 		btnAdd.setBounds(10, 10, 20, 22);
 		btnAdd.setText("+");
 
-		btnDelete = new Button(compositeAddCapability, SWT.NONE);
+		Composite compositeForDeleteButton = new Composite(compositeAddCapability, SWT.NONE);
+		compositeForDeleteButton.setBounds(36, 10, 20, 22);
+
+		btnDelete = new Button(compositeForDeleteButton, SWT.PUSH);
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -274,8 +277,9 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		btnDelete.setEnabled(false);
 		btnDelete.setToolTipText("Delete Capability");
-		btnDelete.setBounds(36, 10, 20, 22);
+		btnDelete.setBounds(0, 0, 20, 22);
 		btnDelete.setText("-");
+		compositeForDeleteButton.setToolTipText("Delete Capability");
 
 		addCapabilityComposite = new Composite(compositeAddCapability, SWT.NONE);
 		addCapabilityComposite.setBounds(62, 0, 550, 42);
