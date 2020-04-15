@@ -4,16 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.opkey</groupId>
-	<artifactId>WebPluginRunner</artifactId>
+	<artifactId>AppiumPluginRunner</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>WebPluginRunner</name>
+	<name>AppiumPluginRunner</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<pluginName>Web</pluginName>
+		<pluginName>Appium</pluginName>
 		<opkeyStudioLibrariesDirPath>C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpKeyStudioIDE\resources\libraries</opkeyStudioLibrariesDirPath>
 		<opkeyruntimejarpath>${opkeyStudioLibrariesDirPath}\PluginBase\opkeyeruntimeJar.jar</opkeyruntimejarpath>
 		<opkeyPluginBaseLibPath>${opkeyStudioLibrariesDirPath}\PluginBase\opkey-pluginbase-v2.0-jar-with-dependencies.jar</opkeyPluginBaseLibPath>
