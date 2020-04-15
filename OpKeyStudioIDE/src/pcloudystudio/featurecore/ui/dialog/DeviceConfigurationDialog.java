@@ -212,7 +212,7 @@ public class DeviceConfigurationDialog extends Dialog {
 				String path = dialog.open();
 				if (path != null) {
 					File file = new File(path);
-					if (file.exists()) {
+					if (file.exists() && getFileExtension(file).equals("apk")) {
 						applicationPathText.setText(file.toString());
 						applicationPathText.setEditable(true);
 					} else {
@@ -427,5 +427,13 @@ public class DeviceConfigurationDialog extends Dialog {
 			}
 		});
 		msd.closeProgressDialog();
+	}
+
+	private static String getFileExtension(File file) {
+		String fileName = file.getName();
+		if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+			return fileName.substring(fileName.lastIndexOf(".") + 1);
+		else
+			return "";
 	}
 }
