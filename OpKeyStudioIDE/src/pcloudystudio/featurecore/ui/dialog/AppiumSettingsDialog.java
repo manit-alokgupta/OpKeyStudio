@@ -83,6 +83,7 @@ public class AppiumSettingsDialog extends Dialog {
 	String Types[] = { "int", "String", "boolean" };
 
 	private ObjectRepositoryView parentObjectRepositoryView;
+	private Button btnRefresh;
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, SWT.DIALOG_TRIM);
@@ -295,7 +296,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
 		capabilityNameCombo.setToolTipText("Please Select DataType");
-		capabilityNameCombo.setBounds(10, 5, 154, 33);
+		capabilityNameCombo.setBounds(10, 5, 108, 28);
 		capabilityNameCombo.setItems(capabilityNameList);
 
 		capabilityNameCombo.addModifyListener(new ModifyListener() {
@@ -309,7 +310,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
 		capabilityTextValue.setToolTipText("Please Enter Capability Value");
-		capabilityTextValue.setBounds(310, 5, 127, 28);
+		capabilityTextValue.setBounds(245, 5, 130, 28);
 
 		capabilityTextValue.addModifyListener(new ModifyListener() {
 			@Override
@@ -346,15 +347,20 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.setText("");
 			}
 		});
-		btnAddToTable.setBounds(443, 3, 97, 30);
+		btnAddToTable.setBounds(381, 3, 108, 30);
 		btnAddToTable.setText("Add to Table");
 		btnAddToTable.setEnabled(false);
 
 		combo_DataType = new Combo(addCapabilityComposite, SWT.READ_ONLY); // change to if want to modifiable
 		combo_DataType.setToolTipText("Please Select DataType ");
-		combo_DataType.setBounds(170, 5, 134, 28);
+		combo_DataType.setBounds(124, 5, 115, 28);
 		combo_DataType.setItems(Types);
 		combo_DataType.setText("String");
+		
+		btnRefresh = new Button(addCapabilityComposite, SWT.NONE);
+		btnRefresh.setBounds(495, 3, 34, 30);
+		
+		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 
 		manuallyAddCapabilityComposite2 = new Composite(compositeAddCapability, SWT.NONE);
 		manuallyAddCapabilityComposite2.setBounds(62, 0, 550, 42);
