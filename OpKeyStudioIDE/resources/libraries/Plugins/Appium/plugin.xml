@@ -6,7 +6,7 @@
  Supports Functional testing using AppiumVersion 1.4.13.1
   </Description>
   <Vendor>CresTech</Vendor>
-  <Version>2.0.0.10936</Version>
+  <Version>2.0.0.11103</Version>
   <KeywordSetVersion>33</KeywordSetVersion>
   <DegreeOfParallelism>2</DegreeOfParallelism>
   <CommunicationProtocol>NAMED_PIPE_v01</CommunicationProtocol>
