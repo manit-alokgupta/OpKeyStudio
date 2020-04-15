@@ -1,7 +1,9 @@
 package com.opkey.OpKeyGenericPlugin;
 
+import com.opkey.ObjectFromatter.ObjectConverter;
 import com.opkey.context.ContextInitiator;
 import com.opkeystudio.runtime.ORObject;
+import com.plugin.appium.AppiumObject;
 
 public class OpKeyGenericKeywords {
 	public OpKeyGenericKeywords() {
@@ -193,7 +195,7 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called Touch");
 
 		// Method_Touch
-
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		return false;
 
 	}
