@@ -256,38 +256,45 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				lblAddToORConfirmation.setVisible(false);
+				if (textObjectName.getText().length() > 0) {
+					lblAddToORConfirmation.setVisible(false);
 
-				Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
-				Widget item = CustomCheckBoxTree.getCheckedItem(element);
-				TreeItem treeItem = (TreeItem) item;
-				Object obj = treeItem.getData();
+					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
+					Widget item = CustomCheckBoxTree.getCheckedItem(element);
+					TreeItem treeItem = (TreeItem) item;
+					Object obj = treeItem.getData();
 
-				if (objectPropertiesTable.getItemCount() > 0) {
-					try {
-						LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
-						for (TableItem row : objectPropertiesTable.getItems())
-							mapOfObjectProperties.put(row.getText(0), row.getText(1));
-						setMobileElementProps(mapOfObjectProperties);
-					} catch (Exception ex) {
-						ex.printStackTrace();
+					if (objectPropertiesTable.getItemCount() > 0) {
+						try {
+							LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
+							for (TableItem row : objectPropertiesTable.getItems())
+								mapOfObjectProperties.put(row.getText(0), row.getText(1));
+							setMobileElementProps(mapOfObjectProperties);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
 					}
-				}
 
-				Object parentObj = ((TreeMobileElement) obj).getParentElement();
-				setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
-				try {
-					new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
-							getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
-							getMobileParentElementProps(), textObjectName.getText().toString(),
-							getMobileParentElementProps().get("package")
-							+ getMobileParentElementProps().get("activity"),
-							"Custom", "HTML Page",
-							getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
-					getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
-					lblAddToORConfirmation.setVisible(true);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+					Object parentObj = ((TreeMobileElement) obj).getParentElement();
+					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
+					try {
+						new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
+								getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
+								getMobileParentElementProps(), textObjectName.getText().toString(),
+								getMobileParentElementProps().get("package")
+								+ getMobileParentElementProps().get("activity"),
+								"Custom", "HTML Page",
+								getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
+						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
+						lblAddToORConfirmation.setVisible(true);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				} else {
+					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							"Object Name field can't be empty!", 1, 0, "OK");
+					mDialog.open();
 				}
 			}
 		});
