@@ -1,12 +1,17 @@
 package com.opkey.OpKeyGenericPlugin;
 
+import org.openqa.selenium.WebElement;
+
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.exceptionhandling.RetryKeywordAgainException;
+import com.crestech.opkey.plugin.webdriver.Finder;
+import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ToolNotSetException;
 import com.crestech.opkey.plugin.webdriver.keywords.Browser;
 import com.crestech.opkey.plugin.webdriver.keywords.Checkbox;
 import com.crestech.opkey.plugin.webdriver.keywords.Deprecate;
 import com.crestech.opkey.plugin.webdriver.keywords.DropDown;
 import com.crestech.opkey.plugin.webdriver.keywords.EditBox;
+import com.crestech.opkey.plugin.webdriver.keywords.Links;
 import com.crestech.opkey.plugin.webdriver.keywords.ListControl;
 import com.crestech.opkey.plugin.webdriver.keywords.Radio;
 import com.crestech.opkey.plugin.webdriver.keywords.Utils;
@@ -141,7 +146,9 @@ public class OpKeyGenericKeywords {
 			System.out.println("Keyword Output " + fr.getOutput());
 			return false;
 		} catch (Exception e) {
+			e.printStackTrace();
 			if (e instanceof RetryKeywordAgainException) {
+				Thread.sleep(1000);
 				return Click(arg0);
 			}
 		}
@@ -1386,12 +1393,19 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean ClickLink(ORObject arg0) {
+	public boolean ClickLink(ORObject arg0) throws ToolNotSetException {
 
 		System.out.println(">>Keyword Called ClickLink");
-
+		ContextInitiator.addFunction("ClickLink");
+		new Utils().waitForPageLoadAndOtherAjax();
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickLink
-
+		try {
+			new Links().Method_clickLink(object);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
