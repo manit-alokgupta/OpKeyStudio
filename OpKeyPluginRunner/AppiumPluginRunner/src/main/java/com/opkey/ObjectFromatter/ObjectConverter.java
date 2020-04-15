@@ -1,6 +1,5 @@
 package com.opkey.ObjectFromatter;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,7 +9,7 @@ import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Pro
 import com.opkeystudio.runtime.ORObject;
 import com.plugin.appium.AppiumObject;
 import com.plugin.appium.ObjectFormatter;
-import com.plugin.appium.exceptionhandlers.ObjectPropertiesNotSufficientExceptionHandler;
+import com.plugin.appium.exceptionhandlers.ObjectPropertiesNotSufficientException;
 
 public class ObjectConverter {
 	public AppiumObject formatObject(ORObject orobject) {
@@ -27,7 +26,8 @@ public class ObjectConverter {
 			webdriverobject.setParentObject(parentobject);
 			System.out.println(">>Object " + webdriverobject.toString());
 			return webdriverobject;
-		} catch (IOException e) {
+		} catch (ObjectPropertiesNotSufficientException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
