@@ -377,6 +377,18 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyAddCapabilityComposite2.setVisible(false);
 
 		manuallyCapabilityName = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
+		manuallyCapabilityName.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent e) {
+				restrictInputForManullyCapabilityName(e);
+			}
+		});
+		manuallyCapabilityName.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				if (manuallyCapabilityValue.getText().length() > 0 && manuallyCapabilityName.getText().length() > 0) {
+					addToTable2.setEnabled(true);
+				}
+			}
+		});
 		manuallyCapabilityName.setToolTipText("Please Enter Capability Name ");
 		manuallyCapabilityName.setBounds(10, 5, 102, 28);
 
@@ -390,14 +402,18 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyCapabilityValue.setToolTipText("Please Enter Capability Value ");
 		manuallyCapabilityValue.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				addToTable2.setEnabled(true);
+				if (manuallyCapabilityValue.getText().length() > 0 && manuallyCapabilityName.getText().length() > 0) {
+					addToTable2.setEnabled(true);
+				}
 			}
 		});
 		manuallyCapabilityValue.addVerifyListener(new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
-				String type = combo_ManualType.getText();
-				addToTable2.setEnabled(true);
-				restrictInputString(e, type);
+				if (manuallyCapabilityValue.getText().length() > 0 && manuallyCapabilityName.getText().length() > 0) {
+					String type = combo_ManualType.getText();
+					addToTable2.setEnabled(true);
+					restrictInputString(e, type);
+				}
 			}
 		});
 		manuallyCapabilityValue.setBounds(230, 5, 137, 28);
@@ -416,9 +432,9 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 				manuallyCapabilityName.setText("");
 				manuallyCapabilityValue.setText("");
-				manuallyAddCapabilityComposite2.setVisible(false);
+				// manuallyAddCapabilityComposite2.setVisible(false);
 				addToTable2.setEnabled(false);
-				addCapabilityComposite.setVisible(true);
+				// addCapabilityComposite.setVisible(true);
 			}
 		});
 		addToTable2.setBounds(379, 4, 86, 30);
@@ -754,17 +770,16 @@ public class AppiumSettingsDialog extends Dialog {
 			break;
 
 		default:
-			if (capabilityTextValue.getText().length() >= 0) {
-				for (int index = 0; index < text.length(); index++) {
-					char character = text.charAt(index);
-					boolean isAllowed = allowedCharactersString.indexOf(character) > -1;
-					if (!isAllowed) {
-						event.doit = false;
-						return;
-					}
-				}
 
+			for (int index = 0; index < text.length(); index++) {
+				char character = text.charAt(index);
+				boolean isAllowed = allowedCharactersString.indexOf(character) > -1;
+				if (!isAllowed) {
+					event.doit = false;
+					return;
+				}
 			}
+
 		}
 
 	}
@@ -793,5 +808,18 @@ public class AppiumSettingsDialog extends Dialog {
 	private void openDeviceConfigurationDialog() {
 		new DeviceConfigurationDialog(this.getParentObjectRepositoryView().getShell(), SWT.NONE,
 				this.parentObjectRepositoryView).open();
+	}
+
+	protected void restrictInputForManullyCapabilityName(VerifyEvent event) {
+		String allowedCharactersString = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+		String text = event.text;
+		for (int index = 0; index < text.length(); index++) {
+			char character = text.charAt(index);
+			boolean isAllowed = allowedCharactersString.indexOf(character) > -1;
+			if (!isAllowed) {
+				event.doit = false;
+				return;
+			}
+		}
 	}
 }
