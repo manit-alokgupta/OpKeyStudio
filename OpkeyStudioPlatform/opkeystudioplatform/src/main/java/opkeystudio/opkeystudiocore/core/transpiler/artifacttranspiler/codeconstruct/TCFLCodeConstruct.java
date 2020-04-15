@@ -46,7 +46,7 @@ public class TCFLCodeConstruct {
 
 	private String getKeywordCode(Artifact artifact, FlowStep flowStep, String refvarName) {
 		String keywordName = flowStep.getKeyword().getName();
-		System.out.println(">>Keyword Name "+keywordName);
+		System.out.println(">>Keyword Name " + keywordName);
 		String methodcode = newLineChar + refvarName + "." + keywordName + "(";
 		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
@@ -102,7 +102,7 @@ public class TCFLCodeConstruct {
 
 		methodcode += argumentCall;
 		methodcode += ");";
-		System.out.println(">>Method Body "+methodcode);
+		System.out.println(">>Method Body " + methodcode);
 		return methodcode;
 	}
 
@@ -125,6 +125,12 @@ public class TCFLCodeConstruct {
 			}
 			return data;
 		}
+		if (dataType.equals("Double")) {
+			if (data == null) {
+				data = "0";
+			}
+			return data;
+		}
 		if (dataType.equals("Boolean")) {
 			if (data == null) {
 				data = "false";
@@ -132,6 +138,12 @@ public class TCFLCodeConstruct {
 			return data.toLowerCase();
 		}
 		if (dataType.equals("File")) {
+			if (data == null) {
+				data = "";
+			}
+			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
+		}
+		if (dataType.equals("DateTime")) {
 			if (data == null) {
 				data = "";
 			}
