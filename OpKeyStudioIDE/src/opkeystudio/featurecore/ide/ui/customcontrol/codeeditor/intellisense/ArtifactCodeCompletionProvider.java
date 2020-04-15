@@ -1,4 +1,4 @@
-package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor;
+package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -30,6 +30,12 @@ import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.AutoCompleteToken;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaBasicCompletion;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCompletionProvider;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableToken;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableTypeCompletion;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 
 public class ArtifactCodeCompletionProvider {
@@ -57,6 +63,7 @@ public class ArtifactCodeCompletionProvider {
 							@Override
 							public void run(IProgressMonitor monitor)
 									throws InvocationTargetException, InterruptedException {
+								new IntellisenseProcessor(cview).initIntellisense(true);
 							}
 						});
 				msd.closeProgressDialog();
