@@ -321,9 +321,11 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		capabilityTextValue.addVerifyListener(new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
-				String type = combo_DataType.getText();
-				btnAddToTable.setEnabled(true);
-				restrictInputString(e, type);
+				if (capabilityTextValue.getText().length() > 0 && capabilityNameCombo.getSelectionIndex() != -1) {
+					String type = combo_DataType.getText();
+					btnAddToTable.setEnabled(true);
+					restrictInputString(e, type);
+				}
 			}
 		});
 
