@@ -295,7 +295,7 @@ public class AppiumSettingsDialog extends Dialog {
 		addCapabilityComposite.setVisible(true);
 
 		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
-		capabilityNameCombo.setToolTipText("Please Select DataType");
+		capabilityNameCombo.setToolTipText("Please Select Capability Name");
 		capabilityNameCombo.setBounds(10, 5, 108, 28);
 		capabilityNameCombo.setItems(capabilityNameList);
 
