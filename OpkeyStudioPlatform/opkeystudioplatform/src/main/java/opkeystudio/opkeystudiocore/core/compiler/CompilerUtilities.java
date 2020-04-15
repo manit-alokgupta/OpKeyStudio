@@ -50,6 +50,11 @@ public class CompilerUtilities {
 		String pluginRunnerDir = Utilities.getInstance().getPluginRunnerDir(pluginName);
 		return getAllFiles(new File(pluginRunnerDir), ".jar");
 	}
+	
+	public List<File> getAllPluginRunnerJar() {
+		String pluginRunnerDir = Utilities.getInstance().getDefaultPluginRunnerDir();
+		return getAllFiles(new File(pluginRunnerDir), ".jar");
+	}
 
 	public String getClassPathOFAllAssociatedLibs(String pluginName) {
 		String classPath = "";

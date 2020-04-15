@@ -17,6 +17,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.AutoCompleteToken
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.CodeCompletionProvider;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
+import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 
 public class IntellisenseProcessor {
 	private ArtifactCodeView parentCodeView;
@@ -92,21 +93,18 @@ public class IntellisenseProcessor {
 
 	public List<String> getAllClassNameFromAassociatedJar() {
 		ArrayList<String> allClases = new ArrayList<String>();
-		List<File> pluginBaseLibs = new ArrayList<File>();
-		pluginBaseLibs.addAll(getAllCFLOpKeyLibs());
-		pluginBaseLibs.addAll(getAllCFLAssociatedLibs());
-		for (File file : pluginBaseLibs) {
-			allClases.addAll(getAllClassNamesFromJar(file.getAbsolutePath()));
-		}
 
-		List<File> pluginsLibrary = getPluginsLibraries(opkeystudio.core.utils.Utilities.getInstance().getPluginName());
-		pluginsLibrary.addAll(new CompilergetPluginBaseLibraries());
+		List<File> pluginsLibrary = new CompilerUtilities().getAllPluginRunnerJar();
+		pluginsLibrary.addAll(new CompilerUtilities().getPluginBaseLibraries());
 		for (File file : pluginsLibrary) {
 			List<String> classNames = getAllClassNamesFromJar(file.getAbsolutePath());
 			for (String className : classNames) {
+				if (className.contains("com.opkey")) {
+					System.out.println(">>ClassName " + className);
+				}
 				if (className.contains("org.openqa") || className.contains("java.lang")
 						|| className.contains("java.util") || className.contains("java.io")
-						|| className.contains("com.opkeystudio")) {
+						|| className.contains("com.opkey")) {
 					if (!alreadyScannedClasses.contains(className)) {
 						allClases.add(className);
 						alreadyScannedClasses.add(className);
@@ -140,6 +138,14 @@ public class IntellisenseProcessor {
 		}
 		return listofClasses;
 	}
+
+	public List<File> getAllAssocitedLibraries(String pluginName) {
+		List<File> allFiles = new ArrayList<File>();
+		allFiles.addAll(new CompilerUtilities().getPluginBaseLibraries());
+		allFiles.addAll(new CompilerUtilities().getAllPluginRunnerJar());
+		return allFiles;
+	}
+
 	public ArtifactCodeView getParentCodeView() {
 		return parentCodeView;
 	}
