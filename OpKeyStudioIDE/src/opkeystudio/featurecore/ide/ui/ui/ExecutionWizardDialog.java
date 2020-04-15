@@ -172,6 +172,10 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		File pluginDirObject = new File(pluginDir);
 		for (File file : pluginDirObject.listFiles()) {
 			if (file.isDirectory()) {
+				String pluginXmlFile = file.getAbsolutePath() + File.separator + "plugin.xml";
+				if (!new File(pluginXmlFile).exists()) {
+					continue;
+				}
 				pluginSelectionDropDown.add(file.getName());
 			}
 		}
