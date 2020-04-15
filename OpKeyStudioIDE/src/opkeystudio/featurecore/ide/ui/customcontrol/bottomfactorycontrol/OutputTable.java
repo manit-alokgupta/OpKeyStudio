@@ -38,6 +38,7 @@ public class OutputTable extends CustomTable {
 	private boolean paintCalled = false;
 
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
+	private List<ComponentOutputArgument> bottomFactoryOutputs = new ArrayList<ComponentOutputArgument>();
 
 	public OutputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
@@ -154,12 +155,12 @@ public class OutputTable extends CustomTable {
 	}
 
 	public void setComponentOutputData(List<ComponentOutputArgument> bottomFactoryOutputs) {
-		super.setControlData(bottomFactoryOutputs);
+		this.bottomFactoryOutputs = bottomFactoryOutputs;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<ComponentOutputArgument> getComponentOutputData() {
-		return (List<ComponentOutputArgument>) super.getControlData();
+		return this.bottomFactoryOutputs;
 	}
 
 	private List<Control> allTableEditors = new ArrayList<Control>();

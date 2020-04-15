@@ -39,6 +39,7 @@ public class InputTable extends CustomTable {
 
 	private boolean paintCalled = false;
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
+	private List<ComponentInputArgument> bottomFactoryInputs = new ArrayList<ComponentInputArgument>();
 
 	public InputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
@@ -168,12 +169,12 @@ public class InputTable extends CustomTable {
 	}
 
 	public void setComponentInputData(List<ComponentInputArgument> bottomFactoryInputs) {
-		super.setControlData(bottomFactoryInputs);
+		this.bottomFactoryInputs = bottomFactoryInputs;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<ComponentInputArgument> getComponentInputData() {
-		return (List<ComponentInputArgument>) super.getControlData();
+		return this.bottomFactoryInputs;
 	}
 
 	public void addInputParameter(ComponentInputArgument bottomFactoryInput) {

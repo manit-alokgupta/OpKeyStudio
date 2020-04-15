@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -46,6 +47,7 @@ public class TagTable extends CustomTable {
 	private BottomFactoryDataRepoUi parentBottomFactoryDataRepoUi;
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
 	private BottomFactoryTestSuiteUi parentBottomFactoryTestSuiteUi;
+	private List<BottomFactoryTag> bottomFactoryTags = new ArrayList<BottomFactoryTag>();
 
 	public TagTable(Composite parent, int style, BottomFactoryTestCaseUi bottomFactoryUI) {
 		super(parent, style);
@@ -205,11 +207,11 @@ public class TagTable extends CustomTable {
 
 	@SuppressWarnings("unchecked")
 	public List<BottomFactoryTag> getTagData() {
-		return (List<BottomFactoryTag>) super.getControlData();
+		return this.bottomFactoryTags;
 	}
 
 	public void setTagData(List<BottomFactoryTag> bottomFactoryTags) {
-		super.setControlData(bottomFactoryTags);
+		this.bottomFactoryTags = bottomFactoryTags;
 	}
 
 	public void deleteTagData(BottomFactoryTag bottomFactoryTag) {
