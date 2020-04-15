@@ -11,7 +11,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
-import opkeystudio.opkeystudiocore.core.transpiler.artifactparser.ArtifactParser;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct.TCFLCodeConstruct;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -25,15 +24,19 @@ public class TCTranspiler extends AbstractTranspiler {
 
 	@Override
 	public void transpile(Artifact artifact) {
-		if (artifact.getFile_type_enum() != MODULETYPE.Flow) {
-			return;
+		try {
+			if (artifact.getFile_type_enum() != MODULETYPE.Flow) {
+				return;
+			}
+			File file = createArtifactFile(artifact);
+			JavaClassSource classSource = getJavaClassOfTestCase(artifact);
+			new TranspilerUtilities().addPackageName(artifact, classSource);
+			new TranspilerUtilities().addDefaultImports(classSource);
+			new TranspilerUtilities().writeCodeToFile(file, classSource);
+			// new ArtifactParser().parseArtifact(artifact);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		File file = createArtifactFile(artifact);
-		JavaClassSource classSource = getJavaClassOfTestCase(artifact);
-		new TranspilerUtilities().addPackageName(artifact, classSource);
-		new TranspilerUtilities().addDefaultImports(classSource);
-		new TranspilerUtilities().writeCodeToFile(file, classSource);
-		new ArtifactParser().parseArtifact(artifact);
 	}
 
 	public JavaClassSource getJavaClassOfTestCase(Artifact artifact) {

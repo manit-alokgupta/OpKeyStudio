@@ -23,14 +23,18 @@ public class SuiteTranspiler extends AbstractTranspiler {
 
 	@Override
 	public void transpile(Artifact artifact) {
-		if (artifact.getFile_type_enum() != MODULETYPE.Suite) {
-			return;
+		try {
+			if (artifact.getFile_type_enum() != MODULETYPE.Suite) {
+				return;
+			}
+			File file = createArtifactFile(artifact);
+			JavaClassSource classSource = getJavaClassOfTestCase(artifact);
+			new TranspilerUtilities().addPackageName(artifact, classSource);
+			new TranspilerUtilities().addDefaultImports(classSource);
+			new TranspilerUtilities().writeCodeToFile(file, classSource);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		File file = createArtifactFile(artifact);
-		JavaClassSource classSource = getJavaClassOfTestCase(artifact);
-		new TranspilerUtilities().addPackageName(artifact, classSource);
-		new TranspilerUtilities().addDefaultImports(classSource);
-		new TranspilerUtilities().writeCodeToFile(file, classSource);
 	}
 
 	public JavaClassSource getJavaClassOfTestCase(Artifact artifact) {

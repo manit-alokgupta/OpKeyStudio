@@ -86,7 +86,12 @@ public class ArtifactTranspiler {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
+		try {
+			Integer.parseInt(String.valueOf(packagename.charAt(0)));
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return true;
 	}
 
