@@ -356,10 +356,20 @@ public class AppiumSettingsDialog extends Dialog {
 		combo_DataType.setBounds(124, 5, 115, 28);
 		combo_DataType.setItems(Types);
 		combo_DataType.setText("String");
-		
+
 		btnRefresh = new Button(addCapabilityComposite, SWT.NONE);
+		btnRefresh.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				while (capabilityTable.getItemCount() > 0) {
+					capabilityTable.remove(0, 1);
+
+				}
+				capabilityTextValue.setText("");
+				fillDataInCapabilityTable();
+			}
+		});
 		btnRefresh.setBounds(495, 3, 34, 30);
-		
 		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 
 		manuallyAddCapabilityComposite2 = new Composite(compositeAddCapability, SWT.NONE);
