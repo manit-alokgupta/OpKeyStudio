@@ -11,6 +11,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
+import opkeystudio.opkeystudiocore.core.transpiler.artifactparser.ArtifactParser;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct.TCFLCodeConstruct;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -32,6 +33,7 @@ public class FLTranspiler extends AbstractTranspiler {
 		new TranspilerUtilities().addPackageName(artifact, classSource);
 		new TranspilerUtilities().addDefaultImports(classSource);
 		new TranspilerUtilities().writeCodeToFile(file, classSource);
+		new ArtifactParser().parseArtifact(artifact);
 	}
 
 	public JavaClassSource getJavaClassOfTestCase(Artifact artifact) {
