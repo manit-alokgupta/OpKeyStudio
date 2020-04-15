@@ -33,6 +33,8 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 public class Utilities {
 	private static Utilities util;
 	private String defaultInstallDir;
+	private String localResourcesDirPath = "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE";
+	private boolean developerMode = true;
 
 	public static Utilities getInstance() {
 		if (util == null) {
@@ -92,7 +94,9 @@ public class Utilities {
 	}
 
 	public String getDefaultInstallDir() {
-		// return "E:\\OpKeyEResources";
+		if (developerMode) {
+			return localResourcesDirPath;
+		}
 		return defaultInstallDir;
 	}
 
