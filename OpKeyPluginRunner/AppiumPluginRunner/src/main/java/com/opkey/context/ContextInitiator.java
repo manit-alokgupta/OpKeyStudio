@@ -9,15 +9,12 @@ import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCa
 import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.Function;
 import com.crestech.opkey.plugin.contexts.Context;
 import com.crestech.opkey.plugin.contexts.InvocationContext;
-import com.crestech.opkey.plugin.webdriver.WebDriverDispatcher;
-import com.crestech.opkey.plugin.webdriver.pluginSpecific.Context.CurrentKeyword;
 
 public class ContextInitiator {
 	public void initContext() {
 		FunctionCall fc = new FunctionCall();
 		Context.set(new InvocationContext(fc));
 		initSettings();
-		initHacks_Jugaad();
 	}
 
 	public static void addDataRgumentsInFunctionCall(String... args) {
@@ -86,9 +83,5 @@ public class ContextInitiator {
 		settingsMap.put("_TimeDifferenceBetweenAgentAndPlugin_", "0");
 		settingsMap.put("_SessionID_", "");
 		return settingsMap;
-	}
-
-	private void initHacks_Jugaad() {
-		WebDriverDispatcher.currentKeyword = new CurrentKeyword();
 	}
 }
