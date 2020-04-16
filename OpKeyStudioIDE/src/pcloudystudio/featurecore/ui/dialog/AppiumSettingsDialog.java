@@ -167,6 +167,8 @@ public class AppiumSettingsDialog extends Dialog {
 		serverAddress = new Text(compositeAppiumSettings, SWT.BORDER);
 		serverAddress.setToolTipText("Please Provide LocalHost Address");
 		serverAddress.setBounds(205, 10, 309, 33);
+		serverAddress.setText("127.0.0.1");
+		
 
 		portNumber = new Text(compositeAppiumSettings, SWT.BORDER);
 		portNumber.addVerifyListener(new VerifyListener() {
@@ -176,6 +178,7 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		portNumber.setToolTipText("Please Provide Port ");
 		portNumber.setBounds(205, 49, 309, 33);
+		portNumber.setText("4723");
 
 		appiumDirectory = new Text(compositeAppiumSettings, SWT.BORDER);
 		appiumDirectory.setBounds(205, 88, 309, 33);
