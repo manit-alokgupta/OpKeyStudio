@@ -123,6 +123,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
 					String tokenData = lastToken.getLexeme();
+					System.out.println(">>Last Token "+tokenData);
 					VariableToken varToken = ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView())
 							.findVariableToken(tokenData);
 					if (varToken != null) {
