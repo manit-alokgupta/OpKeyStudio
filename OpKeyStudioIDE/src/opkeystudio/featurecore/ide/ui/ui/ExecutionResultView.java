@@ -88,13 +88,8 @@ public class ExecutionResultView extends Composite {
 
 		stopButton = new ToolItem(toolBar, SWT.NONE);
 		// stopButton.setText("Save");
-		stopButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
-		stopButton.setToolTipText("Stop");
-
-		refreshButton = new ToolItem(toolBar, SWT.NONE);
-		// refreshButton.setText("Refresh");
-		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
-		refreshButton.setToolTipText("Refresh");
+		stopButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.EXIT_ICON));
+		stopButton.setToolTipText("Stop Execution");
 
 		logTextView = new StyledText(this, SWT.BORDER);
 		logTextView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
