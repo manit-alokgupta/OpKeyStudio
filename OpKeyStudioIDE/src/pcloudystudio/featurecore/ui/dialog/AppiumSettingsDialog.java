@@ -120,7 +120,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -189,7 +189,7 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumPortIpInfo
-						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
@@ -287,7 +287,7 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		btnDelete.setEnabled(false);
 		btnDelete.setToolTipText("Delete Capability");
-		btnDelete.setBounds(0,7, 18, 18);
+		btnDelete.setBounds(0, 7, 18, 18);
 
 		compositeForDeleteButton.setToolTipText("Delete Capability");
 
@@ -353,7 +353,7 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.setText("");
 			}
 		});
-		btnAddToTable.setBounds(445, 12, 18,18);
+		btnAddToTable.setBounds(445, 12, 18, 18);
 		btnAddToTable.setEnabled(false);
 
 		combo_DataType = new CCombo(addCapabilityComposite, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT); // change to if want
@@ -376,7 +376,7 @@ public class AppiumSettingsDialog extends Dialog {
 				fillDataInCapabilityTable();
 			}
 		});
-		btnRefresh.setBounds(470,12, 18,18);
+		btnRefresh.setBounds(470, 12, 18, 18);
 		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		btnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefresh.setToolTipText("Refresh Table");
@@ -394,6 +394,10 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		manuallyCapabilityName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
+				if (manuallyCapabilityName.getText().equals("") || manuallyCapabilityValue.getText().equals("")) {
+					addToTable2.setEnabled(false);
+				}
+
 				if (manuallyCapabilityValue.getText().length() > 0 && manuallyCapabilityName.getText().length() > 0) {
 					addToTable2.setEnabled(true);
 				}
@@ -414,6 +418,9 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyCapabilityValue.setToolTipText("Please Enter Capability Value ");
 		manuallyCapabilityValue.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
+				if (manuallyCapabilityValue.getText().equals("") || manuallyCapabilityName.getText().equals("")) {
+					addToTable2.setEnabled(false);
+				}
 				if (manuallyCapabilityValue.getText().length() > 0 && manuallyCapabilityName.getText().length() > 0) {
 					addToTable2.setEnabled(true);
 				}
@@ -448,7 +455,7 @@ public class AppiumSettingsDialog extends Dialog {
 				manuallyCapabilityName.setText("");
 				manuallyCapabilityValue.setText("");
 				addToTable2.setEnabled(false);
-				
+
 			}
 		});
 		addToTable2.setBounds(450, 12, 18, 18);
