@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import pcloudystudio.core.vncutils.VncStarter;
 
-public class VncHandler {
+public class VNCHandler {
 	@Execute
 	public void execute(Shell parentShell) throws IOException, InterruptedException {
 		VncStarter starter = new VncStarter();
@@ -27,7 +27,6 @@ public class VncHandler {
 			public void run() {
 				try {
 					starter.startMobicast();
-
 				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
