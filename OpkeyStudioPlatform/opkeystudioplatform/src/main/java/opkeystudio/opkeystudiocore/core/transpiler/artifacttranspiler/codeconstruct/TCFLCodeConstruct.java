@@ -222,9 +222,47 @@ public class TCFLCodeConstruct {
 			return newLineChar + "break;";
 		}
 		if (keywordName.equals("If")) {
-			return newLineChar + "if(true){";
+			List<FlowInputArgument> flowInputArgs = flowStep.getFlowInputArgs();
+			List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
+					flowInputArgs);
+			String conditionData = getArgsOfIFKeyword(flowInputObjects);
+			return newLineChar + "if(" + conditionData + "){";
 		}
 		return "";
+	}
+
+	private String getArgsOfIFKeyword(List<FlowInputObject> flowInputObjects) {
+		String conditionData = "";
+		for (FlowInputObject flowInputObject : flowInputObjects) {
+			if (flowInputObject.isStaticValueDataExist()) {
+				conditionData += convertToConditionData(flowInputObject.getStaticValueData());
+			}
+			System.out.println(
+					">.IF condition " + flowInputObject.getDataType() + "  " + flowInputObject.getStaticValueData());
+		}
+		if (conditionData.trim().isEmpty()) {
+			return "true";
+		}
+		return conditionData;
+	}
+
+	private String convertToConditionData(String data) {
+		if (data == null) {
+			return "";
+		}
+		if (data.equals("=")) {
+			return " == ";
+		}
+		if (data.equals("<>")) {
+			return " != ";
+		}
+		if (data.toLowerCase().equals("and")) {
+			return "&&";
+		}
+		if (data.toLowerCase().equals("or")) {
+			return "||";
+		}
+		return "\"" + data + "\"";
 	}
 
 	private String addOutputVariables(Artifact artifact, FlowStep flowStep, String mainCode) {

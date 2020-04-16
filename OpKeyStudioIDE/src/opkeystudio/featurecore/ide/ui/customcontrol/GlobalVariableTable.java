@@ -323,7 +323,7 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
 		gv.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
 		gv.setName("");
-		gv.setValue("Chrome");
+		gv.setValue("");
 		gv.setDatatype("STRING");
 		gv.setAdded(true);
 		gv.setExternallyupdatable(true);

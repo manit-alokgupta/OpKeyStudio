@@ -122,6 +122,7 @@ public class InputDataTable extends CustomTable {
 				boolean isBooleanType = isDataTypeBooleanrType(dataType);
 				int selectedColumn = cursor.getColumn();
 
+				/*
 				Button checkedButton = new Button(cursor, SWT.CHECK);
 				checkedButton.addSelectionListener(new SelectionListener() {
 
@@ -140,9 +141,10 @@ public class InputDataTable extends CustomTable {
 
 					}
 				});
-
+*/
+				
 				Text text = new Text(cursor, 0);
-				text.addVerifyListener(new VerifyListener() {
+		/*		text.addVerifyListener(new VerifyListener() {
 
 					@Override
 					public void verifyText(VerifyEvent e) {
@@ -177,7 +179,7 @@ public class InputDataTable extends CustomTable {
 							}
 						}
 					}
-				});
+				});*/
 
 				text.addFocusListener(new FocusListener() {
 
@@ -204,6 +206,7 @@ public class InputDataTable extends CustomTable {
 				});
 
 				if (selectedColumn == 2) {
+					/*		isBooleanType = false;
 					if (isBooleanType) {
 						if (flowInputArgument.getStaticvalue() != null) {
 							boolean checkedStatus = convertStringToBoolean(flowInputArgument.getStaticvalue());
@@ -215,19 +218,17 @@ public class InputDataTable extends CustomTable {
 							disposeControlEditor(editor);
 							editor.setEditor(checkedButton);
 						}
-					} else {
+					} else {*/
 						if (flowInputArgument.getStaticvalue() != null) {
 							text.setText(flowInputArgument.getStaticvalue());
-							disposeControlEditor(editor);
 							editor.setEditor(text);
 							text.setFocus();
 						} else {
 							text.setText("");
-							disposeControlEditor(editor);
 							editor.setEditor(text);
 							text.setFocus();
 						}
-					}
+				//	}
 				} else {
 					disposeControlEditor(editor);
 				}
@@ -502,7 +503,7 @@ public class InputDataTable extends CustomTable {
 	}
 
 	private void renderConstructFlowIntKeyword(FlowStep flowStep) {
-		
+
 	}
 
 	public void renderInputTable(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
@@ -511,7 +512,7 @@ public class InputDataTable extends CustomTable {
 		this.removeAll();
 		if (isConstructFlowIFKeyword(flowStep)) {
 			renderConstructFlowIntKeyword(flowStep);
-			return;
+			// return;
 		}
 		List<FlowInputArgument> flowInputArgs = getFlowInputArgs();
 		if (getKeyWordInputArgs().size() > 0) {
