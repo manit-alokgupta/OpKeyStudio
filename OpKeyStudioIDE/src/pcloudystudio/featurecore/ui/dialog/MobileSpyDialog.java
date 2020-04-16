@@ -14,12 +14,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.IBaseLabelProvider;
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -383,13 +390,31 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private void createAllObjectsTreeHierarchy(ScrolledComposite allObjectsTreeScrolledComposite) {
 		MobileElementTreeContentProvider contentProvider = new MobileElementTreeContentProvider();
 		MobileElementLabelProvider labelProvider = new MobileElementLabelProvider();
-		allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER, this);
+		allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER);
 		Tree tree = allObjectsCheckboxTreeViewer.getTree();
 		allObjectsCheckboxTreeViewer.setContentProvider(contentProvider);
 		allObjectsCheckboxTreeViewer.setLabelProvider(labelProvider);
 
 		allObjectsTreeScrolledComposite.setContent(tree);
 		allObjectsTreeScrolledComposite.setMinSize(tree.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+		tree.setLayoutData((Object) new GridData(4, 4, true, true, 1, 1));
+		allObjectsCheckboxTreeViewer.setLabelProvider((IBaseLabelProvider) new MobileElementLabelProvider());
+		allObjectsCheckboxTreeViewer.setContentProvider((IContentProvider) new MobileElementTreeContentProvider());
+		tree.setToolTipText("");
+		ColumnViewerToolTipSupport.enableFor((ColumnViewer) allObjectsCheckboxTreeViewer, 2);
+		tree.addMouseListener((MouseListener) new MouseAdapter() {
+			public void mouseDown(MouseEvent e) {
+				if (e.button != 1) {
+					return;
+				}
+				Point pt = new Point(e.x, e.y);
+				TreeItem item = tree.getItem(pt);
+				if (item != null) {
+					MobileSpyDialog.this.highlightObject((MobileElement) item.getData());
+				}
+			}
+		});
 	}
 
 	private void createObjectPropertiesTable(ScrolledComposite objectPropertiesScrolledComposite) {
