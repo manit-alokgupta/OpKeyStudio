@@ -7,10 +7,12 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
@@ -39,7 +41,7 @@ public class TCFLCodeConstruct {
 		}
 
 		if (isFunctionLibraryType(flowStep)) {
-			return getFunctionLibraryCode(flowStep);
+			return getFunctionLibraryCode(artifact, flowStep);
 		}
 		return "";
 	}
@@ -104,9 +106,20 @@ public class TCFLCodeConstruct {
 		return methodcode;
 	}
 
-	private String getFunctionLibraryCode(FlowStep flowStep) {
-		Artifact artifact = flowStep.getFunctionLibraryComponent();
-		String code = newLineChar + " new " + artifact.getVariableName() + "().execute();";
+	private String getFunctionLibraryCode(Artifact artifact, FlowStep flowStep) {
+		FunctionLibraryComponent libraryComponent = flowStep.getFunctionLibraryComponent();
+		List<FlowInputArgument> componentInputArguments = flowStep.getFlowInputArgs();
+		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject_FL(artifact,
+				componentInputArguments);
+		String value = "";
+		for (FlowInputObject flowInputObject : flowInputObjects) {
+			if (!value.isEmpty()) {
+				value += ", ";
+			}
+			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
+		}
+		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().execute(" + value + ");";
+		System.out.println(code);
 		return code;
 	}
 
@@ -121,16 +134,25 @@ public class TCFLCodeConstruct {
 			if (data == null) {
 				data = "0";
 			}
+			if (data.isEmpty()) {
+				data = "0";
+			}
 			return data;
 		}
 		if (dataType.equals("Double")) {
 			if (data == null) {
 				data = "0";
 			}
+			if (data.isEmpty()) {
+				data = "0";
+			}
 			return data;
 		}
 		if (dataType.equals("Boolean")) {
 			if (data == null) {
+				data = "false";
+			}
+			if (data.isEmpty()) {
 				data = "false";
 			}
 			return data.toLowerCase();
