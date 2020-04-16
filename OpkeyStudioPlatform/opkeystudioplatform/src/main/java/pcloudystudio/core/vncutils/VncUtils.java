@@ -8,9 +8,9 @@ import java.nio.charset.StandardCharsets;
 
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class VNCUtils {
+public class VncUtils {
 
-	private static VNCUtils obj;
+	private static VncUtils obj;
 	private static String DeviceidCommand = "adb get-serialno";
 	private static String PreCompiledLibDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator
 			+ "VncServer" + File.separator + "vncserver" + File.separator + "PreCompiled_libs"; // "
@@ -19,12 +19,12 @@ public class VNCUtils {
 			+ "VncServer" + File.separator + "vncserver" + File.separator + "Resources"+File.separator ; 
 	private static String MobileLibDirectory = "/data/local/tmp/pcloudy-libs";
 
-	private VNCUtils() {
+	private VncUtils() {
 	}
 
-	public static VNCUtils getInstance() {
+	public static VncUtils getInstance() {
 		if (obj == null)
-			return new VNCUtils();
+			return new VncUtils();
 		return obj;
 	}
 
@@ -291,8 +291,8 @@ public class VNCUtils {
 	public static void pushVncServer(String id, String abi) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("pushing vnc server");
-		String command = "adb -s " + id + " push " + VNCUtils.PreCompiledLibDirectory + "/libs/" + abi
-				+ "/androidvncserver" + " " + VNCUtils.MobileLibDirectory; // give the source for precompiled directory
+		String command = "adb -s " + id + " push " + VncUtils.PreCompiledLibDirectory + "/libs/" + abi
+				+ "/androidvncserver" + " " + VncUtils.MobileLibDirectory; // give the source for precompiled directory
 		System.out.println("command is  " + command);
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
@@ -333,7 +333,7 @@ public class VNCUtils {
 	public static void pushScreenshotMinicap(String id, String abi) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("pushing minicap file");
-		String command = "adb -s " + id + " push  " + VNCUtils.PreCompiledLibDirectory + "/screenshot/" + abi
+		String command = "adb -s " + id + " push  " + VncUtils.PreCompiledLibDirectory + "/screenshot/" + abi
 				+ "/minicap" + "  " + MobileLibDirectory;
 		System.out.println("command is  " + command);
 		StringBuilder builder = new StringBuilder();
@@ -375,7 +375,7 @@ public class VNCUtils {
 			throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("pushing minicapso file");
-		String command = "adb -s " + id + " push  " + VNCUtils.PreCompiledLibDirectory + "/aosp/android-" + sdk + "/"
+		String command = "adb -s " + id + " push  " + VncUtils.PreCompiledLibDirectory + "/aosp/android-" + sdk + "/"
 				+ abi + "/minicap.so" + "   " + MobileLibDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);

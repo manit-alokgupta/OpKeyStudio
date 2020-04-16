@@ -10,7 +10,7 @@ import org.apache.commons.io.IOUtils;
 
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class VNCStarter {
+public class VncStarter {
 	private String deviceId;
 	private String deviceAbi;
 	private String deviceSdk;
@@ -22,17 +22,17 @@ public class VNCStarter {
 			+ File.separator + "vncserver.zip";
 	private String zipExtractPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "VncServer";
 
-	public VNCStarter() throws IOException, InterruptedException {
-		VNCUtils.getInstance();
-		deviceId = VNCUtils.runAdbCommandForMobileId();
-		deviceName = VNCUtils.runAdbCommandForMobileModel(deviceId);
-		deviceAbi = VNCUtils.runAdbCommandForMobileAbi(deviceId);
-		deviceSdk = VNCUtils.runAdbCommandForMobileSdk(deviceId);
+	public VncStarter() throws IOException, InterruptedException {
+		VncUtils.getInstance();
+		deviceId = VncUtils.runAdbCommandForMobileId();
+		deviceName = VncUtils.runAdbCommandForMobileModel(deviceId);
+		deviceAbi = VncUtils.runAdbCommandForMobileAbi(deviceId);
+		deviceSdk = VncUtils.runAdbCommandForMobileSdk(deviceId);
 	}
 
 	public void startVncServer() throws IOException, InterruptedException {
 
-		Boolean directoryStatus = VNCUtils.checkIfDirectoryExist(VncDirectory);
+		Boolean directoryStatus = VncUtils.checkIfDirectoryExist(VncDirectory);
 		if (!directoryStatus) {
 			try {
 				copyZip();
@@ -45,50 +45,50 @@ public class VNCStarter {
 
 		}
 
-		if (VNCUtils.checkIfDeviceIsConnected(deviceId)) {
+		if (VncUtils.checkIfDeviceIsConnected(deviceId)) {
 
-			Boolean mobileLibStatus = VNCUtils.checkIfMobileContainsLibFolder(deviceId);
+			Boolean mobileLibStatus = VncUtils.checkIfMobileContainsLibFolder(deviceId);
 			if (!mobileLibStatus) {
-				VNCUtils.MakingRequiredDirectory(deviceId);
+				VncUtils.MakingRequiredDirectory(deviceId);
 
-				VNCUtils.givePermissionToDirectory(deviceId);
+				VncUtils.givePermissionToDirectory(deviceId);
 
-				VNCUtils.pushVncServer(deviceId, deviceAbi);
+				VncUtils.pushVncServer(deviceId, deviceAbi);
 
-				VNCUtils.grantPermissionToServer(deviceId);
+				VncUtils.grantPermissionToServer(deviceId);
 
-				VNCUtils.pushScreenshotMinicap(deviceId, deviceAbi);
+				VncUtils.pushScreenshotMinicap(deviceId, deviceAbi);
 
-				VNCUtils.grantPermissionToMinicap(deviceId);
+				VncUtils.grantPermissionToMinicap(deviceId);
 
-				VNCUtils.pushScreenshotMinicapSo(deviceId, deviceSdk, deviceAbi);
+				VncUtils.pushScreenshotMinicapSo(deviceId, deviceSdk, deviceAbi);
 
-				VNCUtils.grantPermissionToMinicapSo(deviceId);
+				VncUtils.grantPermissionToMinicapSo(deviceId);
 
 			} else {
-				Boolean androidvncserverStaus = VNCUtils.checkIfMobileContainsAndroidVncServer(deviceId);
+				Boolean androidvncserverStaus = VncUtils.checkIfMobileContainsAndroidVncServer(deviceId);
 				if (!androidvncserverStaus) {
-					VNCUtils.pushVncServer(deviceId, deviceAbi);
-					VNCUtils.grantPermissionToServer(deviceId);
+					VncUtils.pushVncServer(deviceId, deviceAbi);
+					VncUtils.grantPermissionToServer(deviceId);
 
 				}
-				Boolean androidvMinicapStaus = VNCUtils.checkIfMobileContainsAndroidVncServer(deviceId);
+				Boolean androidvMinicapStaus = VncUtils.checkIfMobileContainsAndroidVncServer(deviceId);
 				if (!androidvMinicapStaus) {
-					VNCUtils.pushScreenshotMinicap(deviceId, deviceAbi);
-					VNCUtils.grantPermissionToMinicap(deviceId);
+					VncUtils.pushScreenshotMinicap(deviceId, deviceAbi);
+					VncUtils.grantPermissionToMinicap(deviceId);
 
 				}
 
-				Boolean androidvMinicapSoStaus = VNCUtils.checkIfMobileContainsAndroidVncServer(deviceId);
+				Boolean androidvMinicapSoStaus = VncUtils.checkIfMobileContainsAndroidVncServer(deviceId);
 				if (!androidvMinicapSoStaus) {
-					VNCUtils.pushScreenshotMinicapSo(deviceId, deviceAbi, deviceAbi);
-					VNCUtils.grantPermissionToMinicapSo(deviceId);
+					VncUtils.pushScreenshotMinicapSo(deviceId, deviceAbi, deviceAbi);
+					VncUtils.grantPermissionToMinicapSo(deviceId);
 
 				}
 
 			}
 
-			VNCUtils.startVncServer(deviceId);
+			VncUtils.startVncServer(deviceId);
 
 		}
 
@@ -104,14 +104,14 @@ public class VNCStarter {
 
 	public void startMobicast() throws IOException, InterruptedException {
 		 
-		if (VNCUtils.checkIfDeviceIsConnected(deviceId)) {
-			VNCUtils.installInputServiceApk(deviceId);
+		if (VncUtils.checkIfDeviceIsConnected(deviceId)) {
+			VncUtils.installInputServiceApk(deviceId);
 
-			VNCUtils.StartInputService(deviceId);
+			VncUtils.StartInputService(deviceId);
 
-			VNCUtils.PortForward(deviceId, port);
+			VncUtils.PortForward(deviceId, port);
 
-			VNCUtils.LunchVnc(deviceId, deviceName, port);
+			VncUtils.LunchVnc(deviceId, deviceName, port);
 		}
 	}
 
