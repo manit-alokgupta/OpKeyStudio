@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.TableEditor;
@@ -68,7 +69,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private Composite compositeAddCapability;
 	private Button btnDelete;
 	private Button btnAdd;
-	private Combo capabilityNameCombo;
+	private CCombo capabilityNameCombo;
 	private Text capabilityTextValue;
 	private Button btnAddToTable;
 	private Composite manuallyAddCapabilityComposite2;
@@ -76,8 +77,8 @@ public class AppiumSettingsDialog extends Dialog {
 	private Text manuallyCapabilityValue;
 	private Button addToTable2;
 	private Button manuallyCancel;
-	private Combo combo_DataType;
-	private Combo combo_ManualType;
+	private CCombo combo_DataType;
+	private CCombo combo_ManualType;
 	String Types[] = { "int", "String", "boolean" };
 
 	private ObjectRepositoryView parentObjectRepositoryView;
@@ -294,7 +295,8 @@ public class AppiumSettingsDialog extends Dialog {
 		addCapabilityComposite.setBounds(75, 0, 550, 42);
 		addCapabilityComposite.setVisible(true);
 
-		capabilityNameCombo = new Combo(addCapabilityComposite, SWT.READ_ONLY);
+		capabilityNameCombo = new CCombo(addCapabilityComposite, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT);
+		capabilityNameCombo.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		capabilityNameCombo.setToolTipText("Please Select Capability Name");
 		capabilityNameCombo.setBounds(10, 5, 135, 33);
 		capabilityNameCombo.setItems(capabilityNameList);
@@ -353,7 +355,8 @@ public class AppiumSettingsDialog extends Dialog {
 		btnAddToTable.setBounds(445,5, 33, 33);
 		btnAddToTable.setEnabled(false);
 
-		combo_DataType = new Combo(addCapabilityComposite, SWT.READ_ONLY); // change to if want to modifiable
+		combo_DataType = new CCombo(addCapabilityComposite, SWT.READ_ONLY); // change to if want to modifiable
+		combo_DataType.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		combo_DataType.setToolTipText("Please Select DataType ");
 		combo_DataType.setBounds(154, 5, 135, 33);
 		combo_DataType.setItems(Types);
@@ -396,7 +399,8 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyCapabilityName.setToolTipText("Please Enter Capability Name ");
 		manuallyCapabilityName.setBounds(10, 5, 135,33);
 
-		combo_ManualType = new Combo(manuallyAddCapabilityComposite2, SWT.READ_ONLY);
+		combo_ManualType = new CCombo(manuallyAddCapabilityComposite2, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT);
+		combo_ManualType.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		combo_ManualType.setToolTipText("Please Select DataType ");
 		combo_ManualType.setBounds(160, 5, 135, 33);
 		combo_ManualType.setItems(Types);

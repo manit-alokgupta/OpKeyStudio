@@ -13,6 +13,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -49,12 +50,13 @@ public class DeviceConfigurationDialog extends Dialog {
 	protected Shell shlDeviceConfiguration;
 	private ObjectRepositoryView parentObjectRepositoryView;
 	private Composite compositeConfigurationSettings;
-	private Combo devicesCombo;
+	private CCombo devicesCombo;
 	private Text applicationPathText;
 	private Map<String, String> devicesList;
 	private LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
 	private Label lblApplicationIsRequiredMessage;
 	private Label lblNoDeviceConnected;
+	private Button btnHelp;
 
 	/**
 	 * Create the dialog.
@@ -122,14 +124,31 @@ public class DeviceConfigurationDialog extends Dialog {
 
 		lblNoDeviceConnected = new Label(compositeConfigurationSettings, SWT.NONE);
 		lblNoDeviceConnected.setVisible(false);
-		lblNoDeviceConnected.setText("No device connected!");
+		lblNoDeviceConnected.setText("No device connected?");
 		lblNoDeviceConnected.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		lblNoDeviceConnected.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
-		lblNoDeviceConnected.setBounds(155, 62, 230, 21);
+		lblNoDeviceConnected.setBounds(155, 62,150, 21);
 		lblNoDeviceConnected.setVisible(false);
+		
+		btnHelp = new Button(compositeConfigurationSettings, SWT.NONE);
+		btnHelp.setToolTipText("Help");
+		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		btnHelp.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/help_13.png"));
+		btnHelp.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Help",
+						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+						"Please contact support@opkey.com", 2, 0, "OK");
+				mDialog.open();
+			}
+		});
+		btnHelp.setBounds(305,64,18,18);
+		btnHelp.setVisible(false);
 
-		devicesCombo = new Combo(compositeConfigurationSettings, SWT.READ_ONLY);
-		devicesCombo.setBounds(155, 23, 309, 25);
+		devicesCombo = new CCombo(compositeConfigurationSettings, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT);
+		devicesCombo.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		devicesCombo.setBounds(155, 23, 309, 33);
 		GridData gd_combo = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		devicesCombo.setLayoutData(gd_combo);
 
@@ -139,14 +158,17 @@ public class DeviceConfigurationDialog extends Dialog {
 		lblApplicationIsRequiredMessage.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
 		lblApplicationIsRequiredMessage.setBounds(155, 128, 230, 21);
 		lblApplicationIsRequiredMessage.setVisible(false);
+		
 
 		try {
 			devicesList = AndroidDeviceUtil.getAndroidDevices();
 			if (devicesList.size() == 0) {
 				lblNoDeviceConnected.setVisible(true);
+				btnHelp.setVisible(true);
 				devicesCombo.removeAll();
 			} else {
 				lblNoDeviceConnected.setVisible(false);
+				btnHelp.setVisible(false);
 				devicesCombo.removeAll();
 				for (Map.Entry<String, String> deviceEntry : devicesList.entrySet())
 					devicesCombo.add(deviceEntry.getValue());
