@@ -5,12 +5,12 @@ import java.io.IOException;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 
-import pcloudystudio.core.vncutils.VncStarter;
+import pcloudystudio.core.vncutils.VNCStarter;
 
 public class VNCHandler {
 	@Execute
 	public void execute(Shell parentShell) throws IOException, InterruptedException {
-		VncStarter starter = new VncStarter();
+		VNCStarter starter = new VNCStarter();
 
 		java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
 			public void run() {
