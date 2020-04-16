@@ -7,6 +7,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
@@ -92,6 +93,15 @@ public class TCFLCodeConstruct {
 				FlowOutputArgument flowOutputArgument = GlobalLoader.getInstance()
 						.getFlowOutputArgumentById(flowOutputId);
 				argumentCall += flowOutputArgument.getOutputvariablename();
+				continue;
+			}
+
+			if (flowInputObject.isFlowInputDataExist()) {
+				String flowInputId = flowInputObject.getFlowInputData();
+				System.out.println(">>Flow Input Id " + flowInputId);
+				ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
+						.getComponentInputArgumentById(flowInputId);
+				argumentCall += flowOutputArgument.getName();
 				continue;
 			}
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {

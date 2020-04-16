@@ -14,12 +14,14 @@ public class FlowInputObject {
 	private boolean staticObjectDataExist;
 	private boolean globalVariableDataExist;
 	private boolean dataRepositoryColumnDataExist;
+	private boolean flowInputDataExist;
 
 	private String staticValueData;
 	private String flowOutputData;
 	private String staticObjectData;
 	private String globalVariableData;
 	private String dataRepositoryColumnData;
+	private String flowInputData;
 
 	private DataSource dataSource;
 	private List<ORObject> orObjects = new ArrayList<>();
@@ -151,5 +153,22 @@ public class FlowInputObject {
 
 	public void setComponentInputArgument(ComponentInputArgument componentInputArgument) {
 		this.componentInputArgument = componentInputArgument;
+	}
+
+	public boolean isFlowInputDataExist() {
+		return flowInputDataExist;
+	}
+
+	public void setFlowInputDataExist(boolean flowInputDataExist) {
+		this.flowInputDataExist = flowInputDataExist;
+	}
+
+	public String getFlowInputData() {
+		return flowInputData;
+	}
+
+	public void setFlowInputData(String flowInputData) {
+		this.setFlowInputDataExist(true);
+		this.flowInputData = flowInputData;
 	}
 }

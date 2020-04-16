@@ -165,6 +165,10 @@ public class FlowApiUtilities {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
 					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
 				}
+				if (flowInputArgument.getDatasource() == DataSource.ValueFromInputParameter) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
+					flowInputObject.setFlowInputData(flowInputArgument.getFlow_step_ia_id());
+				}
 				flowInputObjects.add(flowInputObject);
 			}
 
@@ -185,13 +189,18 @@ public class FlowApiUtilities {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
 					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
 				}
+				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromInputParameter) {
+					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
+					flowInputObject.setFlowInputData(flowInputArgument.getIp_id());
+				}
 				flowInputObjects.add(flowInputObject);
 			}
 		}
 		return flowInputObjects;
 	}
 
-	public List<FlowInputObject> getAllFlowInputObject_FL(Artifact artifact, List<FlowInputArgument> flowInputArguments) {
+	public List<FlowInputObject> getAllFlowInputObject_FL(Artifact artifact,
+			List<FlowInputArgument> flowInputArguments) {
 		List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
 
 		for (FlowInputArgument flowInputArgument : flowInputArguments) {
@@ -242,6 +251,7 @@ public class FlowApiUtilities {
 		}
 		return flowInputObjects;
 	}
+
 	public List<FlowOutputObject> getAllFlowOutputObject(Artifact artifact, FlowStep flowStep) {
 		List<FlowOutputObject> flowOutputObjects = new ArrayList<FlowOutputObject>();
 		for (FlowOutputArgument flowOutputArgument : flowStep.getFlowOutputArgs()) {
