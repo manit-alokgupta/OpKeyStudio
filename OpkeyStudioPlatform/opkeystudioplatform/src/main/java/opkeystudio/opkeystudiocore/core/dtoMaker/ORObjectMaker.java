@@ -86,12 +86,14 @@ public class ORObjectMaker {
 		for (String propName : parentProperties.keySet()) {
 			String propValue = parentProperties.get(propName);
 			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(parentObject, parentAttributeProperties);
-			attrProp.setProperty(propName);
-			attrProp.setValue(propValue);
-			if (propName.equalsIgnoreCase("xpath") || propName.equalsIgnoreCase("resource-id")
-					|| propName.equalsIgnoreCase("name") || propName.equalsIgnoreCase("class"))
-				attrProp.setIsused(true);
-			parentAttributeProperties.add(attrProp);
+			if (!propName.equalsIgnoreCase("name")) {
+				attrProp.setProperty(propName);
+				attrProp.setValue(propValue);
+				if (propName.equalsIgnoreCase("xpath") || propName.equalsIgnoreCase("resource-id")
+						|| propName.equalsIgnoreCase("class"))
+					attrProp.setIsused(true);
+				parentAttributeProperties.add(attrProp);
+			}
 		}
 
 		for (String propName : objectProperties.keySet()) {
