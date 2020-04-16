@@ -20,7 +20,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -127,9 +126,9 @@ public class DeviceConfigurationDialog extends Dialog {
 		lblNoDeviceConnected.setText("No device connected?");
 		lblNoDeviceConnected.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		lblNoDeviceConnected.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
-		lblNoDeviceConnected.setBounds(155, 62,150, 21);
+		lblNoDeviceConnected.setBounds(155, 62, 150, 21);
 		lblNoDeviceConnected.setVisible(false);
-		
+
 		btnHelp = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnHelp.setToolTipText("Help");
 		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
@@ -143,7 +142,7 @@ public class DeviceConfigurationDialog extends Dialog {
 				mDialog.open();
 			}
 		});
-		btnHelp.setBounds(305,64,18,18);
+		btnHelp.setBounds(305, 64, 18, 18);
 		btnHelp.setVisible(false);
 
 		devicesCombo = new CCombo(compositeConfigurationSettings, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT);
@@ -158,7 +157,6 @@ public class DeviceConfigurationDialog extends Dialog {
 		lblApplicationIsRequiredMessage.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
 		lblApplicationIsRequiredMessage.setBounds(155, 128, 230, 21);
 		lblApplicationIsRequiredMessage.setVisible(false);
-		
 
 		try {
 			devicesList = AndroidDeviceUtil.getAndroidDevices();
