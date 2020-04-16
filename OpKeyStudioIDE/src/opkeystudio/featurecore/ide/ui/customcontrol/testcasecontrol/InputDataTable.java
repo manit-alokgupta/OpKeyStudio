@@ -20,6 +20,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -99,6 +100,7 @@ public class InputDataTable extends CustomTable {
 		ControlEditor editor = new ControlEditor(cursor);
 		editor.grabHorizontal = true;
 		editor.grabVertical = true;
+
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -114,7 +116,28 @@ public class InputDataTable extends CustomTable {
 				}
 				System.out.println(">>DataType " + dataType);
 				boolean isNumberType = isDataTypeIntegerType(dataType);
+				boolean isBooleanType = isDataTypeBooleanrType(dataType);
 				int selectedColumn = cursor.getColumn();
+
+				Button checkedButton = new Button(cursor, SWT.CHECK);
+				checkedButton.addSelectionListener(new SelectionListener() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						String status = convertBooleanToString(checkedButton.getSelection());
+						new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
+								flowInputArgument, status, DataSource.StaticValue);
+						getParentTestCaseView().toggleSaveButton(true);
+						row.setText(selectedColumn, status);
+					}
+
+					@Override
+					public void widgetDefaultSelected(SelectionEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
 				Text text = new Text(cursor, 0);
 				text.addVerifyListener(new VerifyListener() {
 
@@ -178,21 +201,32 @@ public class InputDataTable extends CustomTable {
 				});
 
 				if (selectedColumn == 2) {
-					if (flowInputArgument.getStaticvalue() != null) {
-						text.setText(flowInputArgument.getStaticvalue());
-						editor.setEditor(text);
-						text.setFocus();
+					if (isBooleanType) {
+						if (flowInputArgument.getStaticvalue() != null) {
+							boolean checkedStatus = convertStringToBoolean(flowInputArgument.getStaticvalue());
+							checkedButton.setSelection(checkedStatus);
+							disposeControlEditor(editor);
+							editor.setEditor(checkedButton);
+						} else {
+							checkedButton.setSelection(false);
+							disposeControlEditor(editor);
+							editor.setEditor(checkedButton);
+						}
 					} else {
-						text.setText("");
-						editor.setEditor(text);
-						text.setFocus();
-					}
-				} else {
-					if (editor != null) {
-						if (editor.getEditor() != null) {
-							editor.getEditor().dispose();
+						if (flowInputArgument.getStaticvalue() != null) {
+							text.setText(flowInputArgument.getStaticvalue());
+							disposeControlEditor(editor);
+							editor.setEditor(text);
+							text.setFocus();
+						} else {
+							text.setText("");
+							disposeControlEditor(editor);
+							editor.setEditor(text);
+							text.setFocus();
 						}
 					}
+				} else {
+					disposeControlEditor(editor);
 				}
 			}
 
@@ -201,6 +235,28 @@ public class InputDataTable extends CustomTable {
 
 			}
 		});
+	}
+
+	private void disposeControlEditor(ControlEditor editor) {
+		if (editor != null) {
+			if (editor.getEditor() != null) {
+				editor.getEditor().dispose();
+			}
+		}
+	}
+
+	private String convertBooleanToString(boolean status) {
+		if (status) {
+			return "true";
+		}
+		return "false";
+	}
+
+	private boolean convertStringToBoolean(String status) {
+		if (status.toLowerCase().equals("true")) {
+			return true;
+		}
+		return false;
 	}
 
 	private List<Control> allTableEditors = new ArrayList<Control>();
