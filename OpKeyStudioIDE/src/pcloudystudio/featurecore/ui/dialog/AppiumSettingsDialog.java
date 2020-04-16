@@ -204,8 +204,8 @@ public class AppiumSettingsDialog extends Dialog {
 		label_2.setBounds(30, 91, 153, 33);
 
 		Button btnBrowse = new Button(compositeAppiumSettings, SWT.NONE);
-		btnBrowse.setBounds(520, 87, 33, 33);
-		btnBrowse.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browseicon.png"));
+		btnBrowse.setBounds(520, 96, 18, 18);
+		btnBrowse.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browse.png"));
 		btnBrowse.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnBrowse.setToolTipText("Browse");
 
@@ -254,7 +254,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeAddCapability.setBounds(20, 5, 612, 42);
 
 		btnAdd = new Button(compositeAddCapability, SWT.NONE);
-		btnAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addicon.png"));
+		btnAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/add_icon.png"));
 		btnAdd.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -267,13 +267,13 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 		btnAdd.setToolTipText("Add Capability");
-		btnAdd.setBounds(10, 5, 33, 33);
+		btnAdd.setBounds(21, 12, 18, 18);
 
 		Composite compositeForDeleteButton = new Composite(compositeAddCapability, SWT.NONE);
 		compositeForDeleteButton.setBounds(46, 5, 33, 33);
 
 		btnDelete = new Button(compositeForDeleteButton, SWT.PUSH);
-		btnDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/deleteicon.png"));
+		btnDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/delete_icon.png"));
 		btnDelete.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -287,7 +287,7 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		btnDelete.setEnabled(false);
 		btnDelete.setToolTipText("Delete Capability");
-		btnDelete.setBounds(0, 0, 33, 33);
+		btnDelete.setBounds(0,7, 18, 18);
 
 		compositeForDeleteButton.setToolTipText("Delete Capability");
 
@@ -334,7 +334,7 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 
 		btnAddToTable = new Button(addCapabilityComposite, SWT.NONE);
-		btnAddToTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotable.png"));
+		btnAddToTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotableicon.png"));
 		btnAddToTable.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnAddToTable.setToolTipText("Add to table");
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
@@ -353,7 +353,7 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.setText("");
 			}
 		});
-		btnAddToTable.setBounds(445, 5, 33, 33);
+		btnAddToTable.setBounds(445, 12, 18,18);
 		btnAddToTable.setEnabled(false);
 
 		combo_DataType = new CCombo(addCapabilityComposite, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT); // change to if want
@@ -376,7 +376,7 @@ public class AppiumSettingsDialog extends Dialog {
 				fillDataInCapabilityTable();
 			}
 		});
-		btnRefresh.setBounds(484, 5, 33, 33);
+		btnRefresh.setBounds(470,12, 18,18);
 		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		btnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefresh.setToolTipText("Refresh Table");
@@ -431,7 +431,7 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyCapabilityValue.setBounds(310, 5, 135, 33);
 
 		addToTable2 = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
-		addToTable2.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotable.png"));
+		addToTable2.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotableicon.png"));
 		addToTable2.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		addToTable2.setToolTipText("Add to table");
 		addToTable2.addSelectionListener(new SelectionAdapter() {
@@ -451,11 +451,11 @@ public class AppiumSettingsDialog extends Dialog {
 				
 			}
 		});
-		addToTable2.setBounds(450, 4, 33, 33);
+		addToTable2.setBounds(450, 12, 18, 18);
 		addToTable2.setEnabled(false);
 
 		manuallyCancel = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
-		manuallyCancel.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/cancelicon.png"));
+		manuallyCancel.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/cancel.png"));
 		manuallyCancel.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallyCancel.setToolTipText("Cancel");
 		manuallyCancel.addSelectionListener(new SelectionAdapter() {
@@ -467,7 +467,7 @@ public class AppiumSettingsDialog extends Dialog {
 				addCapabilityComposite.setVisible(true);
 			}
 		});
-		manuallyCancel.setBounds(488, 5, 33, 33);
+		manuallyCancel.setBounds(475, 12, 18, 18);
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);

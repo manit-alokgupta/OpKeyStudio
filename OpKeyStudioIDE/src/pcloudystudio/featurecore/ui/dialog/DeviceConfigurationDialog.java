@@ -208,7 +208,7 @@ public class DeviceConfigurationDialog extends Dialog {
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
-		btnRefresh.setBounds(470, 22, 33, 33);
+		btnRefresh.setBounds(470, 30, 20, 20);
 
 		Label lblApplicationFile = new Label(compositeConfigurationSettings, SWT.NONE);
 		lblApplicationFile.setBounds(44, 95, 105, 25);
@@ -221,7 +221,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnBrowseAPK.setToolTipText("Browse Application");
 		btnBrowseAPK.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnBrowseAPK.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browseicon.png"));
+		btnBrowseAPK.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browse.png"));
 		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -245,7 +245,7 @@ public class DeviceConfigurationDialog extends Dialog {
 				shlDeviceConfiguration.setFocus();
 			}
 		});
-		btnBrowseAPK.setBounds(470, 88, 33, 33);
+		btnBrowseAPK.setBounds(470, 96,20,20);
 
 		Button btnNext = new Button(shlDeviceConfiguration, SWT.NONE);
 		btnNext.addSelectionListener(new SelectionAdapter() {
