@@ -353,7 +353,7 @@ public class GlobalLoader {
 
 	public List<Artifact> getAllArtifactByType(String type) {
 		List<Artifact> typeArtifacts = new ArrayList<Artifact>();
-		List<Artifact> artifacts = getAllArtifacts();
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getFile_type_enum().toString().equals(type)) {
 				typeArtifacts.add(artifact);
@@ -363,7 +363,7 @@ public class GlobalLoader {
 	}
 
 	public Artifact getArtifactById(String id) {
-		List<Artifact> artifacts = getAllArtifacts();
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getId().toString().equals(id)) {
 				return artifact;
