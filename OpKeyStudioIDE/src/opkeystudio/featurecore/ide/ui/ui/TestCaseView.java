@@ -615,24 +615,8 @@ public class TestCaseView extends Composite {
 				stepDetails = flowStep.getComments();
 			}
 			getStepDetailLabel().setText(stepDetails);
-			if (flowStep.getKeyword() != null) {
-				outputDataTable.setKeyword(flowStep.getKeyword());
-				inputDataTable.setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
-			} else {
-				outputDataTable.setKeyword(null);
-				inputDataTable.setKeyWordInputArgs(new ArrayList<>());
-			}
-			if (flowStep.getFunctionLibraryComponent() != null) {
-				inputDataTable
-						.setComponentInputArgs(flowStep.getFunctionLibraryComponent().getComponentInputArguments());
-			} else {
-				inputDataTable.setComponentInputArgs(new ArrayList<>());
-			}
-			inputDataTable.setFlowInputArgs(flowStep.getFlowInputArgs());
-			inputDataTable.renderInputTable();
-
-			outputDataTable.setFlowOutputArgs(flowStep.getFlowOutputArgs());
-			outputDataTable.renderOutPutTableFlowStep();
+			inputDataTable.renderInputTable(flowStep);
+			outputDataTable.renderOutPutTableFlowStep(flowStep);
 			outputVariableTable.renderOutPutTableAll();
 			renderTestObjectTable(flowStep, true);
 
@@ -867,7 +851,7 @@ public class TestCaseView extends Composite {
 						DataSource.ValueFromGlobalVariable);
 				toggleSaveButton(true);
 				try {
-					getInputDataTable().renderInputTable();
+					getInputDataTable().renderInputTable(getInputDataTable().getFlowStep());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

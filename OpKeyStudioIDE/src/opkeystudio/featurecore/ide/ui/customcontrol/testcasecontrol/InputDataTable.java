@@ -47,10 +47,12 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgumen
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class InputDataTable extends CustomTable {
+	private FlowStep flowStep;
 	private List<KeyWordInputArgument> keyWordInputArgs = new ArrayList<KeyWordInputArgument>();
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
 	private List<ComponentInputArgument> componentInputArgs = new ArrayList<>();
@@ -473,7 +475,23 @@ public class InputDataTable extends CustomTable {
 		this.flowInputArgs = flowInputArgs;
 	}
 
-	public void renderInputTable() throws JsonParseException, JsonMappingException, IOException {
+	private void initInputTableArguments(FlowStep flowStep) {
+		this.setFlowStep(flowStep);
+		if (flowStep.getKeyword() != null) {
+			setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
+		} else {
+			setKeyWordInputArgs(new ArrayList<>());
+		}
+		if (flowStep.getFunctionLibraryComponent() != null) {
+			setComponentInputArgs(flowStep.getFunctionLibraryComponent().getComponentInputArguments());
+		} else {
+			setComponentInputArgs(new ArrayList<>());
+		}
+		setFlowInputArgs(flowStep.getFlowInputArgs());
+	}
+
+	public void renderInputTable(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
+		this.initInputTableArguments(flowStep);
 		disposeAllTableEditors();
 		this.removeAll();
 		List<FlowInputArgument> flowInputArgs = getFlowInputArgs();
@@ -564,6 +582,14 @@ public class InputDataTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public FlowStep getFlowStep() {
+		return flowStep;
+	}
+
+	public void setFlowStep(FlowStep flowStep) {
+		this.flowStep = flowStep;
 	}
 
 }

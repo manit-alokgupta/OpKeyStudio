@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -28,6 +29,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
@@ -36,6 +38,7 @@ public class OutputDataTable extends CustomTable {
 		SELECTIONTABLE, INPUTTABLE
 	};
 
+	private FlowStep flowStep;
 	private Keyword keyword;
 	private List<FlowOutputArgument> flowOutputArgs;
 	private TestCaseView parentTestCaseView;
@@ -103,7 +106,7 @@ public class OutputDataTable extends CustomTable {
 
 				selectedFlowInputArgument.setModified(true);
 				try {
-					getParentTestCaseView().getInputDataTable().renderInputTable();
+					getParentTestCaseView().getInputDataTable().renderInputTable(getFlowStep());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -219,7 +222,18 @@ public class OutputDataTable extends CustomTable {
 		this.flowOutputArgs = flowOutputArgs;
 	}
 
-	public void renderOutPutTableFlowStep() {
+	private void initOutputTableArguments(FlowStep flowStep) {
+		this.setFlowStep(flowStep);
+		if (flowStep.getKeyword() != null) {
+			setKeyword(flowStep.getKeyword());
+		} else {
+			setKeyword(null);
+		}
+		setFlowOutputArgs(flowStep.getFlowOutputArgs());
+	}
+
+	public void renderOutPutTableFlowStep(FlowStep flowStep) {
+		this.initOutputTableArguments(flowStep);
 		this.removeAll();
 		for (FlowOutputArgument flowOutPutArg : getFlowOutputArgs()) {
 			CustomTableItem cti = new CustomTableItem(this, 0);
@@ -265,5 +279,13 @@ public class OutputDataTable extends CustomTable {
 
 	public void setTableType(TABLE_TYPE tableType) {
 		this.tableType = tableType;
+	}
+
+	public FlowStep getFlowStep() {
+		return flowStep;
+	}
+
+	public void setFlowStep(FlowStep flowStep) {
+		this.flowStep = flowStep;
 	}
 }
