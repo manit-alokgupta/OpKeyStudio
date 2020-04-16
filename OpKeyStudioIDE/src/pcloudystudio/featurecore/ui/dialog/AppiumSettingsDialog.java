@@ -22,7 +22,6 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -121,7 +120,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -146,7 +145,7 @@ public class AppiumSettingsDialog extends Dialog {
 		clblLogo.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		clblLogo.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/appium_logo.jpg"));
 		clblLogo.setBounds(519, 10, 113, 33);
-		
+
 		Label lblProvideAppiumHost = new Label(compositeTopHeading, SWT.NONE);
 		lblProvideAppiumHost.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblProvideAppiumHost.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
@@ -168,7 +167,6 @@ public class AppiumSettingsDialog extends Dialog {
 		serverAddress.setToolTipText("Please Provide LocalHost Address");
 		serverAddress.setBounds(205, 10, 309, 33);
 		serverAddress.setText("127.0.0.1");
-		
 
 		portNumber = new Text(compositeAppiumSettings, SWT.BORDER);
 		portNumber.addVerifyListener(new VerifyListener() {
@@ -191,7 +189,7 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumPortIpInfo
-				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
@@ -270,7 +268,6 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		btnAdd.setToolTipText("Add Capability");
 		btnAdd.setBounds(10, 5, 33, 33);
-		
 
 		Composite compositeForDeleteButton = new Composite(compositeAddCapability, SWT.NONE);
 		compositeForDeleteButton.setBounds(46, 5, 33, 33);
@@ -290,8 +287,8 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		btnDelete.setEnabled(false);
 		btnDelete.setToolTipText("Delete Capability");
-		btnDelete.setBounds(0, 0,33,33);
-		
+		btnDelete.setBounds(0, 0, 33, 33);
+
 		compositeForDeleteButton.setToolTipText("Delete Capability");
 
 		addCapabilityComposite = new Composite(compositeAddCapability, SWT.NONE);
@@ -299,7 +296,7 @@ public class AppiumSettingsDialog extends Dialog {
 		addCapabilityComposite.setVisible(true);
 
 		capabilityNameCombo = new CCombo(addCapabilityComposite, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT);
-		capabilityNameCombo.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		capabilityNameCombo.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		capabilityNameCombo.setToolTipText("Please Select Capability Name");
 		capabilityNameCombo.setBounds(10, 5, 135, 33);
 		capabilityNameCombo.setItems(capabilityNameList);
@@ -314,8 +311,9 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
+		capabilityTextValue.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		capabilityTextValue.setToolTipText("Please Enter Capability Value");
-		capabilityTextValue.setBounds(295, 5,135,33);
+		capabilityTextValue.setBounds(295, 5, 135, 33);
 
 		capabilityTextValue.addModifyListener(new ModifyListener() {
 			@Override
@@ -355,11 +353,12 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.setText("");
 			}
 		});
-		btnAddToTable.setBounds(445,5, 33, 33);
+		btnAddToTable.setBounds(445, 5, 33, 33);
 		btnAddToTable.setEnabled(false);
 
-		combo_DataType = new CCombo(addCapabilityComposite, SWT.READ_ONLY); // change to if want to modifiable
-		combo_DataType.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		combo_DataType = new CCombo(addCapabilityComposite, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT); // change to if want
+		// to modifiable
+		combo_DataType.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		combo_DataType.setToolTipText("Please Select DataType ");
 		combo_DataType.setBounds(154, 5, 135, 33);
 		combo_DataType.setItems(Types);
@@ -377,7 +376,7 @@ public class AppiumSettingsDialog extends Dialog {
 				fillDataInCapabilityTable();
 			}
 		});
-		btnRefresh.setBounds(484, 5, 33,33);
+		btnRefresh.setBounds(484, 5, 33, 33);
 		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		btnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefresh.setToolTipText("Refresh Table");
@@ -387,6 +386,7 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyAddCapabilityComposite2.setVisible(false);
 
 		manuallyCapabilityName = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
+		manuallyCapabilityName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		manuallyCapabilityName.addVerifyListener(new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
 				restrictInputForManullyCapabilityName(e);
@@ -400,16 +400,17 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 		manuallyCapabilityName.setToolTipText("Please Enter Capability Name ");
-		manuallyCapabilityName.setBounds(10, 5, 135,33);
+		manuallyCapabilityName.setBounds(10, 5, 135, 33);
 
 		combo_ManualType = new CCombo(manuallyAddCapabilityComposite2, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT);
-		combo_ManualType.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		combo_ManualType.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		combo_ManualType.setToolTipText("Please Select DataType ");
 		combo_ManualType.setBounds(160, 5, 135, 33);
 		combo_ManualType.setItems(Types);
 		combo_ManualType.setText("String");
 
 		manuallyCapabilityValue = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
+		manuallyCapabilityValue.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		manuallyCapabilityValue.setToolTipText("Please Enter Capability Value ");
 		manuallyCapabilityValue.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -446,12 +447,11 @@ public class AppiumSettingsDialog extends Dialog {
 				}
 				manuallyCapabilityName.setText("");
 				manuallyCapabilityValue.setText("");
-				// manuallyAddCapabilityComposite2.setVisible(false);
 				addToTable2.setEnabled(false);
-				// addCapabilityComposite.setVisible(true);
+				
 			}
 		});
-		addToTable2.setBounds(450, 4, 33,33);
+		addToTable2.setBounds(450, 4, 33, 33);
 		addToTable2.setEnabled(false);
 
 		manuallyCancel = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
@@ -467,8 +467,7 @@ public class AppiumSettingsDialog extends Dialog {
 				addCapabilityComposite.setVisible(true);
 			}
 		});
-		manuallyCancel.setBounds(488,5, 33,33);
-	
+		manuallyCancel.setBounds(488, 5, 33, 33);
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -493,7 +492,7 @@ public class AppiumSettingsDialog extends Dialog {
 		fillDataInCapabilityTable();
 
 		TableEditor editor = new TableEditor(capabilityTable);
-		
+
 		Label lblPressCtrlTo = new Label(compositeCapabilitySettings, SWT.NONE);
 		lblPressCtrlTo.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
 		lblPressCtrlTo.setBounds(20, 197, 283, 25);
