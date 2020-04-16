@@ -21,8 +21,9 @@ public class ObjectConverter {
 				Object _parentobject = convertORObjectToOpKeyObject(orobject.getParentORObject());
 				WebDriverObject parentobject = new ObjectFormatter().formatObjectToWebDriverObject(_parentobject);
 				webdriverobject.setParentObject(parentobject);
+				System.out.println(">>Parent Object " + parentobject.toString());
 			}
-			System.out.println(">>Object " + webdriverobject.toString());
+			System.out.println(">>Current Object " + webdriverobject.toString());
 			return webdriverobject;
 		} catch (ObjectPropertiesNotSufficientException e) {
 			e.printStackTrace();
