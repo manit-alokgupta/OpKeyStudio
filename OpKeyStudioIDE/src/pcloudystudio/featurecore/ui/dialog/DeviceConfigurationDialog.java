@@ -249,7 +249,7 @@ public class DeviceConfigurationDialog extends Dialog {
 				shlDeviceConfiguration.setFocus();
 			}
 		});
-		btnBrowseAPK.setBounds(470, 96,20,20);
+		btnBrowseAPK.setBounds(470, 96, 20, 20);
 
 		Button btnNext = new Button(shlDeviceConfiguration, SWT.NONE);
 		btnNext.addSelectionListener(new SelectionAdapter() {
@@ -335,7 +335,7 @@ public class DeviceConfigurationDialog extends Dialog {
 						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
 								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
 								"Unable to start Application: Please check the Appium Server logs for more ... \n"
-										+ "org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to /"
+										+ "org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to "
 										+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort(),
 										1, 0, "OK");
 						mDialog.open();
