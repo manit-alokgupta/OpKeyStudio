@@ -2,8 +2,9 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class ComponentInputArgument extends Modified implements Comparable<ComponentInputArgument>,Cloneable {
+public class ComponentInputArgument extends Modified implements Comparable<ComponentInputArgument>, Cloneable {
 	@DBField
 	private boolean ismandatory;
 	@DBField
@@ -126,11 +127,20 @@ public class ComponentInputArgument extends Modified implements Comparable<Compo
 		this.description = description;
 	}
 
+	public String getVariableName() {
+		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
+		varName = varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		if (varName.trim().isEmpty()) {
+			return "unknownVar";
+		}
+		return varName;
+	}
+
 	@Override
 	public int compareTo(ComponentInputArgument arg0) {
 		return this.getPosition() - arg0.getPosition();
 	}
-	
+
 	public ComponentInputArgument clone() {
 		try {
 			return (ComponentInputArgument) super.clone();

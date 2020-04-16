@@ -49,6 +49,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class InputDataTable extends CustomTable {
@@ -490,10 +491,28 @@ public class InputDataTable extends CustomTable {
 		setFlowInputArgs(flowStep.getFlowInputArgs());
 	}
 
+	private boolean isConstructFlowIFKeyword(FlowStep flowStep) {
+		if (flowStep.getKeyword() != null) {
+			Keyword keyword = flowStep.getKeyword();
+			if (keyword.getName().toLowerCase().equals("if")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void renderConstructFlowIntKeyword(FlowStep flowStep) {
+		
+	}
+
 	public void renderInputTable(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
 		this.initInputTableArguments(flowStep);
 		disposeAllTableEditors();
 		this.removeAll();
+		if (isConstructFlowIFKeyword(flowStep)) {
+			renderConstructFlowIntKeyword(flowStep);
+			return;
+		}
 		List<FlowInputArgument> flowInputArgs = getFlowInputArgs();
 		if (getKeyWordInputArgs().size() > 0) {
 			for (int i = 0; i < getKeyWordInputArgs().size(); i++) {

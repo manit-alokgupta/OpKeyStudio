@@ -46,7 +46,6 @@ public class TCFLCodeConstruct {
 
 	private String getKeywordCode(Artifact artifact, FlowStep flowStep, String refvarName) {
 		String keywordName = flowStep.getKeyword().getName();
-		System.out.println(">>Keyword Name " + keywordName);
 		String methodcode = newLineChar + refvarName + "." + keywordName + "(";
 		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
@@ -102,7 +101,6 @@ public class TCFLCodeConstruct {
 
 		methodcode += argumentCall;
 		methodcode += ");";
-		System.out.println(">>Method Body " + methodcode);
 		return methodcode;
 	}
 

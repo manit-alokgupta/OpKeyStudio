@@ -14,7 +14,6 @@ import java.util.jar.JarInputStream;
 import javax.management.RuntimeErrorException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.AutoCompleteToken;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.CodeCompletionProvider;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
