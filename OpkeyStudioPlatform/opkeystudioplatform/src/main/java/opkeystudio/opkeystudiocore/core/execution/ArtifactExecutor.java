@@ -8,16 +8,19 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class ArtifactExecutor {
 	private ByteArrayOutputStream standardOutput;
 	private ByteArrayOutputStream standardErrorOutput;
 	private URLClassLoader classLoader;
 	private boolean executionCompleted = false;
+	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 
 	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
 		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
@@ -105,5 +108,13 @@ public class ArtifactExecutor {
 
 	public void setClassLoader(URLClassLoader classLoader) {
 		this.classLoader = classLoader;
+	}
+
+	public List<CompileError> getCompileErrors() {
+		return compileErrors;
+	}
+
+	public void setCompileErrors(List<CompileError> compileErrors) {
+		this.compileErrors = compileErrors;
 	}
 }
