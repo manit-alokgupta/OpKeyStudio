@@ -337,16 +337,23 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnStop.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				AndroidDriverObject.getDriver().quit();
-				btnCapture.setEnabled(false);
-				lblAddToORConfirmation.setVisible(false);
-				btnClickAndMoveToNextScreen.setEnabled(false);
-				btnStop.setEnabled(false);
-				btnAdd.setEnabled(false);
-				allObjectsCheckboxTreeViewer.getTree().removeAll();
-				clearPropertiesTableData();
-				textObjectName.setText("");
-				deviceView.close();
+				try {
+					btnCapture.setEnabled(false);
+					lblAddToORConfirmation.setVisible(false);
+					btnClickAndMoveToNextScreen.setEnabled(false);
+					btnStop.setEnabled(false);
+					btnAdd.setEnabled(false);
+					allObjectsCheckboxTreeViewer.getTree().removeAll();
+					clearPropertiesTableData();
+					textObjectName.setText("");
+					deviceView.close();
+					AndroidDriverObject.getDriver().quit();
+				} catch (Exception ex) {
+					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							ex.getMessage(), 1, 0, "OK");
+					mDialog.open();
+				}
 			}
 		});
 		btnStop.setBounds(347, 5, 58, 28);
