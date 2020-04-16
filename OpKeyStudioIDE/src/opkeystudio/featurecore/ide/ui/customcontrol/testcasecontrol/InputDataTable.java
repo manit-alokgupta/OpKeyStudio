@@ -18,6 +18,8 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -103,8 +105,54 @@ public class InputDataTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				CustomTableItem row = (CustomTableItem) cursor.getRow();
 				FlowInputArgument flowInputArgument = (FlowInputArgument) row.getControlData();
+				String dataType = "";
+				if (flowInputArgument.getKeywordInputArgument() != null) {
+					dataType = flowInputArgument.getKeywordInputArgument().getDatatype();
+				}
+				if (flowInputArgument.getComponentInputArgument() != null) {
+					dataType = flowInputArgument.getComponentInputArgument().getType();
+				}
+				System.out.println(">>DataType " + dataType);
+				boolean isNumberType = isDataTypeIntegerType(dataType);
 				int selectedColumn = cursor.getColumn();
 				Text text = new Text(cursor, 0);
+				text.addVerifyListener(new VerifyListener() {
+
+					@Override
+					public void verifyText(VerifyEvent e) {
+						if (isNumberType) {
+							final String oldS = text.getText();
+							String newS = oldS.substring(0, e.start) + e.text + oldS.substring(e.end);
+							System.out.println(">> Text " + newS);
+							if (newS.trim().isEmpty()) {
+								return;
+							}
+							boolean isNumber = true;
+							try {
+								Float.parseFloat(newS);
+							} catch (NumberFormatException ex) {
+								isNumber = false;
+							}
+
+							try {
+								Integer.parseInt(newS);
+							} catch (NumberFormatException ex) {
+								isNumber = false;
+							}
+
+							try {
+								Double.parseDouble(newS);
+							} catch (NumberFormatException ex) {
+								isNumber = false;
+							}
+
+							if (!isNumber) {
+								e.doit = false;
+							}
+						}
+					}
+				});
+
 				text.addFocusListener(new FocusListener() {
 
 					@Override
@@ -157,11 +205,39 @@ public class InputDataTable extends CustomTable {
 
 	private List<Control> allTableEditors = new ArrayList<Control>();
 
+	private boolean isDataTypeIntegerType(String dataType) {
+		if (dataType.equals("Integer")) {
+			return true;
+		}
+		if (dataType.equals("Float")) {
+			return true;
+		}
+		if (dataType.equals("Double")) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isDataTypeBooleanrType(String dataType) {
+		if (dataType.equals("Boolean")) {
+			return true;
+		}
+		return false;
+	}
+
 	private void addInputTableEditor(CustomTableItem item)
 			throws JsonParseException, JsonMappingException, IOException {
 		item.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
 		FlowInputArgument flowInputArgument = (FlowInputArgument) item.getControlData();
 		DataSource dataSourceType = null;
+		String dataType = "";
+		if (flowInputArgument.getKeywordInputArgument() != null) {
+			dataType = flowInputArgument.getKeywordInputArgument().getDatatype();
+		}
+		if (flowInputArgument.getComponentInputArgument() != null) {
+			dataType = flowInputArgument.getComponentInputArgument().getType();
+		}
+		System.out.println(">>DataType " + dataType);
 		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			dataSourceType = flowInputArgument.getArg_datasource();
 		} else {
@@ -351,24 +427,16 @@ public class InputDataTable extends CustomTable {
 				List<KeyWordInputArgument> filteredKeywordInputArgs = new ArrayList<KeyWordInputArgument>();
 				for (int i1 = 0; i1 < getKeyWordInputArgs().size(); i1++) {
 					KeyWordInputArgument inputArgument = getKeyWordInputArgs().get(i1);
-					// if (!inputArgument.getDatatype().equals("ORObject")) {
 					filteredKeywordInputArgs.add(inputArgument);
-					// }
 				}
 
 				List<FlowInputArgument> filteredFlowInputArgs = new ArrayList<FlowInputArgument>();
 				for (int i1 = 0; i1 < flowInputArgs.size(); i1++) {
 					FlowInputArgument inputArgument = flowInputArgs.get(i1);
-					// if (inputArgument.getStaticobjectid() == null) {
 					filteredFlowInputArgs.add(inputArgument);
-					// }
 				}
-
-				System.out.println("KeyInputArgs " + filteredKeywordInputArgs.size() + "    " + "FlowInputArgs "
-						+ filteredFlowInputArgs.size());
 				if (filteredKeywordInputArgs.size() == filteredFlowInputArgs.size()) {
 					if (!keywordInputArg.getDatatype().equals("ORObject")) {
-
 						FlowInputArgument flowInputArg = flowInputArgs.get(i);
 						CustomTableItem cti = new CustomTableItem(this, 0);
 						String valueData = flowInputArg.getStaticvalue();
