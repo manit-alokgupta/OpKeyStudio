@@ -14,8 +14,9 @@ public class ORObject {
 		return parentORObject;
 	}
 
-	public void setParentORObject(ORObject parentORObject) {
+	public ORObject setParentORObject(ORObject parentORObject) {
 		this.parentORObject = parentORObject;
+		return this;
 	}
 
 	public String getProperty(String key) {
