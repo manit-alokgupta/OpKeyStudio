@@ -45,6 +45,8 @@ import pcloudystudio.core.mobile.util.AndroidDeviceUtil;
 
 public class DeviceConfigurationDialog extends Dialog {
 
+	private String[] ANDROID_FILTER_NAMES;
+	private String[] ANDROID_FILTER_EXTS;
 	protected Object result;
 	protected Shell shlDeviceConfiguration;
 	private ObjectRepositoryView parentObjectRepositoryView;
@@ -72,6 +74,8 @@ public class DeviceConfigurationDialog extends Dialog {
 		super(parent, style);
 		this.setParentObjectRepositoryView(objectRepositoryView);
 		setText("SWT Dialog");
+		this.ANDROID_FILTER_NAMES = new String[] { "Android Application (*.apk)" };
+		this.ANDROID_FILTER_EXTS = new String[] { "*.apk" };
 	}
 
 	/**
@@ -226,8 +230,8 @@ public class DeviceConfigurationDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(shlDeviceConfiguration);
-				dialog.setFilterExtensions(new String[] { "*.apk" });
-				dialog.setFilterNames(new String[] { "APK File" });
+				dialog.setFilterExtensions(ANDROID_FILTER_EXTS);
+				dialog.setFilterNames(ANDROID_FILTER_NAMES);
 				dialog.setFilterPath(applicationPathText.getText());
 				String path = dialog.open();
 				if (path != null) {
