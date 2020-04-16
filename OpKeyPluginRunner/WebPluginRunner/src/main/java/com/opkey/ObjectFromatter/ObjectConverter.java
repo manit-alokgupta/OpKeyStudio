@@ -14,17 +14,14 @@ import com.opkeystudio.runtime.ORObject;
 
 public class ObjectConverter {
 	public WebDriverObject formatObject(ORObject orobject) {
-		ORObject SmartSoftwareTestingSolutions = new ORObject();
-		SmartSoftwareTestingSolutions.addProperty("type", "HTML PAGE").addProperty("tag", "html")
-				.addProperty("index", "0").addProperty("title", "Smart Software Testing Solutions")
-				.addProperty("x", "0").addProperty("y", "0").addProperty("url", "http://sstsinc.com/")
-				.addProperty("src", "http://sstsinc.com/")	.addProperty("titleindex", "0");
 		Object _object = convertORObjectToOpKeyObject(orobject);
 		try {
 			WebDriverObject webdriverobject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
-			Object _parentobject = convertORObjectToOpKeyObject(SmartSoftwareTestingSolutions);
-			WebDriverObject parentobject = new ObjectFormatter().formatObjectToWebDriverObject(_parentobject);
-			webdriverobject.setParentObject(parentobject);
+			if (orobject.getParentORObject() != null) {
+				Object _parentobject = convertORObjectToOpKeyObject(orobject.getParentORObject());
+				WebDriverObject parentobject = new ObjectFormatter().formatObjectToWebDriverObject(_parentobject);
+				webdriverobject.setParentObject(parentobject);
+			}
 			System.out.println(">>Object " + webdriverobject.toString());
 			return webdriverobject;
 		} catch (ObjectPropertiesNotSufficientException e) {
