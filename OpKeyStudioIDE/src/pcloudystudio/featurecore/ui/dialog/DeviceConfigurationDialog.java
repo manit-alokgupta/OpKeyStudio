@@ -420,11 +420,13 @@ public class DeviceConfigurationDialog extends Dialog {
 		MessageDialogs msd = new MessageDialogs();
 		msd.openProgressDialog(getParent(), "Launching Application! - Please Wait ...", true,
 				new IRunnableWithProgress() {
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				startServer(); // Dont open any dailog here ,in background thread we cannot open ui or main
-				// thread component .
-			}
+					@Override
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						monitor.beginTask("Launching Application! - Please Wait ...", -1);
+						startServer(); // Dont open any dailog here ,in background thread we cannot open ui or main
+						// thread component .
+						monitor.done();
+					}
 		});
 		msd.closeProgressDialog();
 	}
