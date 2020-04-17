@@ -1,0 +1,31 @@
+package pcloudystudio.spytreecomponents;
+
+// Created by Alok Gupta on 20/02/2020.
+// Copyright © 2020 SSTS Inc. All rights reserved.
+
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.wb.swt.ResourceManager;
+
+import pcloudystudio.spytreecomponents.providers.TypeCheckedStyleTreeCellLabelProvider;
+
+public class MobileElementLabelProvider extends TypeCheckedStyleTreeCellLabelProvider<TreeMobileElement> {
+	public MobileElementLabelProvider() {
+		super(0);
+	}
+
+	protected Class<TreeMobileElement> getElementType() {
+		return TreeMobileElement.class;
+	}
+
+	protected Image getImage(TreeMobileElement element) {
+		return ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/test_object-16x16.png");
+	}
+
+	protected String getElementToolTipText(TreeMobileElement element) {
+		return this.getText(element);
+	}
+
+	protected String getText(TreeMobileElement element) {
+		return element.getName();
+	}
+}

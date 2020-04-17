@@ -112,8 +112,7 @@ public class ObjectRepositoryTree extends CustomTree {
 
 	public void renderObjectRepositories() {
 		this.removeAll();
-		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		Artifact artifact = getParentORView().getArtifact();
 		getParentORView().setOrId(artifact.getId());
 		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
 		rootNode.setText(artifact.getName());

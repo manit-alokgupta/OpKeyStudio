@@ -1,8 +1,11 @@
 package opkeystudio.opkeystudiocore.core.dtoMaker;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
@@ -69,4 +72,48 @@ public class ORObjectMaker {
 		orobject.setObjectAttributesProperty(orprops);
 		return orobject;
 	}
+
+	public void addMobileObject(Artifact artifact, String orid, Map<String, String> objectProperties,
+			Map<String, String> parentProperties, String objectName, String parentObjectName, String objectType,
+			String parentObjectType, List<ORObject> allORObjects) throws SQLException {
+		List<ObjectAttributeProperty> parentAttributeProperties = new ArrayList<>();
+		List<ObjectAttributeProperty> objectAttributeProperties = new ArrayList<>();
+
+		ORObject parentObject = getORObjectDTO(artifact, orid, null, parentObjectName, parentObjectType, allORObjects);
+		ORObject orobject = getORObjectDTO(artifact, orid, parentObject.getObject_id(), objectName, objectType,
+				allORObjects);
+
+		for (String propName : parentProperties.keySet()) {
+			String propValue = parentProperties.get(propName);
+			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(parentObject, parentAttributeProperties);
+			if (!propName.equalsIgnoreCase("name")) {
+				attrProp.setProperty(propName);
+				attrProp.setValue(propValue);
+				if (propName.equalsIgnoreCase("xpath") || propName.equalsIgnoreCase("resource-id")
+						|| propName.equalsIgnoreCase("class"))
+					attrProp.setIsused(true);
+				parentAttributeProperties.add(attrProp);
+			}
+		}
+
+		for (String propName : objectProperties.keySet()) {
+			String propValue = objectProperties.get(propName);
+			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(orobject, objectAttributeProperties);
+			attrProp.setProperty(propName);
+			attrProp.setValue(propValue);
+			if (propName.equalsIgnoreCase("xpath") || propName.equalsIgnoreCase("resource-id")
+					|| propName.equalsIgnoreCase("name") || propName.equalsIgnoreCase("class"))
+				attrProp.setIsused(true);
+			objectAttributeProperties.add(attrProp);
+		}
+
+		parentObject.setObjectAttributesProperty(parentAttributeProperties);
+		orobject.setObjectAttributesProperty(objectAttributeProperties);
+
+		List<ORObject> orobjects = new ArrayList<ORObject>();
+		orobjects.add(parentObject);
+		orobjects.add(orobject);
+		new ObjectRepositoryApi().saveORObjects(artifact, orobjects);
+	}
+
 }

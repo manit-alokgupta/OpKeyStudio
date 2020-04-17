@@ -31,6 +31,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
@@ -44,8 +45,13 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import pcloudystudio.appium.AppiumPortIpInfo;
+import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
+import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 
 public class ObjectRepositoryView extends Composite {
+	private Artifact artifact;
+
 	private ObjectAttributeTable objectAttributeTable;
 	private ObjectRepositoryTree objectRepositoryTree;
 	private ToolItem saveObject;
@@ -54,6 +60,7 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem refreshObject;
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
+	private ToolItem androidDeviceConfiguration;
 	private MenuItem cutMenuItem;
 	private MenuItem copyMenuItem;
 	private MenuItem pasteMenuItem;
@@ -83,6 +90,7 @@ public class ObjectRepositoryView extends Composite {
 
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
+		initArtifact();
 		ObjectRepositoryUI();
 		toggleSaveButton(false);
 		toggleRenameButton(false);
@@ -280,9 +288,21 @@ public class ObjectRepositoryView extends Composite {
 		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 		refreshObject.setToolTipText("Refresh");
 
+		new ToolItem(toolBar, SWT.SEPARATOR);
+		androidDeviceConfiguration = new ToolItem(toolBar, SWT.NONE);
+		androidDeviceConfiguration.setImage(
+				ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOBILE_ADD_TO_OR_CAPTURED_IMAGE));
+		androidDeviceConfiguration.setToolTipText("Device Configuration and Spy Android");
+
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
+		// Tree tree = new Tree(composite_3, SWT.BORDER);
 		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectRepositoryTree.setBounds(0, 0, 85, 85);
+
+		// bottomFactoryORUi = new BottomFactoryORUi(composite_3, SWT.BORDER);
+		// bottomFactoryORUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		// bottomFactoryORUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+		// 1, 1));
 
 		ServiceRepository.getInstance().setProjectTreeObject(objectRepositoryTree);
 		Menu menu = new Menu(objectRepositoryTree);
@@ -521,6 +541,34 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
+		androidDeviceConfiguration.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				AppiumPortIpInfo.getInstance();
+				if (AppiumPortIpInfo.getHostAddress() == null
+						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
+					AppiumPortIpInfo
+					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+					AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					AppiumPortIpInfo.setAppiumDirectory(
+							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
+				}
+
+				if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getHostAddress() == null
+						|| AppiumPortIpInfo.getAppiumDirectory() == null) {
+					openAppiumSettingDialog();
+				} else {
+					openDeviceConfigurationDialog();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
 		addObjectAttribute.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -652,6 +700,14 @@ public class ObjectRepositoryView extends Composite {
 		deleteMenuItem.setEnabled(status);
 	}
 
+	private void openAppiumSettingDialog() {
+		new AppiumSettingsDialog(this.getShell(), SWT.NONE, this).open();
+	}
+
+	private void openDeviceConfigurationDialog() {
+		new DeviceConfigurationDialog(this.getShell(), SWT.NONE, this).open();
+	}
+
 	public void renameFunction() {
 		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 		ORObject obRepo = selectedTreeItem.getObjectRepository();
@@ -711,7 +767,7 @@ public class ObjectRepositoryView extends Composite {
 			if (item.getObjectRepository().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
 				item.getObjectRepository()
-						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+				.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getObjectRepository().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();
@@ -726,10 +782,13 @@ public class ObjectRepositoryView extends Composite {
 		getCodedFunctionView().refreshORCode();
 	}
 
-	public Artifact getArtifact() {
+	public void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
-		return artifact;
+		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+	}
+
+	public Artifact getArtifact() {
+		return this.artifact;
 	}
 
 	@Override
