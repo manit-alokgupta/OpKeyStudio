@@ -393,11 +393,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		manuallyCapabilityName = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
 		manuallyCapabilityName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-		manuallyCapabilityName.addVerifyListener(new VerifyListener() {
-			public void verifyText(VerifyEvent e) {
-				restrictInputForManullyCapabilityName(e);
-			}
-		});
+	
 		manuallyCapabilityName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				if (manuallyCapabilityName.getText().equals("") || manuallyCapabilityValue.getText().equals("")) {
