@@ -4103,7 +4103,7 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean VerifyMultipleObjectProperty(ORObject arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10) {
+	public boolean VerifyMultipleObjectProperty(ORObject arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10) throws Exception {
 
 		System.out.println(">>Keyword Called VerifyMultipleObjectProperty");
 
@@ -4112,7 +4112,7 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-//		String bool = new WebObjects().Method_VerifyMultipleObjectPropert
+		String bool = new WebObjects().Method_VerifyMultipleObjectProperty(object, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10).getOutput();
 		return DataType.getBoolean(bool);
 
 	}
@@ -4346,7 +4346,6 @@ public class OpKeyGenericKeywords {
 		// Method_IsTextPresentOnScreen_Generic
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		String bool = "false";
 		return DataType.getBoolean(bool);
