@@ -138,7 +138,7 @@ public class AppiumSettingsDialog extends Dialog {
 		lblHeading = new Label(compositeTopHeading, SWT.NONE);
 		lblHeading.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
 		lblHeading.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblHeading.setBounds(29, 10, 209, 33);
+		lblHeading.setBounds(10, 10, 209, 33);
 		lblHeading.setText("Appium Settings");
 
 		clblLogo = new CLabel(compositeTopHeading, SWT.NONE);
@@ -149,7 +149,7 @@ public class AppiumSettingsDialog extends Dialog {
 		Label lblProvideAppiumHost = new Label(compositeTopHeading, SWT.NONE);
 		lblProvideAppiumHost.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.BOLD));
 		lblProvideAppiumHost.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblProvideAppiumHost.setBounds(39, 46, 239, 25);
+		lblProvideAppiumHost.setBounds(10, 49, 239, 25);
 		lblProvideAppiumHost.setText("Provide Appium Host and Port");
 
 		compositeAppiumSettings = new Composite(shlAppiumSettings, SWT.BORDER);
@@ -204,7 +204,7 @@ public class AppiumSettingsDialog extends Dialog {
 		label_2.setBounds(30, 91, 153, 33);
 
 		Button btnBrowse = new Button(compositeAppiumSettings, SWT.NONE);
-		btnBrowse.setBounds(520, 96, 18, 18);
+		btnBrowse.setBounds(520, 97, 18, 18);
 		btnBrowse.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browse.png"));
 		btnBrowse.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnBrowse.setToolTipText("Browse");
@@ -296,7 +296,7 @@ public class AppiumSettingsDialog extends Dialog {
 		addCapabilityComposite.setVisible(true);
 
 		capabilityNameCombo = new CCombo(addCapabilityComposite, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT);
-		capabilityNameCombo.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		capabilityNameCombo.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		capabilityNameCombo.setToolTipText("Please Select Capability Name");
 		capabilityNameCombo.setBounds(10, 5, 135, 33);
 		capabilityNameCombo.setItems(capabilityNameList);
@@ -314,7 +314,7 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 
 		capabilityTextValue = new Text(addCapabilityComposite, SWT.BORDER);
-		capabilityTextValue.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		capabilityTextValue.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		capabilityTextValue.setToolTipText("Please Enter Capability Value");
 		capabilityTextValue.setBounds(295, 5, 135, 33);
 
@@ -342,7 +342,6 @@ public class AppiumSettingsDialog extends Dialog {
 		btnAddToTable = new Button(addCapabilityComposite, SWT.NONE);
 		btnAddToTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotableicon.png"));
 		btnAddToTable.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnAddToTable.setToolTipText("Add to table");
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -359,12 +358,13 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.setText("");
 			}
 		});
-		btnAddToTable.setBounds(445, 12, 18, 18);
+		btnAddToTable.setBounds(445, 13, 18, 18);
+		btnAddToTable.setToolTipText("Add to table");
 		btnAddToTable.setEnabled(false);
 
 		combo_DataType = new CCombo(addCapabilityComposite, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT); // change to if want
 		// to modifiable
-		combo_DataType.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		combo_DataType.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		combo_DataType.setToolTipText("Please Select DataType ");
 		combo_DataType.setBounds(154, 5, 135, 33);
 		combo_DataType.setItems(Types);
@@ -383,7 +383,7 @@ public class AppiumSettingsDialog extends Dialog {
 				fillDataInCapabilityTable();
 			}
 		});
-		btnRefresh.setBounds(470, 12, 18, 18);
+		btnRefresh.setBounds(470, 13, 18, 18);
 		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		btnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefresh.setToolTipText("Refresh Table");
@@ -393,7 +393,7 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyAddCapabilityComposite2.setVisible(false);
 
 		manuallyCapabilityName = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
-		manuallyCapabilityName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		manuallyCapabilityName.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 	
 		manuallyCapabilityName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -410,14 +410,14 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallyCapabilityName.setBounds(10, 5, 135, 33);
 
 		combo_ManualType = new CCombo(manuallyAddCapabilityComposite2, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT);
-		combo_ManualType.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		combo_ManualType.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		combo_ManualType.setToolTipText("Please Select DataType ");
 		combo_ManualType.setBounds(160, 5, 135, 33);
 		combo_ManualType.setItems(Types);
 		combo_ManualType.setText("String");
 
 		manuallyCapabilityValue = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
-		manuallyCapabilityValue.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		manuallyCapabilityValue.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		manuallyCapabilityValue.setToolTipText("Please Enter Capability Value ");
 		manuallyCapabilityValue.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -461,11 +461,11 @@ public class AppiumSettingsDialog extends Dialog {
 
 			}
 		});
-		addToTable2.setBounds(450, 12, 18, 18);
+		addToTable2.setBounds(450, 13, 18, 18);
 		addToTable2.setEnabled(false);
 
 		manuallyCancel = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
-		manuallyCancel.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/cancel.png"));
+		manuallyCancel.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/cancelicon.png"));
 		manuallyCancel.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallyCancel.setToolTipText("Cancel");
 		manuallyCancel.addSelectionListener(new SelectionAdapter() {
@@ -477,7 +477,7 @@ public class AppiumSettingsDialog extends Dialog {
 				addCapabilityComposite.setVisible(true);
 			}
 		});
-		manuallyCancel.setBounds(475, 12, 18, 18);
+		manuallyCancel.setBounds(475, 13, 18, 18);
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
