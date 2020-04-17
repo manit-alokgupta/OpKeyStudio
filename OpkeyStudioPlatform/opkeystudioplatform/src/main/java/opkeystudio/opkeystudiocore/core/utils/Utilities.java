@@ -34,7 +34,7 @@ public class Utilities {
 	private static Utilities util;
 	private String defaultInstallDir;
 	private String localResourcesDirPath = "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE";
-	private boolean developerMode = true;
+	private boolean developerMode = false;
 
 	public static Utilities getInstance() {
 		if (util == null) {
