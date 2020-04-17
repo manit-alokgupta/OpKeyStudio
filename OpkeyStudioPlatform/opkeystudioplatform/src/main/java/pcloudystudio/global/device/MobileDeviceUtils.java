@@ -13,6 +13,7 @@ public class MobileDeviceUtils {
 	private MobileDeviceUtils() {
 	}
 
+	@SuppressWarnings("unused")
 	private static MobileDeviceUtils getInstance() {
 		if (object == null)
 			return new MobileDeviceUtils();

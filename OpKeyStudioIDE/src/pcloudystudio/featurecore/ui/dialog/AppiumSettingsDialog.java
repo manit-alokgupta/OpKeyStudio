@@ -795,7 +795,6 @@ public class AppiumSettingsDialog extends Dialog {
 	protected void restrictInputString(VerifyEvent event, String type) {
 		String allowedCharactersInteger = "1234567890";
 		String allowedCharactersBoolean = "truefalse01";
-		String allowedCharactersString = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890.\\-+/@$%^&*(){}<>";
 		String text = event.text;
 
 		switch (type) {
