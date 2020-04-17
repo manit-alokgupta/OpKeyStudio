@@ -374,10 +374,11 @@ public class AppiumSettingsDialog extends Dialog {
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				while (capabilityTable.getItemCount() > 0) {
-					capabilityTable.remove(0, 1);
+				if(capabilityTable.getItemCount()>=1) {
+				for (int i=0;i<=capabilityTable.getItemCount();i++) {
+					capabilityTable.remove(0);
 
-				}
+				}}
 				capabilityTextValue.setText("");
 				fillDataInCapabilityTable();
 			}
