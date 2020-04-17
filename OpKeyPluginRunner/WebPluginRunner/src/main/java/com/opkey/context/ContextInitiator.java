@@ -1,5 +1,6 @@
 package com.opkey.context;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ public class ContextInitiator {
 	}
 
 	private Map<String, String> getSettings() {
+		String defaultInstallDir = new File("").getAbsolutePath();
 		Map<String, String> settingsMap = new HashMap<String, String>();
 		settingsMap.put("XMLHttpRequestTimeOut", "30");
 		settingsMap.put("UseWaitForPageLoad", "true");
@@ -77,8 +79,8 @@ public class ContextInitiator {
 		settingsMap.put("_LogSinkEndpoint_", "");
 		settingsMap.put("_AdbDirectory_", "");
 
-		settingsMap.put("_DefaultPluginLocation_",
-				"C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE\\resources\\libraries\\Plugins\\Web");
+		settingsMap.put("_DefaultPluginLocation_", defaultInstallDir + File.separator + "resources" + File.separator
+				+ "libraries" + File.separator + "Plugins" + File.separator + "Web");
 
 		settingsMap.put("_IOSDirectory_", "");
 		settingsMap.put("_PluginID_", "");
