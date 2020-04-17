@@ -194,6 +194,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					if (devicesList.size() == 0) {
 						devicesCombo.removeAll();
 						lblNoDeviceConnected.setVisible(true);
+						btnHelp.setVisible(true);
 					} else {
 						devicesCombo.removeAll();
 						for (Map.Entry<String, String> deviceEntry : devicesList.entrySet()) {
@@ -201,6 +202,8 @@ public class DeviceConfigurationDialog extends Dialog {
 						}
 						devicesCombo.select(0);
 						lblNoDeviceConnected.setVisible(false);
+						btnHelp.setVisible(false);
+
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -270,6 +273,10 @@ public class DeviceConfigurationDialog extends Dialog {
 
 				if (devicesCombo.getText().isEmpty() || applicationPathText.getText().isEmpty()) {
 					lblNoDeviceConnected.setVisible(devicesCombo.getText().isEmpty() ? true : false);
+					if (devicesCombo.getText().isEmpty())
+						btnHelp.setVisible(true);
+					else
+						btnHelp.setVisible(false);
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
 				} else if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getHostAddress() == null
 						|| AppiumPortIpInfo.getAppiumDirectory() == null) {
