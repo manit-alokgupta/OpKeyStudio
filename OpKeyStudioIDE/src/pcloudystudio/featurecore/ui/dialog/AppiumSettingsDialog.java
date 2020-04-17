@@ -304,6 +304,9 @@ public class AppiumSettingsDialog extends Dialog {
 		capabilityNameCombo.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
+				if (capabilityNameCombo.getText().equals("") || capabilityTextValue.getText().equals("")) {
+					btnAddToTable.setEnabled(false);
+				}
 				if (capabilityTextValue.getText().length() > 0 && capabilityNameCombo.getSelectionIndex() != -1) {
 					btnAddToTable.setEnabled(true);
 				}
@@ -318,6 +321,9 @@ public class AppiumSettingsDialog extends Dialog {
 		capabilityTextValue.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
+				if (capabilityTextValue.getText().equals("") || capabilityNameCombo.getText().equals("")) {
+					btnAddToTable.setEnabled(false);
+				}
 				if (capabilityTextValue.getText().length() > 0 && capabilityNameCombo.getSelectionIndex() != -1) {
 					btnAddToTable.setEnabled(true);
 				}
