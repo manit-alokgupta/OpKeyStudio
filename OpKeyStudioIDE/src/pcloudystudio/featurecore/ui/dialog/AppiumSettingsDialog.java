@@ -78,6 +78,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private Button manuallyCancel;
 	private CCombo combo_DataType;
 	private CCombo combo_ManualType;
+	private Button manuallybtnRefresh;
 	String Types[] = { "int", "String", "boolean" };
 
 	private ObjectRepositoryView parentObjectRepositoryView;
@@ -477,7 +478,26 @@ public class AppiumSettingsDialog extends Dialog {
 				addCapabilityComposite.setVisible(true);
 			}
 		});
-		manuallyCancel.setBounds(475, 13, 18, 18);
+		manuallyCancel.setBounds(496, 13, 18, 18); 
+		
+		manuallybtnRefresh = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
+		manuallybtnRefresh.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(capabilityTable.getItemCount()>=1) {
+				for (int i=0;i<=capabilityTable.getItemCount();i++) {
+					capabilityTable.remove(0);
+
+				}}
+				manuallyCapabilityName.setText("");
+				manuallyCapabilityValue.setText("");
+				fillDataInCapabilityTable();
+			}
+		});
+		manuallybtnRefresh.setBounds(475, 13, 18, 18);
+		manuallybtnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		manuallybtnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
+		manuallybtnRefresh.setToolTipText("Refresh Table");
 
 		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
