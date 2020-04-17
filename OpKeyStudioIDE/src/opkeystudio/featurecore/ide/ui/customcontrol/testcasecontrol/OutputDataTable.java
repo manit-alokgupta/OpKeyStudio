@@ -1,7 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -237,7 +236,11 @@ public class OutputDataTable extends CustomTable {
 		this.removeAll();
 		for (FlowOutputArgument flowOutPutArg : getFlowOutputArgs()) {
 			CustomTableItem cti = new CustomTableItem(this, 0);
-			cti.setText(new String[] { keyword.getOutputtype(), "Output", flowOutPutArg.getOutputvariablename() });
+			String outputType = "String";
+			if (flowStep.getKeyword() != null) {
+				outputType = flowStep.getKeyword().getOutputtype();
+			}
+			cti.setText(new String[] { outputType, "Output", flowOutPutArg.getOutputvariablename() });
 			cti.setControlData(flowOutPutArg);
 			cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 		}

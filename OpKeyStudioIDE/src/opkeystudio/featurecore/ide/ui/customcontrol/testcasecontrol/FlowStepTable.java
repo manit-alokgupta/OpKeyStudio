@@ -450,6 +450,10 @@ public class FlowStepTable extends CustomTable {
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			flowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(artifactId);
 		}
+		displayFlowSteps(flowSteps);
+	}
+
+	private void displayFlowSteps(List<FlowStep> flowSteps) {
 		setFlowStepsData(flowSteps);
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.isDeleted() == false) {
@@ -492,55 +496,7 @@ public class FlowStepTable extends CustomTable {
 		this.removeAll();
 		List<FlowStep> flowSteps = getFlowStepsData();
 		Collections.sort(flowSteps);
-		for (FlowStep flowStep : flowSteps) {
-			if (flowStep.isDeleted() == false) {
-				String orname = "";
-				String keyWordName = "";
-				if (flowStep.getOrObject().size() > 0) {
-					orname = flowStep.getOrObject().get(0).getName();
-				}
-				if (flowStep.getKeyword() != null) {
-					keyWordName = flowStep.getKeyword().getName();
-					String keywordDescription = "";
-					if (flowStep.getComment() != null) {
-						keywordDescription = flowStep.getComment();
-					} else if (flowStep.getComments() != null) {
-						keywordDescription = flowStep.getComments();
-					}
-					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname, "", "", keywordDescription });
-					flowTableItem.setFlowStepData(flowStep);
-					addTestCaseTableEditor(flowTableItem);
-				}
-				if (flowStep.getFunctionLibraryComponent() != null) {
-					String keywordDescription = "";
-					if (flowStep.getComment() != null) {
-						keywordDescription = flowStep.getComment();
-					} else if (flowStep.getComments() != null) {
-						keywordDescription = flowStep.getComments();
-					}
-					keyWordName = flowStep.getFunctionLibraryComponent().getName();
-					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-					flowTableItem.setText(new String[] { "", keyWordName, orname,
-							new FlowApiUtilities().getFlowInputPutArgumentsString(flowStep),
-							new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), keywordDescription });
-					flowTableItem.setFlowStepData(flowStep);
-					addTestCaseTableEditor(flowTableItem);
-				}
-				if (flowStep.getKeyword() == null && flowStep.getFunctionLibraryComponent() == null) {
-					if (flowStep.isNullKeyword()) {
-						keyWordName = "";
-						FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
-						flowTableItem.setText(new String[] { "", keyWordName, orname,
-								new FlowApiUtilities().getFlowInputPutArgumentsString(flowStep),
-								new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), "" });
-						flowTableItem.setFlowStepData(flowStep);
-						addTestCaseTableEditor(flowTableItem);
-					}
-				}
-			}
-		}
-		selectDefaultRow();
+		displayFlowSteps(flowSteps);
 	}
 
 	private void selectRow(int index) {
