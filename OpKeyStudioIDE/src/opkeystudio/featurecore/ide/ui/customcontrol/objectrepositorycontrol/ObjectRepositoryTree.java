@@ -21,6 +21,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 public class ObjectRepositoryTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
 	private ObjectRepositoryView parentORView;
+	private List<ORObject> objectRepository = new ArrayList<ORObject>();
 
 	public ObjectRepositoryTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
@@ -34,12 +35,12 @@ public class ObjectRepositoryTree extends CustomTree {
 	}
 
 	public void setObjectRepositoriesData(List<ORObject> objectRepository) {
-		super.setControlData(objectRepository);
+		this.objectRepository = objectRepository;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<ORObject> getObjectRepositoriesData() {
-		return (List<ORObject>) super.getControlData();
+		return this.objectRepository;
 	}
 
 	private void addIcon(ObjectRepositoryTreeItem artTreeItem) {

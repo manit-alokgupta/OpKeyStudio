@@ -16,14 +16,6 @@ public class CustomTree extends Tree {
 		super(parent, style);
 	}
 
-	public Object getControlData() {
-		return controlData;
-	}
-
-	public void setControlData(Object controlData) {
-		this.controlData = controlData;
-	}
-
 	public List<TreeItem> getAllTreeItems() {
 		List<TreeItem> allitems = new ArrayList<TreeItem>();
 		TreeItem items[] = this.getItems();

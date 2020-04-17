@@ -26,6 +26,7 @@ import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 public class ArtifactTree extends CustomTree {
 	private TestSuiteView parentTestSuiteView;
 	private boolean attachedinTestSuite = false;
+	private List<Artifact> artifacts = new ArrayList<Artifact>();
 
 	public ArtifactTree(Composite parent, int style) {
 		super(parent, style);
@@ -83,12 +84,12 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public void setArtifactsData(List<Artifact> artifacts) {
-		super.setControlData(artifacts);
+		this.artifacts = artifacts;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Artifact> getArtifactsData() {
-		return (List<Artifact>) super.getControlData();
+		return this.artifacts;
 	}
 
 	private void addIcon(ArtifactTreeItem artTreeItem) {

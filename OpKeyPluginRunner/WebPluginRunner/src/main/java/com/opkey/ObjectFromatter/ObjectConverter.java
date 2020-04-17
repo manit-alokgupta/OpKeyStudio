@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object;
+import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Properties;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Properties.Property;
 import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ObjectPropertiesNotSufficientException;
 import com.crestech.opkey.plugin.webdriver.object.ObjectFormatter;
@@ -15,7 +16,15 @@ public class ObjectConverter {
 	public WebDriverObject formatObject(ORObject orobject) {
 		Object _object = convertORObjectToOpKeyObject(orobject);
 		try {
-			return new ObjectFormatter().formatObjectToWebDriverObject(_object);
+			WebDriverObject webdriverobject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
+			if (orobject.getParentORObject() != null) {
+				Object _parentobject = convertORObjectToOpKeyObject(orobject.getParentORObject());
+				WebDriverObject parentobject = new ObjectFormatter().formatObjectToWebDriverObject(_parentobject);
+				webdriverobject.setParentObject(parentobject);
+				System.out.println(">>Parent Object " + parentobject.toString());
+			}
+			System.out.println(">>Current Object " + webdriverobject.toString());
+			return webdriverobject;
 		} catch (ObjectPropertiesNotSufficientException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -27,6 +36,8 @@ public class ObjectConverter {
 	private Object convertORObjectToOpKeyObject(ORObject orobject) {
 		Object object = new Object();
 		object.setLogicalName(getLogicalNameOfORObject(orobject));
+		Properties props = new Properties();
+		object.setProperties(props);
 
 		Map<String, String> allProperties = orobject.getAllProperties();
 		Set<String> propertyNames = allProperties.keySet();

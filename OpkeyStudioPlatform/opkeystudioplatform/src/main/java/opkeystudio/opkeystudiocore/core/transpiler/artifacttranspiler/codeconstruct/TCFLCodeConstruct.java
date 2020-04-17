@@ -7,10 +7,12 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
@@ -22,24 +24,28 @@ public class TCFLCodeConstruct {
 		if (isKeywordType(flowStep)) {
 			if (isConstructFlowKeyword(flowStep)) {
 				String code = getConstructFlowKeywordCode(artifact, flowStep);
-				return addOutputVariables(artifact, flowStep, code);
+				code = addOutputVariables(artifact, flowStep, code);
+				return addDataRepositoryIterations(artifact, flowStep, code);
 			}
 			if (isOpKeyGenericKeyword(flowStep)) {
 				String code = getKeywordCode(artifact, flowStep, "genericKeywords");
-				return addOutputVariables(artifact, flowStep, code);
+				code = addOutputVariables(artifact, flowStep, code);
+				return addDataRepositoryIterations(artifact, flowStep, code);
 			}
 			if (isSystemKeyword(flowStep)) {
 				String code = getKeywordCode(artifact, flowStep, "systemKeywords");
-				return addOutputVariables(artifact, flowStep, code);
+				code = addOutputVariables(artifact, flowStep, code);
+				return addDataRepositoryIterations(artifact, flowStep, code);
 			}
 			if (isPluginSpecificKeyword(flowStep)) {
 				String code = getKeywordCode(artifact, flowStep, "genericKeywords");
-				return addOutputVariables(artifact, flowStep, code);
+				code = addOutputVariables(artifact, flowStep, code);
+				return addDataRepositoryIterations(artifact, flowStep, code);
 			}
 		}
 
 		if (isFunctionLibraryType(flowStep)) {
-			return getFunctionLibraryCode(flowStep);
+			return getFunctionLibraryCode(artifact, flowStep);
 		}
 		return "";
 	}
@@ -89,24 +95,43 @@ public class TCFLCodeConstruct {
 				argumentCall += flowOutputArgument.getOutputvariablename();
 				continue;
 			}
+
+			if (flowInputObject.isFlowInputDataExist()) {
+				String flowInputId = flowInputObject.getFlowInputData();
+				System.out.println(">>Flow Input Id " + flowInputId);
+				ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
+						.getComponentInputArgumentById(flowInputId);
+				argumentCall += flowOutputArgument.getName();
+				continue;
+			}
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {
 				String columnId = flowInputObject.getDataRepositoryColumnData();
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
 				String columnName = drColumn.getName();
-				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
-				argumentCall += drArtifact.getVariableName() + "." + columnName;
+				argumentCall += columnName;
 				continue;
 			}
 		}
-
+		System.out.println(argumentCall);
 		methodcode += argumentCall;
 		methodcode += ");";
 		return methodcode;
 	}
 
-	private String getFunctionLibraryCode(FlowStep flowStep) {
-		Artifact artifact = flowStep.getFunctionLibraryComponent();
-		String code = newLineChar + " new " + artifact.getVariableName() + "().execute();";
+	private String getFunctionLibraryCode(Artifact artifact, FlowStep flowStep) {
+		FunctionLibraryComponent libraryComponent = flowStep.getFunctionLibraryComponent();
+		List<FlowInputArgument> componentInputArguments = flowStep.getFlowInputArgs();
+		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject_FL(artifact,
+				componentInputArguments);
+		String value = "";
+		for (FlowInputObject flowInputObject : flowInputObjects) {
+			if (!value.isEmpty()) {
+				value += ", ";
+			}
+			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
+		}
+		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().execute(" + value + ");";
+		System.out.println(code);
 		return code;
 	}
 
@@ -115,10 +140,22 @@ public class TCFLCodeConstruct {
 			if (data == null) {
 				data = "";
 			}
-			return "\"" + data + "\"";
+			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
 		if (dataType.equals("Integer")) {
 			if (data == null) {
+				data = "0";
+			}
+			if (data.isEmpty()) {
+				data = "0";
+			}
+			return data;
+		}
+		if (dataType.equals("Double")) {
+			if (data == null) {
+				data = "0";
+			}
+			if (data.isEmpty()) {
 				data = "0";
 			}
 			return data;
@@ -127,7 +164,22 @@ public class TCFLCodeConstruct {
 			if (data == null) {
 				data = "false";
 			}
-			return data;
+			if (data.isEmpty()) {
+				data = "false";
+			}
+			return data.toLowerCase();
+		}
+		if (dataType.equals("File")) {
+			if (data == null) {
+				data = "";
+			}
+			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
+		}
+		if (dataType.equals("DateTime")) {
+			if (data == null) {
+				data = "";
+			}
+			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
 		return data;
 	}
@@ -182,9 +234,47 @@ public class TCFLCodeConstruct {
 			return newLineChar + "break;";
 		}
 		if (keywordName.equals("If")) {
-			return newLineChar + "if(true){";
+			List<FlowInputArgument> flowInputArgs = flowStep.getFlowInputArgs();
+			List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
+					flowInputArgs);
+			String conditionData = getArgsOfIFKeyword(flowInputObjects);
+			return newLineChar + "if(" + conditionData + "){";
 		}
 		return "";
+	}
+
+	private String getArgsOfIFKeyword(List<FlowInputObject> flowInputObjects) {
+		String conditionData = "";
+		for (FlowInputObject flowInputObject : flowInputObjects) {
+			if (flowInputObject.isStaticValueDataExist()) {
+				conditionData += convertToConditionData(flowInputObject.getStaticValueData());
+			}
+			System.out.println(
+					">.IF condition " + flowInputObject.getDataType() + "  " + flowInputObject.getStaticValueData());
+		}
+		if (conditionData.trim().isEmpty()) {
+			return "true";
+		}
+		return conditionData;
+	}
+
+	private String convertToConditionData(String data) {
+		if (data == null) {
+			return "";
+		}
+		if (data.equals("=")) {
+			return " == ";
+		}
+		if (data.equals("<>")) {
+			return " != ";
+		}
+		if (data.toLowerCase().equals("and")) {
+			return "&&";
+		}
+		if (data.toLowerCase().equals("or")) {
+			return "||";
+		}
+		return "\"" + data + "\"";
 	}
 
 	private String addOutputVariables(Artifact artifact, FlowStep flowStep, String mainCode) {
@@ -210,6 +300,32 @@ public class TCFLCodeConstruct {
 		return outputCode + mainCode;
 	}
 
+	private String addDataRepositoryIterations(Artifact artifact, FlowStep flowStep, String mainCode) {
+		String forLoopParameters = "";
+		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
+		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
+				flowInputArguments);
+		for (FlowInputObject flowInputObject : flowInputObjects) {
+			if (flowInputObject.isDataRepositoryColumnDataExist()) {
+				String columnId = flowInputObject.getDataRepositoryColumnData();
+				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
+				String columnName = drColumn.getName();
+				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
+				String path = drArtifact.getPackageName() + "." + drArtifact.getVariableName() + "." + "getDRCells("
+						+ "\"" + columnName + "\"" + ")";
+				forLoopParameters = "String " + columnName + ":" + path;
+				System.out.println(forLoopParameters);
+				break;
+			}
+		}
+		if (forLoopParameters.isEmpty()) {
+			return mainCode;
+		}
+		String forLoopFormat = "for(%s) {%s}";
+		String forLoopCode = String.format(forLoopFormat, forLoopParameters, mainCode);
+		return forLoopCode;
+	}
+
 	private boolean isKeywordType(FlowStep flowStep) {
 		if (flowStep.getKeyword() != null) {
 			return true;
@@ -225,6 +341,7 @@ public class TCFLCodeConstruct {
 	}
 
 	private boolean isOpKeyGenericKeyword(FlowStep flowStep) {
+		System.out.println(flowStep.getKeyword().getName() + "    " + flowStep.getKeyword().getKeywordtype());
 		if (flowStep.getKeyword().getKeywordtype().equals("OpKeyGenericKeyword")) {
 			return true;
 		}

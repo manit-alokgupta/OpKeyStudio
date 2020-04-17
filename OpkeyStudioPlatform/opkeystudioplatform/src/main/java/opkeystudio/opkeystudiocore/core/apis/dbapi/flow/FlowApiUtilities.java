@@ -15,6 +15,7 @@ import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -164,6 +165,10 @@ public class FlowApiUtilities {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
 					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
 				}
+				if (flowInputArgument.getDatasource() == DataSource.ValueFromInputParameter) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
+					flowInputObject.setFlowInputData(flowInputArgument.getFlow_step_ia_id());
+				}
 				flowInputObjects.add(flowInputObject);
 			}
 
@@ -171,6 +176,63 @@ public class FlowApiUtilities {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(keywordInputArgument.getDatatype());
 				flowInputObject.setKeywordInputArgument(keywordInputArgument);
+				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
+						&& flowInputArgument.getStaticobjectid() == null) {
+					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
+					flowInputObject.setStaticValueData(flowInputArgument.getStaticvalue());
+				}
+				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromGlobalVariable) {
+					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
+					flowInputObject.setGlobalVariableData(flowInputArgument.getGlobalvariable_id());
+				}
+				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromOutputArgument) {
+					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
+					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
+				}
+				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromInputParameter) {
+					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
+					flowInputObject.setFlowInputData(flowInputArgument.getIp_id());
+				}
+				flowInputObjects.add(flowInputObject);
+			}
+		}
+		return flowInputObjects;
+	}
+
+	public List<FlowInputObject> getAllFlowInputObject_FL(Artifact artifact,
+			List<FlowInputArgument> flowInputArguments) {
+		List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
+
+		for (FlowInputArgument flowInputArgument : flowInputArguments) {
+			ComponentInputArgument componentInputArgument = flowInputArgument.getComponentInputArgument();
+			if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
+				FlowInputObject flowInputObject = new FlowInputObject();
+				flowInputObject.setDataType(componentInputArgument.getType());
+				flowInputObject.setComponentInputArgument(componentInputArgument);
+				if (flowInputArgument.getDatasource() == DataSource.StaticValue
+						&& flowInputArgument.getStaticobjectid() == null) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
+					flowInputObject.setStaticValueData(flowInputArgument.getStaticvalue());
+				}
+				if (flowInputArgument.getDatasource() == DataSource.ValueFromGlobalVariable) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
+					flowInputObject.setGlobalVariableData(flowInputArgument.getGlobalvariable_id());
+				}
+				if (flowInputArgument.getDatasource() == DataSource.ValueFromDataRepository) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
+					flowInputObject.setDataRepositoryColumnData(flowInputArgument.getDatarepositorycolumnid());
+				}
+				if (flowInputArgument.getDatasource() == DataSource.ValueFromOutputArgument) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
+					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
+				}
+				flowInputObjects.add(flowInputObject);
+			}
+
+			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+				FlowInputObject flowInputObject = new FlowInputObject();
+				flowInputObject.setDataType(componentInputArgument.getType());
+				flowInputObject.setComponentInputArgument(componentInputArgument);
 				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());

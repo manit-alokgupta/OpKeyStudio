@@ -18,6 +18,9 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -44,10 +47,13 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgumen
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class InputDataTable extends CustomTable {
+	private FlowStep flowStep;
 	private List<KeyWordInputArgument> keyWordInputArgs = new ArrayList<KeyWordInputArgument>();
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
 	private List<ComponentInputArgument> componentInputArgs = new ArrayList<>();
@@ -97,54 +103,129 @@ public class InputDataTable extends CustomTable {
 		ControlEditor editor = new ControlEditor(cursor);
 		editor.grabHorizontal = true;
 		editor.grabVertical = true;
+
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				CustomTableItem row = (CustomTableItem) cursor.getRow();
 				FlowInputArgument flowInputArgument = (FlowInputArgument) row.getControlData();
+				String dataType = "";
+				if (flowInputArgument.getKeywordInputArgument() != null) {
+					dataType = flowInputArgument.getKeywordInputArgument().getDatatype();
+				}
+				if (flowInputArgument.getComponentInputArgument() != null) {
+					dataType = flowInputArgument.getComponentInputArgument().getType();
+				}
+				System.out.println(">>DataType " + dataType);
+				boolean isNumberType = isDataTypeIntegerType(dataType);
+				boolean isBooleanType = isDataTypeBooleanrType(dataType);
 				int selectedColumn = cursor.getColumn();
-				Text text = new Text(cursor, 0);
-				text.addFocusListener(new FocusListener() {
-
-					@Override
-					public void focusLost(FocusEvent e) {
-						text.dispose();
-					}
-
-					@Override
-					public void focusGained(FocusEvent e) {
-
-					}
-				});
-
-				text.addModifyListener(new ModifyListener() {
-
-					@Override
-					public void modifyText(ModifyEvent e) {
-						new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
-								flowInputArgument, text.getText(), DataSource.StaticValue);
-						getParentTestCaseView().toggleSaveButton(true);
-						row.setText(selectedColumn, text.getText());
-					}
-				});
 
 				if (selectedColumn == 2) {
-					if (flowInputArgument.getStaticvalue() != null) {
-						text.setText(flowInputArgument.getStaticvalue());
-						editor.setEditor(text);
-						text.setFocus();
+					if (isBooleanType) {
+						disposeControlEditor(editor);
+						Button checkedButton = new Button(cursor, SWT.CHECK);
+						checkedButton.addSelectionListener(new SelectionListener() {
+
+							@Override
+							public void widgetSelected(SelectionEvent e) {
+								String status = convertBooleanToString(checkedButton.getSelection());
+								new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
+										flowInputArgument, status, DataSource.StaticValue);
+								getParentTestCaseView().toggleSaveButton(true);
+								row.setText(selectedColumn, status);
+							}
+
+							@Override
+							public void widgetDefaultSelected(SelectionEvent e) {
+								// TODO Auto-generated method stub
+
+							}
+						});
+						if (flowInputArgument.getStaticvalue() != null) {
+							boolean checkedStatus = convertStringToBoolean(flowInputArgument.getStaticvalue());
+							checkedButton.setSelection(checkedStatus);
+							editor.setEditor(checkedButton);
+						} else {
+							checkedButton.setSelection(false);
+							editor.setEditor(checkedButton);
+						}
 					} else {
-						text.setText("");
-						editor.setEditor(text);
-						text.setFocus();
-					}
-				} else {
-					if (editor != null) {
-						if (editor.getEditor() != null) {
-							editor.getEditor().dispose();
+						disposeControlEditor(editor);
+						Text text = new Text(cursor, 0);
+						text.addVerifyListener(new VerifyListener() {
+
+							@Override
+							public void verifyText(VerifyEvent e) {
+								if (isNumberType) {
+									final String oldS = text.getText();
+									String newS = oldS.substring(0, e.start) + e.text + oldS.substring(e.end);
+									System.out.println(">> Text " + newS);
+									if (newS.trim().isEmpty()) {
+										return;
+									}
+									boolean isNumber = true;
+									try {
+										Float.parseFloat(newS);
+									} catch (NumberFormatException ex) {
+										isNumber = false;
+									}
+
+									try {
+										Integer.parseInt(newS);
+									} catch (NumberFormatException ex) {
+										isNumber = false;
+									}
+
+									try {
+										Double.parseDouble(newS);
+									} catch (NumberFormatException ex) {
+										isNumber = false;
+									}
+
+									if (!isNumber) {
+										e.doit = false;
+									}
+								}
+							}
+						});
+
+						text.addFocusListener(new FocusListener() {
+
+							@Override
+							public void focusLost(FocusEvent e) {
+								text.dispose();
+							}
+
+							@Override
+							public void focusGained(FocusEvent e) {
+
+							}
+						});
+
+						text.addModifyListener(new ModifyListener() {
+
+							@Override
+							public void modifyText(ModifyEvent e) {
+								new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
+										flowInputArgument, text.getText(), DataSource.StaticValue);
+								getParentTestCaseView().toggleSaveButton(true);
+								row.setText(selectedColumn, text.getText());
+							}
+						});
+						if (flowInputArgument.getStaticvalue() != null) {
+							text.setText(flowInputArgument.getStaticvalue());
+							editor.setEditor(text);
+							text.setFocus();
+						} else {
+							text.setText("");
+							editor.setEditor(text);
+							text.setFocus();
 						}
 					}
+				} else {
+					disposeControlEditor(editor);
 				}
 			}
 
@@ -155,13 +236,63 @@ public class InputDataTable extends CustomTable {
 		});
 	}
 
+	private void disposeControlEditor(ControlEditor editor) {
+		if (editor != null) {
+			if (editor.getEditor() != null) {
+				editor.getEditor().dispose();
+			}
+		}
+	}
+
+	private String convertBooleanToString(boolean status) {
+		if (status) {
+			return "true";
+		}
+		return "false";
+	}
+
+	private boolean convertStringToBoolean(String status) {
+		if (status.toLowerCase().equals("true")) {
+			return true;
+		}
+		return false;
+	}
+
 	private List<Control> allTableEditors = new ArrayList<Control>();
+
+	private boolean isDataTypeIntegerType(String dataType) {
+		if (dataType.equals("Integer")) {
+			return true;
+		}
+		if (dataType.equals("Float")) {
+			return true;
+		}
+		if (dataType.equals("Double")) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isDataTypeBooleanrType(String dataType) {
+		if (dataType.equals("Boolean")) {
+			return true;
+		}
+		return false;
+	}
 
 	private void addInputTableEditor(CustomTableItem item)
 			throws JsonParseException, JsonMappingException, IOException {
 		item.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
 		FlowInputArgument flowInputArgument = (FlowInputArgument) item.getControlData();
 		DataSource dataSourceType = null;
+		String dataType = "";
+		if (flowInputArgument.getKeywordInputArgument() != null) {
+			dataType = flowInputArgument.getKeywordInputArgument().getDatatype();
+		}
+		if (flowInputArgument.getComponentInputArgument() != null) {
+			dataType = flowInputArgument.getComponentInputArgument().getType();
+		}
+		System.out.println(">>DataType " + dataType);
 		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			dataSourceType = flowInputArgument.getArg_datasource();
 		} else {
@@ -230,6 +361,7 @@ public class InputDataTable extends CustomTable {
 		}
 
 		if (dataSourceType == DataSource.ValueFromOutputArgument) {
+
 			String flow_step_oa_id = null;
 			if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 				flow_step_oa_id = flowInputArgument.getComponentstep_oa_id();
@@ -273,7 +405,9 @@ public class InputDataTable extends CustomTable {
 			this.allTableEditors.add(editor1.getEditor());
 		}
 
-		if (dataSourceType == DataSource.ValueFromInputParameter) {
+		if (dataSourceType == DataSource.ValueFromInputParameter)
+
+		{
 			String ipId = flowInputArgument.getIp_id();
 			List<ComponentInputArgument> compsinp = new FunctionLibraryApi()
 					.getAllComponentInputArgument(getParentTestCaseView().getArtifact().getId());
@@ -341,9 +475,43 @@ public class InputDataTable extends CustomTable {
 		this.flowInputArgs = flowInputArgs;
 	}
 
-	public void renderInputTable() throws JsonParseException, JsonMappingException, IOException {
+	private void initInputTableArguments(FlowStep flowStep) {
+		this.setFlowStep(flowStep);
+		if (flowStep.getKeyword() != null) {
+			setKeyWordInputArgs(flowStep.getKeyword().getKeywordInputArguments());
+		} else {
+			setKeyWordInputArgs(new ArrayList<>());
+		}
+		if (flowStep.getFunctionLibraryComponent() != null) {
+			setComponentInputArgs(flowStep.getFunctionLibraryComponent().getComponentInputArguments());
+		} else {
+			setComponentInputArgs(new ArrayList<>());
+		}
+		setFlowInputArgs(flowStep.getFlowInputArgs());
+	}
+
+	private boolean isConstructFlowIFKeyword(FlowStep flowStep) {
+		if (flowStep.getKeyword() != null) {
+			Keyword keyword = flowStep.getKeyword();
+			if (keyword.getName().toLowerCase().equals("if")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void renderConstructFlowIntKeyword(FlowStep flowStep) {
+
+	}
+
+	public void renderInputTable(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
+		this.initInputTableArguments(flowStep);
 		disposeAllTableEditors();
 		this.removeAll();
+		if (isConstructFlowIFKeyword(flowStep)) {
+			renderConstructFlowIntKeyword(flowStep);
+			// return;
+		}
 		List<FlowInputArgument> flowInputArgs = getFlowInputArgs();
 		if (getKeyWordInputArgs().size() > 0) {
 			for (int i = 0; i < getKeyWordInputArgs().size(); i++) {
@@ -351,24 +519,16 @@ public class InputDataTable extends CustomTable {
 				List<KeyWordInputArgument> filteredKeywordInputArgs = new ArrayList<KeyWordInputArgument>();
 				for (int i1 = 0; i1 < getKeyWordInputArgs().size(); i1++) {
 					KeyWordInputArgument inputArgument = getKeyWordInputArgs().get(i1);
-					// if (!inputArgument.getDatatype().equals("ORObject")) {
 					filteredKeywordInputArgs.add(inputArgument);
-					// }
 				}
 
 				List<FlowInputArgument> filteredFlowInputArgs = new ArrayList<FlowInputArgument>();
 				for (int i1 = 0; i1 < flowInputArgs.size(); i1++) {
 					FlowInputArgument inputArgument = flowInputArgs.get(i1);
-					// if (inputArgument.getStaticobjectid() == null) {
 					filteredFlowInputArgs.add(inputArgument);
-					// }
 				}
-
-				System.out.println("KeyInputArgs " + filteredKeywordInputArgs.size() + "    " + "FlowInputArgs "
-						+ filteredFlowInputArgs.size());
 				if (filteredKeywordInputArgs.size() == filteredFlowInputArgs.size()) {
 					if (!keywordInputArg.getDatatype().equals("ORObject")) {
-
 						FlowInputArgument flowInputArg = flowInputArgs.get(i);
 						CustomTableItem cti = new CustomTableItem(this, 0);
 						String valueData = flowInputArg.getStaticvalue();
@@ -440,6 +600,14 @@ public class InputDataTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public FlowStep getFlowStep() {
+		return flowStep;
+	}
+
+	public void setFlowStep(FlowStep flowStep) {
+		this.flowStep = flowStep;
 	}
 
 }

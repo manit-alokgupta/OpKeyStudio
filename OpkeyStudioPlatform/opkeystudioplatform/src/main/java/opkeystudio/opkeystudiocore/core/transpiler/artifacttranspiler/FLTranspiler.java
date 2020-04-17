@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaSource;
+import org.jboss.forge.roaster.model.source.MethodSource;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct.TCFLCodeConstruct;
@@ -24,14 +27,19 @@ public class FLTranspiler extends AbstractTranspiler {
 
 	@Override
 	public void transpile(Artifact artifact) {
-		if (artifact.getFile_type_enum() != MODULETYPE.Component) {
-			return;
+		try {
+			if (artifact.getFile_type_enum() != MODULETYPE.Component) {
+				return;
+			}
+			File file = createArtifactFile(artifact);
+			JavaClassSource classSource = getJavaClassOfTestCase(artifact);
+			new TranspilerUtilities().addPackageName(artifact, classSource);
+			new TranspilerUtilities().addDefaultImports(classSource);
+			new TranspilerUtilities().writeCodeToFile(file, classSource);
+			// new ArtifactParser().parseArtifact(artifact);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		File file = createArtifactFile(artifact);
-		JavaClassSource classSource = getJavaClassOfTestCase(artifact);
-		new TranspilerUtilities().addPackageName(artifact, classSource);
-		new TranspilerUtilities().addDefaultImports(classSource);
-		new TranspilerUtilities().writeCodeToFile(file, classSource);
 	}
 
 	public JavaClassSource getJavaClassOfTestCase(Artifact artifact) {
@@ -46,7 +54,35 @@ public class FLTranspiler extends AbstractTranspiler {
 			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(artifact, flowStep);
 			methodBodyCode += flowStepCode;
 		}
-		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
+		List<ComponentInputArgument> componentInputArguments = FunctionLibraryApi.getInstance()
+				.getAllComponentInputArgument(artifact.getId());
+		MethodSource<JavaClassSource> method = class1.addMethod();
+
+		for (ComponentInputArgument cia : componentInputArguments) {
+			System.out.println("DataType " + cia.getType() + "  " + cia.getVariableName());
+			String dataType = convertDataType(cia.getType());
+			String varName = cia.getVariableName();
+			method.addParameter(dataType, varName);
+		}
+
+		method.setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
 		return class1;
 	}
+
+	private String convertDataType(String dataType) {
+		if (dataType.equals("Integer")) {
+			return "int";
+		}
+		if (dataType.equals("Double")) {
+			return "double";
+		}
+		if (dataType.equals("Float")) {
+			return "float";
+		}
+		if (dataType.equals("Boolean")) {
+			return "boolean";
+		}
+		return "String";
+	}
+
 }

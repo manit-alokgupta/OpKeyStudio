@@ -1,89 +1,158 @@
 package com.opkey.OpKeyGenericPlugin;
 
+import org.openqa.selenium.WebElement;
+
+import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
+import com.crestech.opkey.plugin.exceptionhandling.RetryKeywordAgainException;
+import com.crestech.opkey.plugin.webdriver.Finder;
+import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ToolNotSetException;
+import com.crestech.opkey.plugin.webdriver.keywords.Browser;
+import com.crestech.opkey.plugin.webdriver.keywords.Checkbox;
+import com.crestech.opkey.plugin.webdriver.keywords.Deprecate;
+import com.crestech.opkey.plugin.webdriver.keywords.DropDown;
+import com.crestech.opkey.plugin.webdriver.keywords.EditBox;
+import com.crestech.opkey.plugin.webdriver.keywords.Links;
+import com.crestech.opkey.plugin.webdriver.keywords.ListControl;
+import com.crestech.opkey.plugin.webdriver.keywords.Radio;
+import com.crestech.opkey.plugin.webdriver.keywords.Utils;
+import com.crestech.opkey.plugin.webdriver.keywords.WebObjects;
+import com.crestech.opkey.plugin.webdriver.keywords.Window;
 import com.crestech.opkey.plugin.webdriver.object.WebDriverObject;
 import com.opkey.ObjectFromatter.ObjectConverter;
+import com.opkey.context.ContextInitiator;
 import com.opkeystudio.runtime.ORObject;
 
 public class OpKeyGenericKeywords {
-	public boolean TypeTextOnEditBox(ORObject arg0, String arg1) {
+	public OpKeyGenericKeywords() {
+		new ContextInitiator().initContext();
+	}
 
+	public boolean TypeTextOnEditBox(ORObject arg0, String arg1) {
+		ContextInitiator.addFunction("TypeTextOnEditBox");
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called TypeTextOnEditBox");
 
 		// Method_typeTextOnEditBox
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new EditBox().Method_typeTextOnEditBox(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
 
 	public boolean TypeKeysOnEditBox(ORObject arg0, String arg1) {
-
+		ContextInitiator.addFunction("TypeKeysOnEditBox");
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called TypeKeysOnEditBox");
 
 		// Method_typeKeysOnEditBox
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new EditBox().Method_typeKeysOnEditBox(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
 
 	public boolean VerifyEditBoxText(ORObject arg0, String arg1) {
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called VerifyEditBoxText");
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyeditboxtext
-
+		try {
+			new EditBox().Method_verifyeditboxtext(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
 
-	public boolean OpenBrowser(String arg0, String arg1) {
-
+	public boolean OpenBrowser(String arg0, String arg1) throws Exception {
+		ContextInitiator.addFunction("OpenBrowser");
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		System.out.println(">>Keyword Called OpenBrowser");
 
 		// Method_WebBrowserOpen
-
+		new Browser().Method_WebBrowserOpen(arg0, arg1);
 		return false;
 
 	}
 
 	public boolean SelectDropDownItem(ORObject arg0, String arg1) {
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called SelectDropDownItem");
 
 		// Method_selectDropDownItem
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new DropDown().Method_selectDropDownItem(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
 
 	public boolean SelectCheckBox(ORObject arg0, String arg1) {
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		System.out.println(">>Keyword Called SelectCheckBox");
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_selectCheckBox
-
+		try {
+			new Checkbox().Method_selectCheckBox(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
 
 	public boolean SelectRadioButton(ORObject arg0, int arg1) {
-
 		System.out.println(">>Keyword Called SelectRadioButton");
 
 		// Method_SelectRadio
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new Radio().Method_SelectRadio(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
 
-	public boolean Click(ORObject arg0) {
-
+	public boolean Click(ORObject arg0) throws Exception {
+		ContextInitiator.addFunction("Click");
 		System.out.println(">>Keyword Called Click");
 
 		// Method_ObjectClick
-		WebDriverObject object = new ObjectConverter().formatObject(arg0);
-		System.out.println(">>Tag Name " + object.getTagName());
+		try {
+			new Utils().waitForPageLoadAndOtherAjax();
+			WebDriverObject object = new ObjectConverter().formatObject(arg0);
+			System.out.println(">>Tag Name " + object.getTagName());
+			FunctionResult fr = new WebObjects().Method_ObjectClick(object);
+			System.out.println("Keyword Output " + fr.getOutput());
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (e instanceof RetryKeywordAgainException) {
+				Thread.sleep(1000);
+				return Click(arg0);
+			}
+		}
 		return false;
-
 	}
 
 	public boolean DoubleClick(ORObject arg0) {
@@ -91,7 +160,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called DoubleClick");
 
 		// Method_dblClick
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new WebObjects().Method_dblClick(object);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -101,7 +176,12 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called RefreshBrowser");
 
 		// Method_RefreshBrowser
-
+		try {
+			new Browser().Method_RefreshBrowser();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -111,7 +191,12 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called MaximizeBrowser");
 
 		// Method_MaximizeBrowser
-
+		try {
+			new Browser().Method_MaximizeBrowser();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -121,17 +206,29 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called FetchBrowserURL");
 
 		// Method_fetchBrowserURL
-
+		try {
+			FunctionResult fr = new Browser().Method_fetchBrowserURL();
+			return fr.getOutput();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "";
 
 	}
 
 	public String FetchBrowserTitle(String arg0) {
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		System.out.println(">>Keyword Called FetchBrowserTitle");
 
 		// Method_fetchBrowserTitle
-
+		try {
+			FunctionResult fr = new Browser().Method_fetchBrowserTitle(arg0);
+			return fr.getOutput();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "";
 
 	}
@@ -141,7 +238,12 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called GoBackAndWait");
 
 		// Method_goBackAndWait
-
+		try {
+			new Deprecate().Method_goBackAndWait(arg0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -151,7 +253,12 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called RefreshAndWait");
 
 		// Method_refreshAndWait
-
+		try {
+			new Deprecate().Method_refreshAndWait(arg0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -159,9 +266,14 @@ public class OpKeyGenericKeywords {
 	public boolean ClearEditField(ORObject arg0) {
 
 		System.out.println(">>Keyword Called ClearEditField");
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clearEditField
-
+		try {
+			new EditBox().Method_clearEditField(object);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -171,7 +283,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called TypeTextAndWait");
 
 		// Method_typeTextAndWait
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new Deprecate().Method_typeTextAndWait(object, arg1, arg2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -181,7 +299,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called TypeKeysAndWait");
 
 		// Method_typeKeysAndWait
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new Deprecate().Method_typeKeysAndWait(object, arg1, arg2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -191,7 +315,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called VerifyEditable");
 
 		// Method_verifyEditable
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new Deprecate().Method_verifyEditable(object);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -201,7 +331,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called SelectMultipleDropDownItem");
 
 		// Method_selectMultipleDropDownItem
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new ListControl().Method_selectMultipleDropDownItem(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -211,7 +347,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called DeSelectDropDownItem");
 
 		// Method_deselectDropDownItem
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new DropDown().Method_deselectDropDownItem(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -221,7 +363,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called DeSelectMultipleDropDownItem");
 
 		// Method_deselectMultipleDropDownItem
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new ListControl().Method_deselectMultipleDropDownItem(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -231,7 +379,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called DeSelectDropDownItemAndWait");
 
 		// Method_deselectDropDownItemAndWait
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new Deprecate().Method_deselectDropDownItemAndWait(object, arg1, arg2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -241,7 +395,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called DeSelectAllDropDownItemsAndWait");
 
 		// Method_deselectAllDropDownItemsAndWait
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new Deprecate().Method_deselectAllDropDownItemsAndWait(object, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -251,7 +411,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called GetDropDownItemCount");
 
 		// Method_getDropDownItemCount
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new DropDown().Method_getDropDownItemCount(object);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 0;
 
 	}
@@ -281,7 +447,13 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called DeSelectCheckBox");
 
 		// Method_deSelectCheckBox
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		try {
+			new Checkbox().Method_deSelectCheckBox(object);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -506,12 +678,12 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean CloseBrowser(String arg0) {
-
+	public boolean CloseBrowser(String arg0) throws Exception {
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		System.out.println(">>Keyword Called CloseBrowser");
 
 		// Method_CloseBrowser
-
+		new Browser().Method_CloseBrowser(arg0);
 		return false;
 
 	}
@@ -636,12 +808,12 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean CloseAllBrowsers() {
+	public boolean CloseAllBrowsers() throws Exception {
 
 		System.out.println(">>Keyword Called CloseAllBrowsers");
 
 		// Method_CloseAllBrowsers
-
+		new Browser().Method_CloseAllBrowsers();
 		return false;
 
 	}
@@ -661,7 +833,12 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called SelectWindow");
 
 		// Method_selectWindow
-
+		try {
+			new Window().Method_selectWindow(arg0, arg1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}
@@ -761,7 +938,7 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called ClickButton");
 
 		// Method_clickButton
-
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		return false;
 
 	}
@@ -1216,12 +1393,19 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean ClickLink(ORObject arg0) {
+	public boolean ClickLink(ORObject arg0) throws ToolNotSetException {
 
 		System.out.println(">>Keyword Called ClickLink");
-
+		ContextInitiator.addFunction("ClickLink");
+		new Utils().waitForPageLoadAndOtherAjax();
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickLink
-
+		try {
+			new Links().Method_clickLink(object);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 
 	}

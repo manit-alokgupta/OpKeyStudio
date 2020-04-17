@@ -72,7 +72,8 @@ public class ComponentArgumentInputTable extends CustomTable {
 						selectedFlowInputArgument, cia.getIp_id(), DataSource.ValueFromInputParameter);
 				selectedFlowInputArgument.setModified(true);
 				try {
-					getParentTestCaseView().getInputDataTable().renderInputTable();
+					getParentTestCaseView().getInputDataTable()
+							.renderInputTable(getParentTestCaseView().getInputDataTable().getFlowStep());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

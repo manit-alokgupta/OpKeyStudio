@@ -127,6 +127,7 @@ public class ObjectRepositoryView extends Composite {
 							item.getText(), objectRepositoryTree.getObjectRepositoriesData());
 					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
 					toggleSaveButton(true);
+					addParentObjectToolItem.setText("Add (" + menuItem + ")");
 					objectRepositoryTree.refreshObjectRepositories();
 
 				}
@@ -157,6 +158,7 @@ public class ObjectRepositoryView extends Composite {
 							objectRepositoryTree.getObjectRepositoriesData());
 					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
 					toggleSaveButton(true);
+					addChildObjectToolItem.setText("Add (" + menuItem + ")");
 					objectRepositoryTree.refreshObjectRepositories();
 				}
 
@@ -211,7 +213,17 @@ public class ObjectRepositoryView extends Composite {
 					pt = toolBar.toDisplay(pt);
 					parentObjectMenu.setLocation(pt.x, pt.y);
 					parentObjectMenu.setVisible(true);
+					return;
 				}
+				String objectName = addParentObjectToolItem.getText().replaceAll("Add", "").replace("(", "")
+						.replace(")", "").trim();
+				System.out.println("Object Name " + objectName);
+				String name = new Utilities().getRandomVariableName("New Node " + objectName);
+				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name, objectName,
+						objectRepositoryTree.getObjectRepositoriesData());
+				objectRepositoryTree.getObjectRepositoriesData().add(orobject);
+				toggleSaveButton(true);
+				objectRepositoryTree.refreshObjectRepositories();
 			}
 
 			@Override
@@ -232,7 +244,20 @@ public class ObjectRepositoryView extends Composite {
 					pt = toolBar.toDisplay(pt);
 					childObjectMenu.setLocation(pt.x, pt.y);
 					childObjectMenu.setVisible(true);
+					return;
 				}
+				String objectName = addChildObjectToolItem.getText().replaceAll("Add", "").replace("(", "")
+						.replace(")", "").trim();
+				System.out.println("Object Name " + objectName);
+				String name = new Utilities().getRandomVariableName("New Node " + objectName);
+				ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
+				ORObject selectedobject = treeItem.getObjectRepository();
+				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
+						selectedobject.getObject_id(), name, objectName,
+						objectRepositoryTree.getObjectRepositoriesData());
+				objectRepositoryTree.getObjectRepositoriesData().add(orobject);
+				toggleSaveButton(true);
+				objectRepositoryTree.refreshObjectRepositories();
 			}
 
 			@Override

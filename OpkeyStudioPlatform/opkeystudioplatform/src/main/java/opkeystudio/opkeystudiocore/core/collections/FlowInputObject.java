@@ -3,6 +3,7 @@ package opkeystudio.opkeystudiocore.core.collections;
 import java.util.ArrayList;
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -13,18 +14,21 @@ public class FlowInputObject {
 	private boolean staticObjectDataExist;
 	private boolean globalVariableDataExist;
 	private boolean dataRepositoryColumnDataExist;
+	private boolean flowInputDataExist;
 
 	private String staticValueData;
 	private String flowOutputData;
 	private String staticObjectData;
 	private String globalVariableData;
 	private String dataRepositoryColumnData;
+	private String flowInputData;
 
 	private DataSource dataSource;
 	private List<ORObject> orObjects = new ArrayList<>();
 
 	private String dataType;
 	private KeyWordInputArgument keywordInputArgument;
+	private ComponentInputArgument componentInputArgument;
 
 	public boolean isStaticValueDataExist() {
 		return staticValueDataExist;
@@ -141,5 +145,30 @@ public class FlowInputObject {
 
 	public void setKeywordInputArgument(KeyWordInputArgument keywordInputArgument) {
 		this.keywordInputArgument = keywordInputArgument;
+	}
+
+	public ComponentInputArgument getComponentInputArgument() {
+		return componentInputArgument;
+	}
+
+	public void setComponentInputArgument(ComponentInputArgument componentInputArgument) {
+		this.componentInputArgument = componentInputArgument;
+	}
+
+	public boolean isFlowInputDataExist() {
+		return flowInputDataExist;
+	}
+
+	public void setFlowInputDataExist(boolean flowInputDataExist) {
+		this.flowInputDataExist = flowInputDataExist;
+	}
+
+	public String getFlowInputData() {
+		return flowInputData;
+	}
+
+	public void setFlowInputData(String flowInputData) {
+		this.setFlowInputDataExist(true);
+		this.flowInputData = flowInputData;
 	}
 }

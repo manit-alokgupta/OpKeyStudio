@@ -38,7 +38,7 @@ public class GlobalVariableTable extends CustomTable {
 	private GlobalVariableDialog parentGlobalVariableView;
 	private TestCaseView parentTestCaseView;
 	private boolean insideArtifact = false;
-
+	private List<GlobalVariable> globalVariables = new ArrayList<GlobalVariable>();
 	String[] tableHeaders_gv = { "Name", "Data Type", "Value", "Externally Updatable" };
 	String[] tableHeaders_arti = { "Name", "Data Type", "Value" };
 
@@ -162,12 +162,12 @@ public class GlobalVariableTable extends CustomTable {
 	}
 
 	public void setGlobalVariablesData(List<GlobalVariable> gvars) {
-		super.setControlData(gvars);
+		this.globalVariables = gvars;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<GlobalVariable> getGlobalVariablesData() {
-		return (List<GlobalVariable>) super.getControlData();
+		return this.globalVariables;
 	}
 
 	public void addGlobalVariable(GlobalVariable gv) {
@@ -269,7 +269,7 @@ public class GlobalVariableTable extends CustomTable {
 			}
 
 		}
-		this.setControlData(globalvariables);
+		this.globalVariables = globalvariables;
 	}
 
 	public void filterGlobalVariableTable(String searchValue) {
@@ -323,7 +323,7 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setGv_id(Utilities.getInstance().getUniqueUUID(""));
 		gv.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
 		gv.setName("");
-		gv.setValue("Chrome");
+		gv.setValue("");
 		gv.setDatatype("STRING");
 		gv.setAdded(true);
 		gv.setExternallyupdatable(true);

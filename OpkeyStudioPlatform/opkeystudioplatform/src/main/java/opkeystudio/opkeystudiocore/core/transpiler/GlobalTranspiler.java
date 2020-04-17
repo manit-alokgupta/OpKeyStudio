@@ -77,6 +77,14 @@ public class GlobalTranspiler {
 		}
 
 		for (ORObject orobject : orObjects) {
+			String parentVariableName = null;
+			String parentId = orobject.getParent_object_id();
+			for (ORObject parentObject : orObjects) {
+				if (parentObject.getObject_id().equals(parentId)) {
+					parentVariableName = parentObject.getVariableName();
+					break;
+				}
+			}
 			String variableDecalaration = String.format(variableDeclaration, orobject.getVariableName());
 			List<ObjectAttributeProperty> attributeProperties = orobject.getObjectAttributesProperty();
 			int count = 0;
@@ -99,6 +107,10 @@ public class GlobalTranspiler {
 			}
 			variableDecalaration += ";";
 			variabledeclarationdata += variableDecalaration;
+			if (parentVariableName != null) {
+				variabledeclarationdata += orobject.getVariableName() + ".setParentORObject(" + parentVariableName
+						+ ");";
+			}
 		}
 
 		String staticBodyData = String.format(staticBody, staticVariableDatas, variabledeclarationdata);

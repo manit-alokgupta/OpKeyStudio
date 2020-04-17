@@ -192,7 +192,26 @@ public class Artifact extends Modified {
 		if (varName.trim().isEmpty()) {
 			return "unknownVar";
 		}
+		if (checkVariableNameIsValid(varName) == false) {
+			return "opkey" + varName;
+		}
 		return varName;
+	}
+
+	private boolean checkVariableNameIsValid(String packagename) {
+		try {
+			Integer.parseInt(packagename);
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			Integer.parseInt(String.valueOf(packagename.charAt(0)));
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return true;
 	}
 
 	public Artifact getParentArtifact() {

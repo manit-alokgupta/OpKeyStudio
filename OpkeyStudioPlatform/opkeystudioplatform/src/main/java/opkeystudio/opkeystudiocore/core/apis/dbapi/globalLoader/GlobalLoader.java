@@ -15,6 +15,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -31,7 +32,9 @@ public class GlobalLoader {
 
 	private List<FlowInputArgument> componentflowInputArguments = new ArrayList<>();
 	private List<FlowOutputArgument> componentflowOutputArguments = new ArrayList<>();
-
+	
+	private List<ComponentInputArgument> componentInputArguments=new ArrayList<ComponentInputArgument>();
+	
 	private List<ORObject> allORObjects = new ArrayList<ORObject>();
 	private List<Artifact> allArtifacts = new ArrayList<Artifact>();
 	private List<ObjectAttributeProperty> objectAttributeProperties = new ArrayList<>();
@@ -65,6 +68,7 @@ public class GlobalLoader {
 				globalLoader.initAllFlowOutputArguments();
 				globalLoader.initAllComponentFlowInputArguments();
 				globalLoader.initAllComponentFlowOutputArguments();
+				globalLoader.initAllComponentInputParameters();
 				globalLoader.initAllORObjects();
 				globalLoader.initAllORObjectsObjectProperties();
 				globalLoader.initAllDRColumns();
@@ -293,6 +297,21 @@ public class GlobalLoader {
 			e.printStackTrace();
 		}
 	}
+	
+	public void initAllComponentInputParameters() {
+		String query = "select * from component_input_parameters order by position asc";
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ComponentInputArgument.class);
+		List<ComponentInputArgument> componentInputArgs;
+		try {
+			componentInputArgs = mapper.readValue(result, type);
+			setComponentInputArguments(componentInputArgs);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public List<FlowInputArgument> getFlowInputArguments() {
 		return flowInputArguments;
@@ -353,7 +372,7 @@ public class GlobalLoader {
 
 	public List<Artifact> getAllArtifactByType(String type) {
 		List<Artifact> typeArtifacts = new ArrayList<Artifact>();
-		List<Artifact> artifacts = getAllArtifacts();
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getFile_type_enum().toString().equals(type)) {
 				typeArtifacts.add(artifact);
@@ -363,7 +382,7 @@ public class GlobalLoader {
 	}
 
 	public Artifact getArtifactById(String id) {
-		List<Artifact> artifacts = getAllArtifacts();
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getId().toString().equals(id)) {
 				return artifact;
@@ -530,5 +549,22 @@ public class GlobalLoader {
 			}
 		}
 		return null;
+	}
+
+	public ComponentInputArgument getComponentInputArgumentById(String inputId) {
+		for (ComponentInputArgument componentInputArg : GlobalLoader.getInstance().getComponentInputArguments()) {
+			if (componentInputArg.getIp_id().equals(inputId)) {
+				return componentInputArg;
+			}
+		}
+		return null;
+	}
+
+	public List<ComponentInputArgument> getComponentInputArguments() {
+		return componentInputArguments;
+	}
+
+	public void setComponentInputArguments(List<ComponentInputArgument> componentInputArguments) {
+		this.componentInputArguments = componentInputArguments;
 	}
 }
