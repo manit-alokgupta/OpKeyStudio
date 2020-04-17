@@ -307,7 +307,7 @@ public class AppiumSettingsDialog extends Dialog {
 				if (capabilityNameCombo.getText().equals("") || capabilityTextValue.getText().equals("")) {
 					btnAddToTable.setEnabled(false);
 				}
-				if (capabilityTextValue.getText().length() > 0 && capabilityNameCombo.getSelectionIndex() != -1) {
+				if (capabilityTextValue.getText().length() > 0 ) {
 					btnAddToTable.setEnabled(true);
 				}
 			}
