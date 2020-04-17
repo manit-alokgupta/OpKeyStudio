@@ -173,8 +173,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		compositeLeftToolBar.setLayoutData(gd_compositeToolBarLeft);
 
 		btnCapture = new Button(compositeLeftToolBar, SWT.NONE);
+		btnCapture.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NONE));
 		btnCapture.setLocation(5, 5);
-		btnCapture.setSize(142, 28);
+		btnCapture.setSize(131, 28);
 		btnCapture.setToolTipText("Capture Object");
 		btnCapture.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnCapture.addSelectionListener(new SelectionAdapter() {
@@ -186,8 +187,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnCapture.setText("Capture Object");
 
 		btnClickAndMoveToNextScreen = new Button(compositeLeftToolBar, SWT.NONE);
-		btnClickAndMoveToNextScreen.setLocation(153, 5);
-		btnClickAndMoveToNextScreen.setSize(188, 28);
+		btnClickAndMoveToNextScreen.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NONE));
+		btnClickAndMoveToNextScreen.setLocation(142, 5);
+		btnClickAndMoveToNextScreen.setSize(181, 28);
 		btnClickAndMoveToNextScreen.setEnabled(false);
 		btnClickAndMoveToNextScreen.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -219,8 +221,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnClickAndMoveToNextScreen.setText("Click and Update Spy");
 
 		btnStop = new Button(compositeLeftToolBar, SWT.NONE);
-		btnStop.setLocation(348, 5);
-		btnStop.setSize(58, 28);
+		btnStop.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NONE));
+		btnStop.setLocation(329, 5);
+		btnStop.setSize(49, 28);
 		btnStop.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -250,8 +253,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		compositeRightToolBar.setLayoutData(gd_compositeToolBarRight);
 
 		btnAdd = new Button(compositeRightToolBar, SWT.NONE);
+		btnAdd.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NONE));
 		btnAdd.setLocation(10, 5);
-		btnAdd.setSize(239, 28);
+		btnAdd.setSize(220, 28);
 		btnAdd.setToolTipText("Add to Object Repository");
 		btnAdd.setEnabled(false);
 		btnAdd.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
@@ -301,7 +305,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			}
 		});
 		btnAdd.setText("Add to Object Repository");
-		sashFormToolsComposite.setWeights(new int[] { 2, 1 });
+		sashFormToolsComposite.setWeights(new int[] { 475, 286 });
 
 		Composite spyContainerComposite = new Composite(shlSpyMobile, SWT.NONE);
 		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
