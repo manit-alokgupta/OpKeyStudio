@@ -121,7 +121,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -190,7 +190,7 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumPortIpInfo
-				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
@@ -308,7 +308,7 @@ public class AppiumSettingsDialog extends Dialog {
 				if (capabilityNameCombo.getText().equals("") || capabilityTextValue.getText().equals("")) {
 					btnAddToTable.setEnabled(false);
 				}
-				if (capabilityTextValue.getText().length() > 0 ) {
+				if (capabilityTextValue.getText().length() > 0) {
 					btnAddToTable.setEnabled(true);
 				}
 			}
@@ -375,11 +375,12 @@ public class AppiumSettingsDialog extends Dialog {
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(capabilityTable.getItemCount()>=1) {
-				for (int i=0;i<=capabilityTable.getItemCount();i++) {
-					capabilityTable.remove(0);
+				if (capabilityTable.getItemCount() >= 1) {
+					for (int i = 0; i <= capabilityTable.getItemCount(); i++) {
+						capabilityTable.remove(0);
 
-				}}
+					}
+				}
 				capabilityTextValue.setText("");
 				fillDataInCapabilityTable();
 			}
@@ -395,7 +396,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		manuallyCapabilityName = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
 		manuallyCapabilityName.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-	
+
 		manuallyCapabilityName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				if (manuallyCapabilityName.getText().equals("") || manuallyCapabilityValue.getText().equals("")) {
@@ -478,24 +479,26 @@ public class AppiumSettingsDialog extends Dialog {
 				addCapabilityComposite.setVisible(true);
 			}
 		});
-		manuallyCancel.setBounds(496, 13, 18, 18); 
-		
+		manuallyCancel.setBounds(496, 13, 18, 18);
+
 		manuallybtnRefresh = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
 		manuallybtnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(capabilityTable.getItemCount()>=1) {
-				for (int i=0;i<=capabilityTable.getItemCount();i++) {
-					capabilityTable.remove(0);
+				if (capabilityTable.getItemCount() >= 1) {
+					for (int i = 0; i <= capabilityTable.getItemCount(); i++) {
+						capabilityTable.remove(0);
 
-				}}
+					}
+				}
 				manuallyCapabilityName.setText("");
 				manuallyCapabilityValue.setText("");
 				fillDataInCapabilityTable();
 			}
 		});
 		manuallybtnRefresh.setBounds(475, 13, 18, 18);
-		manuallybtnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		manuallybtnRefresh
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		manuallybtnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallybtnRefresh.setToolTipText("Refresh Table");
 
@@ -821,15 +824,15 @@ public class AppiumSettingsDialog extends Dialog {
 
 		default:
 
-			for (int index = 0; index < text.length(); index++) {
-				char character = text.charAt(index);
-				boolean isAllowed = allowedCharactersString.indexOf(character) > -1;
-				if (!isAllowed) {
-					event.doit = false;
-					return;
-				}
-			}
-
+			/*
+			 * for (int index = 0; index < text.length(); index++) { char character =
+			 * text.charAt(index); boolean isAllowed =
+			 * allowedCharactersString.indexOf(character) > -1; if (!isAllowed) { event.doit
+			 * = false; return;
+			 * 
+			 * } }
+			 */
+                     return ;
 		}
 
 	}
