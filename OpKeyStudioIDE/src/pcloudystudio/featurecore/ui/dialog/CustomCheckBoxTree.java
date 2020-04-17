@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 
-import pcloudystudio.objectspy.element.impl.BasicMobileElement;
+import pcloudystudio.spytreecomponents.BasicMobileElement;
 
 public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStateListener, ICheckStateProvider {
 

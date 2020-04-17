@@ -57,12 +57,12 @@ import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import pcloudystudio.appium.AndroidDriverObject;
-import pcloudystudio.objectspy.MobileInspectorController;
-import pcloudystudio.objectspy.element.MobileElement;
-import pcloudystudio.objectspy.element.TreeMobileElement;
-import pcloudystudio.objectspy.element.impl.BasicMobileElement;
-import pcloudystudio.objectspy.element.tree.MobileElementLabelProvider;
-import pcloudystudio.objectspy.element.tree.MobileElementTreeContentProvider;
+import pcloudystudio.spytreecomponents.BasicMobileElement;
+import pcloudystudio.spytreecomponents.MobileElement;
+import pcloudystudio.spytreecomponents.MobileElementLabelProvider;
+import pcloudystudio.spytreecomponents.MobileElementTreeContentProvider;
+import pcloudystudio.spytreecomponents.MobileInspectorController;
+import pcloudystudio.spytreecomponents.TreeMobileElement;
 
 public class MobileSpyDialog extends Dialog implements MobileElementInspectorDialog {
 	private ObjectRepositoryView parentObjectRepositoryView;
@@ -96,6 +96,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	public static Button btnClickAndMoveToNextScreen;
 	static Label lblAddToORConfirmation;
+	private Composite compositeLeftToolBar;
+	private Composite compositeRightToolBar;
 
 	static {
 		DIALOG_TITLE = "Mobile Object Spy";
@@ -148,6 +150,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		shlSpyMobile.setSize(new Point(800, 700));
 		shlSpyMobile.setText(DIALOG_TITLE);
 		shlSpyMobile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		shlSpyMobile.setMinimumSize(new Point(650, 400));
 
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlSpyMobile.getBounds();
@@ -158,9 +161,147 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 		Composite toolsComposite = new Composite(shlSpyMobile, SWT.BORDER);
 		GridData gd_toolsComposite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_toolsComposite.widthHint = 782;
 		gd_toolsComposite.heightHint = 38;
+		gd_toolsComposite.widthHint = 785;
 		toolsComposite.setLayoutData(gd_toolsComposite);
+		toolsComposite.setLayout(new FillLayout());
+
+		SashForm sashFormToolsComposite = new SashForm(toolsComposite, SWT.NONE);
+
+		compositeLeftToolBar = new Composite(sashFormToolsComposite, SWT.NONE | SWT.LEFT_TO_RIGHT);
+		GridData gd_compositeToolBarLeft = new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1);
+		compositeLeftToolBar.setLayoutData(gd_compositeToolBarLeft);
+
+		btnCapture = new Button(compositeLeftToolBar, SWT.NONE);
+		btnCapture.setLocation(5, 5);
+		btnCapture.setSize(142, 28);
+		btnCapture.setToolTipText("Capture Object");
+		btnCapture.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		btnCapture.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				captureObjectAction();
+			}
+		});
+		btnCapture.setText("Capture Object");
+
+		btnClickAndMoveToNextScreen = new Button(compositeLeftToolBar, SWT.NONE);
+		btnClickAndMoveToNextScreen.setLocation(153, 5);
+		btnClickAndMoveToNextScreen.setSize(188, 28);
+		btnClickAndMoveToNextScreen.setEnabled(false);
+		btnClickAndMoveToNextScreen.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				lblAddToORConfirmation.setVisible(false);
+				if (AndroidDriverObject.getInstance() != null) {
+					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
+					Widget item = CustomCheckBoxTree.getCheckedItem(element);
+					TreeItem treeItem = (TreeItem) item;
+					Object obj = treeItem.getData();
+					Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
+					try {
+						WebElement foundElement = AndroidDriverObject.getDriver()
+								.findElementByXPath(mobileElementProps.get("xpath"));
+						if (foundElement != null) {
+							foundElement.click();
+							btnAdd.setEnabled(false);
+							captureObjectAction();
+						}
+					} catch (Exception ex) {
+						MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+								ex.getMessage(), 1, 0, "OK");
+						mDialog.open();
+					}
+				}
+			}
+		});
+		btnClickAndMoveToNextScreen.setText("Click and Update Spy");
+
+		btnStop = new Button(compositeLeftToolBar, SWT.NONE);
+		btnStop.setLocation(348, 5);
+		btnStop.setSize(58, 28);
+		btnStop.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					btnCapture.setEnabled(false);
+					lblAddToORConfirmation.setVisible(false);
+					btnClickAndMoveToNextScreen.setEnabled(false);
+					btnStop.setEnabled(false);
+					btnAdd.setEnabled(false);
+					allObjectsCheckboxTreeViewer.getTree().removeAll();
+					clearPropertiesTableData();
+					textObjectName.setText("");
+					deviceView.close();
+					AndroidDriverObject.getDriver().quit();
+				} catch (Exception ex) {
+					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							ex.getMessage(), 1, 0, "OK");
+					mDialog.open();
+				}
+			}
+		});
+		btnStop.setText("Stop");
+
+		compositeRightToolBar = new Composite(sashFormToolsComposite, SWT.NONE | SWT.RIGHT_TO_LEFT);
+		GridData gd_compositeToolBarRight = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		compositeRightToolBar.setLayoutData(gd_compositeToolBarRight);
+
+		btnAdd = new Button(compositeRightToolBar, SWT.NONE);
+		btnAdd.setLocation(10, 5);
+		btnAdd.setSize(239, 28);
+		btnAdd.setToolTipText("Add to Object Repository");
+		btnAdd.setEnabled(false);
+		btnAdd.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		btnAdd.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (textObjectName.getText().length() > 0) {
+					lblAddToORConfirmation.setVisible(false);
+
+					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
+					Widget item = CustomCheckBoxTree.getCheckedItem(element);
+					TreeItem treeItem = (TreeItem) item;
+					Object obj = treeItem.getData();
+
+					if (objectPropertiesTable.getItemCount() > 0) {
+						try {
+							LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
+							for (TableItem row : objectPropertiesTable.getItems())
+								mapOfObjectProperties.put(row.getText(0), row.getText(1));
+							setMobileElementProps(mapOfObjectProperties);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+					}
+
+					Object parentObj = ((TreeMobileElement) obj).getParentElement();
+					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
+					try {
+						new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
+								getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
+								getMobileParentElementProps(), textObjectName.getText().toString(),
+								getMobileParentElementProps().get("package")
+								+ getMobileParentElementProps().get("activity"),
+								"Custom", "HTML Page",
+								getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
+						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
+						lblAddToORConfirmation.setVisible(true);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				} else {
+					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
+							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+							"Object Name field can't be empty!", 1, 0, "OK");
+					mDialog.open();
+				}
+			}
+		});
+		btnAdd.setText("Add to Object Repository");
+		sashFormToolsComposite.setWeights(new int[] { 2, 1 });
 
 		Composite spyContainerComposite = new Composite(shlSpyMobile, SWT.NONE);
 		GridData gd_spyContainerComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -210,10 +351,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 		allObjectsTreeScrolledComposite = new ScrolledComposite(compositeTreeHierarchy,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_allObjectsTreeScrolledComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_allObjectsTreeScrolledComposite.widthHint = 390;
-		gd_allObjectsTreeScrolledComposite.heightHint = 524;
-		allObjectsTreeScrolledComposite.setLayoutData(gd_allObjectsTreeScrolledComposite);
+		allObjectsTreeScrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		allObjectsTreeScrolledComposite.setExpandHorizontal(true);
 		allObjectsTreeScrolledComposite.setExpandVertical(true);
 
@@ -229,142 +367,17 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		lblObjectName.setText("Object Name");
 
 		textObjectName = new Text(compositeObjectProperties, SWT.BORDER);
-		GridData gd_textObjectName = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		GridData gd_textObjectName = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd_textObjectName.widthHint = 322;
 		textObjectName.setLayoutData(gd_textObjectName);
 		textObjectName.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
 
 		objectPropertiesScrolledComposite = new ScrolledComposite(compositeObjectProperties,
 				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		GridData gd_objectPropertiesScrolledComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_objectPropertiesScrolledComposite.heightHint = 395;
-		gd_objectPropertiesScrolledComposite.widthHint = 310;
-		objectPropertiesScrolledComposite.setLayoutData(gd_objectPropertiesScrolledComposite);
+		objectPropertiesScrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectPropertiesScrolledComposite.setExpandHorizontal(true);
 		objectPropertiesScrolledComposite.setExpandVertical(true);
-		sashForm.setWeights(new int[] { 431, 352 });
-
-		btnCapture = new Button(toolsComposite, SWT.NONE);
-		btnCapture.setToolTipText("Capture Object");
-		btnCapture.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnCapture.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				captureObjectAction();
-			}
-		});
-		btnCapture.setBounds(5, 5, 142, 28);
-		btnCapture.setText("Capture Object");
-
-		btnAdd = new Button(toolsComposite, SWT.NONE);
-		btnAdd.setToolTipText("Add to Object Repository");
-		btnAdd.setEnabled(false);
-		btnAdd.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnAdd.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (textObjectName.getText().length() > 0) {
-					lblAddToORConfirmation.setVisible(false);
-
-					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
-					Widget item = CustomCheckBoxTree.getCheckedItem(element);
-					TreeItem treeItem = (TreeItem) item;
-					Object obj = treeItem.getData();
-
-					if (objectPropertiesTable.getItemCount() > 0) {
-						try {
-							LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
-							for (TableItem row : objectPropertiesTable.getItems())
-								mapOfObjectProperties.put(row.getText(0), row.getText(1));
-							setMobileElementProps(mapOfObjectProperties);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-					}
-
-					Object parentObj = ((TreeMobileElement) obj).getParentElement();
-					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
-					try {
-						new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
-								getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
-								getMobileParentElementProps(), textObjectName.getText().toString(),
-								getMobileParentElementProps().get("package")
-								+ getMobileParentElementProps().get("activity"),
-								"Custom", "HTML Page",
-								getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
-						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
-						lblAddToORConfirmation.setVisible(true);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-				} else {
-					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Object Name field can't be empty!", 1, 0, "OK");
-					mDialog.open();
-				}
-			}
-		});
-		btnAdd.setBounds(515, 5, 239, 28);
-		btnAdd.setText("Add to Object Repository");
-
-		btnClickAndMoveToNextScreen = new Button(toolsComposite, SWT.NONE);
-		btnClickAndMoveToNextScreen.setEnabled(false);
-		btnClickAndMoveToNextScreen.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				lblAddToORConfirmation.setVisible(false);
-				if (AndroidDriverObject.getInstance() != null) {
-					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
-					Widget item = CustomCheckBoxTree.getCheckedItem(element);
-					TreeItem treeItem = (TreeItem) item;
-					Object obj = treeItem.getData();
-					Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
-					try {
-						WebElement foundElement = AndroidDriverObject.getDriver()
-								.findElementByXPath(mobileElementProps.get("xpath"));
-						if (foundElement != null) {
-							foundElement.click();
-							btnAdd.setEnabled(false);
-							captureObjectAction();
-						}
-					} catch (Exception ex) {
-						MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
-								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-								ex.getMessage(), 1, 0, "OK");
-						mDialog.open();
-					}
-				}
-			}
-		});
-		btnClickAndMoveToNextScreen.setBounds(153, 5, 188, 28);
-		btnClickAndMoveToNextScreen.setText("Click and Update Spy");
-
-		btnStop = new Button(toolsComposite, SWT.NONE);
-		btnStop.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					btnCapture.setEnabled(false);
-					lblAddToORConfirmation.setVisible(false);
-					btnClickAndMoveToNextScreen.setEnabled(false);
-					btnStop.setEnabled(false);
-					btnAdd.setEnabled(false);
-					allObjectsCheckboxTreeViewer.getTree().removeAll();
-					clearPropertiesTableData();
-					textObjectName.setText("");
-					deviceView.close();
-					AndroidDriverObject.getDriver().quit();
-				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							ex.getMessage(), 1, 0, "OK");
-					mDialog.open();
-				}
-			}
-		});
-		btnStop.setBounds(347, 5, 58, 28);
-		btnStop.setText("Stop");
+		sashForm.setWeights(new int[] { 2, 1 });
 
 		if (AndroidDriverObject.getDriver() == null) {
 			btnCapture.setEnabled(false);
@@ -390,7 +403,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private void createAllObjectsTreeHierarchy(ScrolledComposite allObjectsTreeScrolledComposite) {
 		MobileElementTreeContentProvider contentProvider = new MobileElementTreeContentProvider();
 		MobileElementLabelProvider labelProvider = new MobileElementLabelProvider();
-		allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.BORDER);
+		allObjectsCheckboxTreeViewer = new CustomCheckBoxTree(allObjectsTreeScrolledComposite, SWT.NONE);
 		Tree tree = allObjectsCheckboxTreeViewer.getTree();
 		allObjectsCheckboxTreeViewer.setContentProvider(contentProvider);
 		allObjectsCheckboxTreeViewer.setLabelProvider(labelProvider);
@@ -418,7 +431,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	}
 
 	private void createObjectPropertiesTable(ScrolledComposite objectPropertiesScrolledComposite) {
-		objectPropertiesTable = new Table(objectPropertiesScrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		objectPropertiesTable = new Table(objectPropertiesScrolledComposite, SWT.NONE | SWT.FULL_SELECTION);
 		objectPropertiesTable.setLinesVisible(true);
 		objectPropertiesTable.setHeaderVisible(true);
 		objectPropertiesTable.setHeaderBackground(SWTResourceManager.getColor(248, 248, 245));

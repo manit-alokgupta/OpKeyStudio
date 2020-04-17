@@ -4,5 +4,5 @@ package pcloudystudio.featurecore.ui.dialog;
 //Copyright © 2020 SSTS Inc. All rights reserved.
 
 public interface MobileElementInspectorDialog {
-	void setSelectedElementByLocation(final int x, final int y);
+	void setSelectedElementByLocation(int x, int y);
 }
