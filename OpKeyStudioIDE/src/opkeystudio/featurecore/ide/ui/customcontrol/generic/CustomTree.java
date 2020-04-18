@@ -7,10 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
-
 public class CustomTree extends Tree {
-	private Object controlData;
 
 	public CustomTree(Composite parent, int style) {
 		super(parent, style);
