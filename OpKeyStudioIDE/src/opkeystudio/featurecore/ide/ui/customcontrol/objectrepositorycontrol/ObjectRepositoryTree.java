@@ -44,7 +44,7 @@ public class ObjectRepositoryTree extends CustomTree {
 	}
 
 	private void addIcon(ObjectRepositoryTreeItem artTreeItem) {
-		ORObject orObject = artTreeItem.getObjectRepository();
+		ORObject orObject = artTreeItem.getORObject();
 		if (orObject == null) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
 			return;
@@ -60,7 +60,7 @@ public class ObjectRepositoryTree extends CustomTree {
 	}
 
 	private void renderAllArtifactTree(ObjectRepositoryTreeItem rootNode, List<ORObject> allArtifacts) {
-		String artifactId = rootNode.getObjectRepository().getObject_id();
+		String artifactId = rootNode.getORObject().getObject_id();
 		for (ORObject artifact : allArtifacts) {
 			if (artifact.getParent_object_id() != null) {
 				if (artifact.getParent_object_id().equals(artifactId)) {
@@ -75,7 +75,7 @@ public class ObjectRepositoryTree extends CustomTree {
 	}
 
 	private void refereshAllArtifactTree(ObjectRepositoryTreeItem rootNode, List<ORObject> allArtifacts) {
-		String artifactId = rootNode.getObjectRepository().getObject_id();
+		String artifactId = rootNode.getORObject().getObject_id();
 		for (ORObject artifact : allArtifacts) {
 			if (!artifact.isDeleted()) {
 				if (artifact.getParent_object_id() != null) {
@@ -107,7 +107,7 @@ public class ObjectRepositoryTree extends CustomTree {
 
 	public ORObject getSelectedORObject() {
 		ObjectRepositoryTreeItem treeItem = getSelectedTreeItem();
-		return treeItem.getObjectRepository();
+		return treeItem.getORObject();
 	}
 
 	public void renderObjectRepositories() {

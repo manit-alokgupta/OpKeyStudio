@@ -151,7 +151,7 @@ public class ObjectRepositoryView extends Composite {
 				public void widgetSelected(SelectionEvent e) {
 					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
 					ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
-					ORObject selectedobject = treeItem.getObjectRepository();
+					ORObject selectedobject = treeItem.getORObject();
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
 							selectedobject.getObject_id(), name, item.getText(),
 							objectRepositoryTree.getObjectRepositoriesData());
@@ -250,7 +250,7 @@ public class ObjectRepositoryView extends Composite {
 				System.out.println("Object Name " + objectName);
 				String name = new Utilities().getRandomVariableName("New Node " + objectName);
 				ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
-				ORObject selectedobject = treeItem.getObjectRepository();
+				ORObject selectedobject = treeItem.getORObject();
 				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
 						selectedobject.getObject_id(), name, objectName,
 						objectRepositoryTree.getObjectRepositoriesData());
@@ -294,14 +294,8 @@ public class ObjectRepositoryView extends Composite {
 		androidDeviceConfiguration.setToolTipText("Device Configuration and Spy Android");
 
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
-		// Tree tree = new Tree(composite_3, SWT.BORDER);
 		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectRepositoryTree.setBounds(0, 0, 85, 85);
-
-		// bottomFactoryORUi = new BottomFactoryORUi(composite_3, SWT.BORDER);
-		// bottomFactoryORUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		// bottomFactoryORUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-		// 1, 1));
 
 		ServiceRepository.getInstance().setProjectTreeObject(objectRepositoryTree);
 		Menu menu = new Menu(objectRepositoryTree);
@@ -366,7 +360,7 @@ public class ObjectRepositoryView extends Composite {
 
 				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) objectRepositoryTree.getSelection()[0];
 				renderObjectAttributeProperty(item);
-				if (item.getObjectRepository() != null) {
+				if (item.getORObject() != null) {
 					toggleDeleteButton(true);
 					toggleRenameButton(true);
 					toggleAddAttributeButton(true);
@@ -375,7 +369,7 @@ public class ObjectRepositoryView extends Composite {
 					togglePasteMenuItem(true);
 
 					toggleDeleteMenuItem(true);
-					if (item.getObjectRepository().getParent_object_id() == null) {
+					if (item.getORObject().getParent_object_id() == null) {
 						toggleChildObjectToolItem(true);
 					} else {
 						toggleChildObjectToolItem(false);
@@ -582,7 +576,7 @@ public class ObjectRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-				obRepo = selectedTreeItem.getObjectRepository();
+				obRepo = selectedTreeItem.getORObject();
 
 			}
 
@@ -680,7 +674,7 @@ public class ObjectRepositoryView extends Composite {
 
 	public void renameFunction() {
 		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-		ORObject obRepo = selectedTreeItem.getObjectRepository();
+		ORObject obRepo = selectedTreeItem.getORObject();
 		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "OpKey", "Enter name to rename",
 				obRepo.getName(), null);
 
@@ -705,7 +699,7 @@ public class ObjectRepositoryView extends Composite {
 		}
 
 		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-		obRepo = selectedTreeItem.getObjectRepository();
+		obRepo = selectedTreeItem.getORObject();
 		boolean isUsed = new ObjectRepositoryApiUtilities().isORObjectUsed(obRepo);
 		if (isUsed) {
 			new MessageDialogs().openInformationDialog("Can't delete ORObject",
@@ -716,7 +710,7 @@ public class ObjectRepositoryView extends Composite {
 			TreeItem[] treeItems = selectedTreeItem.getItems();
 			for (TreeItem treeItem : treeItems) {
 				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) treeItem;
-				ORObject orobject = item.getObjectRepository();
+				ORObject orobject = item.getORObject();
 				boolean isused = new ObjectRepositoryApiUtilities().isORObjectUsed(orobject);
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Can't delete ORObject",
@@ -733,18 +727,18 @@ public class ObjectRepositoryView extends Composite {
 	}
 
 	private void renderObjectAttributeProperty(ObjectRepositoryTreeItem item) {
-		if (item.getObjectRepository() == null) {
+		if (item.getORObject() == null) {
 			objectAttributeTable.clearAllDatas();
 			return;
 		}
-		if (item.getObjectRepository() != null) {
-			String objectId = item.getObjectRepository().getObject_id();
-			if (item.getObjectRepository().getObjectAttributesProperty().size() == 0) {
+		if (item.getORObject() != null) {
+			String objectId = item.getORObject().getObject_id();
+			if (item.getORObject().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
-				item.getObjectRepository()
+				item.getORObject()
 						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
-			objectAttributeTable.setControlData(item.getObjectRepository().getObjectAttributesProperty());
+			objectAttributeTable.setControlData(item.getORObject().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();
 		}
 	}
