@@ -193,7 +193,7 @@ public class Artifact extends Modified {
 			return "unknownVar";
 		}
 		if (checkVariableNameIsValid(varName) == false) {
-			return "opkey" + varName;
+			return "o" + varName;
 		}
 		return varName;
 	}

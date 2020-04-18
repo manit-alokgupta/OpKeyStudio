@@ -81,7 +81,6 @@ public class FlowMaker {
 		int selectedFlowStepPosition = 0;
 		if (selectedFlowStep != null) {
 			selectedFlowStepPosition = selectedFlowStep.getPosition();
-			System.out.println("Position " + selectedFlowStepPosition);
 		} else {
 			if (flowSteps.size() > 0) {
 				FlowStep lastFlowStep = flowSteps.get(flowSteps.size() - 1);
