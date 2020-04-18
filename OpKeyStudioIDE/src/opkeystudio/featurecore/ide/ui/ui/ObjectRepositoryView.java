@@ -61,7 +61,6 @@ public class ObjectRepositoryView extends Composite {
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
 	private ToolItem androidDeviceConfiguration;
-	private MenuItem cutMenuItem;
 	private MenuItem copyMenuItem;
 	private MenuItem pasteMenuItem;
 	private MenuItem renameMenuItem;
@@ -308,9 +307,13 @@ public class ObjectRepositoryView extends Composite {
 		Menu menu = new Menu(objectRepositoryTree);
 		objectRepositoryTree.setMenu(menu);
 
-		cutMenuItem = new MenuItem(menu, SWT.CASCADE);
-		cutMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CUT_ICON));
-		cutMenuItem.setText("Cut");
+		renameMenuItem = new MenuItem(menu, SWT.NONE);
+		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
+		renameMenuItem.setText("Rename");
+
+		deleteMenuItem = new MenuItem(menu, SWT.NONE);
+		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		deleteMenuItem.setText("Delete");
 
 		copyMenuItem = new MenuItem(menu, SWT.NONE);
 		copyMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COPY_ICON));
@@ -319,14 +322,6 @@ public class ObjectRepositoryView extends Composite {
 		pasteMenuItem = new MenuItem(menu, SWT.NONE);
 		pasteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.PASTE_ICON));
 		pasteMenuItem.setText("Paste");
-
-		renameMenuItem = new MenuItem(menu, SWT.NONE);
-		renameMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
-		renameMenuItem.setText("Rename");
-
-		deleteMenuItem = new MenuItem(menu, SWT.NONE);
-		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
-		deleteMenuItem.setText("Delete");
 
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
 		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -380,11 +375,6 @@ public class ObjectRepositoryView extends Composite {
 					togglePasteMenuItem(true);
 
 					toggleDeleteMenuItem(true);
-					if (item.getExpanded()) {
-						toggleCutMenuItem(false);
-					} else {
-						toggleCutMenuItem(true);
-					}
 					if (item.getObjectRepository().getParent_object_id() == null) {
 						toggleChildObjectToolItem(true);
 					} else {
@@ -397,7 +387,6 @@ public class ObjectRepositoryView extends Composite {
 					toggleRenameMenuItem(false);
 					toggleCopyMenuItem(false);
 					togglePasteMenuItem(false);
-					toggleCutMenuItem(false);
 					toggleDeleteMenuItem(false);
 					toggleChildObjectToolItem(false);
 				}
@@ -603,21 +592,6 @@ public class ObjectRepositoryView extends Composite {
 			}
 		});
 
-		cutMenuItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-				obRepo = selectedTreeItem.getObjectRepository();
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
 		pasteMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -682,10 +656,6 @@ public class ObjectRepositoryView extends Composite {
 
 	public void toggleCopyMenuItem(boolean status) {
 		copyMenuItem.setEnabled(status);
-	}
-
-	public void toggleCutMenuItem(boolean status) {
-		cutMenuItem.setEnabled(status);
 	}
 
 	public void toggleRenameMenuItem(boolean status) {
