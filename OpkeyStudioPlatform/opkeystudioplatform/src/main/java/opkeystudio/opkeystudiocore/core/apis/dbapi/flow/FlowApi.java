@@ -126,7 +126,7 @@ public class FlowApi {
 				flowStep.setFlowOutputArgs(fos);
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flowStep.setOrObject(allORObject);
-				flowStep.setIstestcase(true);
+				flowStep.setIsTestCaseStep(true);
 			} else if (flowStep.getComponent_id() != null) {
 				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getComponent_id()).get(0);
 				List<ComponentInputArgument> inputArgs = getAllComponentInputArgument(flowStep.getComponent_id());
@@ -141,7 +141,7 @@ public class FlowApi {
 				flowStep.setFlowOutputArgs(fos);
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flowStep.setOrObject(allORObject);
-				flowStep.setIsfunctionlibrary(true);
+				flowStep.setIsfunctionlibraryStep(true);
 			}
 		}
 		return flowSteps;

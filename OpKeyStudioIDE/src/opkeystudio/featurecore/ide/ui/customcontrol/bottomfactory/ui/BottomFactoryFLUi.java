@@ -285,6 +285,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			}
 		});
+
 		inputTable.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -314,6 +315,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			}
 		});
+
 		addButtonListeners();
 	}
 

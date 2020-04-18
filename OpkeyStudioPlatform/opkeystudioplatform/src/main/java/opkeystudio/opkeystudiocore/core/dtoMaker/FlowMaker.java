@@ -208,25 +208,20 @@ public class FlowMaker {
 		}
 
 		if (flowStep.getFunctionLibraryComponent() != null) {
-			List<ComponentInputArgument> componentInputArgs = flowStep.getFunctionLibraryComponent()
-					.getComponentInputArguments();
-			for (ComponentInputArgument componentInputArgument : componentInputArgs) {
-				FlowInputArgument flowInputArgument = new FlowInputArgument();
+			List<ComponentOutputArgument> componentOutputArgs = flowStep.getFunctionLibraryComponent()
+					.getComponentOutputArguments();
+			for (ComponentOutputArgument componentOutputArgument : componentOutputArgs) {
+				FlowOutputArgument flowOutputArgument = new FlowOutputArgument();
 				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-					flowInputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
-					flowInputArgument.setStepid(flowStep.getStepid());
-					flowInputArgument.setArg_datasource(DataSource.StaticValue);
+					flowOutputArgument.setComponentstep_oa_id(Utilities.getInstance().getUniqueUUID(""));
+					flowOutputArgument.setComponentstep_id(flowStep.getStepid());
 				} else {
-					flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
-					flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
-					flowInputArgument.setDatasource(DataSource.StaticValue);
+					flowOutputArgument.setFlow_step_oa_id(Utilities.getInstance().getUniqueUUID(""));
+					flowOutputArgument.setFlow_stepid(flowStep.getFlow_stepid());
 				}
-				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
-				flowInputArgument.setComponent_ip_id(componentInputArgument.getIp_id());
-				flowInputArgument.setStaticobjectid(null);
-				flowInputArgument.setAdded(true);
-
-				// flowOutputArguments.add(flowInputArgument);
+				flowOutputArgument.setComponent_op_id(componentOutputArgument.getComponentstep_oa_id());
+				flowOutputArgument.setAdded(true);
+				flowOutputArguments.add(flowOutputArgument);
 			}
 		}
 		return flowOutputArguments;

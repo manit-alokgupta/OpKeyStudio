@@ -214,7 +214,7 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 		return istestcase;
 	}
 
-	public void setIstestcase(boolean istestcase) {
+	public void setIsTestCaseStep(boolean istestcase) {
 		this.istestcase = istestcase;
 	}
 
@@ -222,7 +222,7 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 		return isfunctionlibrary;
 	}
 
-	public void setIsfunctionlibrary(boolean isfunctionlibrary) {
+	public void setIsfunctionlibraryStep(boolean isfunctionlibrary) {
 		this.isfunctionlibrary = isfunctionlibrary;
 	}
 

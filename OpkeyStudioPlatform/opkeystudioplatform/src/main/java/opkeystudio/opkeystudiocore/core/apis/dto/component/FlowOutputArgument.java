@@ -18,6 +18,8 @@ public class FlowOutputArgument extends Modified implements Cloneable {
 	@DBField
 	private String componentstep_oa_id;
 	@DBField
+	private String component_op_id;
+	@DBField
 	private String outputvariablename;
 
 	public String getFlow_step_oa_id() {
@@ -84,5 +86,13 @@ public class FlowOutputArgument extends Modified implements Cloneable {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public String getComponent_op_id() {
+		return component_op_id;
+	}
+
+	public void setComponent_op_id(String component_op_id) {
+		this.component_op_id = component_op_id;
 	}
 }
