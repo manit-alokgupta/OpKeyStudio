@@ -365,9 +365,16 @@ public class ObjectRepositoryView extends Composite {
 					toggleRenameButton(true);
 					toggleAddAttributeButton(true);
 					toggleRenameMenuItem(true);
-					toggleCopyMenuItem(true);
-					togglePasteMenuItem(true);
-
+					if (item.getORObject().getParent_object_id() != null) {
+						toggleCopyMenuItem(true);
+					} else {
+						toggleCopyMenuItem(false);
+					}
+					if (item.getORObject().getParent_object_id() == null) {
+						togglePasteMenuItem(true);
+					} else {
+						togglePasteMenuItem(false);
+					}
 					toggleDeleteMenuItem(true);
 					if (item.getORObject().getParent_object_id() == null) {
 						toggleChildObjectToolItem(true);
