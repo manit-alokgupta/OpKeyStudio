@@ -763,6 +763,10 @@ public class ObjectRepositoryView extends Composite {
 	}
 
 	private void renderObjectAttributeProperty(ObjectRepositoryTreeItem item) {
+		if (item.getObjectRepository() == null) {
+			objectAttributeTable.clearAllDatas();
+			return;
+		}
 		if (item.getObjectRepository() != null) {
 			String objectId = item.getObjectRepository().getObject_id();
 			if (item.getObjectRepository().getObjectAttributesProperty().size() == 0) {
