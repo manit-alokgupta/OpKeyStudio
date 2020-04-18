@@ -3,12 +3,10 @@ package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -34,12 +32,11 @@ public class ObjectRepositoryTree extends CustomTree {
 		renderObjectRepositories();
 	}
 
-	public void setObjectRepositoriesData(List<ORObject> objectRepository) {
+	public void setAllORObjects(List<ORObject> objectRepository) {
 		this.objectRepository = objectRepository;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<ORObject> getObjectRepositoriesData() {
+	public List<ORObject> getAllORObjects() {
 		return this.objectRepository;
 	}
 
@@ -119,7 +116,7 @@ public class ObjectRepositoryTree extends CustomTree {
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<ORObject> objectRepositories = new ObjectRepositoryApi().getAllObjects(artifact.getId().trim());
-		setObjectRepositoriesData(objectRepositories);
+		setAllORObjects(objectRepositories);
 		List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
 		for (ORObject objectRepository : objectRepositories) {
 			if (objectRepository.getParent_object_id() == null) {
@@ -148,7 +145,7 @@ public class ObjectRepositoryTree extends CustomTree {
 		rootNode.setText(artifact.getName());
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
-		List<ORObject> objectRepositories = getObjectRepositoriesData();
+		List<ORObject> objectRepositories = getAllORObjects();
 
 		List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
 		for (ORObject objectRepository : objectRepositories) {

@@ -7,12 +7,8 @@ import java.util.Map;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ORObjectMaker {
@@ -135,8 +131,19 @@ public class ORObjectMaker {
 
 		ORObject orobject = pasteORObject.clone();
 		orobject.setObject_id(Utilities.getInstance().getUniqueUUID(""));
+		orobject.setParent_object_id(selectedORObject.getObject_id());
 		orobject.setPosition(selectedORObjectPosition + 5);
 		orobject.setAdded(true);
+		List<ObjectAttributeProperty> attributes = pasteORObject.getObjectAttributesProperty();
+		List<ObjectAttributeProperty> allattributes = new ArrayList<ObjectAttributeProperty>();
+		for (ObjectAttributeProperty attribute : attributes) {
+			ObjectAttributeProperty clonedAttribute = attribute.clone();
+			clonedAttribute.setProperty_id(Utilities.getInstance().getUniqueUUID(""));
+			clonedAttribute.setObject_id(orobject.getObject_id());
+			clonedAttribute.setAdded(true);
+			allattributes.add(clonedAttribute);
+		}
+		orobject.setObjectAttributesProperty(allattributes);
 		for (int i = selectedORObjectIndex + 1; i < allORObjects.size(); i++) {
 			ORObject iflowStep = allORObjects.get(i);
 			iflowStep.setPosition(iflowStep.getPosition() + 10);

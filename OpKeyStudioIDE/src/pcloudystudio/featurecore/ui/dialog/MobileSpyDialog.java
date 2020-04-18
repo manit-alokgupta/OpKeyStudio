@@ -290,7 +290,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 								getMobileParentElementProps().get("package")
 								+ getMobileParentElementProps().get("activity"),
 								"Custom", "HTML Page",
-								getParentObjectRepositoryView().getObjectRepositoryTree().getObjectRepositoriesData());
+								getParentObjectRepositoryView().getObjectRepositoryTree().getAllORObjects());
 						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
 						lblAddToORConfirmation.setVisible(true);
 					} catch (SQLException e1) {

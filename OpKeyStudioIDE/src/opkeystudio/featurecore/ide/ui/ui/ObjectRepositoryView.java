@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import opkeystudio.core.utils.CopyPasteOperation;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTable;
@@ -123,8 +124,8 @@ public class ObjectRepositoryView extends Composite {
 				public void widgetSelected(SelectionEvent e) {
 					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name,
-							item.getText(), objectRepositoryTree.getObjectRepositoriesData());
-					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
+							item.getText(), objectRepositoryTree.getAllORObjects());
+					objectRepositoryTree.getAllORObjects().add(orobject);
 					toggleSaveButton(true);
 					addParentObjectToolItem.setText("Add (" + menuItem + ")");
 					objectRepositoryTree.refreshObjectRepositories();
@@ -154,8 +155,8 @@ public class ObjectRepositoryView extends Composite {
 					ORObject selectedobject = treeItem.getORObject();
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
 							selectedobject.getObject_id(), name, item.getText(),
-							objectRepositoryTree.getObjectRepositoriesData());
-					objectRepositoryTree.getObjectRepositoriesData().add(orobject);
+							objectRepositoryTree.getAllORObjects());
+					objectRepositoryTree.getAllORObjects().add(orobject);
 					toggleSaveButton(true);
 					addChildObjectToolItem.setText("Add (" + menuItem + ")");
 					objectRepositoryTree.refreshObjectRepositories();
@@ -219,8 +220,8 @@ public class ObjectRepositoryView extends Composite {
 				System.out.println("Object Name " + objectName);
 				String name = new Utilities().getRandomVariableName("New Node " + objectName);
 				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name, objectName,
-						objectRepositoryTree.getObjectRepositoriesData());
-				objectRepositoryTree.getObjectRepositoriesData().add(orobject);
+						objectRepositoryTree.getAllORObjects());
+				objectRepositoryTree.getAllORObjects().add(orobject);
 				toggleSaveButton(true);
 				objectRepositoryTree.refreshObjectRepositories();
 			}
@@ -252,9 +253,8 @@ public class ObjectRepositoryView extends Composite {
 				ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
 				ORObject selectedobject = treeItem.getORObject();
 				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
-						selectedobject.getObject_id(), name, objectName,
-						objectRepositoryTree.getObjectRepositoriesData());
-				objectRepositoryTree.getObjectRepositoriesData().add(orobject);
+						selectedobject.getObject_id(), name, objectName, objectRepositoryTree.getAllORObjects());
+				objectRepositoryTree.getAllORObjects().add(orobject);
 				toggleSaveButton(true);
 				objectRepositoryTree.refreshObjectRepositories();
 			}
@@ -477,7 +477,7 @@ public class ObjectRepositoryView extends Composite {
 						objectRepositoryTree.renderObjectRepositories();
 						return;
 					}
-					List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
+					List<ORObject> allors = objectRepositoryTree.getAllORObjects();
 					new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
 					toggleSaveButton(false);
 					objectRepositoryTree.renderObjectRepositories();
@@ -583,7 +583,13 @@ public class ObjectRepositoryView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-				obRepo = selectedTreeItem.getORObject();
+				ORObject selectedORObject = selectedTreeItem.getORObject();
+				if (selectedORObject == null) {
+					return;
+				}
+				CopyPasteOperation.getInstance().setOrObject(selectedORObject);
+				toggleCopyMenuItem(false);
+				togglePasteMenuItem(true);
 
 			}
 
@@ -597,7 +603,19 @@ public class ObjectRepositoryView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				ObjectRepositoryTreeItem selectedItem = (ObjectRepositoryTreeItem) objectRepositoryTree
+						.getSelection()[0];
+				ORObject selectedORObject = selectedItem.getORObject();
+				ORObject pasteORobject = CopyPasteOperation.getInstance().getOrObject();
+				if (pasteORobject == null) {
+					return;
+				}
+				ORObject orobjectReplica = new ORObjectMaker().createORObjectReplica(getArtifact(), selectedORObject,
+						pasteORobject, objectRepositoryTree.getAllORObjects());
+				objectRepositoryTree.getAllORObjects().add(orobjectReplica);
+				objectRepositoryTree.refreshObjectRepositories();
+				togglePasteMenuItem(false);
+				toggleSaveButton(true);
 			}
 
 			@Override
@@ -751,7 +769,7 @@ public class ObjectRepositoryView extends Composite {
 	}
 
 	public void saving() {
-		List<ORObject> allors = objectRepositoryTree.getObjectRepositoriesData();
+		List<ORObject> allors = objectRepositoryTree.getAllORObjects();
 		new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
 		toggleSaveButton(false);
 		objectRepositoryTree.renderObjectRepositories();
