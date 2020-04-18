@@ -549,7 +549,7 @@ public class ObjectRepositoryView extends Composite {
 				if (AppiumPortIpInfo.getHostAddress() == null
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 					AppiumPortIpInfo
-					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+							.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 					AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 					AppiumPortIpInfo.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
@@ -755,6 +755,7 @@ public class ObjectRepositoryView extends Composite {
 				}
 			}
 		}
+		objectAttributeTable.clearAllDatas();
 		System.out.println("Deleting.. " + obRepo.getObject_id());
 		obRepo.setDeleted(true);
 		toggleSaveButton(true);
@@ -767,7 +768,7 @@ public class ObjectRepositoryView extends Composite {
 			if (item.getObjectRepository().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
 				item.getObjectRepository()
-				.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getObjectRepository().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();

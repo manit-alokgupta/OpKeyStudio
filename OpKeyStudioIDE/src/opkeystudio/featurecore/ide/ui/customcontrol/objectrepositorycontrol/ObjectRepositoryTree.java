@@ -3,12 +3,10 @@ package opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -113,43 +111,27 @@ public class ObjectRepositoryTree extends CustomTree {
 	public void renderObjectRepositories() {
 		this.removeAll();
 		Artifact artifact = getParentORView().getArtifact();
-		getParentORView().setOrId(artifact.getId());
-		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
-		rootNode.setText(artifact.getName());
-		rootNode.setExpanded(true);
-		addIcon(rootNode);
 		List<ORObject> objectRepositories = new ObjectRepositoryApi().getAllObjects(artifact.getId().trim());
-		setObjectRepositoriesData(objectRepositories);
-		List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
-		for (ORObject objectRepository : objectRepositories) {
-			if (objectRepository.getParent_object_id() == null) {
-				ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
-				orTreeItem.setText(objectRepository.getName());
-				orTreeItem.setArtifact(objectRepository);
-				topMostNodes.add(orTreeItem);
-				addIcon(orTreeItem);
-			}
-		}
-
-		for (ObjectRepositoryTreeItem topMostNode : topMostNodes) {
-			renderAllArtifactTree(topMostNode, objectRepositories);
-		}
-		expandAll(rootNode);
-		getParentORView().toggleDeleteButton(false);
-		getParentORView().toggleChildObjectToolItem(false);
-		getParentORView().toggleRenameButton(false);
+		displayORObjects(objectRepositories);
 	}
 
 	public void refreshObjectRepositories() {
 		this.removeAll();
-		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		List<ORObject> objectRepositories = getObjectRepositoriesData();
+		displayORObjects(objectRepositories);
+	}
+
+	public void clearAllDatas() {
+		this.removeAll();
+	}
+
+	private void displayORObjects(List<ORObject> objectRepositories) {
+		Artifact artifact = getParentORView().getArtifact();
 		getParentORView().setOrId(artifact.getId());
 		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
 		rootNode.setText(artifact.getName());
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
-		List<ORObject> objectRepositories = getObjectRepositoriesData();
 
 		List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
 		for (ORObject objectRepository : objectRepositories) {

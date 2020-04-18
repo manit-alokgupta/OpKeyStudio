@@ -286,6 +286,11 @@ public class ObjectAttributeTable extends CustomTable {
 		getParentObjectRepositoryView().toggleDeleteAttributeButton(false);
 	}
 
+	public void clearAllDatas() {
+		disposeAllTableEditors();
+		this.removeAll();
+	}
+
 	public ObjectRepositoryView getParentObjectRepositoryView() {
 		return parentObjectRepositoryView;
 	}
