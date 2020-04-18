@@ -87,7 +87,6 @@ public class ArtifactTree extends CustomTree {
 		this.artifacts = artifacts;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Artifact> getArtifactsData() {
 		return this.artifacts;
 	}

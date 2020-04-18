@@ -165,7 +165,6 @@ public class GlobalVariableTable extends CustomTable {
 		this.globalVariables = gvars;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<GlobalVariable> getGlobalVariablesData() {
 		return this.globalVariables;
 	}
