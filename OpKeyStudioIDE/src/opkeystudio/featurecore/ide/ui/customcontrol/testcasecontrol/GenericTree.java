@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -21,6 +22,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -80,8 +82,16 @@ public class GenericTree extends CustomTree {
 				Object selectedData = getSelectedData();
 				if (selectedData instanceof Artifact) {
 					try {
+						Artifact selectedArtifact = (Artifact) selectedData;
+						if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+							if (artifact.getId().equals(selectedArtifact.getId())) {
+								new MessageDialogs().openErrorDialog("OpKey",
+										"Function Library Recursion Call Not Allowed");
+								return;
+							}
+						}
 						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
-								(Artifact) selectedData, artifact.getId(),
+								selectedArtifact, artifact.getId(),
 								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
 						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
@@ -118,8 +128,16 @@ public class GenericTree extends CustomTree {
 				Object selectedData = getSelectedData();
 				if (selectedData instanceof Artifact) {
 					try {
+						Artifact selectedArtifact = (Artifact) selectedData;
+						if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+							if (artifact.getId().equals(selectedArtifact.getId())) {
+								new MessageDialogs().openErrorDialog("OpKey",
+										"Function Library Recursion Call Not Allowed");
+								return;
+							}
+						}
 						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
-								(Artifact) selectedData, artifact.getId(),
+								selectedArtifact, artifact.getId(),
 								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
 						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
