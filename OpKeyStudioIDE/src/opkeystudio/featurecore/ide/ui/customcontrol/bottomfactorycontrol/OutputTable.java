@@ -28,7 +28,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
@@ -93,8 +92,6 @@ public class OutputTable extends CustomTable {
 					@Override
 					public void focusLost(FocusEvent e) {
 						text.dispose();
-						saveAllComponentOutputArguments();
-						renderAllBottomFactoryOutputData();
 					}
 
 					@Override
@@ -110,10 +107,12 @@ public class OutputTable extends CustomTable {
 						if (selectedColumn == 0) {
 							componentOutputArgument.setName(text.getText());
 							componentOutputArgument.setModified(true);
+							getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 						}
 						if (selectedColumn == 3) {
 							componentOutputArgument.setDescription(text.getText());
 							componentOutputArgument.setModified(true);
+							getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 						}
 						cursor.getRow().setText(selectedColumn, text.getText());
 					}
@@ -191,8 +190,7 @@ public class OutputTable extends CustomTable {
 				String selectedDataType = combo.getItem(selected);
 				bottomFactoryOutput.setModified(true);
 				bottomFactoryOutput.setType(selectedDataType);
-				saveAllComponentOutputArguments();
-				renderAllBottomFactoryOutputData();
+				getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 			}
 
 			@Override
@@ -260,8 +258,8 @@ public class OutputTable extends CustomTable {
 		selectRow(selectedIndex - 1);
 		bottomFactoryOutput1.setModified(true);
 		bottomFactoryOutput2.setModified(true);
-		saveAllComponentOutputArguments();
-		renderAllBottomFactoryOutputData();
+		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+		refreshAllBottomFactoryOutputData();
 
 	}
 
@@ -276,8 +274,8 @@ public class OutputTable extends CustomTable {
 		selectRow(selectedIndex + 1);
 		bottomFactoryOutput1.setModified(true);
 		bottomFactoryOutput2.setModified(true);
-		saveAllComponentOutputArguments();
-		renderAllBottomFactoryOutputData();
+		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+		refreshAllBottomFactoryOutputData();
 
 	}
 
@@ -342,21 +340,21 @@ public class OutputTable extends CustomTable {
 	}
 
 	public void addBlankOutputPrameter() {
-		String variableName = this.getUniqueColumnData("output_parameter", 0);
+		String variableName = this.getUniqueColumnData("output_parameter-", 0);
 		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
 		ComponentOutputArgument componentInputArgument = new FunctionLibraryMaker().createComponentOutputParameterDTO(
 				artifact, variableName, getSelectedComponentOutputArgument(), getComponentOutputData());
 		getComponentOutputData().add(componentInputArgument);
 		Collections.sort(getComponentOutputData());
-		saveAllComponentOutputArguments();
-		renderAllBottomFactoryOutputData();
+		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+		refreshAllBottomFactoryOutputData();
 	}
 
 	public void deleteBottomFactoryOutputData() {
 		ComponentOutputArgument componentInputArgument = getSelectedComponentOutputArgument();
 		componentInputArgument.setDeleted(true);
-		saveAllComponentOutputArguments();
-		renderAllBottomFactoryOutputData();
+		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+		refreshAllBottomFactoryOutputData();
 	}
 
 	public ComponentOutputArgument getSelectedComponentOutputArgument() {
@@ -387,7 +385,4 @@ public class OutputTable extends CustomTable {
 		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
 	}
 
-	private void saveAllComponentOutputArguments() {
-		new FunctionLibraryConstruct().saveComponentOutputArguments(getComponentOutputData());
-	}
 }

@@ -35,8 +35,8 @@ public class FunctionLibraryConstruct {
 		updateComponentStep(flowStep);
 	}
 
-	public void saveComponentInputArguments(List<ComponentInputArgument> flowInputArguments) {
-		for (ComponentInputArgument flowInputArgument : flowInputArguments) {
+	public void saveComponentInputArguments(List<ComponentInputArgument> componentInputArguments) {
+		for (ComponentInputArgument flowInputArgument : componentInputArguments) {
 			deleteComponentInputArgument(flowInputArgument);
 			addComponentInputArgument(flowInputArgument);
 			updateComponentInputArgument(flowInputArgument);
@@ -51,8 +51,8 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	public void saveComponentOutputArguments(List<ComponentOutputArgument> flowOutputArguments) {
-		for (ComponentOutputArgument flowOutputArgument : flowOutputArguments) {
+	public void saveComponentOutputArguments(List<ComponentOutputArgument> componentOutputArguments) {
+		for (ComponentOutputArgument flowOutputArgument : componentOutputArguments) {
 			deleteComponentOutputArgument(flowOutputArgument);
 			addComponentOutputArgument(flowOutputArgument);
 			updateComponentOutputArgument(flowOutputArgument);

@@ -108,14 +108,17 @@ public class InputTable extends CustomTable {
 						if (selectedColumn == 0) {
 							componentInputAargument.setName(text.getText());
 							componentInputAargument.setModified(true);
+							getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 						}
 						if (selectedColumn == 2) {
 							componentInputAargument.setDefaultvalue(text.getText());
 							componentInputAargument.setModified(true);
+							getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 						}
 						if (selectedColumn == 4) {
 							componentInputAargument.setDescription(text.getText());
 							componentInputAargument.setModified(true);
+							getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 						}
 						cursor.getRow().setText(selectedColumn, text.getText());
 					}
@@ -212,7 +215,6 @@ public class InputTable extends CustomTable {
 				bottomFactoryInput.setModified(true);
 				bottomFactoryInput.setIsmandatory(isOptional.getSelection());
 				getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
-				refreshAllBottomFactoryInputData();
 			}
 
 			@Override
@@ -230,7 +232,6 @@ public class InputTable extends CustomTable {
 				bottomFactoryInput.setModified(true);
 				bottomFactoryInput.setType(selectedData);
 				getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
-				refreshAllBottomFactoryInputData();
 			}
 
 			@Override

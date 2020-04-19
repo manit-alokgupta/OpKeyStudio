@@ -521,4 +521,12 @@ public class BottomFactoryFLUi extends Composite {
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
 	}
+
+	public InputTable getInputTable() {
+		return this.inputTable;
+	}
+
+	public OutputTable getOutputTable() {
+		return this.outputTable;
+	}
 }

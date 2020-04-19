@@ -51,9 +51,13 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTa
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -94,7 +98,7 @@ public class TestCaseView extends Composite {
 
 	@SuppressWarnings("unused")
 	private String code;
-	private Composite bottomFactory;
+	private BottomFactoryFLUi bottomFactory;
 	@SuppressWarnings("unused")
 	private FlowStep flowStep;
 	@SuppressWarnings("unused")
@@ -868,6 +872,12 @@ public class TestCaseView extends Composite {
 	}
 
 	public void saveAll() {
+		if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+			List<ComponentInputArgument> componentInputArgs = bottomFactory.getInputTable().getComponentInputData();
+			List<ComponentOutputArgument> componentOutputArgs = bottomFactory.getOutputTable().getComponentOutputData();
+			new FunctionLibraryConstruct().saveComponentInputArguments(componentInputArgs);
+			new FunctionLibraryConstruct().saveComponentOutputArguments(componentOutputArgs);
+		}
 		new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
 		flowStepTable.renderFlowSteps();
 		toggleSaveButton(false);
