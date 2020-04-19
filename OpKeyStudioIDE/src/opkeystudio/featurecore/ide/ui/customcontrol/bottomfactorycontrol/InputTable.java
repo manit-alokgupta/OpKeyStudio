@@ -94,8 +94,6 @@ public class InputTable extends CustomTable {
 					@Override
 					public void focusLost(FocusEvent e) {
 						text.dispose();
-						saveAllComponentInputArguments();
-						renderAllBottomFactoryInputData();
 					}
 
 					@Override
@@ -181,8 +179,8 @@ public class InputTable extends CustomTable {
 	public void deleteBottomFactoryInputData() {
 		ComponentInputArgument componentInputArgument = getSelectedComponentInputArgument();
 		componentInputArgument.setDeleted(true);
-		saveAllComponentInputArguments();
-		renderAllBottomFactoryInputData();
+		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+		refreshAllBottomFactoryInputData();
 	}
 
 	private List<Control> allTableEditors = new ArrayList<Control>();
@@ -214,13 +212,13 @@ public class InputTable extends CustomTable {
 				setSelection(inputTableItem);
 				bottomFactoryInput.setModified(true);
 				bottomFactoryInput.setIsmandatory(isOptional.getSelection());
-				saveAllComponentInputArguments();
-				renderAllBottomFactoryInputData();
+				getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+				refreshAllBottomFactoryInputData();
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 
@@ -232,8 +230,8 @@ public class InputTable extends CustomTable {
 				setSelection(inputTableItem);
 				bottomFactoryInput.setModified(true);
 				bottomFactoryInput.setType(selectedData);
-				saveAllComponentInputArguments();
-				renderAllBottomFactoryInputData();
+				getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+				refreshAllBottomFactoryInputData();
 			}
 
 			@Override
@@ -305,8 +303,8 @@ public class InputTable extends CustomTable {
 		selectRow(selectedIndex - 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
-		saveAllComponentInputArguments();
-		renderAllBottomFactoryInputData();
+		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+		refreshAllBottomFactoryInputData();
 
 	}
 
@@ -322,8 +320,8 @@ public class InputTable extends CustomTable {
 		selectRow(selectedIndex + 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
-		saveAllComponentInputArguments();
-		renderAllBottomFactoryInputData();
+		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+		refreshAllBottomFactoryInputData();
 	}
 
 	public ComponentInputArgument getSelectedInputParemeter() {
@@ -382,8 +380,8 @@ public class InputTable extends CustomTable {
 				artifact, variableName, getSelectedComponentInputArgument(), getComponentInputData());
 		getComponentInputData().add(componentInputArgument);
 		Collections.sort(getComponentInputData());
-		saveAllComponentInputArguments();
-		renderAllBottomFactoryInputData();
+		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+		refreshAllBottomFactoryInputData();
 	}
 
 	public ComponentInputArgument getSelectedComponentInputArgument() {
@@ -412,10 +410,6 @@ public class InputTable extends CustomTable {
 
 	public void setParentBottomFactoryFLUi(BottomFactoryFLUi parentBottomFactoryFLUi) {
 		this.parentBottomFactoryFLUi = parentBottomFactoryFLUi;
-	}
-
-	private void saveAllComponentInputArguments() {
-		new FunctionLibraryConstruct().saveComponentInputArguments(getComponentInputData());
 	}
 
 }
