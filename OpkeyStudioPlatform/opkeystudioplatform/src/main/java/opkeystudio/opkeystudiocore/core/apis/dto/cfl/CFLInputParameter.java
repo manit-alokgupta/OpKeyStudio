@@ -1,8 +1,9 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.cfl;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class CFLInputParameter {
+public class CFLInputParameter extends Modified {
 	private int clustering_key;
 	@DBField
 	private String ip_id;

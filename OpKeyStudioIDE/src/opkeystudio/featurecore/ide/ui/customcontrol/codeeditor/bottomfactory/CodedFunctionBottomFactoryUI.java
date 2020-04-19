@@ -340,26 +340,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			}
 		});
 
-		/*
-		 * outputTable.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } }); inputTable.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 */
-
 		addButtonListeners();
 	}
 
