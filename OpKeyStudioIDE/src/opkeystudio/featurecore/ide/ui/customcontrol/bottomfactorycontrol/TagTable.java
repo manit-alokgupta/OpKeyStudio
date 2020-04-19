@@ -205,7 +205,6 @@ public class TagTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<BottomFactoryTag> getTagData() {
 		return this.bottomFactoryTags;
 	}

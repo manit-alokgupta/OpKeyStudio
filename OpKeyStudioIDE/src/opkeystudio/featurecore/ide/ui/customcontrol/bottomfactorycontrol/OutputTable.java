@@ -99,7 +99,6 @@ public class OutputTable extends CustomTable {
 
 					@Override
 					public void focusGained(FocusEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -139,7 +138,6 @@ public class OutputTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -158,7 +156,6 @@ public class OutputTable extends CustomTable {
 		this.bottomFactoryOutputs = bottomFactoryOutputs;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<ComponentOutputArgument> getComponentOutputData() {
 		return this.bottomFactoryOutputs;
 	}
@@ -200,7 +197,6 @@ public class OutputTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});

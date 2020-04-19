@@ -100,7 +100,6 @@ public class InputTable extends CustomTable {
 
 					@Override
 					public void focusGained(FocusEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -153,7 +152,6 @@ public class InputTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -172,7 +170,6 @@ public class InputTable extends CustomTable {
 		this.bottomFactoryInputs = bottomFactoryInputs;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<ComponentInputArgument> getComponentInputData() {
 		return this.bottomFactoryInputs;
 	}
@@ -223,8 +220,7 @@ public class InputTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
@@ -242,7 +238,6 @@ public class InputTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
