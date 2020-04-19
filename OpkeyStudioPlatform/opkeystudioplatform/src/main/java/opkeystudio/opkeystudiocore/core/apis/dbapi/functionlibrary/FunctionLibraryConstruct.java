@@ -147,8 +147,8 @@ public class FunctionLibraryConstruct {
 
 	private void deleteFlowOutputArgument(FlowOutputArgument flowOutputArgument) {
 		if (flowOutputArgument.isDeleted()) {
-			String query = String.format("delete from component_step_output_arguments where component_step_oa_id ='%s'",
-					flowOutputArgument.getFlow_step_oa_id());
+			String query = String.format("delete from component_step_output_arguments where componentstep_oa_id ='%s'",
+					flowOutputArgument.getComponentstep_oa_id());
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
@@ -156,7 +156,7 @@ public class FunctionLibraryConstruct {
 	private void updateFlowOutputArgument(FlowOutputArgument flowOutputArgument) {
 		if (flowOutputArgument.isModified()) {
 			String query = new QueryMaker().createUpdateQuery(flowOutputArgument, "component_step_output_arguments",
-					String.format("WHERE component_step_oa_id ='%s'", flowOutputArgument.getFlow_step_oa_id()));
+					String.format("WHERE componentstep_oa_id ='%s'", flowOutputArgument.getComponentstep_oa_id()));
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
