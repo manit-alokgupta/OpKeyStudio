@@ -15,6 +15,9 @@ public class CustomTree extends Tree {
 
 	public List<TreeItem> getAllTreeItems() {
 		List<TreeItem> allitems = new ArrayList<TreeItem>();
+		if (this.isDisposed()) {
+			return allitems;
+		}
 		TreeItem items[] = this.getItems();
 		for (TreeItem item : items) {
 			allitems.add(item);

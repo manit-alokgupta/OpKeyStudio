@@ -217,6 +217,9 @@ public class ObjectAttributeTable extends CustomTable {
 			String query = String.format("SELECT VALUE FROM or_object_properties WHERE Property_Id='%s'",
 					attrProperty.getProperty_id());
 			byte[] bytes = QueryExecutor.getInstance().executeQueryWithByteData(query);
+			if (bytes == null) {
+				return;
+			}
 			ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 			ImageData imgData = new ImageData(is);
 			Image img = new Image(this.getDisplay(), imgData);
