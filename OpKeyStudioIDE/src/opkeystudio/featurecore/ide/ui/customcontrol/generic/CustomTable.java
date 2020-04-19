@@ -113,8 +113,17 @@ public class CustomTable extends Table {
 	}
 
 	public boolean isColumnDataUnique(String columnData, int columnIndex) {
+		if (columnData.trim().isEmpty()) {
+			return true;
+		}
+		List<String> dataList = new ArrayList<String>();
 		List<String> columnDatas = getTableColumnData(columnIndex);
-		if (columnDatas.contains(columnData.toString())) {
+		for (String cdata : columnDatas) {
+			if (cdata.equals(columnData.toLowerCase())) {
+				dataList.add(columnData);
+			}
+		}
+		if (dataList.size() > 1) {
 			return false;
 		}
 		return true;

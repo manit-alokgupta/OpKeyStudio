@@ -32,6 +32,8 @@ public class ObjectAttributeProperty extends Modified implements Cloneable {
 	@DBField
 	private String f_id;
 
+	private String oldPropertyName;
+
 	public void init(String propertyId, String objectId, String or_id, String fId, String property, String value,
 			String dataType, boolean iseditable) {
 		this.setProperty_id(propertyId);
@@ -158,5 +160,13 @@ public class ObjectAttributeProperty extends Modified implements Cloneable {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public String getOldPropertyName() {
+		return oldPropertyName;
+	}
+
+	public void setOldPropertyName(String oldPropertyName) {
+		this.oldPropertyName = oldPropertyName;
 	}
 }

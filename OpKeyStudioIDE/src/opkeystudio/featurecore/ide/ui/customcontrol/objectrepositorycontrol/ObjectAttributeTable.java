@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.ImageViewer;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomLabel;
@@ -87,6 +88,7 @@ public class ObjectAttributeTable extends CustomTable {
 				// thisTable.deselectAll();
 				ObjectAttributeTableItem selectedTableItem = (ObjectAttributeTableItem) cursor.getRow();
 				ObjectAttributeProperty objectAttributeProperty = selectedTableItem.getObjectAttributeData();
+				objectAttributeProperty.setOldPropertyName(objectAttributeProperty.getProperty());
 				int selectedColumn = cursor.getColumn();
 				CustomText text = new CustomText(cursor, 0);
 				if (selectedColumn == 0) {
@@ -99,6 +101,15 @@ public class ObjectAttributeTable extends CustomTable {
 
 					@Override
 					public void focusLost(FocusEvent e) {
+						String propertyName = objectAttributeProperty.getProperty();
+						boolean isUnique = isColumnDataUnique(propertyName, 0);
+						if (isUnique == false) {
+							objectAttributeProperty.setProperty(objectAttributeProperty.getOldPropertyName());
+							text.setText(objectAttributeProperty.getProperty());
+							new MessageDialogs().openErrorDialog("OpKey", "Attriute named as '" + propertyName
+									+ "' already exists. Please provide a new name.");
+							return;
+						}
 						text.dispose();
 					}
 

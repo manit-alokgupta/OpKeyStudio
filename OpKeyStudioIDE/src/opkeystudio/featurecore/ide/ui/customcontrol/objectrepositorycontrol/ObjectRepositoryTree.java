@@ -135,7 +135,6 @@ public class ObjectRepositoryTree extends CustomTree {
 		getParentORView().toggleDeleteButton(false);
 		getParentORView().toggleChildObjectToolItem(false);
 		getParentORView().toggleRenameButton(false);
-		selectDefaultTreeItem();
 	}
 
 	public void refreshObjectRepositories() {
@@ -168,7 +167,6 @@ public class ObjectRepositoryTree extends CustomTree {
 		getParentORView().toggleDeleteButton(false);
 		getParentORView().toggleChildObjectToolItem(false);
 		getParentORView().toggleRenameButton(false);
-		selectDefaultTreeItem();
 	}
 
 	public void fetchAndRenderORTree() {
