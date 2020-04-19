@@ -346,9 +346,10 @@ public class OutputTable extends CustomTable {
 	}
 
 	public void addBlankOutputPrameter() {
+		String variableName = this.getUniqueColumnData("output_parameter", 0);
 		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
 		ComponentOutputArgument componentInputArgument = new FunctionLibraryMaker().createComponentOutputParameterDTO(
-				artifact, getSelectedComponentOutputArgument(), getComponentOutputData());
+				artifact, variableName, getSelectedComponentOutputArgument(), getComponentOutputData());
 		getComponentOutputData().add(componentInputArgument);
 		Collections.sort(getComponentOutputData());
 		saveAllComponentOutputArguments();

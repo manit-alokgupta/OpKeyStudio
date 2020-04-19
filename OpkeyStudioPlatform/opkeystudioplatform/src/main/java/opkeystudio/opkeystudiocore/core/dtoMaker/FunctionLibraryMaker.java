@@ -8,7 +8,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgume
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FunctionLibraryMaker {
-	public ComponentInputArgument createComponentInputParameterDTO(Artifact artifact,
+	public ComponentInputArgument createComponentInputParameterDTO(Artifact artifact, String variableName,
 			ComponentInputArgument selectedComponentStep, List<ComponentInputArgument> componentInputParameters) {
 
 		int selectedComponentStepIndex = componentInputParameters.indexOf(selectedComponentStep);
@@ -26,7 +26,7 @@ public class FunctionLibraryMaker {
 		componentInputArgument.setIp_id(Utilities.getInstance().getUniqueUUID(""));
 		componentInputArgument.setComponent_id(artifact.getId());
 		componentInputArgument.setIsmandatory(true);
-		componentInputArgument.setName("");
+		componentInputArgument.setName(variableName);
 		componentInputArgument.setType("String");
 		componentInputArgument.setPosition(selectedComponentStepPosition + 5);
 		componentInputArgument.setAdded(true);
@@ -37,8 +37,8 @@ public class FunctionLibraryMaker {
 		}
 		return componentInputArgument;
 	}
-	
-	public ComponentOutputArgument createComponentOutputParameterDTO(Artifact artifact,
+
+	public ComponentOutputArgument createComponentOutputParameterDTO(Artifact artifact, String variableName,
 			ComponentOutputArgument selectedComponentStep, List<ComponentOutputArgument> componentOuputParameters) {
 
 		int selectedComponentStepIndex = componentOuputParameters.indexOf(selectedComponentStep);
@@ -55,7 +55,7 @@ public class FunctionLibraryMaker {
 		ComponentOutputArgument componentOutputArgument = new ComponentOutputArgument();
 		componentOutputArgument.setOp_id(Utilities.getInstance().getUniqueUUID(""));
 		componentOutputArgument.setComponent_id(artifact.getId());
-		componentOutputArgument.setName("");
+		componentOutputArgument.setName(variableName);
 		componentOutputArgument.setType("String");
 		componentOutputArgument.setPosition(selectedComponentStepPosition + 5);
 		componentOutputArgument.setAdded(true);

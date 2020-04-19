@@ -381,9 +381,10 @@ public class InputTable extends CustomTable {
 	}
 
 	public void addBlankInputPArameter() {
+		String variableName = this.getUniqueColumnData("input-parameter-", 0);
 		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
 		ComponentInputArgument componentInputArgument = new FunctionLibraryMaker().createComponentInputParameterDTO(
-				artifact, getSelectedComponentInputArgument(), getComponentInputData());
+				artifact, variableName, getSelectedComponentInputArgument(), getComponentInputData());
 		getComponentInputData().add(componentInputArgument);
 		Collections.sort(getComponentInputData());
 		saveAllComponentInputArguments();
