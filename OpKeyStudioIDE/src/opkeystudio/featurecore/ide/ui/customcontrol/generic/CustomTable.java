@@ -1,11 +1,15 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.generic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 
 public class CustomTable extends Table {
 	private int selectedRowIndex = 0;
@@ -84,4 +88,35 @@ public class CustomTable extends Table {
 		this.tablecursor = tablecursor;
 	}
 
+	private List<String> getTableColumnData(int columnIndex) {
+		List<String> columnDatas = new ArrayList<String>();
+		TableItem[] items = this.getItems();
+		for (TableItem item : items) {
+			String columnData = item.getText(columnIndex);
+			if (columnData == null) {
+				continue;
+			}
+			columnDatas.add(columnData.toLowerCase());
+		}
+		return columnDatas;
+	}
+
+	public String getUniqueColumnData(String stringToSearch, int columnIndex) {
+		List<String> columnDatas = getTableColumnData(columnIndex);
+		for (int i = 0; i < 1000; i++) {
+			String columnData = stringToSearch + i;
+			if (!columnDatas.contains(columnData.toLowerCase())) {
+				return columnData;
+			}
+		}
+		return "";
+	}
+
+	public boolean isColumnDataUnique(String columnData, int columnIndex) {
+		List<String> columnDatas = getTableColumnData(columnIndex);
+		if (columnDatas.contains(columnData.toString())) {
+			return false;
+		}
+		return true;
+	}
 }
