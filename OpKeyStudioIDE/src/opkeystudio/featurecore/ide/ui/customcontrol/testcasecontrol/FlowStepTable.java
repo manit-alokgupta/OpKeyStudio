@@ -485,6 +485,17 @@ public class FlowStepTable extends CustomTable {
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
+				if (flowStep.getKeyword() == null && flowStep.getFunctionLibraryComponent() == null) {
+					if (flowStep.isNullKeyword()) {
+						keyWordName = "";
+						FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
+						flowTableItem.setText(new String[] { "", keyWordName, orname,
+								new FlowApiUtilities().getFlowInputPutArgumentsString(flowStep),
+								new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), "" });
+						flowTableItem.setFlowStepData(flowStep);
+						addTestCaseTableEditor(flowTableItem);
+					}
+				}
 			}
 		}
 		selectDefaultRow();
