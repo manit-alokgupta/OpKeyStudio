@@ -250,6 +250,7 @@ public class GlobalVariableTable extends CustomTable {
 	}
 
 	public void refreshGlobalVariables() {
+		GlobalLoader.getInstance().initGlobalVariables();
 		disposeAllTableEditors();
 		this.removeAll();
 		List<GlobalVariable> globalvariables = GlobalLoader.getInstance().getGlobalVaribles();
