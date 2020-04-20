@@ -103,7 +103,7 @@ public class CustomTable extends Table {
 
 	public String getUniqueColumnData(String stringToSearch, int columnIndex) {
 		List<String> columnDatas = getTableColumnData(columnIndex);
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 1; i < 1000; i++) {
 			String columnData = stringToSearch + i;
 			if (!columnDatas.contains(columnData.toLowerCase())) {
 				return columnData;
