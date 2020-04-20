@@ -80,38 +80,46 @@ public class CodedFunctionApi {
 	}
 
 	private void deleteCFInputParam(CFLInputParameter cfinput) {
-		if (cfinput.isDeleted() == false) {
-			return;
+		if (cfinput.isDeleted()) {
+			String query = String.format("delete from cf_input_parameters where ip_id ='%s'", cfinput.getIp_id());
+			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void addCFInputParam(CFLInputParameter cfinput) {
-		if (cfinput.isAdded() == false) {
-			return;
+		if (cfinput.isAdded()) {
+			String query = new QueryMaker().createInsertQuery(cfinput, "cf_input_parameters", "");
+			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void updateCFInputParam(CFLInputParameter cfinput) {
-		if (cfinput.isModified() == false) {
-			return;
+		if (cfinput.isModified()) {
+			String query = new QueryMaker().createUpdateQuery(cfinput, "cf_input_parameters",
+					String.format("WHERE ip_id='%s'", cfinput.getIp_id()));
+			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void deleteCFOutputParam(CFLOutputParameter cfoutput) {
-		if (cfoutput.isDeleted() == false) {
-			return;
+		if (cfoutput.isDeleted()) {
+			String query = String.format("delete from cf_output_parameters where op_id ='%s'", cfoutput.getOp_id());
+			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void addCFOutputParam(CFLOutputParameter cfoutput) {
-		if (cfoutput.isAdded() == false) {
-			return;
+		if (cfoutput.isAdded()) {
+			String query = new QueryMaker().createInsertQuery(cfoutput, "cf_output_parameters", "");
+			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void updateCFOutputParam(CFLOutputParameter cfoutput) {
-		if (cfoutput.isModified() == false) {
-			return;
+		if (cfoutput.isModified()) {
+			String query = new QueryMaker().createUpdateQuery(cfoutput, "cf_output_parameters",
+					String.format("WHERE op_id='%s'", cfoutput.getOp_id()));
+			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
