@@ -3,6 +3,7 @@ package opkeystudio.opkeystudiocore.core.dtoMaker;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -30,6 +31,35 @@ public class CFLDMaker {
 		
 		for (int i = selectedComponentStepIndex + 1; i < cflInputParameters.size(); i++) {
 			CFLInputParameter icomponentStep = cflInputParameters.get(i);
+			icomponentStep.setPosition(icomponentStep.getPosition() + 10);
+			icomponentStep.setModified(true);
+		}
+		return cfinputparameter;
+	}
+	
+	public CFLOutputParameter createCFOutputParameterDTO(CodedFunctionArtifact artifact, String variablename,
+			CFLOutputParameter selectCFOutputParameter, List<CFLOutputParameter> cflOutputParameters) {
+		int selectedComponentStepIndex = cflOutputParameters.indexOf(selectCFOutputParameter);
+		int selectedComponentStepPosition = 0;
+		if (selectCFOutputParameter != null) {
+			selectedComponentStepPosition = selectCFOutputParameter.getPosition();
+		} else {
+			if (cflOutputParameters.size() > 0) {
+				CFLOutputParameter lastTestSuite = cflOutputParameters.get(cflOutputParameters.size() - 1);
+				selectedComponentStepPosition = lastTestSuite.getPosition();
+			}
+		}
+
+		CFLOutputParameter cfinputparameter = new CFLOutputParameter();
+		cfinputparameter.setAdded(true);
+		cfinputparameter.setCf_id(artifact.getCflCode().getCf_id());
+		cfinputparameter.setName(variablename);
+		cfinputparameter.setType("String");
+		cfinputparameter.setOp_id(Utilities.getInstance().getUniqueUUID(""));
+		cfinputparameter.setPosition(selectedComponentStepPosition + 5);
+		
+		for (int i = selectedComponentStepIndex + 1; i < cflOutputParameters.size(); i++) {
+			CFLOutputParameter icomponentStep = cflOutputParameters.get(i);
 			icomponentStep.setPosition(icomponentStep.getPosition() + 10);
 			icomponentStep.setModified(true);
 		}
