@@ -34,7 +34,9 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
 
@@ -339,8 +341,40 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 				});
 			}
 		});
-
+		initTableListeners();
 		addButtonListeners();
+	}
+
+	private void initTableListeners() {
+		
+		inputTable.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (inputTable.getSelectedCFLInputArgument() != null) {
+					toggleDeleteButton(true);
+				} else {
+					toggleDeleteButton(false);
+				}
+				if (inputTable.getPrevInputParemeter() != null) {
+					toggleMoveUpButton(true);
+				} else {
+					toggleMoveUpButton(false);
+				}
+				if (inputTable.getNextInputParemeter() != null) {
+					toggleMoveDownButton(true);
+				} else {
+					toggleMoveDownButton(false);
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	public void toggleMoveUpButton(boolean status) {
@@ -367,6 +401,50 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				inputTable.addBlankInputPArameter();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		moveUpInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.moveFl_BottomFactoryInputUp(inputTable.getSelectedCFLInputArgument(),
+						inputTable.getPrevInputParemeter());
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		moveDownInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.moveFl_BottomFactoryInputDown(inputTable.getSelectedCFLInputArgument(),
+						inputTable.getNextInputParemeter());
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.deleteBottomFactoryInputData();
+				toggleDeleteButton(false);
 			}
 
 			@Override
