@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.swt.events.PaintEvent;
@@ -12,6 +13,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
+import opkeystudio.opkeystudiocore.core.dtoMaker.CFLDMaker;
 
 public class CFLInputTable extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -70,6 +73,38 @@ public class CFLInputTable extends CustomTable {
 			cti.setText(new String[] { cflinputparam.getName(), cflinputparam.getType(),
 					cflinputparam.getDefaultvalue(), "", description });
 		}
+	}
+
+	public CFLInputParameter getSelectedCFLInputArgument() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
+		CustomTableItem cti = (CustomTableItem) this.getSelection()[0];
+		if (cti == null) {
+			return null;
+		}
+		if (cti.getControlData() == null) {
+			return null;
+		}
+		return (CFLInputParameter) cti.getControlData();
+	}
+
+	public void addBlankInputPArameter() {
+		String variableName = this.getUniqueColumnData("input-parameter-", 0);
+		CodedFunctionArtifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
+				.getCodedFunctionArtifact();
+		CFLInputParameter inputParameter = new CFLDMaker().createCFInputParameterDTO(artifact, variableName,
+				getSelectedCFLInputArgument(), artifact.getCflInputParameters());
+		artifact.getCflInputParameters().add(inputParameter);
+		Collections.sort(artifact.getCflInputParameters());
+		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		renderCFLInputParameters();
 	}
 
 	public List<CFLInputParameter> getCflInputParameters() {

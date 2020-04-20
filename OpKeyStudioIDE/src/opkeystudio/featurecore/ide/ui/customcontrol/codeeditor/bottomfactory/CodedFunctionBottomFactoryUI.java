@@ -97,7 +97,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
 		item.setText("Coded FL Arguments");
-		item.setHeight(200);
+		item.setHeight(350);
 		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
 		Group grpMenu = new Group(expandBar, SWT.NONE);
 		grpMenu.setText("Menu");
@@ -362,115 +362,19 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	}
 
 	public void addButtonListeners() {
-		/*
-		 * addOutputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 * 
-		 * addInputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 * 
-		 * moveUpInputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 * 
-		 * moveDownInputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 * 
-		 * deleteOutputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } }); deleteInputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * toggleDeleteButton(false); }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 * 
-		 * moveUpOutputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 * 
-		 * moveDownOutputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 * 
-		 * deleteOutputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 * 
-		 * refreshOutputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 * 
-		 * refreshInputItem.addSelectionListener(new SelectionListener() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * 
-		 * }
-		 * 
-		 * @Override public void widgetDefaultSelected(SelectionEvent e) {
-		 * 
-		 * } });
-		 */
+		addInputItem.addSelectionListener(new SelectionListener() {
 
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.addBlankInputPArameter();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		refreshORTable.addSelectionListener(new SelectionListener() {
 
 			@Override

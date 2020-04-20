@@ -1,9 +1,10 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.cfl;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class CFLInputParameter extends Modified {
+public class CFLInputParameter extends Modified implements Comparable<CFLInputParameter> {
 	private int clustering_key;
 	@DBField
 	private String ip_id;
@@ -122,5 +123,10 @@ public class CFLInputParameter extends Modified {
 
 	public void setPosition(int position) {
 		this.position = position;
+	}
+
+	@Override
+	public int compareTo(CFLInputParameter arg0) {
+		return this.getPosition() - arg0.getPosition();
 	}
 }
