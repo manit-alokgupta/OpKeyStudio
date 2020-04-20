@@ -121,7 +121,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -190,7 +190,7 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumPortIpInfo
-						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
@@ -340,7 +340,10 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 
-		btnAddToTable = new Button(addCapabilityComposite, SWT.NONE);
+		Composite compositeForBtnAddToTable = new Composite(addCapabilityComposite, SWT.NONE);
+		compositeForBtnAddToTable.setBounds(445, 13, 18, 18);
+
+		btnAddToTable = new Button(compositeForBtnAddToTable, SWT.NONE);
 		btnAddToTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotableicon.png"));
 		btnAddToTable.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
@@ -359,9 +362,10 @@ public class AppiumSettingsDialog extends Dialog {
 				capabilityNameCombo.setText("");
 			}
 		});
-		btnAddToTable.setBounds(445, 13, 18, 18);
-		btnAddToTable.setToolTipText("Add to table");
+		btnAddToTable.setBounds(0, 0, 18, 18);
 		btnAddToTable.setEnabled(false);
+		btnAddToTable.setToolTipText("Add to table");
+		compositeForBtnAddToTable.setToolTipText("Add to table");
 
 		combo_DataType = new CCombo(addCapabilityComposite, SWT.BORDER | SWT.READ_ONLY | SWT.FLAT); // change to if want
 		// to modifiable
@@ -442,10 +446,12 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		manuallyCapabilityValue.setBounds(310, 5, 135, 33);
 
-		addToTable2 = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
+		Composite compositeForBtnAddToTable2 = new Composite(manuallyAddCapabilityComposite2, SWT.NONE);
+		compositeForBtnAddToTable2.setBounds(450, 13, 18, 18);
+
+		addToTable2 = new Button(compositeForBtnAddToTable2, SWT.NONE);
 		addToTable2.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotableicon.png"));
 		addToTable2.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
-		addToTable2.setToolTipText("Add to table");
 		addToTable2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -463,8 +469,10 @@ public class AppiumSettingsDialog extends Dialog {
 
 			}
 		});
-		addToTable2.setBounds(450, 13, 18, 18);
+		addToTable2.setBounds(0, 0, 18, 18);
+		addToTable2.setToolTipText("Add to table");
 		addToTable2.setEnabled(false);
+		compositeForBtnAddToTable2.setToolTipText("Add to table");
 
 		manuallyCancel = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
 		manuallyCancel.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/cancelicon.png"));
@@ -498,7 +506,7 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		manuallybtnRefresh.setBounds(475, 13, 18, 18);
 		manuallybtnRefresh
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		manuallybtnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallybtnRefresh.setToolTipText("Refresh Table");
 
@@ -831,7 +839,7 @@ public class AppiumSettingsDialog extends Dialog {
 			 * 
 			 * } }
 			 */
-                     return ;
+			return;
 		}
 
 	}
