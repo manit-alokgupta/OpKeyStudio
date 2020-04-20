@@ -63,6 +63,58 @@ public class CodedFunctionApi {
 		return cflCodes;
 	}
 
+	public void saveAllCFLInputParams(List<CFLInputParameter> inputParametrs) {
+		for (CFLInputParameter inputParam : inputParametrs) {
+			deleteCFInputParam(inputParam);
+			addCFInputParam(inputParam);
+			updateCFInputParam(inputParam);
+		}
+	}
+
+	public void saveAllCFLOutputParams(List<CFLOutputParameter> outputParametrs) {
+		for (CFLOutputParameter outputParam : outputParametrs) {
+			deleteCFOutputParam(outputParam);
+			addCFOutputParam(outputParam);
+			updateCFOutputParam(outputParam);
+		}
+	}
+
+	private void deleteCFInputParam(CFLInputParameter cfinput) {
+		if (cfinput.isDeleted() == false) {
+			return;
+		}
+	}
+
+	private void addCFInputParam(CFLInputParameter cfinput) {
+		if (cfinput.isAdded() == false) {
+			return;
+		}
+	}
+
+	private void updateCFInputParam(CFLInputParameter cfinput) {
+		if (cfinput.isModified() == false) {
+			return;
+		}
+	}
+
+	private void deleteCFOutputParam(CFLOutputParameter cfoutput) {
+		if (cfoutput.isDeleted() == false) {
+			return;
+		}
+	}
+
+	private void addCFOutputParam(CFLOutputParameter cfoutput) {
+		if (cfoutput.isAdded() == false) {
+			return;
+		}
+	}
+
+	private void updateCFOutputParam(CFLOutputParameter cfoutput) {
+		if (cfoutput.isModified() == false) {
+			return;
+		}
+	}
+
 	public List<CFLInputParameter> getCodedFLInputParameters(Artifact artifact) {
 		String query = String.format("select * from cf_input_parameters WHERE cf_id='%s' ORDER BY position asc;",
 				artifact.getId());

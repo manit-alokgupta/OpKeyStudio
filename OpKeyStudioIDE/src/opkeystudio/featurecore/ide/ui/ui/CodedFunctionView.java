@@ -481,6 +481,10 @@ public class CodedFunctionView extends Composite {
 		if (saveButton.getEnabled() == false) {
 			return;
 		}
+		List<CFLInputParameter> inputParameters=bottomFactoryUi.getCFLInputTable().getCflInputParameters();
+		List<CFLOutputParameter> outPutParameters=bottomFactoryUi.getCFLOutputTable().getCflOutputParameters();
+		new CodedFunctionApi().saveAllCFLInputParams(inputParameters);
+		new CodedFunctionApi().saveAllCFLOutputParams(outPutParameters);
 		JavaAutoCompletion completion = editor.getAutoCompletion();
 		completion.setCompletionProvider(CodeCompletionProvider.getInstance(this).getCompletionProvider());
 		completion.install(editor);
