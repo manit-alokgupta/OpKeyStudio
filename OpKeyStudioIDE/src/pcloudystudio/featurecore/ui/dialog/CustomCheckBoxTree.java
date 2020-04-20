@@ -83,8 +83,17 @@ public class CustomCheckBoxTree extends CheckboxTreeViewer implements ICheckStat
 
 		Map<String, String> mobileElementProps = ((BasicMobileElement) obj).getAttributes();
 
+		MobileSpyDialog.textObjectName
+		.setText((mobileElementProps.get("name") != null && mobileElementProps.get("name").length() > 0)
+				? mobileElementProps.get("name")
+						: (mobileElementProps.get("resource-id") != null
+						&& mobileElementProps.get("resource-id").length() > 0)
+						? mobileElementProps.get("resource-id")
+								: (mobileElementProps.get("class") != null
+								&& mobileElementProps.get("class").length() > 0)
+								? mobileElementProps.get("class")
+										: "");
 		if (mobileElementProps.get("name") != null) {
-			MobileSpyDialog.textObjectName.setText(mobileElementProps.get("name"));
 			MobileSpyDialog.addTableItemToPropertiesTableData("name", mobileElementProps.get("name"));
 		}
 		if (mobileElementProps.get("class") != null) {
