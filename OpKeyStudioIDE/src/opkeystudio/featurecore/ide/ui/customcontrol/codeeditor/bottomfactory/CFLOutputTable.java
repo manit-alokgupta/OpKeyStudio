@@ -106,7 +106,7 @@ public class CFLOutputTable extends CustomTable {
 							componentOutputArgument.setModified(true);
 							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
 						}
-						cursor.getRow().setText(selectedColumn, text.getText());
+						setColumnTextWithCursor(selectedColumn, text.getText());
 					}
 				});
 				if (selectedColumn == 0) {

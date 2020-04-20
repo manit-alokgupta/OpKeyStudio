@@ -120,7 +120,7 @@ public class InputTable extends CustomTable {
 							componentInputAargument.setModified(true);
 							getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 						}
-						cursor.getRow().setText(selectedColumn, text.getText());
+						setColumnTextWithCursor(selectedColumn, text.getText());
 					}
 				});
 

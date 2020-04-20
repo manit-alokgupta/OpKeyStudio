@@ -112,7 +112,7 @@ public class CFLInputTable extends CustomTable {
 							componentInputAargument.setModified(true);
 							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
 						}
-						cursor.getRow().setText(selectedColumn, text.getText());
+						setColumnTextWithCursor(selectedColumn, text.getText());
 					}
 				});
 

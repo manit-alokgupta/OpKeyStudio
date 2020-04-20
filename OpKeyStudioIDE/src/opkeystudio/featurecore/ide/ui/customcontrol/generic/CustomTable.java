@@ -128,4 +128,18 @@ public class CustomTable extends Table {
 		}
 		return true;
 	}
+
+	public void setColumnTextWithCursor(int selectedColumn, String text) {
+		TableCursor cursor = this.getTablecursor();
+		if (cursor == null) {
+			return;
+		}
+		if (cursor.getRow() == null) {
+			return;
+		}
+		if (text == null) {
+			return;
+		}
+		cursor.getRow().setText(selectedColumn, text);
+	}
 }

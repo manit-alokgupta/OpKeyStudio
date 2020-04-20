@@ -114,7 +114,7 @@ public class OutputTable extends CustomTable {
 							componentOutputArgument.setModified(true);
 							getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 						}
-						cursor.getRow().setText(selectedColumn, text.getText());
+						setColumnTextWithCursor(selectedColumn, text.getText());
 					}
 				});
 				if (selectedColumn == 0) {
