@@ -82,13 +82,9 @@ public class TestCaseView extends Composite {
 	private ToolItem itemDelete;
 	private ToolItem keywordButton;
 	private ToolItem functionLibraryButton;
-	private ToolItem serviceRepoButton;
-	private ToolItem codedFunLibraryButton;
 	private TabFolder testCaseArgumentsTabFolder;
 	private TabItem stepDetailsTabItem;
 	private ExpandItem expanditemStepIno;
-	private ExpandItem expenditemInputData;
-	private ExpandItem expanditemTestObject;
 	private TabItem addStepTabItem;
 	private GenericTree allDataTreeView;
 	private Label stepInfoImage;
