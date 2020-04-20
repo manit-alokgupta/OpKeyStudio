@@ -339,14 +339,15 @@ public class GlobalVariableTable extends CustomTable {
 		selectRow(0);
 	}
 
-	public void saveAll() {
+	public boolean saveAll() {
 
 		List<GlobalVariable> allGlobalVariables = getGlobalVariablesData();
 		for (GlobalVariable gv : allGlobalVariables) {
 			if (gv.isDeleted() || gv.isModified() || gv.isAdded()) {
 				if (gv.getName().trim().isEmpty()) {
 					new MessageDialogs().openErrorDialog("OpKey", "Name Should Not Be Blank");
-					return;
+					renderGlobalVariables();
+					return false;
 				}
 			}
 			if (gv.isDeleted()) {
@@ -361,6 +362,7 @@ public class GlobalVariableTable extends CustomTable {
 		}
 		GlobalLoader.getInstance().initGlobalVariables();
 		refreshGlobalVariables();
+		return true;
 	}
 
 	public GlobalVariableDialog getParentGlobalVariableView() {

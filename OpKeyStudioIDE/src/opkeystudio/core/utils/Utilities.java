@@ -17,6 +17,7 @@ import org.osgi.framework.FrameworkUtil;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 
 public class Utilities {
 	private static Utilities utils = null;
@@ -71,6 +72,12 @@ public class Utilities {
 				System.out.println("Closing Already Opened Mparts");
 				Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 				if (artifact_0 != null) {
+					EPartService partService = Utilities.getInstance().getEpartService();
+					partService.hidePart(mpart, true);
+				}
+				ExecutionSession executionSession = (ExecutionSession) mpart.getTransientData()
+						.get("opkeystudio.executionSessionData");
+				if (executionSession != null) {
 					EPartService partService = Utilities.getInstance().getEpartService();
 					partService.hidePart(mpart, true);
 				}

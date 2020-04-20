@@ -167,9 +167,10 @@ public class GlobalVariableDialog extends Dialog {
 		savetoolitem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				globalVariablesTable.saveAll();
-				globalVariablesTable.refreshGlobalVariables();
-				toggleSaveToolItem(false);
+				boolean savestatus = globalVariablesTable.saveAll();
+				if (savestatus) {
+					toggleSaveToolItem(false);
+				}
 			}
 		});
 
@@ -186,9 +187,10 @@ public class GlobalVariableDialog extends Dialog {
 					boolean status = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(),
 							"Global Variable Save", "Do you want to save global varaible?");
 					if (status) {
-						globalVariablesTable.saveAll();
-						globalVariablesTable.refreshGlobalVariables();
-						toggleSaveToolItem(false);
+						boolean savestatus = globalVariablesTable.saveAll();
+						if (savestatus) {
+							toggleSaveToolItem(false);
+						}
 					}
 
 				}
