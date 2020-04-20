@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
-import java.awt.Component;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,7 +26,6 @@ import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;

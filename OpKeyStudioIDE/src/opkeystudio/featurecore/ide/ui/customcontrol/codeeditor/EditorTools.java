@@ -268,6 +268,7 @@ public class EditorTools {
 		Class classToLoad = Class.forName(codedflfile.getName().replaceAll(".class", ""), true, child);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("run");
+		@SuppressWarnings("unused")
 		Object result = method.invoke(instance);
 		try {
 			child.close();

@@ -6,19 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.ResourceManager;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.iconManager.OpKeyStudioIcons;
@@ -68,38 +63,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 		renderAssociatedLibraries();
 	}
 
-	private TableEditor getTableEditor() {
-		TableEditor editor = new TableEditor(this);
-		editor.horizontalAlignment = SWT.CENTER;
-		editor.verticalAlignment = SWT.CENTER;
-		editor.grabHorizontal = true;
-		editor.grabVertical = true;
-		return editor;
-	}
-
 	private List<Control> allTableEditors = new ArrayList<Control>();
-
-	private void addTableEditor(CustomTableItem item) {
-		TableEditor editor1 = getTableEditor();
-		CustomButton associateOR = new CustomButton(this, SWT.CHECK | SWT.CENTER);
-		associateOR.setSelection(false);
-		associateOR.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				setSelection(item);
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		editor1.setEditor(associateOR, item, 0);
-		allTableEditors.add(editor1.getEditor());
-	}
 
 	private void disposeAllTableEditors() {
 		for (Control editor : allTableEditors) {
@@ -142,7 +106,6 @@ public class CFLLibraryAssociateTable extends CustomTable {
 				writer.flush();
 				writer.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			CustomTableItem cti = new CustomTableItem(this, 0);

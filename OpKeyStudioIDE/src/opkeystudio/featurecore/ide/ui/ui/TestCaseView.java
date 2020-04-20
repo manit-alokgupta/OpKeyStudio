@@ -307,7 +307,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -333,7 +332,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -452,9 +450,6 @@ public class TestCaseView extends Composite {
 			bottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		}
 
-		// Source Code Editor Will Be added here
-		// sourceCodeTabItem.setControl(sourceCodeEditor);
-
 		TabItem sourceCodeTabItem = new TabItem(mainTestCaseTabFolder, SWT.NONE);
 		sourceCodeTabItem.setText("SourceCode");
 		sourceCodeTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
@@ -501,7 +496,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -514,14 +508,12 @@ public class TestCaseView extends Composite {
 				try {
 					populateFlowStepsData(flowStep);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -561,7 +553,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -576,7 +567,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -590,7 +580,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -656,7 +645,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -717,7 +705,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -746,7 +733,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -759,7 +745,6 @@ public class TestCaseView extends Composite {
 					toggleSaveButton(true);
 					flowStepTable.deleteStep();
 				} catch (SQLException | IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -767,7 +752,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -782,7 +766,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -804,7 +787,7 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+
 			}
 		});
 
@@ -818,7 +801,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -832,7 +814,6 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -852,14 +833,12 @@ public class TestCaseView extends Composite {
 				try {
 					getInputDataTable().renderInputTable(getInputDataTable().getFlowStep());
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});

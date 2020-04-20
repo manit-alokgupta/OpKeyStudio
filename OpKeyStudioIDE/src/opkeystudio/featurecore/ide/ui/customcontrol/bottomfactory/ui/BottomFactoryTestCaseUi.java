@@ -25,17 +25,12 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.TestCaseDocumentTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 
 public class BottomFactoryTestCaseUi extends Composite {
 	private UsedByTable usedByTable;
-	private TestCaseDocumentTable testCaseDocTable;
-	private ToolItem addTagItem;
 	private ToolItem deleteTagItem;
-	private ToolItem copyTagItem;
-	private ToolItem pasteTagItem;
 	private ToolItem moveUpTagItem;
 	private ToolItem moveDownTagItem;
 	private Display display;
