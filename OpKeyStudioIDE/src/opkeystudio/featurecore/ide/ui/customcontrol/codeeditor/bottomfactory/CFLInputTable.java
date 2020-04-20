@@ -4,17 +4,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
+import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTableItem;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.dtoMaker.CFLDMaker;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class CFLInputTable extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -48,6 +66,89 @@ public class CFLInputTable extends CustomTable {
 				}
 			}
 		});
+		
+
+		TableCursor cursor = new TableCursor(this, 0);
+		ControlEditor controlEditor = new ControlEditor(cursor);
+		controlEditor.grabHorizontal = true;
+		controlEditor.grabVertical = true;
+
+		cursor.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int selectedColumn = cursor.getColumn();
+				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
+				ComponentInputArgument componentInputAargument = (ComponentInputArgument) selectedTableItem
+						.getControlData();
+				CustomText text = new CustomText(cursor, 0);
+				text.addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						text.dispose();
+					}
+
+					@Override
+					public void focusGained(FocusEvent e) {
+
+					}
+				});
+
+				text.addModifyListener(new ModifyListener() {
+
+					@Override
+					public void modifyText(ModifyEvent e) {
+						if (selectedColumn == 0) {
+							componentInputAargument.setName(text.getText());
+							componentInputAargument.setModified(true);
+							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+						}
+						if (selectedColumn == 2) {
+							componentInputAargument.setDefaultvalue(text.getText());
+							componentInputAargument.setModified(true);
+							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+						}
+						if (selectedColumn == 4) {
+							componentInputAargument.setDescription(text.getText());
+							componentInputAargument.setModified(true);
+							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+						}
+						cursor.getRow().setText(selectedColumn, text.getText());
+					}
+				});
+
+				System.out.println("SELECTED COLUMN " + selectedColumn);
+				if (selectedColumn == 0) {
+					if (componentInputAargument.getName() != null) {
+						text.setText(componentInputAargument.getName());
+					} else {
+						text.setText("");
+					}
+				}
+				if (selectedColumn == 2) {
+					if (componentInputAargument.getDefaultvalue() != null) {
+						text.setText(componentInputAargument.getDefaultvalue());
+					} else {
+						text.setText("");
+					}
+				}
+				if (selectedColumn == 4) {
+					if (componentInputAargument.getDescription() != null) {
+						text.setText(componentInputAargument.getDescription());
+					} else {
+						text.setText("");
+					}
+				}
+				controlEditor.setEditor(text);
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
 	}
 
 	public CodedFunctionBottomFactoryUI getParentBottomFactoryUI() {
@@ -58,6 +159,72 @@ public class CFLInputTable extends CustomTable {
 		this.parentBottomFactoryUI = parentBottomFactoryUI;
 	}
 
+	private List<Control> allTableEditors = new ArrayList<Control>();
+	private TableEditor getTableEditor() {
+		TableEditor editor = new TableEditor(this);
+		editor.horizontalAlignment = SWT.CENTER;
+		editor.grabHorizontal = true;
+		editor.minimumWidth = 50;
+		return editor;
+	}
+
+	private void addTableEditor(InputTableItem inputTableItem) {
+		ComponentInputArgument bottomFactoryInput = inputTableItem.getBottomFactoryInputData();
+		TableEditor editor1 = getTableEditor();
+		TableEditor editor2 = getTableEditor();
+		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
+		combo.setItems(ServiceRepository.getInstance().getAllVaraiblesType());
+		combo.select(Utilities.getInstance().getIndexOfItem(ServiceRepository.getInstance().getAllVaraiblesType(),
+				bottomFactoryInput.getType()));
+		combo.setControlData(bottomFactoryInput);
+
+		CustomButton isOptional = new CustomButton(this, SWT.CHECK);
+		isOptional.setSelection(bottomFactoryInput.isIsmandatory());
+		isOptional.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setSelection(inputTableItem);
+				bottomFactoryInput.setModified(true);
+				bottomFactoryInput.setIsmandatory(isOptional.getSelection());
+				getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
+		combo.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String selectedData = combo.getText();
+				setSelection(inputTableItem);
+				bottomFactoryInput.setModified(true);
+				bottomFactoryInput.setType(selectedData);
+				getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
+		editor1.setEditor(isOptional, inputTableItem, 3);
+		editor2.setEditor(combo, inputTableItem, 1);
+		allTableEditors.add(editor1.getEditor());
+		allTableEditors.add(editor2.getEditor());
+	}
+	
+	private void disposeAllTableEditors() {
+		for (Control editor : allTableEditors) {
+			editor.dispose();
+		}
+	}
+	
 	public void renderCFLInputParameters() {
 		this.removeAll();
 		List<CFLInputParameter> cflInputParameters = getParentBottomFactoryUI().getParentCodedFunctionView()
@@ -93,6 +260,92 @@ public class CFLInputTable extends CustomTable {
 			return null;
 		}
 		return (CFLInputParameter) cti.getControlData();
+	}
+
+	public CFLInputParameter getPrevInputParemeter() {
+		if (this.getSelectionIndices() == null) {
+			return null;
+		}
+		if (this.getSelectionIndices().length == 0) {
+			return null;
+		}
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == 0) {
+			return null;
+		}
+		selectedIndex = selectedIndex - 1;
+		CustomTableItem inputTableItem = (CustomTableItem) this.getItem(selectedIndex);
+		if (inputTableItem != null) {
+			return (CFLInputParameter) inputTableItem.getControlData();
+		}
+		return null;
+	}
+
+	private void selectRow(int index) {
+		if (this.getItemCount() == 0) {
+			return;
+		}
+		this.setSelection(index);
+		this.notifyListeners(SWT.Selection, null);
+	}
+
+	public CFLInputParameter getNextInputParemeter() {
+		if (this.getSelectionIndices() == null) {
+			return null;
+		}
+		if (this.getSelectionIndices().length == 0) {
+			return null;
+		}
+		int selectedIndex = this.getSelectionIndices()[0];
+		if (selectedIndex == this.getItemCount() - 1) {
+			return null;
+		}
+		selectedIndex = selectedIndex + 1;
+		CustomTableItem inputTableItem = (CustomTableItem) this.getItem(selectedIndex);
+		if (inputTableItem != null) {
+			return (CFLInputParameter) inputTableItem.getControlData();
+		}
+		return null;
+	}
+
+	public void moveFl_BottomFactoryInputUp(CFLInputParameter bottomFactoryInput1,
+			CFLInputParameter bottomFactoryInput2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = bottomFactoryInput1.getPosition();
+		int fpos2 = bottomFactoryInput2.getPosition();
+
+		bottomFactoryInput1.setPosition(fpos2);
+		bottomFactoryInput2.setPosition(fpos1);
+		renderCFLInputParameters();
+		selectRow(selectedIndex - 1);
+		bottomFactoryInput1.setModified(true);
+		bottomFactoryInput2.setModified(true);
+		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		renderCFLInputParameters();
+
+	}
+
+	public void moveFl_BottomFactoryInputDown(CFLInputParameter bottomFactoryInput1,
+			CFLInputParameter bottomFactoryInput2) {
+		int selectedIndex = this.getSelectionIndex();
+		int fpos1 = bottomFactoryInput1.getPosition();
+		int fpos2 = bottomFactoryInput2.getPosition();
+
+		bottomFactoryInput1.setPosition(fpos2);
+		bottomFactoryInput2.setPosition(fpos1);
+		renderCFLInputParameters();
+		selectRow(selectedIndex + 1);
+		bottomFactoryInput1.setModified(true);
+		bottomFactoryInput2.setModified(true);
+		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		renderCFLInputParameters();
+	}
+
+	public void deleteBottomFactoryInputData() {
+		CFLInputParameter componentInputArgument = getSelectedCFLInputArgument();
+		componentInputArgument.setDeleted(true);
+		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		renderCFLInputParameters();
 	}
 
 	public void addBlankInputPArameter() {
