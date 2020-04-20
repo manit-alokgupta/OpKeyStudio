@@ -35,6 +35,7 @@ import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
 
@@ -345,6 +346,34 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 	private void initTableListeners() {
 
+		outputTable.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (outputTable.getSelectedOutputParemeter() != null) {
+					toggleDeleteOutputItem(true);
+				} else {
+					toggleDeleteOutputItem(false);
+				}
+				if (outputTable.getPrevOutputParemeter() != null) {
+					toggleMoveUpOutputItemButton(true);
+				} else {
+					toggleMoveUpOutputItemButton(false);
+				}
+				if (outputTable.getNextOutputParemeter() != null) {
+					toggleMoveDownOutputItemButton(true);
+				} else {
+					toggleMoveDownOutputItemButton(false);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		inputTable.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -408,6 +437,77 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	}
 
 	public void addButtonListeners() {
+		addOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.addBlankOutputPrameter();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		deleteOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.deleteBottomFactoryOutputData();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveUpOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.moveFl_BottomFactoryOutputUp(outputTable.getSelectedComponentOutputArgument(),
+						outputTable.getPrevOutputParemeter());
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveDownOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.moveFl_BottomFactoryOutputDown(outputTable.getSelectedComponentOutputArgument(),
+						outputTable.getNextOutputParemeter());
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		refreshOutputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				outputTable.renderCFLOutputParameters();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		addInputItem.addSelectionListener(new SelectionListener() {
 
 			@Override
