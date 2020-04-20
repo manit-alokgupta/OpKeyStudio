@@ -263,19 +263,19 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ComponentOutputArgument bottomFactoryInput = outputTable.getSelectedOutputParemeter();
 				if (outputTable.getSelectedOutputParemeter() != null) {
-					toggleDeleteButton(true);
+					toggleDeleteOutputButton(true);
 				} else {
-					toggleDeleteButton(false);
+					toggleDeleteOutputButton(false);
 				}
 				if (outputTable.getPrevOutputParemeter() != null) {
-					toggleMoveUpButton(true);
+					toggleMoveUpOutputButton(true);
 				} else {
-					toggleMoveUpButton(false);
+					toggleMoveUpOutputButton(false);
 				}
 				if (outputTable.getNextOutputParemeter() != null) {
-					toggleMoveDownButton(true);
+					toggleMoveDownOutputButton(true);
 				} else {
-					toggleMoveDownButton(false);
+					toggleMoveDownOutputButton(false);
 				}
 			}
 
@@ -292,19 +292,19 @@ public class BottomFactoryFLUi extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ComponentInputArgument bottomFactoryInput = inputTable.getSelectedInputParemeter();
 				if (inputTable.getSelectedInputParemeter() != null) {
-					toggleDeleteButton(true);
+					toggleDeleteInputButton(true);
 				} else {
-					toggleDeleteButton(false);
+					toggleDeleteInputButton(false);
 				}
 				if (inputTable.getPrevInputParemeter() != null) {
-					toggleMoveUpButton(true);
+					toggleMoveUpInputButton(true);
 				} else {
-					toggleMoveUpButton(false);
+					toggleMoveUpInputButton(false);
 				}
 				if (inputTable.getNextInputParemeter() != null) {
-					toggleMoveDownButton(true);
+					toggleMoveDownInputButton(true);
 				} else {
-					toggleMoveDownButton(false);
+					toggleMoveDownInputButton(false);
 				}
 
 			}
@@ -319,13 +319,19 @@ public class BottomFactoryFLUi extends Composite {
 		addButtonListeners();
 	}
 
-	public void toggleMoveUpButton(boolean status) {
+	public void toggleMoveUpInputButton(boolean status) {
 		moveUpInputItem.setEnabled(status);
+	}
+
+	public void toggleMoveDownInputButton(boolean status) {
+		moveDownInputItem.setEnabled(status);
+	}
+
+	public void toggleMoveUpOutputButton(boolean status) {
 		moveUpOutputItem.setEnabled(status);
 	}
 
-	public void toggleMoveDownButton(boolean status) {
-		moveDownInputItem.setEnabled(status);
+	public void toggleMoveDownOutputButton(boolean status) {
 		moveDownOutputItem.setEnabled(status);
 	}
 
@@ -333,8 +339,11 @@ public class BottomFactoryFLUi extends Composite {
 		refreshInputItem.setEnabled(status);
 	}
 
-	public void toggleDeleteButton(boolean status) {
+	public void toggleDeleteInputButton(boolean status) {
 		deleteInputItem.setEnabled(status);
+	}
+
+	public void toggleDeleteOutputButton(boolean status) {
 		deleteOutputItem.setEnabled(status);
 	}
 
@@ -418,7 +427,7 @@ public class BottomFactoryFLUi extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				inputTable.deleteBottomFactoryInputData();
-				toggleDeleteButton(false);
+				toggleDeleteInputButton(false);
 			}
 
 			@Override
