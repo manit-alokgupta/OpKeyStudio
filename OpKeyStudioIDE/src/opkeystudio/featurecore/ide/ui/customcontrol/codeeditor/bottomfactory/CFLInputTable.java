@@ -27,7 +27,9 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.dtoMaker.CFLDMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -64,7 +66,6 @@ public class CFLInputTable extends CustomTable {
 				}
 			}
 		});
-		
 
 		TableCursor cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
@@ -77,8 +78,7 @@ public class CFLInputTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				int selectedColumn = cursor.getColumn();
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
-				CFLInputParameter componentInputAargument = (CFLInputParameter) selectedTableItem
-						.getControlData();
+				CFLInputParameter componentInputAargument = (CFLInputParameter) selectedTableItem.getControlData();
 				CustomText text = new CustomText(cursor, 0);
 				text.addFocusListener(new FocusListener() {
 
@@ -158,6 +158,7 @@ public class CFLInputTable extends CustomTable {
 	}
 
 	private List<Control> allTableEditors = new ArrayList<Control>();
+
 	private TableEditor getTableEditor() {
 		TableEditor editor = new TableEditor(this);
 		editor.horizontalAlignment = SWT.CENTER;
@@ -216,20 +217,43 @@ public class CFLInputTable extends CustomTable {
 		allTableEditors.add(editor1.getEditor());
 		allTableEditors.add(editor2.getEditor());
 	}
-	
+
 	private void disposeAllTableEditors() {
 		for (Control editor : allTableEditors) {
 			editor.dispose();
 		}
 	}
-	
+
 	public void renderCFLInputParameters() {
 		disposeAllTableEditors();
 		this.removeAll();
-		List<CFLInputParameter> cflInputParameters = getParentBottomFactoryUI().getParentCodedFunctionView()
-				.getJavaEditor().getCodedFunctionArtifact().getCflInputParameters();
+		Artifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifact();
+		List<CFLInputParameter> cflInputParameters = new CodedFunctionApi().getCodedFLInputParameters(artifact);
+		Collections.sort(cflInputParameters);
 		this.setCflInputParameters(cflInputParameters);
 		for (CFLInputParameter cflinputparam : cflInputParameters) {
+			CustomTableItem cti = new CustomTableItem(this, 0);
+			cti.setControlData(cflinputparam);
+			String description = cflinputparam.getDescription();
+			if (description == null) {
+				description = "";
+			}
+			cti.setText(new String[] { cflinputparam.getName(), cflinputparam.getType(),
+					cflinputparam.getDefaultvalue(), "", description });
+			addTableEditor(cti);
+		}
+	}
+
+	public void refreshCFLInputParameters() {
+		disposeAllTableEditors();
+		this.removeAll();
+		List<CFLInputParameter> cflInputParameters = this.getCflInputParameters();
+		Collections.sort(cflInputParameters);
+		this.setCflInputParameters(cflInputParameters);
+		for (CFLInputParameter cflinputparam : cflInputParameters) {
+			if (cflinputparam.isDeleted()) {
+				continue;
+			}
 			CustomTableItem cti = new CustomTableItem(this, 0);
 			cti.setControlData(cflinputparam);
 			String description = cflinputparam.getDescription();
@@ -316,12 +340,11 @@ public class CFLInputTable extends CustomTable {
 
 		bottomFactoryInput1.setPosition(fpos2);
 		bottomFactoryInput2.setPosition(fpos1);
-		renderCFLInputParameters();
 		selectRow(selectedIndex - 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
 		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
-		renderCFLInputParameters();
+		refreshCFLInputParameters();
 
 	}
 
@@ -333,19 +356,18 @@ public class CFLInputTable extends CustomTable {
 
 		bottomFactoryInput1.setPosition(fpos2);
 		bottomFactoryInput2.setPosition(fpos1);
-		renderCFLInputParameters();
 		selectRow(selectedIndex + 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
 		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
-		renderCFLInputParameters();
+		refreshCFLInputParameters();
 	}
 
 	public void deleteBottomFactoryInputData() {
 		CFLInputParameter componentInputArgument = getSelectedCFLInputArgument();
 		componentInputArgument.setDeleted(true);
 		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
-		renderCFLInputParameters();
+		refreshCFLInputParameters();
 	}
 
 	public void addBlankInputPArameter() {
@@ -353,11 +375,10 @@ public class CFLInputTable extends CustomTable {
 		CodedFunctionArtifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
 				.getCodedFunctionArtifact();
 		CFLInputParameter inputParameter = new CFLDMaker().createCFInputParameterDTO(artifact, variableName,
-				getSelectedCFLInputArgument(), artifact.getCflInputParameters());
-		artifact.getCflInputParameters().add(inputParameter);
-		Collections.sort(artifact.getCflInputParameters());
+				getSelectedCFLInputArgument(), this.getCflInputParameters());
+		this.getCflInputParameters().add(inputParameter);
 		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
-		renderCFLInputParameters();
+		refreshCFLInputParameters();
 	}
 
 	public List<CFLInputParameter> getCflInputParameters() {

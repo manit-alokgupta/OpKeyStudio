@@ -465,6 +465,19 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			}
 		});
+		refreshInputItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				inputTable.renderCFLInputParameters();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		refreshORTable.addSelectionListener(new SelectionListener() {
 
 			@Override
