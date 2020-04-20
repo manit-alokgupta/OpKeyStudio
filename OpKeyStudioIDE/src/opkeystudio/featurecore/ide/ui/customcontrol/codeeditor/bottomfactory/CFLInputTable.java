@@ -79,7 +79,7 @@ public class CFLInputTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				int selectedColumn = cursor.getColumn();
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
-				ComponentInputArgument componentInputAargument = (ComponentInputArgument) selectedTableItem
+				CFLInputParameter componentInputAargument = (CFLInputParameter) selectedTableItem
 						.getControlData();
 				CustomText text = new CustomText(cursor, 0);
 				text.addFocusListener(new FocusListener() {
@@ -168,8 +168,8 @@ public class CFLInputTable extends CustomTable {
 		return editor;
 	}
 
-	private void addTableEditor(InputTableItem inputTableItem) {
-		ComponentInputArgument bottomFactoryInput = inputTableItem.getBottomFactoryInputData();
+	private void addTableEditor(CustomTableItem inputTableItem) {
+		CFLInputParameter bottomFactoryInput = (CFLInputParameter) inputTableItem.getControlData();
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
 		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
@@ -226,6 +226,7 @@ public class CFLInputTable extends CustomTable {
 	}
 	
 	public void renderCFLInputParameters() {
+		disposeAllTableEditors();
 		this.removeAll();
 		List<CFLInputParameter> cflInputParameters = getParentBottomFactoryUI().getParentCodedFunctionView()
 				.getJavaEditor().getCodedFunctionArtifact().getCflInputParameters();
@@ -239,6 +240,7 @@ public class CFLInputTable extends CustomTable {
 			}
 			cti.setText(new String[] { cflinputparam.getName(), cflinputparam.getType(),
 					cflinputparam.getDefaultvalue(), "", description });
+			addTableEditor(cti);
 		}
 	}
 
