@@ -350,19 +350,19 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (inputTable.getSelectedCFLInputArgument() != null) {
-					toggleDeleteLibraryButton(true);
+					toggleDeleteInputItem(true);
 				} else {
-					toggleDeleteLibraryButton(false);
+					toggleDeleteInputItem(false);
 				}
 				if (inputTable.getPrevInputParemeter() != null) {
-					toggleMoveUpButton(true);
+					toggleMoveUpInputItemButton(true);
 				} else {
-					toggleMoveUpButton(false);
+					toggleMoveUpInputItemButton(false);
 				}
 				if (inputTable.getNextInputParemeter() != null) {
-					toggleMoveDownButton(true);
+					toggleMoveDownInputItemButton(true);
 				} else {
-					toggleMoveDownButton(false);
+					toggleMoveDownInputItemButton(false);
 				}
 
 			}
@@ -375,13 +375,19 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		});
 	}
 
-	public void toggleMoveUpButton(boolean status) {
+	public void toggleMoveUpInputItemButton(boolean status) {
 		this.moveUpInputItem.setEnabled(status);
+	}
+
+	public void toggleMoveDownInputItemButton(boolean status) {
+		this.moveDownInputItem.setEnabled(status);
+	}
+
+	public void toggleMoveUpOutputItemButton(boolean status) {
 		this.moveUpOutputItem.setEnabled(status);
 	}
 
-	public void toggleMoveDownButton(boolean status) {
-		this.moveDownInputItem.setEnabled(status);
+	public void toggleMoveDownOutputItemButton(boolean status) {
 		this.moveDownOutputItem.setEnabled(status);
 	}
 
