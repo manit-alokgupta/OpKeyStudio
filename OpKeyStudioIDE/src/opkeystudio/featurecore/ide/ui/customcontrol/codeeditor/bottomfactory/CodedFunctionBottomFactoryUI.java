@@ -34,9 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
 
@@ -346,15 +344,15 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	}
 
 	private void initTableListeners() {
-		
+
 		inputTable.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (inputTable.getSelectedCFLInputArgument() != null) {
-					toggleDeleteButton(true);
+					toggleDeleteLibraryButton(true);
 				} else {
-					toggleDeleteButton(false);
+					toggleDeleteLibraryButton(false);
 				}
 				if (inputTable.getPrevInputParemeter() != null) {
 					toggleMoveUpButton(true);
@@ -378,21 +376,29 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	}
 
 	public void toggleMoveUpButton(boolean status) {
-		moveUpInputItem.setEnabled(status);
-		moveUpOutputItem.setEnabled(status);
+		this.moveUpInputItem.setEnabled(status);
+		this.moveUpOutputItem.setEnabled(status);
 	}
 
 	public void toggleMoveDownButton(boolean status) {
-		moveDownInputItem.setEnabled(status);
-		moveDownOutputItem.setEnabled(status);
+		this.moveDownInputItem.setEnabled(status);
+		this.moveDownOutputItem.setEnabled(status);
 	}
 
 	public void toggleRefreshInputButton(boolean status) {
-		refreshInputItem.setEnabled(status);
+		this.refreshInputItem.setEnabled(status);
 	}
 
-	public void toggleDeleteButton(boolean status) {
-		deleteLibrary.setEnabled(status);
+	public void toggleDeleteInputItem(boolean status) {
+		this.deleteInputItem.setEnabled(status);
+	}
+
+	public void toggleDeleteOutputItem(boolean status) {
+		this.deleteOutputItem.setEnabled(status);
+	}
+
+	public void toggleDeleteLibraryButton(boolean status) {
+		this.deleteLibrary.setEnabled(status);
 	}
 
 	public void addButtonListeners() {
@@ -444,7 +450,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				inputTable.deleteBottomFactoryInputData();
-				toggleDeleteButton(false);
+				toggleDeleteLibraryButton(false);
 			}
 
 			@Override
