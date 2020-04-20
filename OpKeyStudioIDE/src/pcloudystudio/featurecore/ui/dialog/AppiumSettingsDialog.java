@@ -336,7 +336,7 @@ public class AppiumSettingsDialog extends Dialog {
 				restrictInputString(e, type);
 				if (capabilityTextValue.getText().length() > 0 && capabilityNameCombo.getSelectionIndex() != -1) {
 					btnAddToTable.setEnabled(true);
-					
+
 				}
 			}
 		});
@@ -381,9 +381,23 @@ public class AppiumSettingsDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (capabilityTable.getItemCount() >= 1) {
-					for (int i = 0; i <= capabilityTable.getItemCount(); i++) {
-						capabilityTable.remove(0);
 
+					MessageDialog dialog = new MessageDialog(shlAppiumSettings, "Confirmation", null,
+							"Do You Want To Save Capabilities", MessageDialog.CONFIRM, new String[] { "Yes", "No", },
+							0);
+					int result = dialog.open();
+					System.out.println(result);
+					if (result == 0) {
+						System.out.println("yes is pressed");
+						
+
+					} else {
+						if (capabilityTable.getItemCount() >= 1) {
+							for (int i = 0; i <= capabilityTable.getItemCount(); i++) {
+								capabilityTable.remove(0);
+
+							}
+						}
 					}
 				}
 				capabilityTextValue.setText("");
