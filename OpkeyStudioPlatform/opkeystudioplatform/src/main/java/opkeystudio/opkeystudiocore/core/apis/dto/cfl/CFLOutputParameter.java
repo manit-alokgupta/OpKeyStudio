@@ -1,9 +1,10 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.cfl;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
-public class CFLOutputParameter extends Modified {
+public class CFLOutputParameter extends Modified implements Comparable<CFLOutputParameter> {
 	private int clustering_key;
 	@DBField
 	private String op_id;
@@ -82,5 +83,10 @@ public class CFLOutputParameter extends Modified {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public int compareTo(CFLOutputParameter arg0) {
+		return this.getPosition() - arg0.getPosition();
 	}
 }

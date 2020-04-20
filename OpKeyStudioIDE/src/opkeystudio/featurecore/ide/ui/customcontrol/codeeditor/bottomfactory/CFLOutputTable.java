@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -206,6 +207,7 @@ public class CFLOutputTable extends CustomTable {
 		disposeAllTableEditors();
 		this.removeAll();
 		List<CFLOutputParameter> outputParameters = this.getCflOutputParameters();
+		Collections.sort(outputParameters);
 		this.setCflOutputParameters(outputParameters);
 		for (CFLOutputParameter cfloutputparam : outputParameters) {
 			if (cfloutputparam.isDeleted()) {
