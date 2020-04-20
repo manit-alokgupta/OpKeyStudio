@@ -242,6 +242,7 @@ public class CFLInputTable extends CustomTable {
 					cflinputparam.getDefaultvalue(), "", description });
 			addTableEditor(cti);
 		}
+		selectDefaultRow();
 	}
 
 	public void refreshCFLInputParameters() {
@@ -264,6 +265,7 @@ public class CFLInputTable extends CustomTable {
 					cflinputparam.getDefaultvalue(), "", description });
 			addTableEditor(cti);
 		}
+		selectDefaultRow();
 	}
 
 	public CFLInputParameter getSelectedCFLInputArgument() {
@@ -340,6 +342,7 @@ public class CFLInputTable extends CustomTable {
 
 		bottomFactoryInput1.setPosition(fpos2);
 		bottomFactoryInput2.setPosition(fpos1);
+		refreshCFLInputParameters();
 		selectRow(selectedIndex - 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
@@ -356,6 +359,7 @@ public class CFLInputTable extends CustomTable {
 
 		bottomFactoryInput1.setPosition(fpos2);
 		bottomFactoryInput2.setPosition(fpos1);
+		refreshCFLInputParameters();
 		selectRow(selectedIndex + 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
