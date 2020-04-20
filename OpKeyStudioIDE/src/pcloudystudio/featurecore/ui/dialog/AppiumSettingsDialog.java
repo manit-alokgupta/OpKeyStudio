@@ -332,10 +332,11 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		capabilityTextValue.addVerifyListener(new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
+				String type = combo_DataType.getText();
+				restrictInputString(e, type);
 				if (capabilityTextValue.getText().length() > 0 && capabilityNameCombo.getSelectionIndex() != -1) {
-					String type = combo_DataType.getText();
 					btnAddToTable.setEnabled(true);
-					restrictInputString(e, type);
+					
 				}
 			}
 		});
@@ -437,10 +438,11 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		manuallyCapabilityValue.addVerifyListener(new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
+				String type = combo_ManualType.getText();
+				restrictInputString(e, type);
 				if (manuallyCapabilityValue.getText().length() > 0 && manuallyCapabilityName.getText().length() > 0) {
-					String type = combo_ManualType.getText();
 					addToTable2.setEnabled(true);
-					restrictInputString(e, type);
+					
 				}
 			}
 		});
@@ -871,7 +873,7 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	protected void restrictInputForManullyCapabilityName(VerifyEvent event) {
-		String allowedCharactersString = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+		String allowedCharactersString = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM2";
 		String text = event.text;
 		for (int index = 0; index < text.length(); index++) {
 			char character = text.charAt(index);
