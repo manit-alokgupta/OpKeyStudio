@@ -33,8 +33,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputT
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 
 public class BottomFactoryFLUi extends Composite {
 	private UsedByTable usedByTable;
@@ -261,7 +259,6 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ComponentOutputArgument bottomFactoryInput = outputTable.getSelectedOutputParemeter();
 				if (outputTable.getSelectedOutputParemeter() != null) {
 					toggleDeleteOutputButton(true);
 				} else {
@@ -290,7 +287,6 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ComponentInputArgument bottomFactoryInput = inputTable.getSelectedInputParemeter();
 				if (inputTable.getSelectedInputParemeter() != null) {
 					toggleDeleteInputButton(true);
 				} else {
@@ -414,6 +410,7 @@ public class BottomFactoryFLUi extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				outputTable.deleteBottomFactoryOutputData();
+				toggleDeleteOutputButton(false);
 			}
 
 			@Override
@@ -467,24 +464,10 @@ public class BottomFactoryFLUi extends Composite {
 			}
 		});
 
-		deleteOutputItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 		refreshOutputItem.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				outputTable.renderAllBottomFactoryOutputData();
 			}
 
 			@Override
