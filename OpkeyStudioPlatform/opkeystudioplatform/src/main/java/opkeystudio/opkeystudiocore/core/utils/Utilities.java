@@ -82,7 +82,7 @@ public class Utilities {
 			new File(path).mkdir();
 		}
 		path = System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
-				+ File.separator + "VncServer" ;
+				+ File.separator + "VncServer";
 		if (!new File(path).exists()) {
 			new File(path).mkdir();
 		}
