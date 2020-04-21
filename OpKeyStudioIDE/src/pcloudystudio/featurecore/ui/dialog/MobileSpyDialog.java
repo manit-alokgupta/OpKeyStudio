@@ -6,7 +6,9 @@ package pcloudystudio.featurecore.ui.dialog;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -99,6 +101,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private Composite compositeLeftToolBar;
 	private Composite compositeRightToolBar;
 	private CustomMessageDialogUtil msgDialog;
+	private List<TreeMobileElement> allElements;
 
 	static {
 		DIALOG_TITLE = "Mobile Object Spy";
@@ -542,11 +545,31 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		return new Point(startX, objectSpyViewBounds.y);
 	}
 
+	public void setAllElements(TreeMobileElement xmlElement) {
+		if (xmlElement == null) {
+			return;
+		}
+		if (xmlElement.getChildrenElement().size() == 0) {
+			return;
+		}
+		if (xmlElement.getParentElement() != null)
+			allElements.add(xmlElement);
+		for (int count = xmlElement.getChildrenElement().size(), i = 0; i < count; ++i) {
+			TreeMobileElement node = xmlElement.getChildrenElement().get(i);
+			allElements.add(node);
+			setAllElements(node);
+		}
+	}
+
 	@Override
 	public void setSelectedElementByLocation(int x, int y) {
 		if (this.appRootElement == null) {
 			return;
 		}
+
+		this.allElements = new ArrayList<TreeMobileElement>();
+		this.setAllElements(this.appRootElement);
+
 		TreeMobileElement foundElement = this.recursivelyFindElementByLocation(this.appRootElement, x, y);
 		if (foundElement == null) {
 			return;
@@ -569,7 +592,9 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	}
 
 	private TreeMobileElement recursivelyFindElementByLocation(TreeMobileElement currentElement, int x, int y) {
-		for (TreeMobileElement childElement : currentElement.getChildrenElement()) {
+		TreeMobileElement smallestElement = allElements.get(0);
+		List<TreeMobileElement> elementsLiesIN = new ArrayList<TreeMobileElement>();
+		for (TreeMobileElement childElement : allElements) {
 			Map<String, String> attributes = childElement.getAttributes();
 			Double elementX = Double.parseDouble(attributes.get("x"));
 			Double elementY = Double.parseDouble(attributes.get("y"));
@@ -579,10 +604,16 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					MobileDeviceDialog.safeRoundDouble(elementY), MobileDeviceDialog.safeRoundDouble(elementWidth),
 					MobileDeviceDialog.safeRoundDouble(elementHeight));
 			if (rectangle.contains(x, y)) {
-				return this.recursivelyFindElementByLocation(childElement, x, y);
+				elementsLiesIN.add(childElement);
+				if (rectangle.width * rectangle.height < MobileDeviceDialog
+						.safeRoundDouble(Double.parseDouble(smallestElement.getAttributes().get("height")))
+						* MobileDeviceDialog
+						.safeRoundDouble(Double.parseDouble(smallestElement.getAttributes().get("width")))) {
+					smallestElement = childElement;
+				}
 			}
 		}
-		return currentElement;
+		return (elementsLiesIN.size() > 0) ? elementsLiesIN.get(elementsLiesIN.size() - 1) : this.appRootElement;
 	}
 
 	private void highlightObject(MobileElement selectedElement) {
