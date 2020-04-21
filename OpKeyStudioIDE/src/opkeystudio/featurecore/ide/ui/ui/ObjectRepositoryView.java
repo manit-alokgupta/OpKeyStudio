@@ -472,8 +472,8 @@ public class ObjectRepositoryView extends Composite {
 					toggleDeleteAttributeButton(false);
 					toggleAddAttributeButton(false);
 
-					CustomMessageDialogUtil msgDialog = new CustomMessageDialogUtil();
-					int result = msgDialog.openConfirmDialog("Confirmation", "Do you want to save changes?");
+					int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation",
+							"Do you want to save changes?");
 					if (result != 0) {
 						toggleSaveButton(false);
 						objectRepositoryTree.renderObjectRepositories();

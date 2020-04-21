@@ -100,7 +100,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	static Label lblAddToORConfirmation;
 	private Composite compositeLeftToolBar;
 	private Composite compositeRightToolBar;
-	private CustomMessageDialogUtil msgDialog;
 	private List<TreeMobileElement> allElements;
 
 	static {
@@ -115,7 +114,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 */
 	public MobileSpyDialog(Shell parent, int style) {
 		super(parent, style);
-		msgDialog = new CustomMessageDialogUtil();
 		setText("SWT Dialog");
 		this.inspectorController = new MobileInspectorController();
 	}
@@ -123,7 +121,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	public MobileSpyDialog(Shell parent, int style, ObjectRepositoryView parentObjectRepositoryView) {
 		super(parent, style);
 		this.setParentObjectRepositoryView(parentObjectRepositoryView);
-		msgDialog = new CustomMessageDialogUtil();
 		setText("SWT Dialog");
 		this.inspectorController = new MobileInspectorController();
 	}
@@ -216,7 +213,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							captureObjectAction();
 						}
 					} catch (Exception ex) {
-						msgDialog.openErrorDialog("Error", ex.getMessage());
+						CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
 					}
 				}
 			}
@@ -242,7 +239,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					deviceView.close();
 					AndroidDriverObject.getDriver().quit();
 				} catch (Exception ex) {
-					msgDialog.openErrorDialog("Error", ex.getMessage());
+					CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
 				}
 			}
 		});
@@ -297,7 +294,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 						e1.printStackTrace();
 					}
 				} else {
-					msgDialog.openErrorDialog("Error", "Object Name field can't be empty!");
+					CustomMessageDialogUtil.openErrorDialog("Error", "Object Name field can't be empty!");
 				}
 			}
 		});
@@ -332,7 +329,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				msgDialog.openInformationDialog("Help", "Please contact support@opkey.com");
+				CustomMessageDialogUtil.openInformationDialog("Help", "Please contact support@opkey.com");
 			}
 		});
 		btnHelp.setBounds(5, 5, 20, 20);
@@ -642,7 +639,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			clearPropertiesTableData();
 			textObjectName.setText("");
 			deviceView.close();
-			msgDialog.openErrorDialog("Error", ex.getMessage());
+			CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
 			return;
 		}
 

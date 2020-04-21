@@ -22,11 +22,11 @@ public class CustomMessageDialogUtil {
 				"OK");
 		mDialog.open();
 	}
-	
+
 	public static int openConfirmDialog(String title, String message) {
-		MessageDialog mDialog= new MessageDialog(Display.getCurrent().getActiveShell(), title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-				message, MessageDialog.CONFIRM,
-				new String[] { "Yes", "No", }, 0);
+		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
+				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message,
+				MessageDialog.CONFIRM, new String[] { "Yes", "No", }, 0);
 		int result = mDialog.open();
 		return result;
 	}
