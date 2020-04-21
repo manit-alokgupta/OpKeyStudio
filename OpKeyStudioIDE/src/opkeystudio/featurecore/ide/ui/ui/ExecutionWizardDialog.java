@@ -153,19 +153,20 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			}
 		});
+
 		Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
 		// setMessage("Select The Plugin, and Click \"Run\"");
 		setTitle("Execution Wizard");
-		
+
 		try {
 			initPluginNames();
-			
+
 		} catch (SetupConfigurationException e1) {
 			CustomMessageDialogUtil.openErrorDialog("OpKey", e1.getMessage());
 		}
 		return area;
-		
+
 	}
 
 	private void initExecutionSession(Artifact artifact) {
@@ -258,7 +259,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(680, 413);
+		return new Point(680, 550);
 	}
 
 	public TestSuiteView getParentTestSuiteView() {
