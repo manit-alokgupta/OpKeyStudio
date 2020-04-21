@@ -23,8 +23,10 @@ import org.eclipse.swt.widgets.Text;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import pcloudystudio.core.utils.CustomMessageDialogUtil;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Combo pluginSelectionDropDown;
@@ -155,8 +157,15 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		composite.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
 		// setMessage("Select The Plugin, and Click \"Run\"");
 		setTitle("Execution Wizard");
-		initPluginNames();
+		
+		try {
+			initPluginNames();
+			
+		} catch (SetupConfigurationException e1) {
+			CustomMessageDialogUtil.openErrorDialog("OpKey", e1.getMessage());
+		}
 		return area;
+		
 	}
 
 	private void initExecutionSession(Artifact artifact) {
@@ -165,11 +174,14 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		setExecutionSession(eSession);
 	}
 
-	private void initPluginNames() {
+	private void initPluginNames() throws SetupConfigurationException {
 		pluginSelectionDropDown.removeAll();
 		pluginSelectionDropDown.add("Select Plugin");
 		String pluginDir = Utilities.getInstance().getDefaultPluginsDir();
 		File pluginDirObject = new File(pluginDir);
+		if (pluginDirObject.listFiles() == null)
+			throw new SetupConfigurationException("Plugin Dir is Empty: " + pluginDirObject.getAbsolutePath());
+
 		for (File file : pluginDirObject.listFiles()) {
 			if (file.isDirectory()) {
 				String pluginXmlFile = file.getAbsolutePath() + File.separator + "plugin.xml";

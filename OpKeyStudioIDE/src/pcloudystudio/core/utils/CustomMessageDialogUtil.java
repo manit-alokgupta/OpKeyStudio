@@ -9,21 +9,21 @@ import org.eclipse.wb.swt.ResourceManager;
 
 public class CustomMessageDialogUtil {
 
-	public void openInformationDialog(String title, String message) {
+	public static void openInformationDialog(String title, String message) {
 		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
 				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 2, 0,
 				"OK");
 		mDialog.open();
 	}
 
-	public void openErrorDialog(String title, String message) {
+	public static void openErrorDialog(String title, String message) {
 		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
 				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 1, 0,
 				"OK");
 		mDialog.open();
 	}
 	
-	public int openConfirmDialog(String title, String message) {
+	public static int openConfirmDialog(String title, String message) {
 		MessageDialog mDialog= new MessageDialog(Display.getCurrent().getActiveShell(), title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
 				message, MessageDialog.CONFIRM,
 				new String[] { "Yes", "No", }, 0);
