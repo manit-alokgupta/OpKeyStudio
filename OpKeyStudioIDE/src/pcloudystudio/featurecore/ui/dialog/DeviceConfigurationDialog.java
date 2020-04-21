@@ -10,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -41,7 +40,8 @@ import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.appium.AppiumPortIpInfo;
 import pcloudystudio.appium.AppiumServer;
 import pcloudystudio.appium.MobileCapabilities;
-import pcloudystudio.core.mobile.util.AndroidDeviceUtil;
+import pcloudystudio.core.utils.AndroidDeviceUtil;
+import pcloudystudio.core.utils.CustomMessageDialogUtil;
 
 public class DeviceConfigurationDialog extends Dialog {
 
@@ -59,6 +59,8 @@ public class DeviceConfigurationDialog extends Dialog {
 	private Label lblNoDeviceConnected;
 	private Button btnHelp;
 
+	private CustomMessageDialogUtil msgDialog;
+
 	/**
 	 * Create the dialog.
 	 * 
@@ -67,12 +69,14 @@ public class DeviceConfigurationDialog extends Dialog {
 	 */
 	public DeviceConfigurationDialog(Shell parent, int style) {
 		super(parent, style);
+		msgDialog = new CustomMessageDialogUtil();
 		setText("SWT Dialog");
 	}
 
 	public DeviceConfigurationDialog(Shell parent, int style, ObjectRepositoryView objectRepositoryView) {
 		super(parent, style);
 		this.setParentObjectRepositoryView(objectRepositoryView);
+		msgDialog = new CustomMessageDialogUtil();
 		setText("SWT Dialog");
 		this.ANDROID_FILTER_NAMES = new String[] { "Android Application (*.apk)" };
 		this.ANDROID_FILTER_EXTS = new String[] { "*.apk" };
@@ -140,10 +144,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Help",
-						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-						"Please contact support@opkey.com", 2, 0, "OK");
-				mDialog.open();
+				msgDialog.openInformationDialog("Help", "Please contact support@opkey.com");
 			}
 		});
 		btnHelp.setBounds(305, 64, 18, 18);
@@ -243,10 +244,7 @@ public class DeviceConfigurationDialog extends Dialog {
 						applicationPathText.setText(file.toString());
 						applicationPathText.setEditable(true);
 					} else {
-						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-								"Application APK file you provided doesn't exist!", 1, 0, "OK");
-						mDialog.open();
+						msgDialog.openErrorDialog("Error", "Application APK file you provided doesn't exist!");
 					}
 				}
 				shlDeviceConfiguration.setFocus();
@@ -280,15 +278,10 @@ public class DeviceConfigurationDialog extends Dialog {
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
 				} else if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getHostAddress() == null
 						|| AppiumPortIpInfo.getAppiumDirectory() == null) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Please Note",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Appium Settings are not configured! Go-To: Tools->Appium Settings.", 2, 0, "OK");
-					mDialog.open();
+					msgDialog.openInformationDialog("Please Note",
+							"Appium Settings are not configured! Go-To: Tools->Appium Settings.");
 				} else if (!exists) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Application file you entered is not valid!", 1, 0, "OK");
-					mDialog.open();
+					msgDialog.openErrorDialog("Error", "Application file you entered is not valid!");
 					lblApplicationIsRequiredMessage.setVisible(false);
 				} else {
 					try {
@@ -324,14 +317,8 @@ public class DeviceConfigurationDialog extends Dialog {
 					try {
 						showProgressDialog();
 					} catch (Exception ex) {
-
-						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-								"Unable to start Application: Please check the Appium Server logs for more ... \n"
-										+ ex.getMessage(),
-										1, 0, "OK");
-						mDialog.open();
-
+						msgDialog.openErrorDialog("Error",
+								"Unable to start Application: Please check the Appium Server logs for more ... \n");
 					}
 
 					if (AndroidDriverObject.getDriver() != null
@@ -339,13 +326,10 @@ public class DeviceConfigurationDialog extends Dialog {
 						shlDeviceConfiguration.close();
 						new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
 					} else {
-						MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+						msgDialog.openErrorDialog("Error",
 								"Unable to start Application: Please check the Appium Server logs for more ... \n"
 										+ "org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session. \n Original error: Failed to connect to "
-										+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort(),
-										1, 0, "OK");
-						mDialog.open();
+										+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
 					}
 				}
 			}
@@ -386,12 +370,9 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					msgDialog.openErrorDialog("Error",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+									+ ex.getMessage());
 				}
 			} else {
 				try {
@@ -405,12 +386,9 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					msgDialog.openErrorDialog("Error",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+									+ ex.getMessage());
 				}
 			}
 		} else {
@@ -433,12 +411,9 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					msgDialog.openErrorDialog("Error",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+									+ ex.getMessage());
 				}
 			} else {
 				try {
@@ -453,12 +428,9 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlDeviceConfiguration, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
+					msgDialog.openErrorDialog("Error",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
-									+ ex.getMessage(),
-									1, 0, "OK");
-					mDialog.open();
+									+ ex.getMessage());
 				}
 			}
 		}

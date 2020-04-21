@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ColumnViewer;
@@ -57,6 +56,7 @@ import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import pcloudystudio.appium.AndroidDriverObject;
+import pcloudystudio.core.utils.CustomMessageDialogUtil;
 import pcloudystudio.spytreecomponents.BasicMobileElement;
 import pcloudystudio.spytreecomponents.MobileElement;
 import pcloudystudio.spytreecomponents.MobileElementLabelProvider;
@@ -98,6 +98,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	static Label lblAddToORConfirmation;
 	private Composite compositeLeftToolBar;
 	private Composite compositeRightToolBar;
+	private CustomMessageDialogUtil msgDialog;
 
 	static {
 		DIALOG_TITLE = "Mobile Object Spy";
@@ -111,6 +112,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 */
 	public MobileSpyDialog(Shell parent, int style) {
 		super(parent, style);
+		msgDialog = new CustomMessageDialogUtil();
 		setText("SWT Dialog");
 		this.inspectorController = new MobileInspectorController();
 	}
@@ -118,6 +120,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	public MobileSpyDialog(Shell parent, int style, ObjectRepositoryView parentObjectRepositoryView) {
 		super(parent, style);
 		this.setParentObjectRepositoryView(parentObjectRepositoryView);
+		msgDialog = new CustomMessageDialogUtil();
 		setText("SWT Dialog");
 		this.inspectorController = new MobileInspectorController();
 	}
@@ -210,10 +213,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							captureObjectAction();
 						}
 					} catch (Exception ex) {
-						MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
-								ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-								ex.getMessage(), 1, 0, "OK");
-						mDialog.open();
+						msgDialog.openErrorDialog("Error", ex.getMessage());
 					}
 				}
 			}
@@ -239,10 +239,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					deviceView.close();
 					AndroidDriverObject.getDriver().quit();
 				} catch (Exception ex) {
-					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							ex.getMessage(), 1, 0, "OK");
-					mDialog.open();
+					msgDialog.openErrorDialog("Error", ex.getMessage());
 				}
 			}
 		});
@@ -297,10 +294,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 						e1.printStackTrace();
 					}
 				} else {
-					MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
-							ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-							"Object Name field can't be empty!", 1, 0, "OK");
-					mDialog.open();
+					msgDialog.openErrorDialog("Error", "Object Name field can't be empty!");
 				}
 			}
 		});
@@ -335,10 +329,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Help",
-						ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-						"Please contact support@opkey.com", 2, 0, "OK");
-				mDialog.open();
+				msgDialog.openInformationDialog("Help", "Please contact support@opkey.com");
 			}
 		});
 		btnHelp.setBounds(5, 5, 20, 20);
@@ -620,10 +611,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			clearPropertiesTableData();
 			textObjectName.setText("");
 			deviceView.close();
-			MessageDialog mDialog = new MessageDialog(shlSpyMobile, "Error",
-					ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"),
-					ex.getMessage(), 1, 0, "OK");
-			mDialog.open();
+			msgDialog.openErrorDialog("Error", ex.getMessage());
 			return;
 		}
 
