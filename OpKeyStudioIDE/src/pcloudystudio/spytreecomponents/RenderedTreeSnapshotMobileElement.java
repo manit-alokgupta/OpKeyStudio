@@ -31,6 +31,17 @@ implements SnapshotMobileElement<T> {
 		String tagName = this.getTagName();
 		int index = this.getIndexPropertyForElement(tagName);
 		String xpath = StringUtils.isEmpty(tagName) ? "//*" : ("/" + tagName);
+
+		// https://myopkey.atlassian.net/browse/SAS-32302 | Added for this only -
+		// subclass case
+
+		int indexOf$ = xpath.indexOf('$');
+		if (indexOf$ != -1) {
+			char[] myXpathChars = xpath.toCharArray();
+			myXpathChars[indexOf$] = '.';
+			xpath = String.valueOf(myXpathChars);
+		}
+
 		if (index > 0) {
 			xpath = String.valueOf(xpath) + "[" + index + "]";
 		}
