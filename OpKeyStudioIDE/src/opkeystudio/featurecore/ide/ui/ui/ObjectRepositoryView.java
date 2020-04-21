@@ -47,6 +47,7 @@ import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.appium.AppiumPortIpInfo;
+import pcloudystudio.core.utils.CustomMessageDialogUtil;
 import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
 import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 
@@ -470,9 +471,10 @@ public class ObjectRepositoryView extends Composite {
 
 					toggleDeleteAttributeButton(false);
 					toggleAddAttributeButton(false);
-					boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
-							"Do you want to save changes?");
-					if (!result) {
+
+					CustomMessageDialogUtil msgDialog = new CustomMessageDialogUtil();
+					int result = msgDialog.openConfirmDialog("Confirmation", "Do you want to save changes?");
+					if (result != 0) {
 						toggleSaveButton(false);
 						objectRepositoryTree.renderObjectRepositories();
 						return;
@@ -539,7 +541,7 @@ public class ObjectRepositoryView extends Composite {
 				if (AppiumPortIpInfo.getHostAddress() == null
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 					AppiumPortIpInfo
-							.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 					AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 					AppiumPortIpInfo.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
@@ -761,7 +763,7 @@ public class ObjectRepositoryView extends Composite {
 			if (item.getORObject().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
 				item.getORObject()
-						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+				.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getORObject().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();
