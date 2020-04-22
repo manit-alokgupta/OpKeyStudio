@@ -10,7 +10,17 @@ public class MobileDeviceExecutionDetail {
 	private String deviceAPILevel;
 	private String deviceABI;
 
-	public MobileDeviceExecutionDetail() { }
+	private static MobileDeviceExecutionDetail instance = null;
+
+	private MobileDeviceExecutionDetail() {
+	}
+
+	public static MobileDeviceExecutionDetail getInstance() {
+		if (instance == null) {
+			instance = new MobileDeviceExecutionDetail();
+		}
+		return instance;
+	}
 
 	public String getDeviceId() {
 		return deviceId;
