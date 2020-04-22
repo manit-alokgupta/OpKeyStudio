@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -13,7 +14,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -76,23 +76,30 @@ public class ExecutionResultView extends Composite {
 			@Override
 			public void run() {
 				while (true) {
-					if (executor.isExecutionCompleted()) {
-						ByteArrayOutputStream standardOutPut = executor.getStandardOutput();
-						ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
-						String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
-								+ standardErrorOutput.toString();
-						System.out.println(">>Logs " + consoleOutPut);
-						new MessageDialogs().executeDisplayAsync(new Runnable() {
 
-							@Override
-							public void run() {
-								logTextView.setText(consoleOutPut);
-							}
-						});
+					ByteArrayOutputStream standardOutPut = executor.getStandardOutput();
+					ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
+					String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
+							+ standardErrorOutput.toString();
+					try {
+						standardOutPut.flush();
+						standardErrorOutput.flush();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+						@Override
+						public void run() {
+							logTextView.setText(consoleOutPut);
+						}
+					});
+					if (executor.isExecutionCompleted()) {
 						break;
 					}
 					try {
-						Thread.sleep(2000);
+						Thread.sleep(500);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
