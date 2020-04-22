@@ -15,7 +15,7 @@ public class SessionHandler implements ExecutionSession {
 	}
 
 	public void beforeSessionStart() {
-		ReportBuilder builder = ReportBuilder.atPath(new File(System.getProperty("user.dir") + "/hello.html"));
+		ReportBuilder builder = ReportBuilder.atPath(new File(System.getProperty("user.dir") + "/Report.html"));
 		Report report = builder.withFormat(ReportFormat.HTML).build();
 		report.beginSuite("Appium Automation");
 		report.beginTestCase("Test Case1");

@@ -354,7 +354,7 @@ public class OpKeyGenericKeywords {
 			ReportHelper.addReportStep(DataType.getMethodName(), functionResult);
 			return DataType.getBoolean(boolString);
 		} catch (Exception e) {
-			ReportHelper.addReportStep(DataType.getMethodName(), ReportHelper.getFailFunctionResult(e));
+			ReportHelper.addReportStep(DataType.getMethodName(), e);
 			return false;
 		}
 	}

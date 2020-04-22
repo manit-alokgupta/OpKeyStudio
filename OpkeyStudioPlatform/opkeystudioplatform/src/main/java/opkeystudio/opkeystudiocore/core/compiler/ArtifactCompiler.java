@@ -17,7 +17,7 @@ import javax.tools.JavaCompiler.CompilationTask;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class ArtifactCompiler {
-	
+
 	public List<CompileError> compileAllArtifacts(String rootFile, String pluginName) {
 		List<File> allFiles = new CompilerUtilities().getAllFiles(new File(rootFile), ".java");
 		String librariesClassPath = new CompilerUtilities().getClassPathOFAllAssociatedLibs(pluginName);
@@ -36,11 +36,16 @@ public class ArtifactCompiler {
 					optionList.addAll(Arrays.asList("-classpath", librariesClassPath));
 					JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 					DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
+
 					try (StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null)) {
 						Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(files);
 
 						CompilationTask task = compiler.getTask(null, manager, diagnostics, optionList, null, sources);
 						task.call();
+						
+					} catch (NullPointerException e) {
+						throw new Exception("Diaganostics might be null, Running through a JRE?");
+						
 					} catch (IOException e) {
 
 					}

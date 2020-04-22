@@ -1,6 +1,7 @@
 package com.ssts.reporting;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
@@ -35,35 +36,40 @@ public class Report {
 	}
 
 	public void addStep(String action, String[] parameters, Status status) {
-		String[][] data = new String[parameters.length + 1][];
-		data[0] = new String[] { "Action", action };
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Action", action);
 
 		int ii = 1;
 		for (String entry : parameters) {
-			data[ii++] = new String[] { "Param-" + ii, entry };
+			map.put("Param-" + ii, entry);
 		}
 
-		this.addStep(data, status);
+		this.addStep(map, status);
 	}
 
 	public void addStep(Map<String, String> parameters, Status status) {
-
-		String[][] data = new String[parameters.size()][];
-		int ii = 0;
-		for (Entry<String, String> entry : parameters.entrySet()) {
-			data[ii++] = new String[] { entry.getKey(), entry.getValue() };
-		}
-		this.addStep(data, status);
+		this.addStep(parameters, status, null);
 	}
 
-	public void addStep(String[][] parameters, Status status) {
-		
+	public void addStep(Map<String, String> parameters, Status status, Exception e) {
+
 		if (aNode == null) {
 			aNode = reportingStacks.peek().createNode(reportingStacks.peek().getModel().getName() + " continued...");
 		}
-		
-		Markup markup = MarkupHelper.createTable(parameters);
-		aNode.log(com.aventstack.extentreports.Status.valueOf(status.toString()), markup);
+
+		if (e != null) {
+			aNode.error(e);
+		} else {
+			String[][] data = new String[parameters.size()][];
+			int ii = 0;
+			for (Entry<String, String> entry : parameters.entrySet()) {
+				data[ii++] = new String[] { entry.getKey(), entry.getValue() };
+			}
+			Markup markup = MarkupHelper.createTable(data);
+			aNode.log(com.aventstack.extentreports.Status.valueOf(status.toString()), markup);
+		}
+
+		this.extentReport.flush();
 	}
 
 	public void beginFunctionLibrary(String flCaseName) {
