@@ -3,8 +3,10 @@ package com.opkey.OpKeyGenericPlugin;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
+import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
+import com.crestech.opkey.plugin.contexts.Context;
 import com.crestech.opkey.plugin.exceptionhandling.ArgumentDataMissingException;
 import com.opkey.ObjectFromatter.ObjectConverter;
 import com.opkey.context.ContextInitiator;
@@ -46,6 +48,7 @@ import com.plugin.appium.keywords.GenericKeyword.WebObjects;
 import com.plugin.appium.keywords.GenericKeyword.Window;
 import com.plugin.appium.keywords.GenericKeyword.actionByText.ActionByText;
 import com.ssts.reporting.Report;
+import com.ssts.reporting.Status;
 
 public class OpKeyGenericKeywords {
 	public OpKeyGenericKeywords() {
@@ -319,31 +322,43 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean LaunchChromeOnMobile(String arg0, String arg1) {
+	public boolean LaunchChromeOnMobile(String arg0, String url) {
 
 		System.out.println(">>Keyword Called LaunchChromeOnMobile");
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, url);
+		HashMap<String, String> parameters = new HashMap<String, String>();
+		parameters.put("Action", DataType.getMethodName());
 		
 		try {
-			Map map = new HashMap<String, Object>();
-			map.put("Action", DataType.getMethodName());
-			map.put("Output", "");
-			map.put("Message", "");
-//			Report.get().addStep(action, parameters, status);
+			
+			// Method_Launch_ChromeBrowser
+
+			MobileDevice device = new MobileDevice();
+			device.setVersion("8.1");
+			System.out.println(device);
+			device.setSerialNumber("PL2GAR4832302659");
+			device.setOperatingSystem("Android");
+			device.setDisplayName("Android Device");
+
+			Context.session().getSettings().put("AppiumServer", "C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
+			Context.session().getSettings().put("Host", "localhost");
+			Context.session().getSettings().put("Port", "4723");
+//			Context.session().getSettings().put("Host", "");
+//			Context.session().getSettings().put("Port", "");
+			Context.session().getSettings().put("PlatformVersion", "8.1");
+			
+			FunctionResult functionResult = new com.plugin.appium.keywords.AppiumSpecificKeyword.Connect2AppiumServer().Method_Launch_ChromeBrowser(device, url);
+			String boolString = functionResult.getOutput();
+			
+			ReportHelper.addReportStep(DataType.getMethodName(), functionResult);
+			return DataType.getBoolean(boolString);
 		} catch (Exception e) {
-			// TODO: handle exception
+			ReportHelper.addReportStep(DataType.getMethodName(), ReportHelper.getFailFunctionResult(e));
+			return false;
 		}
-		
-		
-		
-		// Method_Launch_ChromeBrowser
-
-		String bool = "false";
-		return DataType.getBoolean(bool);
-
 	}
-
+	
 	public boolean SetPickerValue(ORObject arg0, String arg1) throws Exception {
 
 		System.out.println(">>Keyword Called SetPickerValue");

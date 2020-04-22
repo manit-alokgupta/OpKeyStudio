@@ -10,7 +10,6 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.ssts.reporting.ReportBuilder.ReportFormat;
 
 public class Report {
 
@@ -37,12 +36,12 @@ public class Report {
 		
 	}
 	
-	public void addStep(String action, Map<String, Object> parameters, Status status) {
+	public void addStep(Map<String, String> parameters, Status status) {
 		
 		String[][] data = new String[parameters.size()][];
 		int ii =0;
-		for(Entry<String, Object> entry : parameters.entrySet()){
-		    data[ii++] = new String[] { entry.getKey(), entry.getValue().toString() };
+		for(Entry<String, String> entry : parameters.entrySet()){
+		    data[ii++] = new String[] { entry.getKey(), entry.getValue() };
 		}
 		
 		Markup markup = MarkupHelper.createTable(data);
@@ -96,22 +95,22 @@ public class Report {
 		
 		
 		report1.beginTestCase("Test Case2");
-		Map<String, Object> output = new HashMap<String, Object>();
+		Map<String, String> output = new HashMap<String, String>();
 		output.put("Action", "ClickOnObject");
 		output.put("Arguments", "Ahmad, 1234, True");
 		output.put("Output", "False");
 		output.put("Message", "Property-Name and value matched");
 		
 		
-		Map<String, Object> output1 = new HashMap<String, Object>();
+		Map<String, String> output1 = new HashMap<String, String>();
 		output1.put("Action", "TypeTextOnEditBox");
 		output1.put("Arguments", "Ahmad, 1234, True");
 		output1.put("Output", "True");
 		output1.put("Message", "");
 		
-		report1.addStep("Click on Something", output, Status.FAIL);
-		report1.addStep("Click on Something",output1, Status.PASS);
-		report1.addStep("Click on Something",output, Status.FAIL);
+		report1.addStep(output, Status.FAIL);
+		report1.addStep(output1, Status.PASS);
+		report1.addStep(output, Status.FAIL);
 		report1.endTestCase();
 		
 		report1.endSuite();

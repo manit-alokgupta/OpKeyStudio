@@ -34,7 +34,7 @@ public class ReportBuilder {
 		return format;
 	}
 
-	enum ReportFormat {
-		PDF, HTML
-	}
+//	enum ReportFormat {
+//		PDF, HTML
+//	}
 }
