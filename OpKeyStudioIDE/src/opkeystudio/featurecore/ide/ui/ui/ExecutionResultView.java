@@ -1,8 +1,11 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
@@ -10,6 +13,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -50,29 +54,43 @@ public class ExecutionResultView extends Composite {
 	}
 
 	private void startExecutionSession() {
-		ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
-		ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
-		setArtifactExecutor(executorExecutor);
-		startExecutionLogsFetch(executorExecutor);
+		MessageDialogs msd = new MessageDialogs();
+		msd.openProgressDialogOnBackgroundThread(getParent().getShell(), "Please Wait Execution is on Progress...",
+				true, new IRunnableWithProgress() {
+
+					@Override
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
+						ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
+						setArtifactExecutor(executorExecutor);
+						startExecutionLogsFetch(executorExecutor);
+					}
+				});
 	}
 
 	private void startExecutionLogsFetch(ArtifactExecutor executor) {
-		new MessageDialogs().executeDisplayAsync(new Runnable() {
+		Thread logThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				while (true) {
-					ByteArrayOutputStream standardOutPut = executor.getStandardOutput();
-					ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
 					if (executor.isExecutionCompleted()) {
+						ByteArrayOutputStream standardOutPut = executor.getStandardOutput();
+						ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
 						String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
 								+ standardErrorOutput.toString();
 						System.out.println(">>Logs " + consoleOutPut);
-						logTextView.setText(consoleOutPut);
+						new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+							@Override
+							public void run() {
+								logTextView.setText(consoleOutPut);
+							}
+						});
 						break;
 					}
 					try {
-						Thread.sleep(500);
+						Thread.sleep(2000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -80,6 +98,7 @@ public class ExecutionResultView extends Composite {
 				}
 			}
 		});
+		logThread.start();
 	}
 
 	private void initUI() {
@@ -91,7 +110,7 @@ public class ExecutionResultView extends Composite {
 		stopButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.EXIT_ICON));
 		stopButton.setToolTipText("Stop Execution");
 
-		logTextView = new StyledText(this, SWT.BORDER);
+		logTextView = new StyledText(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		logTextView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		logTextView.setEditable(true);
 		logTextView.setAlwaysShowScrollBars(true);

@@ -89,6 +89,9 @@ public class GlobalTranspiler {
 			List<ObjectAttributeProperty> attributeProperties = orobject.getObjectAttributesProperty();
 			int count = 0;
 			for (ObjectAttributeProperty oap : attributeProperties) {
+				if (oap.isIsused() == false) {
+					continue;
+				}
 				if (oap.getProperty().toLowerCase().equals("objectimage")) {
 					continue;
 				}

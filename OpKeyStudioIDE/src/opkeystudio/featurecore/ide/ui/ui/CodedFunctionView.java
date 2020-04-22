@@ -221,7 +221,7 @@ public class CodedFunctionView extends Composite {
 				}
 
 				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog_2(getParent().getShell(), "Please Wait Execution is on Progress...", true,
+				msd.openProgressDialogOnBackgroundThread(getParent().getShell(), "Please Wait Execution is on Progress...", true,
 						new IRunnableWithProgress() {
 
 							@Override
