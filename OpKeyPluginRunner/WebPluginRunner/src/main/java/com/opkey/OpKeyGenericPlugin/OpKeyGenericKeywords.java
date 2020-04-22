@@ -132,7 +132,6 @@ public class OpKeyGenericKeywords {
 
 		// Method_ObjectClick
 		try {
-			new Utils().waitForPageLoadAndOtherAjax();
 			WebDriverObject object = new ObjectConverter().formatObject(arg0);
 
 			FunctionResult fr = new WebObjects().Method_ObjectClick(object);
@@ -1335,7 +1334,6 @@ public class OpKeyGenericKeywords {
 	public boolean ClickLink(ORObject arg0) throws ToolNotSetException {
 		ContextInitiator.addFunction("ClickLink");
 
-		new Utils().waitForPageLoadAndOtherAjax();
 		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickLink
 		try {

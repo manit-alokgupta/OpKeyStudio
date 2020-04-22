@@ -64,8 +64,10 @@ public class ExecutionResultView extends Composite {
 						ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
 						setArtifactExecutor(executorExecutor);
 						startExecutionLogsFetch(executorExecutor);
+						
 					}
 				});
+		msd.closeProgressDialog();
 	}
 
 	private void startExecutionLogsFetch(ArtifactExecutor executor) {
