@@ -46,11 +46,16 @@ public class CompilerUtilities {
 		return allFiles;
 	}
 
+	private List<File> getReportingUtilJars() {
+		File reportingUtil = new File(Utilities.getInstance().getLibrariesFolder(), "ReportingUtil");
+		return getAllFiles(reportingUtil, ".jar");
+	}
+
 	private List<File> getPluginRunnerJar(String pluginName) {
 		String pluginRunnerDir = Utilities.getInstance().getPluginRunnerDir(pluginName);
 		return getAllFiles(new File(pluginRunnerDir), ".jar");
 	}
-	
+
 	public List<File> getAllPluginRunnerJar() {
 		String pluginRunnerDir = Utilities.getInstance().getDefaultPluginRunnerDir();
 		return getAllFiles(new File(pluginRunnerDir), ".jar");
@@ -62,6 +67,8 @@ public class CompilerUtilities {
 		files.addAll(getPluginRunnerJar("System"));
 		files.addAll(getPluginRunnerJar(pluginName));
 		files.addAll(getPluginsLibraries(pluginName));
+		files.addAll(getReportingUtilJars());
+
 		for (File file : files) {
 			if (!classPath.isEmpty()) {
 				classPath += ";";
