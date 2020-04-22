@@ -11,10 +11,7 @@ import org.apache.commons.io.IOUtils;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class VncStarter {
-	private String deviceId;
-	private String deviceAbi;
-	private String deviceSdk;
-	private String deviceName;
+	
 	private String port = "5801";
 	private String VncDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "VncServer"
 			+ File.separator + "vncserver" + File.separator + "PreCompiled_libs";
@@ -24,13 +21,10 @@ public class VncStarter {
 
 	public VncStarter() throws IOException, InterruptedException {
 		VncUtils.getInstance();
-		deviceId = VncUtils.runAdbCommandForMobileId();
-		deviceName = VncUtils.runAdbCommandForMobileModel(deviceId);
-		deviceAbi = VncUtils.runAdbCommandForMobileAbi(deviceId);
-		deviceSdk = VncUtils.runAdbCommandForMobileSdk(deviceId);
+		
 	}
 
-	public void startVncServer() throws IOException, InterruptedException {
+	public void startVncServer(String deviceId,String deviceName,String deviceAbi,String deviceSdk) throws IOException, InterruptedException {
 
 		Boolean directoryStatus = VncUtils.checkIfDirectoryExist(VncDirectory);
 		if (!directoryStatus) {
@@ -102,7 +96,7 @@ public class VncStarter {
 		}
 	}
 
-	public void startMobicast() throws IOException, InterruptedException {
+	public void startMobicast(String deviceId,String deviceName,String deviceAbi,String deviceSdk) throws IOException, InterruptedException {
 		 
 		if (VncUtils.checkIfDeviceIsConnected(deviceId)) {
 			VncUtils.installInputServiceApk(deviceId);
