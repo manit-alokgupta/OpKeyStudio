@@ -71,7 +71,7 @@ public class ArtifactExecutor {
 		Object result = method.invoke(instance);
 		
 		callExecuteSessionEnd();
-		stopExecution();
+		cleanExecutionSession();
 	}
 
 	private void callExecuteSessionStart() throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
@@ -90,7 +90,16 @@ public class ArtifactExecutor {
 		Object result = method.invoke(instance);
 	}
 
-	public void stopExecution() {
+	public void stopExecutionSession() {
+		try {
+			callExecuteSessionEnd();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void cleanExecutionSession() {
 		try {
 			getClassLoader().close();
 		} catch (IOException e) {

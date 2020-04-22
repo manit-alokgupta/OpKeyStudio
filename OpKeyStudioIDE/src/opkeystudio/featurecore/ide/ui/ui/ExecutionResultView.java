@@ -64,7 +64,7 @@ public class ExecutionResultView extends Composite {
 						ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
 						setArtifactExecutor(executorExecutor);
 						startExecutionLogsFetch(executorExecutor);
-						
+
 					}
 				});
 		msd.closeProgressDialog();
@@ -121,7 +121,7 @@ public class ExecutionResultView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				getArtifactExecutor().stopExecution();
+				getArtifactExecutor().stopExecutionSession();
 
 			}
 
