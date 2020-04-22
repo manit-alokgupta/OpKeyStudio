@@ -4,6 +4,7 @@ import com.crestech.opkey.plugin.communication.contracts.functionresult.Function
 import com.crestech.opkey.plugin.exceptionhandling.RetryKeywordAgainException;
 import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ToolNotSetException;
 import com.crestech.opkey.plugin.webdriver.keywords.Browser;
+import com.crestech.opkey.plugin.webdriver.keywords.Button;
 import com.crestech.opkey.plugin.webdriver.keywords.Checkbox;
 import com.crestech.opkey.plugin.webdriver.keywords.Deprecate;
 import com.crestech.opkey.plugin.webdriver.keywords.DropDown;
@@ -133,9 +134,9 @@ public class OpKeyGenericKeywords {
 		try {
 			new Utils().waitForPageLoadAndOtherAjax();
 			WebDriverObject object = new ObjectConverter().formatObject(arg0);
-			
+
 			FunctionResult fr = new WebObjects().Method_ObjectClick(object);
-			
+
 			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -687,7 +688,7 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyTextInTableCell(ORObject arg0, int arg1, int arg2, String arg3, String arg4, String arg5) {
 		ContextInitiator.addFunction("VerifyTextInTableCell");
-		
+
 		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextInTable
 
@@ -747,7 +748,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean SyncBrowser() {
 		ContextInitiator.addFunction("SyncBrowser");
-		
 
 		// Method_syncBrowser
 
@@ -757,7 +757,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean CloseAllBrowsers() throws Exception {
 		ContextInitiator.addFunction("CloseAllBrowsers");
-		
 
 		// Method_CloseAllBrowsers
 		new Browser().Method_CloseAllBrowsers();
@@ -767,7 +766,6 @@ public class OpKeyGenericKeywords {
 
 	public String GetAllTitles(String arg0) {
 		ContextInitiator.addFunction("GetAllTitles");
-		
 
 		// Method_GetAllTitles
 
@@ -777,7 +775,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean SelectWindow(String arg0, int arg1) {
 		ContextInitiator.addFunction("SelectWindow");
-		
 
 		// Method_selectWindow
 		try {
@@ -792,7 +789,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean CloseSelectedWindow(String arg0, int arg1) {
 		ContextInitiator.addFunction("CloseSelectedWindow");
-		
 
 		// Method_closeSelectedWindow
 
@@ -802,7 +798,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean SetFocusOnWindow(int arg0) {
 		ContextInitiator.addFunction("SetFocusOnWindow");
-		
 
 		// Method_setFocousOnWindow
 
@@ -822,7 +817,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyBrowserExist(String arg0) {
 		ContextInitiator.addFunction("VerifyBrowserExist");
-		
 
 		// Method_verifyBrowserExist
 
@@ -883,7 +877,12 @@ public class OpKeyGenericKeywords {
 	public boolean ClickButton(ORObject arg0) {
 		ContextInitiator.addFunction("ClickButton");
 		WebDriverObject object = new ObjectConverter().formatObject(arg0);
-
+		try {
+			new Button().Method_clickButton(object);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Method_clickButton
 		return false;
 
@@ -1101,7 +1100,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean DeFocusButton() {
 		ContextInitiator.addFunction("DeFocusButton");
-		
 
 		// Method_deFocusButton
 
@@ -1192,7 +1190,6 @@ public class OpKeyGenericKeywords {
 	public boolean DeFocusTextArea() {
 		ContextInitiator.addFunction("DeFocusTextArea");
 
-
 		// Method_deFocusTextArea
 
 		return false;
@@ -1271,7 +1268,6 @@ public class OpKeyGenericKeywords {
 
 	public int GetLinkCount() {
 		ContextInitiator.addFunction("GetLinkCount");
-		
 
 		// Method_getLinkCount
 
@@ -1281,7 +1277,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyLinkCount(int arg0) {
 		ContextInitiator.addFunction("VerifyLinkCount");
-		
 
 		// Method_verifyLinkCount
 
@@ -1311,7 +1306,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean PressTAB() {
 		ContextInitiator.addFunction("PressTAB");
-		
 
 		// Method_PressTAB
 
@@ -1321,7 +1315,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean CaptureSnapshot(String arg0) {
 		ContextInitiator.addFunction("CaptureSnapshot");
-		
 
 		// Method_CaptureSnapshot
 
@@ -1341,7 +1334,7 @@ public class OpKeyGenericKeywords {
 
 	public boolean ClickLink(ORObject arg0) throws ToolNotSetException {
 		ContextInitiator.addFunction("ClickLink");
-		
+
 		new Utils().waitForPageLoadAndOtherAjax();
 		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickLink
@@ -1367,7 +1360,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyAllLinkExist(String arg0) {
 		ContextInitiator.addFunction("VerifyAllLinkExist");
-		
 
 		// Method_verifyAllLinkExist
 
@@ -1407,7 +1399,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyImageCount(int arg0) {
 		ContextInitiator.addFunction("VerifyImageCount");
-
 
 		// Method_verifyImageCount
 
@@ -1457,7 +1448,6 @@ public class OpKeyGenericKeywords {
 
 	public String CopyFromClipBoard() {
 		ContextInitiator.addFunction("CopyFromClipBoard");
-		
 
 		// Method_copyFromClipBoard
 
@@ -1467,7 +1457,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean KeyLeft() {
 		ContextInitiator.addFunction("KeyLeft");
-		
 
 		// Method_KeyLeft
 
@@ -1477,7 +1466,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean KeyRight() {
 		ContextInitiator.addFunction("KeyRight");
-		
 
 		// Method_KeyRight
 
@@ -1497,7 +1485,6 @@ public class OpKeyGenericKeywords {
 
 	public String ReturnConcatenated(String arg0, String arg1, String arg2) {
 		ContextInitiator.addFunction("ReturnConcatenated");
-		
 
 		// Method_returnConcatenated
 
@@ -1507,7 +1494,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyAllLink(String arg0) {
 		ContextInitiator.addFunction("VerifyAllLink");
-		
 
 		// Method_verifyAllLink
 
@@ -1637,7 +1623,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean KeyPressNative(String arg0) {
 		ContextInitiator.addFunction("KeyPressNative");
-		
 
 		// Method_keyPressNative
 
@@ -1647,7 +1632,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Enter() {
 		ContextInitiator.addFunction("Enter");
-		
 
 		// Method_Enter
 
@@ -1707,7 +1691,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean DeFocusRadioButton() {
 		ContextInitiator.addFunction("DeFocusRadioButton");
-		
 
 		// Method_deFocusRadioButton
 
@@ -1757,7 +1740,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean DeFocusCheckBox() {
 		ContextInitiator.addFunction("DeFocusCheckBox");
-		
 
 		// Method_deFocusCheckBox
 
@@ -1847,7 +1829,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean DeFocusfromDropDown() {
 		ContextInitiator.addFunction("DeFocusfromDropDown");
-		
 
 		// Method_deFocusfromDropDown
 
@@ -1947,7 +1928,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean DeFocusEditField() {
 		ContextInitiator.addFunction("DeFocusEditField");
-		
 
 		// Method_deFocusEditField
 
@@ -1977,7 +1957,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyBrowserTitle(String arg0, String arg1) {
 		ContextInitiator.addFunction("VerifyBrowserTitle");
-		
 
 		// Method_VerifyBrowserTitle
 
@@ -2017,7 +1996,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean ReportMessage(String arg0, String arg1) {
 		ContextInitiator.addFunction("ReportMessage");
-		
 
 		// Method_reportMessage
 
@@ -2057,7 +2035,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean NavigateTo(String arg0) {
 		ContextInitiator.addFunction("NavigateTo");
-		
 
 		// Method_navigateTo
 
@@ -2067,7 +2044,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean AssertTextPresent(String arg0) {
 		ContextInitiator.addFunction("AssertTextPresent");
-		
 
 		// Method_AssertTextPresent
 
@@ -2167,7 +2143,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean MinimizeBrowser() {
 		ContextInitiator.addFunction("MinimizeBrowser");
-		
 
 		// Method_MinimizeBrowser
 
@@ -2207,7 +2182,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean AcceptPopup() {
 		ContextInitiator.addFunction("AcceptPopup");
-		
 
 		// Method_acceptPopup
 
@@ -2217,7 +2191,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean DismissPopup() {
 		ContextInitiator.addFunction("DismissPopup");
-		
 
 		// Method_dismissPopup
 
@@ -2227,7 +2200,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyPopupPresent(String arg0) {
 		ContextInitiator.addFunction("VerifyPopupPresent");
-		
 
 		// Method_verifyPopupPresent
 
@@ -2247,7 +2219,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean SwitchToDefaultContent() {
 		ContextInitiator.addFunction("SwitchToDefaultContent");
-		
 
 		// Method_switchToDefaultContent
 
@@ -2327,7 +2298,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean ExcelCompare(String arg0, String arg1, String arg2, String arg3) {
 		ContextInitiator.addFunction("ExcelCompare");
-		
 
 		// Method_excelCompare
 
@@ -2467,7 +2437,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Swipe(double arg0, double arg1, double arg2, double arg3, double arg4) {
 		ContextInitiator.addFunction("Swipe");
-		
 
 		// Method_swipe
 
@@ -2477,7 +2446,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean SwipeLeft() {
 		ContextInitiator.addFunction("SwipeLeft");
-		
 
 		// Method_SwipeLeft
 
@@ -2487,7 +2455,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean SwipeRight() {
 		ContextInitiator.addFunction("SwipeRight");
-		
 
 		// Method_SwipeRight
 
@@ -2507,7 +2474,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean SwipeObject(ORObject arg0, int arg1, String arg2) {
 		ContextInitiator.addFunction("SwipeObject");
-		
 
 		// Method_swipeWithObject
 
@@ -2517,7 +2483,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Swipe(int arg0, String arg1) {
 		ContextInitiator.addFunction("Swipe");
-		
 
 		// Method_MobilitySwipe
 
@@ -2528,7 +2493,6 @@ public class OpKeyGenericKeywords {
 	public int GetObjectCount(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6,
 			String arg7, String arg8, String arg9) {
 		ContextInitiator.addFunction("GetObjectCount");
-		
 
 		// Method_getObjectCount
 
@@ -2548,7 +2512,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyEditBoxExist() {
 		ContextInitiator.addFunction("VerifyEditBoxExist");
-		
 
 		// Method_verifyEditBoxExist
 
@@ -2592,7 +2555,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Web_ClickByText(String arg0, int arg1, boolean arg2, ORObject arg3, String arg4, String arg5) {
 		ContextInitiator.addFunction("Web_ClickByText");
-		
 
 		// Method_clickByText
 
@@ -2604,7 +2566,6 @@ public class OpKeyGenericKeywords {
 			boolean arg6, ORObject arg7, ORObject arg8, ORObject arg9, ORObject arg10, ORObject arg11, boolean arg12,
 			String arg13, int arg14, boolean arg15, String arg16, int arg17, boolean arg18, String arg19) {
 		ContextInitiator.addFunction("Web_ClickByTextInSequence");
-		
 
 		// Method_clickByTextInSequence
 
@@ -2614,7 +2575,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Web_SelectByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
 		ContextInitiator.addFunction("Web_SelectByText");
-		
 
 		// Method_SelectByText
 
@@ -2624,7 +2584,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Web_TypeByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4, ORObject arg5) {
 		ContextInitiator.addFunction("Web_TypeByText");
-		
 
 		// Method_typeTextUsingText
 
@@ -2634,7 +2593,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean MouseHoverOnText(String arg0, int arg1, boolean arg2, ORObject arg3) {
 		ContextInitiator.addFunction("MouseHoverOnText");
-		
 
 		// Method_mouseHoverOnText
 
@@ -2644,7 +2602,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean ClickImageByTitleAlt(String arg0, int arg1, boolean arg2) {
 		ContextInitiator.addFunction("ClickImageByTitleAlt");
-		
 
 		// Method_clickImageByAltText
 
@@ -2655,7 +2612,6 @@ public class OpKeyGenericKeywords {
 	public boolean Web_SelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, String arg4,
 			ORObject arg5) {
 		ContextInitiator.addFunction("Web_SelectCheckboxByText");
-		
 
 		// Method_selectCheckBoxByText
 
@@ -2665,7 +2621,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Web_DeSelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
 		ContextInitiator.addFunction("Web_DeSelectCheckboxByText");
-		
 
 		// Method_deSelectCheckBoxByText
 
@@ -2675,7 +2630,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Web_SelectRadioButtonByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
 		ContextInitiator.addFunction("Web_SelectRadioButtonByText");
-		
 
 		// Method_selectRadioButtonByText
 
@@ -2686,7 +2640,6 @@ public class OpKeyGenericKeywords {
 	public boolean Web_SelectDropDownByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4,
 			boolean arg5, ORObject arg6) {
 		ContextInitiator.addFunction("Web_SelectDropDownByText");
-		
 
 		// Method_selectDropDownByText
 
@@ -2696,7 +2649,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Web_GoBack() {
 		ContextInitiator.addFunction("Web_GoBack");
-		
 
 		// Method_goBack
 
@@ -2917,7 +2869,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyAllButtons(String arg0) {
 		ContextInitiator.addFunction("VerifyAllButtons");
-		
 
 		// Method_verifyAllButtons
 
@@ -2927,7 +2878,6 @@ public class OpKeyGenericKeywords {
 
 	public int GetImageCount() {
 		ContextInitiator.addFunction("GetImageCount");
-		
 
 		// Method_getImageCount
 
@@ -2997,7 +2947,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean SetBrowserCapability(String arg0, String arg1, String arg2, String arg3) {
 		ContextInitiator.addFunction("SetBrowserCapability");
-		
 
 		// Method_SetBrowserCapability
 
@@ -3017,7 +2966,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean DeFocusObject() {
 		ContextInitiator.addFunction("DeFocusObject");
-		
 
 		// Method_deFocusObject
 
@@ -3058,7 +3006,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Web_SetFocusOnCurrentWindow() {
 		ContextInitiator.addFunction("Web_SetFocusOnCurrentWindow");
-		
 
 		// Method_setFocusOnCurrentWindow
 
@@ -3068,7 +3015,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Web_WaitForWindowLoad(String arg0, int arg1, boolean arg2, int arg3) {
 		ContextInitiator.addFunction("Web_WaitForWindowLoad");
-		
 
 		// Method_waitForWindowLoad
 
@@ -3078,7 +3024,6 @@ public class OpKeyGenericKeywords {
 
 	public double GetLoadTime() {
 		ContextInitiator.addFunction("GetLoadTime");
-		
 
 		// Method_getLoadingTime
 
@@ -3088,7 +3033,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean IgnoreXMLHttpRequest(String arg0) {
 		ContextInitiator.addFunction("IgnoreXMLHttpRequest");
-		
 
 		// Method_ignoreXMLHttpRequest
 
@@ -3098,7 +3042,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean SynchronizeBrowser(boolean arg0, boolean arg1, boolean arg2, boolean arg3) {
 		ContextInitiator.addFunction("SynchronizeBrowser");
-		
 
 		// Method_syncBrowser
 
@@ -3118,7 +3061,6 @@ public class OpKeyGenericKeywords {
 
 	public String VisualComparisonForPage(String arg0, String arg1, boolean arg2, boolean arg3) {
 		ContextInitiator.addFunction("VisualComparisonForPage");
-		
 
 		// Custom_visualComparionForPage
 
@@ -3174,7 +3116,6 @@ public class OpKeyGenericKeywords {
 
 	public boolean Web_ResizeBrowser(int arg0, int arg1) {
 		ContextInitiator.addFunction("Web_ResizeBrowser");
-		
 
 		// Method_setViewPort
 

@@ -36,6 +36,7 @@ public class ObjectConverter {
 	private Object convertORObjectToOpKeyObject(ORObject orobject) {
 		Object object = new Object();
 		object.setLogicalName(getLogicalNameOfORObject(orobject));
+		object.setUseSmartIdentification(false);
 		Properties props = new Properties();
 		object.setProperties(props);
 
@@ -48,6 +49,7 @@ public class ObjectConverter {
 			property.setValue(propertyValue);
 			property.setDataType("String");
 			property.setIsUsed(true);
+			property.setRegularExpression(false);
 			object.getProperties().getProperty().add(property);
 		}
 		return object;

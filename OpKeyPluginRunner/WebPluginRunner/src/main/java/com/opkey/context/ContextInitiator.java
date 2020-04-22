@@ -39,14 +39,17 @@ public class ContextInitiator {
 	}
 
 	public static void addFunction(String functionName) {
+		System.out.println("[Function Call "+functionName+"]");
 		Function function = new Function();
 		function.setCallTimeoutInMillis(90000);
 		function.setMethodName(functionName);
 		Context.current().getFunctionCall().setFunction(function);
+		WebDriverDispatcher.preKeywordClearance();
 	}
 
 	private Map<String, String> getSettings() {
 		String defaultInstallDir = new File("").getAbsolutePath();
+		defaultInstallDir = "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE";
 		Map<String, String> settingsMap = new HashMap<String, String>();
 		settingsMap.put("XMLHttpRequestTimeOut", "30");
 		settingsMap.put("UseWaitForPageLoad", "true");
@@ -63,7 +66,7 @@ public class ContextInitiator {
 		settingsMap.put("ProxyHost", "");
 		settingsMap.put("ProxyPort", "");
 		settingsMap.put("_DefaultStepTimeout", "90");
-		settingsMap.put("_HighlightObject", "false");
+		settingsMap.put("_HighlightObject", "true");
 		settingsMap.put("_ObjectVisibilityCheck", "false");
 		settingsMap.put("________ignore________",
 				"NOTE: Below items can also be fetched through invocation arguments defined in plugin descriptor. Ignore the underscore edges in names");
