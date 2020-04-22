@@ -2,11 +2,16 @@ package opkeystudio.opkeystudiocore.core.execution;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
+import javax.tools.Diagnostic.Kind;
 
 import org.apache.commons.io.FileUtils;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.compiler.ArtifactCompiler;
+import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ExecutionSessionExecutor {
@@ -37,7 +42,14 @@ public class ExecutionSessionExecutor {
 		String artifactCodesDirPath = getSessionArtifacCodesFolder(session.getSessionName());
 
 		FileUtils.copyDirectory(new File(transpiledFilesDir), new File(artifactCodesDirPath));
-		new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath, pluginName);
+		List<CompileError> compileErrors = new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath, pluginName);
+		compileErrors = new CompilerUtilities().filterErrors(compileErrors, Kind.ERROR);
+		if (compileErrors.size() > 0) {
+			ArtifactExecutor retObject = new ArtifactExecutor();
+			retObject.setContainsErrors(true);
+			retObject.setCompileErrors(compileErrors);
+			return retObject;
+		}
 		return executeArtifact(artifactCodesDirPath, artifact, pluginName);
 	}
 

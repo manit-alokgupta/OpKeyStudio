@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.tools.Diagnostic.Kind;
+
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CompilerUtilities {
@@ -75,5 +78,15 @@ public class CompilerUtilities {
 			classPath += file.getAbsolutePath();
 		}
 		return classPath;
+	}
+	
+	public List<CompileError> filterErrors(List<CompileError> errors, Kind kind) {
+		List<CompileError> filteredErrors = new ArrayList<CompileError>();
+		for (CompileError ce : errors) {
+			if (ce.getKind() == kind) {
+				filteredErrors.add(ce);
+			}
+		}
+		return filteredErrors;
 	}
 }
