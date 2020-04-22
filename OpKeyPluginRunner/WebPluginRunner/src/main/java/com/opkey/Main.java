@@ -18,7 +18,6 @@ public class Main {
 	public static ORObject Login;
 
 	public static void main(String[] args) throws Exception {
-
 		CresConnect = new ORObject();
 		CresConnect.addProperty("tag", "html").addProperty("title", "CresConnect").addProperty("x", "0")
 				.addProperty("y", "0").addProperty("url", "http://cresconnect.crestechglobal.com/");
