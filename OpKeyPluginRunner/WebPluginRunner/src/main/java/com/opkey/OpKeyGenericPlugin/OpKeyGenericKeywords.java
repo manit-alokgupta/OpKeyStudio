@@ -1,7 +1,6 @@
 package com.opkey.OpKeyGenericPlugin;
 
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
-import com.crestech.opkey.plugin.exceptionhandling.RetryKeywordAgainException;
 import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ToolNotSetException;
 import com.crestech.opkey.plugin.webdriver.keywords.Browser;
 import com.crestech.opkey.plugin.webdriver.keywords.Button;
