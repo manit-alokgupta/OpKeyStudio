@@ -3,6 +3,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -11,6 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -23,6 +25,7 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSessionExecutor;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class ExecutionResultView extends Composite {
 
@@ -62,12 +65,50 @@ public class ExecutionResultView extends Composite {
 					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 						ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
 						ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
+						if (executorExecutor.isContainsErrors()) {
+							displayCompileErrors(executorExecutor.getCompileErrors());
+							new MessageDialogs().openErrorDialog("OpKey",
+									"Artifacts has Compiling Errors. Please check the execution logs for errors.");
+							return;
+						}
 						setArtifactExecutor(executorExecutor);
 						startExecutionLogsFetch(executorExecutor);
 
 					}
 				});
 		msd.closeProgressDialog();
+	}
+
+	private void displayLogs(String text) {
+		new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+			@Override
+			public void run() {
+				if (logTextView.isDisposed()) {
+					return;
+				}
+				logTextView.setForeground(new Color(logTextView.getDisplay(), 0, 0, 255));
+				logTextView.setText(text);
+			}
+		});
+	}
+
+	private void displayCompileErrors(List<CompileError> errors) {
+		new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+			@Override
+			public void run() {
+				if (logTextView.isDisposed()) {
+					return;
+				}
+				String errorLogs = "Errors while Compiling Artifacts";
+				for (CompileError error : errors) {
+					errorLogs += error.getMessage() + System.lineSeparator();
+				}
+				logTextView.setForeground(new Color(logTextView.getDisplay(), 255, 0, 0));
+				logTextView.setText(errorLogs);
+			}
+		});
 	}
 
 	private void startExecutionLogsFetch(ArtifactExecutor executor) {
@@ -88,13 +129,7 @@ public class ExecutionResultView extends Composite {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					new MessageDialogs().executeDisplayAsync(new Runnable() {
-
-						@Override
-						public void run() {
-							logTextView.setText(consoleOutPut);
-						}
-					});
+					displayLogs(consoleOutPut);
 					if (executor.isExecutionCompleted()) {
 						break;
 					}

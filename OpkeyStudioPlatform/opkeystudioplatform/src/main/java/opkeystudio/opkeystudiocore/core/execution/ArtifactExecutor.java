@@ -21,6 +21,7 @@ public class ArtifactExecutor {
 	private URLClassLoader classLoader;
 	private boolean executionCompleted = false;
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
+	private boolean containsErrors;
 
 	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
 		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
@@ -61,28 +62,31 @@ public class ArtifactExecutor {
 		}
 		URLClassLoader child = new URLClassLoader(allJarsAndClasses, ArtifactExecutor.class.getClassLoader());
 		setClassLoader(child);
-		
+
 		callExecuteSessionStart();
-		
+
 		@SuppressWarnings("rawtypes")
 		Class classToLoad = Class.forName(artifactClassNAME, true, child);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("execute");
 		Object result = method.invoke(instance);
-		
+
 		callExecuteSessionEnd();
 		cleanExecutionSession();
 	}
 
-	private void callExecuteSessionStart() throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+	private void callExecuteSessionStart()
+			throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException,
+			SecurityException, IllegalArgumentException, InvocationTargetException {
 		URLClassLoader classLoader = getClassLoader();
 		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("beforeSessionStart");
 		Object result = method.invoke(instance);
 	}
-	
-	private void callExecuteSessionEnd() throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+
+	private void callExecuteSessionEnd() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
 		URLClassLoader classLoader = getClassLoader();
 		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
@@ -99,6 +103,7 @@ public class ArtifactExecutor {
 			e.printStackTrace();
 		}
 	}
+
 	public void cleanExecutionSession() {
 		try {
 			getClassLoader().close();
@@ -146,5 +151,13 @@ public class ArtifactExecutor {
 
 	public void setCompileErrors(List<CompileError> compileErrors) {
 		this.compileErrors = compileErrors;
+	}
+
+	public boolean isContainsErrors() {
+		return containsErrors;
+	}
+
+	public void setContainsErrors(boolean containsErrors) {
+		this.containsErrors = containsErrors;
 	}
 }
