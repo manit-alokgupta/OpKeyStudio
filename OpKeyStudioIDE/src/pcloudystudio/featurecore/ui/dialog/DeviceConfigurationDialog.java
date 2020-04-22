@@ -287,13 +287,15 @@ public class DeviceConfigurationDialog extends Dialog {
 						if (MobileCapabilities.getMapOfCapabilities().containsKey("udid")
 								&& MobileCapabilities.getMapOfCapabilities().containsKey("deviceName")) {
 							MobileCapabilities.getMapOfCapabilities().replace("udid", selectedDeviceUDID);
-							String previousDeviceModelName = AndroidDeviceUtil
-									.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice));
+							String previousDeviceModelName = AndroidDeviceUtil.getDeviceProperty(
+									AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice),
+									AndroidDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY);
 							MobileCapabilities.getMapOfCapabilities().replace("deviceName", previousDeviceModelName);
 						} else {
 							MobileCapabilities.getMapOfCapabilities().put("udid", selectedDeviceUDID);
-							String previousDeviceModelName = AndroidDeviceUtil
-									.getDeviceName(AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice));
+							String previousDeviceModelName = AndroidDeviceUtil.getDeviceProperty(
+									AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice),
+									AndroidDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY);
 							MobileCapabilities.getMapOfCapabilities().put("deviceName", previousDeviceModelName);
 						}
 

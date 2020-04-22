@@ -5,7 +5,6 @@ package pcloudystudio.core.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,10 +13,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class AndroidDeviceUtil {
+	public static final String ANDROID_DEVICE_VERSION_PROPERTY = "ro.build.version.release";
+	public static final String ANDROID_DEVICE_NAME_PROPERTY = "ro.product.model";
+	public static final String ANDROID_DEVICE_API_LEVEL_PROPERTY = "ro.build.version.sdk";
+	public static final String ANDROID_DEVICE_ABI_PROPERTY = "ro.product.cpu.abi";
+
 	private static Map<String, String> devicesList;
-	private static String deviceName;
-	private static String deviceAbi;
-	private static String deviceSdk;
+	private static String devicePropertyOutput;
 
 	public static Map<String, String> getAndroidDevices() throws Exception {
 		String adbPath = System.getenv("ANDROID_SDK_HOME");
@@ -70,24 +72,6 @@ public class AndroidDeviceUtil {
 		return devicesList;
 	}
 
-	public static String getDeviceName(String deviceID) throws Exception {
-		String adbPath = System.getenv("ANDROID_SDK_HOME");
-		if (adbPath == null)
-			adbPath = System.getenv("ANDROID_HOME");
-		if (adbPath != null) {
-			adbPath = String.valueOf(adbPath) + File.separator + "platform-tools" + File.separator + "adb";
-			String[] cmd = new String[] { adbPath, "-s", deviceID, "shell", "getprop", "ro.product.model" };
-			ProcessBuilder pb = new ProcessBuilder(cmd);
-			pb.command(cmd);
-			Process process = pb.start();
-			process.waitFor();
-			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			deviceName = br.readLine();
-			br.close();
-		}
-		return deviceName;
-	}
-
 	public static String getSelectedAndroidDeviceId(String selectedDeviceName) {
 		String deviceID = null;
 		if (selectedDeviceName != null || selectedDeviceName != "") {
@@ -101,41 +85,22 @@ public class AndroidDeviceUtil {
 		return deviceID;
 	}
 
-	public static String getDeviceAbi(String deviceID) throws IOException, InterruptedException {
+	public static String getDeviceProperty(String deviceID, String propertyName) throws Exception {
 		String adbPath = System.getenv("ANDROID_SDK_HOME");
 		if (adbPath == null)
 			adbPath = System.getenv("ANDROID_HOME");
 		if (adbPath != null) {
 			adbPath = String.valueOf(adbPath) + File.separator + "platform-tools" + File.separator + "adb";
-			String[] cmd = new String[] { adbPath, "-s", deviceID, "shell", "getprop", "ro.product.cpu.abi" };
+			String[] cmd = new String[] { adbPath, "-s", deviceID, "shell", "getprop", propertyName };
 			ProcessBuilder pb = new ProcessBuilder(cmd);
 			pb.command(cmd);
 			Process process = pb.start();
 			process.waitFor();
 			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			deviceAbi = br.readLine();
+			devicePropertyOutput = br.readLine();
 			br.close();
 		}
-		return deviceAbi;
-
+		return devicePropertyOutput;
 	}
 
-	public static String getDeviceSdk(String deviceID) throws IOException, InterruptedException {
-		String adbPath = System.getenv("ANDROID_SDK_HOME");
-		if (adbPath == null)
-			adbPath = System.getenv("ANDROID_HOME");
-		if (adbPath != null) {
-			adbPath = String.valueOf(adbPath) + File.separator + "platform-tools" + File.separator + "adb";
-			String[] cmd = new String[] { adbPath, "-s", deviceID, "shell", "getprop", "ro.product.cpu.abi" };
-			ProcessBuilder pb = new ProcessBuilder(cmd);
-			pb.command(cmd);
-			Process process = pb.start();
-			process.waitFor();
-			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			deviceSdk = br.readLine();
-			br.close();
-		}
-		return deviceSdk;
-
-	}
 }
