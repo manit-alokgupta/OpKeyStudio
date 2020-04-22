@@ -2,6 +2,8 @@ package com.opkey.OpKeyGenericPlugin;
 
 import java.awt.AWTException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.crestech.opkey.plugin.exceptionhandling.ArgumentDataMissingException;
 import com.opkey.ObjectFromatter.ObjectConverter;
@@ -43,6 +45,7 @@ import com.plugin.appium.keywords.GenericKeyword.UnCategorised;
 import com.plugin.appium.keywords.GenericKeyword.WebObjects;
 import com.plugin.appium.keywords.GenericKeyword.Window;
 import com.plugin.appium.keywords.GenericKeyword.actionByText.ActionByText;
+import com.ssts.reporting.Report;
 
 public class OpKeyGenericKeywords {
 	public OpKeyGenericKeywords() {
@@ -319,9 +322,21 @@ public class OpKeyGenericKeywords {
 	public boolean LaunchChromeOnMobile(String arg0, String arg1) {
 
 		System.out.println(">>Keyword Called LaunchChromeOnMobile");
-
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
+		
+		try {
+			Map map = new HashMap<String, Object>();
+			map.put("Action", DataType.getMethodName());
+			map.put("Output", "");
+			map.put("Message", "");
+//			Report.get().addStep(action, parameters, status);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		
 		// Method_Launch_ChromeBrowser
 
 		String bool = "false";
