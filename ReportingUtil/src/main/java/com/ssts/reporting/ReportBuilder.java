@@ -14,6 +14,7 @@ public class ReportBuilder {
 	public static ReportBuilder atPath(File path) {
 		ReportBuilder util = new ReportBuilder();
 		util.atPath = path;
+		System.out.println("### Report @ " + path.getAbsolutePath());
 		return util;
 	}
 

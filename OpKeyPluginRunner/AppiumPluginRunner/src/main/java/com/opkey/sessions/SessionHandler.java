@@ -21,4 +21,14 @@ public class SessionHandler implements ExecutionSession {
 		report.beginTestCase("Test Case1");
 	}
 
+	public void pauseExecutionSession() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void resumeExecutionSession() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
