@@ -61,12 +61,33 @@ public class ArtifactExecutor {
 		}
 		URLClassLoader child = new URLClassLoader(allJarsAndClasses, ArtifactExecutor.class.getClassLoader());
 		setClassLoader(child);
+		
+		callExecuteSessionStart();
+		
 		@SuppressWarnings("rawtypes")
 		Class classToLoad = Class.forName(artifactClassNAME, true, child);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("execute");
 		Object result = method.invoke(instance);
+		
+		callExecuteSessionEnd();
 		stopExecution();
+	}
+
+	private void callExecuteSessionStart() throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+		URLClassLoader classLoader = getClassLoader();
+		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
+		Object instance = classToLoad.newInstance();
+		Method method = instance.getClass().getDeclaredMethod("beforeSessionStart");
+		Object result = method.invoke(instance);
+	}
+	
+	private void callExecuteSessionEnd() throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+		URLClassLoader classLoader = getClassLoader();
+		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
+		Object instance = classToLoad.newInstance();
+		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds");
+		Object result = method.invoke(instance);
 	}
 
 	public void stopExecution() {
