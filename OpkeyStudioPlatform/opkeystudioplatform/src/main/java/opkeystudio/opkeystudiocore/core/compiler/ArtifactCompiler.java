@@ -17,6 +17,7 @@ import javax.tools.JavaCompiler.CompilationTask;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class ArtifactCompiler {
+	
 	public List<CompileError> compileAllArtifacts(String rootFile, String pluginName) {
 		List<File> allFiles = new CompilerUtilities().getAllFiles(new File(rootFile), ".java");
 		String librariesClassPath = new CompilerUtilities().getClassPathOFAllAssociatedLibs(pluginName);

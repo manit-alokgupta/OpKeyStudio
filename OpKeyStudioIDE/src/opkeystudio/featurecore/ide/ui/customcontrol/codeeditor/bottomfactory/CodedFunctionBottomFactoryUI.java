@@ -35,7 +35,6 @@ import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
 

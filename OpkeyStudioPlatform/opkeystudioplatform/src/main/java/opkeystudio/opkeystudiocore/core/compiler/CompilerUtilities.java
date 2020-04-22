@@ -7,6 +7,7 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CompilerUtilities {
+
 	public List<File> getAllFiles(File rootFile, String extension) {
 		List<File> allFiles = new ArrayList<File>();
 		File[] files = rootFile.listFiles();
@@ -28,7 +29,7 @@ public class CompilerUtilities {
 		return getAllFiles(file, ".jar");
 	}
 
-	public List<File> getPluginsLibraries(String pluginName) {
+	private List<File> getPluginsLibraries(String pluginName) {
 		String pluginBaseFolder = Utilities.getInstance().getDefaultPluginsDir() + File.separator + pluginName;
 		File file = new File(pluginBaseFolder);
 		if (!file.exists()) {
@@ -43,6 +44,8 @@ public class CompilerUtilities {
 		allFiles.addAll(getPluginRunnerJar("System"));
 		allFiles.addAll(getPluginRunnerJar(pluginName));
 		allFiles.addAll(getPluginsLibraries(pluginName));
+		allFiles.addAll(getReportingUtilJars());
+		
 		return allFiles;
 	}
 
@@ -63,11 +66,7 @@ public class CompilerUtilities {
 
 	public String getClassPathOFAllAssociatedLibs(String pluginName) {
 		String classPath = "";
-		List<File> files = getPluginBaseLibraries();
-		files.addAll(getPluginRunnerJar("System"));
-		files.addAll(getPluginRunnerJar(pluginName));
-		files.addAll(getPluginsLibraries(pluginName));
-		files.addAll(getReportingUtilJars());
+		List<File> files =getAllAssocitedLibraries(pluginName);
 
 		for (File file : files) {
 			if (!classPath.isEmpty()) {
