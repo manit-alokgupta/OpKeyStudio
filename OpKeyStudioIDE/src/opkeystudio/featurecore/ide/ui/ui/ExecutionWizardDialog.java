@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.File;
+import java.util.Map;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
@@ -26,10 +27,14 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import pcloudystudio.core.utils.AndroidDeviceUtil;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.pcloudystudio.core.execution.MobileDeviceExecutionDetail;
+import org.eclipse.swt.events.SelectionAdapter;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Combo pluginSelectionDropDown;
+	private Combo androidDeviceSelectionDropDown;
 	private Button runButton;
 	private TestCaseView parentTestCaseView;
 	private TestSuiteView parentTestSuiteView;
@@ -37,10 +42,12 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private boolean executingFromTestSuiteView;
 	private Text sessionNameTextField;
 	private Text buildNameTextField;
+	private Label lblDeviceSelection;
 
 	private ExecutionSession executionSession;
 	private Composite container;
 	private Composite area;
+	private Button btnRefreshDeviceList;
 
 	/**
 	 * Create the dialog.
@@ -73,16 +80,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {
 		area = (Composite) super.createDialogArea(parent);
 		container = new Composite(area, SWT.NONE);
-		container.setLayout(new GridLayout(22, false));
+		container.setLayout(new GridLayout(15, false));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
@@ -100,39 +99,27 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		new Label(container, SWT.NONE);
 
 		Label lblNewLabel = new Label(container, SWT.NONE);
-		lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 20, 1));
+		lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
 		lblNewLabel.setText("Session Name:");
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 
 		sessionNameTextField = new Text(container, SWT.BORDER);
-		sessionNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
+		sessionNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 15, 1));
 		sessionNameTextField.setText(getExecutionSession().getSessionName());
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 
 		Label lblNewLabel_1 = new Label(container, SWT.NONE);
-		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 20, 1));
+		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
 		lblNewLabel_1.setText("Build Name:");
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 
 		buildNameTextField = new Text(container, SWT.BORDER);
-		buildNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 20, 1));
+		buildNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 15, 1));
 		buildNameTextField.setText(getExecutionSession().getBuildName());
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 
 		Label lblNewLabel_2 = new Label(container, SWT.NONE);
-		lblNewLabel_2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 20, 1));
+		lblNewLabel_2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
 		lblNewLabel_2.setText("Plugin:");
-		new Label(container, SWT.NONE);
-
-		Composite composite_1 = new Composite(container, SWT.NONE);
-		composite_1.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
 
 		pluginSelectionDropDown = new Combo(container, SWT.DROP_DOWN | SWT.READ_ONLY);
-		pluginSelectionDropDown.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 20, 1));
+		pluginSelectionDropDown.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 15, 1));
 		pluginSelectionDropDown.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -145,17 +132,80 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 				String pluginName = pluginSelectionDropDown.getItem(index);
 				getExecutionSession().setPluginName(pluginName);
 				runButton.setEnabled(true);
+				if (pluginName.contentEquals("Appium")) {
+					initDeviceNames();
+					lblDeviceSelection.setVisible(true);
+					btnRefreshDeviceList.setVisible(true);
+					androidDeviceSelectionDropDown.setVisible(true);
+				} else {
+					lblDeviceSelection.setVisible(false);
+					btnRefreshDeviceList.setVisible(false);
+					androidDeviceSelectionDropDown.setVisible(false);
+				}
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
 
-		Composite composite = new Composite(container, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
+		lblDeviceSelection = new Label(container, SWT.NONE);
+		lblDeviceSelection.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
+		lblDeviceSelection.setVisible(false);
+		lblDeviceSelection.setText("Device:");
+
+		androidDeviceSelectionDropDown = new Combo(container, SWT.DROP_DOWN | SWT.READ_ONLY);
+		androidDeviceSelectionDropDown.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 14, 1));
+		androidDeviceSelectionDropDown.setVisible(false);
+
+		btnRefreshDeviceList = new Button(container, SWT.NONE);
+		btnRefreshDeviceList.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				initDeviceNames();
+			}
+		});
+		btnRefreshDeviceList.setVisible(false);
+		btnRefreshDeviceList.setText("Refresh");
+		androidDeviceSelectionDropDown.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int index = androidDeviceSelectionDropDown.getSelectionIndex();
+				if (index == 0) {
+					runButton.setEnabled(false);
+					return;
+				} else {
+					String deviceID = AndroidDeviceUtil
+							.getSelectedAndroidDeviceId(androidDeviceSelectionDropDown.getText());
+					getMobileDeviceExecutionDetail().setDeviceId(deviceID);
+					try {
+						getMobileDeviceExecutionDetail().setDeviceName(AndroidDeviceUtil.getDeviceProperty(deviceID,
+								AndroidDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY));
+						getMobileDeviceExecutionDetail().setDeviceVersion(AndroidDeviceUtil.getDeviceProperty(deviceID,
+								AndroidDeviceUtil.ANDROID_DEVICE_VERSION_PROPERTY));
+						getMobileDeviceExecutionDetail().setDeviceAPILevel(AndroidDeviceUtil.getDeviceProperty(deviceID,
+								AndroidDeviceUtil.ANDROID_DEVICE_API_LEVEL_PROPERTY));
+						getMobileDeviceExecutionDetail().setDeviceABI(AndroidDeviceUtil.getDeviceProperty(deviceID,
+								AndroidDeviceUtil.ANDROID_DEVICE_ABI_PROPERTY));
+					} catch (Exception ex) {
+						CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
+					}
+					System.out.println("\n<---------------- Selected Device Details ---------------->\n" + "Device ID: "
+							+ getMobileDeviceExecutionDetail().getDeviceId() + "\n" + "Device Name: "
+							+ getMobileDeviceExecutionDetail().getDeviceName() + "\n" + "Device Version: "
+							+ getMobileDeviceExecutionDetail().getDeviceVersion() + "\n" + "Device API Level: "
+							+ getMobileDeviceExecutionDetail().getDeviceAPILevel() + "\n" + "Device ABI: "
+							+ getMobileDeviceExecutionDetail().getDeviceABI() + "\n");
+					runButton.setEnabled(true);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
 		// setMessage("Select The Plugin, and Click \"Run\"");
 		setTitle("Execution Wizard");
 
@@ -195,6 +245,22 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		pluginSelectionDropDown.select(0);
 	}
 
+	private void initDeviceNames() {
+		runButton.setEnabled(false);
+		androidDeviceSelectionDropDown.removeAll();
+		androidDeviceSelectionDropDown.add("Select Device");
+		try {
+			Map<String, String> devicesList = AndroidDeviceUtil.getAndroidDevices();
+			if (devicesList.size() > 0) {
+				for (Map.Entry<String, String> deviceEntry : devicesList.entrySet())
+					androidDeviceSelectionDropDown.add(deviceEntry.getValue());
+			}
+			androidDeviceSelectionDropDown.select(0);
+		} catch (Exception ex) {
+			CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
+		}
+	}
+
 	/**
 	 * Create contents of the button bar.
 	 * 
@@ -223,7 +289,6 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -232,13 +297,11 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -259,7 +322,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(680, 550);
+		return new Point(650, 540);
 	}
 
 	public TestSuiteView getParentTestSuiteView() {
@@ -300,5 +363,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 	public void setExecutionSession(ExecutionSession executionSession) {
 		this.executionSession = executionSession;
+	}
+
+	public MobileDeviceExecutionDetail getMobileDeviceExecutionDetail() {
+		return MobileDeviceExecutionDetail.getInstance();
 	}
 }
