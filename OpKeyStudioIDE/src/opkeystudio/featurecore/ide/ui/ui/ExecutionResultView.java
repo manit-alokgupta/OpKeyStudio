@@ -67,8 +67,6 @@ public class ExecutionResultView extends Composite {
 						ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
 						if (executorExecutor.isContainsErrors()) {
 							displayCompileErrors(executorExecutor.getCompileErrors());
-							new MessageDialogs().openErrorDialog("OpKey",
-									"Artifacts has Compiling Errors. Please check the execution logs for errors.");
 							return;
 						}
 						setArtifactExecutor(executorExecutor);
@@ -103,10 +101,12 @@ public class ExecutionResultView extends Composite {
 				}
 				String errorLogs = "Errors while Compiling Artifacts";
 				for (CompileError error : errors) {
-					errorLogs += error.getMessage() + System.lineSeparator();
+					errorLogs += System.lineSeparator() + error.getMessage() + System.lineSeparator();
 				}
 				logTextView.setForeground(new Color(logTextView.getDisplay(), 255, 0, 0));
 				logTextView.setText(errorLogs);
+				new MessageDialogs().openErrorDialog("OpKey",
+						"Artifacts has Compiling Errors. Please check the execution logs for errors.");
 			}
 		});
 	}
