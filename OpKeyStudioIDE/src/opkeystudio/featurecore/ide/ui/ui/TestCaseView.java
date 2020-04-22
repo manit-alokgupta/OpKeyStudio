@@ -588,7 +588,7 @@ public class TestCaseView extends Composite {
 		populateInputTabData();
 	}
 
-	private void openExecutionWizard() {
+	public void openExecutionWizard() {
 		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
 		executionWizard.open();
 	}

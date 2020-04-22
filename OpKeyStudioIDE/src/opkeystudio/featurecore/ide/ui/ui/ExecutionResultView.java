@@ -120,16 +120,18 @@ public class ExecutionResultView extends Composite {
 
 					ByteArrayOutputStream standardOutPut = executor.getStandardOutput();
 					ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
-					String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
-							+ standardErrorOutput.toString();
-					try {
-						standardOutPut.flush();
-						standardErrorOutput.flush();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					if (standardOutPut != null && standardErrorOutput != null) {
+						String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
+								+ standardErrorOutput.toString();
+						try {
+							standardOutPut.flush();
+							standardErrorOutput.flush();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						displayLogs(consoleOutPut);
 					}
-					displayLogs(consoleOutPut);
 					if (executor.isExecutionCompleted()) {
 						break;
 					}
@@ -156,15 +158,15 @@ public class ExecutionResultView extends Composite {
 
 		logTextView = new StyledText(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		logTextView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		logTextView.setEditable(true);
+		logTextView.setEditable(false);
 		logTextView.setAlwaysShowScrollBars(true);
 
 		stopButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				getArtifactExecutor().getExecutionThread().interrupt();
 				getArtifactExecutor().stopExecutionSession();
-
 			}
 
 			@Override

@@ -100,7 +100,7 @@ public class ArtifactCodeView extends Composite {
 		initDataRepositoryCode();
 		getJavaEditor().setEditable(editable);
 	}
-	
+
 	private void initTestCaseCode() {
 		Artifact artifact = getParentTestCaseView().getArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
@@ -173,8 +173,9 @@ public class ArtifactCodeView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				if (isEmbeddedInsideTestCaseView()) {
+					getParentTestCaseView().openExecutionWizard();
+				}
 			}
 
 			@Override
@@ -217,8 +218,9 @@ public class ArtifactCodeView extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				if (isEmbeddedInsideTestSuiteView()) {
+					getParentTestSuiteView().openExecutionWizard();
+				}
 			}
 
 			@Override

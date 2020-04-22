@@ -22,6 +22,7 @@ public class ArtifactExecutor {
 	private boolean executionCompleted = false;
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 	private boolean containsErrors;
+	private Thread executionThread;
 
 	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
 		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
@@ -49,6 +50,7 @@ public class ArtifactExecutor {
 			}
 		});
 		executionThread.start();
+		setExecutionThread(executionThread);
 	}
 
 	private void execute(String sessionRootDir, String artifactClassNAME, String pluginName)
@@ -159,5 +161,13 @@ public class ArtifactExecutor {
 
 	public void setContainsErrors(boolean containsErrors) {
 		this.containsErrors = containsErrors;
+	}
+
+	public Thread getExecutionThread() {
+		return executionThread;
+	}
+
+	public void setExecutionThread(Thread executionThread) {
+		this.executionThread = executionThread;
 	}
 }
