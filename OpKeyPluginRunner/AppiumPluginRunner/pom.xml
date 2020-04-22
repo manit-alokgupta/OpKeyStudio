@@ -49,5 +49,10 @@
 			<scope>system</scope>
 			<systemPath>${opkeyAppiumPluginJar}</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>com.ssts</groupId>
+			<artifactId>ReportingUtil</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
