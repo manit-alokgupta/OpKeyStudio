@@ -1,5 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.IOException;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -26,7 +28,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import opkeystudio.commandhandler.RefreshArtifactTree;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.CodeViewTree;
 import opkeystudio.iconManager.OpKeyStudioIcons;
@@ -874,7 +875,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				ArtifactTree tree = (ArtifactTree) e.getSource();
+				CodeViewTree tree = (CodeViewTree) e.getSource();
 				ArtifactTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
 
 				System.out.println("Mouse clicked event");
