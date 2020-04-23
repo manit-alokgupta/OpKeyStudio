@@ -14,10 +14,12 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<pluginName>Web</pluginName>
-		<opkeyStudioLibrariesDirPath>C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpKeyStudioIDE\resources\libraries</opkeyStudioLibrariesDirPath>
+		<!-- <opkeyStudioLibrariesDirPath>C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpKeyStudioIDE\resources\libraries</opkeyStudioLibrariesDirPath> -->
+		<opkeyStudioLibrariesDirPath>D:\WP_Opkey\OpKeyStudio\OpKeyStudioIDE\resources\libraries</opkeyStudioLibrariesDirPath>
 		<opkeyruntimejarpath>${opkeyStudioLibrariesDirPath}\PluginBase\opkeyeruntimeJar.jar</opkeyruntimejarpath>
 		<opkeyPluginBaseLibPath>${opkeyStudioLibrariesDirPath}\PluginBase\opkey-pluginbase-v2.0-jar-with-dependencies.jar</opkeyPluginBaseLibPath>
 		<opkeyWebPluginJar>${opkeyStudioLibrariesDirPath}\Plugins\Web\Web-3.141.59.jar</opkeyWebPluginJar>
+		<ReportingUtilJar>${opkeyStudioLibrariesDirPath}\ReportingUtil\ReportingUtil-0.0.1-SNAPSHOT.jar</ReportingUtilJar>
 	</properties>
 
 	<dependencies>
@@ -47,6 +49,13 @@
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${opkeyWebPluginJar}</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.ssts</groupId>
+			<artifactId>ReportingUtil</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${ReportingUtilJar}</systemPath>
 		</dependency>
 	</dependencies>
 </project>

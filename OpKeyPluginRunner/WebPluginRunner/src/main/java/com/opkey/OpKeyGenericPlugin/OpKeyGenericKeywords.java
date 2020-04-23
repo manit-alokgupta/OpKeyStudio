@@ -19,6 +19,7 @@ import com.opkey.context.ContextInitiator;
 import com.opkey.executor.KeywordExecutor;
 import com.opkey.executor.Runnable;
 import com.opkeystudio.runtime.ORObject;
+import com.ssts.reporting.Report;
 
 public class OpKeyGenericKeywords {
 	public OpKeyGenericKeywords() {
@@ -45,6 +46,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
+		ReportHelper.addReportStep("TypeTextOnEditBox", result);
 		return false;
 
 	}
@@ -97,16 +99,19 @@ public class OpKeyGenericKeywords {
 
 		// Method_WebBrowserOpen
 		FunctionResult result = new KeywordExecutor(new Runnable() {
-
+			
 			public FunctionResult run() {
 				try {
-					return new Browser().Method_WebBrowserOpen(arg0, arg1);
+					FunctionResult functionResult = new Browser().Method_WebBrowserOpen(arg0, arg1);
+					ReportHelper.addReportStep("OpenBrowser", functionResult);
+					return functionResult;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				return null;
 			}
 		}).executeKeyword();
+		
 		return false;
 
 	}
@@ -183,10 +188,11 @@ public class OpKeyGenericKeywords {
 			public FunctionResult run() {
 				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
-					return new WebObjects().Method_ObjectClick(object);
+					FunctionResult functionResult = new WebObjects().Method_ObjectClick(object);
+					ReportHelper.addReportStep("Click", functionResult);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					ReportHelper.addReportStep("Click", e);
 				}
 				return null;
 			}
@@ -346,14 +352,18 @@ public class OpKeyGenericKeywords {
 			public FunctionResult run() {
 				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
-					return new EditBox().Method_clearEditField(object);
+					FunctionResult functionResult =  new EditBox().Method_clearEditField(object);
+					ReportHelper.addReportStep("ClearEditField", functionResult);
+					return functionResult;
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					ReportHelper.addReportStep("ClearEditField", e);
 					e.printStackTrace();
 				}
 				return null;
 			}
 		}).executeKeyword();
+		
+		
 		return false;
 
 	}
@@ -599,6 +609,7 @@ public class OpKeyGenericKeywords {
 		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_ObjectExists
 
+		ReportHelper.addReportStep("VerifyObjectExists", new Exception("Exception while VerifyObjectExists"));
 		return false;
 
 	}
@@ -2146,6 +2157,8 @@ public class OpKeyGenericKeywords {
 				return null;
 			}
 		}).executeKeyword();
+		
+		ReportHelper.addReportStep("NavigateTo", new Exception("Methond not implemented yet."));
 		return false;
 
 	}
@@ -2840,6 +2853,8 @@ public class OpKeyGenericKeywords {
 				return null;
 			}
 		}).executeKeyword();
+		
+		ReportHelper.addReportStep("GetObjectText", new Exception("exception while runnging GetObjectText"));
 		return "";
 
 	}
@@ -2854,6 +2869,8 @@ public class OpKeyGenericKeywords {
 				return null;
 			}
 		}).executeKeyword();
+		
+		ReportHelper.addReportStep("VerifyEditBoxExist", new Exception("Object not found"));
 		return false;
 
 	}
