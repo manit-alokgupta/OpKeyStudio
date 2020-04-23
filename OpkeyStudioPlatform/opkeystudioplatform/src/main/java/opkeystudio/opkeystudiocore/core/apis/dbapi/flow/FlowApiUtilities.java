@@ -56,6 +56,26 @@ public class FlowApiUtilities {
 
 	public String getFlowInputPutArgumentsString(Artifact artifact, FlowStep flowStep) {
 		String outData = "";
+		List<FlowInputArgument> flowStepInputargs = flowStep.getFlowInputArgs();
+		if (flowStepInputargs.size() == 0) {
+			return "";
+		}
+		for (FlowInputArgument flowInputArgument : flowStepInputargs) {
+			if (!outData.isEmpty()) {
+				outData += "|";
+			}
+			if (flowInputArgument.getStaticvalue() != null) {
+				outData += flowInputArgument.getStaticvalue();
+			}
+		}
+		if (!outData.isEmpty()) {
+			return "Input: " + "<" + outData + ">";
+		}
+		return "Input: <>";
+	}
+
+	public String getFlowInputPutArgumentsString_2(Artifact artifact, FlowStep flowStep) {
+		String outData = "";
 		List<FlowInputObject> flowInputObjects = getAllFlowInputObject(artifact, flowStep.getFlowInputArgs());
 		if (flowInputObjects.size() == 0) {
 			return "";
@@ -163,7 +183,6 @@ public class FlowApiUtilities {
 
 	public List<FlowInputObject> getAllFlowInputObject(Artifact artifact, List<FlowInputArgument> flowInputArguments) {
 		List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
-
 		for (FlowInputArgument flowInputArgument : flowInputArguments) {
 			KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
 			if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
