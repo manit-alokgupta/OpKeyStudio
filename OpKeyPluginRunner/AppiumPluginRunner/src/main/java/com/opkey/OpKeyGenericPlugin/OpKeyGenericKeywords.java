@@ -327,8 +327,6 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called LaunchChromeOnMobile");
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, url);
-		HashMap<String, String> parameters = new HashMap<String, String>();
-		parameters.put("Action", DataType.getMethodName());
 		
 		try {
 			
@@ -420,12 +418,23 @@ public class OpKeyGenericKeywords {
 	public boolean TypeTextOnEditBox(ORObject arg0, String arg1) throws Exception {
 
 		System.out.println(">>Keyword Called TypeTextOnEditBox");
-
-		ContextInitiator.addFunction("TypeTextOnEditBox");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_typeTextOnEditBox
+		String methodName = DataType.getMethodName();
+		ContextInitiator.addFunction(methodName);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1); 
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		String boolString = new EditBox().Method_typeTextOnEditBox(object, arg1).getOutput();
-		return DataType.getBoolean(boolString);
+		// Method_typeTextOnEditBox
+		
+		try {
+			FunctionResult functionResult = new EditBox().Method_typeTextOnEditBox(object, arg1);
+			ReportHelper.addReportStep(methodName, functionResult);
+			
+			String boolString = functionResult.getOutput();
+			return DataType.getBoolean(boolString);
+		} catch (Exception e) {
+			ReportHelper.addReportStep(methodName, e);
+		}
+		
+		return false;
 	}
 
 	public boolean TypeKeysOnEditBox(ORObject arg0, String arg1) throws Exception {
@@ -499,13 +508,21 @@ public class OpKeyGenericKeywords {
 	public boolean Click(ORObject arg0) throws Exception {
 
 		System.out.println(">>Keyword Called Click");
-
-		ContextInitiator.addFunction("Click");
+		String methodName = DataType.getMethodName();
+		ContextInitiator.addFunction(methodName);
+		
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_ObjectClick
-		String bool = new com.plugin.appium.keywords.GenericKeyword.WebObjects().Method_ObjectClick(object).getOutput();
-		return DataType.getBoolean(bool);
-
+		try {
+			FunctionResult functionResult = new com.plugin.appium.keywords.GenericKeyword.WebObjects().Method_ObjectClick(object);
+			String bool = functionResult.getOutput();
+			ReportHelper.addReportStep(methodName, functionResult);
+			return DataType.getBoolean(bool);
+		} catch (Exception e) {
+			ReportHelper.addReportStep(methodName, e);
+		}
+		
+		return false;
 	}
 
 	public boolean DoubleClick(ORObject arg0) throws Exception {
@@ -593,13 +610,21 @@ public class OpKeyGenericKeywords {
 	public boolean ClearEditField(ORObject arg0) throws Exception {
 
 		System.out.println(">>Keyword Called ClearEditField");
-
+		String methodName = DataType.getMethodName();
 		ContextInitiator.addFunction("ClearEditField");
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clearEditField
 
-		String bool = new EditBox().Method_clearEditField(object).getOutput();
-		return DataType.getBoolean(bool);
+		try {
+			FunctionResult functionResult = new EditBox().Method_clearEditField(object);
+			ReportHelper.addReportStep(methodName, functionResult);
+			String bool = functionResult.getOutput();
+			return DataType.getBoolean(bool);
+		} catch (Exception e) {
+			ReportHelper.addReportStep(methodName, e);
+		}
+		
+		return false;
 
 	}
 
@@ -847,14 +872,22 @@ public class OpKeyGenericKeywords {
 	public boolean VerifyObjectExists(ORObject arg0) throws ToolNotSetException {
 
 		System.out.println(">>Keyword Called VerifyObjectExists");
-
-		ContextInitiator.addFunction("VerifyObjectExists");
+		String methodName = DataType.getMethodName();
+		ContextInitiator.addFunction(methodName);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_ObjectExists
 
-		String bool = new WebObjects().Method_ObjectExists(object).getOutput();
-		return DataType.getBoolean(bool);
-
+		try {
+			FunctionResult functionResult = new WebObjects().Method_ObjectExists(object);
+			ReportHelper.addReportStep(methodName, functionResult);
+			
+			String bool = functionResult.getOutput();
+			return DataType.getBoolean(bool);
+		} catch (Exception e) {
+			ReportHelper.addReportStep(methodName, e);
+		}
+		
+		return false;
 	}
 
 	public boolean VerifyObjectEnabled(ORObject arg0) throws Exception {
@@ -2858,14 +2891,21 @@ public class OpKeyGenericKeywords {
 	public boolean NavigateTo(String arg0) throws Exception {
 
 		System.out.println(">>Keyword Called NavigateTo");
-
+		String methodName = DataType.getMethodName();
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
+		
 		// Method_navigateTo
-
-		String bool = new Browser().Method_navigateTo(arg0).getOutput();
-		return DataType.getBoolean(bool);
-
+		try {
+			FunctionResult functionResult = new Browser().Method_navigateTo(arg0);
+			String bool = functionResult.getOutput();
+			ReportHelper.addReportStep(methodName, functionResult);
+			return DataType.getBoolean(bool);
+		} catch (Exception e) {
+			ReportHelper.addReportStep(methodName, e);
+		}
+		
+		return false;
 	}
 
 	public boolean AssertTextPresent(String arg0) throws Exception {
@@ -3486,23 +3526,30 @@ public class OpKeyGenericKeywords {
 	}
 
 	public String GetObjectText(ORObject arg0, String arg1, String arg2) throws Exception {
-		ContextInitiator.addFunction(DataType.getMethodName());
+		String methodName = DataType.getMethodName();
+		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">>Keyword Called GetObjectText");
 
 		// Method_GetObjectText
-
-		return new WebObjects().Method_GetObjectText(object, arg1, arg2).getOutput();
+		try {
+			FunctionResult functionResult = new WebObjects().Method_GetObjectText(object, arg1, arg2);
+			ReportHelper.addReportStep(methodName, functionResult);
+		} catch (Exception e) {
+			ReportHelper.addReportStep(methodName, e);
+		}
+		
+		return "";
 
 	}
 
 	public boolean VerifyEditBoxExist() {
-		ContextInitiator.addFunction(DataType.getMethodName());
+		String methodName = DataType.getMethodName();
+		ContextInitiator.addFunction(methodName);
 
 		System.out.println(">>Keyword Called VerifyEditBoxExist");
-
 		// Method_verifyEditBoxExist
 
 		String bool = "false";
