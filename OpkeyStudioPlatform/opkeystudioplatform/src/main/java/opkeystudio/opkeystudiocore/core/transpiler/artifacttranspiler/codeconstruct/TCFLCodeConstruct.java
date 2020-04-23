@@ -218,6 +218,32 @@ public class TCFLCodeConstruct {
 		return outputCode + mainCode;
 	}
 
+	private String addDataRepositoryIterations(Artifact artifact, FlowStep flowStep, String mainCode) {
+		String forLoopParameters = "";
+		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
+		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
+				flowInputArguments);
+		for (FlowInputObject flowInputObject : flowInputObjects) {
+			if (flowInputObject.isDataRepositoryColumnDataExist()) {
+				String columnId = flowInputObject.getDataRepositoryColumnData();
+				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
+				String columnName = drColumn.getName();
+				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
+				String path = drArtifact.getPackageName() + "." + drArtifact.getVariableName() + "." + "getDRCells("
+						+ "\"" + columnName + "\"" + ")";
+				forLoopParameters = "String " + columnName + ":" + path;
+				System.out.println(forLoopParameters);
+				break;
+			}
+		}
+		if (forLoopParameters.isEmpty()) {
+			return mainCode;
+		}
+		String forLoopFormat = "for(%s) {%s}";
+		String forLoopCode = String.format(forLoopFormat, forLoopParameters, mainCode);
+		return forLoopCode;
+	}
+
 	private boolean isKeywordType(FlowStep flowStep) {
 		if (flowStep.getKeyword() != null) {
 			return true;
