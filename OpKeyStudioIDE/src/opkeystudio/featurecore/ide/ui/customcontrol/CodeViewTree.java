@@ -10,17 +10,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import opkeystudio.core.utils.ArtifactTranspilerAsync;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
-import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
-import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class CodeViewTree extends CustomTree {
 	private List<Artifact> artifacts = new ArrayList<Artifact>();
@@ -28,10 +24,6 @@ public class CodeViewTree extends CustomTree {
 	public CodeViewTree(Composite parent, int style) {
 		super(parent, style);
 		init();
-	}
-
-	public CodeViewTree(Composite parent, int style, TestSuiteView parentTestSuiteView) {
-		super(parent, style);
 	}
 
 	private void init() {
@@ -44,6 +36,7 @@ public class CodeViewTree extends CustomTree {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
+				
 			}
 
 			@Override
@@ -91,37 +84,37 @@ public class CodeViewTree extends CustomTree {
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Folder) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Flow) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.ObjectRepository) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Suite) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.DataRepository) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Component) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
+			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.CodedFunction) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		}
 	}
 
-	private void renderAllArtifactTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {
+	private void renderCodeViewTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {
 		String artifactId = rootNode.getArtifact().getId();
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getParentid() != null) {
 				if (artifact.getParentid().equals(artifactId)) {
 					artifact.setParentArtifact(rootNode.getArtifact());
 					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-					artitreeitem.setText(artifact.getName());
+					artitreeitem.setText(artifact.getVariableName()+".java");
 					artitreeitem.setArtifact(artifact);
 					addIcon(artitreeitem);
-					renderAllArtifactTree(artitreeitem, allArtifacts);
+					renderCodeViewTree(artitreeitem, allArtifacts);
 				}
 			}
 		}
 	}
 
-	private void refreshAllArtifactTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {
+	private void refreshCodeViewTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {
 		String artifactId = rootNode.getArtifact().getId();
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getParentid() != null) {
@@ -129,10 +122,10 @@ public class CodeViewTree extends CustomTree {
 				if (artifact.isVisible()) {
 					if (artifact.getParentid().equals(artifactId)) {
 						ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-						artitreeitem.setText(artifact.getName());
+						artitreeitem.setText(artifact.getVariableName()+".java");
 						artitreeitem.setArtifact(artifact);
 						addIcon(artitreeitem);
-						refreshAllArtifactTree(artitreeitem, allArtifacts);
+						refreshCodeViewTree(artitreeitem, allArtifacts);
 					}
 				}
 			}
@@ -155,7 +148,7 @@ public class CodeViewTree extends CustomTree {
 		}
 		this.removeAll();
 		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
-		rootNode.setText("Project WorkSpace");
+		rootNode.setText("Code WorkSpace");
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<Artifact> artifacts = new ArrayList<>();
@@ -165,7 +158,7 @@ public class CodeViewTree extends CustomTree {
 		for (Artifact artifact : artifacts) {
 			if (artifact.getParentid() == null) {
 				ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-				artitreeitem.setText(artifact.getName());
+				artitreeitem.setText(artifact.getVariableName());
 				artitreeitem.setArtifact(artifact);
 				topMostNodes.add(artitreeitem);
 				addIcon(artitreeitem);
@@ -173,12 +166,9 @@ public class CodeViewTree extends CustomTree {
 		}
 
 		for (ArtifactTreeItem topMostNode : topMostNodes) {
-			renderAllArtifactTree(topMostNode, artifacts);
+			renderCodeViewTree(topMostNode, artifacts);
 		}
 		expandAll(rootNode);
-		GlobalLoader.getInstance().initAllArguments();
-		new ArtifactTranspiler().setPackageProperties();
-		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 	}
 
 	public void highlightArtifact(String artifactId) {
@@ -215,7 +205,7 @@ public class CodeViewTree extends CustomTree {
 		}
 
 		for (ArtifactTreeItem topMostNode : topMostNodes) {
-			refreshAllArtifactTree(topMostNode, artifacts);
+			refreshCodeViewTree(topMostNode, artifacts);
 		}
 		expandAll(rootNode);
 	}
