@@ -20,7 +20,6 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 
 public class CodeViewTree extends CustomTree {
 	private List<Artifact> artifacts = new ArrayList<Artifact>();
-
 	public CodeViewTree(Composite parent, int style) {
 		super(parent, style);
 		init();

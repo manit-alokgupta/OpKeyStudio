@@ -1,7 +1,5 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import java.io.IOException;
-
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
