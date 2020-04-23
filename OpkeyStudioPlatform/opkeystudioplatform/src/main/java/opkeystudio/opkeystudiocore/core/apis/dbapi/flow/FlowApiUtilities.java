@@ -51,18 +51,30 @@ public class FlowApiUtilities {
 		return "Output: <>";
 	}
 
-	public String getFlowInputPutArgumentsString(FlowStep flowStep) {
+	public String getFlowInputPutArgumentsString(Artifact artifact, FlowStep flowStep) {
 		String outData = "";
-		List<FlowInputArgument> flowStepInputargs = flowStep.getFlowInputArgs();
-		if (flowStepInputargs.size() == 0) {
+		List<FlowInputObject> flowInputObjects = getAllFlowInputObject(artifact, flowStep.getFlowInputArgs());
+		if (flowInputObjects.size() == 0) {
 			return "";
 		}
-		for (FlowInputArgument flowInputArgument : flowStepInputargs) {
+		for (FlowInputObject inputObject : flowInputObjects) {
 			if (!outData.isEmpty()) {
-				outData += "|";
+				outData += ", ";
 			}
-			if (flowInputArgument.getStaticvalue() != null) {
-				outData += flowInputArgument.getStaticvalue();
+			if (inputObject.isStaticValueDataExist()) {
+				outData += "StaticValue:" + inputObject.getStaticValueData();
+			}
+			if (inputObject.isGlobalVariableDataExist()) {
+				outData += "GV:";
+			}
+			if (inputObject.isDataRepositoryColumnDataExist()) {
+				outData += "DR:";
+			}
+			if (inputObject.isFlowInputDataExist()) {
+				outData += "Input:";
+			}
+			if (inputObject.isFlowOutputDataExist()) {
+				outData += "Output:";
 			}
 		}
 		if (!outData.isEmpty()) {
