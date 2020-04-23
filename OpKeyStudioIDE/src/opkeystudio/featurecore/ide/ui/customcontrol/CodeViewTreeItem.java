@@ -19,14 +19,6 @@ public class CodeViewTreeItem extends CustomTreeItem {
 		super(parent, style);
 	}
 
-	public Artifact getArtifact() {
-		return (Artifact) super.getControlData();
-	}
-
-	public void setArtifact(Artifact artifact) {
-		super.setControlData(artifact);
-	}
-
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components

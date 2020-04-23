@@ -42,10 +42,15 @@ public class CodeViewTree extends CustomTree {
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-
+				openSelectedCodeFile();
 			}
 
 		});
+	}
+
+	public void openSelectedCodeFile() {
+		File selectedCodeFile = getSelectedArtifact();
+		System.out.println(">> " + selectedCodeFile.getAbsolutePath());
 	}
 
 	public void setArtifactsData(List<Artifact> artifacts) {
@@ -148,12 +153,12 @@ public class CodeViewTree extends CustomTree {
 		return (CodeViewTreeItem) this.getSelection()[0];
 	}
 
-	public Artifact getSelectedArtifact() {
+	public File getSelectedArtifact() {
 		CodeViewTreeItem treeItem = getSelectedArtifactTreeItem();
 		if (treeItem == null) {
 			return null;
 		}
-		return treeItem.getArtifact();
+		return treeItem.getArtifactFile();
 	}
 
 	@Override
