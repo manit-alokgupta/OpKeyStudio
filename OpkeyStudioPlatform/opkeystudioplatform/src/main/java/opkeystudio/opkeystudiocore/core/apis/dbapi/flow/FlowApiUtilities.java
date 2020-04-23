@@ -7,6 +7,8 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
+import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
@@ -16,6 +18,7 @@ import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -65,13 +68,20 @@ public class FlowApiUtilities {
 				outData += "StaticValue:" + inputObject.getStaticValueData();
 			}
 			if (inputObject.isGlobalVariableDataExist()) {
-				outData += "GV:";
+				GlobalVariable globalVariable = GlobalLoader.getInstance()
+						.getGlobalVariableById(inputObject.getGlobalVariableData());
+				outData += "GV:" + globalVariable.getName();
 			}
 			if (inputObject.isDataRepositoryColumnDataExist()) {
-				outData += "DR:";
+				String columnId = inputObject.getDataRepositoryColumnData();
+				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
+				outData += "DR:" + drColumn.getName();
 			}
 			if (inputObject.isFlowInputDataExist()) {
-				outData += "Input:";
+				String flowInputId = inputObject.getFlowInputData();
+				ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
+						.getComponentInputArgumentById(flowInputId);
+				outData += "Input:" + flowOutputArgument.getName();
 			}
 			if (inputObject.isFlowOutputDataExist()) {
 				outData += "Output:";
