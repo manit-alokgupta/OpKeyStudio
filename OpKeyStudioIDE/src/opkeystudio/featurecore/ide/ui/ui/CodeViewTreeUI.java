@@ -28,6 +28,7 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.CodeViewTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.CodeViewTreeItem;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
@@ -415,7 +416,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				codeViewTree.openSelectedArtifact();
+				
 			}
 
 			@Override
@@ -490,8 +491,6 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				codeViewTree.refereshArtifacts();
 
 				System.out.println("Refresh Success");
 			}
@@ -874,7 +873,7 @@ public class CodeViewTreeUI extends Composite {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				CodeViewTree tree = (CodeViewTree) e.getSource();
-				ArtifactTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
+				CodeViewTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
 
 				System.out.println("Mouse clicked event");
 
