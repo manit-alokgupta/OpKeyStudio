@@ -101,7 +101,7 @@ public class TCFLCodeConstruct {
 				System.out.println(">>Flow Input Id " + flowInputId);
 				ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
 						.getComponentInputArgumentById(flowInputId);
-				argumentCall += flowOutputArgument.getName();
+				argumentCall += flowOutputArgument.getVariableName();
 				continue;
 			}
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {
@@ -181,7 +181,7 @@ public class TCFLCodeConstruct {
 			}
 			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
-		return data;
+		return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 	}
 
 	private String getConstructFlowKeywordCode(Artifact artifact, FlowStep flowStep) {
