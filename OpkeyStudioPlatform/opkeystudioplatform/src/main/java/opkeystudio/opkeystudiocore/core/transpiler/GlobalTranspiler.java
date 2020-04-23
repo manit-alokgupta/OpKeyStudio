@@ -135,7 +135,7 @@ public class GlobalTranspiler {
 		String methodCall = "addDRCell(\"%s\",\"%s\");";
 		String staticVariableDatas = "";
 		for (DRColumnAttributes drColumnAttribute : drColumns) {
-			String columnName = drColumnAttribute.getName();
+			String columnName = drColumnAttribute.getVariableName();
 			for (DRCellAttributes drCell : drColumnAttribute.getDrCellAttributes()) {
 				String drcellValue = drCell.getValue();
 				if (drcellValue == null) {

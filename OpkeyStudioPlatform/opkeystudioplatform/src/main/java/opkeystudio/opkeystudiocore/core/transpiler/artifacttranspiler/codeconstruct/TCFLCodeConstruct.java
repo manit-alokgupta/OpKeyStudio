@@ -309,7 +309,7 @@ public class TCFLCodeConstruct {
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {
 				String columnId = flowInputObject.getDataRepositoryColumnData();
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
-				String columnName = drColumn.getName();
+				String columnName = drColumn.getVariableName();
 				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
 				String path = drArtifact.getPackageName() + "." + drArtifact.getVariableName() + "." + "getDRCells("
 						+ "\"" + columnName + "\"" + ")";
