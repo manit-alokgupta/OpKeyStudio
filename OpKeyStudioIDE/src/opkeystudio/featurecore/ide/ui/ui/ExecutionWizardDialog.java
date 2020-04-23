@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -29,6 +30,7 @@ import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.core.utils.AndroidDeviceUtil;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.core.vncutils.VncStarter;
 import pcloudystudio.pcloudystudio.core.execution.MobileDeviceExecutionDetail;
 import org.eclipse.swt.events.SelectionAdapter;
 
@@ -279,6 +281,15 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 					@Override
 					public void run() {
+						try {
+							startVnc();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						executeSession();
 					}
 				});
@@ -367,5 +378,44 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 	public MobileDeviceExecutionDetail getMobileDeviceExecutionDetail() {
 		return MobileDeviceExecutionDetail.getInstance();
+	}
+
+	public void startVnc() throws IOException, InterruptedException {
+
+		VncStarter starter = starter = new VncStarter();
+		java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
+			public void run() {
+				try {
+					starter.startVncServer(getMobileDeviceExecutionDetail().getDeviceId(),
+							getMobileDeviceExecutionDetail().getDeviceName(),
+							getMobileDeviceExecutionDetail().getDeviceABI(),
+							getMobileDeviceExecutionDetail().getDeviceAPILevel());
+
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
+			public void run() {
+				try {
+					starter.startMobicast(getMobileDeviceExecutionDetail().getDeviceId(),
+							getMobileDeviceExecutionDetail().getDeviceName(),
+							getMobileDeviceExecutionDetail().getDeviceABI(),
+							getMobileDeviceExecutionDetail().getDeviceAPILevel());
+
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+
 	}
 }
