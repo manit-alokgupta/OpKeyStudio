@@ -59,7 +59,7 @@ public class CodeViewTree extends CustomTree {
 		MPart part = partService.createPart("opkeystudio.partdescriptor.genericCodeEditor");
 		part.setLabel(selectedCodeFile.getName());
 		part.setTooltip(selectedCodeFile.getName());
-		part.getTransientData().put("opkeystudio.artifactData", selectedCodeFile);
+		part.getTransientData().put("opkeystudio.codeFile", selectedCodeFile);
 		partService.showPart(part, PartState.ACTIVATE);
 	}
 

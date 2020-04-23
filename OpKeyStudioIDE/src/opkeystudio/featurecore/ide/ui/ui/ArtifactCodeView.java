@@ -54,11 +54,15 @@ public class ArtifactCodeView extends Composite {
 	private boolean embeddedInsideTestSuiteView = false;
 	private boolean genericEditor = false;
 
+	private File codeViewFile;
+
 	public ArtifactCodeView(Composite parent, int style, boolean isGenericEditor) {
 		super(parent, style);
 		this.setGenericEditor(isGenericEditor);
 		setLayout(new GridLayout(1, false));
 		initTCFLUI();
+		initCodeViewFile();
+		displayCodeViewFileData();
 	}
 
 	public ArtifactCodeView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
@@ -107,6 +111,18 @@ public class ArtifactCodeView extends Composite {
 		initDRUI();
 		initDataRepositoryCode();
 		getJavaEditor().setEditable(editable);
+	}
+
+	private void initCodeViewFile() {
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		File codeViewFile = (File) mpart.getTransientData().get("opkeystudio.codeFile");
+		setCodeViewFile(codeViewFile);
+	}
+
+	private void displayCodeViewFileData() {
+		File file = getCodeViewFile();
+		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
+		getJavaEditor().setArtifactJavaCode(codeData);
 	}
 
 	private void initTestCaseCode() {
@@ -446,5 +462,13 @@ public class ArtifactCodeView extends Composite {
 
 	public void setGenericEditor(boolean genericEditor) {
 		this.genericEditor = genericEditor;
+	}
+
+	public void setCodeViewFile(File codeViewFile) {
+		this.codeViewFile = codeViewFile;
+	}
+
+	public File getCodeViewFile() {
+		return this.codeViewFile;
 	}
 }
