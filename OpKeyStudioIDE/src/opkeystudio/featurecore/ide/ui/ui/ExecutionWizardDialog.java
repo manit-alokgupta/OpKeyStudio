@@ -22,6 +22,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -165,6 +167,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		androidDeviceSelectionDropDown.setVisible(false);
 
 		btnRefreshDeviceList = new Button(container, SWT.NONE);
+		btnRefreshDeviceList.setToolTipText("Browse Application");
+		btnRefreshDeviceList.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+		btnRefreshDeviceList.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browse.png"));
 		btnRefreshDeviceList.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -172,7 +177,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			}
 		});
 		btnRefreshDeviceList.setVisible(false);
-		btnRefreshDeviceList.setText("Refresh");
+
 		androidDeviceSelectionDropDown.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

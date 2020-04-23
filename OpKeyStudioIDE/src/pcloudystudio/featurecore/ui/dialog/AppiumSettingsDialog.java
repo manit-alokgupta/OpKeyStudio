@@ -83,6 +83,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 	private ObjectRepositoryView parentObjectRepositoryView;
 	private Button btnRefresh;
+	private static int previousTablecount = 0;
 
 	public AppiumSettingsDialog(Shell parent, int style) {
 		super(parent, SWT.DIALOG_TRIM);
@@ -121,7 +122,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -190,7 +191,7 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumPortIpInfo
-				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
@@ -377,24 +378,27 @@ public class AppiumSettingsDialog extends Dialog {
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (capabilityTable.getItemCount() >= 1) {
+
+				if (checkIfTableIsModified(previousTablecount)) { // if false means table is not modified
 					int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation",
 							"Do You Want To Save Capabilities?");
 					System.out.println(result);
 					if (result == 0) {
-						System.out.println("yes is pressed");
+						saveDataOnRefresh();
+						capabilityTextValue.setText("");
 
 					} else {
-						if (capabilityTable.getItemCount() >= 1) {
-							for (int i = 0; i <= capabilityTable.getItemCount(); i++) {
-								capabilityTable.remove(0);
-
-							}
-						}
+						clearTable();
+						fillDataInCapabilityTable();
+						capabilityTextValue.setText("");
 					}
+
+				} else {
+
+					capabilityTextValue.setText("");
+
 				}
-				capabilityTextValue.setText("");
-				fillDataInCapabilityTable();
+
 			}
 		});
 		btnRefresh.setBounds(470, 13, 18, 18);
@@ -502,20 +506,35 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallybtnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (capabilityTable.getItemCount() >= 1) {
-					for (int i = 0; i <= capabilityTable.getItemCount(); i++) {
-						capabilityTable.remove(0);
 
+				if (checkIfTableIsModified(previousTablecount)) { // if false means table is not modified
+					int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation",
+							"Do You Want To Save Capabilities?");
+					System.out.println(result);
+					if (result == 0) {
+						saveDataOnRefresh();
+						manuallyCapabilityName.setText("");
+						manuallyCapabilityValue.setText("");
+
+					} else {
+						clearTable();
+						fillDataInCapabilityTable();
+						manuallyCapabilityName.setText("");
+						manuallyCapabilityValue.setText("");
 					}
+
+				} else {
+
+					manuallyCapabilityName.setText("");
+					manuallyCapabilityValue.setText("");
+
 				}
-				manuallyCapabilityName.setText("");
-				manuallyCapabilityValue.setText("");
-				fillDataInCapabilityTable();
+
 			}
 		});
 		manuallybtnRefresh.setBounds(475, 13, 18, 18);
 		manuallybtnRefresh
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		manuallybtnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallybtnRefresh.setToolTipText("Refresh Table");
 
@@ -582,6 +601,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 							MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
 							MobileCapabilities.setMapOfCapabilityNameType(mapOfCapabilityValueType);
+							previousTablecount = capabilityTable.getItemCount();
 						} catch (Exception e2) {
 							e2.printStackTrace();
 						}
@@ -665,12 +685,15 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	private void addTableItemToCapabilityTableData(String key, String type, String value) {
-		TableItem item = new TableItem(capabilityTable, SWT.NONE);
-		item.setText(0, key);
-		item.setText(1, type);
-		item.setText(2, value);
-		btnAddToTable.setEnabled(false);
-		// item.setText(new String[] { key, value });
+
+		if (!checkIfTableContainsRow(key, value)) {
+			TableItem item = new TableItem(capabilityTable, SWT.NONE);
+			item.setText(0, key);
+			item.setText(1, type);
+			item.setText(2, value);
+			btnAddToTable.setEnabled(false);
+			// item.setText(new String[] { key, value });
+		}
 	}
 
 	public Boolean validate() {
@@ -862,5 +885,63 @@ public class AppiumSettingsDialog extends Dialog {
 				return;
 			}
 		}
+	}
+
+	public boolean checkIfTableIsModified(int previousTablecount) {
+		int count = capabilityTable.getItemCount();
+		if (count != previousTablecount)
+			return true;
+		else
+			return false;
+	}
+
+	public void clearTable() {
+		if (capabilityTable.getItemCount() >= 0) {
+			for (int i = 0; i <= capabilityTable.getItemCount(); i++) {
+				capabilityTable.removeAll();
+
+			}
+		}
+
+	}
+
+	public void saveDataOnRefresh() {
+
+		if (capabilityTable.getItemCount() >= 0) {
+			try {
+				MobileCapabilities.getinstance();
+				if (MobileCapabilities.getMapOfCapabilities() != null) {
+					MobileCapabilities.getinstance().setMapOfCapabilities(null);
+
+				}
+				if (MobileCapabilities.getMapOfCapabilityNameType() != null) {
+					MobileCapabilities.setMapOfCapabilityNameType(null);
+
+				}
+				LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
+				LinkedHashMap<String, String> mapOfCapabilityValueType = new LinkedHashMap<String, String>();
+				for (TableItem row : capabilityTable.getItems()) {
+					mapOfCapabilities.put(row.getText(0), row.getText(2));
+					mapOfCapabilityValueType.put(row.getText(0), row.getText(1));
+				}
+
+				MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+				MobileCapabilities.setMapOfCapabilityNameType(mapOfCapabilityValueType);
+				previousTablecount = capabilityTable.getItemCount();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+	}
+
+	public boolean checkIfTableContainsRow(String key, String value) {
+
+		for (TableItem item : capabilityTable.getItems()) {
+			if (item.getText(0).equals(key) && item.getText(0).equals(value))
+				return true;
+
+		}
+		return false;
 	}
 }

@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import org.eclipse.jface.dialogs.MessageDialog;
+import java.io.IOException;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -14,7 +15,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
@@ -24,14 +24,9 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.commandhandler.RefreshArtifactTree;
-import opkeystudio.core.utils.MessageDialogs;
-import opkeystudio.core.utils.Utilities;
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.CodeViewTree;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -266,24 +261,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "Test Case " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
-							artifact.getName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
 
-				createArtifact(artifact, inputValue, MODULETYPE.Flow);
 			}
 
 			@Override
@@ -296,24 +274,6 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
-						"Test Suite Name", "Test Suite " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
-							"Test Suite Name ", "Test Suite " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-				createArtifact(artifact, inputValue, MODULETYPE.Suite);
-
 			}
 
 			@Override
@@ -326,24 +286,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
-						"Folder " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name ",
-							"Folder " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
 
-				createArtifact(artifact, inputValue, MODULETYPE.Folder);
 			}
 
 			@Override
@@ -356,24 +299,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
-						"Object Repository Name", "Object Repository " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
-							"Object Repository Name ", "Object Repository " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
 
-				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
 			}
 
 			@Override
@@ -386,24 +312,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
-						"Function Library Name", "Function Library " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
-							"Function Library Name ", "Function Library " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
 
-				createArtifact(artifact, inputValue, MODULETYPE.Component);
 			}
 
 			@Override
@@ -416,7 +325,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				codeViewTree.openSelectedArtifact();
+				
 			}
 
 			@Override
@@ -428,23 +337,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
 
-				boolean status = new MessageDialogs().openConfirmDialog("Delete",
-						"Do you want to delete " + artifact.getName() + "?");
-				if (!status) {
-					return;
-				}
-				boolean isused = new ArtifactApiUtilities().isArtifactIsUsed(artifact);
-				if (isused) {
-					new MessageDialogs().openInformationDialog("Unable to delete " + artifact.getFile_type_enum(),
-							"Unable to delete " + artifact.getFile_type_enum() + " '" + artifact.getName()
-									+ "' as it is being used:");
-					return;
-				}
-				new ArtifactApi().deleteArtifact(artifact);
-				Utilities.getInstance().closeArtifactPart(artifact);
-				codeViewTree.renderArtifacts();
 			}
 
 			@Override
@@ -457,28 +350,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
-						"Rename " + artifact.getName(), artifact.getName());
-				if (renamedText == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (renamedText.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
-							"Rename " + artifact.getName(), artifact.getName());
-					if (renamedText == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-				artifact.setName(renamedText);
-				new ArtifactApi().updateArtifact(artifact);
-				Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
-				codeViewTree.renderArtifacts();
-				renameMenuItem.setEnabled(false);
-				renameMenuItem.setEnabled(false);
+
 			}
 
 			@Override
@@ -491,8 +363,6 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				codeViewTree.refereshArtifacts();
 
 				System.out.println("Refresh Success");
 			}
@@ -507,25 +377,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name",
-						"DR " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name ",
-							"DR " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-
-				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
-
+				
 			}
 
 			@Override
@@ -538,24 +390,6 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New CodedFL",
-						"CodedFL Name", "NEW CFL " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New CodedFL", "CodedFL Name ",
-							"NEW CFL " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-
-				createArtifact(artifact, inputValue, MODULETYPE.CodedFunction);
 
 			}
 
@@ -588,30 +422,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
-						"Rename " + artifact.getName(), artifact.getName());
-				if (renamedText == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (renamedText.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
-							"Rename " + artifact.getName(), artifact.getName());
-					if (renamedText == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-				artifact.setName(renamedText);
-				new ArtifactApi().updateArtifact(artifact);
-				toggleRenameToolbarItem(false);
-				toogleDeleteToolbarItem(false);
-				toogleNewToolbarMenuItem(false);
-				toogleNewToolbarItem(false);
-				codeViewTree.renderArtifacts();
-
+				
 			}
 
 			@Override
@@ -624,18 +435,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				boolean status = new MessageDialogs().openConfirmDialog("Delete",
-						"Do you want to delete " + artifact.getName() + "?");
-				if (!status) {
-					return;
-				}
-				new ArtifactApi().deleteArtifact(artifact);
-				toggleRenameToolbarItem(false);
-				toogleDeleteToolbarItem(false);
-				toogleNewToolbarMenuItem(false);
-				toogleNewToolbarItem(false);
-				codeViewTree.renderArtifacts();
+
 
 			}
 
@@ -662,32 +462,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
-						"Folder " + getVarName());
-
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Enter Name ",
-							"Folder " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-
-				String artifactId = null;
-				if (artifact != null) {
-					if (artifact.getId() != null) {
-						artifactId = artifact.getId();
-					}
-				}
-				toogleNewToolbarItem(false);
-				createArtifact(artifact, inputValue, MODULETYPE.Folder);
+				
 			}
 
 			@Override
@@ -700,24 +475,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-						"TestCase Name", "Test Case " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
-							"Test Case Name ", "Test Case " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-				toogleNewToolbarItem(false);
-				createArtifact(artifact, inputValue, MODULETYPE.Flow);
+
 			}
 
 			@Override
@@ -730,26 +488,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
-						"Function Library Name", "Function Library " + getVarName());
-
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
-							"Function Library Name ", "Function Library " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-				toogleNewToolbarItem(false);
-				createArtifact(artifact, inputValue, MODULETYPE.Component);
+				
 			}
 
 			@Override
@@ -762,24 +501,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
-						"Object Repository Name", "Object Repository " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
-							"Object Repository Name ", "Object Repository " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-				toogleNewToolbarItem(false);
-				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
+
 			}
 
 			@Override
@@ -792,24 +514,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
-						"TestSuite Name", "");
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Test Suite Name ",
-							"Test Suite " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
-				toogleNewToolbarItem(false);
-				createArtifact(artifact, inputValue, MODULETYPE.Suite);
+
 			}
 
 			@Override
@@ -822,24 +527,7 @@ public class CodeViewTreeUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = codeViewTree.getSelectedArtifact();
-				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name",
-						"DR " + getVarName());
-				if (inputValue == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (inputValue.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name ",
-							"DR " + getVarName());
-					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
-						return;
-					}
-				}
 
-				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
 
 			}
 
@@ -867,127 +555,6 @@ public class CodeViewTreeUI extends Composite {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 
-			}
-		});
-
-		codeViewTree.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-				ArtifactTree tree = (ArtifactTree) e.getSource();
-				ArtifactTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
-
-				System.out.println("Mouse clicked event");
-
-				if (selectedTreeItem == null) {
-					toogleNewToolbarMenuItem(false);
-					toogleNewToolbarItem(false);
-					toggleRenameToolbarItem(false);
-					toogleDeleteToolbarItem(false);
-					openMenuItem.setEnabled(false);
-					deleteMenuItem.setEnabled(false);
-					renameMenuItem.setEnabled(false);
-					toggleRefreshMenuItem(false);
-
-					return;
-				}
-				if (selectedTreeItem.getArtifact() == null) {
-					toogleNewToolbarMenuItem(true);
-					toogleNewToolbarItem(true);
-					toggleRenameToolbarItem(false);
-					toogleDeleteToolbarItem(false);
-					openMenuItem.setEnabled(false);
-					deleteMenuItem.setEnabled(false);
-					renameMenuItem.setEnabled(false);
-					toggleRefreshMenuItem(true);
-					return;
-				}
-				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
-					toogleNewToolbarMenuItem(true);
-					toogleNewToolbarItem(true);
-					toggleRenameToolbarItem(true);
-					toogleDeleteToolbarItem(true);
-					openMenuItem.setEnabled(false);
-					deleteMenuItem.setEnabled(true);
-					renameMenuItem.setEnabled(true);
-					toggleRefreshMenuItem(true);
-
-				}
-				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.ObjectRepository) {
-					toogleNewToolbarMenuItem(false);
-					toogleNewToolbarItem(false);
-					toggleRenameToolbarItem(true);
-					toogleDeleteToolbarItem(true);
-					openMenuItem.setEnabled(true);
-					deleteMenuItem.setEnabled(true);
-					renameMenuItem.setEnabled(true);
-					toggleRefreshMenuItem(true);
-
-				}
-				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
-					toogleNewToolbarMenuItem(false);
-					toogleNewToolbarItem(false);
-					toggleRenameToolbarItem(true);
-					toogleDeleteToolbarItem(true);
-					openMenuItem.setEnabled(true);
-					deleteMenuItem.setEnabled(true);
-					renameMenuItem.setEnabled(true);
-					toggleRefreshMenuItem(true);
-
-				}
-				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Suite) {
-					toogleNewToolbarMenuItem(false);
-					toogleNewToolbarItem(false);
-					toggleRenameToolbarItem(true);
-					toogleDeleteToolbarItem(true);
-					openMenuItem.setEnabled(true);
-					deleteMenuItem.setEnabled(true);
-					renameMenuItem.setEnabled(true);
-					toggleRefreshMenuItem(true);
-				}
-
-				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-					toogleNewToolbarMenuItem(false);
-					toogleNewToolbarItem(false);
-					toggleRenameToolbarItem(true);
-					toogleDeleteToolbarItem(true);
-					openMenuItem.setEnabled(true);
-					deleteMenuItem.setEnabled(true);
-					renameMenuItem.setEnabled(true);
-					toggleRefreshMenuItem(true);
-				}
-
-				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.DataRepository) {
-					toogleNewToolbarMenuItem(false);
-					toogleNewToolbarItem(false);
-					toggleRenameToolbarItem(true);
-					toogleDeleteToolbarItem(true);
-					openMenuItem.setEnabled(true);
-					deleteMenuItem.setEnabled(true);
-					renameMenuItem.setEnabled(true);
-					toggleRefreshMenuItem(true);
-				}
-
-				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.CodedFunction) {
-					toogleNewToolbarMenuItem(false);
-					toogleNewToolbarItem(false);
-					toggleRenameToolbarItem(true);
-					toogleDeleteToolbarItem(true);
-					openMenuItem.setEnabled(true);
-					deleteMenuItem.setEnabled(true);
-					renameMenuItem.setEnabled(true);
-					toggleRefreshMenuItem(true);
-				}
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				return;
 			}
 		});
 
