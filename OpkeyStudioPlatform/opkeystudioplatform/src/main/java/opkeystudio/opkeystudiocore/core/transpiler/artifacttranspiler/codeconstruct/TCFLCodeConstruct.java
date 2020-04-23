@@ -136,49 +136,35 @@ public class TCFLCodeConstruct {
 	}
 
 	private String formatDataType(String dataType, String data) {
+		if (data == null) {
+			data = "";
+		}
 		if (dataType.equals("String")) {
-			if (data == null) {
-				data = "";
-			}
 			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
 		if (dataType.equals("Integer")) {
-			if (data == null) {
-				data = "0";
-			}
 			if (data.isEmpty()) {
 				data = "0";
 			}
 			return data;
 		}
 		if (dataType.equals("Double")) {
-			if (data == null) {
-				data = "0";
-			}
 			if (data.isEmpty()) {
 				data = "0";
 			}
 			return data;
 		}
 		if (dataType.equals("Boolean")) {
-			if (data == null) {
-				data = "false";
-			}
 			if (data.isEmpty()) {
 				data = "false";
 			}
 			return data.toLowerCase();
 		}
 		if (dataType.equals("File")) {
-			if (data == null) {
-				data = "";
-			}
 			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
 		if (dataType.equals("DateTime")) {
-			if (data == null) {
-				data = "";
-			}
+
 			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
 		return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
