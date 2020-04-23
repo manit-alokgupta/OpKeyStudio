@@ -136,20 +136,6 @@ public class CodeViewTree extends CustomTree {
 		}
 	}
 
-	public void highlightArtifact(String artifactId) {
-		List<TreeItem> titems = this.getAllTreeItems();
-		for (TreeItem item : titems) {
-			ArtifactTreeItem ati = (ArtifactTreeItem) item;
-			if (ati.getArtifact() != null) {
-				if (ati.getArtifact().getId().equals(artifactId)) {
-					this.setSelection(item);
-					this.notifyListeners(SWT.FocusIn, null);
-					break;
-				}
-			}
-		}
-	}
-
 	public CodeViewTreeItem getSelectedArtifactTreeItem() {
 		if (this.getSelection() == null) {
 			return null;
