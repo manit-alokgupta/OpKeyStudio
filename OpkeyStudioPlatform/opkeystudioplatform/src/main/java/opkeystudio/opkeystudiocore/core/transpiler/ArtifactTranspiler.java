@@ -77,6 +77,7 @@ public class ArtifactTranspiler {
 		ArtifactTranspiler.getInstance().addPackageName("allartifacts");
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.OpKeyGenericPlugin");
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
+		ArtifactTranspiler.getInstance().addPackageName("com.ssts.reporting");
 	}
 
 	private boolean checkPackageNameIsValid(String packagename) {
