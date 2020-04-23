@@ -52,6 +52,14 @@ public class ArtifactCodeView extends Composite {
 	private boolean embeddedInsideObjectRepositoryView = false;
 	private boolean embeddedInsideDataRepositoryView = false;
 	private boolean embeddedInsideTestSuiteView = false;
+	private boolean genericEditor = false;
+
+	public ArtifactCodeView(Composite parent, int style, boolean isGenericEditor) {
+		super(parent, style);
+		this.setGenericEditor(isGenericEditor);
+		setLayout(new GridLayout(1, false));
+		initTCFLUI();
+	}
 
 	public ArtifactCodeView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
 		super(parent, SWT.BORDER);
@@ -430,5 +438,13 @@ public class ArtifactCodeView extends Composite {
 
 	public void setEmbeddedInsideTestSuiteView(boolean embeddedInsideTestSuiteView) {
 		this.embeddedInsideTestSuiteView = embeddedInsideTestSuiteView;
+	}
+
+	public boolean isGenericEditor() {
+		return genericEditor;
+	}
+
+	public void setGenericEditor(boolean genericEditor) {
+		this.genericEditor = genericEditor;
 	}
 }
