@@ -1,9 +1,12 @@
 package pcloudystudio.featurecore.ui.dialog;
 
+import java.awt.image.BufferedImage;
+
 // Created by Alok Gupta on 20/02/2020.
 // Copyright © 2020 SSTS Inc. All rights reserved.
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import javax.imageio.ImageIO;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -78,6 +84,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private MobileInspectorController inspectorController;
 	public static CheckboxTreeViewer allObjectsCheckboxTreeViewer;
 	public TreeMobileElement appRootElement;
+	private File currentScreenshot;
+	private File croppedObjectImage;
 
 	private MobileDeviceDialog deviceView;
 	private Button btnCapture;
@@ -272,6 +280,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
 							for (TableItem row : objectPropertiesTable.getItems())
 								mapOfObjectProperties.put(row.getText(0), row.getText(1));
+							// mapOfObjectProperties.put("ObjectImage", croppedObjectImage((TreeMobileElement) obj));
 							setMobileElementProps(mapOfObjectProperties);
 						} catch (Exception ex) {
 							ex.printStackTrace();
@@ -692,9 +701,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			}
 
 			private void refreshDeviceView(String imgPath) {
-				File imgFile = new File(imgPath);
-				if (imgFile.exists()) {
-					MobileSpyDialog.this.deviceView.refreshDialog(imgFile, MobileSpyDialog.this.appRootElement);
+				currentScreenshot = new File(imgPath);
+				if (currentScreenshot.exists()) {
+					MobileSpyDialog.this.deviceView.refreshDialog(currentScreenshot,
+							MobileSpyDialog.this.appRootElement);
 				}
 			}
 
@@ -763,5 +773,39 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 
 	public void setParentObjectRepositoryView(ObjectRepositoryView parentObjectRepositoryView) {
 		this.parentObjectRepositoryView = parentObjectRepositoryView;
+	}
+
+	@SuppressWarnings("unused")
+	private String croppedObjectImage(TreeMobileElement selectedElement) {
+		BufferedImage bufferedImage = null;
+		String encodstring = null;
+		try {
+			bufferedImage = ImageIO.read(currentScreenshot);
+			int x = Integer.parseInt((selectedElement.getAttributes().get("x")));
+			int y = Integer.parseInt((selectedElement.getAttributes().get("y")));
+			int width = Integer.parseInt((selectedElement.getAttributes().get("width")));
+			int height = Integer.parseInt((selectedElement.getAttributes().get("height")));
+			BufferedImage image = bufferedImage.getSubimage(x, y, width, height);
+
+			croppedObjectImage = new File(
+					currentScreenshot.getPath().substring(0, currentScreenshot.getPath().lastIndexOf('\\')) + "\\"
+							+ currentScreenshot.getName().substring(0, currentScreenshot.getName().lastIndexOf('.'))
+							+ "-cropped-object.jpeg");
+			System.out.println(croppedObjectImage.getAbsolutePath());
+			ImageIO.write(image, "jpg", croppedObjectImage);
+			encodstring = encodeFileToBase64Binary(croppedObjectImage);
+			System.out.println(encodstring);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return encodstring;
+	}
+
+	@SuppressWarnings("resource")
+	private static String encodeFileToBase64Binary(File file) throws Exception {
+		FileInputStream fileInputStreamReader = new FileInputStream(file);
+		byte[] bytes = new byte[(int) file.length()];
+		fileInputStreamReader.read(bytes);
+		return new String(Base64.encodeBase64(bytes), "UTF-8");
 	}
 }
