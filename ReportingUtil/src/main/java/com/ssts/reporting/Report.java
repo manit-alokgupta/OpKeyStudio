@@ -29,6 +29,10 @@ public class Report {
 		}
 		return report;
 	}
+	
+	public void close() {
+		this.report = null;
+	}
 
 	Report(ReportBuilder builder) {
 		this.builder = builder;
@@ -52,7 +56,7 @@ public class Report {
 	}
 
 	public void addStep(Map<String, String> parameters, Status status, Exception e) {
-
+		System.out.println("@AddStep");
 		if (aNode == null) {
 			aNode = reportingStacks.peek().createNode(reportingStacks.peek().getModel().getName() + " continued...");
 		}
@@ -63,6 +67,7 @@ public class Report {
 			String[][] data = new String[parameters.size()][];
 			int ii = 0;
 			for (Entry<String, String> entry : parameters.entrySet()) {
+				System.out.println("Key: " + entry.getKey() + ", " + entry.getValue());
 				data[ii++] = new String[] { entry.getKey(), entry.getValue() };
 			}
 			Markup markup = MarkupHelper.createTable(data);
@@ -73,23 +78,27 @@ public class Report {
 	}
 
 	public void beginFunctionLibrary(String flCaseName) {
+		System.out.println("@BeginSuite");
 		ExtentTest childNode = reportingStacks.peek().createNode(flCaseName);
 		aNode = childNode;
 		reportingStacks.push(childNode);
 	}
 
 	public void endFunctionLibrary() {
+		System.out.println("@EndFL");
 		aNode = null;
 		reportingStacks.pop();
 	}
 
 	public void beginTestCase(String testCaseName) {
+		System.out.println("@BeginTest");
 		ExtentTest childNode = extentReport.createTest(testCaseName);
 		aNode = null;
 		reportingStacks.push(childNode);
 	}
 
 	public void endTestCase() {
+		System.out.println("@EndTest");
 		reportingStacks.pop();
 		aNode = null;
 		this.extentReport.flush();
@@ -97,6 +106,7 @@ public class Report {
 	}
 
 	public void beginSuite(String suiteName) {
+		System.out.println("@BeginSuite");
 		ExtentSparkReporter sparkReporter = new ExtentSparkReporter(this.builder.getPath());
 		sparkReporter.config().setDocumentTitle(suiteName);
 		sparkReporter.config().setReportName(suiteName);
@@ -106,7 +116,9 @@ public class Report {
 	}
 
 	public void endSuite() {
+		System.out.println("@EndSuite");
 		this.extentReport.flush();
+		report = null;
 	}
 
 	public static void main(String[] args) {
