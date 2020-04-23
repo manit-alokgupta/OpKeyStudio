@@ -46,7 +46,7 @@ import pcloudystudio.core.utils.CustomMessageDialogUtil;
 public class AppiumSettingsDialog extends Dialog {
 
 	private String capabilityNameList[] = { "platformName", "automationName", "launchTimeout", "newCommandTimeout",
-			"platformVersion", "appActivity", "appPackage", "enforceAppInstall", "noSign" };
+			"platformVersion", "appActivity", "appPackage", "enforceAppInstall", "noSign", "appWaitActivity" };
 
 	protected Object result;
 	protected Shell shlAppiumSettings;

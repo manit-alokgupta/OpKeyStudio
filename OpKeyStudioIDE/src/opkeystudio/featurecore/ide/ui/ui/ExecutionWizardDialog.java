@@ -50,6 +50,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Composite container;
 	private Composite area;
 	private Button btnRefreshDeviceList;
+	boolean isAppiumPluginExecution;
 
 	/**
 	 * Create the dialog.
@@ -119,7 +120,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		Label lblNewLabel_2 = new Label(container, SWT.NONE);
 		lblNewLabel_2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
 		lblNewLabel_2.setText("Plugin:");
-
+		isAppiumPluginExecution = false;
 		pluginSelectionDropDown = new Combo(container, SWT.DROP_DOWN | SWT.READ_ONLY);
 		pluginSelectionDropDown.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 15, 1));
 		pluginSelectionDropDown.addSelectionListener(new SelectionListener() {
@@ -139,10 +140,12 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					lblDeviceSelection.setVisible(true);
 					btnRefreshDeviceList.setVisible(true);
 					androidDeviceSelectionDropDown.setVisible(true);
+					isAppiumPluginExecution = true;
 				} else {
 					lblDeviceSelection.setVisible(false);
 					btnRefreshDeviceList.setVisible(false);
 					androidDeviceSelectionDropDown.setVisible(false);
+					isAppiumPluginExecution = false;
 				}
 			}
 
@@ -200,6 +203,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 							+ getMobileDeviceExecutionDetail().getDeviceAPILevel() + "\n" + "Device ABI: "
 							+ getMobileDeviceExecutionDetail().getDeviceABI() + "\n");
 					runButton.setEnabled(true);
+
 				}
 			}
 
@@ -281,14 +285,12 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 					@Override
 					public void run() {
-						try {
-							startVnc();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if (isAppiumPluginExecution) {
+							try {
+								startVnc();
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
 						}
 						executeSession();
 					}
@@ -381,8 +383,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	}
 
 	public void startVnc() throws IOException, InterruptedException {
-
-		VncStarter starter = starter = new VncStarter();
+		VncStarter starter = new VncStarter();
 		java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
 			public void run() {
 				try {
