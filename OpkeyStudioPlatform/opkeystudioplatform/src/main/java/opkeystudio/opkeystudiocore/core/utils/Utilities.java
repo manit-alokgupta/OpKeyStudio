@@ -36,7 +36,7 @@ public class Utilities {
 	private String localResourcesDirPath = "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE";
 //	private String localResourcesDirPath = "C:/Users/anshuman.chatterjee/Documents/GitHub/OpKeyStudio/OpKeyStudioIDE";
 //	private String localResourcesDirPath = "D:\\GitHubProjects\\OpKeyStudio\\OpKeyStudioIDE";
-	private boolean developerMode = true;
+	private boolean developerMode = false;
 
 	public static Utilities getInstance() {
 		if (util == null) {

@@ -33,7 +33,8 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 	private Keyword keyword;
 
 	private FunctionLibraryComponent functionLibraryComponent;
-
+	private CodedFunctionArtifact codedFunctionArtifact;
+	
 	private List<ORObject> orObject = new ArrayList<ORObject>();
 
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
@@ -59,8 +60,9 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 	private boolean istestsuites;
 
 	private boolean NullKeyword = false;
-	
+
 	private String variableName;
+
 	public String getKeywordid() {
 		return keywordid;
 	}
@@ -261,11 +263,19 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 	}
 
 	public String getVariableName() {
-		setVariableName("step"+getClustering_key());
+		setVariableName("step" + getClustering_key());
 		return variableName;
 	}
 
 	public void setVariableName(String variableName) {
 		this.variableName = variableName;
+	}
+
+	public CodedFunctionArtifact getCodedFunctionArtifact() {
+		return codedFunctionArtifact;
+	}
+
+	public void setCodedFunctionArtifact(CodedFunctionArtifact codedFunctionArtifact) {
+		this.codedFunctionArtifact = codedFunctionArtifact;
 	}
 }
