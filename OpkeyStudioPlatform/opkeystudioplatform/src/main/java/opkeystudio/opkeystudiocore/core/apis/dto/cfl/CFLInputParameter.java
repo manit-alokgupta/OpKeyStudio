@@ -1,8 +1,8 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.cfl;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.query.DBField;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CFLInputParameter extends Modified implements Comparable<CFLInputParameter> {
 	private int clustering_key;
@@ -125,6 +125,34 @@ public class CFLInputParameter extends Modified implements Comparable<CFLInputPa
 		this.position = position;
 	}
 
+	public String getVariableName() {
+		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
+		varName = varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		if (varName.trim().isEmpty()) {
+			return "unknownVar";
+		}
+		if (checkVariableNameIsValid(varName) == false) {
+			return "o" + varName;
+		}
+		return varName;
+	}
+
+	private boolean checkVariableNameIsValid(String packagename) {
+		try {
+			Integer.parseInt(packagename);
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			Integer.parseInt(String.valueOf(packagename.charAt(0)));
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return true;
+	}
+	
 	@Override
 	public int compareTo(CFLInputParameter arg0) {
 		return this.getPosition() - arg0.getPosition();
