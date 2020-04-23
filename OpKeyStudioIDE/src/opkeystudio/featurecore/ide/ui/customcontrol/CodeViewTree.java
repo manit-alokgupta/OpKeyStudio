@@ -20,24 +20,18 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
-import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class CodeViewTree extends CustomTree {
-	private TestSuiteView parentTestSuiteView;
-	private boolean attachedinTestSuite = false;
 	private List<Artifact> artifacts = new ArrayList<Artifact>();
 
 	public CodeViewTree(Composite parent, int style) {
 		super(parent, style);
 		init();
-		SystemRepository.getInstance().setArtifactTreeControl(this);
 	}
 
 	public CodeViewTree(Composite parent, int style, TestSuiteView parentTestSuiteView) {
 		super(parent, style);
-		this.setParentTestSuiteView(parentTestSuiteView);
-		this.setAttachedinTestSuite(true);
 	}
 
 	private void init() {
@@ -161,20 +155,11 @@ public class CodeViewTree extends CustomTree {
 		}
 		this.removeAll();
 		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
-		if (isAttachedinTestSuite()) {
-			rootNode.setText("Gherkin and Test Case");
-		} else {
-			rootNode.setText("Project WorkSpace");
-		}
+		rootNode.setText("Project WorkSpace");
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<Artifact> artifacts = new ArrayList<>();
-		if (isAttachedinTestSuite()) {
-			artifacts = new ArtifactApi().getAllArtificatesByType("Flow");
-		} else {
-			artifacts = new ArtifactApi().getAllArtificates();
-			GlobalLoader.getInstance().setAllArtifacts(artifacts);
-		}
+		artifacts = new ArtifactApi().getAllArtificates();
 		setArtifactsData(artifacts);
 		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
 		for (Artifact artifact : artifacts) {
@@ -184,13 +169,6 @@ public class CodeViewTree extends CustomTree {
 				artitreeitem.setArtifact(artifact);
 				topMostNodes.add(artitreeitem);
 				addIcon(artitreeitem);
-			} else {
-				if (isAttachedinTestSuite()) {
-					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-					artitreeitem.setText(artifact.getName());
-					artitreeitem.setArtifact(artifact);
-					addIcon(artitreeitem);
-				}
 			}
 		}
 
@@ -220,11 +198,7 @@ public class CodeViewTree extends CustomTree {
 	public void refereshArtifacts() {
 		this.removeAll();
 		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
-		if (isAttachedinTestSuite()) {
-			rootNode.setText("Gherkin and Test Case");
-		} else {
-			rootNode.setText("Project WorkSpace");
-		}
+		rootNode.setText("Project WorkSpace");
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<Artifact> artifacts = getArtifactsData();
@@ -237,15 +211,6 @@ public class CodeViewTree extends CustomTree {
 				artitreeitem.setArtifact(artifact);
 				topMostNodes.add(artitreeitem);
 				addIcon(artitreeitem);
-			} else {
-				if (isAttachedinTestSuite()) {
-					if (artifact.isVisible()) {
-						ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-						artitreeitem.setText(artifact.getName());
-						artitreeitem.setArtifact(artifact);
-						addIcon(artitreeitem);
-					}
-				}
 			}
 		}
 
@@ -279,22 +244,6 @@ public class CodeViewTree extends CustomTree {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
-	}
-
-	public TestSuiteView getParentTestSuiteView() {
-		return parentTestSuiteView;
-	}
-
-	public void setParentTestSuiteView(TestSuiteView parentTestSuiteView) {
-		this.parentTestSuiteView = parentTestSuiteView;
-	}
-
-	public boolean isAttachedinTestSuite() {
-		return attachedinTestSuite;
-	}
-
-	public void setAttachedinTestSuite(boolean attachedinTestSuite) {
-		this.attachedinTestSuite = attachedinTestSuite;
 	}
 
 	public void filterArtifactTree(String searchValue) {
