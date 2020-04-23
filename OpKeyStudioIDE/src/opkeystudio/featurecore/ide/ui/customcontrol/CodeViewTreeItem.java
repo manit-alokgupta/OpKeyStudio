@@ -6,10 +6,10 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 
 public class CodeViewTreeItem extends CustomTreeItem {
 	private File artifactFile;
+	private boolean systemFolder = false;
 
 	public CodeViewTreeItem(Tree parent, int style) {
 		super(parent, style);
@@ -30,5 +30,13 @@ public class CodeViewTreeItem extends CustomTreeItem {
 
 	public void setArtifactFile(File artifactFile) {
 		this.artifactFile = artifactFile;
+	}
+
+	public boolean isSystemFolder() {
+		return systemFolder;
+	}
+
+	public void setSystemFolder(boolean systemFolder) {
+		this.systemFolder = systemFolder;
 	}
 }

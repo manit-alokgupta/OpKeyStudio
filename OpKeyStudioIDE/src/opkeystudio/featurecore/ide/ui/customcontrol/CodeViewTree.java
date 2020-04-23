@@ -50,6 +50,9 @@ public class CodeViewTree extends CustomTree {
 
 	public void openSelectedCodeFile() {
 		File selectedCodeFile = getSelectedArtifact();
+		if (selectedCodeFile == null) {
+			return;
+		}
 		System.out.println(">> " + selectedCodeFile.getAbsolutePath());
 	}
 
@@ -98,13 +101,20 @@ public class CodeViewTree extends CustomTree {
 		CodeViewTreeItem rootNode = new CodeViewTreeItem(this, 0);
 		rootNode.setText("Code WorkSpace");
 		rootNode.setExpanded(true);
+		rootNode.setSystemFolder(true);
 		addIcon(rootNode);
+
+		CodeViewTreeItem srcNode = new CodeViewTreeItem(rootNode, 0);
+		srcNode.setText("src");
+		srcNode.setExpanded(true);
+		srcNode.setSystemFolder(true);
+		addIcon(srcNode);
 		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getTranspiledArtifactsFolder();
 		File transpileDirFolder = new File(transpileDirpath);
 		File[] files = transpileDirFolder.listFiles();
 		for (File file : files) {
-			renderFiles(rootNode, file);
+			renderFiles(srcNode, file);
 		}
 		expandAll(rootNode);
 	}
