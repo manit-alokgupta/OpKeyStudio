@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.swt.SWT;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
@@ -17,7 +19,6 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
-import pcloudystudio.spytreecomponents.control.CTreeViewer;
 
 public class CodeViewTree extends CustomTree {
 	private List<Artifact> artifacts = new ArrayList<Artifact>();
@@ -54,6 +55,12 @@ public class CodeViewTree extends CustomTree {
 			return;
 		}
 		System.out.println(">> " + selectedCodeFile.getAbsolutePath());
+		EPartService partService = Utilities.getInstance().getEpartService();
+		MPart part = partService.createPart("opkeystudio.partdescriptor.genericCodeEditor");
+		part.setLabel(selectedCodeFile.getName());
+		part.setTooltip(selectedCodeFile.getName());
+		part.getTransientData().put("opkeystudio.codeFile", selectedCodeFile);
+		partService.showPart(part, PartState.ACTIVATE);
 	}
 
 	public void setArtifactsData(List<Artifact> artifacts) {

@@ -45,9 +45,10 @@ public class CompilerUtilities {
 		List<File> allFiles = new ArrayList<File>();
 		allFiles.addAll(getPluginBaseLibraries());
 		allFiles.addAll(getPluginRunnerJar("System"));
+		allFiles.addAll(getReportingUtilJars());
 		allFiles.addAll(getPluginRunnerJar(pluginName));
 		allFiles.addAll(getPluginsLibraries(pluginName));
-		allFiles.addAll(getReportingUtilJars());
+		
 		
 		return allFiles;
 	}

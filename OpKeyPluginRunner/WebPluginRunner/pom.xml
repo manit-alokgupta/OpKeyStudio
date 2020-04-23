@@ -14,6 +14,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<pluginName>Web</pluginName>
+		<!-- <opkeyStudioLibrariesDirPath>C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpKeyStudioIDE\resources\libraries</opkeyStudioLibrariesDirPath> -->
 		<opkeyStudioLibrariesDirPath>C:\Users\neon.nishant\Desktop\OpKeyStudioEclipse\trunk\OpKeyStudioIDE\resources\libraries</opkeyStudioLibrariesDirPath>
 		<!-- 	<opkeyStudioLibrariesDirPath>D:\WP_Opkey\OpKeyStudio\OpKeyStudioIDE\resources\libraries</opkeyStudioLibrariesDirPath> -->
 		<opkeyruntimejarpath>${opkeyStudioLibrariesDirPath}\PluginBase\opkeyeruntimeJar.jar</opkeyruntimejarpath>
