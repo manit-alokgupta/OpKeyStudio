@@ -191,6 +191,7 @@ public class GlobalVariableDialog extends Dialog {
 						if (savestatus) {
 							toggleSaveToolItem(false);
 						}
+						return;
 					}
 
 				}

@@ -253,7 +253,7 @@ public class GenericTree extends CustomTree {
 			cti.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DARK_GREEN_FLAG_ICON));
 			List<Keyword> keywords = KeywordManager.getInstance().getKeywordGroup(groupName);
 			for (Keyword keyword : keywords) {
-				if (keyword.getName().toLowerCase().startsWith(keywordName.toLowerCase())) {
+				if (keyword.getName().toLowerCase().contains(keywordName.toLowerCase())) {
 					CustomTreeItem keywItem = new CustomTreeItem(cti, 0);
 					keywItem.setText(keyword.getName());
 					keywItem.setControlData(keyword);
