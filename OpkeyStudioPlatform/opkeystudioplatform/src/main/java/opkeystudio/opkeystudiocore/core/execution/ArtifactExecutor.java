@@ -91,7 +91,7 @@ public class ArtifactExecutor {
 		ExecutionSession session = getExecutionSession();
 		sinfo.setSessionName(session.getSessionName());
 		sinfo.setDefaultPluginLocation("");
-		// sinfo.setReportFilePath(session.get);
+		sinfo.setReportFilePath(session.getReportFolderDir() + File.separator + "Report.html");
 		return sinfo;
 	}
 
@@ -102,7 +102,7 @@ public class ArtifactExecutor {
 		URLClassLoader classLoader = getClassLoader();
 		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
-		Method method = instance.getClass().getDeclaredMethod("beforeSessionStart");
+		Method method = instance.getClass().getDeclaredMethod("beforeSessionStart", SessionInfo.class);
 		Object result = method.invoke(instance, info);
 	}
 
@@ -112,7 +112,7 @@ public class ArtifactExecutor {
 		URLClassLoader classLoader = getClassLoader();
 		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
-		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds");
+		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds", SessionInfo.class);
 		Object result = method.invoke(instance, info);
 	}
 

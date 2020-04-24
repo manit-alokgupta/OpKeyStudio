@@ -50,7 +50,8 @@ public class ExecutionSessionExecutor {
 			retObject.setCompileErrors(compileErrors);
 			return retObject;
 		}
-		return executeArtifact(session,artifactCodesDirPath, artifact, pluginName);
+		session.setReportFolderDir(getSessionReportFolder(session.getSessionName()));
+		return executeArtifact(session, artifactCodesDirPath, artifact, pluginName);
 	}
 
 	private ArtifactExecutor executeArtifact(ExecutionSession esession, String sessionRootDir, Artifact artifact,
@@ -73,6 +74,11 @@ public class ExecutionSessionExecutor {
 		if (!file2.exists()) {
 			file2.mkdir();
 		}
+
+		File file3 = new File(file.getAbsolutePath() + File.separator + "Reports");
+		if (!file3.exists()) {
+			file3.mkdir();
+		}
 	}
 
 	private String getSessionArtifacCodesFolder(String sessionName) {
@@ -82,6 +88,10 @@ public class ExecutionSessionExecutor {
 
 	private String getSessionLogsFolder(String sessionName) {
 		return Utilities.getInstance().getSessionsFolder() + File.separator + sessionName + File.separator + "logs";
+	}
+
+	private String getSessionReportFolder(String sessionName) {
+		return Utilities.getInstance().getSessionsFolder() + File.separator + sessionName + File.separator + "Reports";
 	}
 
 	public String getSorceFileExt() {

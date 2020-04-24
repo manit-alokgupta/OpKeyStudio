@@ -9,6 +9,7 @@ public class ExecutionSession {
 	private String buildName;
 	private String pluginName;
 	private Artifact artifact;
+	private String reportFolderDir;
 
 	public ExecutionSession(String sessionName, String buildName) {
 		this.setSessionName((sessionName + "_" + Utilities.getInstance().getCurrentDateTime()).replaceAll(" ", "_")
@@ -65,5 +66,13 @@ public class ExecutionSession {
 
 	public void setBuildName(String buildName) {
 		this.buildName = buildName;
+	}
+
+	public String getReportFolderDir() {
+		return reportFolderDir;
+	}
+
+	public void setReportFolderDir(String reportFolderDir) {
+		this.reportFolderDir = reportFolderDir;
 	}
 }
