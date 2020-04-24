@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -39,6 +41,7 @@ public class ExecutionResultView extends Composite {
 	private ToolItem pauseButton;
 	private ToolItem stopButton;
 	private ToolItem refreshButton;
+	private ToolItem showLogView;
 	private StyledText logTextView;
 	private ExecutionSession executionSession;
 	private ArtifactExecutor artifactExecutor;
@@ -133,6 +136,13 @@ public class ExecutionResultView extends Composite {
 						displayLogs(consoleOutPut);
 					}
 					if (executor.isExecutionCompleted()) {
+						new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+							@Override
+							public void run() {
+								showLogView.setEnabled(true);
+							}
+						});
 						break;
 					}
 					try {
@@ -155,7 +165,11 @@ public class ExecutionResultView extends Composite {
 		// stopButton.setText("Save");
 		stopButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.EXIT_ICON));
 		stopButton.setToolTipText("Stop Execution");
-
+		new ToolItem(toolBar, SWT.SEPARATOR);
+		showLogView = new ToolItem(toolBar, SWT.NONE);
+		showLogView.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		showLogView.setToolTipText("Show Report");
+		showLogView.setEnabled(false);
 		logTextView = new StyledText(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		logTextView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		logTextView.setEditable(false);
@@ -173,6 +187,26 @@ public class ExecutionResultView extends Composite {
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
 
+			}
+		});
+		
+		showLogView.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ExecutionSession esession=getExecutionSession();
+				EPartService partService = opkeystudio.core.utils.Utilities.getInstance().getEpartService();
+				MPart part = partService.createPart("opkeystudio.partdescriptor.reportViewer");
+				part.setLabel(esession.getSessionName());
+				part.setTooltip(esession.getSessionName());
+				part.getTransientData().put("opkeystudio.executionSessionData", esession);
+				partService.showPart(part, PartState.ACTIVATE);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 	}
