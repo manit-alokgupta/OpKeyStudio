@@ -82,7 +82,10 @@ public class Report {
 				data[ii++] = new String[] { entry.getKey(), entry.getValue() };
 			}
 			Markup markup = MarkupHelper.createTable(data);
-			aNode.log(com.aventstack.extentreports.Status.valueOf(status.toString()), markup);
+			if(status == Status.FAIL)
+				aNode.log(com.aventstack.extentreports.Status.FAIL, markup);
+			else
+				aNode.log(com.aventstack.extentreports.Status.PASS, markup);
 		}
 
 		this.extentReport.flush();
