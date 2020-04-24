@@ -17,6 +17,10 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<opkeyStudioIdedir>${project.basedir}/../../OpKeyStudioIDE</opkeyStudioIdedir>
+		<opkeyStudioLibrariesDir>${opkeyStudioIdedir}\resources\libraries</opkeyStudioLibrariesDir>
+		<opkeyStudioOpKeyERuntimeLibrary>${opkeyStudioIdedir}\resources\libraries\PluginBase\opkeyeruntimeJar.jar</opkeyStudioOpKeyERuntimeLibrary>
+		<opkeyPluginBaseLibPath>${opkeyStudioIdedir}\resources\libraries\PluginBase\opkey-pluginbase-v2.0-jar-with-dependencies.jar</opkeyPluginBaseLibPath>
 	</properties>
 
 	<dependencies>
@@ -108,7 +112,22 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
-        </dependency>
+		</dependency>
+
+		<dependency>
+			<groupId>com</groupId>
+			<artifactId>opkeystudio</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${opkeyStudioOpKeyERuntimeLibrary}</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.crestech.opkey</groupId>
+			<artifactId>plugin</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${opkeyPluginBaseLibPath}</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>

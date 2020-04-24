@@ -1785,7 +1785,9 @@ Bundle-ClassPath: target/dependency/accessors-smart-1.2.jar,
  target/dependency/selenium-opera-driver-3.14.0.jar,
  target/dependency/selenium-remote-driver-3.14.0.jar,
  target/dependency/selenium-safari-driver-3.14.0.jar,
- target/dependency/selenium-support-3.14.0.jar
+ target/dependency/selenium-support-3.14.0.jar,
+ target/dependency/opkeystudio-1.0.jar,
+ target/dependency/plugin-1.0.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: opkeystudioplatform
 Bundle-ActivationPolicy: lazy
