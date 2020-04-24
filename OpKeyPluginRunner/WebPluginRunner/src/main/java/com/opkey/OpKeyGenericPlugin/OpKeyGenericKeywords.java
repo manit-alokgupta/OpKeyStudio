@@ -37,8 +37,8 @@ public class OpKeyGenericKeywords {
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
+					WebDriverObject object = new ObjectConverter().formatObject(arg0);
 					return new EditBox().Method_typeTextOnEditBox(object, arg1);
 				} catch (Exception e) {
 					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
@@ -60,8 +60,8 @@ public class OpKeyGenericKeywords {
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
+					WebDriverObject object = new ObjectConverter().formatObject(arg0);
 					return new EditBox().Method_typeKeysOnEditBox(object, arg1);
 				} catch (Exception e) {
 					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
@@ -79,8 +79,8 @@ public class OpKeyGenericKeywords {
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
+					WebDriverObject object = new ObjectConverter().formatObject(arg0);
 					return new EditBox().Method_verifyeditboxtext(object, arg1);
 				} catch (Exception e) {
 					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
@@ -123,8 +123,8 @@ public class OpKeyGenericKeywords {
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
+					WebDriverObject object = new ObjectConverter().formatObject(arg0);
 					return new DropDown().Method_selectDropDownItem(object, arg1);
 				} catch (Exception e) {
 					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
@@ -142,8 +142,8 @@ public class OpKeyGenericKeywords {
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
+					WebDriverObject object = new ObjectConverter().formatObject(arg0);
 					return new Checkbox().Method_selectCheckBox(object, arg1);
 				} catch (Exception e) {
 					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
@@ -162,8 +162,8 @@ public class OpKeyGenericKeywords {
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
+					WebDriverObject object = new ObjectConverter().formatObject(arg0);
 					return new Radio().Method_SelectRadio(object, arg1);
 				} catch (Exception e) {
 					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
@@ -182,8 +182,8 @@ public class OpKeyGenericKeywords {
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
+					WebDriverObject object = new ObjectConverter().formatObject(arg0);
 					FunctionResult functionResult = new WebObjects().Method_ObjectClick(object);
 					ReportHelper.addReportStep("Click", functionResult);
 				} catch (Exception e) {
@@ -202,8 +202,8 @@ public class OpKeyGenericKeywords {
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
+					WebDriverObject object = new ObjectConverter().formatObject(arg0);
 					return new WebObjects().Method_dblClick(object);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -860,11 +860,22 @@ public class OpKeyGenericKeywords {
 	}
 
 	public boolean CloseAllBrowsers() throws Exception {
+
 		ContextInitiator.addFunction("CloseAllBrowsers");
 
-		// Method_CloseAllBrowsers
-		new Browser().Method_CloseAllBrowsers();
-		return false;
+		FunctionResult result = new KeywordExecutor(new Runnable() {
+
+			public FunctionResult run() {
+				try {
+					return new Browser().Method_CloseAllBrowsers();
+				} catch (Exception e) {
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
+				}
+			}
+		}).executeKeyword();
+
+		ReportHelper.addReportStep("CloseAllBrowsers", result);
+		return Boolean.getBoolean(result.getOutput());
 
 	}
 
