@@ -18,9 +18,10 @@ public class ReportHelper {
 		Report.get().addStep(parameters, status);
 	}
 
-	public static void addReportStep(String methodName, Exception e) {
-		HashMap<String, String> parameters = new HashMap<String, String>();
-		parameters.put("Action", methodName);
-		Report.get().addStep(parameters, Status.FAIL, e);
-	}
+	/*
+	 * public static void addReportStep(String methodName, Exception e) {
+	 * HashMap<String, String> parameters = new HashMap<String, String>();
+	 * parameters.put("Action", methodName); Report.get().addStep(parameters,
+	 * Status.FAIL, e); }
+	 */
 }

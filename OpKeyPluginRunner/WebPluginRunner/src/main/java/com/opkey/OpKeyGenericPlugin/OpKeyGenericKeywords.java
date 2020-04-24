@@ -184,15 +184,15 @@ public class OpKeyGenericKeywords {
 			public FunctionResult run() {
 				try {
 					WebDriverObject object = new ObjectConverter().formatObject(arg0);
-					FunctionResult functionResult = new WebObjects().Method_ObjectClick(object);
-					ReportHelper.addReportStep("Click", functionResult);
+					return new WebObjects().Method_ObjectClick(object);
 				} catch (Exception e) {
-					ReportHelper.addReportStep("Click", e);
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
-		return false;
+
+		ReportHelper.addReportStep("Click", result);
+		return Boolean.getBoolean(result.getOutput());
 	}
 
 	public boolean DoubleClick(final ORObject arg0) {
@@ -328,14 +328,13 @@ public class OpKeyGenericKeywords {
 				try {
 					return new Deprecate().Method_refreshAndWait(arg0);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
-		return false;
 
+		ReportHelper.addReportStep("RefreshAndWait", result);
+		return Boolean.getBoolean(result.getOutput());
 	}
 
 	public boolean ClearEditField(final ORObject arg0) {
@@ -347,19 +346,15 @@ public class OpKeyGenericKeywords {
 			public FunctionResult run() {
 				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
-					FunctionResult functionResult = new EditBox().Method_clearEditField(object);
-					ReportHelper.addReportStep("ClearEditField", functionResult);
-					return functionResult;
+					return new EditBox().Method_clearEditField(object);
 				} catch (Exception e) {
-					ReportHelper.addReportStep("ClearEditField", e);
-					e.printStackTrace();
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
 
-		return false;
-
+		ReportHelper.addReportStep("ClearEditField", result);
+		return Boolean.getBoolean(result.getOutput());
 	}
 
 	public boolean TypeTextAndWait(final ORObject arg0, final String arg1, final int arg2) {
@@ -603,7 +598,7 @@ public class OpKeyGenericKeywords {
 		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_ObjectExists
 
-		ReportHelper.addReportStep("VerifyObjectExists", new Exception("Exception while VerifyObjectExists"));
+//		ReportHelper.addReportStep("VerifyObjectExists", new Exception("Exception while VerifyObjectExists"));
 		return false;
 
 	}
@@ -2163,7 +2158,8 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		ReportHelper.addReportStep("NavigateTo", new Exception("Methond not implemented yet."));
+		// ReportHelper.addReportStep("NavigateTo", new Exception("Methond not
+		// implemented yet."));
 		return false;
 
 	}
@@ -2859,7 +2855,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		ReportHelper.addReportStep("GetObjectText", new Exception("exception while runnging GetObjectText"));
+		//ReportHelper.addReportStep("GetObjectText", new Exception("exception while runnging GetObjectText"));
 		return "";
 
 	}
@@ -2875,7 +2871,8 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		ReportHelper.addReportStep("VerifyEditBoxExist", new Exception("Object not found"));
+		// ReportHelper.addReportStep("VerifyEditBoxExist", new Exception("Object not
+		// found"));
 		return false;
 
 	}
