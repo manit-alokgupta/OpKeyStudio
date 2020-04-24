@@ -49,7 +49,7 @@ public class ContextInitiator {
 
 	private Map<String, String> getSettings() {
 		String defaultInstallDir = new File("").getAbsolutePath();
-		defaultInstallDir = "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE";
+	//	defaultInstallDir = "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE";
 		Map<String, String> settingsMap = new HashMap<String, String>();
 		settingsMap.put("XMLHttpRequestTimeOut", "30");
 		settingsMap.put("UseWaitForPageLoad", "true");
