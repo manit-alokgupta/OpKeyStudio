@@ -13,8 +13,8 @@ public class SessionHandler implements ExecutionSession {
 
 	public void afterSessionEnds() {
 		try {
-			Report.get().endTestCase();
-			Report.get().endSuite();
+			//Report.get().endTestCase();
+			//Report.get().endSuite();
 			new Browser().Method_CloseAllBrowsers();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -24,9 +24,9 @@ public class SessionHandler implements ExecutionSession {
 
 	public void beforeSessionStart() {
 		ReportBuilder builder = ReportBuilder.atPath(new File(System.getProperty("user.dir") + "/Report.html"));
-		Report report = builder.withFormat(ReportFormat.HTML).build();
-		report.beginSuite("Web Plugin Automation");
-		report.beginTestCase("Web Test Case");
+		Report report = builder.withName("GiveSessionNameHere").withFormat(ReportFormat.HTML).build();
+		//report.beginSuite("Web Plugin Automation");
+		//report.beginTestCase("Web Test Case");
 
 	}
 

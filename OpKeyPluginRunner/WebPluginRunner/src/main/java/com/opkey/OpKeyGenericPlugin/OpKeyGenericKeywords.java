@@ -1,6 +1,8 @@
 package com.opkey.OpKeyGenericPlugin;
 
+import com.crestech.opkey.plugin.ResultCodes;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
+import com.crestech.opkey.plugin.communication.contracts.functionresult.Result;
 import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ToolNotSetException;
 import com.crestech.opkey.plugin.webdriver.keywords.Browser;
 import com.crestech.opkey.plugin.webdriver.keywords.Button;
@@ -22,6 +24,7 @@ import com.opkeystudio.runtime.ORObject;
 import com.ssts.reporting.Report;
 
 public class OpKeyGenericKeywords {
+
 	public OpKeyGenericKeywords() {
 		new ContextInitiator().initContext();
 	}
@@ -39,15 +42,13 @@ public class OpKeyGenericKeywords {
 				try {
 					return new EditBox().Method_typeTextOnEditBox(object, arg1);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
 
 		ReportHelper.addReportStep("TypeTextOnEditBox", result);
-		return false;
+		return Boolean.getBoolean(result.getOutput());
 
 	}
 
@@ -64,13 +65,13 @@ public class OpKeyGenericKeywords {
 				try {
 					return new EditBox().Method_typeKeysOnEditBox(object, arg1);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
-		return false;
+
+		ReportHelper.addReportStep("TypeTextOnEditBox", result);
+		return Boolean.getBoolean(result.getOutput());
 
 	}
 
@@ -83,14 +84,13 @@ public class OpKeyGenericKeywords {
 				try {
 					return new EditBox().Method_verifyeditboxtext(object, arg1);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
-		return false;
 
+		ReportHelper.addReportStep("TypeTextOnEditBox", result);
+		return Boolean.getBoolean(result.getOutput());
 	}
 
 	public boolean OpenBrowser(final String arg0, final String arg1) throws Exception {
@@ -99,20 +99,20 @@ public class OpKeyGenericKeywords {
 
 		// Method_WebBrowserOpen
 		FunctionResult result = new KeywordExecutor(new Runnable() {
-			
+
 			public FunctionResult run() {
 				try {
 					FunctionResult functionResult = new Browser().Method_WebBrowserOpen(arg0, arg1);
 					ReportHelper.addReportStep("OpenBrowser", functionResult);
 					return functionResult;
 				} catch (Exception e) {
-					e.printStackTrace();
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
-		
-		return false;
+
+		ReportHelper.addReportStep("TypeTextOnEditBox", result);
+		return Boolean.getBoolean(result.getOutput());
 
 	}
 
@@ -128,13 +128,12 @@ public class OpKeyGenericKeywords {
 				try {
 					return new DropDown().Method_selectDropDownItem(object, arg1);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
-		return false;
+		ReportHelper.addReportStep("TypeTextOnEditBox", result);
+		return Boolean.getBoolean(result.getOutput());
 
 	}
 
@@ -306,7 +305,7 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction("GoBackAndWait");
 
 		// Method_goBackAndWait
-		
+
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
@@ -352,7 +351,7 @@ public class OpKeyGenericKeywords {
 			public FunctionResult run() {
 				WebDriverObject object = new ObjectConverter().formatObject(arg0);
 				try {
-					FunctionResult functionResult =  new EditBox().Method_clearEditField(object);
+					FunctionResult functionResult = new EditBox().Method_clearEditField(object);
 					ReportHelper.addReportStep("ClearEditField", functionResult);
 					return functionResult;
 				} catch (Exception e) {
@@ -362,8 +361,7 @@ public class OpKeyGenericKeywords {
 				return null;
 			}
 		}).executeKeyword();
-		
-		
+
 		return false;
 
 	}
@@ -2157,7 +2155,7 @@ public class OpKeyGenericKeywords {
 				return null;
 			}
 		}).executeKeyword();
-		
+
 		ReportHelper.addReportStep("NavigateTo", new Exception("Methond not implemented yet."));
 		return false;
 
@@ -2853,7 +2851,7 @@ public class OpKeyGenericKeywords {
 				return null;
 			}
 		}).executeKeyword();
-		
+
 		ReportHelper.addReportStep("GetObjectText", new Exception("exception while runnging GetObjectText"));
 		return "";
 
@@ -2869,7 +2867,7 @@ public class OpKeyGenericKeywords {
 				return null;
 			}
 		}).executeKeyword();
-		
+
 		ReportHelper.addReportStep("VerifyEditBoxExist", new Exception("Object not found"));
 		return false;
 

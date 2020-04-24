@@ -6,6 +6,7 @@ public class ReportBuilder {
 
 	private File atPath;
 	private ReportFormat format;
+	private String SessionName;
 
 	private ReportBuilder() {
 		// enforce builder pattern
@@ -18,6 +19,11 @@ public class ReportBuilder {
 		return util;
 	}
 
+	public ReportBuilder withName(String sessionName) {
+		this.SessionName = sessionName;
+		return this;
+	}
+	
 	public ReportBuilder withFormat(ReportFormat format) {
 		this.format = format;
 		return this;
@@ -27,6 +33,10 @@ public class ReportBuilder {
 		return new Report(this);
 	}
 
+	public String getSessionName() {
+		return this.SessionName;
+	}
+	
 	public File getPath() {
 		return atPath;
 	}

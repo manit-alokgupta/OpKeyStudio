@@ -37,6 +37,13 @@ public class Report {
 	Report(ReportBuilder builder) {
 		this.builder = builder;
 		report = this;
+		
+		ExtentSparkReporter sparkReporter = new ExtentSparkReporter(this.builder.getPath());
+		sparkReporter.config().setDocumentTitle(builder.getSessionName());
+		sparkReporter.config().setReportName(builder.getSessionName());
+		sparkReporter.config().setTheme(com.aventstack.extentreports.reporter.configuration.Theme.STANDARD);
+		this.extentReport = new ExtentReports();
+		this.extentReport.attachReporter(sparkReporter);
 	}
 
 	public void addStep(String action, String[] parameters, Status status) {
@@ -107,12 +114,7 @@ public class Report {
 
 	public void beginSuite(String suiteName) {
 		System.out.println("@BeginSuite");
-		ExtentSparkReporter sparkReporter = new ExtentSparkReporter(this.builder.getPath());
-		sparkReporter.config().setDocumentTitle(suiteName);
-		sparkReporter.config().setReportName(suiteName);
-		sparkReporter.config().setTheme(com.aventstack.extentreports.reporter.configuration.Theme.STANDARD);
-		this.extentReport = new ExtentReports();
-		this.extentReport.attachReporter(sparkReporter);
+	
 	}
 
 	public void endSuite() {
