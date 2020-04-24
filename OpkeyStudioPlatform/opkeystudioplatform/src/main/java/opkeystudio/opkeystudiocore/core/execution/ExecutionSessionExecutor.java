@@ -45,16 +45,17 @@ public class ExecutionSessionExecutor {
 		List<CompileError> compileErrors = new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath, pluginName);
 		compileErrors = new CompilerUtilities().filterErrors(compileErrors, Kind.ERROR);
 		if (compileErrors.size() > 0) {
-			ArtifactExecutor retObject = new ArtifactExecutor();
+			ArtifactExecutor retObject = new ArtifactExecutor(session);
 			retObject.setContainsErrors(true);
 			retObject.setCompileErrors(compileErrors);
 			return retObject;
 		}
-		return executeArtifact(artifactCodesDirPath, artifact, pluginName);
+		return executeArtifact(session,artifactCodesDirPath, artifact, pluginName);
 	}
 
-	private ArtifactExecutor executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
-		ArtifactExecutor executor = new ArtifactExecutor();
+	private ArtifactExecutor executeArtifact(ExecutionSession esession, String sessionRootDir, Artifact artifact,
+			String pluginName) {
+		ArtifactExecutor executor = new ArtifactExecutor(esession);
 		executor.executeArtifact(sessionRootDir, artifact, pluginName);
 		return executor;
 	}

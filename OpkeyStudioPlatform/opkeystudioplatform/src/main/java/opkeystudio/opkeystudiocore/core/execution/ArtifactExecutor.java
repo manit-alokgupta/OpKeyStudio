@@ -16,6 +16,9 @@ import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class ArtifactExecutor {
+
+	private ExecutionSession executionSession;
+
 	private ByteArrayOutputStream standardOutput;
 	private ByteArrayOutputStream standardErrorOutput;
 	private URLClassLoader classLoader;
@@ -23,6 +26,10 @@ public class ArtifactExecutor {
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
 	private boolean containsErrors;
 	private Thread executionThread;
+
+	public ArtifactExecutor(ExecutionSession esession) {
+		this.setExecutionSession(esession);
+	}
 
 	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
 		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
@@ -169,5 +176,13 @@ public class ArtifactExecutor {
 
 	public void setExecutionThread(Thread executionThread) {
 		this.executionThread = executionThread;
+	}
+
+	public ExecutionSession getExecutionSession() {
+		return executionSession;
+	}
+
+	public void setExecutionSession(ExecutionSession executionSession) {
+		this.executionSession = executionSession;
 	}
 }
