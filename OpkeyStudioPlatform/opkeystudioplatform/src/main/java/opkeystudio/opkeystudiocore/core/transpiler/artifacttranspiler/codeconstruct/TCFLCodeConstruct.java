@@ -84,7 +84,7 @@ public class TCFLCodeConstruct {
 				GlobalVariable globalVariable = GlobalLoader.getInstance()
 						.getGlobalVariableById(flowInputObject.getGlobalVariableData());
 
-				argumentCall += "OpKeyGlobalVariables." + globalVariable.getName().replaceAll(" ", "_");
+				argumentCall += "OpKeyGlobalVariables." + globalVariable.getVariableName();
 				continue;
 			}
 
@@ -92,7 +92,7 @@ public class TCFLCodeConstruct {
 				String flowOutputId = flowInputObject.getFlowOutputData();
 				FlowOutputArgument flowOutputArgument = GlobalLoader.getInstance()
 						.getFlowOutputArgumentById(flowOutputId);
-				argumentCall += flowOutputArgument.getOutputvariablename();
+				argumentCall += flowOutputArgument.getVariableName();
 				continue;
 			}
 
@@ -107,7 +107,7 @@ public class TCFLCodeConstruct {
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {
 				String columnId = flowInputObject.getDataRepositoryColumnData();
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
-				String columnName = drColumn.getName();
+				String columnName = drColumn.getVariableName();
 				argumentCall += columnName;
 				continue;
 			}
