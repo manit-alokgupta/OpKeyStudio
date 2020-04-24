@@ -82,10 +82,14 @@ public class Report {
 				data[ii++] = new String[] { entry.getKey(), entry.getValue() };
 			}
 			Markup markup = MarkupHelper.createTable(data);
-			if(status == Status.FAIL)
-				aNode.log(com.aventstack.extentreports.Status.FAIL, markup);
-			else
+			if(status == Status.PASS)
 				aNode.log(com.aventstack.extentreports.Status.PASS, markup);
+			else if(status == Status.FAIL)
+				aNode.log(com.aventstack.extentreports.Status.FAIL, markup);
+			else if(status == Status.InProgress)
+				aNode.log(com.aventstack.extentreports.Status.ERROR, markup);
+			else if(status == Status.NotStarted)
+				aNode.log(com.aventstack.extentreports.Status.SKIP, markup);
 		}
 
 		this.extentReport.flush();
