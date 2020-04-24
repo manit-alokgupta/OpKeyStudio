@@ -33,9 +33,6 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 public class Utilities {
 	private static Utilities util;
 	private String defaultInstallDir;
-//	private String localResourcesDirPath = "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE";
-	private String localResourcesDirPath = "C:/Users/anshuman.chatterjee/Documents/GitHub/OpKeyStudio/OpKeyStudioIDE";
-//	private String localResourcesDirPath = "D:\\GitHubProjects\\OpKeyStudio\\OpKeyStudioIDE";
 	private boolean developerMode = true;
 
 	public static Utilities getInstance() {
@@ -103,7 +100,7 @@ public class Utilities {
 
 	public String getDefaultInstallDir() {
 		if (developerMode) {
-			return localResourcesDirPath;
+			return System.getenv("LOCAL_RESOURCES_DIR_PATH");
 		}
 		return defaultInstallDir;
 	}
