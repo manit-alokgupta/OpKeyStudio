@@ -11,6 +11,8 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.opkeystudio.core.sessions.SessionInfo;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
@@ -84,23 +86,34 @@ public class ArtifactExecutor {
 		cleanExecutionSession();
 	}
 
+	private SessionInfo getSessionInfo() {
+		SessionInfo sinfo = new SessionInfo();
+		ExecutionSession session = getExecutionSession();
+		sinfo.setSessionName(session.getSessionName());
+		sinfo.setDefaultPluginLocation("");
+		// sinfo.setReportFilePath(session.get);
+		return sinfo;
+	}
+
 	private void callExecuteSessionStart()
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException,
 			SecurityException, IllegalArgumentException, InvocationTargetException {
+		SessionInfo info = getSessionInfo();
 		URLClassLoader classLoader = getClassLoader();
 		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("beforeSessionStart");
-		Object result = method.invoke(instance);
+		Object result = method.invoke(instance, info);
 	}
 
 	private void callExecuteSessionEnd() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+		SessionInfo info = getSessionInfo();
 		URLClassLoader classLoader = getClassLoader();
 		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds");
-		Object result = method.invoke(instance);
+		Object result = method.invoke(instance, info);
 	}
 
 	public void stopExecutionSession() {
