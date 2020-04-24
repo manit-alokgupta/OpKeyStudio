@@ -287,6 +287,7 @@ public class Utilities {
 			String newPath = extractFolder;
 
 			new File(newPath).mkdir();
+			@SuppressWarnings("rawtypes")
 			Enumeration zipFileEntries = zip.entries();
 
 			// Process each entry

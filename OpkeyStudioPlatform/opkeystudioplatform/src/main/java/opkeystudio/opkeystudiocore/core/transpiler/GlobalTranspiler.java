@@ -21,11 +21,11 @@ public class GlobalTranspiler {
 		class1.setName("OpKeyGlobalVariables").setPublic();
 		for (GlobalVariable gv : globalVariables) {
 			try {
-				class1.addField().setName(gv.getName().replaceAll(" ", "_")).setType("String")
-						.setStringInitializer(gv.getValue()).setPublic().setStatic(true);
+				class1.addField().setName(gv.getVariableName()).setType("String").setStringInitializer(gv.getValue())
+						.setPublic().setStatic(true);
 			} catch (Exception e) {
 				e.printStackTrace();
-				class1.addField().setName("_" + gv.getName().replaceAll(" ", "_")).setType("String")
+				class1.addField().setName("_" + gv.getVariableName()).setType("String")
 						.setStringInitializer(gv.getValue()).setPublic().setStatic(true);
 			}
 		}
@@ -135,7 +135,7 @@ public class GlobalTranspiler {
 		String methodCall = "addDRCell(\"%s\",\"%s\");";
 		String staticVariableDatas = "";
 		for (DRColumnAttributes drColumnAttribute : drColumns) {
-			String columnName = drColumnAttribute.getName();
+			String columnName = drColumnAttribute.getVariableName();
 			for (DRCellAttributes drCell : drColumnAttribute.getDrCellAttributes()) {
 				String drcellValue = drCell.getValue();
 				if (drcellValue == null) {

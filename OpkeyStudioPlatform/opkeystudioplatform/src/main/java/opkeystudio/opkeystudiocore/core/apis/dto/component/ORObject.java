@@ -187,7 +187,26 @@ public class ORObject extends Modified implements Cloneable {
 		if (varName.trim().isEmpty()) {
 			return "unknownVar";
 		}
+		if (checkVariableNameIsValid(varName) == false) {
+			return "o" + varName;
+		}
 		return varName;
+	}
+
+	private boolean checkVariableNameIsValid(String packagename) {
+		try {
+			Integer.parseInt(packagename);
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			Integer.parseInt(String.valueOf(packagename.charAt(0)));
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return true;
 	}
 
 	public void setVariableName(String variableName) {

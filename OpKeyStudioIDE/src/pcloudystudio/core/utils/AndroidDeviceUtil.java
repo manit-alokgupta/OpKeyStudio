@@ -17,6 +17,7 @@ public class AndroidDeviceUtil {
 	public static final String ANDROID_DEVICE_NAME_PROPERTY = "ro.product.model";
 	public static final String ANDROID_DEVICE_API_LEVEL_PROPERTY = "ro.build.version.sdk";
 	public static final String ANDROID_DEVICE_ABI_PROPERTY = "ro.product.cpu.abi";
+	public static final String ANDROID_DEVICE_MANUFACTURER_PROPERTY = "ro.product.manufacturer";
 
 	private static Map<String, String> devicesList;
 	private static String devicePropertyOutput;
@@ -44,21 +45,21 @@ public class AndroidDeviceUtil {
 			br.close();
 			devicesList = new HashMap<String, String>();
 			for (final String id : deviceIds) {
-				cmd = new String[] { adbPath, "-s", id, "shell", "getprop", "ro.product.manufacturer" };
+				cmd = new String[] { adbPath, "-s", id, "shell", "getprop", ANDROID_DEVICE_MANUFACTURER_PROPERTY };
 				pb.command(cmd);
 				process = pb.start();
 				process.waitFor();
 				br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 				String deviceName = br.readLine();
 				br.close();
-				cmd = new String[] { adbPath, "-s", id, "shell", "getprop", "ro.product.model" };
+				cmd = new String[] { adbPath, "-s", id, "shell", "getprop", ANDROID_DEVICE_NAME_PROPERTY };
 				pb.command(cmd);
 				process = pb.start();
 				process.waitFor();
 				br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 				deviceName = String.valueOf(deviceName) + " " + br.readLine();
 				br.close();
-				cmd = new String[] { adbPath, "-s", id, "shell", "getprop", "ro.build.version.release" };
+				cmd = new String[] { adbPath, "-s", id, "shell", "getprop", ANDROID_DEVICE_VERSION_PROPERTY };
 				pb.command(cmd);
 				process = pb.start();
 				process.waitFor();

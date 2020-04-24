@@ -470,7 +470,8 @@ public class FlowStepTable extends CustomTable {
 					keyWordName = flowStep.getKeyword().getName();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
 					flowTableItem.setText(new String[] { "", keyWordName, orname,
-							new FlowApiUtilities().getFlowInputPutArgumentsString(flowStep),
+							new FlowApiUtilities().getFlowInputPutArgumentsString(getParentTestCaseView().getArtifact(),
+									flowStep),
 							new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), keywordDescription });
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
@@ -479,7 +480,8 @@ public class FlowStepTable extends CustomTable {
 					keyWordName = flowStep.getFunctionLibraryComponent().getName();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
 					flowTableItem.setText(new String[] { "", keyWordName, orname,
-							new FlowApiUtilities().getFlowInputPutArgumentsString(flowStep),
+							new FlowApiUtilities().getFlowInputPutArgumentsString(getParentTestCaseView().getArtifact(),
+									flowStep),
 							new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), keywordDescription });
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
@@ -489,7 +491,8 @@ public class FlowStepTable extends CustomTable {
 						keyWordName = "";
 						FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
 						flowTableItem.setText(new String[] { "", keyWordName, orname,
-								new FlowApiUtilities().getFlowInputPutArgumentsString(flowStep),
+								new FlowApiUtilities().getFlowInputPutArgumentsString(
+										getParentTestCaseView().getArtifact(), flowStep),
 								new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), "" });
 						flowTableItem.setFlowStepData(flowStep);
 						addTestCaseTableEditor(flowTableItem);

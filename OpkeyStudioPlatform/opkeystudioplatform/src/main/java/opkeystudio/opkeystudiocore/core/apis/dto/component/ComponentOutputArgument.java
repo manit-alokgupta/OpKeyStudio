@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ComponentOutputArgument extends Modified implements Cloneable, Comparable<ComponentOutputArgument> {
 
@@ -105,6 +106,34 @@ public class ComponentOutputArgument extends Modified implements Cloneable, Comp
 		this.component_id = component_id;
 	}
 
+	public String getVariableName() {
+		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
+		varName = varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		if (varName.trim().isEmpty()) {
+			return "unknownVar";
+		}
+		if (checkVariableNameIsValid(varName) == false) {
+			return "o" + varName;
+		}
+		return varName;
+	}
+
+	private boolean checkVariableNameIsValid(String packagename) {
+		try {
+			Integer.parseInt(packagename);
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			Integer.parseInt(String.valueOf(packagename.charAt(0)));
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return true;
+	}
+	
 	public ComponentOutputArgument clone() {
 		try {
 			return (ComponentOutputArgument) super.clone();

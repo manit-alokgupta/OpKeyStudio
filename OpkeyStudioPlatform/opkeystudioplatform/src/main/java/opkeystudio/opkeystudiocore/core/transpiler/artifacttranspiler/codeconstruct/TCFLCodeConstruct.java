@@ -84,7 +84,7 @@ public class TCFLCodeConstruct {
 				GlobalVariable globalVariable = GlobalLoader.getInstance()
 						.getGlobalVariableById(flowInputObject.getGlobalVariableData());
 
-				argumentCall += "OpKeyGlobalVariables." + globalVariable.getName().replaceAll(" ", "_");
+				argumentCall += "OpKeyGlobalVariables." + globalVariable.getVariableName();
 				continue;
 			}
 
@@ -92,7 +92,7 @@ public class TCFLCodeConstruct {
 				String flowOutputId = flowInputObject.getFlowOutputData();
 				FlowOutputArgument flowOutputArgument = GlobalLoader.getInstance()
 						.getFlowOutputArgumentById(flowOutputId);
-				argumentCall += flowOutputArgument.getOutputvariablename();
+				argumentCall += flowOutputArgument.getVariableName();
 				continue;
 			}
 
@@ -101,13 +101,13 @@ public class TCFLCodeConstruct {
 				System.out.println(">>Flow Input Id " + flowInputId);
 				ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
 						.getComponentInputArgumentById(flowInputId);
-				argumentCall += flowOutputArgument.getName();
+				argumentCall += flowOutputArgument.getVariableName();
 				continue;
 			}
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {
 				String columnId = flowInputObject.getDataRepositoryColumnData();
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
-				String columnName = drColumn.getName();
+				String columnName = drColumn.getVariableName();
 				argumentCall += columnName;
 				continue;
 			}
@@ -136,52 +136,38 @@ public class TCFLCodeConstruct {
 	}
 
 	private String formatDataType(String dataType, String data) {
+		if (data == null) {
+			data = "";
+		}
 		if (dataType.equals("String")) {
-			if (data == null) {
-				data = "";
-			}
 			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
 		if (dataType.equals("Integer")) {
-			if (data == null) {
-				data = "0";
-			}
 			if (data.isEmpty()) {
 				data = "0";
 			}
 			return data;
 		}
 		if (dataType.equals("Double")) {
-			if (data == null) {
-				data = "0";
-			}
 			if (data.isEmpty()) {
 				data = "0";
 			}
 			return data;
 		}
 		if (dataType.equals("Boolean")) {
-			if (data == null) {
-				data = "false";
-			}
 			if (data.isEmpty()) {
 				data = "false";
 			}
 			return data.toLowerCase();
 		}
 		if (dataType.equals("File")) {
-			if (data == null) {
-				data = "";
-			}
 			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
 		if (dataType.equals("DateTime")) {
-			if (data == null) {
-				data = "";
-			}
+
 			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 		}
-		return data;
+		return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 	}
 
 	private String getConstructFlowKeywordCode(Artifact artifact, FlowStep flowStep) {
@@ -309,7 +295,7 @@ public class TCFLCodeConstruct {
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {
 				String columnId = flowInputObject.getDataRepositoryColumnData();
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
-				String columnName = drColumn.getName();
+				String columnName = drColumn.getVariableName();
 				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
 				String path = drArtifact.getPackageName() + "." + drArtifact.getVariableName() + "." + "getDRCells("
 						+ "\"" + columnName + "\"" + ")";

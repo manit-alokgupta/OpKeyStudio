@@ -167,9 +167,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		androidDeviceSelectionDropDown.setVisible(false);
 
 		btnRefreshDeviceList = new Button(container, SWT.NONE);
-		btnRefreshDeviceList.setToolTipText("Browse Application");
+		btnRefreshDeviceList.setToolTipText("Refresh");
 		btnRefreshDeviceList.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnRefreshDeviceList.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browse.png"));
+		btnRefreshDeviceList.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		btnRefreshDeviceList.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

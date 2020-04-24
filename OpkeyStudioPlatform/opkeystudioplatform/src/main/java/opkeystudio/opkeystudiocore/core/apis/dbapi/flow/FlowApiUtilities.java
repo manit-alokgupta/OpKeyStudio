@@ -7,6 +7,8 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
+import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
@@ -16,6 +18,7 @@ import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -51,7 +54,7 @@ public class FlowApiUtilities {
 		return "Output: <>";
 	}
 
-	public String getFlowInputPutArgumentsString(FlowStep flowStep) {
+	public String getFlowInputPutArgumentsString(Artifact artifact, FlowStep flowStep) {
 		String outData = "";
 		List<FlowInputArgument> flowStepInputargs = flowStep.getFlowInputArgs();
 		if (flowStepInputargs.size() == 0) {
@@ -63,6 +66,45 @@ public class FlowApiUtilities {
 			}
 			if (flowInputArgument.getStaticvalue() != null) {
 				outData += flowInputArgument.getStaticvalue();
+			}
+		}
+		if (!outData.isEmpty()) {
+			return "Input: " + "<" + outData + ">";
+		}
+		return "Input: <>";
+	}
+
+	public String getFlowInputPutArgumentsString_2(Artifact artifact, FlowStep flowStep) {
+		String outData = "";
+		List<FlowInputObject> flowInputObjects = getAllFlowInputObject(artifact, flowStep.getFlowInputArgs());
+		if (flowInputObjects.size() == 0) {
+			return "";
+		}
+		for (FlowInputObject inputObject : flowInputObjects) {
+			if (!outData.isEmpty()) {
+				outData += ", ";
+			}
+			if (inputObject.isStaticValueDataExist()) {
+				outData += "StaticValue:" + inputObject.getStaticValueData();
+			}
+			if (inputObject.isGlobalVariableDataExist()) {
+				GlobalVariable globalVariable = GlobalLoader.getInstance()
+						.getGlobalVariableById(inputObject.getGlobalVariableData());
+				outData += "GV:" + globalVariable.getName();
+			}
+			if (inputObject.isDataRepositoryColumnDataExist()) {
+				String columnId = inputObject.getDataRepositoryColumnData();
+				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
+				outData += "DR:" + drColumn.getName();
+			}
+			if (inputObject.isFlowInputDataExist()) {
+				String flowInputId = inputObject.getFlowInputData();
+				ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
+						.getComponentInputArgumentById(flowInputId);
+				outData += "Input:" + flowOutputArgument.getName();
+			}
+			if (inputObject.isFlowOutputDataExist()) {
+				outData += "Output:";
 			}
 		}
 		if (!outData.isEmpty()) {
@@ -141,7 +183,6 @@ public class FlowApiUtilities {
 
 	public List<FlowInputObject> getAllFlowInputObject(Artifact artifact, List<FlowInputArgument> flowInputArguments) {
 		List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
-
 		for (FlowInputArgument flowInputArgument : flowInputArguments) {
 			KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
 			if (artifact.getFile_type_enum() == MODULETYPE.Flow) {

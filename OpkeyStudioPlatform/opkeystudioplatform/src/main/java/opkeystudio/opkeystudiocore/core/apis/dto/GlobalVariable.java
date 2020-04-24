@@ -1,6 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
 import opkeystudio.opkeystudiocore.core.query.DBField;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariable extends Modified {
 	@DBField
@@ -97,8 +98,31 @@ public class GlobalVariable extends Modified {
 	}
 
 	public String getVariableName() {
-		setVariableName("gv_" + this.getName().replaceAll(" ", "") + getClustering_key());
-		return variableName;
+		String varName = Utilities.getInstance().removeSpecialCharacters(getName());
+		varName = varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
+		if (varName.trim().isEmpty()) {
+			return "unknownVar";
+		}
+		if (checkVariableNameIsValid(varName) == false) {
+			return "o" + varName;
+		}
+		return varName;
+	}
+
+	private boolean checkVariableNameIsValid(String packagename) {
+		try {
+			Integer.parseInt(packagename);
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			Integer.parseInt(String.valueOf(packagename.charAt(0)));
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return true;
 	}
 
 	public void setVariableName(String variableName) {
