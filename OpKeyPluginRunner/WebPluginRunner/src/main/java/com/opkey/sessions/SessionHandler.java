@@ -14,21 +14,15 @@ public class SessionHandler implements ExecutionSession {
 
 	public void afterSessionEnds(SessionInfo sessionInfo) {
 		try {
-			//Report.get().endTestCase();
-			//Report.get().endSuite();
 			new Browser().Method_CloseAllBrowsers();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public void beforeSessionStart(SessionInfo sessionInfo) {
-		ReportBuilder builder = ReportBuilder.atPath(new File(System.getProperty("user.dir") + "/Report.html"));
-		Report report = builder.withName("GiveSessionNameHere").withFormat(ReportFormat.HTML).build();
-		//report.beginSuite("Web Plugin Automation");
-		//report.beginTestCase("Web Test Case");
-
+		ReportBuilder builder = ReportBuilder.atPath(new File(sessionInfo.getReportFilePath()));
+		Report report = builder.withName(sessionInfo.getSessionName()).withFormat(ReportFormat.HTML).build();
 	}
 
 	public void pauseExecutionSession(SessionInfo sessionInfo) {

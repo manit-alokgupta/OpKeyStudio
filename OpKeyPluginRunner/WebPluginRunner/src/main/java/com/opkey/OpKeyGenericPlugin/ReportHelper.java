@@ -12,11 +12,7 @@ public class ReportHelper {
 		HashMap<String, String> parameters = new HashMap<String, String>();
 		parameters.put("Action", methodName);
 		parameters.put("Output", functionResult.getOutput());
-
-		if (!functionResult.getMessage().isEmpty()) {
-			parameters.put("Message", functionResult.getMessage());
-
-		}
+		parameters.put("Message", functionResult.getMessage());
 
 		Status status = Status.valueOf(functionResult.getStatus().toUpperCase());
 		Report.get().addStep(parameters, status);

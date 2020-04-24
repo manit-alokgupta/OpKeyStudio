@@ -21,7 +21,6 @@ import com.opkey.context.ContextInitiator;
 import com.opkey.executor.KeywordExecutor;
 import com.opkey.executor.Runnable;
 import com.opkeystudio.runtime.ORObject;
-import com.ssts.reporting.Report;
 
 public class OpKeyGenericKeywords {
 
@@ -70,7 +69,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		ReportHelper.addReportStep("TypeTextOnEditBox", result);
+		ReportHelper.addReportStep("TypeKeysOnEditBox", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -89,7 +88,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		ReportHelper.addReportStep("TypeTextOnEditBox", result);
+		ReportHelper.addReportStep("VerifyEditBox", result);
 		return Boolean.getBoolean(result.getOutput());
 	}
 
@@ -111,7 +110,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		ReportHelper.addReportStep("TypeTextOnEditBox", result);
+		ReportHelper.addReportStep("OpenBrowser", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -132,7 +131,7 @@ public class OpKeyGenericKeywords {
 				}
 			}
 		}).executeKeyword();
-		ReportHelper.addReportStep("TypeTextOnEditBox", result);
+		ReportHelper.addReportStep("SelectDropDownItem", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -147,13 +146,12 @@ public class OpKeyGenericKeywords {
 				try {
 					return new Checkbox().Method_selectCheckBox(object, arg1);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
-		return false;
+		ReportHelper.addReportStep("SelectCheckBox", result);
+		return Boolean.getBoolean(result.getOutput());
 
 	}
 
@@ -168,13 +166,12 @@ public class OpKeyGenericKeywords {
 				try {
 					return new Radio().Method_SelectRadio(object, arg1);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
 				}
-				return null;
 			}
 		}).executeKeyword();
-		return false;
+		ReportHelper.addReportStep("SelectRadioButton", result);
+		return Boolean.getBoolean(result.getOutput());
 
 	}
 
@@ -190,7 +187,6 @@ public class OpKeyGenericKeywords {
 					FunctionResult functionResult = new WebObjects().Method_ObjectClick(object);
 					ReportHelper.addReportStep("Click", functionResult);
 				} catch (Exception e) {
-					e.printStackTrace();
 					ReportHelper.addReportStep("Click", e);
 				}
 				return null;
