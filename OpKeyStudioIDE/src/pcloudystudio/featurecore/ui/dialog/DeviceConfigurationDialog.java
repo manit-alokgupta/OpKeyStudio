@@ -107,6 +107,9 @@ public class DeviceConfigurationDialog extends Dialog {
 		shlDeviceConfiguration.setSize(624, 262);
 		shlDeviceConfiguration.setText("Configuration Dashboard");
 
+		Label label = new Label(shlDeviceConfiguration, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label.setBounds(0, 0, 624, 2);
+
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlDeviceConfiguration.getBounds();
 		int locationX = (parentSize.width - shellSize.width) / 2 + parentSize.x;
