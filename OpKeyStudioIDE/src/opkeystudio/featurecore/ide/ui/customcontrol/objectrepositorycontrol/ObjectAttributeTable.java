@@ -26,11 +26,11 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import opkeystudio.core.utils.MessageDialogs;
-import opkeystudio.featurecore.ide.ui.customcontrol.ImageViewer;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomLabel;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
+import opkeystudio.featurecore.ide.ui.customcontrol.imagetools.ImageViewer;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;

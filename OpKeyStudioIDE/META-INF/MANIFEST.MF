@@ -39,7 +39,6 @@ Bundle-ActivationPolicy: lazy
 Export-Package: opkeystudio,
  opkeystudio.commandhandler,
  opkeystudio.core.utils,
- opkeystudio.featurecore.ide.ui.customcontrol,
  opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui,
  opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol,
  opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol,

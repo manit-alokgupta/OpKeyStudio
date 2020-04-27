@@ -1,4 +1,4 @@
-package opkeystudio.featurecore.ide.ui.customcontrol;
+package opkeystudio.featurecore.ide.ui.customcontrol.globalvariable;
 
 import java.util.ArrayList;
 import java.util.List;

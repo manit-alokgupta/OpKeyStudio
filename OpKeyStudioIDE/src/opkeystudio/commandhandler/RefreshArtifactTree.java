@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class RefreshArtifactTree {

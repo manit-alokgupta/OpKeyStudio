@@ -1,4 +1,4 @@
-package opkeystudio.featurecore.ide.ui.customcontrol;
+package opkeystudio.featurecore.ide.ui.customcontrol.imagetools;
 
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;

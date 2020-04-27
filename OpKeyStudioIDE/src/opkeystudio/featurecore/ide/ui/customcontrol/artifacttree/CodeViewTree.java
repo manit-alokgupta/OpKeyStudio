@@ -1,4 +1,4 @@
-package opkeystudio.featurecore.ide.ui.customcontrol;
+package opkeystudio.featurecore.ide.ui.customcontrol.artifacttree;
 
 import java.io.File;
 import java.util.ArrayList;

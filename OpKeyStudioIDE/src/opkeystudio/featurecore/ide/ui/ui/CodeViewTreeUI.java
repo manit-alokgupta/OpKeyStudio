@@ -23,7 +23,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.commandhandler.RefreshArtifactTree;
-import opkeystudio.featurecore.ide.ui.customcontrol.CodeViewTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;

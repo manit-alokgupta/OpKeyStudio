@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;

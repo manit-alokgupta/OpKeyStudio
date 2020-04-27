@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.LoginDialog;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.project.ProjectDataApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;

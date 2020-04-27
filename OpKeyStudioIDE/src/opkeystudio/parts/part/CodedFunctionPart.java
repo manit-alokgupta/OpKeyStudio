@@ -10,7 +10,7 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;

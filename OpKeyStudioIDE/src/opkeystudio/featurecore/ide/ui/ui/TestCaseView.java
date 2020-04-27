@@ -36,9 +36,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTreeItem;
-import opkeystudio.featurecore.ide.ui.customcontrol.GlobalVariableTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
+import opkeystudio.featurecore.ide.ui.customcontrol.globalvariable.GlobalVariableTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.ComponentArgumentInputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.FlowStepTable;

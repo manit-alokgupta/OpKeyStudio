@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
-import opkeystudio.featurecore.ide.ui.customcontrol.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
