@@ -342,6 +342,7 @@ public class ObjectRepositoryView extends Composite {
 		objectAttributeTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectAttributeTable.setHeaderVisible(true);
 		objectAttributeTable.setLinesVisible(true);
+		objectAttributeTable.setHeaderBackground(SWTResourceManager.getColor(248, 248, 245));
 		sashForm.setWeights(new int[] { 2, 1 });
 
 		TabItem sourceCodeTabItem = new TabItem(tabFolder, SWT.NONE);
