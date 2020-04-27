@@ -224,6 +224,7 @@ public class TCFLCodeConstruct {
 			List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
 					flowInputArgs);
 			String conditionData = getArgsOfIFKeyword(flowInputObjects);
+			System.out.println("Argument " + conditionData);
 			return newLineChar + "if(" + conditionData + "){";
 		}
 		return "";
@@ -259,6 +260,9 @@ public class TCFLCodeConstruct {
 		}
 		if (data.toLowerCase().equals("or")) {
 			return "||";
+		}
+		if (data.isEmpty()) {
+			return "";
 		}
 		return "\"" + data + "\"";
 	}
