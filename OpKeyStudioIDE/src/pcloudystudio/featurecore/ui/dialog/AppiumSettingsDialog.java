@@ -12,6 +12,8 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -305,9 +307,13 @@ public class AppiumSettingsDialog extends Dialog {
 			public void modifyText(ModifyEvent e) {
 				if (capabilityNameCombo.getText().equals("") || capabilityTextValue.getText().equals("")) {
 					btnAddToTable.setEnabled(false);
+					capabilityNameCombo.addSelectionListener(selectionAdapter);
+					capabilityNameCombo.addFocusListener(focusAdapter);
 				}
 				if (capabilityTextValue.getText().length() > 0) {
 					btnAddToTable.setEnabled(true);
+					capabilityNameCombo.addSelectionListener(selectionAdapter);
+					capabilityNameCombo.addFocusListener(focusAdapter);
 				}
 			}
 		});
@@ -373,6 +379,8 @@ public class AppiumSettingsDialog extends Dialog {
 		combo_DataType.setBounds(154, 5, 135, 33);
 		combo_DataType.setItems(Types);
 		combo_DataType.setText("String");
+		combo_DataType.addSelectionListener(selectionAdapter);
+		combo_DataType.addFocusListener(focusAdapter);
 
 		btnRefresh = new Button(addCapabilityComposite, SWT.NONE);
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
@@ -433,6 +441,8 @@ public class AppiumSettingsDialog extends Dialog {
 		combo_ManualType.setBounds(160, 5, 135, 33);
 		combo_ManualType.setItems(Types);
 		combo_ManualType.setText("String");
+		combo_ManualType.addSelectionListener(selectionAdapter);
+		combo_ManualType.addFocusListener(focusAdapter);
 
 		manuallyCapabilityValue = new Text(manuallyAddCapabilityComposite2, SWT.BORDER);
 		manuallyCapabilityValue.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
@@ -943,5 +953,27 @@ public class AppiumSettingsDialog extends Dialog {
 
 		}
 		return false;
+		
+		
 	}
+	
+	static void selectionAtEnd(CCombo c) {
+		String text = c.getText();
+		int endSelection = text.length();
+		c.setSelection(new Point(endSelection, endSelection));
+	}
+
+	static SelectionAdapter selectionAdapter = new SelectionAdapter() {
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			selectionAtEnd((CCombo) e.getSource());
+		}
+	};
+
+	static FocusAdapter focusAdapter = new FocusAdapter() {
+		@Override
+		public void focusGained(FocusEvent e) {
+			selectionAtEnd((CCombo) e.getSource());
+		}
+	};
 }
