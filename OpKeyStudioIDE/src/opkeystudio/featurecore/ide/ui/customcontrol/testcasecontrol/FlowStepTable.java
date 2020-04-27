@@ -291,10 +291,12 @@ public class FlowStepTable extends CustomTable {
 				if (flowStep == null) {
 					return;
 				}
-				if (flowStep.getFunctionLibraryComponent() == null) {
-					return;
+				if (flowStep.getFunctionLibraryComponent() != null) {
+					Utilities.getInstance().openArtifacts(flowStep.getFunctionLibraryComponent());
 				}
-				Utilities.getInstance().openArtifacts(flowStep.getFunctionLibraryComponent());
+				if (flowStep.getCodedFunctionArtifact() != null) {
+					Utilities.getInstance().openArtifacts(flowStep.getCodedFunctionArtifact());
+				}
 			}
 
 			@Override
@@ -316,6 +318,8 @@ public class FlowStepTable extends CustomTable {
 					toggleSetToRunMenuItem(true);
 					toggleSkipFromRunMenuItem(true);
 					if (flowStep.getFunctionLibraryComponent() != null) {
+						toggleOpenInNewTabMenuItem(true);
+					} else if (flowStep.getCodedFunctionArtifact() != null) {
 						toggleOpenInNewTabMenuItem(true);
 					} else {
 						toggleOpenInNewTabMenuItem(false);
@@ -468,6 +472,7 @@ public class FlowStepTable extends CustomTable {
 				} else if (flowStep.getComments() != null) {
 					keywordDescription = flowStep.getComments();
 				}
+
 				if (flowStep.getKeyword() != null) {
 					keyWordName = flowStep.getKeyword().getName();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
@@ -478,6 +483,7 @@ public class FlowStepTable extends CustomTable {
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
+
 				if (flowStep.getFunctionLibraryComponent() != null) {
 					keyWordName = flowStep.getFunctionLibraryComponent().getName();
 					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
@@ -488,6 +494,18 @@ public class FlowStepTable extends CustomTable {
 					flowTableItem.setFlowStepData(flowStep);
 					addTestCaseTableEditor(flowTableItem);
 				}
+
+				if (flowStep.getCodedFunctionArtifact() != null) {
+					keyWordName = flowStep.getCodedFunctionArtifact().getName();
+					FlowStepTableItem flowTableItem = new FlowStepTableItem(this, 0);
+					flowTableItem.setText(new String[] { "", keyWordName, orname,
+							new FlowApiUtilities().getFlowInputPutArgumentsString(getParentTestCaseView().getArtifact(),
+									flowStep),
+							new FlowApiUtilities().getFlowOutPutArgumentsString(flowStep), keywordDescription });
+					flowTableItem.setFlowStepData(flowStep);
+					addTestCaseTableEditor(flowTableItem);
+				}
+
 				if (flowStep.getKeyword() == null && flowStep.getFunctionLibraryComponent() == null) {
 					if (flowStep.isNullKeyword()) {
 						keyWordName = "";
