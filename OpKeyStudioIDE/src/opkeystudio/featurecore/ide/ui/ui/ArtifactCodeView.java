@@ -72,7 +72,7 @@ public class ArtifactCodeView extends Composite {
 		initArtifact();
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
-		initGenericEditorUI();
+		initTCFLUI();
 		initTestCaseCode();
 		getJavaEditor().setEditable(editable);
 	}
@@ -228,6 +228,51 @@ public class ArtifactCodeView extends Composite {
 		});
 	}
 
+	
+	private void initTCFLUI() {
+		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
+		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+
+		runButton = new ToolItem(toolBar, SWT.NONE);
+		runButton.setText("Run");
+		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
+		runButton.setToolTipText("Run");
+
+		refreshButton = new ToolItem(toolBar, SWT.NONE);
+		refreshButton.setText("Refresh Code");
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
+		refreshButton.setToolTipText("Refresh TC/FL Code");
+
+		editor = new ArtifactCodeEditor(this, this, true);
+		editor.setArtifact(getArtifact());
+		refreshButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				refreshTCFLCode();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+		runButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (isEmbeddedInsideTestCaseView()) {
+					getParentTestCaseView().openExecutionWizard();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
 	private void initTSUI() {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
