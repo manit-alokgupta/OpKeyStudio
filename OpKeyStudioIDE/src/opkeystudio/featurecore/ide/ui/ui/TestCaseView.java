@@ -82,6 +82,7 @@ public class TestCaseView extends Composite {
 	private ToolItem itemDelete;
 	private ToolItem keywordButton;
 	private ToolItem functionLibraryButton;
+	private ToolItem codedFunctionLibraryButton;
 	private TabFolder testCaseArgumentsTabFolder;
 	private TabItem stepDetailsTabItem;
 	private ExpandItem expanditemStepIno;
@@ -279,12 +280,20 @@ public class TestCaseView extends Composite {
 		keywordButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TEXT_KEYWORD_ICON));
 		keywordButton.setText("Keyword");
 		keywordButton.setToolTipText("Keyword");
-		ToolItem seperator9 = new ToolItem(toolBar, SWT.SEPARATOR);
+
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		functionLibraryButton = new ToolItem(toolBar, SWT.NONE);
 		functionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 		functionLibraryButton.setText("Function Library");
 		functionLibraryButton.setToolTipText("Function Library");
+
+		new ToolItem(toolBar, SWT.SEPARATOR);
+
+		codedFunctionLibraryButton = new ToolItem(toolBar, SWT.NONE);
+		codedFunctionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		codedFunctionLibraryButton.setText("Coded Function Library");
+		codedFunctionLibraryButton.setToolTipText("Coded Function Library");
 
 		Composite composite_12 = new Composite(composite_10, SWT.NONE);
 		composite_12.setLayout(new GridLayout(2, false));
@@ -814,6 +823,20 @@ public class TestCaseView extends Composite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
+		codedFunctionLibraryButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				allDataTreeView.initCodedFunctionLibraries("");
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 
 			}
 		});

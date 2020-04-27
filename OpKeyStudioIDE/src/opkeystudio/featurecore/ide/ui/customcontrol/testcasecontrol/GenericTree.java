@@ -41,6 +41,7 @@ public class GenericTree extends CustomTree {
 	private TREETYPE treeType;
 	private boolean keywordTree = false;
 	private boolean flTree = false;
+	private boolean cflTree = false;
 
 	public GenericTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
@@ -81,26 +82,32 @@ public class GenericTree extends CustomTree {
 				FlowStep selectedFlowStep = getParentTestCaseView().getFlowStepTable().getSelectedFlowStep();
 				Object selectedData = getSelectedData();
 				if (selectedData instanceof Artifact) {
-					try {
-						Artifact selectedArtifact = (Artifact) selectedData;
-						if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-							if (artifact.getId().equals(selectedArtifact.getId())) {
-								new MessageDialogs().openErrorDialog("OpKey",
-										"Function Library Recursion Call Not Allowed");
-								return;
+					Artifact selectedArtifact = (Artifact) selectedData;
+					if (selectedArtifact.getFile_type_enum() == MODULETYPE.Component) {
+						try {
+							if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+								if (artifact.getId().equals(selectedArtifact.getId())) {
+									new MessageDialogs().openErrorDialog("OpKey",
+											"Function Library Recursion Call Not Allowed");
+									return;
+								}
 							}
+							FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact,
+									selectedFlowStep, selectedArtifact, artifact.getId(),
+									getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+							getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+							getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+							getParentTestCaseView().toggleSaveButton(true);
+						} catch (SQLException | IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
-						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
-								selectedArtifact, artifact.getId(),
-								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
-						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
-						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
-						getParentTestCaseView().toggleSaveButton(true);
-					} catch (SQLException | IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						return;
 					}
-					return;
+					if (selectedArtifact.getFile_type_enum() == MODULETYPE.CodedFunction) {
+						System.out.println("Coded FL not implemented exception");
+						return;
+					}
 				}
 				FlowStep flowStep = new FlowMaker().getFlowStepDTO(getParentTestCaseView().getArtifact(),
 						selectedFlowStep, (Keyword) getSelectedData(), artifact.getId(),
@@ -244,6 +251,7 @@ public class GenericTree extends CustomTree {
 
 	public void initKeywords(String keywordName) {
 		setFlTree(false);
+		setCflTree(false);
 		setKeywordTree(true);
 		this.removeAll();
 		Set<String> groupNames = KeywordManager.getInstance().getAllGroupNames();
@@ -269,11 +277,13 @@ public class GenericTree extends CustomTree {
 	public void initFunctionLibraries(String flName) {
 		setFlTree(true);
 		setKeywordTree(false);
+		setCflTree(false);
 		this.removeAll();
 		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("Component");
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Function Library");
 		rootNode.setExpanded(true);
+		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		for (Artifact artifact : artifacts) {
 			if (artifact.getName().toLowerCase().contains(flName.toLowerCase())) {
 				CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
@@ -284,12 +294,24 @@ public class GenericTree extends CustomTree {
 		}
 	}
 
-	public void initSeriveRepo() {
-
-	}
-
-	public void initCodedFunction() {
-
+	public void initCodedFunctionLibraries(String flName) {
+		setFlTree(false);
+		setKeywordTree(false);
+		setCflTree(true);
+		this.removeAll();
+		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("CodedFunction");
+		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
+		rootNode.setText("Coded Function Library");
+		rootNode.setExpanded(true);
+		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
+		for (Artifact artifact : artifacts) {
+			if (artifact.getName().toLowerCase().contains(flName.toLowerCase())) {
+				CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
+				keywItem.setText(artifact.getName());
+				keywItem.setControlData(artifact);
+				addIcon(keywItem);
+			}
+		}
 	}
 
 	private void initDREvents() {
@@ -377,5 +399,13 @@ public class GenericTree extends CustomTree {
 
 	public void setKeywordTree(boolean keywordTree) {
 		this.keywordTree = keywordTree;
+	}
+
+	public boolean isCflTree() {
+		return cflTree;
+	}
+
+	public void setCflTree(boolean cflTree) {
+		this.cflTree = cflTree;
 	}
 }
