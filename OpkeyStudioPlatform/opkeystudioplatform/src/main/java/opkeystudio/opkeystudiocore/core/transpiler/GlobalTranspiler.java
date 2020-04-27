@@ -19,7 +19,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 public class GlobalTranspiler {
 	public JavaClassSource getJavaClassOfGlobalVariables() {
 		List<GlobalVariable> globalVariables = GlobalLoader.getInstance().getGlobalVaribles();
-		String mobileDeviceVariable = "%s=new MobileDevice();device.setSerialNumber(\"%s\");device.setDisplayName(\"%s\");device.setIPAddress(\"%s\");device.setVersion(\"%s\");";
+		String mobileDeviceVariable = "%s=new MobileDevice();GV_VARNAME.setSerialNumber(\"%s\");GV_VARNAME.setDisplayName(\"%s\");GV_VARNAME.setIPAddress(\"%s\");GV_VARNAME.setVersion(\"%s\");";
 		String classBody = "public class %s{%s}";
 		String variableBody = "public static %s %s=%s;";
 		String staticBody = "%s static {%s}";
@@ -36,8 +36,9 @@ public class GlobalTranspiler {
 				if (data == null) {
 					data = "";
 				}
-				String mobileDeviceVariableDecla = String.format(mobileDeviceVariable, varName, gv.getValue(), "Android Phone",
-						"", "2.0");
+				String mobileDeviceVariableDecla = String.format(mobileDeviceVariable, varName, gv.getValue(),
+						"Android Phone", "", "2.0");
+				mobileDeviceVariableDecla = mobileDeviceVariableDecla.replaceAll("GV_VARNAME", varName);
 				staticBodyData += mobileDeviceVariableDecla;
 			}
 		}
@@ -73,7 +74,7 @@ public class GlobalTranspiler {
 			// return "double";
 		}
 		if (gv.getDatatype().equals("MobileDevice")) {
-			 return "MobileDevice";
+			return "MobileDevice";
 		}
 		return "String";
 	}
