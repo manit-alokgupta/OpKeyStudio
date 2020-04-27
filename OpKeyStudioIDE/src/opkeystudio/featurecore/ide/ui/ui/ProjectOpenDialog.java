@@ -36,7 +36,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ProjectOpenDialog extends TitleAreaDialog {
 
-	private Shell parentshell;
+	private Shell shlOpenProject;
 
 	public ProjectOpenDialog(Shell parentShell) {
 		super(parentShell);
@@ -65,8 +65,10 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		getShell().setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		setMessage("Select a Project to Open");
 		setTitle("Open Project");
+
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -122,7 +124,6 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -136,7 +137,6 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -144,7 +144,6 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		try {
 			renderProjectList();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return area;
@@ -226,7 +225,6 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -242,11 +240,11 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 	}
 
 	public Shell getParentshell() {
-		return parentshell;
+		return shlOpenProject;
 	}
 
 	public void setParentshell(Shell parentshell) {
-		this.parentshell = parentshell;
+		this.shlOpenProject = parentshell;
 	}
 
 	public List<ProjectFile> getAllProjects() {
