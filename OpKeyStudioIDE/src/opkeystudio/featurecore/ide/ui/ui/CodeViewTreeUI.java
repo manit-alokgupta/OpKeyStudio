@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -25,9 +24,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import opkeystudio.commandhandler.RefreshArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
 import opkeystudio.iconManager.OpKeyStudioIcons;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class CodeViewTreeUI extends Composite {
@@ -579,11 +575,6 @@ public class CodeViewTreeUI extends Composite {
 
 	}
 
-	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
-		new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
-		codeViewTree.renderArtifacts();
-	}
-
 	public void toggleRenameToolbarItem(boolean status) {
 		toolbarRename.setEnabled(status);
 	}
@@ -613,9 +604,5 @@ public class CodeViewTreeUI extends Composite {
 		if (event.keyCode == SWT.ESC) {
 			System.out.println("Escape pressed");
 		}
-	}
-
-	private String getVarName() {
-		return String.valueOf(System.currentTimeMillis());
 	}
 }
