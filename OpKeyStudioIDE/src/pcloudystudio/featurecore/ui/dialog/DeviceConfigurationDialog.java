@@ -13,6 +13,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -175,6 +177,8 @@ public class DeviceConfigurationDialog extends Dialog {
 				for (Map.Entry<String, String> deviceEntry : devicesList.entrySet())
 					devicesCombo.add(deviceEntry.getValue());
 				devicesCombo.select(0);
+				devicesCombo.addSelectionListener(selectionAdapter);
+				devicesCombo.addFocusListener(focusAdapter);
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
@@ -201,9 +205,10 @@ public class DeviceConfigurationDialog extends Dialog {
 							devicesCombo.add(deviceEntry.getValue());
 						}
 						devicesCombo.select(0);
+						devicesCombo.addSelectionListener(selectionAdapter);
+						devicesCombo.addFocusListener(focusAdapter);
 						lblNoDeviceConnected.setVisible(false);
 						btnHelp.setVisible(false);
-
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -460,4 +465,24 @@ public class DeviceConfigurationDialog extends Dialog {
 		else
 			return "";
 	}
+
+	static void selectionAtEnd(CCombo c) {
+		String text = c.getText();
+		int endSelection = text.length();
+		c.setSelection(new Point(endSelection, endSelection));
+	}
+
+	static SelectionAdapter selectionAdapter = new SelectionAdapter() {
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			selectionAtEnd((CCombo) e.getSource());
+		}
+	};
+
+	static FocusAdapter focusAdapter = new FocusAdapter() {
+		@Override
+		public void focusGained(FocusEvent e) {
+			selectionAtEnd((CCombo) e.getSource());
+		}
+	};
 }
