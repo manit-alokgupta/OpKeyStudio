@@ -58,7 +58,7 @@
     </trimBars>
     <trimBars xmi:id="_xg_vUNVvEemLeZBMchgvxw" elementId="opkeystudio.trimbar.mainstatusbarholder" side="Bottom">
       <children xsi:type="menu:ToolBar" xmi:id="_yjP2gNVvEemLeZBMchgvxw" elementId="opkeystudio.toolbar.1">
-        <children xsi:type="menu:HandledToolItem" xmi:id="_2We3kNVvEemLeZBMchgvxw" elementId="opkeystudio.handledtoolitem.1" iconURI=""/>
+        <children xsi:type="menu:ToolControl" xmi:id="_skAi8IiPEeqMKIqNVcLxsQ" elementId="opkeystudio.toolcontrol.0"/>
       </children>
     </trimBars>
   </children>
