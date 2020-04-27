@@ -21,6 +21,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -51,6 +52,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class InputDataTable extends CustomTable {
 	private FlowStep flowStep;
@@ -123,6 +125,7 @@ public class InputDataTable extends CustomTable {
 				int selectedColumn = cursor.getColumn();
 
 				if (selectedColumn == 2) {
+
 					if (isBooleanType) {
 						disposeControlEditor(editor);
 						Button checkedButton = new Button(cursor, SWT.CHECK);
@@ -298,6 +301,72 @@ public class InputDataTable extends CustomTable {
 		} else {
 			dataSourceType = flowInputArgument.getDatasource();
 		}
+
+		if (isConstructFlowIFKeyword(getFlowStep())) {
+			int index = flowInputArgument.getIndex();
+			if (index == 1 || index == 5 || index == 9 || index == 13 || index == 17) {
+				String[] items = {"", "=", "<", ">", "<>" };
+				TableEditor editor1 = getTableEditor();
+				Combo combo = new Combo(this, SWT.READ_ONLY);
+				combo.setItems(items);
+				int selectIndex = Utilities.getInstance().getIndexOfItem(items, flowInputArgument.getStaticvalue());
+				if (selectIndex > -1) {
+					combo.select(selectIndex);
+				}
+				combo.addSelectionListener(new SelectionListener() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						int index = combo.getSelectionIndex();
+						String selecedData=items[index];
+						flowInputArgument.setStaticvalue(selecedData);
+						flowInputArgument.setModified(true);
+						getParentTestCaseView().toggleSaveButton(true);
+					}
+
+					@Override
+					public void widgetDefaultSelected(SelectionEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+				editor1.setEditor(combo, item, 2);
+				this.allTableEditors.add(editor1.getEditor());
+				return;
+			}
+
+			if (index == 3 || index == 7 || index == 11 || index == 15 || index == 19) {
+				String[] items = {"", "AND", "OR" };
+				TableEditor editor1 = getTableEditor();
+				Combo combo = new Combo(this, SWT.READ_ONLY);
+				combo.setItems(items);
+				int selectIndex = Utilities.getInstance().getIndexOfItem(items, flowInputArgument.getStaticvalue());
+				if (selectIndex > -1) {
+					combo.select(selectIndex);
+				}
+				
+				combo.addSelectionListener(new SelectionListener() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						int index = combo.getSelectionIndex();
+						String selecedData=items[index];
+						flowInputArgument.setStaticvalue(selecedData);
+						flowInputArgument.setModified(true);
+						getParentTestCaseView().toggleSaveButton(true);
+					}
+
+					@Override
+					public void widgetDefaultSelected(SelectionEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+				editor1.setEditor(combo, item, 2);
+				this.allTableEditors.add(editor1.getEditor());
+				return;
+			}
+		}
 		if (dataSourceType == DataSource.ValueFromGlobalVariable) {
 			String gv_id = flowInputArgument.getGlobalvariable_id();
 			GlobalVariable globalVar = new GlobalVariableApi().getGlobalVariable(gv_id);
@@ -450,6 +519,7 @@ public class InputDataTable extends CustomTable {
 		// editor.horizontalAlignment = SWT.RIGHT;
 		editor.grabHorizontal = true;
 		editor.minimumWidth = 50;
+		editor.minimumHeight = 10;
 		return editor;
 	}
 
@@ -500,8 +570,11 @@ public class InputDataTable extends CustomTable {
 		return false;
 	}
 
-	private void renderConstructFlowIntKeyword(FlowStep flowStep) {
-
+	private void addIndexInFlowInputArgumentOfConstructFlowIFKeyword(FlowStep flowStep) {
+		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
+		for (int i = 0; i < flowInputArguments.size(); i++) {
+			flowInputArguments.get(i).setIndex(i);
+		}
 	}
 
 	public void renderInputTable(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
@@ -509,8 +582,7 @@ public class InputDataTable extends CustomTable {
 		disposeAllTableEditors();
 		this.removeAll();
 		if (isConstructFlowIFKeyword(flowStep)) {
-			renderConstructFlowIntKeyword(flowStep);
-			// return;
+			addIndexInFlowInputArgumentOfConstructFlowIFKeyword(flowStep);
 		}
 		List<FlowInputArgument> flowInputArgs = getFlowInputArgs();
 		if (getKeyWordInputArgs().size() > 0) {
