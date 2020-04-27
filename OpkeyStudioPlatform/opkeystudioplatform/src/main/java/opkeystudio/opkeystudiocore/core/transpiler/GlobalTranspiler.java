@@ -19,25 +19,46 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 public class GlobalTranspiler {
 	public JavaClassSource getJavaClassOfGlobalVariables() {
 		List<GlobalVariable> globalVariables = GlobalLoader.getInstance().getGlobalVaribles();
-		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
-		class1.setName("OpKeyGlobalVariables").setPublic();
+		String mobileDeviceVariable = "%s=new MobileDevice();device.setSerialNumber(\"%s\");device.setDisplayName(\"%s\");device.setIPAddress(\"%s\");device.setVersion(\"%s\");";
+		String classBody = "public class %s{%s}";
+		String variableBody = "public static %s %s=%s;";
+		String staticBody = "%s static {%s}";
+		String gvVariables = "";
+		String staticBodyData = "";
 		for (GlobalVariable gv : globalVariables) {
 			String dataType = getGVDataType(gv);
-			if (dataType.equals("MobileDevice")) {
+			String data = getData(gv);
+			String varName = gv.getVariableName();
+			String outputData = String.format(variableBody, dataType, varName, data);
+			gvVariables += outputData;
 
-				continue;
-			}
-			try {
-				class1.addField().setName(gv.getVariableName()).setType(dataType).setStringInitializer(gv.getValue())
-						.setPublic().setStatic(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-				class1.addField().setName("_" + gv.getVariableName()).setType(dataType)
-						.setStringInitializer(gv.getValue()).setPublic().setStatic(true);
+			if (dataType.equals("MobileDevice")) {
+				if (data == null) {
+					data = "";
+				}
+				String mobileDeviceVariableDecla = String.format(mobileDeviceVariable, varName, gv.getValue(), "Android Phone",
+						"", "2.0");
+				staticBodyData += mobileDeviceVariableDecla;
 			}
 		}
+
+		String staticBodyDeclaration = String.format(staticBody, gvVariables, staticBodyData);
+		String classBodyDeclaration = String.format(classBody, "OpKeyGlobalVariables", staticBodyDeclaration);
+		JavaClassSource class1 = (JavaClassSource) Roaster.parse(classBodyDeclaration);
 		class1.addImport(MobileDevice.class);
 		return class1;
+	}
+
+	private String getData(GlobalVariable gv) {
+		String dataType = getGVDataType(gv);
+		String data = gv.getValue();
+		if (data == null) {
+			data = "";
+		}
+		if (dataType.equals("String")) {
+			return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
+		}
+		return "null";
 	}
 
 	private String getGVDataType(GlobalVariable gv) {
@@ -52,7 +73,7 @@ public class GlobalTranspiler {
 			// return "double";
 		}
 		if (gv.getDatatype().equals("MobileDevice")) {
-			// return "MobileDevice";
+			 return "MobileDevice";
 		}
 		return "String";
 	}
