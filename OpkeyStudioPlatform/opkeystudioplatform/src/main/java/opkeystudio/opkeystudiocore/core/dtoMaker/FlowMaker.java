@@ -1,16 +1,15 @@
 package opkeystudio.opkeystudiocore.core.dtoMaker;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
+import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -141,8 +140,7 @@ public class FlowMaker {
 	}
 
 	public FlowStep getFlowStepDTOWithFunctionLibray(Artifact artifact, FlowStep selectedFlowStep, Artifact flArtifact,
-			String flow_id, List<FlowStep> flowSteps)
-			throws JsonParseException, JsonMappingException, SQLException, IOException {
+			String flow_id, List<FlowStep> flowSteps) {
 		int selectedFlowStepPosition = 0;
 		int selectedFlowStepIndex = 0;
 		if (selectedFlowStep != null) {
@@ -158,7 +156,7 @@ public class FlowMaker {
 			flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
 		}
 
-		FunctionLibraryComponent flComp = FlowApi.getInstance().getFunctinLibraryComponent(flArtifact.getId()).get(0);
+		FunctionLibraryComponent flComp = FlowApi.getInstance().getFunctionLibraryComponent(flArtifact.getId()).get(0);
 		flowStep.setFunctionLibraryComponent(flComp);
 		List<ComponentInputArgument> inputArgs = FlowApi.getInstance().getAllComponentInputArgument(flArtifact.getId());
 		List<ComponentOutputArgument> outputArgs = FlowApi.getInstance()
@@ -175,6 +173,54 @@ public class FlowMaker {
 			flowStep.setStepcomponent_id(flArtifact.getId());
 		} else {
 			flowStep.setComponent_id(flArtifact.getId());
+		}
+
+		flowStep.setPosition(selectedFlowStepPosition + 5);
+		flowStep.setShouldrun(true);
+
+		flowStep.setAdded(true);
+		for (int i = selectedFlowStepIndex + 1; i < flowSteps.size(); i++) {
+			FlowStep iflowStep = flowSteps.get(i);
+			iflowStep.setPosition(iflowStep.getPosition() + 10);
+			iflowStep.setModified(true);
+		}
+		return flowStep;
+	}
+
+	public FlowStep getFlowStepDTOWithCodedFunctionLibray(Artifact artifact, FlowStep selectedFlowStep,
+			Artifact cflArtifact, String flow_id, List<FlowStep> flowSteps) {
+		int selectedFlowStepPosition = 0;
+		int selectedFlowStepIndex = 0;
+		if (selectedFlowStep != null) {
+			selectedFlowStepIndex = flowSteps.indexOf(selectedFlowStep);
+			selectedFlowStepPosition = selectedFlowStep.getPosition();
+		}
+		FlowStep flowStep = new FlowStep();
+		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+			flowStep.setComponent_id(flow_id);
+			flowStep.setStepid(Utilities.getInstance().getUniqueUUID(""));
+		} else {
+			flowStep.setFlow_id(flow_id);
+			flowStep.setFlow_stepid(Utilities.getInstance().getUniqueUUID(""));
+		}
+
+		CodedFunctionArtifact codedFunctionArtifact = FlowApi.getInstance()
+				.getCodedFunctionArtifact(cflArtifact.getId()).get(0);
+		flowStep.setCodedFunctionArtifact(codedFunctionArtifact);
+		List<CFLInputParameter> cflInputArgs = new CodedFunctionApi().getCodedFLInputParameters(cflArtifact);
+		List<CFLOutputParameter> cflOutputArgs = new CodedFunctionApi().getCodedFLOutputParameters(cflArtifact);
+		codedFunctionArtifact.setCflInputParameters(cflInputArgs);
+		codedFunctionArtifact.setCflOutputParameters(cflOutputArgs);
+
+		List<FlowInputArgument> flowInputArguments = getFlowStepInputArguments(artifact, flowStep);
+		List<FlowOutputArgument> flowOutputArguments = getFlowStepOutputArguments(artifact, flowStep);
+		flowStep.setFlowInputArgs(flowInputArguments);
+		flowStep.setFlowOutputArgs(flowOutputArguments);
+
+		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+			flowStep.setStepcomponent_id(cflArtifact.getId());
+		} else {
+			flowStep.setComponent_id(cflArtifact.getId());
 		}
 
 		flowStep.setPosition(selectedFlowStepPosition + 5);

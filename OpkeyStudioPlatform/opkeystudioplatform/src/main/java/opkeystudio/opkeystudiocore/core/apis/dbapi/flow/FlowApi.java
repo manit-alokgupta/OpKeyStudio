@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -128,7 +129,7 @@ public class FlowApi {
 				flowStep.setOrObject(allORObject);
 				flowStep.setIsTestCaseStep(true);
 			} else if (flowStep.getComponent_id() != null) {
-				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getComponent_id()).get(0);
+				FunctionLibraryComponent flComp = getFunctionLibraryComponent(flowStep.getComponent_id()).get(0);
 				List<ComponentInputArgument> inputArgs = getAllComponentInputArgument(flowStep.getComponent_id());
 				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(flowStep.getComponent_id());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
@@ -178,7 +179,7 @@ public class FlowApi {
 		return new ArrayList<ComponentOutputArgument>();
 	}
 
-	public List<FunctionLibraryComponent> getFunctinLibraryComponent(String componentId) {
+	public List<FunctionLibraryComponent> getFunctionLibraryComponent(String componentId) {
 		String query = String.format("select * from main_artifact_filesystem where id='%s'", componentId);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -191,6 +192,20 @@ public class FlowApi {
 			e.printStackTrace();
 		}
 		return new ArrayList<FunctionLibraryComponent>();
+	}
+
+	public List<CodedFunctionArtifact> getCodedFunctionArtifact(String componentId) {
+		String query = String.format("select * from main_artifact_filesystem where id='%s'", componentId);
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CodedFunctionArtifact.class);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<CodedFunctionArtifact>();
 	}
 
 	public List<FlowOutputArgument> fetchFlowStepOutputArguments(String flowStepId) {
