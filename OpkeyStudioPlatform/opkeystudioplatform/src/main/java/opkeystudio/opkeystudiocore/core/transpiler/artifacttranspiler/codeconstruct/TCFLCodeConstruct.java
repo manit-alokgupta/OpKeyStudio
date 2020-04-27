@@ -252,6 +252,12 @@ public class TCFLCodeConstruct {
 		if (data.equals("=")) {
 			return " == ";
 		}
+		if (data.equals("<")) {
+			return "<";
+		}
+		if (data.equals(">")) {
+			return ">";
+		}
 		if (data.equals("<>")) {
 			return " != ";
 		}

@@ -236,6 +236,9 @@ public class Utilities {
 	}
 
 	public int getIndexOfItem(String[] arrays, String item) {
+		if (item == null) {
+			item = "OpKeyE_IGNORE_736764736767365";
+		}
 		for (int i = 0; i < arrays.length; i++) {
 			if (arrays[i].toLowerCase().equals(item.toLowerCase())) {
 				return i;
