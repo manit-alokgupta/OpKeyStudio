@@ -34,17 +34,7 @@ public class CompilerTools {
 		return librariesPath;
 	}
 
-	private String getLibrariesClassPath() {
-		String data = "";
-		ArrayList<String> classPathDatas = getLibrariesPath();
-		for (String classPath : classPathDatas) {
-			if (!data.isEmpty()) {
-				data += ";";
-			}
-			data += classPath;
-		}
-		return data;
-	}
+
 
 	public List<CompileError> compileCodeFl(String codedFLpath, String librariesClassPath) {
 		ArrayList<CompileError> compilerErrors = new ArrayList<CompileError>();

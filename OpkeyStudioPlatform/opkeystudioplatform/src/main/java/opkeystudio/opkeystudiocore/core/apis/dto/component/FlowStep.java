@@ -34,7 +34,7 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 
 	private FunctionLibraryComponent functionLibraryComponent;
 	private CodedFunctionArtifact codedFunctionArtifact;
-	
+
 	private List<ORObject> orObject = new ArrayList<ORObject>();
 
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
@@ -49,6 +49,11 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 
 	@DBField
 	private String component_id;
+
+	@DBField
+	private String codedfunction_id;
+	@DBField
+	private String stepcodedfunction_id;
 	@DBField
 	private String comments;
 	@DBField
@@ -277,5 +282,21 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 
 	public void setCodedFunctionArtifact(CodedFunctionArtifact codedFunctionArtifact) {
 		this.codedFunctionArtifact = codedFunctionArtifact;
+	}
+
+	public String getCodedfunction_id() {
+		return codedfunction_id;
+	}
+
+	public void setCodedfunction_id(String codedfunction_id) {
+		this.codedfunction_id = codedfunction_id;
+	}
+
+	public String getStepcodedfunction_id() {
+		return stepcodedfunction_id;
+	}
+
+	public void setStepcodedfunction_id(String stepcodedfunction_id) {
+		this.stepcodedfunction_id = stepcodedfunction_id;
 	}
 }

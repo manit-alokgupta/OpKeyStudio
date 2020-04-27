@@ -218,9 +218,9 @@ public class FlowMaker {
 		flowStep.setFlowOutputArgs(flowOutputArguments);
 
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-			flowStep.setStepcomponent_id(cflArtifact.getId());
+			flowStep.setStepcodedfunction_id(cflArtifact.getId());
 		} else {
-			flowStep.setComponent_id(cflArtifact.getId());
+			flowStep.setCodedfunction_id(cflArtifact.getId());
 		}
 
 		flowStep.setPosition(selectedFlowStepPosition + 5);
