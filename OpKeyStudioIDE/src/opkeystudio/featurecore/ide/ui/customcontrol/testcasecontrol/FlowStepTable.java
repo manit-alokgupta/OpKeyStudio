@@ -392,6 +392,8 @@ public class FlowStepTable extends CustomTable {
 					ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TEXT_KEYWORD_ICON));
 		} else if (flowStep.getFunctionLibraryComponent() != null) {
 			flowStepTableItem.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
+		} else if (flowStep.getCodedFunctionArtifact() != null) {
+			flowStepTableItem.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		}
 		flowStepTableItem.setImage(2, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
 		flowStepTableItem.setImage(3, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
