@@ -78,9 +78,14 @@ public class LoginDialog extends Dialog {
 	 */
 	private void createContents() {
 		shlLoginToOpkey = new Shell(getParent(), SWT.DIALOG_TRIM);
+		shlLoginToOpkey
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlLoginToOpkey.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlLoginToOpkey.setSize(466, 333);
 		shlLoginToOpkey.setText("Login to OpKey");
+		
+		Label labelSeparator = new Label(shlLoginToOpkey, SWT.SEPARATOR | SWT.HORIZONTAL);
+		labelSeparator.setBounds(0, 0, 460, 2);
 
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlLoginToOpkey.getBounds();
@@ -90,18 +95,18 @@ public class LoginDialog extends Dialog {
 
 		Composite composite = new Composite(shlLoginToOpkey, SWT.NONE);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		composite.setBounds(10, 0, 434, 64);
+		composite.setBounds(10, 10, 440, 69);
 
 		Label lblNewLabel = new Label(composite, SWT.NONE);
 		lblNewLabel.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
 		lblNewLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-		lblNewLabel.setBounds(10, 10, 164, 23);
+		lblNewLabel.setBounds(0, 0, 204, 38);
 		lblNewLabel.setText("Login to OpKey");
 
 		Label lblNewLabel_1 = new Label(composite, SWT.NONE);
 		lblNewLabel_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		lblNewLabel_1.setFont(SWTResourceManager.getFont("Segoe UI", 7, SWT.NORMAL));
-		lblNewLabel_1.setBounds(10, 39, 164, 15);
+		lblNewLabel_1.setBounds(0, 44, 267, 25);
 		lblNewLabel_1.setText("Provide your OpKey credential to login");
 
 		CLabel lblNewLabel_5 = new CLabel(composite, SWT.NONE);
@@ -162,7 +167,7 @@ public class LoginDialog extends Dialog {
 		closebutton.setText("Close");
 
 		Composite composite_1 = new Composite(shlLoginToOpkey, SWT.BORDER);
-		composite_1.setBounds(10, 70, 434, 167);
+		composite_1.setBounds(10, 85, 440, 167);
 
 		Label label = new Label(composite_1, SWT.NONE);
 		label.setText("UserName");
@@ -170,15 +175,15 @@ public class LoginDialog extends Dialog {
 
 		domainUrl = new Text(composite_1, SWT.BORDER);
 		domainUrl.setToolTipText("OpKey Domain");
-		domainUrl.setBounds(192, 24, 178, 24);
+		domainUrl.setBounds(192, 24, 199, 24);
 
 		userName = new Text(composite_1, SWT.BORDER);
 		userName.setToolTipText("UserName");
-		userName.setBounds(192, 68, 178, 24);
+		userName.setBounds(192, 68, 199, 24);
 
 		passWord = new Text(composite_1, SWT.BORDER | SWT.PASSWORD);
 		passWord.setToolTipText("Password");
-		passWord.setBounds(192, 110, 178, 24);
+		passWord.setBounds(192, 110, 199, 24);
 
 		String domainURL = OpKeyStudioPreferences.getPreferences().getBasicSettings("opkey_url");
 		String username = OpKeyStudioPreferences.getPreferences().getBasicSettings("opkey_username");
