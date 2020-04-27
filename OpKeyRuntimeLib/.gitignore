@@ -1,3 +1,4 @@
 appium-java-client/*.jar
 selenium-java-3.141.59/*.jar
 bin/*
+/bin/

@@ -33,7 +33,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 public class Utilities {
 	private static Utilities util;
 	private String defaultInstallDir;
-	private boolean developerMode = true;
+	private boolean developerMode = false;
 
 	public static Utilities getInstance() {
 		if (util == null) {
