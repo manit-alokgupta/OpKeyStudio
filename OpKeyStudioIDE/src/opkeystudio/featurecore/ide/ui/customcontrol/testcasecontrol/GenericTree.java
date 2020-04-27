@@ -1,7 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -84,30 +82,30 @@ public class GenericTree extends CustomTree {
 				if (selectedData instanceof Artifact) {
 					Artifact selectedArtifact = (Artifact) selectedData;
 					if (selectedArtifact.getFile_type_enum() == MODULETYPE.Component) {
-						try {
-							if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-								if (artifact.getId().equals(selectedArtifact.getId())) {
-									new MessageDialogs().openErrorDialog("OpKey",
-											"Function Library Recursion Call Not Allowed");
-									return;
-								}
-							}
-							FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact,
-									selectedFlowStep, selectedArtifact, artifact.getId(),
-									getParentTestCaseView().getFlowStepTable().getFlowStepsData());
-							getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
-							getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
-							getParentTestCaseView().toggleSaveButton(true);
-						} catch (SQLException | IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						if (artifact.getId().equals(selectedArtifact.getId())) {
+							new MessageDialogs().openErrorDialog("OpKey",
+									"Function Library Recursion Call Not Allowed");
+							return;
 						}
+						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
+								selectedArtifact, artifact.getId(),
+								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+						getParentTestCaseView().toggleSaveButton(true);
 						return;
 					}
+
 					if (selectedArtifact.getFile_type_enum() == MODULETYPE.CodedFunction) {
-						System.out.println("Coded FL not implemented exception");
+						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithCodedFunctionLibray(artifact,
+								selectedFlowStep, selectedArtifact, artifact.getId(),
+								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+						getParentTestCaseView().toggleSaveButton(true);
 						return;
 					}
+
 				}
 				FlowStep flowStep = new FlowMaker().getFlowStepDTO(getParentTestCaseView().getArtifact(),
 						selectedFlowStep, (Keyword) getSelectedData(), artifact.getId(),
@@ -134,26 +132,22 @@ public class GenericTree extends CustomTree {
 				}
 				Object selectedData = getSelectedData();
 				if (selectedData instanceof Artifact) {
-					try {
-						Artifact selectedArtifact = (Artifact) selectedData;
-						if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-							if (artifact.getId().equals(selectedArtifact.getId())) {
-								new MessageDialogs().openErrorDialog("OpKey",
-										"Function Library Recursion Call Not Allowed");
-								return;
-							}
+					Artifact selectedArtifact = (Artifact) selectedData;
+					if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+						if (artifact.getId().equals(selectedArtifact.getId())) {
+							new MessageDialogs().openErrorDialog("OpKey",
+									"Function Library Recursion Call Not Allowed");
+							return;
 						}
+
 						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
 								selectedArtifact, artifact.getId(),
 								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
 						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 						getParentTestCaseView().toggleSaveButton(true);
-					} catch (SQLException | IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						return;
 					}
-					return;
 				}
 				FlowStep flowStep = new FlowMaker().getFlowStepDTO(getParentTestCaseView().getArtifact(),
 						selectedFlowStep, (Keyword) getSelectedData(), artifact.getId(),
