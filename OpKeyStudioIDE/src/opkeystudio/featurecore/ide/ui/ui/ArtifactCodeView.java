@@ -60,7 +60,7 @@ public class ArtifactCodeView extends Composite {
 		super(parent, style);
 		this.setGenericEditor(isGenericEditor);
 		setLayout(new GridLayout(1, false));
-		initTCFLUI();
+		initGenericEditorUI();
 		initCodeViewFile();
 		displayCodeViewFileData();
 	}
@@ -72,7 +72,7 @@ public class ArtifactCodeView extends Composite {
 		initArtifact();
 		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
-		initTCFLUI();
+		initGenericEditorUI();
 		initTestCaseCode();
 		getJavaEditor().setEditable(editable);
 	}
@@ -165,34 +165,24 @@ public class ArtifactCodeView extends Composite {
 		getJavaEditor().setArtifactJavaCode(codeData);
 	}
 
-	private void initTCFLUI() {
+	private void initGenericEditorUI() {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
 		runButton = new ToolItem(toolBar, SWT.NONE);
-		runButton.setText("Run");
 		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
 		runButton.setToolTipText("Run");
-
+		new ToolItem(toolBar, SWT.SEPARATOR);
+		saveButton = new ToolItem(toolBar, SWT.NONE);
+		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
+		saveButton.setToolTipText("Sve");
+		new ToolItem(toolBar, SWT.SEPARATOR);
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
-		refreshButton.setText("Refresh Code");
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
-		refreshButton.setToolTipText("Refresh TC/FL Code");
+		refreshButton.setToolTipText("Refresh Source Code");
 
 		editor = new ArtifactCodeEditor(this, this, true);
 		editor.setArtifact(getArtifact());
-		refreshButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				refreshTCFLCode();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
 		runButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -205,6 +195,34 @@ public class ArtifactCodeView extends Composite {
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
+
+			}
+		});
+
+		saveButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		refreshButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				displayCodeViewFileData();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
 
 			}
 		});
