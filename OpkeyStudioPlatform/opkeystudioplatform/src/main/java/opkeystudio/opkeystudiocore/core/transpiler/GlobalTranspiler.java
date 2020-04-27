@@ -6,6 +6,8 @@ import java.util.List;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
+
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -20,16 +22,35 @@ public class GlobalTranspiler {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName("OpKeyGlobalVariables").setPublic();
 		for (GlobalVariable gv : globalVariables) {
+			String dataType = getGVDataType(gv);
 			try {
-				class1.addField().setName(gv.getVariableName()).setType("String").setStringInitializer(gv.getValue())
+				class1.addField().setName(gv.getVariableName()).setType(dataType).setStringInitializer(gv.getValue())
 						.setPublic().setStatic(true);
 			} catch (Exception e) {
 				e.printStackTrace();
-				class1.addField().setName("_" + gv.getVariableName()).setType("String")
+				class1.addField().setName("_" + gv.getVariableName()).setType(dataType)
 						.setStringInitializer(gv.getValue()).setPublic().setStatic(true);
 			}
 		}
+		class1.addImport(MobileDevice.class);
 		return class1;
+	}
+
+	private String getGVDataType(GlobalVariable gv) {
+		if (gv.getDatatype().equals("String")) {
+		//	return "String";
+		}
+		if (gv.getDatatype().equals("Integer")) {
+		//	return "int";
+		}
+
+		if (gv.getDatatype().equals("Double")) {
+		//	return "double";
+		}
+		if (gv.getDatatype().equals("MobileDevice")) {
+		//	return "MobileDevice";
+		}
+		return "String";
 	}
 
 	private boolean isVariableAlreadyAdded(List<String> varaiableNames, String varName) {
