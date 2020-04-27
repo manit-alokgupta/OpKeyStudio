@@ -831,7 +831,7 @@ public class TestCaseView extends Composite {
 						DataSource.ValueFromGlobalVariable);
 				toggleSaveButton(true);
 				try {
-					getInputDataTable().renderInputTable(getInputDataTable().getFlowStep());
+					getInputDataTable().renderInputTable(getSelectedFlowStep());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

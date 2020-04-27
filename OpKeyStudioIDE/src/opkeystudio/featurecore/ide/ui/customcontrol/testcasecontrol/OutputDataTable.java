@@ -105,7 +105,8 @@ public class OutputDataTable extends CustomTable {
 
 				selectedFlowInputArgument.setModified(true);
 				try {
-					getParentTestCaseView().getInputDataTable().renderInputTable(getFlowStep());
+					getParentTestCaseView().getInputDataTable()
+							.renderInputTable(getParentTestCaseView().getSelectedFlowStep());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
