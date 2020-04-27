@@ -23,6 +23,10 @@ public class GlobalTranspiler {
 		class1.setName("OpKeyGlobalVariables").setPublic();
 		for (GlobalVariable gv : globalVariables) {
 			String dataType = getGVDataType(gv);
+			if (dataType.equals("MobileDevice")) {
+
+				continue;
+			}
 			try {
 				class1.addField().setName(gv.getVariableName()).setType(dataType).setStringInitializer(gv.getValue())
 						.setPublic().setStatic(true);
@@ -38,17 +42,17 @@ public class GlobalTranspiler {
 
 	private String getGVDataType(GlobalVariable gv) {
 		if (gv.getDatatype().equals("String")) {
-		//	return "String";
+			// return "String";
 		}
 		if (gv.getDatatype().equals("Integer")) {
-		//	return "int";
+			// return "int";
 		}
 
 		if (gv.getDatatype().equals("Double")) {
-		//	return "double";
+			// return "double";
 		}
 		if (gv.getDatatype().equals("MobileDevice")) {
-		//	return "MobileDevice";
+			// return "MobileDevice";
 		}
 		return "String";
 	}
