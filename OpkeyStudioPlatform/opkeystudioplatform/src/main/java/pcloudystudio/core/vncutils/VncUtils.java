@@ -346,14 +346,14 @@ public class VncUtils {
 	}
 
 	public static void StartInputService(String id) throws IOException, InterruptedException {
-		Runtime runtime = Runtime.getRuntime();
 		System.out.println("starting input service");
 		String command = "adb -s " + id
 				+ " shell export CLASSPATH=/data/app/com.pcloudy.inputservice-1/base.apk; exec app_process /system/bin com.pcloudy.inputservice.Agent";
 		System.out.println("command is" + " " + command);
+		String [] cmd= {adbPath+ File.separator + "adb",command};
+		ProcessBuilder pb=new ProcessBuilder(cmd);
 		StringBuilder builder = new StringBuilder();
-		Thread.sleep(500);
-		Process process = runtime.exec(command);
+		Process process = pb.start();
 		process.waitFor();
 		String line;
 		BufferedReader reader = new BufferedReader(
