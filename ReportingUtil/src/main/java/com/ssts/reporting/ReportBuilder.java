@@ -8,6 +8,16 @@ public class ReportBuilder {
 	private ReportFormat format;
 	private String SessionName;
 
+	static IReport report;
+
+	public static IReport get() {
+		if (report == null) {
+			System.err.println("Call the ReportBuilder.build method at the very beginning of the execution");
+
+		}
+		return report;
+	}
+
 	private ReportBuilder() {
 		// enforce builder pattern
 	}
@@ -23,20 +33,22 @@ public class ReportBuilder {
 		this.SessionName = sessionName;
 		return this;
 	}
-	
+
 	public ReportBuilder withFormat(ReportFormat format) {
 		this.format = format;
 		return this;
 	}
 
-	public Report build() {
-		return new Report(this);
+	public IReport build() {
+		// report =new ExtentReport(this);
+		report = new PCloudyReport(this);
+		return report;
 	}
 
 	public String getSessionName() {
 		return this.SessionName;
 	}
-	
+
 	public File getPath() {
 		return atPath;
 	}

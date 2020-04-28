@@ -7,6 +7,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ReportingUtil</name>
 
+	<properties>
+		<pCloudyConnectorJar>
+			${project.basedir}/../OpKeyStudioIDE/resources/libraries/ReportingUtil/pCloudy-java-connector-11.0.6-jar-with-dependencies.jar
+		</pCloudyConnectorJar>
+	</properties>
+
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
 		<dependency>
@@ -14,6 +20,15 @@
 			<artifactId>extentreports</artifactId>
 			<version>4.1.5</version>
 		</dependency>
-
+		<dependency>
+			<groupId>pCloudy-java-connector</groupId>
+			<artifactId>pCloudy-java-connector</artifactId>
+			<version>11.0.6</version>
+			<scope>system</scope>
+			<systemPath>${pCloudyConnectorJar}</systemPath>
+		</dependency>
 	</dependencies>
+
+
+
 </project>
