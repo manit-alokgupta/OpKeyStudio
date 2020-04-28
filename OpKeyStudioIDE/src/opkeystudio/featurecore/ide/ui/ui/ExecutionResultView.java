@@ -23,13 +23,14 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSessionExecutor;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
-public class ExecutionResultView extends Composite {
+public class ExecutionResultView extends SuperComposite {
 
 	/**
 	 * Create the composite.

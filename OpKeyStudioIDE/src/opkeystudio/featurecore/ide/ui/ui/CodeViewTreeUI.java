@@ -23,10 +23,11 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.commandhandler.RefreshArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
+import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
-public class CodeViewTreeUI extends Composite {
+public class CodeViewTreeUI extends SuperComposite {
 	MenuItem mntmNew;
 	private ToolItem toolbarRename;
 	private ToolItem toolbarDelete;

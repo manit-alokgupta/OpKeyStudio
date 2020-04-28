@@ -48,6 +48,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTab
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
+import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
@@ -62,7 +63,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
-public class TestCaseView extends Composite {
+public class TestCaseView extends SuperComposite {
 	private FlowStepTable flowStepTable;
 	private OutputDataTable outputDataTable;
 	private OutputDataTable outputVariableTable;

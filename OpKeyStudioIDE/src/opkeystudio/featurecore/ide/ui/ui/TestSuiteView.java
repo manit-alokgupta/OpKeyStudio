@@ -35,12 +35,13 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteTestCaseTree;
+import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 
-public class TestSuiteView extends Composite {
+public class TestSuiteView extends SuperComposite {
 	private SuiteTestCaseTree testCaseTree;
 	private Text searchTextBox;
 	private SuiteStepTable testSuiteTable;

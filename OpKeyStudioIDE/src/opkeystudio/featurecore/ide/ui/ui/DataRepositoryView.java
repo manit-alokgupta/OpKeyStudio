@@ -24,12 +24,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
+import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
-public class DataRepositoryView extends Composite {
+public class DataRepositoryView extends SuperComposite {
 	private DataRepositoryTable dataRepositoryTable;
 	@SuppressWarnings("unused")
 	private int colCount = 0;

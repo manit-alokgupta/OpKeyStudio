@@ -32,6 +32,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaAutoCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
+import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
@@ -48,7 +49,7 @@ import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspil
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.SuiteTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
 
-public class CodedFunctionView extends Composite {
+public class CodedFunctionView extends SuperComposite {
 
 	/**
 	 * Create the composite.

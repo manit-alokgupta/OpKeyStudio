@@ -16,6 +16,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.ArtifactCodeEditor;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
+import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -25,7 +26,7 @@ import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspil
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.SuiteTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
 
-public class ArtifactCodeView extends Composite {
+public class ArtifactCodeView extends SuperComposite {
 
 	/**
 	 * Create the composite.
