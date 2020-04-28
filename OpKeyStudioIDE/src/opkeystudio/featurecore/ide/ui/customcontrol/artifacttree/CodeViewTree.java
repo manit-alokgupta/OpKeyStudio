@@ -9,12 +9,15 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
+import opkeystudio.featurecore.ide.ui.ui.CodeViewTreeUI;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -23,8 +26,11 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 public class CodeViewTree extends CustomTree {
 	private List<Artifact> artifacts = new ArrayList<Artifact>();
 
-	public CodeViewTree(Composite parent, int style) {
+	private CodeViewTreeUI parentArtifactCodeViewTreeUI;
+
+	public CodeViewTree(Composite parent, int style, CodeViewTreeUI parentArtifactCodeViewTreeUI) {
 		super(parent, style);
+		this.setParentArtifactCodeViewTreeUI(parentArtifactCodeViewTreeUI);
 		init();
 	}
 
@@ -45,7 +51,44 @@ public class CodeViewTree extends CustomTree {
 			public void mouseDoubleClick(MouseEvent e) {
 				openSelectedCodeFile();
 			}
+		});
 
+		this.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				CodeViewTreeItem treeItem = getSelectedArtifactTreeItem();
+				if (treeItem == null) {
+					return;
+				}
+				File selectedFile = treeItem.getArtifactFile();
+				if (treeItem.isSystemFolder()) {
+					getParentArtifactCodeViewTreeUI().toggleDeleteToolbarItem(false);
+					getParentArtifactCodeViewTreeUI().toggleRenameToolbarItem(false);
+					return;
+				}
+				if (selectedFile.isDirectory() || selectedFile.isFile()) {
+					getParentArtifactCodeViewTreeUI().toggleDeleteToolbarItem(true);
+					getParentArtifactCodeViewTreeUI().toggleRenameToolbarItem(true);
+				}
+
+				if (selectedFile.isDirectory()) {
+					getParentArtifactCodeViewTreeUI().toggleNewToolbarItem(true);
+					getParentArtifactCodeViewTreeUI().toggleNewToolbarMenuItem(true);
+					getParentArtifactCodeViewTreeUI().toggleOpenMenuItem(false);
+				} else if (selectedFile.isFile()) {
+					getParentArtifactCodeViewTreeUI().toggleNewToolbarItem(false);
+					getParentArtifactCodeViewTreeUI().toggleNewToolbarMenuItem(false);
+					getParentArtifactCodeViewTreeUI().toggleOpenMenuItem(true);
+				}
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
 		});
 	}
 
@@ -61,6 +104,14 @@ public class CodeViewTree extends CustomTree {
 		part.setTooltip(selectedCodeFile.getName());
 		part.getTransientData().put("opkeystudio.codeFile", selectedCodeFile);
 		partService.showPart(part, PartState.ACTIVATE);
+	}
+
+	public void deleteSelectedFile() {
+
+	}
+
+	public void renameSelectedFile() {
+
 	}
 
 	public void setArtifactsData(List<Artifact> artifacts) {
@@ -180,5 +231,13 @@ public class CodeViewTree extends CustomTree {
 				}
 			}
 		}
+	}
+
+	public CodeViewTreeUI getParentArtifactCodeViewTreeUI() {
+		return parentArtifactCodeViewTreeUI;
+	}
+
+	public void setParentArtifactCodeViewTreeUI(CodeViewTreeUI parentArtifactCodeViewTreeUI) {
+		this.parentArtifactCodeViewTreeUI = parentArtifactCodeViewTreeUI;
 	}
 }

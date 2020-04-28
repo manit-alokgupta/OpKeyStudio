@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -21,7 +22,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import opkeystudio.commandhandler.RefreshArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
@@ -131,7 +131,7 @@ public class CodeViewTreeUI extends SuperComposite {
 		toolbarRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		toolbarRefresh.setToolTipText("Refresh");
 
-		codeViewTree = new CodeViewTree(this, SWT.BORDER);
+		codeViewTree = new CodeViewTree(this, SWT.BORDER, this);
 		codeViewTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		ServiceRepository.getInstance().setProjectTreeObject(codeViewTree);
@@ -154,7 +154,7 @@ public class CodeViewTreeUI extends SuperComposite {
 		toolbarFolder.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 
 		toolJavaFile = new MenuItem(newMenu, SWT.PUSH);
-		toolJavaFile.setText("TestCase");
+		toolJavaFile.setText("Java File (.java)");
 		toolJavaFile.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
 
 		folderMenuItem = new MenuItem(menu_1, SWT.NONE);
@@ -163,7 +163,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 		javaFileMenuItem = new MenuItem(menu_1, SWT.NONE);
 		javaFileMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
-		javaFileMenuItem.setText("TestCase");
+		javaFileMenuItem.setText("Java File (.java)");
 
 		openMenuItem = new MenuItem(menu, SWT.NONE);
 		openMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OPEN_ICON));
@@ -215,7 +215,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				codeViewTree.openSelectedCodeFile();
 			}
 
 			@Override
@@ -227,7 +227,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				codeViewTree.deleteSelectedFile();
 			}
 
 			@Override
@@ -240,7 +240,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				codeViewTree.renameSelectedFile();
 			}
 
 			@Override
@@ -253,8 +253,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				System.out.println("Refresh Success");
+				codeViewTree.renderArtifacts();
 			}
 
 			@Override
@@ -287,7 +286,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				codeViewTree.renameSelectedFile();
 			}
 
 			@Override
@@ -300,7 +299,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				codeViewTree.deleteSelectedFile();
 			}
 
 			@Override
@@ -313,7 +312,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				new RefreshArtifactTree().refreshArtifactTree();
+				codeViewTree.renderArtifacts();
 			}
 
 			@Override
@@ -369,9 +368,6 @@ public class CodeViewTreeUI extends SuperComposite {
 		});
 
 		codeViewTree.renderArtifacts();
-
-//		  Search button listener
-
 		clearArtifactTreeButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -391,33 +387,34 @@ public class CodeViewTreeUI extends SuperComposite {
 	}
 
 	public void toggleRenameToolbarItem(boolean status) {
+		renameMenuItem.setEnabled(status);
 		toolbarRename.setEnabled(status);
 	}
 
-	public void toogleNewToolbarItem(boolean status) {
+	public void toggleNewToolbarItem(boolean status) {
 		toolbarNew.setEnabled(status);
 	}
 
-	public void toogleDeleteToolbarItem(boolean status) {
+	public void toggleDeleteToolbarItem(boolean status) {
+		deleteMenuItem.setEnabled(status);
 		toolbarDelete.setEnabled(status);
 	}
 
-	public void toogleNewToolbarMenuItem(boolean status) {
+	public void toggleNewToolbarMenuItem(boolean status) {
 		mntmNew.setEnabled(status);
 	}
 
 	public void toggleRefreshMenuItem(boolean status) {
+		toolbarRefresh.setEnabled(status);
 		refreshMenuItem.setEnabled(status);
+	}
+
+	public void toggleOpenMenuItem(boolean status) {
+		openMenuItem.setEnabled(status);
 	}
 
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
-	}
-
-	public void keyPressed(KeyEvent event) {
-		if (event.keyCode == SWT.ESC) {
-			System.out.println("Escape pressed");
-		}
 	}
 }
