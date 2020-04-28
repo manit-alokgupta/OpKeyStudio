@@ -11,13 +11,15 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class VncUtils {
 
 	private static VncUtils obj;
-	private static String DeviceidCommand = "adb get-serialno";
+	
 	private static String PreCompiledLibDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator
 			+ "VncServer" + File.separator + "vncserver" + File.separator + "PreCompiled_libs"; // "
 	
 	private static String ResourceDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator
 			+ "VncServer" + File.separator + "vncserver" + File.separator + "Resources"+File.separator ; 
 	private static String MobileLibDirectory = "/data/local/tmp/pcloudy-libs";
+	
+	private static String adbPath=String.valueOf(System.getenv("ANDROID_HOME"))+ File.separator + "platform-tools";
 
 	private VncUtils() {
 	}
@@ -325,8 +327,9 @@ public class VncUtils {
 	public static void LunchVnc(String id, String deviceName, String port) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("Launching Vnc");
-		String command = "java -jar " + ResourceDirectory + "opkeyvnc.jar" + " " + port + " " + deviceName + " " + id
-				+ " " + ResourceDirectory;
+		String command = "java -jar " + ResourceDirectory + "opkeyvnc.jar" + " " + '"'+port+'"' + " " + '"'+deviceName+'"' + " " + '"'+id+'"'
+				+ " " + adbPath;
+
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
 		process.waitFor();
