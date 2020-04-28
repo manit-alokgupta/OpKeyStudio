@@ -1,12 +1,8 @@
 package opkeystudio.opkeystudiocore.core.keywordmanager;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -20,23 +16,12 @@ public class KeywordLoader {
 		SQLiteCommunicator sqlComm = new SQLiteCommunicator(dbPath);
 		try {
 			sqlComm.connect();
-			String results = sqlComm.executeQueryString(
-					"SELECT * FROM main_keywords t1");
+			String results = sqlComm.executeQueryString("SELECT * FROM main_keywords t1");
 			ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 			CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, Keyword.class);
 			return mapper.readValue(results, type);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		return new ArrayList<Keyword>();
 	}
@@ -52,18 +37,8 @@ public class KeywordLoader {
 			CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
 					KeyWordInputArgument.class);
 			return mapper.readValue(results, type);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		return new ArrayList<KeyWordInputArgument>();
 	}

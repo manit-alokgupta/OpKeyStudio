@@ -8,6 +8,8 @@ import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
 import org.eclipse.e4.ui.workbench.lifecycle.ProcessAdditions;
 import org.eclipse.e4.ui.workbench.lifecycle.ProcessRemovals;
 
+import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyArtifactPersistListenerDispatcher;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -29,14 +31,17 @@ public class E4LifeCycle {
 
 	@PreSave
 	void preSave(IEclipseContext workbenchContext) {
+		System.out.println("Called @@PreSave");
+		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
 	@ProcessAdditions
 	void processAdditions(IEclipseContext workbenchContext) {
+		System.out.println("Called @@ProcessAdditions");
 	}
 
 	@ProcessRemovals
 	void processRemovals(IEclipseContext workbenchContext) {
-
+		System.out.println("Called @ProcessRemovals");
 	}
 }

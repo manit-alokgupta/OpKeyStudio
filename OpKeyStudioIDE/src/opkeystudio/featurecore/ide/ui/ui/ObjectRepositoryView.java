@@ -38,7 +38,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
-import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListener;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApiUtilities;
@@ -119,7 +119,7 @@ public class ObjectRepositoryView extends SuperComposite {
 	}
 
 	private void addOpKeyGlobalListener() {
-		this.addOpKeyGlobalEventListener(new OpKeyGlobalListener() {
+		this.addOpKeyGlobalEventListener(new ArtifactPersistListener() {
 
 			@Override
 			public void handleGlobalEvent() {

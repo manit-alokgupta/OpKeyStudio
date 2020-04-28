@@ -50,7 +50,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
-import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListener;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
@@ -136,7 +136,7 @@ public class TestCaseView extends SuperComposite {
 	}
 
 	private void addOpKeyGlobalListener() {
-		this.addOpKeyGlobalEventListener(new OpKeyGlobalListener() {
+		this.addOpKeyGlobalEventListener(new ArtifactPersistListener() {
 
 			@Override
 			public void handleGlobalEvent() {
