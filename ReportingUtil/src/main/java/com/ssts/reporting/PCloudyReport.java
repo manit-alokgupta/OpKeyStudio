@@ -1,5 +1,7 @@
 package com.ssts.reporting;
 
+import java.io.File;
+
 import com.ssts.util.reporting.ExecutionResult;
 import com.ssts.util.reporting.SingleRunReport;
 import com.ssts.util.reporting.printers.HtmlFilePrinter;
@@ -19,17 +21,24 @@ public class PCloudyReport implements IReport {
 	PCloudyReport(ReportBuilder builder) {
 		this.builder = builder;
 		report = new SingleRunReport();
+		report.Header = builder.getSessionName();
+		report.ProjectLogo = "http://www.qatestingtools.com/sites/default/files/tools_shortcuts/OpKey%20150.png";
 	}
 
 	public void addStep(String action, String[] parameters, Status status) {
 		this.addStep(action, parameters, status, null, null);
 	}
 
-	public void addStep(String action, String[] parameters, Status status, String output) {
-		this.addStep(action, parameters, status, output, null);
+	public void addStep(String action, String[] parameters, Status status, File snapshotPath) {
+		this.addStep(action, parameters, status, null, snapshotPath);
 	}
 
-	public void addStep(String action, String[] parameters, Status status, String output, Exception ex) {
+	public void addStep(String action, String[] parameters, Status status, String output, File snapshotPath) {
+		this.addStep(action, parameters, status, output, snapshotPath, null);
+	}
+
+	public void addStep(String action, String[] parameters, Status status, String output, File snapshotPath,
+			Exception ex) {
 		ExecutionResult result;
 		if (status == Status.FAIL)
 			result = ExecutionResult.Fail;
@@ -38,7 +47,11 @@ public class PCloudyReport implements IReport {
 		else
 			result = ExecutionResult.NotExecuted;
 
-		this.report.addStep(action, String.join(", ", parameters), output, result);
+		if (snapshotPath != null && snapshotPath.exists())
+			this.report.addStep(action, String.join(", ", parameters), output, snapshotPath.getAbsolutePath(), result);
+		else
+			this.report.addStep(action, String.join(", ", parameters), output, result);
+
 	}
 
 	public void beginFunctionLibrary(String flCaseName) {

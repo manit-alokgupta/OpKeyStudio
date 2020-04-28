@@ -1,14 +1,19 @@
 package com.ssts.reporting;
 
+import java.io.File;
+
 public interface IReport {
 
 	public void close();
 
 	public void addStep(String action, String[] parameters, Status status);
+	
+	public void addStep(String action, String[] parameters, Status status, File snapshotPath);
 
-	public void addStep(String action, String[] parameters, Status status, String output);
+	public void addStep(String action, String[] parameters, Status status, String output, File snapshotPath);
 
-	public void addStep(String action, String[] parameters, Status status, String output, Exception ex);
+	public void addStep(String action, String[] parameters, Status status, String output, File snapshotPath,
+			Exception ex);
 
 	public void beginFunctionLibrary(String flCaseName);
 

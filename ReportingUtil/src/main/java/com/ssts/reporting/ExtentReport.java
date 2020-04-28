@@ -1,5 +1,6 @@
 package com.ssts.reporting;
 
+import java.io.File;
 import java.util.Stack;
 
 import com.aventstack.extentreports.ExtentReports;
@@ -36,11 +37,16 @@ public class ExtentReport implements IReport {
 		this.addStep(action, parameters, status, null, null);
 	}
 
-	public void addStep(String action, String[] parameters, Status status, String output) {
-		this.addStep(action, parameters, status, output, null);
+	public void addStep(String action, String[] parameters, Status status, File snapshotPath) {
+		this.addStep(action, parameters, status, null, snapshotPath);
 	}
 
-	public void addStep(String action, String[] parameters, Status status, String output, Exception ex) {
+	public void addStep(String action, String[] parameters, Status status, String output, File snapshotPath) {
+		this.addStep(action, parameters, status, output, snapshotPath, null);
+	}
+
+	public void addStep(String action, String[] parameters, Status status, String output, File snapshotPath,
+			Exception ex) {
 		System.out.println("@AddStep");
 
 		if (reportingStacks.size() == 0) {
