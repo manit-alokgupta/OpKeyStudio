@@ -19,4 +19,14 @@ public class OpKeyGlobalListenerDispatcher {
 	public void addSuperComposite(SuperComposite scomposite) {
 		this.superComposites.add(scomposite);
 	}
+
+	public void clearAllSuperComposites() {
+		this.superComposites.clear();
+	}
+
+	public void fireAllSuperCompositeGlobalListener() {
+		for (SuperComposite scomp : this.superComposites) {
+			scomp.fireGlobalListener();
+		}
+	}
 }
