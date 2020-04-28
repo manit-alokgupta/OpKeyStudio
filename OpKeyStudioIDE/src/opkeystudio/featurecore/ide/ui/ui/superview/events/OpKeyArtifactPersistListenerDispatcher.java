@@ -5,13 +5,13 @@ import java.util.List;
 
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 
-public class OpKeyGlobalListenerDispatcher {
-	private static OpKeyGlobalListenerDispatcher instance = null;
+public class OpKeyArtifactPersistListenerDispatcher {
+	private static OpKeyArtifactPersistListenerDispatcher instance = null;
 	private List<SuperComposite> superComposites = new ArrayList<>();
 
-	public static OpKeyGlobalListenerDispatcher getInstance() {
+	public static OpKeyArtifactPersistListenerDispatcher getInstance() {
 		if (instance == null) {
-			instance = new OpKeyGlobalListenerDispatcher();
+			instance = new OpKeyArtifactPersistListenerDispatcher();
 		}
 		return instance;
 	}

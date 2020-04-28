@@ -26,7 +26,7 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
-import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListener;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -177,7 +177,7 @@ public class DataRepositoryView extends SuperComposite {
 	}
 
 	private void addGlobalListener() {
-		this.addOpKeyGlobalEventListener(new OpKeyGlobalListener() {
+		this.addOpKeyGlobalEventListener(new ArtifactPersistListener() {
 
 			@Override
 			public void handleGlobalEvent() {

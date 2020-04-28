@@ -9,7 +9,7 @@ import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.reportview.ReportViewer;
-import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListenerDispatcher;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyArtifactPersistListenerDispatcher;
 
 public class ReportViewerPart {
 	@PostConstruct
@@ -24,7 +24,7 @@ public class ReportViewerPart {
 
 	@Focus
 	public void onFocus() {
-		OpKeyGlobalListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
 	@Persist
@@ -34,6 +34,6 @@ public class ReportViewerPart {
 
 	@PersistState
 	public void persistState() {
-		OpKeyGlobalListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 }

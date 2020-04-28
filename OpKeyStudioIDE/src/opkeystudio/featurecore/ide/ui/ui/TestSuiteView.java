@@ -36,7 +36,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteTestCaseTree;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
-import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListener;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -90,7 +90,7 @@ public class TestSuiteView extends SuperComposite {
 	}
 
 	private void addOpKeyGlobalListener() {
-		this.addOpKeyGlobalEventListener(new OpKeyGlobalListener() {
+		this.addOpKeyGlobalEventListener(new ArtifactPersistListener() {
 
 			@Override
 			public void handleGlobalEvent() {
