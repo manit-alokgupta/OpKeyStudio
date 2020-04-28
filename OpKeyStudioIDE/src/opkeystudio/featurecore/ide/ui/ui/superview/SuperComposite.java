@@ -14,11 +14,11 @@ public class SuperComposite extends Composite {
 		super(parent, style);
 	}
 
-	public void addMyEventListener(OpKeyGlobalListener listener) {
+	public void addOpKeyGlobalEventListener(OpKeyGlobalListener listener) {
 		listeners.add(listener);
 	}
 
-	public void removeMyEventListener(OpKeyGlobalListener listener) {
+	public void removeOpKeyGlobalListener(OpKeyGlobalListener listener) {
 		listeners.remove(listener);
 	}
 }
