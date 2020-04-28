@@ -21,4 +21,10 @@ public class SuperComposite extends Composite {
 	public void removeOpKeyGlobalListener(OpKeyGlobalListener listener) {
 		listeners.remove(listener);
 	}
+
+	public void fireGlobalListener() {
+		for (OpKeyGlobalListener listener : this.listeners) {
+			listener.handleGlobalEvent();
+		}
+	}
 }
