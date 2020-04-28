@@ -109,7 +109,7 @@ public class ArtifactTreeUI extends Composite {
 			}
 		});
 
-//		  Hiding Search button as searching is working without it
+		// Hiding Search button as searching is working without it
 
 		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -130,11 +130,12 @@ public class ArtifactTreeUI extends Composite {
 		composite_1.setLayout(new GridLayout(1, true));
 		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-//		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
-//		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-//		gd_composite_1.heightHint = 34;
-//		gd_composite_1.widthHint = 110; 
-//		composite_1.setLayoutData(gd_composite_1);
+		// composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
+		// GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1,
+		// 1);
+		// gd_composite_1.heightHint = 34;
+		// gd_composite_1.widthHint = 110;
+		// composite_1.setLayoutData(gd_composite_1);
 
 		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT | SWT.WRAP);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -147,7 +148,7 @@ public class ArtifactTreeUI extends Composite {
 		toolbarNew.setToolTipText("New");
 
 		// ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
-//		toolbarNew.setDropDownMenu(menu_1);
+		// toolbarNew.setDropDownMenu(menu_1);
 
 		toolbarRename = new ToolItem(toolBar_1, SWT.NONE);
 		// toolbarRename.setText("Rename");
@@ -163,7 +164,7 @@ public class ArtifactTreeUI extends Composite {
 		toolbarDelete.setEnabled(false);
 		toolbarDelete.setToolTipText("Delete");
 
-//		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		// ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		toolbarRefresh = new ToolItem(toolBar_1, SWT.NONE);
 		// toolbarDelete.setText("Delete");
@@ -282,6 +283,13 @@ public class ArtifactTreeUI extends Composite {
 					}
 				}
 
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
+						return;
+					}
+				}
+
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
 			}
 
@@ -311,6 +319,14 @@ public class ArtifactTreeUI extends Composite {
 						return;
 					}
 				}
+
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
+						return;
+					}
+				}
+
 				createArtifact(artifact, inputValue, MODULETYPE.Suite);
 
 			}
@@ -338,6 +354,13 @@ public class ArtifactTreeUI extends Composite {
 							"Folder " + getVarName());
 					if (inputValue == null) {
 						System.out.println("cancel pressed inside while loop");
+						return;
+					}
+				}
+
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
 					}
 				}
@@ -372,6 +395,13 @@ public class ArtifactTreeUI extends Composite {
 					}
 				}
 
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
+						return;
+					}
+				}
+
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
 			}
 
@@ -398,6 +428,13 @@ public class ArtifactTreeUI extends Composite {
 							"Function Library Name ", "Function Library " + getVarName());
 					if (inputValue == null) {
 						System.out.println("cancel pressed inside while loop");
+						return;
+					}
+				}
+
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
 					}
 				}
@@ -438,7 +475,7 @@ public class ArtifactTreeUI extends Composite {
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Unable to delete " + artifact.getFile_type_enum(),
 							"Unable to delete " + artifact.getFile_type_enum() + " '" + artifact.getName()
-									+ "' as it is being used:");
+							+ "' as it is being used:");
 					return;
 				}
 				new ArtifactApi().deleteArtifact(artifact);
@@ -472,6 +509,14 @@ public class ArtifactTreeUI extends Composite {
 						return;
 					}
 				}
+
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(renamedText)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
+						return;
+					}
+				}
+
 				artifact.setName(renamedText);
 				new ArtifactApi().updateArtifact(artifact);
 				Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
@@ -523,6 +568,13 @@ public class ArtifactTreeUI extends Composite {
 					}
 				}
 
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
+						return;
+					}
+				}
+
 				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
 
 			}
@@ -550,6 +602,13 @@ public class ArtifactTreeUI extends Composite {
 							"NEW CFL " + getVarName());
 					if (inputValue == null) {
 						System.out.println("cancel pressed inside while loop");
+						return;
+					}
+				}
+
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
 					}
 				}
@@ -679,6 +738,13 @@ public class ArtifactTreeUI extends Composite {
 					}
 				}
 
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
+						return;
+					}
+				}
+
 				String artifactId = null;
 				if (artifact != null) {
 					if (artifact.getId() != null) {
@@ -715,6 +781,14 @@ public class ArtifactTreeUI extends Composite {
 						return;
 					}
 				}
+
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
+						return;
+					}
+				}
+
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
 			}
@@ -747,6 +821,14 @@ public class ArtifactTreeUI extends Composite {
 						return;
 					}
 				}
+
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
+						return;
+					}
+				}
+
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
 			}
@@ -777,6 +859,14 @@ public class ArtifactTreeUI extends Composite {
 						return;
 					}
 				}
+
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
+						return;
+					}
+				}
+
 				toogleNewToolbarItem(false);
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
 			}
@@ -834,6 +924,13 @@ public class ArtifactTreeUI extends Composite {
 							"DR " + getVarName());
 					if (inputValue == null) {
 						System.out.println("cancel pressed inside while loop");
+						return;
+					}
+				}
+
+				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+					if (artifactN.getName().equals(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
 					}
 				}
@@ -992,7 +1089,7 @@ public class ArtifactTreeUI extends Composite {
 
 		artifactTree.renderArtifacts();
 
-//		  Search button listener
+		// Search button listener
 
 		clearArtifactTreeButton.addSelectionListener(new SelectionListener() {
 
