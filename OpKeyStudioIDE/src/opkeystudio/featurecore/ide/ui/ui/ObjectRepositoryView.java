@@ -93,7 +93,7 @@ public class ObjectRepositoryView extends SuperComposite {
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
 		initArtifact();
-		ObjectRepositoryUI();
+		initObjectRepositoryUI();
 		toggleSaveButton(false);
 		toggleRenameButton(false);
 		toggleDeleteButton(false);
@@ -173,8 +173,7 @@ public class ObjectRepositoryView extends SuperComposite {
 		return menu;
 	}
 
-	@SuppressWarnings("unused")
-	public void ObjectRepositoryUI() {
+	private void initObjectRepositoryUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		TabFolder tabFolder = new TabFolder(this, SWT.BOTTOM);
 
@@ -193,12 +192,12 @@ public class ObjectRepositoryView extends SuperComposite {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar.setBounds(0, 0, 87, 23);
 
-		ToolItem septoolItem = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		addParentObjectToolItem = new ToolItem(toolBar, SWT.DROP_DOWN);
 		addParentObjectToolItem.setText("Add(HtmlPage)");
 
-		ToolItem septoolItem2 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		addChildObjectToolItem = new ToolItem(toolBar, SWT.DROP_DOWN);
 		addChildObjectToolItem.setText("Add(Area)");
@@ -271,19 +270,19 @@ public class ObjectRepositoryView extends SuperComposite {
 		saveObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 		saveObject.setToolTipText("Save");
 
-		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		renameObject = new ToolItem(toolBar, SWT.NONE);
 		renameObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
 		renameObject.setToolTipText("Rename");
 
-		ToolItem toolItem_5 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		deleteObject = new ToolItem(toolBar, SWT.NONE);
 		deleteObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
 		deleteObject.setToolTipText("Delete");
 
-		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		refreshObject = new ToolItem(toolBar, SWT.NONE);
 		refreshObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
@@ -332,7 +331,7 @@ public class ObjectRepositoryView extends SuperComposite {
 		addObjectAttribute.setText("Add");
 		addObjectAttribute.setToolTipText("Add Property");
 
-		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		deleteObjectAttribute = new ToolItem(toolBar_1, SWT.NONE);
 		deleteObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
@@ -543,7 +542,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				if (AppiumPortIpInfo.getHostAddress() == null
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 					AppiumPortIpInfo
-					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+							.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 					AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 					AppiumPortIpInfo.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
@@ -765,7 +764,7 @@ public class ObjectRepositoryView extends SuperComposite {
 			if (item.getORObject().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
 				item.getORObject()
-				.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getORObject().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();
