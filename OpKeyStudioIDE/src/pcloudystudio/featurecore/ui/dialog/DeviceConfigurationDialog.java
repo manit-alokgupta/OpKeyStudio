@@ -385,7 +385,7 @@ public class DeviceConfigurationDialog extends Dialog {
 				try {
 					AppiumServer.startServer();
 					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
-					Thread.sleep(2000);
+					Thread.sleep(5000);
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
 							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
 							mobileCapability);
