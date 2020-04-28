@@ -36,6 +36,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteTestCaseTree;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -75,10 +76,29 @@ public class TestSuiteView extends SuperComposite {
 	 * @param parent
 	 * @param style
 	 */
-	@SuppressWarnings("unused")
+	
 	public TestSuiteView(Composite parent, int style) {
 		super(parent, style);
 		initArtifact();
+		initTestSuiteUI();
+		toggleSaveButton(false);
+		toggleDeleteButton(false);
+		toggleMoveUpButton(false);
+		toggleMoveDownButton(false);
+		addOpKeyGlobalListener();
+	}
+
+	private void addOpKeyGlobalListener() {
+		this.addOpKeyGlobalEventListener(new OpKeyGlobalListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				System.out.println("Test Suite Global Listner Called");
+			}
+		});
+	}
+
+	private void initTestSuiteUI() {
 		display = getParent().getDisplay();
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -110,7 +130,7 @@ public class TestSuiteView extends SuperComposite {
 		runButton = new ToolItem(toolBar_1, SWT.NONE);
 		runButton.setToolTipText("Run Now");
 		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
-		ToolItem toolItem_6 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		deleteSuiteStepButton = new ToolItem(toolBar_1, SWT.NONE);
 		deleteSuiteStepButton.setToolTipText("Delete Suite Step");
@@ -128,19 +148,19 @@ public class TestSuiteView extends SuperComposite {
 		moveDownButton.setToolTipText("Move Down");
 		moveDownButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 
-		ToolItem toolItem_8 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		saveButton = new ToolItem(toolBar_1, SWT.NONE);
 		saveButton.setToolTipText("Save");
 		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 
-		ToolItem toolItem_9 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		refreshButton = new ToolItem(toolBar_1, SWT.NONE);
 		refreshButton.setToolTipText("Refresh");
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
 
-		ToolItem toolItem_10 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		toolDropDown = new ToolItem(toolBar_1, SWT.DROP_DOWN);
 		toolDropDown.setText("More");
@@ -269,31 +289,19 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
 
 		addButtonListeners();
-		try {
-			testSuiteTable.renderAllTestSuites();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		toggleSaveButton(false);
-		toggleDeleteButton(false);
-		toggleMoveUpButton(false);
-		toggleMoveDownButton(false);
-
+		testSuiteTable.renderAllTestSuites();
 	}
 
 	public void openExecutionWizard() {
 		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
 		executionWizard.open();
 	}
-	
+
 	public void populateTestSuiteData(TestSuiteStep testSuite) {
 		if (testSuite != null) {
 			setSelectedTEstSuite(testSuite);
@@ -357,7 +365,6 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -372,7 +379,6 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -387,8 +393,7 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 
@@ -401,10 +406,10 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
+		
 		deleteSuiteStepButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -413,14 +418,12 @@ public class TestSuiteView extends SuperComposite {
 				try {
 					testSuiteTable.deleteSuiteStep();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -434,7 +437,6 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -481,17 +483,8 @@ public class TestSuiteView extends SuperComposite {
 							bottomFactory.refreshBottomFactory();
 							return;
 						}
-
-						// AbstractNotificationPopup notification = new SaveNotificationPopup(display);
-						// notification.setDelayClose(1L);
-						// notification.open();
-
 						new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
-						try {
-							testSuiteTable.renderAllTestSuites();
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
+						testSuiteTable.renderAllTestSuites();
 
 						saveButton.setEnabled(false);
 					}
@@ -504,7 +497,6 @@ public class TestSuiteView extends SuperComposite {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -519,12 +511,7 @@ public class TestSuiteView extends SuperComposite {
 
 	public void saveSuiteSteps() {
 		new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
-		try {
-			testSuiteTable.renderAllTestSuites();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		testSuiteTable.renderAllTestSuites();
 		saveButton.setEnabled(false);
 	}
 

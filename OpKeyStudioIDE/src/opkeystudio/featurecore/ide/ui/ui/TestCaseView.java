@@ -49,6 +49,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTa
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
@@ -121,6 +122,7 @@ public class TestCaseView extends SuperComposite {
 		toggleMoveupButton(false);
 		toggleDeleteButton(false);
 		toggleAddButton(true);
+		addOpKeyGlobalListener();
 
 	}
 
@@ -130,7 +132,16 @@ public class TestCaseView extends SuperComposite {
 		this.setArtifact(artifact);
 	}
 
-	@SuppressWarnings("unused")
+	private void addOpKeyGlobalListener() {
+		this.addOpKeyGlobalEventListener(new OpKeyGlobalListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				System.out.println("Test Case Global Listner Called");
+			}
+		});
+	}
+	
 	public void initTestCaseUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		display = getParent().getDisplay();
@@ -331,7 +342,6 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String textToSearch = searchBox.getText();
 				searchBox.setText("");
 				if (allDataTreeView.isKeywordTree()) {
 					allDataTreeView.initKeywords("");

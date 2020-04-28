@@ -38,6 +38,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.Obje
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApiUtilities;
@@ -101,6 +102,7 @@ public class ObjectRepositoryView extends SuperComposite {
 		toggleDeleteAttributeButton(false);
 		toggleParentObjectToolItem(true);
 		toggleChildObjectToolItem(false);
+		addOpKeyGlobalListener();
 	}
 
 	public ObjectRepositoryTree getObjectRepositoryTree() {
@@ -113,6 +115,16 @@ public class ObjectRepositoryView extends SuperComposite {
 
 	public void toggleChildObjectToolItem(boolean status) {
 		addChildObjectToolItem.setEnabled(status);
+	}
+
+	private void addOpKeyGlobalListener() {
+		this.addOpKeyGlobalEventListener(new OpKeyGlobalListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				System.out.println("Object Repository Global Listner Called");
+			}
+		});
 	}
 
 	private Menu createParentObjectCreationMenu(Control parent) {

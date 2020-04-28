@@ -469,7 +469,7 @@ public class SuiteStepTable extends CustomTable {
 		getParentTestSuiteView().toggleSaveButton(true);
 	}
 
-	public void renderAllTestSuites() throws JsonParseException, JsonMappingException, IOException {
+	public void renderAllTestSuites() {
 		disposeAllTableEditors();
 		this.removeAll();
 		Artifact artifact = getParentTestSuiteView().getArtifact();
