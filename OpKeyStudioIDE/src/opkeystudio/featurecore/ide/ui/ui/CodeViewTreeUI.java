@@ -37,18 +37,9 @@ public class CodeViewTreeUI extends SuperComposite {
 	private Menu menu_1;
 	private Menu newMenu;
 	private MenuItem toolbarFolder;
-	private MenuItem toolbarDR;
-	private MenuItem toolbarTestCase;
-	private MenuItem toolbarObjectRepository;
-	private MenuItem toolbarFunctionLibrary;
-	private MenuItem toolbarTestSuite;
+	private MenuItem toolJavaFile;
 	private MenuItem folderMenuItem;
-	private MenuItem testcaseMenuItem;
-	private MenuItem objectRepositoryMenuItem;
-	private MenuItem functionLibraryMenuItem;
-	private MenuItem testSuiteMenuItem;
-	private MenuItem codedFLMenuItem;
-	private MenuItem drMenuItem;
+	private MenuItem javaFileMenuItem;
 	private MenuItem openMenuItem;
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
@@ -101,8 +92,6 @@ public class CodeViewTreeUI extends SuperComposite {
 			}
 		});
 
-//		  Hiding Search button as searching is working without it
-
 		ToolBar toolBar = new ToolBar(composite, SWT.FLAT | SWT.RIGHT);
 		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		toolBar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 1));
@@ -122,12 +111,6 @@ public class CodeViewTreeUI extends SuperComposite {
 		composite_1.setLayout(new GridLayout(1, true));
 		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-//		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
-//		GridData gd_composite_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-//		gd_composite_1.heightHint = 34;
-//		gd_composite_1.widthHint = 110; 
-//		composite_1.setLayoutData(gd_composite_1);
-
 		ToolBar toolBar_1 = new ToolBar(composite_1, SWT.FLAT | SWT.RIGHT | SWT.WRAP);
 		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
@@ -135,32 +118,17 @@ public class CodeViewTreeUI extends SuperComposite {
 		toolbarNew = new ToolItem(toolBar_1, SWT.DROP_DOWN);
 		toolbarNew.setEnabled(false);
 		toolbarNew.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
-		// toolbarNew.setText("New");
 		toolbarNew.setToolTipText("New");
-
-		// ToolItem toolItem = new ToolItem(toolBar_1, SWT.SEPARATOR);
-//		toolbarNew.setDropDownMenu(menu_1);
-
 		toolbarRename = new ToolItem(toolBar_1, SWT.NONE);
-		// toolbarRename.setText("Rename");
 		toolbarRename.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
 		toolbarRename.setEnabled(false);
 		toolbarRename.setToolTipText("Rename");
-
-		// ToolItem toolItem_1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
 		toolbarDelete = new ToolItem(toolBar_1, SWT.NONE);
-		// toolbarDelete.setText("Delete");
 		toolbarDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_TOOL_ICON));
 		toolbarDelete.setEnabled(false);
 		toolbarDelete.setToolTipText("Delete");
-
-//		ToolItem toolItem_2 = new ToolItem(toolBar_1, SWT.SEPARATOR);
-
 		toolbarRefresh = new ToolItem(toolBar_1, SWT.NONE);
-		// toolbarDelete.setText("Delete");
 		toolbarRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
-		// toolbarRefresh.setEnabled(false);
 		toolbarRefresh.setToolTipText("Refresh");
 
 		codeViewTree = new CodeViewTree(this, SWT.BORDER);
@@ -185,53 +153,17 @@ public class CodeViewTreeUI extends SuperComposite {
 		toolbarFolder.setText("Folder");
 		toolbarFolder.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 
-		toolbarTestCase = new MenuItem(newMenu, SWT.PUSH);
-		toolbarTestCase.setText("TestCase");
-		toolbarTestCase.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
-
-		toolbarFunctionLibrary = new MenuItem(newMenu, SWT.PUSH);
-		toolbarFunctionLibrary.setText("Function Library");
-		toolbarFunctionLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
-
-		toolbarObjectRepository = new MenuItem(newMenu, SWT.PUSH);
-		toolbarObjectRepository.setText("Object Repository");
-		toolbarObjectRepository.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
-
-		toolbarTestSuite = new MenuItem(newMenu, SWT.PUSH);
-		toolbarTestSuite.setText("Test Suite");
-		toolbarTestSuite.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
-
-		toolbarDR = new MenuItem(newMenu, SWT.PUSH);
-		toolbarDR.setText("DR");
-		toolbarDR.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
+		toolJavaFile = new MenuItem(newMenu, SWT.PUSH);
+		toolJavaFile.setText("TestCase");
+		toolJavaFile.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
 
 		folderMenuItem = new MenuItem(menu_1, SWT.NONE);
 		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		folderMenuItem.setText("Folder");
 
-		testcaseMenuItem = new MenuItem(menu_1, SWT.NONE);
-		testcaseMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
-		testcaseMenuItem.setText("TestCase");
-
-		objectRepositoryMenuItem = new MenuItem(menu_1, SWT.NONE);
-		objectRepositoryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
-		objectRepositoryMenuItem.setText("ObjectRepository");
-
-		functionLibraryMenuItem = new MenuItem(menu_1, SWT.NONE);
-		functionLibraryMenuItem.setText("Function Library");
-		functionLibraryMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
-
-		testSuiteMenuItem = new MenuItem(menu_1, SWT.PUSH);
-		testSuiteMenuItem.setText("Test Suite");
-		testSuiteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
-
-		drMenuItem = new MenuItem(menu_1, SWT.PUSH);
-		drMenuItem.setText("DR");
-		drMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
-
-		codedFLMenuItem = new MenuItem(menu_1, SWT.PUSH);
-		codedFLMenuItem.setText("Coded FL");
-		codedFLMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		javaFileMenuItem = new MenuItem(menu_1, SWT.NONE);
+		javaFileMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
+		javaFileMenuItem.setText("TestCase");
 
 		openMenuItem = new MenuItem(menu, SWT.NONE);
 		openMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OPEN_ICON));
@@ -253,23 +185,11 @@ public class CodeViewTreeUI extends SuperComposite {
 		refreshMenuItem.setText("Refresh");
 		refreshMenuItem.setEnabled(false);
 
-		testcaseMenuItem.addSelectionListener(new SelectionListener() {
+		javaFileMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		testSuiteMenuItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
 			}
 
 			@Override
@@ -291,37 +211,11 @@ public class CodeViewTreeUI extends SuperComposite {
 			}
 		});
 
-		objectRepositoryMenuItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		functionLibraryMenuItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
 		openMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 			}
 
 			@Override
@@ -369,31 +263,6 @@ public class CodeViewTreeUI extends SuperComposite {
 			}
 		});
 
-		drMenuItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		codedFLMenuItem.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
 		toolbarNew.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -418,7 +287,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 			}
 
 			@Override
@@ -431,7 +300,6 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
 
 			}
 
@@ -450,7 +318,6 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -458,19 +325,6 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		toolbarTestCase.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
 
 			}
 
@@ -480,50 +334,10 @@ public class CodeViewTreeUI extends SuperComposite {
 			}
 		});
 
-		toolbarFunctionLibrary.addSelectionListener(new SelectionListener() {
+		toolJavaFile.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		toolbarObjectRepository.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		toolbarTestSuite.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-
-		toolbarDR.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
 
 			}
 
