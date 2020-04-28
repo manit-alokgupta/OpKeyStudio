@@ -114,6 +114,14 @@ public class CodeViewTree extends CustomTree {
 
 	}
 
+	public void createNewJavaFile() {
+
+	}
+
+	public void createNewFolder() {
+
+	}
+
 	public void setArtifactsData(List<Artifact> artifacts) {
 		this.artifacts = artifacts;
 	}
