@@ -7,11 +7,13 @@ import javax.annotation.PreDestroy;
 
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListenerDispatcher;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
@@ -33,6 +35,7 @@ public class FunctionLibraryPart {
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
 		}
+		OpKeyGlobalListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
 	public Artifact getArtifact() {
@@ -46,4 +49,8 @@ public class FunctionLibraryPart {
 
 	}
 
+	@PersistState
+	public void persistState() {
+		OpKeyGlobalListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+	}
 }

@@ -36,6 +36,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.globalvariable.GlobalVariableTable;
@@ -113,6 +114,7 @@ public class TestCaseView extends SuperComposite {
 	 */
 
 	private ArtifactCodeView codedFunctionView;
+	private MPart currentMpart;
 
 	public TestCaseView(Composite parent, int style) {
 		super(parent, style);
@@ -130,6 +132,7 @@ public class TestCaseView extends SuperComposite {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		this.setArtifact(artifact);
+		this.setCurrentMpart(mpart);
 	}
 
 	private void addOpKeyGlobalListener() {
@@ -138,10 +141,11 @@ public class TestCaseView extends SuperComposite {
 			@Override
 			public void handleGlobalEvent() {
 				System.out.println("Test Case Global Listner Called");
+				handleSaveOnRefresh();
 			}
 		});
 	}
-	
+
 	public void initTestCaseUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		display = getParent().getDisplay();
@@ -794,15 +798,7 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (itemSave.isEnabled()) {
-					toggleSaveButton(false);
-					boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
-					if (status) {
-						new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
-					}
-				}
-				flowStepTable.renderFlowSteps();
-				getCodedFunctionView().refreshTCFLCode();
+				handleSaveOnRefresh();
 			}
 
 			@Override
@@ -879,6 +875,19 @@ public class TestCaseView extends SuperComposite {
 
 	}
 
+	private void handleSaveOnRefresh() {
+		if (itemSave.isEnabled()) {
+			Utilities.getInstance().activateMpart(getCurrentMpart());
+			toggleSaveButton(false);
+			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
+			if (status) {
+				new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
+			}
+		}
+		flowStepTable.renderFlowSteps();
+		getCodedFunctionView().refreshTCFLCode();
+	}
+
 	public void saveAll() {
 		if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			List<ComponentInputArgument> componentInputArgs = bottomFactory.getInputTable().getComponentInputData();
@@ -934,5 +943,13 @@ public class TestCaseView extends SuperComposite {
 
 	public void setCodedFunctionView(ArtifactCodeView codedFunctionView) {
 		this.codedFunctionView = codedFunctionView;
+	}
+
+	public MPart getCurrentMpart() {
+		return currentMpart;
+	}
+
+	public void setCurrentMpart(MPart currentMpart) {
+		this.currentMpart = currentMpart;
 	}
 }

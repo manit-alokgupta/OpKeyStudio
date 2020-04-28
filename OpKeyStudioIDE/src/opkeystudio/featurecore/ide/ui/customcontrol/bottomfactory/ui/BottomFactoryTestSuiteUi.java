@@ -127,7 +127,7 @@ public class BottomFactoryTestSuiteUi extends Composite {
 
 	}
 
-	public void refreshBottomFactory() throws JsonParseException, JsonMappingException, IOException, SQLException {
+	public void refreshBottomFactory() {
 
 	}
 

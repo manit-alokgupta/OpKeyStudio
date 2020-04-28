@@ -3,7 +3,10 @@ package opkeystudio.featurecore.ide.ui.ui.superview;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListenerDispatcher;

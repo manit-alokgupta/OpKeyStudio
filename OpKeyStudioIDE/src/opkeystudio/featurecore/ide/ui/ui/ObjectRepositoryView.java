@@ -90,6 +90,7 @@ public class ObjectRepositoryView extends SuperComposite {
 	 */
 
 	private ArtifactCodeView codedFunctionView;
+	private MPart currentMPart;
 
 	public ObjectRepositoryView(Composite parent, int style) {
 		super(parent, style);
@@ -123,6 +124,7 @@ public class ObjectRepositoryView extends SuperComposite {
 			@Override
 			public void handleGlobalEvent() {
 				System.out.println("Object Repository Global Listner Called");
+				handleSaveOnRefresh();
 			}
 		});
 	}
@@ -453,7 +455,7 @@ public class ObjectRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				saving();
+				saveAll();
 			}
 
 			@Override
@@ -480,29 +482,7 @@ public class ObjectRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (saveObject.isEnabled()) {
-
-					toggleDeleteAttributeButton(false);
-					toggleAddAttributeButton(false);
-
-					int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation",
-							"Do you want to save changes?");
-					if (result != 0) {
-						toggleSaveButton(false);
-						objectRepositoryTree.renderObjectRepositories();
-						return;
-					}
-					List<ORObject> allors = objectRepositoryTree.getAllORObjects();
-					new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
-					toggleSaveButton(false);
-					objectRepositoryTree.renderObjectRepositories();
-					toggleSaveButton(false);
-				}
-
-				toggleDeleteAttributeButton(false);
-				toggleAddAttributeButton(false);
-				objectRepositoryTree.renderObjectRepositories();
-				getCodedFunctionView().refreshORCode();
+				handleSaveOnRefresh();
 
 			}
 
@@ -666,6 +646,32 @@ public class ObjectRepositoryView extends SuperComposite {
 		});
 	}
 
+	private void handleSaveOnRefresh() {
+		if (saveObject.isEnabled()) {
+			opkeystudio.core.utils.Utilities.getInstance().activateMpart(getCurrentMPart());
+			toggleDeleteAttributeButton(false);
+			toggleAddAttributeButton(false);
+
+			int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation", "Do you want to save changes?");
+			if (result != 0) {
+				toggleSaveButton(false);
+				objectRepositoryTree.renderObjectRepositories();
+				return;
+			}
+			List<ORObject> allors = objectRepositoryTree.getAllORObjects();
+			new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
+			toggleSaveButton(false);
+			objectRepositoryTree.renderObjectRepositories();
+			toggleSaveButton(false);
+		}
+
+		toggleDeleteAttributeButton(false);
+		toggleAddAttributeButton(false);
+		objectRepositoryTree.renderObjectRepositories();
+		getCodedFunctionView().refreshORCode();
+
+	}
+
 	public void toggleSaveButton(boolean status) {
 		saveObject.setEnabled(status);
 	}
@@ -783,7 +789,7 @@ public class ObjectRepositoryView extends SuperComposite {
 		}
 	}
 
-	public void saving() {
+	public void saveAll() {
 		List<ORObject> allors = objectRepositoryTree.getAllORObjects();
 		new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
 		toggleSaveButton(false);
@@ -793,6 +799,7 @@ public class ObjectRepositoryView extends SuperComposite {
 
 	public void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		this.setCurrentMPart(mpart);
 		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 	}
 
@@ -823,5 +830,13 @@ public class ObjectRepositoryView extends SuperComposite {
 
 	public void setCodedFunctionView(ArtifactCodeView codedFunctionView) {
 		this.codedFunctionView = codedFunctionView;
+	}
+
+	public MPart getCurrentMPart() {
+		return currentMPart;
+	}
+
+	public void setCurrentMPart(MPart currentMPart) {
+		this.currentMPart = currentMPart;
 	}
 }

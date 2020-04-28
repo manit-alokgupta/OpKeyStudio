@@ -26,6 +26,9 @@ public class OpKeyGlobalListenerDispatcher {
 
 	public void fireAllSuperCompositeGlobalListener() {
 		for (SuperComposite scomp : this.superComposites) {
+			if (scomp.isDisposed()) {
+				continue;
+			}
 			scomp.fireGlobalListener();
 		}
 	}

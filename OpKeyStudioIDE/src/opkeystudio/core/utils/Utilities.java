@@ -175,6 +175,11 @@ public class Utilities {
 		partService.hidePart(mpart, true);
 	}
 
+	public void activateMpart(MPart mpart) {
+		EPartService partService = Utilities.getInstance().getEpartService();
+		partService.showPart(mpart, PartState.VISIBLE);
+	}
+
 	public void renameArtifactLabel(Artifact artifact, String renamedData) {
 		MPart mpart = getArtifactMPart(artifact);
 		if (mpart == null) {

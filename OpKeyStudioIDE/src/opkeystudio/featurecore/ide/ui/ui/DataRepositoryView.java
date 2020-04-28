@@ -22,9 +22,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -50,6 +52,8 @@ public class DataRepositoryView extends SuperComposite {
 	private ToolItem saveToolItm;
 	private ArtifactCodeView codedFunctionView;
 
+	private MPart currentMpart;
+
 	/**
 	 * Create the composite.
 	 * 
@@ -59,7 +63,7 @@ public class DataRepositoryView extends SuperComposite {
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
-	@SuppressWarnings("unused")
+
 	public DataRepositoryView(Composite parent, int style)
 			throws JsonParseException, JsonMappingException, IOException {
 		super(parent, SWT.BORDER);
@@ -86,61 +90,61 @@ public class DataRepositoryView extends SuperComposite {
 		addColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_COLUMN_ICON));
 		addColmToolItm.setToolTipText("Add Column");
 
-		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		deleteColmToolItm = new ToolItem(toolBar, SWT.NONE);
 		deleteColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_COLUMN_ICON));
 		deleteColmToolItm.setToolTipText("Delete Column");
 
-		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		moveColmLeftToolItm = new ToolItem(toolBar, SWT.NONE);
 		moveColmLeftToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_LEFT_ICON));
 		moveColmLeftToolItm.setToolTipText("Move Column Left");
 
-		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		moveColmRightToolItm = new ToolItem(toolBar, SWT.NONE);
 		moveColmRightToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_RIGHT_ICON));
 		moveColmRightToolItm.setToolTipText("Move Column Right");
 
-		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		renameColmToolItm = new ToolItem(toolBar, SWT.NONE);
 		renameColmToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RENAME_ICON));
 		renameColmToolItm.setToolTipText("Rename Column ");
 
-		ToolItem toolItem_4 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		addRowToolItm = new ToolItem(toolBar, SWT.NONE);
 		addRowToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ROW_ICON));
 		addRowToolItm.setToolTipText("Add Row");
 
-		ToolItem toolItem_5 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		deleteRowToolItm = new ToolItem(toolBar, SWT.NONE);
 		deleteRowToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ROW_ICON));
 		deleteRowToolItm.setToolTipText("Delete Row");
 
-		ToolItem toolItem_6 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		moveRowUpToolItm = new ToolItem(toolBar, SWT.NONE);
 		moveRowUpToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
 		moveRowUpToolItm.setToolTipText("Move Row Up");
 
-		ToolItem toolItem_7 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		moveRowDownToolItm = new ToolItem(toolBar, SWT.NONE);
 		moveRowDownToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		moveRowDownToolItm.setToolTipText("Move Row Down");
 
-		ToolItem toolItem_10 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		saveToolItm = new ToolItem(toolBar, SWT.NONE);
 		saveToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 		saveToolItm.setToolTipText("Save");
 
-		ToolItem toolItem_12 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		refreshToolItm = new ToolItem(toolBar, SWT.NONE);
 		refreshToolItm.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
@@ -169,6 +173,17 @@ public class DataRepositoryView extends SuperComposite {
 
 		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, false);
 		setCodedFunctionView(codedFunctionView);
+		addGlobalListener();
+	}
+
+	private void addGlobalListener() {
+		this.addOpKeyGlobalEventListener(new OpKeyGlobalListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				handleSaveOnRefresh();
+			}
+		});
 	}
 
 	private void addButtonListner() {
@@ -207,7 +222,6 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -221,7 +235,6 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -235,7 +248,6 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -249,7 +261,6 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -263,7 +274,6 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -277,7 +287,6 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -291,7 +300,6 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -307,7 +315,6 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -316,22 +323,26 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (saveToolItm.getEnabled() == true) {
-					boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to save?");
-					if (status) {
-						saveDR();
-					}
-				}
-				dataRepositoryTable.renderAllDRDetails();
-				getCodedFunctionView().refreshDRCode();
+				handleSaveOnRefresh();
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
+	}
+
+	private void handleSaveOnRefresh() {
+		if (saveToolItm.getEnabled() == true) {
+			Utilities.getInstance().activateMpart(getCurrentMpart());
+			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to save?");
+			if (status) {
+				saveDR();
+			}
+		}
+		dataRepositoryTable.renderAllDRDetails();
+		getCodedFunctionView().refreshDRCode();
 	}
 
 	private void saveDR() {
@@ -343,6 +354,7 @@ public class DataRepositoryView extends SuperComposite {
 	public Artifact getArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		this.setCurrentMpart(mpart);
 		return artifact;
 	}
 
@@ -401,5 +413,13 @@ public class DataRepositoryView extends SuperComposite {
 
 	public void setCodedFunctionView(ArtifactCodeView codedFunctionView) {
 		this.codedFunctionView = codedFunctionView;
+	}
+
+	public MPart getCurrentMpart() {
+		return currentMpart;
+	}
+
+	public void setCurrentMpart(MPart currentMpart) {
+		this.currentMpart = currentMpart;
 	}
 }

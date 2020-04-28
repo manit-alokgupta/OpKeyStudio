@@ -1,7 +1,6 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 //import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
@@ -32,6 +31,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryTestSuiteUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteStepTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.suitecontrol.SuiteTestCaseTree;
@@ -69,6 +69,7 @@ public class TestSuiteView extends SuperComposite {
 	private Display display;
 	private ArtifactCodeView codedFunctionView;
 	private Artifact artifact;
+	private MPart currentMpart;
 
 	/**
 	 * Create the composite.
@@ -76,7 +77,7 @@ public class TestSuiteView extends SuperComposite {
 	 * @param parent
 	 * @param style
 	 */
-	
+
 	public TestSuiteView(Composite parent, int style) {
 		super(parent, style);
 		initArtifact();
@@ -94,6 +95,7 @@ public class TestSuiteView extends SuperComposite {
 			@Override
 			public void handleGlobalEvent() {
 				System.out.println("Test Suite Global Listner Called");
+				handleSaveOnRefresh();
 			}
 		});
 	}
@@ -393,7 +395,7 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				
+
 			}
 		});
 
@@ -409,7 +411,7 @@ public class TestSuiteView extends SuperComposite {
 
 			}
 		});
-		
+
 		deleteSuiteStepButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -472,33 +474,7 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					if (saveButton.isEnabled()) {
-						boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-								"Do you want to Save changes?");
-						if (!status) {
-							toggleSaveButton(false);
-
-							testSuiteTable.renderAllTestSuites();
-							bottomFactory.refreshBottomFactory();
-							return;
-						}
-						new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
-						testSuiteTable.renderAllTestSuites();
-
-						saveButton.setEnabled(false);
-					}
-
-					toggleDeleteButton(false);
-					toggleMoveUpButton(false);
-					toggleMoveDownButton(false);
-					testSuiteTable.renderAllTestSuites();
-					bottomFactory.refreshBottomFactory();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				handleSaveOnRefresh();
 
 			}
 
@@ -507,6 +483,30 @@ public class TestSuiteView extends SuperComposite {
 
 			}
 		});
+	}
+
+	private void handleSaveOnRefresh() {
+		if (saveButton.isEnabled()) {
+			Utilities.getInstance().activateMpart(getCurrentMpart());
+			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
+			if (!status) {
+				toggleSaveButton(false);
+
+				testSuiteTable.renderAllTestSuites();
+				bottomFactory.refreshBottomFactory();
+				return;
+			}
+			new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
+			testSuiteTable.renderAllTestSuites();
+
+			saveButton.setEnabled(false);
+		}
+
+		toggleDeleteButton(false);
+		toggleMoveUpButton(false);
+		toggleMoveDownButton(false);
+		testSuiteTable.renderAllTestSuites();
+		bottomFactory.refreshBottomFactory();
 	}
 
 	public void saveSuiteSteps() {
@@ -539,6 +539,7 @@ public class TestSuiteView extends SuperComposite {
 	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		this.setCurrentMpart(mpart);
 	}
 
 	public Artifact getArtifact() {
@@ -555,5 +556,13 @@ public class TestSuiteView extends SuperComposite {
 
 	public void setCodedFunctionView(ArtifactCodeView codedFunctionView) {
 		this.codedFunctionView = codedFunctionView;
+	}
+
+	public MPart getCurrentMpart() {
+		return currentMpart;
+	}
+
+	public void setCurrentMpart(MPart currentMpart) {
+		this.currentMpart = currentMpart;
 	}
 }
