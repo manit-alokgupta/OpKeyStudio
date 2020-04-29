@@ -283,12 +283,13 @@ public class AppiumSettingsDialog extends Dialog {
 					while (capabilityTable.getSelectionIndex() != -1)
 						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
-				btnDelete.setEnabled(false);
+				
 			}
 		});
 		btnDelete.setEnabled(false);
 		btnDelete.setToolTipText("Delete Capability");
 		btnDelete.setBounds(0, 7, 18, 18);
+		btnDelete.setEnabled(true);
 
 		compositeForDeleteButton.setToolTipText("Delete Capability");
 
@@ -642,7 +643,7 @@ public class AppiumSettingsDialog extends Dialog {
 		editor.grabHorizontal = true;
 		capabilityTable.addListener(SWT.MouseDown, new Listener() {
 			public void handleEvent(Event event) {
-				btnDelete.setEnabled(true);
+				
 				Rectangle clientArea = capabilityTable.getClientArea();
 				Point pt = new Point(event.x, event.y);
 				int index = capabilityTable.getTopIndex();
