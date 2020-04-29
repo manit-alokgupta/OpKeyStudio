@@ -476,7 +476,7 @@ public class ArtifactTreeUI extends SuperComposite {
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Unable to delete " + artifact.getFile_type_enum(),
 							"Unable to delete " + artifact.getFile_type_enum() + " '" + artifact.getName()
-							+ "' as it is being used:");
+									+ "' as it is being used:");
 					return;
 				}
 				new ArtifactApi().deleteArtifact(artifact);
@@ -511,6 +511,23 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
+				boolean startsWithNumber = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isStringStartsWithNumbers(renamedText);
+				boolean containsSpecialCharacters = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isStringContainsSpecialCharacters(renamedText);
+
+				if (startsWithNumber) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+							"Name should not start with number.");
+					return;
+				}
+
+				if (containsSpecialCharacters) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+							"Name should not contain any special characters.");
+					return;
+				}
+				
 				for (Artifact artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(renamedText)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
@@ -602,11 +619,26 @@ public class ArtifactTreeUI extends SuperComposite {
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New CodedFL", "CodedFL Name ",
 							"NEW CFL " + getVarName());
 					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
 						return;
 					}
 				}
 
+				boolean startsWithNumber = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isStringStartsWithNumbers(inputValue);
+				boolean containsSpecialCharacters = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isStringContainsSpecialCharacters(inputValue);
+
+				if (startsWithNumber) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+							"Name should not start with number.");
+					return;
+				}
+
+				if (containsSpecialCharacters) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+							"Name should not contain any special characters.");
+					return;
+				}
 				for (Artifact artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
@@ -662,6 +694,23 @@ public class ArtifactTreeUI extends SuperComposite {
 						System.out.println("cancel pressed inside while loop");
 						return;
 					}
+				}
+				
+				boolean startsWithNumber = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isStringStartsWithNumbers(renamedText);
+				boolean containsSpecialCharacters = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isStringContainsSpecialCharacters(renamedText);
+
+				if (startsWithNumber) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+							"Name should not start with number.");
+					return;
+				}
+
+				if (containsSpecialCharacters) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+							"Name should not contain any special characters.");
+					return;
 				}
 				artifact.setName(renamedText);
 				new ArtifactApi().updateArtifact(artifact);
