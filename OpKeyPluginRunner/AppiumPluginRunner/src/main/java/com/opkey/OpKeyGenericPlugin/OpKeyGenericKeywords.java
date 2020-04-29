@@ -1,8 +1,10 @@
 package com.opkey.OpKeyGenericPlugin;
 
 import java.awt.AWTException;
+import java.io.File;
 import java.io.IOException;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileApplication;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.contexts.Context;
@@ -23,6 +25,7 @@ import com.plugin.appium.keywords.AppiumSpecificKeyword.AndroidPicker;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.AndroidRadio;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.AndroidWindowHandling;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.AppiumSpecificUnCategorised;
+import com.plugin.appium.keywords.AppiumSpecificKeyword.Connect2AppiumServer;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.Gestures;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.MenuHandling;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.Orientation;
@@ -330,7 +333,7 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean LaunchChromeOnMobile(MobileDevice device, String url) {
+	public boolean LaunchChromeOnMobile(MobileDevice device, String url) throws ToolNotSetException {
 
 		System.out.println(">>Keyword Called LaunchChromeOnMobile");
 		ContextInitiator.addFunction(DataType.getMethodName());
@@ -367,8 +370,45 @@ public class OpKeyGenericKeywords {
 			return DataType.getBoolean(boolString);
 		} catch (Exception e) {
 			ReportHelper.addReportStep(DataType.getMethodName(), e);
-			return false;
+			throw new ToolNotSetException();
 		}
+	}
+	
+	public boolean Mobile_LaunchAndroidApplication(MobileDevice device, String androidApplicationPathh) throws Exception {
+		String methodName = DataType.getMethodName();
+		ContextInitiator.addFunction(methodName);
+		ContextInitiator.addDataRgumentsInFunctionCall(androidApplicationPathh); // Method_SetPickerValue
+		
+		System.out.println("@AppPath: " + androidApplicationPathh);
+		System.out.println("Name " + device.getDisplayName());
+		System.out.println("os " + device.getOperatingSystem());
+		System.out.println("sn " + device.getSerialNumber());
+		System.out.println("ver " + device.getVersion());
+		device.setOperatingSystem("android");
+
+		MobileApplication m = new MobileApplication();
+		m.setApplicationPath(androidApplicationPathh);
+		m.setDisplayName(new File(androidApplicationPathh).getName());
+		m.setOperatingSystem("android");
+		device.setVersion("8.1");
+		
+		Context.session().getSettings().put("AppiumServer",
+				"C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
+		Context.session().getSettings().put("Host", "localhost");
+		Context.session().getSettings().put("Port", "4723");
+//		Context.session().getSettings().put("Host", "");
+//		Context.session().getSettings().put("Port", "");
+		Context.session().getSettings().put("PlatformVersion", device.getVersion());
+		
+		try {
+			FunctionResult functionResult = new Connect2AppiumServer().Method_Launch_AndroidApplication(device, m);
+			ReportHelper.addReportStep(methodName, functionResult);;
+		} catch (Exception e) {
+			ReportHelper.addReportStep(methodName, e);
+			throw new ToolNotSetException();
+		}
+		
+		return false;
 	}
 
 	public boolean SetPickerValue(ORObject arg0, String arg1) throws Exception {
