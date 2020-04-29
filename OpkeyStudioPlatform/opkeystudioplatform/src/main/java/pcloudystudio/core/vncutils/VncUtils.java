@@ -11,6 +11,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class VncUtils {
 
 	private static VncUtils obj;
+	private static Process vncServerProcess = null;
 	
 	private static String PreCompiledLibDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator
 			+ "VncServer" + File.separator + "vncserver" + File.separator + "PreCompiled_libs"; // "
@@ -251,14 +252,14 @@ public class VncUtils {
 	public static void startVncServer(String id) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("Starting Vnc Server");
-		String command = "cmd.exe /c start cmd.exe /k adb -s " + id
+		String command = "adb -s " + id
 				+ " shell LD_LIBRARY_PATH=/data/local/tmp/pcloudy-libs  exec /data/local/tmp/pcloudy-libs/androidvncserver -s 100";
 		StringBuilder builder = new StringBuilder();
-		Process process = runtime.exec(command);
-		process.waitFor();
+		vncServerProcess = runtime.exec(command);
+		vncServerProcess.waitFor();
 		String line;
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
+				new InputStreamReader(vncServerProcess.getInputStream(), StandardCharsets.UTF_8));
 		while ((line = reader.readLine()) != null) {
 			builder.append(line);
 			builder.append(System.getProperty("line.separator"));
@@ -333,6 +334,8 @@ public class VncUtils {
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
 		process.waitFor();
+		vncServerProcess.destroy();
+		
 		String line;
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
