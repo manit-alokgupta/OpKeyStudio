@@ -421,7 +421,7 @@ public class TestCaseView extends SuperComposite {
 		} else {
 			TabItem componentArgInputTable = new TabItem(datasTabHolder, SWT.NONE);
 			componentArgInputTable
-					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+			.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			componentArgInputTable.setText("Data Input");
 			componentArgInputTable.setToolTipText("Data Input");
 			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder,
@@ -443,7 +443,7 @@ public class TestCaseView extends SuperComposite {
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
 		globalVariableTable = new GlobalVariableTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
@@ -570,6 +570,7 @@ public class TestCaseView extends SuperComposite {
 							break;
 						}
 						renderTestObjectTable(flowStep, false);
+						flowStepTable.refreshFlowSteps();
 						toggleSaveButton(true);
 					}
 				}
@@ -843,7 +844,6 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
