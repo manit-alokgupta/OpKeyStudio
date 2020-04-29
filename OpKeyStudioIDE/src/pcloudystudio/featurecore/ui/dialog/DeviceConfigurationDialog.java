@@ -335,8 +335,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					} else {
 						CustomMessageDialogUtil.openErrorDialog("Error",
 								"Unable to start Application: Please check the Appium Server logs for more ... \n"
-										+ "org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session.\nOriginal error: Failed to connect to "
-										+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort());
+										+ "org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session.");
 					}
 				}
 			}
