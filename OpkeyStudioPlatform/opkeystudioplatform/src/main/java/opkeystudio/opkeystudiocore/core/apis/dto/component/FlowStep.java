@@ -64,6 +64,8 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 	private boolean isfunctionlibrary;
 	private boolean istestsuites;
 
+	private boolean codedFunctionLibrary;
+
 	private boolean NullKeyword = false;
 
 	private String variableName;
@@ -298,5 +300,13 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 
 	public void setStepcodedfunction_id(String stepcodedfunction_id) {
 		this.stepcodedfunction_id = stepcodedfunction_id;
+	}
+
+	public boolean isCodedFunctionLibrary() {
+		return codedFunctionLibrary;
+	}
+
+	public void setCodedFunctionLibrary(boolean codedFunctionLibrary) {
+		this.codedFunctionLibrary = codedFunctionLibrary;
 	}
 }
