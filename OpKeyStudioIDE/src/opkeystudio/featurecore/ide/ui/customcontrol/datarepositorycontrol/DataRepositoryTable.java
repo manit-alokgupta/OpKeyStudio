@@ -64,6 +64,7 @@ public class DataRepositoryTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				disposeControlEditor(controlEditor);
 				CustomText text = new CustomText(cursor, 0);
 				int selectedColNo = cursor.getColumn();
 				setSelectedColumn(selectedColNo);
@@ -190,6 +191,14 @@ public class DataRepositoryTable extends CustomTable {
 
 			}
 		});
+	}
+
+	private void disposeControlEditor(ControlEditor editor) {
+		if (editor != null) {
+			if (editor.getEditor() != null) {
+				editor.getEditor().dispose();
+			}
+		}
 	}
 
 	private void initializeHeaders(List<DRColumnAttributes> columnAttributes) {
