@@ -8,6 +8,8 @@ public interface IReport {
 
 	public void addStep(String action, String[] parameters, Status status);
 	
+	public void addStep(String action, String[] parameters, Status status, String output);
+	
 	public void addStep(String action, String[] parameters, Status status, File snapshotPath);
 
 	public void addStep(String action, String[] parameters, Status status, String output, File snapshotPath);

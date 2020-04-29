@@ -29,6 +29,10 @@ public class PCloudyReport implements IReport {
 		this.addStep(action, parameters, status, null, null);
 	}
 
+	public void addStep(String action, String[] parameters, Status status, String output) {
+		this.addStep(action, parameters, status, output, null);
+	}
+
 	public void addStep(String action, String[] parameters, Status status, File snapshotPath) {
 		this.addStep(action, parameters, status, null, snapshotPath);
 	}
