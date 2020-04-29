@@ -4,6 +4,8 @@ import java.io.File;
 
 import com.opkeystudio.core.sessioninterfaces.ExecutionSession;
 import com.opkeystudio.core.sessions.SessionInfo;
+import com.plugin.appium.Finder;
+import com.plugin.appium.exceptionhandlers.ToolNotSetException;
 import com.ssts.reporting.IReport;
 import com.ssts.reporting.ReportBuilder;
 import com.ssts.reporting.ReportFormat;
@@ -14,7 +16,12 @@ public class SessionHandler implements ExecutionSession {
 		/*
 		 * Report.get().endTestCase(); Report.get().endSuite();
 		 */
-
+		try {
+			Finder.findAppiumDriver().quit();
+		} catch (ToolNotSetException e) {
+			System.out.println("@Exception while driver quit.");
+			e.printStackTrace();
+		}
 		ReportBuilder.get().close();
 	}
 
