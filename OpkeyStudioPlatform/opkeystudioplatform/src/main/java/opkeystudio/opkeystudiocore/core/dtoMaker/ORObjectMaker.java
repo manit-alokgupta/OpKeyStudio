@@ -73,27 +73,47 @@ public class ORObjectMaker {
 		return orobject;
 	}
 
-	public void addMobileObject(Artifact artifact, String orid, Map<String, String> objectProperties,
-			Map<String, String> parentProperties, String objectName, String parentObjectName, String objectType,
-			String parentObjectType, List<ORObject> allORObjects) throws SQLException {
-		List<ObjectAttributeProperty> parentAttributeProperties = new ArrayList<>();
+	public void addMobileObject(Artifact artifact, String objectName, Map<String, String> objectProperties,
+			String parentObjectName, Map<String, String> parentObjectProperties, String objectType,
+			String parentObjectType, ORObject parentORObject, List<ORObject> allORObjects) throws SQLException {
+
+		String artifactId = artifact.getId(); // OR-ID
 		List<ObjectAttributeProperty> objectAttributeProperties = new ArrayList<>();
 
-		ORObject parentObject = getORObjectDTO(artifact, orid, null, parentObjectName, parentObjectType, allORObjects);
-		ORObject orobject = getORObjectDTO(artifact, orid, parentObject.getObject_id(), objectName, objectType,
-				allORObjects);
-
-		for (String propName : parentProperties.keySet()) {
-			String propValue = parentProperties.get(propName);
-			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(parentObject, parentAttributeProperties);
-			if (!propName.equalsIgnoreCase("name")) {
+		if (parentORObject != null) {
+			ORObject orobject = getORObjectDTO(artifact, artifactId, parentORObject.getObject_id(), objectName,
+					objectType, allORObjects);
+			for (String propName : objectProperties.keySet()) {
+				String propValue = objectProperties.get(propName);
+				ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(orobject, objectAttributeProperties);
 				attrProp.setProperty(propName);
 				attrProp.setValue(propValue);
 				if (propName.equalsIgnoreCase("xpath") || propName.equalsIgnoreCase("resource-id")
-						|| propName.equalsIgnoreCase("class"))
+						|| propName.equalsIgnoreCase("name") || propName.equalsIgnoreCase("class"))
 					attrProp.setIsused(true);
-				parentAttributeProperties.add(attrProp);
+				objectAttributeProperties.add(attrProp);
 			}
+			orobject.setObjectAttributesProperty(objectAttributeProperties);
+			List<ORObject> orobjects = new ArrayList<ORObject>();
+			orobjects.add(orobject);
+			new ObjectRepositoryApi().saveORObjects(artifact, orobjects);
+			return;
+		}
+
+		List<ObjectAttributeProperty> parentAttributeProperties = new ArrayList<>();
+		ORObject parentObject = getORObjectDTO(artifact, artifactId, null, parentObjectName, parentObjectType,
+				allORObjects);
+		ORObject orobject = getORObjectDTO(artifact, artifactId, parentObject.getObject_id(), objectName, objectType,
+				allORObjects);
+
+		for (String propName : parentObjectProperties.keySet()) {
+			String propValue = parentObjectProperties.get(propName);
+			ObjectAttributeProperty attrProp = getNewObjectAttributeProperty(parentObject, parentAttributeProperties);
+			attrProp.setProperty(propName);
+			attrProp.setValue(propValue);
+			if (propName.equalsIgnoreCase("class"))
+				attrProp.setIsused(true);
+			parentAttributeProperties.add(attrProp);
 		}
 
 		for (String propName : objectProperties.keySet()) {
@@ -113,6 +133,7 @@ public class ORObjectMaker {
 		List<ORObject> orobjects = new ArrayList<ORObject>();
 		orobjects.add(parentObject);
 		orobjects.add(orobject);
+
 		new ObjectRepositoryApi().saveORObjects(artifact, orobjects);
 	}
 

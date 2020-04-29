@@ -1,19 +1,17 @@
 package pcloudystudio.featurecore.ui.dialog;
 
-import java.awt.image.BufferedImage;
-
 // Created by Alok Gupta on 20/02/2020.
 // Copyright © 2020 SSTS Inc. All rights reserved.
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
@@ -62,6 +60,7 @@ import org.openqa.selenium.WebElement;
 
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import pcloudystudio.appium.AndroidDriverObject;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
@@ -100,9 +99,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	private ScrolledComposite objectPropertiesScrolledComposite;
 	private Composite compositeTreeHierarchy;
 	private Composite compositeObjectProperties;
-
-	private Map<String, String> mobileElementProps;
-	private Map<String, String> mobileParentElementProps;
 
 	public static Button btnClickAndMoveToNextScreen;
 	static Label lblAddToORConfirmation;
@@ -271,45 +267,47 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 					lblAddToORConfirmation.setVisible(false);
 					btnClickAndMoveToNextScreen.setEnabled(false);
 
-					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
-					Widget item = CustomCheckBoxTree.getCheckedItem(element);
-					TreeItem treeItem = (TreeItem) item;
-					Object obj = treeItem.getData();
+					LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
+					for (TableItem row : objectPropertiesTable.getItems())
+						mapOfObjectProperties.put(row.getText(0), row.getText(1));
 
-					if (objectPropertiesTable.getItemCount() > 0) {
-						try {
-							LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
-							for (TableItem row : objectPropertiesTable.getItems())
-								mapOfObjectProperties.put(row.getText(0), row.getText(1));
-							// mapOfObjectProperties.put("ObjectImage",
-							// croppedObjectImage((TreeMobileElement) obj));
-							setMobileElementProps(mapOfObjectProperties);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
+					String parentActivityPathName = mapOfObjectProperties.get("package")
+							+ mapOfObjectProperties.get("activity");
+					LinkedHashMap<String, String> parentActivityPathProperties = new LinkedHashMap<String, String>();
+					try {
+						BufferedImage bimg = ImageIO.read(currentScreenshot);
+						parentActivityPathProperties.put("class", parentActivityPathName);
+						parentActivityPathProperties.put("width", Integer.toString(bimg.getWidth()));
+						parentActivityPathProperties.put("height", Integer.toString(bimg.getHeight()));
+					} catch (Exception ex) {
+						ex.printStackTrace();
 					}
 
-					Object parentObj = ((TreeMobileElement) obj).getParentElement();
-					setMobileParentElementProps(((BasicMobileElement) parentObj).getAttributes());
+					List<ORObject> allORObjects = getParentObjectRepositoryView().getObjectRepositoryTree()
+							.getAllORObjects();
+					ORObject foundParentObject = null;
+					for (ORObject foundParentObjectInOR : allORObjects) {
+						if (foundParentObjectInOR.getName().equals(parentActivityPathName)) {
+							foundParentObject = foundParentObjectInOR;
+							break;
+						}
+					}
 					try {
 						new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
-								getParentObjectRepositoryView().getArtifact().getId(), getMobileElementProps(),
-								getMobileParentElementProps(), textObjectName.getText().toString(),
-								getMobileParentElementProps().get("package")
-								+ getMobileParentElementProps().get("activity"),
-								"Custom", "HTML Page",
-								getParentObjectRepositoryView().getObjectRepositoryTree().getAllORObjects());
+								textObjectName.getText().toString(), mapOfObjectProperties, parentActivityPathName,
+								parentActivityPathProperties, "Custom", "HTML Page", foundParentObject, allORObjects);
 						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
 						lblAddToORConfirmation.setVisible(true);
 						btnClickAndMoveToNextScreen.setEnabled(true);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
+					} catch (Exception ex) {
+						ex.printStackTrace();
 					}
 				} else {
 					CustomMessageDialogUtil.openErrorDialog("Error", "Object Name field can't be empty!");
 				}
 			}
 		});
+
 		btnAdd.setText("Add to Object Repository");
 		sashFormToolsComposite.setWeights(new int[] { 475, 286 });
 
@@ -752,22 +750,6 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			appName = appPath.substring(appPath.lastIndexOf('\\') + 1);
 		}
 		return appName;
-	}
-
-	public Map<String, String> getMobileElementProps() {
-		return mobileElementProps;
-	}
-
-	public void setMobileElementProps(Map<String, String> mobileElementProps) {
-		this.mobileElementProps = mobileElementProps;
-	}
-
-	public Map<String, String> getMobileParentElementProps() {
-		return mobileParentElementProps;
-	}
-
-	public void setMobileParentElementProps(Map<String, String> mobileParentElementProps) {
-		this.mobileParentElementProps = mobileParentElementProps;
 	}
 
 	public ObjectRepositoryView getParentObjectRepositoryView() {
