@@ -53,6 +53,7 @@ public class DataRepositoryView extends SuperComposite {
 	private ArtifactCodeView codedFunctionView;
 
 	private MPart currentMpart;
+	private Artifact artifact;
 
 	/**
 	 * Create the composite.
@@ -67,6 +68,12 @@ public class DataRepositoryView extends SuperComposite {
 	public DataRepositoryView(Composite parent, int style)
 			throws JsonParseException, JsonMappingException, IOException {
 		super(parent, SWT.BORDER);
+		initArtifact();
+		initUI();
+		addGlobalListener();
+	}
+
+	private void initUI() {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		TabFolder tabFolder = new TabFolder(this, SWT.BOTTOM);
 
@@ -173,7 +180,6 @@ public class DataRepositoryView extends SuperComposite {
 
 		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, false);
 		setCodedFunctionView(codedFunctionView);
-		addGlobalListener();
 	}
 
 	private void addGlobalListener() {
@@ -351,11 +357,14 @@ public class DataRepositoryView extends SuperComposite {
 		toggleSaveButton(false);
 	}
 
-	public Artifact getArtifact() {
+	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		this.setCurrentMpart(mpart);
-		return artifact;
+		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+	}
+
+	public Artifact getArtifact() {
+		return this.artifact;
 	}
 
 	public void toggleRefreshButton(boolean status) {

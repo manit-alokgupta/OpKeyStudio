@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,9 +19,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
@@ -41,14 +37,13 @@ public class DataRepositoryTable extends CustomTable {
 	private DRCellAttributes selectedDRCEllAttribute;
 	private int selectedDRRow;
 
-	public DataRepositoryTable(Composite parent, int style, DataRepositoryView parentView)
-			throws JsonParseException, JsonMappingException, IOException {
+	public DataRepositoryTable(Composite parent, int style, DataRepositoryView parentView) {
 		super(parent, style);
 		this.setParentDataRepositoryView(parentView);
 		init();
 	}
 
-	private void init() throws JsonParseException, JsonMappingException, IOException {
+	private void init() {
 		getParentDataRepositoryView().toggleMoveColumnLeftButton(false);
 		getParentDataRepositoryView().toggleMoveColumnRightButton(false);
 		getParentDataRepositoryView().toggleMoveRowDownButton(false);
@@ -298,10 +293,30 @@ public class DataRepositoryTable extends CustomTable {
 		if (data.trim().isEmpty()) {
 			return;
 		}
+
+		boolean isDRColumnExists = isDRColumnAlreadyExist(data);
+		if (isDRColumnExists) {
+			new MessageDialogs().openErrorDialog("OpKey",
+					String.format("Unable to rename Column name '%s' already exist", data));
+			return;
+		}
 		drColumn.setName(data);
 		drColumn.setModified(true);
 		refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
+	}
+
+	private boolean isDRColumnAlreadyExist(String columnName) {
+		List<DRColumnAttributes> columnAttributes = this.getDrColumnAttributes();
+		for (DRColumnAttributes column : columnAttributes) {
+			if (column.getName() == null) {
+				continue;
+			}
+			if (column.getName().trim().toLowerCase().equals(columnName.trim().toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void addDRColumn() {
@@ -311,6 +326,12 @@ public class DataRepositoryTable extends CustomTable {
 			return;
 		}
 		if (data.trim().isEmpty()) {
+			return;
+		}
+		boolean isColumnNameExist = isDRColumnAlreadyExist(data);
+		if (isColumnNameExist) {
+			new MessageDialogs().openErrorDialog("OpKey",
+					String.format("Column Name '%s' already exist. Please provide different name", data));
 			return;
 		}
 		DRColumnAttributes drColumn = new DRMaker().createDRColumnWithCells(getParentDataRepositoryView().getArtifact(),
