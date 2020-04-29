@@ -515,6 +515,8 @@ public class ObjectRepositoryView extends SuperComposite {
 				}
 				ObjectAttributeProperty selectedProperty = objectAttributeTable.getSelectedObjectAttributeProperty();
 				System.out.println("Deleting " + selectedProperty.getOr_id());
+				selectedProperty.setAdded(false);
+				selectedProperty.setModified(false);
 				selectedProperty.setDeleted(true);
 				objectAttributeTable.renderObjectAttributes();
 				toggleSaveButton(true);
