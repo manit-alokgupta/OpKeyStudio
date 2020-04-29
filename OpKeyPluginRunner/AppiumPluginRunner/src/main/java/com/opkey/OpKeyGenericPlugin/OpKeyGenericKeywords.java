@@ -344,6 +344,7 @@ public class OpKeyGenericKeywords {
 			System.out.println("os " + device.getOperatingSystem());
 			System.out.println("sn " + device.getSerialNumber());
 			System.out.println("ver " + device.getVersion());
+			device.setVersion("8.1");
 
 			// Method_Launch_ChromeBrowser
 
@@ -370,6 +371,7 @@ public class OpKeyGenericKeywords {
 			return DataType.getBoolean(boolString);
 		} catch (Exception e) {
 			ReportHelper.addReportStep(DataType.getMethodName(), e);
+			e.printStackTrace();
 			throw new ToolNotSetException();
 		}
 	}
