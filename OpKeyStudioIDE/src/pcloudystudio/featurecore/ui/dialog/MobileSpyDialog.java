@@ -269,6 +269,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 			public void widgetSelected(SelectionEvent e) {
 				if (textObjectName.getText().length() > 0) {
 					lblAddToORConfirmation.setVisible(false);
+					btnClickAndMoveToNextScreen.setEnabled(false);
 
 					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
 					Widget item = CustomCheckBoxTree.getCheckedItem(element);
@@ -280,7 +281,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
 							for (TableItem row : objectPropertiesTable.getItems())
 								mapOfObjectProperties.put(row.getText(0), row.getText(1));
-							// mapOfObjectProperties.put("ObjectImage", croppedObjectImage((TreeMobileElement) obj));
+							// mapOfObjectProperties.put("ObjectImage",
+							// croppedObjectImage((TreeMobileElement) obj));
 							setMobileElementProps(mapOfObjectProperties);
 						} catch (Exception ex) {
 							ex.printStackTrace();
@@ -299,6 +301,7 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 								getParentObjectRepositoryView().getObjectRepositoryTree().getAllORObjects());
 						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
 						lblAddToORConfirmation.setVisible(true);
+						btnClickAndMoveToNextScreen.setEnabled(true);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
