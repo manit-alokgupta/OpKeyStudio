@@ -46,9 +46,9 @@ public class SuiteTranspiler extends AbstractTranspiler {
 			methodBodyCode += newLineChar + " new " + suiteStep.getArtifact().getVariableName() + "().execute();";
 		}
 		
-		String reportingStart = String.format("Report.get().beginSuite(%s);",
+		String reportingStart = String.format("ReportBuilder.get().beginSuite(%s);",
 				"\"" + artifact.getName() + "\"");
-		String reportingEnd = "Report.get().endSuite();";
+		String reportingEnd = "ReportBuilder.get().endSuite();";
 		methodBodyCode = reportingStart + methodBodyCode + reportingEnd;
 		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
 		return class1;

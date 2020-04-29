@@ -64,9 +64,9 @@ public class FLTranspiler extends AbstractTranspiler {
 			method.addParameter(dataType, varName);
 		}
 
-		String reportingStart = String.format("Report.get().beginFunctionLibrary(%s);",
+		String reportingStart = String.format("ReportBuilder.get().beginFunctionLibrary(%s);",
 				"\"" + artifact.getName() + "\"");
-		String reportingEnd = "Report.get().endFunctionLibrary();";
+		String reportingEnd = "ReportBuilder.get().endFunctionLibrary();";
 		methodBodyCode = reportingStart + methodBodyCode + reportingEnd;
 
 		method.setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");

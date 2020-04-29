@@ -52,9 +52,9 @@ public class TCTranspiler extends AbstractTranspiler {
 			methodBodyCode += flowStepCode;
 		}
 		
-		String reportingStart = String.format("Report.get().beginTestCase(%s);",
+		String reportingStart = String.format("ReportBuilder.get().beginTestCase(%s);",
 				"\"" + artifact.getName() + "\"");
-		String reportingEnd = "Report.get().endTestCase();";
+		String reportingEnd = "ReportBuilder.get().endTestCase();";
 		methodBodyCode = reportingStart + methodBodyCode + reportingEnd;
 
 		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
