@@ -374,4 +374,50 @@ public class Utilities {
 		}
 		return "";
 	}
+
+	public boolean isStringContainsNumbers(String str) {
+		if (str == null) {
+			return false;
+		}
+		String replacedStr = str.replaceAll("[0-9]", "");
+		if (!replacedStr.equals(str)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isStringContainsSpecialCharacters(String str) {
+		if (str == null) {
+			return false;
+		}
+		String replacedStr = str.replaceAll("[^a-zA-Z0-9]", "");
+		if (!replacedStr.equals(str)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isStringStartsWithNumbers(String str) {
+		if (str == null) {
+			return false;
+		}
+		str = String.valueOf(str.charAt(0));
+		String replacedStr = str.replaceAll("[0-9]", "");
+		if (!replacedStr.equals(str)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isStringStartsWithSpecialCharacters(String str) {
+		if (str == null) {
+			return false;
+		}
+		str = String.valueOf(str.charAt(0));
+		String replacedStr = str.replaceAll("[^a-zA-Z0-9]", "");
+		if (!replacedStr.equals(str)) {
+			return true;
+		}
+		return false;
+	}
 }
