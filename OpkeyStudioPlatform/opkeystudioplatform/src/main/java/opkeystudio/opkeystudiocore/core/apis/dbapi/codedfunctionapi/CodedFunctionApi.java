@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.MethodSource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
@@ -346,7 +347,28 @@ public class CodedFunctionApi {
 		_class.addImport("org.openqa.selenium.By");
 		_class.addImport("org.openqa.selenium.WebDriver");
 		_class.addInterface("com.crestech.opkey.plugin.CodedFunctionLibrary");
-		_class.addMethod().setName("run").setPublic().setBody(usercode).addThrows("Exception");
+		MethodSource<JavaClassSource> method = _class.addMethod();
+		method.setName("run").setPublic();
+		for (CFLInputParameter cfin : cflInputParameters) {
+			String dataType = cfin.getType();
+			dataType = convertDataType(dataType);
+			String varName = cfin.getVariableName();
+			method.addParameter(dataType, varName);
+		}
+		method.setBody(usercode).addThrows("Exception");
 		return imports + "" + _class.toString();
+	}
+
+	private String convertDataType(String dataType) {
+		if (dataType.equals("Float")) {
+			return "float";
+		}
+		if (dataType.equals("Double")) {
+			return "double";
+		}
+		if (dataType.equals("Integer")) {
+			return "int";
+		}
+		return "String";
 	}
 }
