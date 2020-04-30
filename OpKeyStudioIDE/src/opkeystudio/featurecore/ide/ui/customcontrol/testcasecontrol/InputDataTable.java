@@ -561,10 +561,12 @@ public class InputDataTable extends CustomTable {
 		}
 
 		if (flowStep.getCodedFunctionArtifact() != null) {
+			System.out.println("CFL Input Size " + flowStep.getCodedFunctionArtifact().getCflInputParameters().size());
 			setCflInputArguments(flowStep.getCodedFunctionArtifact().getCflInputParameters());
 		} else {
 			setCflInputArguments(new ArrayList<CFLInputParameter>());
 		}
+		System.out.println("Flow Input Size " + flowStep.getFlowInputArgs().size());
 		setFlowInputArgs(flowStep.getFlowInputArgs());
 	}
 
@@ -652,8 +654,8 @@ public class InputDataTable extends CustomTable {
 				}
 			}
 		}
-		
-		//Display CFL in TestCase and FL
+
+		// Display CFL in TestCase and FL
 		if (getCflInputArguments().size() > 0) {
 			for (int i = 0; i < getCflInputArguments().size(); i++) {
 				List<CFLInputParameter> filteredComponentInputArgs = new ArrayList<CFLInputParameter>();

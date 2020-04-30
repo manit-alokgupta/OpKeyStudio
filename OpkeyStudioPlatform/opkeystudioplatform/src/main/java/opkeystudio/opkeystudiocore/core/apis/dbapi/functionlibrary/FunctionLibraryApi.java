@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
@@ -118,16 +119,18 @@ public class FunctionLibraryApi {
 				flowStep.setOrObject(allORObject);
 				flowStep.setIsfunctionlibraryStep(true);
 			} else if (flowStep.getStepcodedfunction_id() != null) {
-				CodedFunctionArtifact codedFunctionArtifac = FlowApi.getInstance().getCodedFunctionArtifact(flowStep.getStepcodedfunction_id())
-						.get(0);
-				List<CFLInputParameter> cflInputParams = new ArrayList<CFLInputParameter>();
-				List<CFLOutputParameter> cflOutputParams = new ArrayList<CFLOutputParameter>();
+				CodedFunctionArtifact codedFunctionArtifact = FlowApi.getInstance()
+						.getCodedFunctionArtifact(flowStep.getStepcodedfunction_id()).get(0);
+				List<CFLInputParameter> cflInputParams = new CodedFunctionApi()
+						.getCodedFLInputParameters(codedFunctionArtifact);
+				List<CFLOutputParameter> cflOutputParams = new CodedFunctionApi()
+						.getCodedFLOutputParameters(codedFunctionArtifact);
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
 
-				codedFunctionArtifac.setCflInputParameters(cflInputParams);
-				codedFunctionArtifac.setCflOutputParameters(cflOutputParams);
-				flowStep.setCodedFunctionArtifact(codedFunctionArtifac);
+				codedFunctionArtifact.setCflInputParameters(cflInputParams);
+				codedFunctionArtifact.setCflOutputParameters(cflOutputParams);
+				flowStep.setCodedFunctionArtifact(codedFunctionArtifact);
 				flowStep.setFlowInputArgs(fis);
 				flowStep.setFlowOutputArgs(fos);
 				flowStep.setCodedFunctionLibrary(true);
