@@ -323,7 +323,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				codeViewTree.createNewFolder();
 			}
 
 			@Override
@@ -336,7 +336,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				codeViewTree.createNewJavaFile();
 			}
 
 			@Override

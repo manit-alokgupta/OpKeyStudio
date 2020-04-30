@@ -114,6 +114,12 @@ public class CodeViewTree extends CustomTree {
 		if (selectedCodeFile == null) {
 			return;
 		}
+
+		boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+				String.format("Do ypu reaaly want to delete '%s'?", selectedCodeFile.getName()));
+		if (!status) {
+			return;
+		}
 		if (selectedCodeFile.isFile()) {
 			try {
 				FileUtils.forceDelete(selectedCodeFile);
