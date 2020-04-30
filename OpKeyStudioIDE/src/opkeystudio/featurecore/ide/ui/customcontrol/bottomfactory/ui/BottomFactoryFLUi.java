@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -30,12 +28,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.InputTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.OutputTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol.UsedByTable;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 
 public class BottomFactoryFLUi extends Composite {
-	private UsedByTable usedByTable;
 	private InputTable inputTable;
 	private OutputTable outputTable;
 
@@ -95,40 +91,6 @@ public class BottomFactoryFLUi extends Composite {
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tabFolder.setBounds(0, 0, 120, 43);
 		tabFolder.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-
-		TabItem detailsTabItem = new TabItem(tabFolder, SWT.NONE);
-		detailsTabItem.setText("Details");
-		detailsTabItem.setToolTipText("Details");
-
-		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
-		detailsTabItem.setControl(composite_2);
-		composite_2.setLayout(new FillLayout(SWT.HORIZONTAL));
-		composite_2.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		SashForm sashForm = new SashForm(composite_2, SWT.NONE);
-
-		Composite composite_3 = new Composite(sashForm, SWT.BORDER);
-		composite_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		Composite composite_4 = new Composite(sashForm, SWT.BORDER);
-		composite_4.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		sashForm.setWeights(new int[] { 1, 1 });
-
-		TabItem usedByTabItem = new TabItem(tabFolder, SWT.NONE);
-		usedByTabItem.setText("Used By");
-		usedByTabItem.setToolTipText("Used By");
-
-		Composite composite_5 = new Composite(tabFolder, SWT.NONE);
-		usedByTabItem.setControl(composite_5);
-		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
-		composite_5.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-
-		usedByTable = new UsedByTable(composite_5, SWT.BORDER | SWT.FULL_SELECTION, this);
-//		usedByTable = new Table(composite_5, SWT.BORDER | SWT.FULL_SELECTION);
-		usedByTable.setHeaderVisible(true);
-		usedByTable.setLinesVisible(true);
-
-		TableCursor tableCursor = new TableCursor(usedByTable, SWT.NONE);
 
 		inputTabItem = new TabItem(tabFolder, SWT.NONE);
 		inputTabItem.setText("Input");
