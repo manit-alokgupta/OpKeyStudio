@@ -20,6 +20,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.jboss.forge.roaster.Roaster;
+import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
@@ -69,6 +70,14 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			String methodBodyToEnter = String.format("%s(%s);", methodName, params);
 			System.out.println(methodBodyToShow);
 			provider.addMethodTypeBasicCompletion(methodBodyToShow, methodBodyToEnter, returnType);
+		}
+
+		List<FieldSource<JavaClassSource>> fields = tranpiledClassInfo.getClassSource().getFields();
+		for (FieldSource<JavaClassSource> field : fields) {
+			String name = field.getName();
+			String type = field.getType().getName();
+			System.out.println(name + "     " + type);
+			provider.addFieldTypeBasicCompletion(name, name, type);
 		}
 		return provider;
 	}
