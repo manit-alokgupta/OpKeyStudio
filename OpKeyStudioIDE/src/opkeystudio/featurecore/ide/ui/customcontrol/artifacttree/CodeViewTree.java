@@ -233,7 +233,7 @@ public class CodeViewTree extends CustomTree {
 		class1.addMethod().setName("main").setBody("System.out.println(\"Hello from OpKey E\");").setPublic()
 				.setStatic(true).addParameter("String[]", "args");
 		for (String packag : packages) {
-			class1.addImport(packag);
+			class1.addImport(packag + ".*");
 		}
 
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
@@ -291,17 +291,20 @@ public class CodeViewTree extends CustomTree {
 	private void addIcon(CodeViewTreeItem artTreeItem) {
 		File artifactFile = artTreeItem.getArtifactFile();
 		if (artifactFile == null) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("org.eclipse.jdt.ui", "/icons/full/obj16/packagefolder_obj.png"));
+			artTreeItem.setImage(
+					ResourceManager.getPluginImage("org.eclipse.jdt.ui", "/icons/full/obj16/packagefolder_obj.png"));
 			return;
 		}
 		if (artifactFile.isDirectory()) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("org.eclipse.jdt.ui", "/icons/full/obj16/package_obj.png"));
+			artTreeItem.setImage(
+					ResourceManager.getPluginImage("org.eclipse.jdt.ui", "/icons/full/obj16/package_obj.png"));
 			return;
 		}
 
 		if (artifactFile.isFile()) {
 			if (artifactFile.getName().toLowerCase().endsWith(".java")) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("org.eclipse.jdt.ui", "/icons/full/obj16/jcu_obj.gif"));
+				artTreeItem.setImage(
+						ResourceManager.getPluginImage("org.eclipse.jdt.ui", "/icons/full/obj16/jcu_obj.gif"));
 			}
 			return;
 		}
