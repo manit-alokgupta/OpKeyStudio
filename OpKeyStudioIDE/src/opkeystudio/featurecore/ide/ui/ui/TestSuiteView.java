@@ -375,6 +375,7 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				addTestCaseButton.setEnabled(false);
 				String textToSearch = searchTextBox.getText();
 				testCaseTree.filterArtifactTree(textToSearch);
 			}
