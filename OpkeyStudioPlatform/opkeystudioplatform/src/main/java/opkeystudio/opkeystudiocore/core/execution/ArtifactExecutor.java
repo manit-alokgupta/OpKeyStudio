@@ -62,6 +62,34 @@ public class ArtifactExecutor {
 		setExecutionThread(executionThread);
 	}
 
+	
+	public void executeArtifactFile(String sessionRootDir, String artifactClassName, String pluginName) {
+		System.out.println(">>Artifact Code Folder " + sessionRootDir);
+		System.out.println(">>Executing Artifact " + artifactClassName);
+		Thread executionThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				setExecutionCompleted(false);
+				java.io.ByteArrayOutputStream standrdout = new java.io.ByteArrayOutputStream();
+				java.io.ByteArrayOutputStream errorout = new java.io.ByteArrayOutputStream();
+				System.setOut(new java.io.PrintStream(standrdout));
+				System.setErr(new java.io.PrintStream(errorout));
+				setStandardOutput(standrdout);
+				setStandardErrorOutput(errorout);
+				try {
+					execute(sessionRootDir, artifactClassName, pluginName);
+				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
+						| InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				setExecutionCompleted(true);
+			}
+		});
+		executionThread.start();
+		setExecutionThread(executionThread);
+	}
 	private void execute(String sessionRootDir, String artifactClassNAME, String pluginName)
 			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

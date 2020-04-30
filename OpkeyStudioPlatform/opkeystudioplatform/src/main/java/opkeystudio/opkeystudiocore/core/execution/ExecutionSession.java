@@ -9,6 +9,7 @@ public class ExecutionSession {
 	private String buildName;
 	private String pluginName;
 	private Artifact artifact;
+	private String artifactFilePackageClass;
 	private String reportFolderDir;
 
 	public ExecutionSession(String sessionName, String buildName) {
@@ -74,5 +75,13 @@ public class ExecutionSession {
 
 	public void setReportFolderDir(String reportFolderDir) {
 		this.reportFolderDir = reportFolderDir;
+	}
+
+	public String getArtifactFilePackageClass() {
+		return artifactFilePackageClass;
+	}
+
+	public void setArtifactFilePackageClass(String artifactFilePackageClass) {
+		this.artifactFilePackageClass = artifactFilePackageClass;
 	}
 }

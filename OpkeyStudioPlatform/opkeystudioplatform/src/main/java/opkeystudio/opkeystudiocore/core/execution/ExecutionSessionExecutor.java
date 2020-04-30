@@ -51,6 +51,10 @@ public class ExecutionSessionExecutor {
 			return retObject;
 		}
 		session.setReportFolderDir(getSessionReportFolder(session.getSessionName()));
+		if (session.getArtifactFilePackageClass() != null) {
+			return executeArtifactFile(session, artifactCodesDirPath, session.getArtifactFilePackageClass(),
+					pluginName);
+		}
 		return executeArtifact(session, artifactCodesDirPath, artifact, pluginName);
 	}
 
@@ -58,6 +62,13 @@ public class ExecutionSessionExecutor {
 			String pluginName) {
 		ArtifactExecutor executor = new ArtifactExecutor(esession);
 		executor.executeArtifact(sessionRootDir, artifact, pluginName);
+		return executor;
+	}
+
+	private ArtifactExecutor executeArtifactFile(ExecutionSession esession, String sessionRootDir,
+			String artifactClassName, String pluginName) {
+		ArtifactExecutor executor = new ArtifactExecutor(esession);
+		executor.executeArtifactFile(sessionRootDir, artifactClassName, pluginName);
 		return executor;
 	}
 
