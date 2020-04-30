@@ -6,6 +6,7 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -20,16 +21,22 @@ import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.MethodSource;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.AutoCompleteToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaBasicCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCompletionProvider;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableTypeCompletion;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranpiledClassInfo;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GenericEditorIntellisense extends JavaCompletionProvider {
 
+	private List<TranpiledClassInfo> transpiledClasses = new ArrayList<TranpiledClassInfo>();
+	private List<VariableToken> allvariabletokens = new ArrayList<VariableToken>();
 	private static GenericEditorIntellisense instance;
 
 	public static GenericEditorIntellisense getInstance() {
@@ -66,7 +73,9 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		for (File file : allFiles) {
 			String codeData = Utilities.getInstance().readTextFile(file);
 			JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
+			this.addTranspiledClasses(new TranpiledClassInfo(classSource));
 			parseConstructors(classSource);
+			parseClassMethods(classSource);
 		}
 	}
 
@@ -75,7 +84,21 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		String className = javaClassSource.getName();
 		addConstructorTypeBasicCompletion(className, className);
 	}
-	
+
+	private void parseClassMethods(JavaClassSource classSource) {
+		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
+		for (MethodSource<JavaClassSource> method : methods) {
+			System.out.println(method.getName() + "   " + method.getParameters().toString());
+		}
+	}
+
+	public void addBasicCompletion(String data) {
+		if (this.getCompletionByInputText(data) == null) {
+			JavaBasicCompletion bc = new JavaBasicCompletion(this, data);
+			bc.setTextToEnter(data);
+			this.addCompletion(bc);
+		}
+	}
 
 	private void addConstructorTypeBasicCompletion(String dataToShow, String dataToEnter) {
 		String[] dataArray = dataToShow.split("\\.");
@@ -153,6 +176,54 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			}
 			return bufferedImage;
 		}
+	}
+
+	public List<TranpiledClassInfo> getTranspiledClasses() {
+		return transpiledClasses;
+	}
+
+	private void addTranspiledClasses(TranpiledClassInfo classInfo) {
+		this.getTranspiledClasses().add(classInfo);
+	}
+
+	public void setTranspiledClasses(List<TranpiledClassInfo> transpiledClasses) {
+		this.transpiledClasses = transpiledClasses;
+	}
+
+	public void addVariableToken(VariableToken token) {
+		this.allvariabletokens.add(token);
+	}
+
+	public List<VariableToken> getAllvariabletokens() {
+		return allvariabletokens;
+	}
+
+	public void setAllvariabletokens(List<VariableToken> allvariabletokens) {
+		this.allvariabletokens = allvariabletokens;
+	}
+
+	public VariableToken findVariableToken(String varName) {
+		for (VariableToken varToken : getAllvariabletokens()) {
+			if (varToken.getVariableName().equals(varName)) {
+				return varToken;
+			}
+		}
+		return null;
+	}
+
+	public TranpiledClassInfo findAutoCompleteToken(String tokenString) {
+		List<TranpiledClassInfo> allTokens = getTranspiledClasses();
+		for (TranpiledClassInfo token : allTokens) {
+			String className = token.getClassSource().getName();
+			if (className.endsWith("." + tokenString)) {
+				System.out.println("ClassName " + token.getClassSource().getName());
+				return token;
+			}
+			if (className.trim().equals(tokenString.trim())) {
+				return token;
+			}
+		}
+		return null;
 	}
 
 }

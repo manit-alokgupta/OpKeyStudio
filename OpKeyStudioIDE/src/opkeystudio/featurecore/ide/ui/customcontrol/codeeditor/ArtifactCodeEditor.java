@@ -27,6 +27,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.ArtifactCodeCompletionProvider;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranpiledClassInfo;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -148,17 +149,15 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 					Token lastToken = getRecentToken();
 					String tokenData = lastToken.getLexeme();
 					System.out.println(">>Last Token " + tokenData);
-					VariableToken varToken = ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView())
-							.findVariableToken(tokenData);
+					VariableToken varToken = GenericEditorIntellisense.getInstance().findVariableToken(tokenData);
 					if (varToken != null) {
 						tokenData = varToken.getClassName();
 					}
-					AutoCompleteToken autocompletetoken = ArtifactCodeCompletionProvider
-							.getInstance(getCodeFunctionView()).findAutoCompleteToken(tokenData);
+					TranpiledClassInfo autocompletetoken = GenericEditorIntellisense.getInstance().findAutoCompleteToken(tokenData);
 					if (autocompletetoken != null) {
-						JavaCompletionProvider provider = ArtifactCodeCompletionProvider
-								.getInstance(getCodeFunctionView())
-								.getClassMethodsCompletionProvider(autocompletetoken);
+					//	JavaCompletionProvider provider = ArtifactCodeCompletionProvider
+						//		.getInstance(getCodeFunctionView())
+							//	.getClassMethodsCompletionProvider(autocompletetoken);
 						autoCompletion.setCompletionProvider(provider);
 						autoCompletion.doCompletion();
 					}
@@ -262,8 +261,8 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 					varClassName = lineTokens.get(i - 2).getLexeme();
 				}
 				VariableToken varToken = new VariableToken(varName, varClassName);
-				ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView()).addVariableToken(varToken);
-				ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView()).addBasicCompletion(varName);
+				GenericEditorIntellisense.getInstance().addVariableToken(varToken);
+				GenericEditorIntellisense.getInstance().addBasicCompletion(varName);
 			}
 		}
 	}
