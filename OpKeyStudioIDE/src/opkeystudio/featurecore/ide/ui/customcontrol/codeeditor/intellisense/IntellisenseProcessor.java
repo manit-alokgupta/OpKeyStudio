@@ -13,10 +13,14 @@ import java.util.jar.JarInputStream;
 
 import javax.management.RuntimeErrorException;
 
+import org.jboss.forge.roaster.Roaster;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.AutoCompleteToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class IntellisenseProcessor {
 	private ArtifactCodeView parentCodeView;
@@ -27,6 +31,28 @@ public class IntellisenseProcessor {
 	}
 
 	public void initIntellisense(boolean requireInIt) {
+		if (requireInIt) {
+			ArtifactCodeCompletionProvider.getInstance(getParentCodeView()).clearAutoCompleteToken();
+			ArtifactCodeCompletionProvider.getInstance(getParentCodeView()).reinitProvider();
+			alreadyScannedClasses.clear();
+		}
+		String mainDirPath = Utilities.getInstance().getTranspiledArtifactsFolder();
+		List<File> allFiles = new CompilerUtilities().getAllFiles(new File(mainDirPath), ".java");
+		for (File file : allFiles) {
+			String codeData = Utilities.getInstance().readTextFile(file);
+			JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
+			parseConstructors(classSource);
+		}
+	}
+
+	private void parseConstructors(JavaClassSource javaClassSource) {
+		System.out.println("Constructor " + javaClassSource.getName());
+		String className = javaClassSource.getName();
+		ArtifactCodeCompletionProvider.getInstance(getParentCodeView()).addConstructorTypeBasicCompletion(className,
+				className);
+	}
+
+	public void initIntellisense_2(boolean requireInIt) {
 		try {
 			if (requireInIt) {
 				ArtifactCodeCompletionProvider.getInstance(getParentCodeView()).clearAutoCompleteToken();

@@ -71,7 +71,7 @@ public class ArtifactCodeCompletionProvider {
 		});
 	}
 
-	public CompletionProvider getCompletionProvider() {
+	private void addBasicCompletions() {
 		provider.addCompletion(new BasicCompletion(provider, "abstract"));
 		provider.addCompletion(new BasicCompletion(provider, "assert"));
 		provider.addCompletion(new BasicCompletion(provider, "break"));
@@ -82,11 +82,19 @@ public class ArtifactCodeCompletionProvider {
 		provider.addCompletion(new BasicCompletion(provider, "volatile"));
 		provider.addCompletion(new BasicCompletion(provider, "while"));
 		provider.addCompletion(
-				new ShorthandCompletion(provider, "sysout", "System.out.println(", "System.out.println("));
+				new ShorthandCompletion(provider, "sysout", "System.out.println(", "System.out.println();"));
 		provider.addCompletion(
-				new ShorthandCompletion(provider, "syserr", "System.err.println(", "System.err.println("));
-		return provider;
+				new ShorthandCompletion(provider, "syserr", "System.err.println(", "System.err.println();"));
+	}
 
+	private static boolean basicAdded = false;
+
+	public CompletionProvider getCompletionProvider() {
+		if (basicAdded == false) {
+			addBasicCompletions();
+			basicAdded = true;
+		}
+		return provider;
 	}
 
 	public void reinitProvider() {

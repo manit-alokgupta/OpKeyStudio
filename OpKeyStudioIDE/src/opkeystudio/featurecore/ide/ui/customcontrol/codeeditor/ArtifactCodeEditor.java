@@ -68,6 +68,30 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 		}
 	}
 
+	public ArtifactCodeEditor(Composite parent, ArtifactCodeView parentView, boolean enableIntellisense,
+			boolean isgenericEditor) {
+
+		super();
+		System.out.println("JC 1");
+		this.setCodeFunctionView(parentView);
+		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
+		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (UnsupportedLookAndFeelException e) {
+		} catch (ClassNotFoundException e) {
+		} catch (InstantiationException e) {
+		} catch (IllegalAccessException e) {
+		}
+		if (enableIntellisense) {
+			init(SWT_AWT.new_Frame(composite));
+		} else {
+			initWithoutIntellisense(SWT_AWT.new_Frame(composite));
+		}
+	}
+
 	public JavaAutoCompletion getAutoCompletion() {
 		return this.autoCompletion;
 	}
@@ -123,24 +147,29 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 				if (keyChar == '.') {
 					Token lastToken = getRecentToken();
 					String tokenData = lastToken.getLexeme();
-					System.out.println(">>Last Token "+tokenData);
+					System.out.println(">>Last Token " + tokenData);
 					VariableToken varToken = ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView())
 							.findVariableToken(tokenData);
 					if (varToken != null) {
 						tokenData = varToken.getClassName();
 					}
-					AutoCompleteToken autocompletetoken = ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView())
-							.findAutoCompleteToken(tokenData);
+					AutoCompleteToken autocompletetoken = ArtifactCodeCompletionProvider
+							.getInstance(getCodeFunctionView()).findAutoCompleteToken(tokenData);
 					if (autocompletetoken != null) {
-						JavaCompletionProvider provider = ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView())
+						JavaCompletionProvider provider = ArtifactCodeCompletionProvider
+								.getInstance(getCodeFunctionView())
 								.getClassMethodsCompletionProvider(autocompletetoken);
 						autoCompletion.setCompletionProvider(provider);
 						autoCompletion.doCompletion();
 					}
+				} else {
+					CompletionProvider provider = ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView())
+							.getCompletionProvider();
+					autoCompletion.setCompletionProvider(provider);
 				}
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
-						
+
 					}
 				});
 			}
@@ -239,6 +268,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 			}
 		}
 	}
+
 	public Artifact getArtifact() {
 		return artifact;
 	}

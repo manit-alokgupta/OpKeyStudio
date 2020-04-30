@@ -182,7 +182,7 @@ public class ArtifactCodeView extends SuperComposite {
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		refreshButton.setToolTipText("Refresh Source Code");
 
-		editor = new ArtifactCodeEditor(this, this, true);
+		editor = new ArtifactCodeEditor(this, this, true, true);
 		editor.setArtifact(getArtifact());
 		runButton.addSelectionListener(new SelectionListener() {
 
