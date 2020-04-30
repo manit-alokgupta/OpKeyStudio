@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class AndroidDeviceUtil {
+public class MobileDeviceUtil {
 	public static final String ANDROID_DEVICE_VERSION_PROPERTY = "ro.build.version.release";
 	public static final String ANDROID_DEVICE_NAME_PROPERTY = "ro.product.model";
 	public static final String ANDROID_DEVICE_API_LEVEL_PROPERTY = "ro.build.version.sdk";
@@ -76,7 +76,7 @@ public class AndroidDeviceUtil {
 	public static String getSelectedAndroidDeviceId(String selectedDeviceName) {
 		String deviceID = null;
 		if (selectedDeviceName != null || selectedDeviceName != "") {
-			for (Entry<String, String> entry : AndroidDeviceUtil.devicesList.entrySet()) {
+			for (Entry<String, String> entry : MobileDeviceUtil.devicesList.entrySet()) {
 				if (entry.getValue().equals(selectedDeviceName)) {
 					deviceID = entry.getKey();
 					break;

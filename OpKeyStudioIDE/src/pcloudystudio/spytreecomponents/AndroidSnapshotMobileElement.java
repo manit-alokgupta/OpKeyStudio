@@ -50,8 +50,8 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 		if (objectName != null && objectName.length() > 0)
 			htmlMobileElementProps.put("name", objectName);
 
-		if (MobileInspectorController.currentActivity != null && MobileInspectorController.currentActivity.length() > 0)
-			htmlMobileElementProps.put("activity", MobileInspectorController.currentActivity);
+		if (MobileElementInspectorController.currentActivity != null && MobileElementInspectorController.currentActivity.length() > 0)
+			htmlMobileElementProps.put("activity", MobileElementInspectorController.currentActivity);
 
 		if (xmlElement.hasAttribute("class") && xmlElement.getAttribute("class").length() > 0) {
 			htmlMobileElementProps.put("class", xmlElement.getAttribute("class"));

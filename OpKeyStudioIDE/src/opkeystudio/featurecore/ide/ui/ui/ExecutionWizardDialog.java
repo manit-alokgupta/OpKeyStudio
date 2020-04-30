@@ -30,9 +30,9 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
-import pcloudystudio.core.utils.AndroidDeviceUtil;
+import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
-import pcloudystudio.core.vncutils.VncStarter;
+import pcloudystudio.core.vncutils.AndroidVNCLauncher;
 import pcloudystudio.pcloudystudio.core.execution.MobileDeviceExecutionDetail;
 import org.eclipse.swt.events.SelectionAdapter;
 
@@ -180,7 +180,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		btnRefreshDeviceList.setToolTipText("Refresh");
 		btnRefreshDeviceList.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefreshDeviceList
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		btnRefreshDeviceList.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -197,18 +197,18 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					runButton.setEnabled(false);
 					return;
 				} else {
-					String deviceID = AndroidDeviceUtil
+					String deviceID = MobileDeviceUtil
 							.getSelectedAndroidDeviceId(androidDeviceSelectionDropDown.getText());
 					getMobileDeviceExecutionDetail().setDeviceId(deviceID);
 					try {
-						getMobileDeviceExecutionDetail().setDeviceName(AndroidDeviceUtil.getDeviceProperty(deviceID,
-								AndroidDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY));
-						getMobileDeviceExecutionDetail().setDeviceVersion(AndroidDeviceUtil.getDeviceProperty(deviceID,
-								AndroidDeviceUtil.ANDROID_DEVICE_VERSION_PROPERTY));
-						getMobileDeviceExecutionDetail().setDeviceAPILevel(AndroidDeviceUtil.getDeviceProperty(deviceID,
-								AndroidDeviceUtil.ANDROID_DEVICE_API_LEVEL_PROPERTY));
-						getMobileDeviceExecutionDetail().setDeviceABI(AndroidDeviceUtil.getDeviceProperty(deviceID,
-								AndroidDeviceUtil.ANDROID_DEVICE_ABI_PROPERTY));
+						getMobileDeviceExecutionDetail().setDeviceName(MobileDeviceUtil.getDeviceProperty(deviceID,
+								MobileDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY));
+						getMobileDeviceExecutionDetail().setDeviceVersion(MobileDeviceUtil.getDeviceProperty(deviceID,
+								MobileDeviceUtil.ANDROID_DEVICE_VERSION_PROPERTY));
+						getMobileDeviceExecutionDetail().setDeviceAPILevel(MobileDeviceUtil.getDeviceProperty(deviceID,
+								MobileDeviceUtil.ANDROID_DEVICE_API_LEVEL_PROPERTY));
+						getMobileDeviceExecutionDetail().setDeviceABI(MobileDeviceUtil.getDeviceProperty(deviceID,
+								MobileDeviceUtil.ANDROID_DEVICE_ABI_PROPERTY));
 					} catch (Exception ex) {
 						CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
 					}
@@ -288,7 +288,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		androidDeviceSelectionDropDown.removeAll();
 		androidDeviceSelectionDropDown.add("Select Device");
 		try {
-			Map<String, String> devicesList = AndroidDeviceUtil.getAndroidDevices();
+			Map<String, String> devicesList = MobileDeviceUtil.getAndroidDevices();
 			if (devicesList.size() > 0) {
 				for (Map.Entry<String, String> deviceEntry : devicesList.entrySet())
 					androidDeviceSelectionDropDown.add(deviceEntry.getValue());
@@ -415,7 +415,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	}
 
 	public void startVnc() throws IOException, InterruptedException {
-		VncStarter starter = new VncStarter();
+		AndroidVNCLauncher starter = new AndroidVNCLauncher();
 		java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
 			public void run() {
 				try {

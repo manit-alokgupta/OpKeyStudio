@@ -39,11 +39,11 @@ import io.appium.java_client.android.AndroidDriver;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
-import pcloudystudio.appium.AndroidDriverObject;
-import pcloudystudio.appium.AppiumPortIpInfo;
-import pcloudystudio.appium.AppiumServer;
-import pcloudystudio.appium.MobileCapabilities;
-import pcloudystudio.core.utils.AndroidDeviceUtil;
+import pcloudystudio.appium.MobileDriverObject;
+import pcloudystudio.appium.AppiumConfiguration;
+import pcloudystudio.appium.AppiumMobileServer;
+import pcloudystudio.appium.MobileDesiredCapabilities;
+import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
 
 public class DeviceConfigurationDialog extends Dialog {
@@ -123,8 +123,8 @@ public class DeviceConfigurationDialog extends Dialog {
 		int locationY = (parentSize.height - shellSize.height) / 2 + parentSize.y;
 		shlDeviceConfiguration.setLocation(new Point(locationX, locationY));
 
-		if (MobileCapabilities.getMapOfCapabilities() == null) {
-			MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+		if (MobileDesiredCapabilities.getMapOfCapabilities() == null) {
+			MobileDesiredCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
 		}
 
 		compositeConfigurationSettings = new Composite(shlDeviceConfiguration, SWT.BORDER);
@@ -170,7 +170,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		lblApplicationIsRequiredMessage.setVisible(false);
 
 		try {
-			devicesList = AndroidDeviceUtil.getAndroidDevices();
+			devicesList = MobileDeviceUtil.getAndroidDevices();
 			if (devicesList.size() == 0) {
 				lblNoDeviceConnected.setVisible(true);
 				btnHelp.setVisible(true);
@@ -198,7 +198,7 @@ public class DeviceConfigurationDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					devicesList.clear();
-					devicesList = AndroidDeviceUtil.getAndroidDevices();
+					devicesList = MobileDeviceUtil.getAndroidDevices();
 
 					if (devicesList.size() == 0) {
 						devicesCombo.removeAll();
@@ -269,13 +269,13 @@ public class DeviceConfigurationDialog extends Dialog {
 				File apkFile = new File(applicationPathText.getText());
 				boolean exists = apkFile.exists();
 
-				AppiumPortIpInfo.getInstance();
-				if (AppiumPortIpInfo.getHostAddress() == null
+				AppiumConfiguration.getInstance();
+				if (AppiumConfiguration.getHostAddress() == null
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
-					AppiumPortIpInfo
+					AppiumConfiguration
 					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
-					AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
-					AppiumPortIpInfo.setAppiumDirectory(
+					AppiumConfiguration.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					AppiumConfiguration.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				}
 
@@ -286,8 +286,8 @@ public class DeviceConfigurationDialog extends Dialog {
 					else
 						btnHelp.setVisible(false);
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
-				} else if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getHostAddress() == null
-						|| AppiumPortIpInfo.getAppiumDirectory() == null) {
+				} else if (AppiumConfiguration.getPort() == null || AppiumConfiguration.getHostAddress() == null
+						|| AppiumConfiguration.getAppiumDirectory() == null) {
 					CustomMessageDialogUtil.openInformationDialog("Please Note",
 							"Appium Settings are not configured! Go-To: Tools->Appium Settings.");
 				} else if (!exists) {
@@ -296,29 +296,29 @@ public class DeviceConfigurationDialog extends Dialog {
 				} else {
 					try {
 						String selectedDevice = devicesCombo.getText();
-						String selectedDeviceUDID = AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice);
-						if (MobileCapabilities.getMapOfCapabilities().containsKey("udid")
-								&& MobileCapabilities.getMapOfCapabilities().containsKey("deviceName")) {
-							MobileCapabilities.getMapOfCapabilities().replace("udid", selectedDeviceUDID);
-							String previousDeviceModelName = AndroidDeviceUtil.getDeviceProperty(
-									AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice),
-									AndroidDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY);
-							MobileCapabilities.getMapOfCapabilities().replace("deviceName", previousDeviceModelName);
+						String selectedDeviceUDID = MobileDeviceUtil.getSelectedAndroidDeviceId(selectedDevice);
+						if (MobileDesiredCapabilities.getMapOfCapabilities().containsKey("udid")
+								&& MobileDesiredCapabilities.getMapOfCapabilities().containsKey("deviceName")) {
+							MobileDesiredCapabilities.getMapOfCapabilities().replace("udid", selectedDeviceUDID);
+							String previousDeviceModelName = MobileDeviceUtil.getDeviceProperty(
+									MobileDeviceUtil.getSelectedAndroidDeviceId(selectedDevice),
+									MobileDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY);
+							MobileDesiredCapabilities.getMapOfCapabilities().replace("deviceName", previousDeviceModelName);
 						} else {
-							MobileCapabilities.getMapOfCapabilities().put("udid", selectedDeviceUDID);
-							String previousDeviceModelName = AndroidDeviceUtil.getDeviceProperty(
-									AndroidDeviceUtil.getSelectedAndroidDeviceId(selectedDevice),
-									AndroidDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY);
-							MobileCapabilities.getMapOfCapabilities().put("deviceName", previousDeviceModelName);
+							MobileDesiredCapabilities.getMapOfCapabilities().put("udid", selectedDeviceUDID);
+							String previousDeviceModelName = MobileDeviceUtil.getDeviceProperty(
+									MobileDeviceUtil.getSelectedAndroidDeviceId(selectedDevice),
+									MobileDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY);
+							MobileDesiredCapabilities.getMapOfCapabilities().put("deviceName", previousDeviceModelName);
 						}
 
 						OpKeyStudioPreferences.getPreferences().addBasicSettings("application_name",
 								applicationPathText.getText());
 						String path = applicationPathText.getText();
-						if (MobileCapabilities.getMapOfCapabilities().containsKey("app")) {
-							MobileCapabilities.getMapOfCapabilities().replace("app", path);
+						if (MobileDesiredCapabilities.getMapOfCapabilities().containsKey("app")) {
+							MobileDesiredCapabilities.getMapOfCapabilities().replace("app", path);
 						} else {
-							MobileCapabilities.getMapOfCapabilities().put("app", path);
+							MobileDesiredCapabilities.getMapOfCapabilities().put("app", path);
 						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -333,10 +333,10 @@ public class DeviceConfigurationDialog extends Dialog {
 								"Unable to start Application: Please check the Appium Server logs for more ... \n");
 					}
 
-					if (AndroidDriverObject.getDriver() != null
-							&& AndroidDriverObject.getDriver().getSessionId() != null) {
+					if (MobileDriverObject.getDriver() != null
+							&& MobileDriverObject.getDriver().getSessionId() != null) {
 						shlDeviceConfiguration.close();
-						new MobileSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
+						new MobileElementSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
 					} else {
 						CustomMessageDialogUtil.openErrorDialog("Error",
 								"Unable to start Application: Please check the Appium Server logs for more ... \n"
@@ -368,16 +368,16 @@ public class DeviceConfigurationDialog extends Dialog {
 	}
 
 	public void startServer() {
-		if (AndroidDriverObject.getDriver() == null) {
-			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
+		if (MobileDriverObject.getDriver() == null) {
+			Boolean serverStatus = AppiumMobileServer.isServerRunning(Integer.parseInt(AppiumConfiguration.getPort()));
 			if (serverStatus) {
-				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				DesiredCapabilities mobileCapability = (MobileDesiredCapabilities.getCapabilities());
 				try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							+ AppiumConfiguration.getHostAddress() + ":" + AppiumConfiguration.getPort() + "/wd/hub"),
 							mobileCapability);
 
-					AndroidDriverObject.getInstance().setDriver(driver);
+					MobileDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
@@ -387,13 +387,13 @@ public class DeviceConfigurationDialog extends Dialog {
 				}
 			} else {
 				try {
-					AppiumServer.startServer();
-					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+					AppiumMobileServer.startServer();
+					DesiredCapabilities mobileCapability = (MobileDesiredCapabilities.getCapabilities());
 					Thread.sleep(5000);
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							+ AppiumConfiguration.getHostAddress() + ":" + AppiumConfiguration.getPort() + "/wd/hub"),
 							mobileCapability);
-					AndroidDriverObject.getInstance().setDriver(driver);
+					MobileDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
@@ -405,20 +405,20 @@ public class DeviceConfigurationDialog extends Dialog {
 		} else {
 
 			try {
-				AndroidDriverObject.getInstance().setDriver(null);
+				MobileDriverObject.getInstance().setDriver(null);
 				Thread.sleep(2000);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			Boolean serverStatus = AppiumServer.isServerRunning(Integer.parseInt(AppiumPortIpInfo.getPort()));
+			Boolean serverStatus = AppiumMobileServer.isServerRunning(Integer.parseInt(AppiumConfiguration.getPort()));
 			if (serverStatus) {
-				DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+				DesiredCapabilities mobileCapability = (MobileDesiredCapabilities.getCapabilities());
 				try {
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							+ AppiumConfiguration.getHostAddress() + ":" + AppiumConfiguration.getPort() + "/wd/hub"),
 							mobileCapability);
 
-					AndroidDriverObject.getInstance().setDriver(driver);
+					MobileDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
@@ -429,13 +429,13 @@ public class DeviceConfigurationDialog extends Dialog {
 			} else {
 				try {
 					Thread.sleep(5000);
-					AppiumServer.startServer();
-					DesiredCapabilities mobileCapability = (MobileCapabilities.getCapabilities());
+					AppiumMobileServer.startServer();
+					DesiredCapabilities mobileCapability = (MobileDesiredCapabilities.getCapabilities());
 
 					AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://"
-							+ AppiumPortIpInfo.getHostAddress() + ":" + AppiumPortIpInfo.getPort() + "/wd/hub"),
+							+ AppiumConfiguration.getHostAddress() + ":" + AppiumConfiguration.getPort() + "/wd/hub"),
 							mobileCapability);
-					AndroidDriverObject.getInstance().setDriver(driver);
+					MobileDriverObject.getInstance().setDriver(driver);
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {

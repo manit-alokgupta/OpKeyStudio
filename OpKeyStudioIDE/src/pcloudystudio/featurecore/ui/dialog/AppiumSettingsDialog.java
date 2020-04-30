@@ -42,8 +42,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
-import pcloudystudio.appium.AppiumPortIpInfo;
-import pcloudystudio.appium.MobileCapabilities;
+import pcloudystudio.appium.AppiumConfiguration;
+import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
 
 public class AppiumSettingsDialog extends Dialog {
@@ -191,19 +191,19 @@ public class AppiumSettingsDialog extends Dialog {
 		appiumDirectory = new Text(compositeAppiumSettings, SWT.BORDER);
 		appiumDirectory.setBounds(205, 88, 309, 33);
 
-		AppiumPortIpInfo.getInstance();
-		if (AppiumPortIpInfo.getHostAddress() != null) {
-			serverAddress.setText(AppiumPortIpInfo.getHostAddress());
-			portNumber.setText(AppiumPortIpInfo.getPort());
-			appiumDirectory.setText(AppiumPortIpInfo.getAppiumDirectory());
+		AppiumConfiguration.getInstance();
+		if (AppiumConfiguration.getHostAddress() != null) {
+			serverAddress.setText(AppiumConfiguration.getHostAddress());
+			portNumber.setText(AppiumConfiguration.getPort());
+			appiumDirectory.setText(AppiumConfiguration.getAppiumDirectory());
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
-				AppiumPortIpInfo
+				AppiumConfiguration
 						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
-				AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+				AppiumConfiguration.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
-				AppiumPortIpInfo.setAppiumDirectory(
+				AppiumConfiguration.setAppiumDirectory(
 						OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				appiumDirectory.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 			}
@@ -589,24 +589,24 @@ public class AppiumSettingsDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Boolean status = validate();
-				AppiumPortIpInfo.getInstance();
+				AppiumConfiguration.getInstance();
 				if (status) {
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("host_address", serverAddress.getText());
-					AppiumPortIpInfo.setHostAddress(serverAddress.getText());
+					AppiumConfiguration.setHostAddress(serverAddress.getText());
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("port_number", portNumber.getText());
-					AppiumPortIpInfo.setPort(portNumber.getText());
+					AppiumConfiguration.setPort(portNumber.getText());
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory",
 							appiumDirectory.getText());
-					AppiumPortIpInfo.setAppiumDirectory(appiumDirectory.getText());
+					AppiumConfiguration.setAppiumDirectory(appiumDirectory.getText());
 					if (capabilityTable.getItemCount() >= 0) {
 						try {
-							MobileCapabilities.getinstance();
-							if (MobileCapabilities.getMapOfCapabilities() != null) {
-								MobileCapabilities.getinstance().setMapOfCapabilities(null);
+							MobileDesiredCapabilities.getinstance();
+							if (MobileDesiredCapabilities.getMapOfCapabilities() != null) {
+								MobileDesiredCapabilities.getinstance().setMapOfCapabilities(null);
 
 							}
-							if (MobileCapabilities.getMapOfCapabilityNameType() != null) {
-								MobileCapabilities.setMapOfCapabilityNameType(null);
+							if (MobileDesiredCapabilities.getMapOfCapabilityNameType() != null) {
+								MobileDesiredCapabilities.setMapOfCapabilityNameType(null);
 
 							}
 							LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
@@ -616,8 +616,8 @@ public class AppiumSettingsDialog extends Dialog {
 								mapOfCapabilityValueType.put(row.getText(0), row.getText(1));
 							}
 
-							MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
-							MobileCapabilities.setMapOfCapabilityNameType(mapOfCapabilityValueType);
+							MobileDesiredCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+							MobileDesiredCapabilities.setMapOfCapabilityNameType(mapOfCapabilityValueType);
 							previousTablecount = capabilityTable.getItemCount();
 						} catch (Exception e2) {
 							e2.printStackTrace();
@@ -781,7 +781,7 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	private void fillDataInCapabilityTable() {
-		LinkedHashMap<String, String> mapOfCapabilities = MobileCapabilities.getMapOfCapabilities();
+		LinkedHashMap<String, String> mapOfCapabilities = MobileDesiredCapabilities.getMapOfCapabilities();
 		String udid = "udid";
 		String app = "app";
 		String deviceName = "deviceName";
@@ -868,7 +868,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private String getType(String capName) {
 
 		LinkedHashMap<String, String> mapOfCapabilityNameType = new LinkedHashMap<String, String>();
-		mapOfCapabilityNameType = MobileCapabilities.getMapOfCapabilityNameType();
+		mapOfCapabilityNameType = MobileDesiredCapabilities.getMapOfCapabilityNameType();
 		if (mapOfCapabilityNameType != null) {
 			if (mapOfCapabilityNameType.containsKey(capName)) {
 				return mapOfCapabilityNameType.get(capName);
@@ -926,13 +926,13 @@ public class AppiumSettingsDialog extends Dialog {
 
 		if (capabilityTable.getItemCount() >= 0) {
 			try {
-				MobileCapabilities.getinstance();
-				if (MobileCapabilities.getMapOfCapabilities() != null) {
-					MobileCapabilities.getinstance().setMapOfCapabilities(null);
+				MobileDesiredCapabilities.getinstance();
+				if (MobileDesiredCapabilities.getMapOfCapabilities() != null) {
+					MobileDesiredCapabilities.getinstance().setMapOfCapabilities(null);
 
 				}
-				if (MobileCapabilities.getMapOfCapabilityNameType() != null) {
-					MobileCapabilities.setMapOfCapabilityNameType(null);
+				if (MobileDesiredCapabilities.getMapOfCapabilityNameType() != null) {
+					MobileDesiredCapabilities.setMapOfCapabilityNameType(null);
 
 				}
 				LinkedHashMap<String, String> mapOfCapabilities = new LinkedHashMap<String, String>();
@@ -942,8 +942,8 @@ public class AppiumSettingsDialog extends Dialog {
 					mapOfCapabilityValueType.put(row.getText(0), row.getText(1));
 				}
 
-				MobileCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
-				MobileCapabilities.setMapOfCapabilityNameType(mapOfCapabilityValueType);
+				MobileDesiredCapabilities.getinstance().setMapOfCapabilities(mapOfCapabilities);
+				MobileDesiredCapabilities.setMapOfCapabilityNameType(mapOfCapabilityValueType);
 				previousTablecount = capabilityTable.getItemCount();
 			} catch (Exception e2) {
 				e2.printStackTrace();

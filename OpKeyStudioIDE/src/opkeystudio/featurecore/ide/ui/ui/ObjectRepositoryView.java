@@ -48,7 +48,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
-import pcloudystudio.appium.AppiumPortIpInfo;
+import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
 import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
 import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
@@ -532,18 +532,18 @@ public class ObjectRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				AppiumPortIpInfo.getInstance();
-				if (AppiumPortIpInfo.getHostAddress() == null
+				AppiumConfiguration.getInstance();
+				if (AppiumConfiguration.getHostAddress() == null
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
-					AppiumPortIpInfo
+					AppiumConfiguration
 							.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
-					AppiumPortIpInfo.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
-					AppiumPortIpInfo.setAppiumDirectory(
+					AppiumConfiguration.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					AppiumConfiguration.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				}
 
-				if (AppiumPortIpInfo.getPort() == null || AppiumPortIpInfo.getHostAddress() == null
-						|| AppiumPortIpInfo.getAppiumDirectory() == null) {
+				if (AppiumConfiguration.getPort() == null || AppiumConfiguration.getHostAddress() == null
+						|| AppiumConfiguration.getAppiumDirectory() == null) {
 					openAppiumSettingDialog();
 				} else {
 					openDeviceConfigurationDialog();
