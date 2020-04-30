@@ -123,11 +123,16 @@ public class TestCaseView extends SuperComposite {
 
 	}
 
-	public void initArtifact() {
+	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		this.setArtifact(artifact);
 		this.setCurrentMpart(mpart);
+	}
+
+	public Artifact getCurrentArtifact() {
+		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
+		return (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 	}
 
 	private void addOpKeyGlobalListener() {

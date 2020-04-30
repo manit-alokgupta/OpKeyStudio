@@ -130,7 +130,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initTestCaseCode() {
-		Artifact artifact = getParentTestCaseView().getArtifact();
+		Artifact artifact = getParentTestCaseView().getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -140,7 +140,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initTestSuiteCode() {
-		Artifact artifact = getParentTestSuiteView().getArtifact();
+		Artifact artifact = getParentTestSuiteView().getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -150,7 +150,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initObjectRepositoryCode() {
-		Artifact artifact = getParentObjectRepositoryView().getArtifact();
+		Artifact artifact = getParentObjectRepositoryView().getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -160,7 +160,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initDataRepositoryCode() {
-		Artifact artifact = getParentDataRepositoryView().getArtifact();
+		Artifact artifact = getParentDataRepositoryView().getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -403,8 +403,10 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	public void refreshTCFLCode() {
-		getParentTestCaseView().initArtifact();
-		Artifact artifact = getParentTestCaseView().getArtifact();
+		Artifact artifact = getParentTestCaseView().getCurrentArtifact();
+		if (artifact == null) {
+			return;
+		}
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			new FLTranspiler().transpile(artifact);
 		} else if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
@@ -414,22 +416,28 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	public void refreshTSCode() {
-		getParentTestSuiteView().initArtifact();
-		Artifact artifact = getParentTestSuiteView().getArtifact();
+		Artifact artifact = getParentTestSuiteView().getCurrentArtifact();
+		if (artifact == null) {
+			return;
+		}
 		new SuiteTranspiler().transpile(artifact);
 		initTestSuiteCode();
 	}
 
 	public void refreshORCode() {
-		getParentObjectRepositoryView().initArtifact();
-		Artifact artifact = getParentObjectRepositoryView().getArtifact();
+		Artifact artifact = getParentObjectRepositoryView().getCurrentArtifact();
+		if (artifact == null) {
+			return;
+		}
 		new ORTranspiler().transpile(artifact);
 		initObjectRepositoryCode();
 	}
 
 	public void refreshDRCode() {
-		getParentDataRepositoryView().initArtifact();
-		Artifact artifact = getParentDataRepositoryView().getArtifact();
+		Artifact artifact = getParentDataRepositoryView().getCurrentArtifact();
+		if (artifact == null) {
+			return;
+		}
 		new DRTranspiler().transpile(artifact);
 		initDataRepositoryCode();
 	}
