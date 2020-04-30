@@ -3,6 +3,7 @@ package opkeystudio.featurecore.ide.ui.customcontrol.artifacttree;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -227,6 +228,24 @@ public class CodeViewTree extends CustomTree {
 			e.printStackTrace();
 		}
 
+		List<String> packagesName = new ArrayList<String>();
+		CodeViewTreeItem treeitem = this.getSelectedArtifactTreeItem();
+		while (treeitem.getParentItem() != null) {
+			if (treeitem.isSystemFolder()) {
+				break;
+			}
+			packagesName.add(treeitem.getText());
+			treeitem = (CodeViewTreeItem) treeitem.getParentItem();
+		}
+
+		Collections.reverse(packagesName);
+		String packageName = "";
+		for (String pname : packagesName) {
+			if (!packageName.isEmpty()) {
+				packageName += ".";
+			}
+			packageName += pname;
+		}
 		Set<String> packages = ArtifactTranspiler.getInstance().getAllPackagesNames();
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(fileName).setPublic();
@@ -236,6 +255,7 @@ public class CodeViewTree extends CustomTree {
 			class1.addImport(packag + ".*");
 		}
 
+		class1.setPackage(packageName);
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
 		renderArtifacts();
 	}
