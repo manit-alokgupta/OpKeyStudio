@@ -312,14 +312,18 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 								&& obj.getName().equals(objectName)) {
 
 							renamedText = CustomMessageDialogUtil.openInputDialog("Rename",
-									"Rename Object: " + objectName, objectName);
+									"One object is already added with the same name in the OR. \nRename Object: "
+											+ objectName,
+											objectName);
 							if (renamedText == null)
 								return;
 
 							while (renamedText.trim().isEmpty()) {
 								CustomMessageDialogUtil.openErrorDialog("Error", "Name can't be empty!");
 								renamedText = CustomMessageDialogUtil.openInputDialog("Rename",
-										"Rename Object: " + objectName, objectName);
+										"One object is already added with the same name in the OR. \nRename Object: "
+												+ objectName,
+												objectName);
 								if (renamedText == null)
 									return;
 							}
