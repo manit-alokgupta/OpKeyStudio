@@ -357,7 +357,7 @@ public class DataRepositoryView extends SuperComposite {
 		toggleSaveButton(false);
 	}
 
-	private void initArtifact() {
+	public void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		this.setCurrentMpart(mpart);
 		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");

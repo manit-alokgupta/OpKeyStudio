@@ -128,7 +128,7 @@ public class TestCaseView extends SuperComposite {
 
 	}
 
-	private void initArtifact() {
+	public void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		this.setArtifact(artifact);
@@ -421,7 +421,7 @@ public class TestCaseView extends SuperComposite {
 		} else {
 			TabItem componentArgInputTable = new TabItem(datasTabHolder, SWT.NONE);
 			componentArgInputTable
-			.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			componentArgInputTable.setText("Data Input");
 			componentArgInputTable.setToolTipText("Data Input");
 			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder,
@@ -443,7 +443,7 @@ public class TestCaseView extends SuperComposite {
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
 		globalVariableTable = new GlobalVariableTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);

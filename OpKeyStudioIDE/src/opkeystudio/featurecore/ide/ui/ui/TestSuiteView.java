@@ -536,7 +536,7 @@ public class TestSuiteView extends SuperComposite {
 		return this.testSuiteTable;
 	}
 
-	private void initArtifact() {
+	public void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 		this.setCurrentMpart(mpart);
