@@ -26,6 +26,7 @@ import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.ArtifactCodeCompletionProvider;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -114,8 +115,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 		this.setAutoIndentEnabled(true);
 		this.setMarkAllOnOccurrenceSearches(true);
 		this.setMarkOccurrences(true);
-		CompletionProvider provider = ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView())
-				.getCompletionProvider();
+		CompletionProvider provider = GenericEditorIntellisense.getInstance();
 		autoCompletion = new JavaAutoCompletion(provider);
 		autoCompletion.setListCellRenderer(new JavaCellRenderer());
 		autoCompletion.setChoicesWindowSize(350, 200);
@@ -163,8 +163,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 						autoCompletion.doCompletion();
 					}
 				} else {
-					CompletionProvider provider = ArtifactCodeCompletionProvider.getInstance(getCodeFunctionView())
-							.getCompletionProvider();
+					CompletionProvider provider = GenericEditorIntellisense.getInstance();
 					autoCompletion.setCompletionProvider(provider);
 				}
 				Display.getDefault().asyncExec(new Runnable() {

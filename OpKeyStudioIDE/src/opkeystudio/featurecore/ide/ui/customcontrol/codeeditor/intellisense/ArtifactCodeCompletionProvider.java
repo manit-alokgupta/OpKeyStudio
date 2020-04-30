@@ -89,7 +89,7 @@ public class ArtifactCodeCompletionProvider {
 
 	private static boolean basicAdded = false;
 
-	public CompletionProvider getCompletionProvider() {
+	public CompletionProvider getCompletionProvider_2() {
 		if (basicAdded == false) {
 			addBasicCompletions();
 			basicAdded = true;
