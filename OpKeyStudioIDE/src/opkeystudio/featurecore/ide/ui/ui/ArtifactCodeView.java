@@ -1,5 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -9,6 +11,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -177,6 +180,7 @@ public class ArtifactCodeView extends SuperComposite {
 		saveButton = new ToolItem(toolBar, SWT.NONE);
 		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
 		saveButton.setToolTipText("Save");
+		saveButton.setEnabled(false);
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
@@ -184,6 +188,32 @@ public class ArtifactCodeView extends SuperComposite {
 
 		editor = new ArtifactCodeEditor(this, this, true, true);
 		editor.setArtifact(getArtifact());
+
+		editor.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				Display.getDefault().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						saveButton.setEnabled(true);
+					}
+				});
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		runButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -202,7 +232,10 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				String code = getJavaEditor().getText();
+				File file = getCodeViewFile();
+				opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
+				saveButton.setEnabled(false);
 
 			}
 

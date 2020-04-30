@@ -296,13 +296,13 @@ public class CodeViewTree extends CustomTree {
 			return;
 		}
 		if (artifactFile.isDirectory()) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
+			artTreeItem.setImage(ResourceManager.getPluginImage("org.eclipse.jdt.ui", "/icons/full/obj16/package_obj.png"));
 			return;
 		}
 
 		if (artifactFile.isFile()) {
 			if (artifactFile.getName().toLowerCase().endsWith(".java")) {
-				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+				artTreeItem.setImage(ResourceManager.getPluginImage("org.eclipse.jdt.ui", "/icons/full/obj16/jcu_obj.gif"));
 			}
 			return;
 		}
