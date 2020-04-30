@@ -188,14 +188,20 @@ public class Utilities {
 		return mapper.readValue(data, _class);
 	}
 
-	public void writeToFile(File file, String data) throws IOException {
-		if (!file.exists()) {
-			file.createNewFile();
+	public void writeToFile(File file, String data) {
+
+		try {
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			bw.write(data);
+			bw.flush();
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-		bw.write(data);
-		bw.flush();
-		bw.close();
 	}
 
 	public Object cloneObject(Object object, Class<?> _class) throws IOException {
