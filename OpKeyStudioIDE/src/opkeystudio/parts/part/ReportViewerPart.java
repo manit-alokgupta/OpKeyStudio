@@ -24,7 +24,7 @@ public class ReportViewerPart {
 
 	@Focus
 	public void onFocus() {
-		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		
 	}
 
 	@Persist

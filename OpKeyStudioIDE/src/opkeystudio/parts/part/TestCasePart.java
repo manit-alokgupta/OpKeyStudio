@@ -35,7 +35,6 @@ public class TestCasePart {
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
 		}
-		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
 	public Artifact getArtifact() {

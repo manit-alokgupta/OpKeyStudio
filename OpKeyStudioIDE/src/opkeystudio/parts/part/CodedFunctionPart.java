@@ -36,7 +36,6 @@ public class CodedFunctionPart {
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
 		}
-		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
 	public Artifact getArtifact() {
