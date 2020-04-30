@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -16,6 +17,8 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
+import org.jboss.forge.roaster.Roaster;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
@@ -25,6 +28,7 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class CodeViewTree extends CustomTree {
 	private List<Artifact> artifacts = new ArrayList<Artifact>();
@@ -154,7 +158,7 @@ public class CodeViewTree extends CustomTree {
 		}
 
 		String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
-				"NewClass.java");
+				"NewClass");
 		if (fileName == null) {
 			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
 			return;
@@ -164,7 +168,21 @@ public class CodeViewTree extends CustomTree {
 			return;
 		}
 
-		File file = new File(selectedCodeFile.getAbsolutePath() + File.separator + fileName);
+		boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.isStringContainsSpecialCharacters(fileName);
+		boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.isStringStartsWithNumbers(fileName);
+
+		if (cond1) {
+			new MessageDialogs().openErrorDialog("OpKey", "File Name must not contain special characters");
+			return;
+		}
+
+		if (cond2) {
+			new MessageDialogs().openErrorDialog("OpKey", "File Name must not starts with number");
+			return;
+		}
+		File file = new File(selectedCodeFile.getAbsolutePath() + File.separator + fileName + ".java");
 		if (file.exists()) {
 			new MessageDialogs().openErrorDialog("OpKey", "File Name must be unique");
 			return;
@@ -175,6 +193,17 @@ public class CodeViewTree extends CustomTree {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		Set<String> packages = ArtifactTranspiler.getInstance().getAllPackagesNames();
+		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
+		class1.setName(fileName).setPublic();
+		class1.addMethod().setName("main").setBody("System.out.println(\"Hello from OpKey E\");").setPublic()
+				.setStatic(true).addParameter("String[]", "args");
+		for (String packag : packages) {
+			class1.addImport(packag);
+		}
+
+		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
 		renderArtifacts();
 	}
 
@@ -192,6 +221,20 @@ public class CodeViewTree extends CustomTree {
 		}
 		if (fileName.trim().isEmpty()) {
 			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
+			return;
+		}
+		boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.isStringContainsSpecialCharacters(fileName);
+		boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.isStringStartsWithNumbers(fileName);
+
+		if (cond1) {
+			new MessageDialogs().openErrorDialog("OpKey", "Folder Name must not contain special characters");
+			return;
+		}
+
+		if (cond2) {
+			new MessageDialogs().openErrorDialog("OpKey", "Folder Name must not starts with number");
 			return;
 		}
 
