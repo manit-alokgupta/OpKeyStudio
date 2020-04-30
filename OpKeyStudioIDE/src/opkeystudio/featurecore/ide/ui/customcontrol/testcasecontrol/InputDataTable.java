@@ -43,6 +43,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
@@ -59,6 +60,7 @@ public class InputDataTable extends CustomTable {
 	private List<KeyWordInputArgument> keyWordInputArgs = new ArrayList<KeyWordInputArgument>();
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
 	private List<ComponentInputArgument> componentInputArgs = new ArrayList<>();
+	private List<CFLInputParameter> cflInputArguments = new ArrayList<CFLInputParameter>();
 	private TestCaseView parentTestCaseView;
 
 	public InputDataTable(Composite parent, int style) {
@@ -305,7 +307,7 @@ public class InputDataTable extends CustomTable {
 		if (isConstructFlowIFKeyword(getFlowStep())) {
 			int index = flowInputArgument.getIndex();
 			if (index == 1 || index == 5 || index == 9 || index == 13 || index == 17) {
-				String[] items = {"", "=", "<", ">", "<>" };
+				String[] items = { "", "=", "<", ">", "<>" };
 				TableEditor editor1 = getTableEditor();
 				Combo combo = new Combo(this, SWT.READ_ONLY);
 				combo.setItems(items);
@@ -318,7 +320,7 @@ public class InputDataTable extends CustomTable {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
 						int index = combo.getSelectionIndex();
-						String selecedData=items[index];
+						String selecedData = items[index];
 						flowInputArgument.setStaticvalue(selecedData);
 						flowInputArgument.setModified(true);
 						getParentTestCaseView().toggleSaveButton(true);
@@ -336,7 +338,7 @@ public class InputDataTable extends CustomTable {
 			}
 
 			if (index == 3 || index == 7 || index == 11 || index == 15 || index == 19) {
-				String[] items = {"", "AND", "OR" };
+				String[] items = { "", "AND", "OR" };
 				TableEditor editor1 = getTableEditor();
 				Combo combo = new Combo(this, SWT.READ_ONLY);
 				combo.setItems(items);
@@ -344,13 +346,13 @@ public class InputDataTable extends CustomTable {
 				if (selectIndex > -1) {
 					combo.select(selectIndex);
 				}
-				
+
 				combo.addSelectionListener(new SelectionListener() {
 
 					@Override
 					public void widgetSelected(SelectionEvent e) {
 						int index = combo.getSelectionIndex();
-						String selecedData=items[index];
+						String selecedData = items[index];
 						flowInputArgument.setStaticvalue(selecedData);
 						flowInputArgument.setModified(true);
 						getParentTestCaseView().toggleSaveButton(true);
@@ -557,6 +559,12 @@ public class InputDataTable extends CustomTable {
 		} else {
 			setComponentInputArgs(new ArrayList<>());
 		}
+
+		if (flowStep.getCodedFunctionArtifact() != null) {
+			setCflInputArguments(flowStep.getCodedFunctionArtifact().getCflInputParameters());
+		} else {
+			setCflInputArguments(new ArrayList<CFLInputParameter>());
+		}
 		setFlowInputArgs(flowStep.getFlowInputArgs());
 	}
 
@@ -644,6 +652,33 @@ public class InputDataTable extends CustomTable {
 				}
 			}
 		}
+		
+		//Display CFL in TestCase and FL
+		if (getCflInputArguments().size() > 0) {
+			for (int i = 0; i < getCflInputArguments().size(); i++) {
+				List<CFLInputParameter> filteredComponentInputArgs = new ArrayList<CFLInputParameter>();
+				for (int i1 = 0; i1 < getCflInputArguments().size(); i1++) {
+					CFLInputParameter inputArgument = getCflInputArguments().get(i1);
+					filteredComponentInputArgs.add(inputArgument);
+				}
+
+				List<FlowInputArgument> filteredFlowInputArgs = new ArrayList<FlowInputArgument>();
+				for (int i1 = 0; i1 < flowInputArgs.size(); i1++) {
+					FlowInputArgument inputArgument = flowInputArgs.get(i1);
+					filteredFlowInputArgs.add(inputArgument);
+				}
+
+				if (filteredComponentInputArgs.size() == filteredFlowInputArgs.size()) {
+					CFLInputParameter keywordInputArg = getCflInputArguments().get(i);
+					FlowInputArgument flowInputArg = flowInputArgs.get(i);
+					CustomTableItem cti = new CustomTableItem(this, 0);
+					cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
+							flowInputArg.getStaticvalue() });
+					cti.setControlData(flowInputArg);
+					addInputTableEditor(cti);
+				}
+			}
+		}
 		selectDefaultRow();
 	}
 
@@ -680,6 +715,14 @@ public class InputDataTable extends CustomTable {
 
 	public void setFlowStep(FlowStep flowStep) {
 		this.flowStep = flowStep;
+	}
+
+	public List<CFLInputParameter> getCflInputArguments() {
+		return cflInputArguments;
+	}
+
+	public void setCflInputArguments(List<CFLInputParameter> cflInputArguments) {
+		this.cflInputArguments = cflInputArguments;
 	}
 
 }
