@@ -62,7 +62,6 @@ public class ArtifactExecutor {
 		setExecutionThread(executionThread);
 	}
 
-	
 	public void executeArtifactFile(String sessionRootDir, String artifactClassName, String pluginName) {
 		System.out.println(">>Artifact Code Folder " + sessionRootDir);
 		System.out.println(">>Executing Artifact " + artifactClassName);
@@ -78,7 +77,7 @@ public class ArtifactExecutor {
 				setStandardOutput(standrdout);
 				setStandardErrorOutput(errorout);
 				try {
-					execute(sessionRootDir, artifactClassName, pluginName);
+					executeMainFunction(sessionRootDir, artifactClassName, pluginName);
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
 						| InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
@@ -90,6 +89,7 @@ public class ArtifactExecutor {
 		executionThread.start();
 		setExecutionThread(executionThread);
 	}
+
 	private void execute(String sessionRootDir, String artifactClassNAME, String pluginName)
 			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -109,6 +109,31 @@ public class ArtifactExecutor {
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("execute");
 		Object result = method.invoke(instance);
+
+		callExecuteSessionEnd();
+		cleanExecutionSession();
+	}
+
+	private void executeMainFunction(String sessionRootDir, String artifactClassNAME, String pluginName)
+			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
+			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		List<File> allLibs = new CompilerUtilities().getAllAssocitedLibraries(pluginName);
+		allLibs.add(new File(sessionRootDir));
+		URL[] allJarsAndClasses = new URL[allLibs.size()];
+		for (int i = 0; i < allLibs.size(); i++) {
+			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
+		}
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses, ArtifactExecutor.class.getClassLoader());
+		setClassLoader(child);
+
+		callExecuteSessionStart();
+
+		Class<?> classToLoad = Class.forName(artifactClassNAME, true, child);
+		Method method = classToLoad.getDeclaredMethod("main", String[].class);
+		final Object[] args = new Object[1];
+		args[0] = new String[] {};
+		
+		method.invoke(classToLoad, args);
 
 		callExecuteSessionEnd();
 		cleanExecutionSession();
