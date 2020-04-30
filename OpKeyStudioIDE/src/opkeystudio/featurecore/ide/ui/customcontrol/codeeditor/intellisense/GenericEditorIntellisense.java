@@ -6,6 +6,8 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
+import org.jboss.forge.roaster.model.source.ParameterSource;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.AutoCompleteToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
@@ -52,6 +55,27 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		addOpKeyTranspiledClassInformation();
 	}
 
+	public JavaCompletionProvider getClassMethodsCompletionProvider(TranpiledClassInfo tranpiledClassInfo) {
+		GenericEditorIntellisense provider = new GenericEditorIntellisense();
+		List<MethodSource<JavaClassSource>> methods = tranpiledClassInfo.getClassSource().getMethods();
+		for (MethodSource<JavaClassSource> method : methods) {
+			String methodName = method.getName();
+			String returnType = method.getReturnType().toString();
+			String params = "";
+			for (ParameterSource<JavaClassSource> param : method.getParameters()) {
+				if (!params.isEmpty()) {
+					params += ", ";
+				}
+				params += param.toString();
+			}
+			String methodBodyToShow = String.format("%s(%s)", methodName, params);
+			String methodBodyToEnter = String.format("%s(%s);", methodName, params);
+			System.out.println(methodBodyToShow);
+			provider.addMethodTypeBasicCompletion(methodBodyToShow, methodBodyToEnter, returnType);
+		}
+		return provider;
+	}
+
 	private void addSimpleKeywords() {
 		this.addCompletion(new BasicCompletion(this, "abstract"));
 		this.addCompletion(new BasicCompletion(this, "assert"));
@@ -80,7 +104,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	private void parseConstructors(JavaClassSource javaClassSource) {
-		System.out.println("Constructor " + javaClassSource.getName());
 		String className = javaClassSource.getName();
 		addConstructorTypeBasicCompletion(className, className);
 	}
@@ -88,7 +111,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private void parseClassMethods(JavaClassSource classSource) {
 		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
 		for (MethodSource<JavaClassSource> method : methods) {
-			System.out.println(method.getName() + "   " + method.getParameters().toString());
 		}
 	}
 
@@ -215,6 +237,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		List<TranpiledClassInfo> allTokens = getTranspiledClasses();
 		for (TranpiledClassInfo token : allTokens) {
 			String className = token.getClassSource().getName();
+			System.out.println(">>ClassName " + className);
 			if (className.endsWith("." + tokenString)) {
 				System.out.println("ClassName " + token.getClassSource().getName());
 				return token;

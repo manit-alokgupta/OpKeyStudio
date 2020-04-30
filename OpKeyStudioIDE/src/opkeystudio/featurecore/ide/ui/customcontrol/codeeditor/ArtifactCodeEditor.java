@@ -153,11 +153,10 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 					if (varToken != null) {
 						tokenData = varToken.getClassName();
 					}
-					TranpiledClassInfo autocompletetoken = GenericEditorIntellisense.getInstance().findAutoCompleteToken(tokenData);
+					TranpiledClassInfo autocompletetoken = GenericEditorIntellisense.getInstance()
+							.findAutoCompleteToken(tokenData);
 					if (autocompletetoken != null) {
-					//	JavaCompletionProvider provider = ArtifactCodeCompletionProvider
-						//		.getInstance(getCodeFunctionView())
-							//	.getClassMethodsCompletionProvider(autocompletetoken);
+						JavaCompletionProvider provider = GenericEditorIntellisense.getInstance().getClassMethodsCompletionProvider(autocompletetoken);
 						autoCompletion.setCompletionProvider(provider);
 						autoCompletion.doCompletion();
 					}
