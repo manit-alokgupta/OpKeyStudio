@@ -292,7 +292,7 @@ public class CodeViewTree extends CustomTree {
 	private void addIcon(CodeViewTreeItem artTreeItem) {
 		File artifactFile = artTreeItem.getArtifactFile();
 		if (artifactFile == null) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
+			artTreeItem.setImage(ResourceManager.getPluginImage("org.eclipse.jdt.ui", "/icons/full/obj16/packagefolder_obj.png"));
 			return;
 		}
 		if (artifactFile.isDirectory()) {
