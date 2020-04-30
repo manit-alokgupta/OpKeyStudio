@@ -286,6 +286,7 @@ public class GenericTree extends CustomTree {
 				addIcon(keywItem);
 			}
 		}
+		expandAll(rootNode);
 	}
 
 	public void initCodedFunctionLibraries(String flName) {
@@ -306,6 +307,7 @@ public class GenericTree extends CustomTree {
 				addIcon(keywItem);
 			}
 		}
+		expandAll(rootNode);
 	}
 
 	private void initDREvents() {
