@@ -269,6 +269,23 @@ public class FlowMaker {
 				flowOutputArguments.add(flowOutputArgument);
 			}
 		}
+
+		if (flowStep.getCodedFunctionArtifact() != null) {
+			List<CFLOutputParameter> componentOutputArgs = flowStep.getCodedFunctionArtifact().getCflOutputParameters();
+			for (CFLOutputParameter componentOutputArgument : componentOutputArgs) {
+				FlowOutputArgument flowOutputArgument = new FlowOutputArgument();
+				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+					flowOutputArgument.setComponentstep_oa_id(Utilities.getInstance().getUniqueUUID(""));
+					flowOutputArgument.setComponentstep_id(flowStep.getStepid());
+				} else {
+					flowOutputArgument.setFlow_step_oa_id(Utilities.getInstance().getUniqueUUID(""));
+					flowOutputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+				}
+				flowOutputArgument.setCodedfunction_op_id(componentOutputArgument.getOp_id());
+				flowOutputArgument.setAdded(true);
+				flowOutputArguments.add(flowOutputArgument);
+			}
+		}
 		return flowOutputArguments;
 	}
 
@@ -312,6 +329,28 @@ public class FlowMaker {
 				}
 				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
 				flowInputArgument.setComponent_ip_id(componentInputArgument.getIp_id());
+				flowInputArgument.setStaticobjectid(null);
+				flowInputArgument.setAdded(true);
+
+				flowInputArguments.add(flowInputArgument);
+			}
+		}
+
+		if (flowStep.getCodedFunctionArtifact() != null) {
+			List<CFLInputParameter> componentInputArgs = flowStep.getCodedFunctionArtifact().getCflInputParameters();
+			for (CFLInputParameter componentInputArgument : componentInputArgs) {
+				FlowInputArgument flowInputArgument = new FlowInputArgument();
+				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+					flowInputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
+					flowInputArgument.setStepid(flowStep.getStepid());
+					flowInputArgument.setArg_datasource(DataSource.StaticValue);
+				} else {
+					flowInputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+					flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+					flowInputArgument.setDatasource(DataSource.StaticValue);
+				}
+				flowInputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+				flowInputArgument.setCodedfunction_ip_id(componentInputArgument.getIp_id());
 				flowInputArgument.setStaticobjectid(null);
 				flowInputArgument.setAdded(true);
 

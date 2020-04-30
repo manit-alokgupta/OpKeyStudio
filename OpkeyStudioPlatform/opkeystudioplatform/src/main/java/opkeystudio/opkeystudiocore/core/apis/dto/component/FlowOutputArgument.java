@@ -19,6 +19,9 @@ public class FlowOutputArgument extends Modified implements Cloneable {
 	@DBField
 	private String componentstep_oa_id;
 	@DBField
+	private String codedfunction_op_id;
+	
+	@DBField
 	private String component_op_id;
 	@DBField
 	private String outputvariablename;
@@ -123,5 +126,13 @@ public class FlowOutputArgument extends Modified implements Cloneable {
 			// TODO: handle exception
 		}
 		return true;
+	}
+
+	public String getCodedfunction_op_id() {
+		return codedfunction_op_id;
+	}
+
+	public void setCodedfunction_op_id(String codedfunction_op_id) {
+		this.codedfunction_op_id = codedfunction_op_id;
 	}
 }

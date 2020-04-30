@@ -38,6 +38,9 @@ public class FlowInputArgument extends Modified implements Cloneable {
 	private String componentstep_id;
 	@DBField
 	private String component_ip_id;
+	
+	@DBField
+	private String codedfunction_ip_id;
 
 	@DBField
 	private String datarepositorycolumnid;
@@ -229,5 +232,13 @@ public class FlowInputArgument extends Modified implements Cloneable {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	public String getCodedfunction_ip_id() {
+		return codedfunction_ip_id;
+	}
+
+	public void setCodedfunction_ip_id(String codedfunction_ip_id) {
+		this.codedfunction_ip_id = codedfunction_ip_id;
 	}
 }
