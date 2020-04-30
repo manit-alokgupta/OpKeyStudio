@@ -149,6 +149,40 @@ public class CodeViewTree extends CustomTree {
 		if (selectedCodeFile == null) {
 			return;
 		}
+		String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
+				"NewClass");
+		if (fileName == null) {
+			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
+			return;
+		}
+		if (fileName.trim().isEmpty()) {
+			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
+			return;
+		}
+
+		boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.isStringContainsSpecialCharacters(fileName);
+		boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.isStringStartsWithNumbers(fileName);
+
+		if (cond1) {
+			new MessageDialogs().openErrorDialog("OpKey", "File Name must not contain special characters");
+			return;
+		}
+
+		if (cond2) {
+			new MessageDialogs().openErrorDialog("OpKey", "File Name must not starts with number");
+			return;
+		}
+
+		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(selectedCodeFile);
+		JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
+		classSource.setName(fileName);
+		String parentFolder = selectedCodeFile.getParentFile().getAbsolutePath();
+		selectedCodeFile.delete();
+		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.writeToFile(new File(parentFolder + File.separator + fileName + ".java"), classSource.toString());
+		renderArtifacts();
 	}
 
 	public void createNewJavaFile() {
