@@ -133,15 +133,24 @@ public class GenericTree extends CustomTree {
 				Object selectedData = getSelectedData();
 				if (selectedData instanceof Artifact) {
 					Artifact selectedArtifact = (Artifact) selectedData;
-					if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+					if (selectedArtifact.getFile_type_enum() == MODULETYPE.Component) {
 						if (artifact.getId().equals(selectedArtifact.getId())) {
 							new MessageDialogs().openErrorDialog("OpKey",
 									"Function Library Recursion Call Not Allowed");
 							return;
 						}
-
 						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
 								selectedArtifact, artifact.getId(),
+								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+						getParentTestCaseView().toggleSaveButton(true);
+						return;
+					}
+
+					if (selectedArtifact.getFile_type_enum() == MODULETYPE.CodedFunction) {
+						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithCodedFunctionLibray(artifact,
+								selectedFlowStep, selectedArtifact, artifact.getId(),
 								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
 						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
