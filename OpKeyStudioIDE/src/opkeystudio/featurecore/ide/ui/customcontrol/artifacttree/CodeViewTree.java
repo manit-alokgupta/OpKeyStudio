@@ -1,9 +1,11 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.artifacttree;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
@@ -15,6 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.CodeViewTreeUI;
@@ -107,19 +110,92 @@ public class CodeViewTree extends CustomTree {
 	}
 
 	public void deleteSelectedFile() {
+		File selectedCodeFile = getSelectedArtifact();
+		if (selectedCodeFile == null) {
+			return;
+		}
+		if (selectedCodeFile.isFile()) {
+			try {
+				FileUtils.forceDelete(selectedCodeFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
+		if (selectedCodeFile.isDirectory()) {
+			try {
+				FileUtils.deleteDirectory(selectedCodeFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		renderArtifacts();
 	}
 
 	public void renameSelectedFile() {
-
+		File selectedCodeFile = getSelectedArtifact();
+		if (selectedCodeFile == null) {
+			return;
+		}
 	}
 
 	public void createNewJavaFile() {
+		File selectedCodeFile = getSelectedArtifact();
+		if (selectedCodeFile == null) {
+			return;
+		}
 
+		String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
+				"NewClass.java");
+		if (fileName == null) {
+			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
+			return;
+		}
+		if (fileName.trim().isEmpty()) {
+			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
+			return;
+		}
+
+		File file = new File(selectedCodeFile.getAbsolutePath() + File.separator + fileName);
+		if (file.exists()) {
+			new MessageDialogs().openErrorDialog("OpKey", "File Name must be unique");
+			return;
+		}
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		renderArtifacts();
 	}
 
 	public void createNewFolder() {
+		File selectedCodeFile = getSelectedArtifact();
+		if (selectedCodeFile == null) {
+			return;
+		}
 
+		String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
+				"NewFolder");
+		if (fileName == null) {
+			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
+			return;
+		}
+		if (fileName.trim().isEmpty()) {
+			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
+			return;
+		}
+
+		File file = new File(selectedCodeFile.getAbsolutePath() + File.separator + fileName);
+		if (file.exists()) {
+			new MessageDialogs().openErrorDialog("OpKey", "Folder Name must be unique");
+			return;
+		}
+		file.mkdir();
+		renderArtifacts();
 	}
 
 	public void setArtifactsData(List<Artifact> artifacts) {

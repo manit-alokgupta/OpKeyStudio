@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -189,7 +188,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				codeViewTree.createNewJavaFile();
 			}
 
 			@Override
@@ -202,7 +201,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				codeViewTree.createNewFolder();
 			}
 
 			@Override
