@@ -20,9 +20,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.ExpandItem;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.TableItem;
@@ -88,10 +85,8 @@ public class TestCaseView extends SuperComposite {
 	private ToolItem codedFunctionLibraryButton;
 	private TabFolder testCaseArgumentsTabFolder;
 	private TabItem stepDetailsTabItem;
-	private ExpandItem expanditemStepIno;
 	private TabItem addStepTabItem;
 	private GenericTree allDataTreeView;
-	private Label stepInfoImage;
 	private StyledText stepInfoLabel;
 	private FlowStep selectedFlowStep;
 
@@ -242,34 +237,15 @@ public class TestCaseView extends SuperComposite {
 		stepDetailsTabItem.setToolTipText("Step Details");
 		stepDetailsTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.STEP_DETAILS_ICON));
 
-		Composite composite = new Composite(testCaseArgumentsTabFolder, SWT.BORDER);
-		stepDetailsTabItem.setControl(composite);
-		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
-		expandBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
-
-		expanditemStepIno = new ExpandItem(expandBar, SWT.NONE);
-		expanditemStepIno.setExpanded(true);
-		expanditemStepIno.setText("Step Information");
-		expanditemStepIno.setHeight(500);
-
-		Composite composite_5 = new Composite(expandBar, SWT.NONE);
-		expanditemStepIno.setControl(composite_5);
-		expanditemStepIno.setHeight(expanditemStepIno.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		Composite composite_5 = new Composite(testCaseArgumentsTabFolder, SWT.NONE);
+		stepDetailsTabItem.setControl(composite_5);
 		composite_5.setLayout(new GridLayout(2, false));
 		composite_5.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		stepInfoLabel = new StyledText(composite_5, SWT.V_SCROLL);
+		stepInfoLabel = new StyledText(composite_5, SWT.WRAP);
 		stepInfoLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		stepInfoLabel.setText("");
 		stepInfoLabel.setEditable(false);
-
-		stepInfoImage = new Label(composite_5, SWT.NONE);
-		stepInfoImage.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/sample.png"));
-		GridData gd_stepInfoImage = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_stepInfoImage.widthHint = 88;
-		stepInfoImage.setLayoutData(gd_stepInfoImage);
 
 		addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_NEW_ICON));
