@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
@@ -84,7 +85,15 @@ public class CFLInputTable extends CustomTable {
 
 					@Override
 					public void focusLost(FocusEvent e) {
+						String value = getColumnTextWithCursor(cursor, 0);
 						text.dispose();
+						boolean isunique = isColumnDataUnique(value, 0);
+						System.out.println("Value " + value);
+						if (isunique == false) {
+							componentInputAargument.setModified(false);
+							renderCFLInputParameters();
+							new MessageDialogs().openErrorDialog("OpKey", "Variable Name Must Be Unique");
+						}
 					}
 
 					@Override
@@ -112,7 +121,7 @@ public class CFLInputTable extends CustomTable {
 							componentInputAargument.setModified(true);
 							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
 						}
-						setColumnTextWithCursor(selectedColumn, text.getText());
+						setColumnTextWithCursor(cursor,selectedColumn, text.getText());
 					}
 				});
 

@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
@@ -91,7 +92,14 @@ public class OutputTable extends CustomTable {
 
 					@Override
 					public void focusLost(FocusEvent e) {
+						String value = getColumnTextWithCursor(cursor, 0);
 						text.dispose();
+						boolean isunique = isColumnDataUnique(value, 0);
+						if (isunique == false) {
+							componentOutputArgument.setModified(false);
+							renderAllBottomFactoryOutputData();
+							new MessageDialogs().openErrorDialog("OpKey", "Variable Name Must Be Unique");
+						}
 					}
 
 					@Override
@@ -114,7 +122,7 @@ public class OutputTable extends CustomTable {
 							componentOutputArgument.setModified(true);
 							getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 						}
-						setColumnTextWithCursor(selectedColumn, text.getText());
+						setColumnTextWithCursor(cursor, selectedColumn, text.getText());
 					}
 				});
 				if (selectedColumn == 0) {
