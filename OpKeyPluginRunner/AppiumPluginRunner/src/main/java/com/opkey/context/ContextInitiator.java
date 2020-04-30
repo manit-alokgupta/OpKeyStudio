@@ -13,8 +13,6 @@ import com.crestech.opkey.plugin.contexts.InvocationContext;
 
 public class ContextInitiator {
 	public void initContext() {
-		FunctionCall fc = new FunctionCall();
-		Context.set(new InvocationContext(fc));
 		initSettings();
 	}
 
@@ -36,10 +34,12 @@ public class ContextInitiator {
 	}
 
 	public static void addFunction(String functionName) {
+		FunctionCall fc = new FunctionCall();
 		Function function = new Function();
 		function.setCallTimeoutInMillis(90000);
 		function.setMethodName(functionName);
-		Context.current().getFunctionCall().setFunction(function);
+		fc.setFunction(function);
+		Context.set(new InvocationContext(fc));
 	}
 
 	private Map<String, String> getSettings() {

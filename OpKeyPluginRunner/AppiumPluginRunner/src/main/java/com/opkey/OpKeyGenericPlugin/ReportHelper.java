@@ -14,22 +14,10 @@ public class ReportHelper {
 
 	public static void addReportStep(String methodName, FunctionResult functionResult) {
 		Status status = Status.valueOf(functionResult.getStatus().toUpperCase());
+		System.out.println("@Status: " + status);
+		
 		List<String> parameterList = new ArrayList<String>();
 
-//		FunctionCall fc = Context.current().getFunctionCall();
-//		System.out.println("FunctionCall: " + fc);
-//		System.out.println("fc.getObjectArguments(): " + fc.getObjectArguments());
-//		if(fc != null && fc.getObjectArguments() !=null) {
-//			for (ObjectArgument oa : fc.getObjectArguments().getObjectArgument()) {
-//				parameterList.add(oa.getObject().getLogicalName());
-//			}
-//
-//			for (DataArgument oa : fc.getDataArguments().getDataArgument()) {
-//				parameterList.add(oa.getArgumentName() + ":" + oa.getValue());
-//			}
-//
-//		}
-		
 		parameterList = getParameters();
 		ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
 				functionResult.getOutput());
@@ -38,6 +26,7 @@ public class ReportHelper {
 	public static void addReportStep(String methodName, Exception e) {
 
 		List<String> parameterList = new ArrayList<String>();
+		
 		ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), Status.FAIL,
 				e.getMessage());
 	}
