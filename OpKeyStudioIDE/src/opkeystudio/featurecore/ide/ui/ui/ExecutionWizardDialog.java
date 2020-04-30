@@ -42,8 +42,10 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Button runButton;
 	private TestCaseView parentTestCaseView;
 	private TestSuiteView parentTestSuiteView;
+	private ArtifactCodeView parentArtifactCodeView;
 	private boolean executingFromTestCaseView;
 	private boolean executingFromTestSuiteView;
+	private boolean executingFromGenericEditor;
 	private Text sessionNameTextField;
 	private Text buildNameTextField;
 	private Label lblDeviceSelection;
@@ -52,7 +54,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Composite container;
 	private Composite area;
 	private Button btnRefreshDeviceList;
-	boolean isAppiumPluginExecution;
+	private boolean isAppiumPluginExecution;
 
 	/**
 	 * Create the dialog.
@@ -74,6 +76,14 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		this.setExecutingFromTestSuiteView(true);
 		setHelpAvailable(false);
 		initExecutionSession(parentTestSuiteView.getArtifact());
+	}
+
+	public ExecutionWizardDialog(Shell parentShell, ArtifactCodeView parentArtifactCodeView) {
+		super(parentShell);
+		this.setParentArtifactCodeView(parentArtifactCodeView);
+		this.setExecutingFromGenericEditor(true);
+		setHelpAvailable(false);
+		initExecutionSession(parentArtifactCodeView.getCodeViewFile());
 	}
 
 	/**
@@ -169,7 +179,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		btnRefreshDeviceList = new Button(container, SWT.NONE);
 		btnRefreshDeviceList.setToolTipText("Refresh");
 		btnRefreshDeviceList.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnRefreshDeviceList.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		btnRefreshDeviceList
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		btnRefreshDeviceList.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -233,6 +244,22 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private void initExecutionSession(Artifact artifact) {
 		ExecutionSession eSession = new ExecutionSession(artifact.getName() + "_", "Build_");
 		eSession.setArtifact(artifact);
+		setExecutionSession(eSession);
+	}
+
+	private void initExecutionSession(File artifactFile) {
+		System.out.println("Artifact File path " + artifactFile.getAbsolutePath());
+		String artifactPath = artifactFile.getAbsolutePath();
+		artifactPath = artifactPath.replaceAll("\\\\", "OPKEY_SLASH");
+		String dir = Utilities.getInstance().getTranspiledArtifactsFolder() + File.separator;
+		dir = dir.replaceAll("\\\\", "OPKEY_SLASH").replaceAll("/", "OPKEY_SLASH");
+
+		String packageClassName = artifactPath.replaceAll(dir, "");
+		packageClassName = packageClassName.split("\\.")[0];
+		packageClassName = packageClassName.replaceAll("OPKEY_SLASH", ".");
+		System.out.println("Package Name " + packageClassName);
+		ExecutionSession eSession = new ExecutionSession(artifactFile.getName() + "_", "Build_");
+		eSession.setArtifactFilePackageClass(packageClassName);
 		setExecutionSession(eSession);
 	}
 
@@ -422,5 +449,21 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			}
 		});
 
+	}
+
+	public ArtifactCodeView getParentArtifactCodeView() {
+		return parentArtifactCodeView;
+	}
+
+	public void setParentArtifactCodeView(ArtifactCodeView parentArtifactCodeView) {
+		this.parentArtifactCodeView = parentArtifactCodeView;
+	}
+
+	public boolean isExecutingFromGenericEditor() {
+		return executingFromGenericEditor;
+	}
+
+	public void setExecutingFromGenericEditor(boolean executingFromGenericEditor) {
+		this.executingFromGenericEditor = executingFromGenericEditor;
 	}
 }

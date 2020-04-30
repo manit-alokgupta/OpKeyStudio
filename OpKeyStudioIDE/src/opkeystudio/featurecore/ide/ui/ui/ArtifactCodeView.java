@@ -176,7 +176,7 @@ public class ArtifactCodeView extends SuperComposite {
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		saveButton = new ToolItem(toolBar, SWT.NONE);
 		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
-		saveButton.setToolTipText("Sve");
+		saveButton.setToolTipText("Save");
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
@@ -188,9 +188,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (isEmbeddedInsideTestCaseView()) {
-					getParentTestCaseView().openExecutionWizard();
-				}
+				openExecutionWizard();
 			}
 
 			@Override
@@ -227,6 +225,11 @@ public class ArtifactCodeView extends SuperComposite {
 
 			}
 		});
+	}
+
+	public void openExecutionWizard() {
+		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
+		executionWizard.open();
 	}
 
 	private void initTCFLUI() {
