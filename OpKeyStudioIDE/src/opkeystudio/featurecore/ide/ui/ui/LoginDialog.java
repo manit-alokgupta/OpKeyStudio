@@ -119,6 +119,7 @@ public class LoginDialog extends Dialog {
 		lblNewLabel_5.setBounds(321, 10, 113, 44);
 
 		Button loginButton = new Button(shlLoginToOpkey, SWT.NONE);
+		loginButton.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
 		loginButton.setToolTipText("Login");
 		loginButton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		loginButton.addSelectionListener(new SelectionAdapter() {
@@ -156,10 +157,11 @@ public class LoginDialog extends Dialog {
 				}
 			}
 		});
-		loginButton.setBounds(254, 258, 75, 25);
+		loginButton.setBounds(254, 258, 75, 27);
 		loginButton.setText("Login");
 
 		Button closebutton = new Button(shlLoginToOpkey, SWT.NONE);
+		closebutton.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
 		closebutton.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		closebutton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -167,13 +169,14 @@ public class LoginDialog extends Dialog {
 				shlLoginToOpkey.close();
 			}
 		});
-		closebutton.setBounds(359, 258, 75, 25);
+		closebutton.setBounds(359, 258, 75, 27);
 		closebutton.setText("Close");
 
 		Composite composite_1 = new Composite(shlLoginToOpkey, SWT.BORDER);
 		composite_1.setBounds(10, 85, 440, 167);
 
 		Label label = new Label(composite_1, SWT.NONE);
+		label.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
 		label.setText("UserName");
 		label.setBounds(42, 71, 84, 21);
 
@@ -205,10 +208,12 @@ public class LoginDialog extends Dialog {
 			passWord.setText(password);
 		}
 		Label label_1 = new Label(composite_1, SWT.NONE);
+		label_1.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
 		label_1.setText("OpKey Domain");
 		label_1.setBounds(41, 27, 119, 21);
 
 		Label label_2 = new Label(composite_1, SWT.NONE);
+		label_2.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
 		label_2.setText("Password");
 		label_2.setBounds(43, 113, 105, 18);
 
