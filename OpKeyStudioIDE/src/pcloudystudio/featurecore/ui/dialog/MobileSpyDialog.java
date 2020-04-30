@@ -34,6 +34,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -135,10 +136,14 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 * @return the result
 	 */
 	public Object open() {
+		Cursor waitCursor=new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT);
+		getParent().setCursor(waitCursor);
 		createContents();
 		shlSpyMobile.open();
 		shlSpyMobile.layout();
 		Display display = getParent().getDisplay();
+		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		getParent().setCursor(arrow);
 		while (!shlSpyMobile.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();

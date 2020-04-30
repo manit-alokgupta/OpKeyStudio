@@ -7,6 +7,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
@@ -51,11 +52,14 @@ public class LoginDialog extends Dialog {
 	 * @return the result
 	 */
 	public Object open() {
-
+		Cursor waitCursor=new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT);
+		getParent().setCursor(waitCursor);
 		createContents();
 		shlLoginToOpkey.open();
 		shlLoginToOpkey.layout();
 		Display display = getParent().getDisplay();
+		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		getParent().setCursor(arrow);
 		while (!shlLoginToOpkey.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
