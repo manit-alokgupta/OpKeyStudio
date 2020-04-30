@@ -185,6 +185,7 @@ public class Utilities {
 		if (mpart == null) {
 			return;
 		}
+		mpart.getTransientData().put("opkeystudio.artifactData", artifact);
 		mpart.setLabel(renamedData);
 		mpart.setTooltip(renamedData);
 	}

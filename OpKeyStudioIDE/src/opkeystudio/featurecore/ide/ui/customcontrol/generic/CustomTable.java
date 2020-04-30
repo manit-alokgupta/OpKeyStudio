@@ -129,9 +129,9 @@ public class CustomTable extends Table {
 		return true;
 	}
 
-	public void setColumnTextWithCursor(int selectedColumn, String text) {
-		TableCursor cursor = this.getTablecursor();
+	public void setColumnTextWithCursor(TableCursor cursor, int selectedColumn, String text) {
 		if (cursor == null) {
+			System.out.println("Cursor is Null");
 			return;
 		}
 		if (cursor.getRow() == null) {
@@ -141,5 +141,20 @@ public class CustomTable extends Table {
 			return;
 		}
 		cursor.getRow().setText(selectedColumn, text);
+	}
+
+	public String getColumnTextWithCursor(TableCursor cursor, int selectedColumn) {
+		if (cursor == null) {
+			System.out.println("Cursor is Null");
+			return "";
+		}
+		if (cursor.getRow() == null) {
+			return "";
+		}
+		String text = cursor.getRow().getText(selectedColumn);
+		if (text == null) {
+			return "";
+		}
+		return text;
 	}
 }

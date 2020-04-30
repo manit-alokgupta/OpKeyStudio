@@ -229,7 +229,6 @@ public class ArtifactCodeView extends SuperComposite {
 		});
 	}
 
-	
 	private void initTCFLUI() {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
@@ -274,6 +273,7 @@ public class ArtifactCodeView extends SuperComposite {
 			}
 		});
 	}
+
 	private void initTSUI() {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
@@ -367,6 +367,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	public void refreshTCFLCode() {
+		getParentTestCaseView().initArtifact();
 		Artifact artifact = getParentTestCaseView().getArtifact();
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			new FLTranspiler().transpile(artifact);
@@ -377,18 +378,21 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	public void refreshTSCode() {
+		getParentTestSuiteView().initArtifact();
 		Artifact artifact = getParentTestSuiteView().getArtifact();
 		new SuiteTranspiler().transpile(artifact);
 		initTestSuiteCode();
 	}
 
 	public void refreshORCode() {
+		getParentObjectRepositoryView().initArtifact();
 		Artifact artifact = getParentObjectRepositoryView().getArtifact();
 		new ORTranspiler().transpile(artifact);
 		initObjectRepositoryCode();
 	}
 
 	public void refreshDRCode() {
+		getParentDataRepositoryView().initArtifact();
 		Artifact artifact = getParentDataRepositoryView().getArtifact();
 		new DRTranspiler().transpile(artifact);
 		initDataRepositoryCode();

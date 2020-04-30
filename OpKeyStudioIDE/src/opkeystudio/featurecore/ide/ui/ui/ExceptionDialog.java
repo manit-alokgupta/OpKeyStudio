@@ -4,6 +4,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -46,10 +47,14 @@ public class ExceptionDialog extends Dialog {
 	 * @return the result
 	 */
 	public Object open() {
+		Cursor waitCursor=new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT);
+		getParent().setCursor(waitCursor);
 		createContents();
 		shlExceptionDialog.open();
 		shlExceptionDialog.layout();
 		Display display = getParent().getDisplay();
+		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		getParent().setCursor(arrow);
 		while (!shlExceptionDialog.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();

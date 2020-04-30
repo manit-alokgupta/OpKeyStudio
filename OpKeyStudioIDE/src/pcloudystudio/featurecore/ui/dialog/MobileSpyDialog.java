@@ -1,5 +1,7 @@
 package pcloudystudio.featurecore.ui.dialog;
 
+import java.awt.image.BufferedImage;
+
 // Created by Alok Gupta on 20/02/2020.
 // Copyright © 2020 SSTS Inc. All rights reserved.
 
@@ -11,7 +13,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
@@ -34,6 +35,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -135,10 +137,14 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 * @return the result
 	 */
 	public Object open() {
+		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
+		getParent().setCursor(waitCursor);
 		createContents();
 		shlSpyMobile.open();
 		shlSpyMobile.layout();
 		Display display = getParent().getDisplay();
+		Cursor arrow = new Cursor(display, SWT.CURSOR_ARROW);
+		getParent().setCursor(arrow);
 		while (!shlSpyMobile.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -266,7 +272,10 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				if (textObjectName.getText().length() > 0) {
 					lblAddToORConfirmation.setVisible(false);
 					btnClickAndMoveToNextScreen.setEnabled(false);
+					btnStop.setEnabled(false);
+					btnCapture.setEnabled(false);
 
+					String objectName = textObjectName.getText().toString();
 					LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
 					for (TableItem row : objectPropertiesTable.getItems())
 						mapOfObjectProperties.put(row.getText(0), row.getText(1));
@@ -292,13 +301,45 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 							break;
 						}
 					}
+
+					String renamedText = null;
+
+					// SQLITE_CONSTRAINT_UNIQUE: next time add map of name to id for continuous
+					// check
+					for (ORObject obj : allORObjects) {
+						if ((obj.getParent_object_id() != null)
+								&& obj.getParent_object_id().equals(foundParentObject.getObject_id())
+								&& obj.getName().equals(objectName)) {
+
+							renamedText = CustomMessageDialogUtil.openInputDialog("Rename",
+									"One object is already added with the same name in the OR. \nRename Object: "
+											+ objectName,
+											objectName);
+							if (renamedText == null)
+								return;
+
+							while (renamedText.trim().isEmpty()) {
+								CustomMessageDialogUtil.openErrorDialog("Error", "Name can't be empty!");
+								renamedText = CustomMessageDialogUtil.openInputDialog("Rename",
+										"One object is already added with the same name in the OR. \nRename Object: "
+												+ objectName,
+												objectName);
+								if (renamedText == null)
+									return;
+							}
+						}
+					}
+
 					try {
 						new ORObjectMaker().addMobileObject(getParentObjectRepositoryView().getArtifact(),
-								textObjectName.getText().toString(), mapOfObjectProperties, parentActivityPathName,
-								parentActivityPathProperties, "Custom", "HTML Page", foundParentObject, allORObjects);
+								(renamedText != null) ? renamedText : objectName, mapOfObjectProperties,
+										parentActivityPathName, parentActivityPathProperties, "Custom", "HTML Page",
+										foundParentObject, allORObjects);
 						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
 						lblAddToORConfirmation.setVisible(true);
 						btnClickAndMoveToNextScreen.setEnabled(true);
+						btnStop.setEnabled(true);
+						btnCapture.setEnabled(true);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}

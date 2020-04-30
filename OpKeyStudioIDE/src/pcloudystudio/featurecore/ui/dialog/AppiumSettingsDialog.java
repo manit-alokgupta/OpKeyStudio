@@ -20,6 +20,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
@@ -99,11 +100,16 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	public Object open() {
-
+		
+		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
+		getParent().setCursor(waitCursor);
 		createContents();
 		shlAppiumSettings.open();
 		shlAppiumSettings.layout();
 		Display display = getParent().getDisplay();
+		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		getParent().setCursor(arrow);
+		
 		while (!shlAppiumSettings.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();

@@ -714,6 +714,7 @@ public class ArtifactTreeUI extends SuperComposite {
 				}
 				artifact.setName(renamedText);
 				new ArtifactApi().updateArtifact(artifact);
+				Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
 				toggleRenameToolbarItem(false);
 				toogleDeleteToolbarItem(false);
 				toogleNewToolbarMenuItem(false);

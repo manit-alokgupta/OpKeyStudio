@@ -10,6 +10,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -78,10 +79,14 @@ public class GlobalVariableDialog extends Dialog {
 	 * @return the result
 	 */
 	public Object open() {
+		Cursor waitCursor=new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT);
+		getParent().setCursor(waitCursor);
 		createContents();
 		shlGlobalVariable.open();
 		shlGlobalVariable.layout();
 		Display display = getParent().getDisplay();
+		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		getParent().setCursor(arrow);
 		while (!shlGlobalVariable.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
