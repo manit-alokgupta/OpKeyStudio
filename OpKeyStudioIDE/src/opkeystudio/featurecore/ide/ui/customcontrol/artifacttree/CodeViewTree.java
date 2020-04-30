@@ -116,7 +116,7 @@ public class CodeViewTree extends CustomTree {
 		}
 
 		boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-				String.format("Do ypu reaaly want to delete '%s'?", selectedCodeFile.getName()));
+				String.format("Do ypu really want to delete '%s'?", selectedCodeFile.getName()));
 		if (!status) {
 			return;
 		}
