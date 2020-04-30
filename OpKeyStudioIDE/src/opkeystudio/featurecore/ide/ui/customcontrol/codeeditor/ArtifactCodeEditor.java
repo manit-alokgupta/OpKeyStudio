@@ -25,7 +25,6 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.ArtifactCodeCompletionProvider;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranpiledClassInfo;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
@@ -161,8 +160,8 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 						autoCompletion.doCompletion();
 					}
 				} else {
-					CompletionProvider provider = GenericEditorIntellisense.getInstance();
-					autoCompletion.setCompletionProvider(provider);
+					//CompletionProvider provider = GenericEditorIntellisense.getInstance();
+				//	autoCompletion.setCompletionProvider(provider);
 				}
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {

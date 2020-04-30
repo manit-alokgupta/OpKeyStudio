@@ -6,8 +6,6 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,6 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.AutoCompleteToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaBasicCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCompletionProvider;
@@ -110,8 +107,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	private void parseClassMethods(JavaClassSource classSource) {
 		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
-		for (MethodSource<JavaClassSource> method : methods) {
-		}
 	}
 
 	public void addBasicCompletion(String data) {
