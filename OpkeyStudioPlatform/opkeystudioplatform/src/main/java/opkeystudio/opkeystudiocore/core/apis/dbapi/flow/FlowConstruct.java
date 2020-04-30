@@ -28,7 +28,8 @@ public class FlowConstruct {
 		}
 
 		for (FlowStep flowStep : allFlowSteps) {
-			if (flowStep.getKeyword() == null && flowStep.getFunctionLibraryComponent() == null) {
+			if (flowStep.getKeyword() == null && flowStep.getFunctionLibraryComponent() == null
+					&& flowStep.getCodedFunctionArtifact() == null) {
 				continue;
 			}
 			saveFlowInputArguments(flowStep.getFlowInputArgs());

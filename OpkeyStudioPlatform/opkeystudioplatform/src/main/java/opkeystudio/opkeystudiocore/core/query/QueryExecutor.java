@@ -37,6 +37,7 @@ public class QueryExecutor {
 	}
 
 	public int executeUpdateQuery(String query) {
+		System.out.println("Query " + query);
 		try {
 			SQLiteCommunicator sqlComm = SQLiteCommunicator.getOpKeyDBCommunicator();
 			int result = sqlComm.executeUpdate(query);
