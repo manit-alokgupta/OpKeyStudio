@@ -136,13 +136,13 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 	 * @return the result
 	 */
 	public Object open() {
-		Cursor waitCursor=new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT);
+		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
 		createContents();
 		shlSpyMobile.open();
 		shlSpyMobile.layout();
 		Display display = getParent().getDisplay();
-		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		Cursor arrow = new Cursor(display, SWT.CURSOR_ARROW);
 		getParent().setCursor(arrow);
 		while (!shlSpyMobile.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -271,6 +271,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 				if (textObjectName.getText().length() > 0) {
 					lblAddToORConfirmation.setVisible(false);
 					btnClickAndMoveToNextScreen.setEnabled(false);
+					btnStop.setEnabled(false);
+					btnCapture.setEnabled(false);
 
 					LinkedHashMap<String, String> mapOfObjectProperties = new LinkedHashMap<String, String>();
 					for (TableItem row : objectPropertiesTable.getItems())
@@ -304,6 +306,8 @@ public class MobileSpyDialog extends Dialog implements MobileElementInspectorDia
 						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
 						lblAddToORConfirmation.setVisible(true);
 						btnClickAndMoveToNextScreen.setEnabled(true);
+						btnStop.setEnabled(true);
+						btnCapture.setEnabled(true);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
