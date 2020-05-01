@@ -8,6 +8,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -461,6 +462,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			}
 		});
+
 		deleteMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -527,7 +529,7 @@ public class ArtifactTreeUI extends SuperComposite {
 							"Name should not contain any special characters.");
 					return;
 				}
-				
+
 				for (Artifact artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(renamedText)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
@@ -655,6 +657,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			}
 		});
+
 		toolbarNew.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -695,7 +698,7 @@ public class ArtifactTreeUI extends SuperComposite {
 						return;
 					}
 				}
-				
+
 				boolean startsWithNumber = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 						.isStringStartsWithNumbers(renamedText);
 				boolean containsSpecialCharacters = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
@@ -755,10 +758,10 @@ public class ArtifactTreeUI extends SuperComposite {
 		});
 
 		toolbarRefresh.addSelectionListener(new SelectionListener() {
-
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				new RefreshArtifactTree().refreshArtifactTree();
+				new RefreshArtifactTree().refreshArtifactTree();				
 			}
 
 			@Override
@@ -767,6 +770,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			}
 		});
+
 		toolbarFolder.addSelectionListener(new SelectionListener() {
 
 			@Override
