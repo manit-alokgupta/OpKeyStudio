@@ -7,7 +7,6 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileInputStream;
-import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -35,7 +34,6 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.CodeCompletionProvider;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaBasicCompletion;
@@ -68,7 +66,10 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	private void addLibraryClassInformation() {
 		List<File> jarFiles = new CompilerUtilities().getAllPluginRunnerJar();
-		parseClassesForIntellisense(jarFiles);
+		jarFiles.addAll(new CompilerUtilities().getPluginBaseLibraries());
+		jarFiles.addAll(new CompilerUtilities().getAllPluginsLibraries());
+		List<Class> allClasses = getAllReflectionsClassesFromJars(jarFiles);
+		parseAllClassesForIntellisense(allClasses);
 	}
 
 	private URLClassLoader getURLClassLoaderOfClasses(List<File> allLibs) throws MalformedURLException {
@@ -88,7 +89,11 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				if (className.contains("$")) {
 					continue;
 				}
-				allClases.add(className);
+				if (className.contains("org.openqa") || className.contains("java.lang")
+						|| className.contains("java.util") || className.contains("java.io")
+						|| className.contains("com.opkey")) {
+					allClases.add(className);
+				}
 			}
 		}
 		return allClases;
@@ -118,7 +123,8 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return listofClasses;
 	}
 
-	private void parseClassesForIntellisense(List<File> jarFiles) {
+	private List<Class> getAllReflectionsClassesFromJars(List<File> jarFiles) {
+		List<Class> allClasses = new ArrayList<Class>();
 		try {
 			System.out.println("Fetching Class Information");
 			URLClassLoader classLoader = getURLClassLoaderOfClasses(jarFiles);
@@ -129,12 +135,9 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				}
 				try {
 					@SuppressWarnings("rawtypes")
-					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
-					String modifiers = Modifier.toString(classToLoad.getModifiers());
-					modifiers = modifiers.toLowerCase();
-					System.out.println("Reflection Class " + classToLoad.getName());
-					// parseClass(classToLoad);
-
+					Class loadedClass = Class.forName(className.replaceAll(".class", ""), true, classLoader);
+					System.out.println("Reflection Class " + loadedClass.getName());
+					allClasses.add(loadedClass);
 				} catch (NoClassDefFoundError e) {
 					e.printStackTrace();
 				} catch (IncompatibleClassChangeError e) {
@@ -158,9 +161,13 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				}
 			}
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return allClasses;
+	}
+
+	private void parseAllClassesForIntellisense(List<Class> allclasses) {
+
 	}
 
 	public JavaCompletionProvider getClassMethodsCompletionProvider(TranpiledClassInfo tranpiledClassInfo) {
