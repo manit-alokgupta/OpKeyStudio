@@ -4,9 +4,14 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 public class TranpiledClassInfo {
 	private JavaClassSource classSource;
+	private Class reflectionClassObject;
 
 	public TranpiledClassInfo(JavaClassSource classSource) {
 		this.setClassSource(classSource);
+	}
+
+	public TranpiledClassInfo(Class classSource) {
+		this.setReflectionClassObject(classSource);
 	}
 
 	public JavaClassSource getClassSource() {
@@ -15,5 +20,13 @@ public class TranpiledClassInfo {
 
 	public void setClassSource(JavaClassSource classSource) {
 		this.classSource = classSource;
+	}
+
+	public Class getReflectionClassObject() {
+		return reflectionClassObject;
+	}
+
+	public void setReflectionClassObject(Class reflectionClassObject) {
+		this.reflectionClassObject = reflectionClassObject;
 	}
 }
