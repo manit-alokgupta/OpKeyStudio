@@ -43,6 +43,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
@@ -448,6 +449,7 @@ public class CodedFunctionView extends SuperComposite {
 			new FLTranspiler().transpile(artifact);
 		} else if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 			new TCTranspiler().transpile(artifact);
+			new ArtifactTranspiler().transpileAllFl();
 		}
 		initTestCaseCode();
 	}
