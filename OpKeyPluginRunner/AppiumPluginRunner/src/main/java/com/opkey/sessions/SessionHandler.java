@@ -2,6 +2,7 @@ package com.opkey.sessions;
 
 import java.io.File;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 import com.opkeystudio.core.sessioninterfaces.ExecutionSession;
 import com.opkeystudio.core.sessions.SessionInfo;
 import com.plugin.appium.Finder;
@@ -26,18 +27,13 @@ public class SessionHandler implements ExecutionSession {
 	}
 
 	public void beforeSessionStart(SessionInfo sessionInfo) {
-		String deviceId = sessionInfo.getPluginSetting("DeviceID");
-		String deviceName = sessionInfo.getPluginSetting("DeviceName");
-		String deviceVersion = sessionInfo.getPluginSetting("DeviceVersion");
-		String deviceApiLevel = sessionInfo.getPluginSetting("DeviceApiLevel");
-		String deviceAbi = sessionInfo.getPluginSetting("DeviceABI");
+		MobileDevice device = sessionInfo.getMobileDevice();
 
 		System.out.println(">>Mobile Device Info");
-		System.out.println("Device Name :" + deviceName);
-		System.out.println("Device Id :" + deviceId);
-		System.out.println("Device Version :" + deviceVersion);
-		System.out.println("Device Api Level :" + deviceApiLevel);
-		System.out.println("Device Abi :" + deviceAbi);
+		System.out.println("Device Name :" + device.getDisplayName());
+		System.out.println("Device Id :" + device.getSerialNumber());
+		System.out.println("Device Version :" + device.getVersion());
+		System.out.println("Device OS :" + device.getOperatingSystem());
 
 		ReportBuilder builder = ReportBuilder.atPath(new File(sessionInfo.getReportFilePath()));
 		IReport report = builder.withName(sessionInfo.getSessionName()).withFormat(ReportFormat.HTML).build();
