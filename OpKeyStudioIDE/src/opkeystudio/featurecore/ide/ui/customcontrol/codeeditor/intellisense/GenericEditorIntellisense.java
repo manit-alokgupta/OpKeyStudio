@@ -6,9 +6,19 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.FileInputStream;
+import java.lang.reflect.Modifier;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
 
+import javax.management.RuntimeErrorException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -25,6 +35,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.CodeCompletionProvider;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaBasicCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCompletionProvider;
@@ -51,6 +63,104 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private void initIntellisense() {
 		addSimpleKeywords();
 		addOpKeyTranspiledClassInformation();
+		addLibraryClassInformation();
+	}
+
+	private void addLibraryClassInformation() {
+		List<File> jarFiles = new CompilerUtilities().getAllPluginRunnerJar();
+		parseClassesForIntellisense(jarFiles);
+	}
+
+	private URLClassLoader getURLClassLoaderOfClasses(List<File> allLibs) throws MalformedURLException {
+		URL[] allJarsAndClasses = new URL[allLibs.size()];
+		for (int i = 0; i < allLibs.size(); i++) {
+			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
+		}
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses, EditorTools.class.getClassLoader());
+		return child;
+	}
+
+	private Set<String> getAllClassNameFromAllJar(List<File> pluginsLibrary) {
+		Set<String> allClases = new HashSet<String>();
+		for (File file : pluginsLibrary) {
+			List<String> classNames = getAllClassNamesFromJar(file.getAbsolutePath());
+			for (String className : classNames) {
+				if (className.contains("$")) {
+					continue;
+				}
+				allClases.add(className);
+			}
+		}
+		return allClases;
+	}
+
+	private List<String> getAllClassNamesFromJar(String jarName) {
+		List<String> listofClasses = new ArrayList<String>();
+		try {
+			JarInputStream jarFile = new JarInputStream(new FileInputStream(jarName));
+			JarEntry jarEntry;
+
+			while (true) {
+				jarEntry = jarFile.getNextJarEntry();
+				if (jarEntry == null) {
+					break;
+				}
+				if ((jarEntry.getName().toLowerCase().endsWith(".class"))) {
+					String className = jarEntry.getName().replaceAll("/", "\\.");
+					String myClass = className.substring(0, className.lastIndexOf('.'));
+					listofClasses.add(myClass);
+				}
+			}
+			jarFile.close();
+		} catch (Exception e) {
+
+		}
+		return listofClasses;
+	}
+
+	private void parseClassesForIntellisense(List<File> jarFiles) {
+		try {
+			System.out.println("Fetching Class Information");
+			URLClassLoader classLoader = getURLClassLoaderOfClasses(jarFiles);
+			Set<String> classNames = getAllClassNameFromAllJar(jarFiles);
+			for (String className : classNames) {
+				if (className.contains("$")) {
+					continue;
+				}
+				try {
+					@SuppressWarnings("rawtypes")
+					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
+					String modifiers = Modifier.toString(classToLoad.getModifiers());
+					modifiers = modifiers.toLowerCase();
+					System.out.println("Reflection Class " + classToLoad.getName());
+					// parseClass(classToLoad);
+
+				} catch (NoClassDefFoundError e) {
+					e.printStackTrace();
+				} catch (IncompatibleClassChangeError e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (UnsupportedClassVersionError e) {
+					e.printStackTrace();
+				} catch (RuntimeErrorException e) {
+					e.printStackTrace();
+				} catch (RuntimeException e) {
+					e.printStackTrace();
+				} catch (ExceptionInInitializerError e) {
+					e.printStackTrace();
+				} catch (UnsatisfiedLinkError e) {
+					e.printStackTrace();
+				} catch (LinkageError e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public JavaCompletionProvider getClassMethodsCompletionProvider(TranpiledClassInfo tranpiledClassInfo) {
