@@ -595,8 +595,15 @@ public class TestCaseView extends SuperComposite {
 	}
 
 	public void openExecutionWizard() {
-		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
-		executionWizard.open();
+		try {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
+			ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
+			executionWizard.open();
+		}
+		finally {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
+		}
+		
 	}
 
 	private void populateFlowStepsData(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {

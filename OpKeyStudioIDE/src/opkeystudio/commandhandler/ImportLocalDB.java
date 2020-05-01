@@ -23,43 +23,51 @@ public class ImportLocalDB {
 
 	@Execute
 	public void execute(Shell shell) {
-		Utilities.getInstance().setDefaultShell(shell);
-		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
-		dialog.setFilterExtensions(filterExt);
-		dialog.open();
-		String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
-		if (filePath != null) {
-			File file = new File(filePath);
-			if (!file.exists()) {
-				return;
+		try {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
+			Utilities.getInstance().setDefaultShell(shell);
+			FileDialog dialog = new FileDialog(shell, SWT.OPEN);
+			dialog.setFilterExtensions(filterExt);
+			dialog.open();
+			String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
+			if (filePath != null) {
+				File file = new File(filePath);
+				if (!file.exists()) {
+					return;
+				}
+				if (!file.isFile()) {
+					return;
+				}
+				ServiceRepository.getInstance().setExortedDBFilePath(filePath);
+				SQLiteCommunicator sqlComm = new SQLiteCommunicator(filePath);
+				try {
+					sqlComm.connect();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				SQLiteCommunicator.getOpKeyDBCommunicator(sqlComm);
+				List<Project> projects = new ProjectDataApi().getProjectList();
+				ServiceRepository.getInstance().setDefaultProject(projects.get(0));
+				ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
+				tree.renderArtifacts();
 			}
-			if (!file.isFile()) {
-				return;
-			}
-			ServiceRepository.getInstance().setExortedDBFilePath(filePath);
-			SQLiteCommunicator sqlComm = new SQLiteCommunicator(filePath);
+			SQLiteCommunicator sqlComm = new SQLiteCommunicator(ServiceRepository.getInstance().getExportedDBFilePath());
 			try {
 				sqlComm.connect();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			new Utilities().closeAllMparts();
 			SQLiteCommunicator.getOpKeyDBCommunicator(sqlComm);
 			List<Project> projects = new ProjectDataApi().getProjectList();
 			ServiceRepository.getInstance().setDefaultProject(projects.get(0));
-			ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
-			tree.renderArtifacts();
+			
 		}
-		SQLiteCommunicator sqlComm = new SQLiteCommunicator(ServiceRepository.getInstance().getExportedDBFilePath());
-		try {
-			sqlComm.connect();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		finally {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
-		new Utilities().closeAllMparts();
-		SQLiteCommunicator.getOpKeyDBCommunicator(sqlComm);
-		List<Project> projects = new ProjectDataApi().getProjectList();
-		ServiceRepository.getInstance().setDefaultProject(projects.get(0));
+		
 	}
 
 }
