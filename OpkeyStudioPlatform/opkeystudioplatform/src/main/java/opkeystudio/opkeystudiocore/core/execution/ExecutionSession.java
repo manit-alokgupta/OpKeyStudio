@@ -1,5 +1,8 @@
 package opkeystudio.opkeystudiocore.core.execution;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -11,6 +14,8 @@ public class ExecutionSession {
 	private Artifact artifact;
 	private String artifactFilePackageClass;
 	private String reportFolderDir;
+
+	private Map<String, String> pluginSettings = new HashMap<String, String>();
 
 	public ExecutionSession(String sessionName, String buildName) {
 		this.setSessionName((sessionName + "_" + Utilities.getInstance().getCurrentDateTime()).replaceAll(" ", "_")
@@ -83,5 +88,21 @@ public class ExecutionSession {
 
 	public void setArtifactFilePackageClass(String artifactFilePackageClass) {
 		this.artifactFilePackageClass = artifactFilePackageClass;
+	}
+
+	public Map<String, String> getPluginSettings() {
+		return pluginSettings;
+	}
+
+	public void setPluginSettings(Map<String, String> pluginSettings) {
+		this.pluginSettings = pluginSettings;
+	}
+
+	public void addPluginSetting(String key, String value) {
+		getPluginSettings().put(key, value);
+	}
+
+	public String getPluginSetting(String key) {
+		return getPluginSettings().get(key);
 	}
 }

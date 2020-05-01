@@ -132,7 +132,7 @@ public class ArtifactExecutor {
 		Method method = classToLoad.getDeclaredMethod("main", String[].class);
 		final Object[] args = new Object[1];
 		args[0] = new String[] {};
-		
+
 		method.invoke(classToLoad, args);
 
 		callExecuteSessionEnd();
@@ -143,6 +143,7 @@ public class ArtifactExecutor {
 		SessionInfo sinfo = new SessionInfo();
 		ExecutionSession session = getExecutionSession();
 		sinfo.setSessionName(session.getSessionName());
+		sinfo.setPluginSettings(session.getPluginSettings());
 		sinfo.setDefaultPluginLocation("");
 		sinfo.setReportFilePath(session.getReportFolderDir() + File.separator + "Report.html");
 		return sinfo;
