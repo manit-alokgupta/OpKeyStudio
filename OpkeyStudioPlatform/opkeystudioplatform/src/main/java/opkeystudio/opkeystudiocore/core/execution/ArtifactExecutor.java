@@ -90,6 +90,7 @@ public class ArtifactExecutor {
 		setExecutionThread(executionThread);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void execute(String sessionRootDir, String artifactClassNAME, String pluginName)
 			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -104,7 +105,6 @@ public class ArtifactExecutor {
 
 		callExecuteSessionStart();
 
-		@SuppressWarnings("rawtypes")
 		Class classToLoad = Class.forName(artifactClassNAME, true, child);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("execute");
@@ -150,6 +150,7 @@ public class ArtifactExecutor {
 		return sinfo;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void callExecuteSessionStart()
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException,
 			SecurityException, IllegalArgumentException, InvocationTargetException {
@@ -161,6 +162,7 @@ public class ArtifactExecutor {
 		Object result = method.invoke(instance, info);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void callExecuteSessionEnd() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
 		SessionInfo info = getSessionInfo();
