@@ -306,26 +306,28 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 
 					// SQLITE_CONSTRAINT_UNIQUE: next time add map of name to id for continuous
 					// check
-					for (ORObject obj : allORObjects) {
-						if ((obj.getParent_object_id() != null)
-								&& obj.getParent_object_id().equals(foundParentObject.getObject_id())
-								&& obj.getName().equals(objectName)) {
+					if (foundParentObject != null) {
+						for (ORObject obj : allORObjects) {
+							if ((obj.getParent_object_id() != null)
+									&& obj.getParent_object_id().equals(foundParentObject.getObject_id())
+									&& obj.getName().equals(objectName)) {
 
-							renamedText = CustomMessageDialogUtil.openInputDialog("Rename",
-									"One object is already added with the same name in the OR. \nRename Object: "
-											+ objectName,
-											objectName);
-							if (renamedText == null)
-								return;
-
-							while (renamedText.trim().isEmpty()) {
-								CustomMessageDialogUtil.openErrorDialog("Error", "Name can't be empty!");
 								renamedText = CustomMessageDialogUtil.openInputDialog("Rename",
 										"One object is already added with the same name in the OR. \nRename Object: "
 												+ objectName,
 												objectName);
 								if (renamedText == null)
 									return;
+
+								while (renamedText.trim().isEmpty()) {
+									CustomMessageDialogUtil.openErrorDialog("Error", "Name can't be empty!");
+									renamedText = CustomMessageDialogUtil.openInputDialog("Rename",
+											"One object is already added with the same name in the OR. \nRename Object: "
+													+ objectName,
+													objectName);
+									if (renamedText == null)
+										return;
+								}
 							}
 						}
 					}
@@ -554,8 +556,8 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		if (this.deviceView != null && !this.deviceView.isDisposed()) {
 			return;
 		}
-		(this.deviceView = new MobileScreenshotDialog(shlSpyMobile, this, this.calculateInitPositionForDeviceViewDialog()))
-		.open();
+		(this.deviceView = new MobileScreenshotDialog(shlSpyMobile, this,
+				this.calculateInitPositionForDeviceViewDialog())).open();
 		setDeviceView(this.deviceView);
 	}
 
@@ -649,7 +651,8 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 			Double elementWidth = Double.parseDouble(attributes.get("width"));
 			Double elementHeight = Double.parseDouble(attributes.get("height"));
 			Rectangle rectangle = new Rectangle(MobileScreenshotDialog.safeRoundDouble(elementX),
-					MobileScreenshotDialog.safeRoundDouble(elementY), MobileScreenshotDialog.safeRoundDouble(elementWidth),
+					MobileScreenshotDialog.safeRoundDouble(elementY),
+					MobileScreenshotDialog.safeRoundDouble(elementWidth),
 					MobileScreenshotDialog.safeRoundDouble(elementHeight));
 			if (rectangle.contains(x, y)) {
 				elementsLiesIN.add(childElement);
