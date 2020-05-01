@@ -105,12 +105,7 @@ public class CodeViewTree extends CustomTree {
 			return;
 		}
 		System.out.println(">> " + selectedCodeFile.getAbsolutePath());
-		EPartService partService = Utilities.getInstance().getEpartService();
-		MPart part = partService.createPart("opkeystudio.partdescriptor.genericCodeEditor");
-		part.setLabel(selectedCodeFile.getName());
-		part.setTooltip(selectedCodeFile.getName());
-		part.getTransientData().put("opkeystudio.codeFile", selectedCodeFile);
-		partService.showPart(part, PartState.ACTIVATE);
+		Utilities.getInstance().openSelectedFileInGenericCodeEditor(selectedCodeFile);
 	}
 
 	public void deleteSelectedFile() {

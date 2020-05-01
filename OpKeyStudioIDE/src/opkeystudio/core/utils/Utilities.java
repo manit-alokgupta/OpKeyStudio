@@ -1,5 +1,6 @@
 package opkeystudio.core.utils;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -65,6 +66,22 @@ public class Utilities {
 			}
 			if (artifact_0.getId().equals(artifact.getId())) {
 				System.out.println("ID FOUND " + artifact_0.getId());
+				return mpart;
+			}
+		}
+		return null;
+	}
+
+	public MPart getGenericEditorMPart(File artifact) {
+		Collection<MPart> allParts = getAllParts();
+		System.out.println("All Parts " + allParts.size());
+		for (MPart mpart : allParts) {
+			System.out.println("Mpart Searching");
+			File artifact_0 = (File) mpart.getTransientData().get("opkeystudio.codeFile");
+			if (artifact_0 == null) {
+				continue;
+			}
+			if (artifact_0.getAbsolutePath().equals(artifact.getAbsolutePath())) {
 				return mpart;
 			}
 		}
@@ -178,6 +195,22 @@ public class Utilities {
 		} finally {
 			Utilities.getInstance().defaultShell.setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
+	}
+
+	public void openSelectedFileInGenericCodeEditor(File selectedCodeFile) {
+		MPart mpart = Utilities.getInstance().getGenericEditorMPart(selectedCodeFile);
+		if (mpart != null) {
+			System.out.println("MPART Found");
+			EPartService partService = Utilities.getInstance().getEpartService();
+			partService.showPart(mpart, PartState.ACTIVATE);
+			return;
+		}
+		EPartService partService = Utilities.getInstance().getEpartService();
+		MPart part = partService.createPart("opkeystudio.partdescriptor.genericCodeEditor");
+		part.setLabel(selectedCodeFile.getName());
+		part.setTooltip(selectedCodeFile.getName());
+		part.getTransientData().put("opkeystudio.codeFile", selectedCodeFile);
+		partService.showPart(part, PartState.ACTIVATE);
 	}
 
 	public void closeArtifactPart(Artifact artifact) {
