@@ -1,4 +1,4 @@
-package com.opkey.ObjectFromatter;
+package com.opkey.appium.ObjectFromatter;
 
 import java.util.Map;
 import java.util.Set;

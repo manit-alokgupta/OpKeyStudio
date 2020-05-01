@@ -1,4 +1,4 @@
-package com.opkey.OpKeyGenericPlugin;
+package com.opkey.appium;
 
 import java.awt.AWTException;
 import java.io.File;
@@ -11,10 +11,10 @@ import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevi
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.contexts.Context;
 import com.crestech.opkey.plugin.exceptionhandling.ArgumentDataMissingException;
-import com.opkey.ObjectFromatter.ObjectConverter;
-import com.opkey.caller.FunctionCaller;
-import com.opkey.context.ContextInitiator;
-import com.opkey.sessions.SessionHandler;
+import com.opkey.appium.ObjectFromatter.ObjectConverter;
+import com.opkey.appium.caller.FunctionCaller;
+import com.opkey.appium.context.ContextInitiator;
+import com.opkey.appium.sessions.SessionHandler;
 import com.opkeystudio.runtime.ORObject;
 import com.plugin.appium.AppiumObject;
 import com.plugin.appium.exceptionhandlers.AdbNotFoundException;
@@ -55,8 +55,8 @@ import com.plugin.appium.keywords.GenericKeyword.Window;
 import com.plugin.appium.keywords.GenericKeyword.actionByText.ActionByText;
 import com.ssts.reporting.ReportBuilder;
 
-public class OpKeyGenericKeywords {
-	public OpKeyGenericKeywords() {
+public class OpKeyAppiumKeywords {
+	public OpKeyAppiumKeywords() {
 		new ContextInitiator().initContext();
 	}
 

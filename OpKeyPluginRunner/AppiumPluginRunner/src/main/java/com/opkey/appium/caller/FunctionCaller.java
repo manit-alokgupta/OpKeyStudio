@@ -1,4 +1,4 @@
-package com.opkey.caller;
+package com.opkey.appium.caller;
 
 import java.util.concurrent.Callable;
 
@@ -6,7 +6,7 @@ import com.crestech.opkey.plugin.ResultCodes;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.Result;
 import com.crestech.opkey.plugin.contexts.Context;
-import com.opkey.OpKeyGenericPlugin.ReportHelper;
+import com.opkey.appium.ReportHelper;
 
 public class FunctionCaller {
 	public static <T> FunctionResult execute(Callable<T> task) {

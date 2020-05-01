@@ -1,4 +1,4 @@
-package com.opkey.OpKeyGenericPlugin;
+package com.opkey.appium;
 
 import java.util.ArrayList;
 import java.util.List;

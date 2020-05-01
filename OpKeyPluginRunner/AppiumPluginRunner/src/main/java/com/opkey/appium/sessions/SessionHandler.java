@@ -1,4 +1,4 @@
-package com.opkey.sessions;
+package com.opkey.appium.sessions;
 
 import java.io.File;
 
@@ -19,12 +19,6 @@ public class SessionHandler implements ExecutionSession {
 		/*
 		 * Report.get().endTestCase(); Report.get().endSuite();
 		 */
-		try {
-			Finder.findAppiumDriver().quit();
-		} catch (ToolNotSetException e) {
-			System.out.println("@Exception while driver quit.");
-			e.printStackTrace();
-		}
 		ReportBuilder.get().close();
 	}
 

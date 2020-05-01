@@ -1,4 +1,4 @@
-package com.opkey.OpKeyGenericPlugin;
+package com.opkey.appium;
 
 public class DataType {
 	public static boolean getBoolean(String bool) {
