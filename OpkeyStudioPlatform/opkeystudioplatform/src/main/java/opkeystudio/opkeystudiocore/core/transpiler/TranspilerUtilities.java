@@ -11,6 +11,17 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class TranspilerUtilities {
+
+	private List<String> appiumTypeFunctionLibraries = new ArrayList<String>();
+	private static TranspilerUtilities instance;
+
+	public static TranspilerUtilities getInstance() {
+		if (instance == null) {
+			instance = new TranspilerUtilities();
+		}
+		return instance;
+	}
+
 	public void writeCodeToFile(File file, JavaClassSource classSource) {
 		Utilities.getInstance().writeToFile(file, classSource.toString());
 	}
@@ -30,8 +41,7 @@ public class TranspilerUtilities {
 		}
 		classSource.setPackage(artifact.getPackageName());
 	}
-	
-	
+
 	private List<String> getGenericAppiumKeywords() {
 		List<String> keywords = new ArrayList<String>();
 		keywords.add("LaunchChromeOnMobile");
@@ -49,8 +59,8 @@ public class TranspilerUtilities {
 		return keywords;
 	}
 
-	public void processFlowStepsForAppium(List<FlowStep> flowSteps) {
-		boolean isMobileKeyword = false;
+	public void processFlowStepsForAppium(Artifact artifact, List<FlowStep> flowSteps) {
+		boolean isMobileKeyword = TranspilerUtilities.getInstance().isFunctionLibraryisAppiumType(artifact.getId());
 		List<String> appiumKeywords = getGenericAppiumKeywords();
 		List<String> webKeywords = getGenericWebKeywords();
 		for (FlowStep flowStep : flowSteps) {
@@ -64,7 +74,45 @@ public class TranspilerUtilities {
 					isMobileKeyword = false;
 				}
 			}
+			if (flowStep.getFunctionLibraryComponent() != null) {
+				if (isMobileKeyword) {
+					TranspilerUtilities.getInstance()
+							.addAppiumTypeFunctionLibraries(flowStep.getFunctionLibraryComponent().getId());
+				} else {
+					TranspilerUtilities.getInstance()
+							.removeAppiumTypeFunctionLibraries(flowStep.getFunctionLibraryComponent().getId());
+				}
+			}
 			flowStep.setAppiumType(isMobileKeyword);
 		}
+	}
+
+	public List<String> getAppiumTypeFunctionLibraries() {
+		return appiumTypeFunctionLibraries;
+	}
+
+	public void setAppiumTypeFunctionLibraries(List<String> appiumTypeFunctionLibraries) {
+		this.appiumTypeFunctionLibraries = appiumTypeFunctionLibraries;
+	}
+
+	public void addAppiumTypeFunctionLibraries(String functionLibrrayId) {
+		this.getAppiumTypeFunctionLibraries().add(functionLibrrayId);
+	}
+
+	public void removeAppiumTypeFunctionLibraries(String functionLibrrayId) {
+		if (this.getAppiumTypeFunctionLibraries().contains(functionLibrrayId)) {
+			this.getAppiumTypeFunctionLibraries().remove(functionLibrrayId);
+		}
+	}
+
+	public void clearAppiumTypeFunctionLibraries() {
+		this.getAppiumTypeFunctionLibraries().clear();
+	}
+
+	public boolean isFunctionLibraryisAppiumType(String artifactId) {
+		if (getAppiumTypeFunctionLibraries().contains(artifactId)) {
+			return true;
+		}
+		return false;
 	}
 }

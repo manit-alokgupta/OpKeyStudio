@@ -46,7 +46,7 @@ public class FLTranspiler extends AbstractTranspiler {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(artifact.getVariableName()).setPublic();
 		List<FlowStep> flowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(artifact.getId());
-		new TranspilerUtilities().processFlowStepsForAppium(flowSteps);
+		new TranspilerUtilities().processFlowStepsForAppium(artifact, flowSteps);
 		String methodBodyCode = "";
 		for (String varName : new TCFLCodeConstruct().getDefaultKeywordsClassVariables()) {
 			methodBodyCode += newLineChar + varName + newLineChar;
@@ -55,6 +55,7 @@ public class FLTranspiler extends AbstractTranspiler {
 			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(artifact, flowStep);
 			methodBodyCode += flowStepCode;
 		}
+
 		List<ComponentInputArgument> componentInputArguments = FunctionLibraryApi.getInstance()
 				.getAllComponentInputArgument(artifact.getId());
 		MethodSource<JavaClassSource> method = class1.addMethod();

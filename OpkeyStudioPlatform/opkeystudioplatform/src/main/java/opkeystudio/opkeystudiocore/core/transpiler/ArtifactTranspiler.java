@@ -79,6 +79,7 @@ public class ArtifactTranspiler {
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.appium");
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
 		ArtifactTranspiler.getInstance().addPackageName("com.ssts.reporting");
+		TranspilerUtilities.getInstance().clearAppiumTypeFunctionLibraries();
 	}
 
 	private boolean checkPackageNameIsValid(String packagename) {
@@ -107,6 +108,13 @@ public class ArtifactTranspiler {
 			new TCTranspiler().transpile(artifact);
 			new FLTranspiler().transpile(artifact);
 			new SuiteTranspiler().transpile(artifact);
+		}
+	}
+
+	public void transpileAllFl() {
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
+		for (Artifact artifact : artifacts) {
+			new FLTranspiler().transpile(artifact);
 		}
 	}
 
