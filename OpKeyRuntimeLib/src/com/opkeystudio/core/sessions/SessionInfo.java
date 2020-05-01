@@ -3,11 +3,13 @@ package com.opkeystudio.core.sessions;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
+
 public class SessionInfo {
 	private String sessionName;
 	private String defaultPluginLocation;
 	private String reportFilePath;
-
+	private MobileDevice mobileDevice;
 	private Map<String, String> pluginSettings = new HashMap<String, String>();
 
 	public String getSessionName() {
@@ -48,5 +50,13 @@ public class SessionInfo {
 
 	public String getPluginSetting(String key) {
 		return getPluginSettings().get(key);
+	}
+
+	public MobileDevice getMobileDevice() {
+		return mobileDevice;
+	}
+
+	public void setMobileDevice(MobileDevice mobileDevice) {
+		this.mobileDevice = mobileDevice;
 	}
 }
