@@ -105,7 +105,8 @@ public class ExecutionResultView extends SuperComposite {
 				}
 				String errorLogs = "Errors while Compiling Artifacts";
 				for (CompileError error : errors) {
-					errorLogs += System.lineSeparator() + error.getMessage() + System.lineSeparator();
+					errorLogs += System.lineSeparator() + error.getSource().getName() + System.lineSeparator()
+							+ error.getMessage() + System.lineSeparator();
 				}
 				logTextView.setForeground(new Color(logTextView.getDisplay(), 255, 0, 0));
 				logTextView.setText(errorLogs);
@@ -190,12 +191,12 @@ public class ExecutionResultView extends SuperComposite {
 
 			}
 		});
-		
+
 		showLogView.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ExecutionSession esession=getExecutionSession();
+				ExecutionSession esession = getExecutionSession();
 				EPartService partService = opkeystudio.core.utils.Utilities.getInstance().getEpartService();
 				MPart part = partService.createPart("opkeystudio.partdescriptor.reportViewer");
 				part.setLabel(esession.getSessionName());
@@ -203,11 +204,11 @@ public class ExecutionResultView extends SuperComposite {
 				part.getTransientData().put("opkeystudio.executionSessionData", esession);
 				partService.showPart(part, PartState.ACTIVATE);
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
