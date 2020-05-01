@@ -8,6 +8,10 @@ import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,10 +27,13 @@ import javax.management.RuntimeErrorException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.ShorthandCompletion;
@@ -36,6 +43,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaBasicCompletion;
@@ -44,6 +52,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranspiledClassInfo;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GenericEditorIntellisense extends JavaCompletionProvider {
@@ -61,11 +70,24 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	private void initIntellisense() {
-		addSimpleKeywords();
-		addOpKeyTranspiledClassInformation();
-		addLibraryClassInformation();
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				MessageDialogs msd = new MessageDialogs();
+				msd.openProgressDialog(null, "Intellisense Initializing", false, new IRunnableWithProgress() {
+
+					@Override
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						addSimpleKeywords();
+						addOpKeyTranspiledClassInformation();
+						addLibraryClassInformation();
+					}
+				});
+				msd.closeProgressDialog();
+			}
+		});
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void addLibraryClassInformation() {
 		List<File> jarFiles = new CompilerUtilities().getAllPluginRunnerJar();
 		jarFiles.addAll(new CompilerUtilities().getPluginBaseLibraries());
@@ -125,6 +147,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return listofClasses;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private List<Class> getAllReflectionsClassesFromJars(List<File> jarFiles) {
 		List<Class> allClasses = new ArrayList<Class>();
 		try {
@@ -136,7 +159,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 					continue;
 				}
 				try {
-					@SuppressWarnings("rawtypes")
 					Class loadedClass = Class.forName(className.replaceAll(".class", ""), true, classLoader);
 					System.out.println("Reflection Class " + loadedClass.getName());
 					allClasses.add(loadedClass);
@@ -168,6 +190,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return allClasses;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void parseAllClassesForIntellisense(List<Class> allclasses) {
 		for (Class _class : allclasses) {
 			parseClass(_class);
@@ -230,31 +253,82 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	public JavaCompletionProvider getClassMethodsCompletionProvider(TranspiledClassInfo tranpiledClassInfo) {
 		GenericEditorIntellisense provider = new GenericEditorIntellisense();
-		List<MethodSource<JavaClassSource>> methods = tranpiledClassInfo.getClassSource().getMethods();
-		for (MethodSource<JavaClassSource> method : methods) {
-			String methodName = method.getName();
-			String returnType = method.getReturnType().toString();
-			String params = "";
-			for (ParameterSource<JavaClassSource> param : method.getParameters()) {
-				if (!params.isEmpty()) {
-					params += ", ";
+
+		if (tranpiledClassInfo.getClassSource() != null) {
+			List<MethodSource<JavaClassSource>> methods = tranpiledClassInfo.getClassSource().getMethods();
+			for (MethodSource<JavaClassSource> method : methods) {
+				String methodName = method.getName();
+				String returnType = method.getReturnType().toString();
+				String params = "";
+				for (ParameterSource<JavaClassSource> param : method.getParameters()) {
+					if (!params.isEmpty()) {
+						params += ", ";
+					}
+					params += param.toString();
 				}
-				params += param.toString();
+				String methodBodyToShow = String.format("%s(%s)", methodName, params);
+				String methodBodyToEnter = String.format("%s(%s);", methodName, params);
+				System.out.println(methodBodyToShow);
+				provider.addMethodTypeBasicCompletion(methodBodyToShow, methodBodyToEnter, returnType);
 			}
-			String methodBodyToShow = String.format("%s(%s)", methodName, params);
-			String methodBodyToEnter = String.format("%s(%s);", methodName, params);
-			System.out.println(methodBodyToShow);
-			provider.addMethodTypeBasicCompletion(methodBodyToShow, methodBodyToEnter, returnType);
+
+			List<FieldSource<JavaClassSource>> fields = tranpiledClassInfo.getClassSource().getFields();
+			for (FieldSource<JavaClassSource> field : fields) {
+				String name = field.getName();
+				String type = field.getType().getName();
+				System.out.println(name + "     " + type);
+				provider.addFieldTypeBasicCompletion(name, name, type);
+			}
 		}
 
-		List<FieldSource<JavaClassSource>> fields = tranpiledClassInfo.getClassSource().getFields();
-		for (FieldSource<JavaClassSource> field : fields) {
-			String name = field.getName();
-			String type = field.getType().getName();
-			System.out.println(name + "     " + type);
-			provider.addFieldTypeBasicCompletion(name, name, type);
+		if (tranpiledClassInfo.getReflectionClassObject() != null) {
+			Class _class = tranpiledClassInfo.getReflectionClassObject();
+			Method[] methods = _class.getMethods();
+			Field[] fields = _class.getFields();
+			for (Field field : fields) {
+				parseStaticVariables(provider, field);
+			}
+			for (Method method : methods) {
+				parseMethod(provider, method);
+			}
 		}
 		return provider;
+	}
+
+	private void parseStaticVariables(GenericEditorIntellisense provider, Field field) {
+		String modifier = Modifier.toString(field.getModifiers()).toLowerCase();
+		System.out.println("Adding Field " + field.getName());
+		if (modifier.contains("public")) {
+			if (modifier.contains("static")) {
+				if (!modifier.contains("private")) {
+					provider.addFieldTypeBasicCompletion(field.getName(), field.getName(),
+							field.getType().getSimpleName());
+				}
+			}
+		}
+	}
+
+	private void parseMethod(GenericEditorIntellisense provider, Method method) {
+		Parameter[] parameters = method.getParameters();
+		String parametersString = "";
+		String argumentsString = "";
+		for (Parameter param : parameters) {
+			if (!parametersString.isEmpty()) {
+				parametersString += ", ";
+			}
+			if (!argumentsString.isEmpty()) {
+				argumentsString += ", ";
+			}
+			String paramType = param.getType().getSimpleName();
+			String argName = param.getName();
+			parametersString += paramType;
+			argumentsString += argName;
+		}
+
+		String dataToShow = method.getName() + "(" + parametersString + ")";
+		String dataToEnter = method.getName() + "(" + argumentsString + ")";
+		String retType = method.getReturnType().getSimpleName();
+		provider.addMethodTypeBasicCompletion(dataToShow, dataToEnter, retType);
 	}
 
 	private void addSimpleKeywords() {
