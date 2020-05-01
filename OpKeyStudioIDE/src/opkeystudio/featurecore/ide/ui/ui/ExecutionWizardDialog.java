@@ -180,7 +180,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		btnRefreshDeviceList.setToolTipText("Refresh");
 		btnRefreshDeviceList.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefreshDeviceList
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		btnRefreshDeviceList.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -220,6 +220,12 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 							+ getMobileDeviceExecutionDetail().getDeviceABI() + "\n");
 					runButton.setEnabled(true);
 
+					ExecutionSession session = getExecutionSession();
+					session.addPluginSetting("DeviceID", getMobileDeviceExecutionDetail().getDeviceId());
+					session.addPluginSetting("DeviceName", getMobileDeviceExecutionDetail().getDeviceName());
+					session.addPluginSetting("DeviceVersion", getMobileDeviceExecutionDetail().getDeviceVersion());
+					session.addPluginSetting("DeviceApiLevel", getMobileDeviceExecutionDetail().getDeviceAPILevel());
+					session.addPluginSetting("DeviceABI", getMobileDeviceExecutionDetail().getDeviceABI());
 				}
 			}
 
