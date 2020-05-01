@@ -3,6 +3,8 @@ package com.opkey.executor;
 import com.crestech.opkey.plugin.ResultCodes;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.Result;
+import com.crestech.opkey.plugin.contexts.Context;
+import com.opkey.OpKeyGenericPlugin.ReportHelper;
 
 public class KeywordExecutor {
 	private Runnable keywordRunnable;
@@ -15,10 +17,13 @@ public class KeywordExecutor {
 		FunctionResult outFunctionResult = Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage("")
 				.setOutput(false).make();
 		try {
-			return getKeywordRunnable().run();
+			FunctionResult functionResult = getKeywordRunnable().run();
+			ReportHelper.addReportStep(Context.current().getFunctionCall().getFunction().getMethodName(), functionResult);
+			return functionResult;
 		} catch (Exception e) {
 			e.printStackTrace();
 			outFunctionResult.setMessage(e.getMessage());
+			ReportHelper.addReportStep(Context.current().getFunctionCall().getFunction().getMethodName(), e);
 		}
 		return outFunctionResult;
 	}

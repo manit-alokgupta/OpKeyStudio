@@ -3,14 +3,18 @@ package com.opkey.OpKeyGenericPlugin;
 import java.awt.AWTException;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.Function.OutputParameters.OutputParameter;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileApplication;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.contexts.Context;
 import com.crestech.opkey.plugin.exceptionhandling.ArgumentDataMissingException;
 import com.opkey.ObjectFromatter.ObjectConverter;
+import com.opkey.caller.FunctionCaller;
 import com.opkey.context.ContextInitiator;
+import com.opkey.sessions.SessionHandler;
 import com.opkeystudio.runtime.ORObject;
 import com.plugin.appium.AppiumObject;
 import com.plugin.appium.exceptionhandlers.AdbNotFoundException;
@@ -487,11 +491,12 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(device.getDisplayName(), url);
 		device.setOperatingSystem("Android");
 		try {
+			device = SessionHandler.getSessionInfo().getMobileDevice();
 			System.out.println("Name " + device.getDisplayName());
 			System.out.println("os " + device.getOperatingSystem());
 			System.out.println("sn " + device.getSerialNumber());
 			System.out.println("ver " + device.getVersion());
-			device.setVersion("8.1");
+			device.setVersion(device.getVersion());
 
 			// Method_Launch_ChromeBrowser
 
@@ -529,20 +534,21 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(androidApplicationPathh); // Method_SetPickerValue
 
+		device = SessionHandler.getSessionInfo().getMobileDevice();
 		System.out.println("@AppPath: " + androidApplicationPathh);
 		System.out.println("Name " + device.getDisplayName());
 		System.out.println("os " + device.getOperatingSystem());
 		System.out.println("sn " + device.getSerialNumber());
 		System.out.println("ver " + device.getVersion());
-		device.setOperatingSystem("android");
+		//device.setOperatingSystem("android");
+		//device.setVersion("8.1");
 
-		MobileApplication m = new MobileApplication();
-		m.setApplicationPath(androidApplicationPathh);
-		m.setDisplayName(new File(androidApplicationPathh).getName());
-		m.setOperatingSystem("android");
-		device.setVersion("8.1");
-		m.setPackage(System.getenv("APP_PACKAGE"));
-		m.setMainActivity(System.getenv("APP_ACTIVITY"));
+		MobileApplication mobileApplication = new MobileApplication();
+		mobileApplication.setApplicationPath(androidApplicationPathh);
+		mobileApplication.setDisplayName(new File(androidApplicationPathh).getName());
+		mobileApplication.setOperatingSystem(SessionHandler.getSessionInfo().getMobileDevice().getOperatingSystem());
+		mobileApplication.setPackage(System.getenv("APP_PACKAGE"));
+		mobileApplication.setMainActivity(System.getenv("APP_ACTIVITY"));
 
 		Context.session().getSettings().put("AppiumServer",
 				"C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
@@ -553,7 +559,8 @@ public class OpKeyGenericKeywords {
 		Context.session().getSettings().put("PlatformVersion", device.getVersion());
 
 		try {
-			FunctionResult functionResult = new Connect2AppiumServer().Method_Launch_AndroidApplication(device, m);
+			FunctionResult functionResult = new Connect2AppiumServer().Method_Launch_AndroidApplication(device,
+					mobileApplication);
 			ReportHelper.addReportStep(methodName, functionResult);
 			;
 		} catch (Exception e) {
@@ -1426,8 +1433,6 @@ public class OpKeyGenericKeywords {
 
 	}
 
-//////Start
-
 	public boolean SetFocus(ORObject arg0) throws Exception {
 
 		String methodName = DataType.getMethodName();
@@ -2181,6 +2186,8 @@ public class OpKeyGenericKeywords {
 
 	}
 
+	// //////Start
+	
 	public boolean TypeTextAndEnterTextArea(ORObject arg0, String arg1) throws Exception {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -2190,8 +2197,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_typeTextandEnterTextArea
 
-		String bool = new TextArea().Method_typeTextandEnterTextArea(object, arg1).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_typeTextandEnterTextArea(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2204,8 +2211,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_verifyTextAreaDefaultValue
 
-		String bool = new Deprecate().Method_verifyTextAreaDefaultValue(object, arg1).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyTextAreaDefaultValue(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2217,8 +2224,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction("VerifyTextAreaDisabled");
 		// Method_verifyTextAreaDisabled
 
-		String bool = new Deprecate().Method_verifyTextAreaDisabled(object).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyTextAreaDisabled(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2230,8 +2237,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction("VerifyTextAreaEditable");
 		// Method_verifyTextAreaEditable
 
-		String bool = new TextArea().Method_verifyTextAreaEditable(object).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_verifyTextAreaEditable(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2243,8 +2250,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction("VerifyTextAreaNotEditable");
 		// Method_verifyTextAreaNotEditable
 
-		String bool = new Deprecate().Method_verifyTextAreaNotEditable(object).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyTextAreaNotEditable(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2257,8 +2264,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_verifyTextAreaToolTip
 
-		String bool = new TextArea().Method_verifyTextAreaToolTip(object, arg1).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_verifyTextAreaToolTip(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2271,8 +2278,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2, String.valueOf(arg3));
 		// Method_verifyTableColumnNumber
 
-		String bool = new Table().Method_verifyTableColumnNumber(object, arg1, arg2, arg3).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_verifyTableColumnNumber(object, arg1, arg2, arg3));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2285,8 +2292,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
 		// Method_verifyTableColumnText
 
-		String bool = new Table().Method_verifyTableColumnText(object, arg1, arg2).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_verifyTableColumnText(object, arg1, arg2));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2299,8 +2306,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
 		// Method_verifyTableRowText
 
-		String bool = new Table().Method_verifyTableRowText(object, arg1, arg2).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_verifyTableRowText(object, arg1, arg2));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2313,8 +2320,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_verifyTableColumnHeader
 
-		String bool = new Table().Method_verifyTableColumnHeader(object, arg1).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_verifyTableColumnHeader(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2327,8 +2334,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_verifyObjectToolTip
 
-		String bool = new WebObjects().Method_verifyObjectToolTip(object, arg1).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_verifyObjectToolTip(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2341,8 +2348,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
 		// Method_selectMultipleDropDownItemAndWait
 
-		String bool = new Deprecate().Method_selectMultipleDropDownItemAndWait(object, arg1, arg2).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_selectMultipleDropDownItemAndWait(object, arg1, arg2));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2354,8 +2361,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction("DoubleClickButton");
 		// Method_doubleClickButton
 
-		String bool = new Button().Method_doubleClickButton(object).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Button().Method_doubleClickButton(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2367,8 +2374,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction("FocusButton");
 		// Method_focusButton
 
-		String bool = new Button().Method_focusButton(object).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Button().Method_focusButton(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2379,8 +2386,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction("DeFocusButton");
 		// Method_deFocusButton
 
-		String bool = new Button().Method_deFocusButton().getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Button().Method_deFocusButton());
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2393,8 +2400,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction("VerifyButtonDisabled");
 		// Method_verifyButtonDisabled
 
-		String bool = new Deprecate().Method_verifyButtonDisabled(object).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyButtonDisabled(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2406,22 +2413,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction("VerifyButtonExist");
 		// Method_verifyButtonExist
 
-		String bool = new Button().Method_verifyButtonExist(object).getOutput();
-		return DataType.getBoolean(bool);
-
-	}
-
-	public boolean SelectRadioButtonOnIndexBasis(ORObject arg0, int arg1) {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
-		System.out.println(">>Keyword Called SelectRadioButtonOnIndexBasis");
-
-		ContextInitiator.addFunction("SelectRadioButtonOnIndexBasis");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
-		// Method_selectRadioButtonOnIndexBasis
-
-		String bool = "false";
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Button().Method_verifyButtonExist(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2435,8 +2428,8 @@ public class OpKeyGenericKeywords {
 				String.valueOf(arg3));
 		// Method_clickLinkInTableCell
 
-		String bool = new Table().Method_clickLinkInTableCell(object, arg1, arg2, arg3).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_clickLinkInTableCell(object, arg1, arg2, arg3));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2449,8 +2442,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_typeTextInTextArea
 
-		String bool = new TextArea().Method_typeTextInTextArea(object, arg1).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_typeTextInTextArea(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2463,8 +2456,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_typeKeysInTextArea
 
-		String bool = new TextArea().Method_typeKeysInTextArea(object, arg1).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_typeKeysInTextArea(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2476,8 +2469,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_clearTextArea
 
-		String bool = new TextArea().Method_clearTextArea(object).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_clearTextArea(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2489,8 +2482,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_SetfocusTextArea
 
-		String bool = new TextArea().Method_SetfocusTextArea(object).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_SetfocusTextArea(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -2501,29 +2494,22 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_deFocusTextArea
 
-		String bool = new TextArea().Method_deFocusTextArea().getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_deFocusTextArea());
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
-
-	public String GetTextfromTextArea(ORObject arg0) throws Exception {
+	
+	public boolean SelectRadioButtonOnIndexBasis(ORObject arg0, int arg1) {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		String methodName = DataType.getMethodName();
-		System.out.println(">>Keyword Called GetTextfromTextArea");
-		ContextInitiator.addFunction(DataType.getMethodName());
-		try {
-			FunctionResult functionResult = new TextArea().Method_GetTextfromTextArea(object);
-			ReportHelper.addReportStep(methodName, functionResult);
-			String boolString = functionResult.getOutput();
-			return boolString;
-		} catch (Exception e) {
-			e.printStackTrace();
-			ReportHelper.addReportStep(methodName, e);
-		}
 
-		// Method_GetTextfromTextArea
+		System.out.println(">>Keyword Called SelectRadioButtonOnIndexBasis");
 
-		return "";
+		ContextInitiator.addFunction("SelectRadioButtonOnIndexBasis");
+		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		// Method_selectRadioButtonOnIndexBasis
+
+		String bool = "false";
+		return DataType.getBoolean(bool);
 
 	}
 
@@ -2594,6 +2580,27 @@ public class OpKeyGenericKeywords {
 
 	}
 
+	public String GetTextfromTextArea(ORObject arg0) throws Exception {
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+		String methodName = DataType.getMethodName();
+		System.out.println(">>Keyword Called GetTextfromTextArea");
+		ContextInitiator.addFunction(DataType.getMethodName());
+		try {
+			FunctionResult functionResult = new TextArea().Method_GetTextfromTextArea(object);
+			ReportHelper.addReportStep(methodName, functionResult);
+			String boolString = functionResult.getOutput();
+			return boolString;
+		} catch (Exception e) {
+			e.printStackTrace();
+			ReportHelper.addReportStep(methodName, e);
+		}
+
+		// Method_GetTextfromTextArea
+
+		return "";
+
+	}
+	
 	public boolean VerifyTextAreaLength(ORObject arg0, int arg1) throws Exception {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -2603,7 +2610,9 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
 		// Method_verifyTextAreaLength
 
-		String bool = new Deprecate().Method_verifyTextAreaLength(object, arg1).getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Deprecate().Method_verifyTextAreaLength(object, arg1));
+		String bool = functionResult.getOutput();
 		return DataType.getBoolean(bool);
 
 	}
@@ -2626,8 +2635,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_verifyLinkCount
 
-		String bool = new Links().Method_verifyLinkCount(arg0).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Links().Method_verifyLinkCount(arg0));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -3468,8 +3477,8 @@ public class OpKeyGenericKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_verifyEditBoxEnabled
 
-		String bool = new EditBox().Method_verifyEditBoxEnabled(object).getOutput();
-		return DataType.getBoolean(bool);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_verifyEditBoxEnabled(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -3807,8 +3816,8 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called GetEditBoxName");
 
 		// Method_GetEditBoxName
-
-		return new EditBox().Method_GetEditBoxName(object).getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_GetEditBoxName(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -4378,6 +4387,7 @@ public class OpKeyGenericKeywords {
 
 	}
 
+	// Argument mismatch
 	public boolean VerifyEditBoxExist() {
 		String methodName = DataType.getMethodName();
 		ContextInitiator.addFunction(methodName);
@@ -4385,6 +4395,7 @@ public class OpKeyGenericKeywords {
 		System.out.println(">>Keyword Called VerifyEditBoxExist");
 		// Method_verifyEditBoxExist
 
+		//FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyEditBoxExist)
 		String bool = "false";
 		return DataType.getBoolean(bool);
 

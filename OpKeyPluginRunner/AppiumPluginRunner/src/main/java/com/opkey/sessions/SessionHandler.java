@@ -12,6 +12,8 @@ import com.ssts.reporting.ReportBuilder;
 import com.ssts.reporting.ReportFormat;
 
 public class SessionHandler implements ExecutionSession {
+	
+	private static SessionInfo sessionInfo;
 
 	public void afterSessionEnds(SessionInfo sessionInfo) {
 		/*
@@ -27,6 +29,7 @@ public class SessionHandler implements ExecutionSession {
 	}
 
 	public void beforeSessionStart(SessionInfo sessionInfo) {
+		SessionHandler.sessionInfo = sessionInfo;
 		MobileDevice device = sessionInfo.getMobileDevice();
 
 		System.out.println(">>Mobile Device Info");
@@ -47,6 +50,10 @@ public class SessionHandler implements ExecutionSession {
 
 	public void resumeExecutionSession(SessionInfo sessionInfo) {
 
+	}
+	
+	public static SessionInfo getSessionInfo() {
+		return SessionHandler.sessionInfo;
 	}
 
 }

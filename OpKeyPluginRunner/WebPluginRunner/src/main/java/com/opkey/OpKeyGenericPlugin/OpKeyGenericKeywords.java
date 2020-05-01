@@ -1,8 +1,12 @@
 package com.opkey.OpKeyGenericPlugin;
 
+import java.awt.AWTException;
+
 import com.crestech.opkey.plugin.ResultCodes;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.Result;
+import com.crestech.opkey.plugin.exceptionhandling.ArgumentDataMissingException;
+import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ObjectNotFoundException;
 import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ToolNotSetException;
 import com.crestech.opkey.plugin.webdriver.keywords.Browser;
 import com.crestech.opkey.plugin.webdriver.keywords.Button;
@@ -13,14 +17,18 @@ import com.crestech.opkey.plugin.webdriver.keywords.EditBox;
 import com.crestech.opkey.plugin.webdriver.keywords.Links;
 import com.crestech.opkey.plugin.webdriver.keywords.ListControl;
 import com.crestech.opkey.plugin.webdriver.keywords.Radio;
+import com.crestech.opkey.plugin.webdriver.keywords.TextArea;
 import com.crestech.opkey.plugin.webdriver.keywords.WebObjects;
 import com.crestech.opkey.plugin.webdriver.keywords.Window;
+import com.crestech.opkey.plugin.webdriver.keywords.byText.ByTextKeywords;
 import com.crestech.opkey.plugin.webdriver.object.WebDriverObject;
 import com.opkey.ObjectFromatter.ObjectConverter;
 import com.opkey.context.ContextInitiator;
 import com.opkey.executor.KeywordExecutor;
 import com.opkey.executor.Runnable;
 import com.opkeystudio.runtime.ORObject;
+
+import javafx.scene.control.CheckBox;
 
 public class OpKeyGenericKeywords {
 
@@ -102,7 +110,6 @@ public class OpKeyGenericKeywords {
 			public FunctionResult run() {
 				try {
 					FunctionResult functionResult = new Browser().Method_WebBrowserOpen(arg0, arg1);
-					ReportHelper.addReportStep("OpenBrowser", functionResult);
 					return functionResult;
 				} catch (Exception e) {
 					return Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage(e.getMessage()).make();
@@ -110,7 +117,6 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		ReportHelper.addReportStep("OpenBrowser", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -614,9 +620,20 @@ public class OpKeyGenericKeywords {
 
 	public boolean VerifyObjectVisible(ORObject arg0) {
 		ContextInitiator.addFunction("VerifyObjectVisible");
-		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		final WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		
 		// Method_verifyObjectVisible
+		FunctionResult result = new KeywordExecutor(new Runnable() {
 
+			public FunctionResult run() {
+				try {
+					return new WebObjects().Method_verifyObjectVisible(object);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}).executeKeyword();
 		return false;
 
 	}
@@ -885,12 +902,13 @@ public class OpKeyGenericKeywords {
 
 	public boolean SelectWindow(String arg0, int arg1) {
 		ContextInitiator.addFunction("SelectWindow");
-
+		String methodName = DataTypeConverter.getMethodName();
 		// Method_selectWindow
 		try {
-			new Window().Method_selectWindow(arg0, arg1);
+			FunctionResult functionResult = new Window().Method_selectWindow(arg0, arg1);
+			ReportHelper.addReportStep(methodName, functionResult);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			ReportHelper.addReportStep(methodName, e);
 			e.printStackTrace();
 		}
 		return false;
@@ -1257,12 +1275,23 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean TypeTextInTextArea(ORObject arg0, String arg1) {
+	public boolean TypeTextInTextArea(ORObject arg0, final String arg1) {
 		ContextInitiator.addFunction("TypeTextInTextArea");
-		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		final WebDriverObject object = new ObjectConverter().formatObject(arg0);
 
 		// Method_typeTextInTextArea
+		FunctionResult result = new KeywordExecutor(new Runnable() {
 
+			public FunctionResult run() {
+				try {
+					return new TextArea().Method_typeTextInTextArea(object, arg1);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}).executeKeyword();
 		return false;
 
 	}
@@ -2073,11 +2102,23 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean TypeSecureText(ORObject arg0, String arg1) {
+	public boolean TypeSecureText(ORObject arg0, final String arg1) {
 		ContextInitiator.addFunction("TypeSecureText");
-		WebDriverObject object = new ObjectConverter().formatObject(arg0);
+		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		final WebDriverObject object = new ObjectConverter().formatObject(arg0);
 
 		// Method_typeSecureText
+		FunctionResult result = new KeywordExecutor(new Runnable() {
+
+			public FunctionResult run() {
+				try {
+					return new Deprecate().Method_typeSecureText(object, arg1);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}).executeKeyword();
 
 		return false;
 
@@ -2480,12 +2521,18 @@ public class OpKeyGenericKeywords {
 
 	public boolean GetObjectExistence(final ORObject arg0) {
 		ContextInitiator.addFunction("GetObjectExistence");
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getObjectExistence
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
 				WebDriverObject object = new ObjectConverter().formatObject(arg0);
-				return null;
+				try {
+					return new WebObjects().Method_getObjectExistence(object);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}).executeKeyword();
 		return false;
@@ -2664,15 +2711,21 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean WaitForObjectVisible(final ORObject arg0, int arg1) {
+	public boolean WaitForObjectVisible(final ORObject arg0, final int arg1) {
 		ContextInitiator.addFunction("WaitForObjectVisible");
-
+		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_waitforobjectvisible
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
 				WebDriverObject object = new ObjectConverter().formatObject(arg0);
-				return null;
+				try {
+					return new WebObjects().Method_waitforobjectvisible(object, arg1);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}).executeKeyword();
 		return false;
@@ -2855,7 +2908,8 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		//ReportHelper.addReportStep("GetObjectText", new Exception("exception while runnging GetObjectText"));
+		// ReportHelper.addReportStep("GetObjectText", new Exception("exception while
+		// runnging GetObjectText"));
 		return "";
 
 	}
@@ -2943,44 +2997,70 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean Web_ClickByTextInSequence(String arg0, int arg1, int arg2, boolean arg3, String arg4, int arg5,
-			boolean arg6, ORObject arg7, ORObject arg8, ORObject arg9, ORObject arg10, ORObject arg11, boolean arg12,
-			String arg13, int arg14, boolean arg15, String arg16, int arg17, boolean arg18, String arg19) {
+	public boolean Web_ClickByTextInSequence(final String arg0, final int arg1, final int arg2, final boolean arg3, final String arg4, final int arg5,
+			final boolean arg6, ORObject arg7, ORObject arg8, ORObject arg9, ORObject arg10, ORObject arg11, final boolean arg12,
+			final String arg13, final int arg14, final boolean arg15, final String arg16, final int arg17, final boolean arg18, final String arg19) {
 		ContextInitiator.addFunction("Web_ClickByTextInSequence");
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2),
+				String.valueOf(arg3), String.valueOf(arg4), String.valueOf(arg5), String.valueOf(arg6),
+				String.valueOf(arg12), String.valueOf(arg13), String.valueOf(arg14), String.valueOf(arg15), String.valueOf(arg16), String.valueOf(arg17), String.valueOf(arg18),String.valueOf(arg19));
+		
+		final WebDriverObject object1 = new ObjectConverter().formatObject(arg7);
+		final WebDriverObject object2 = new ObjectConverter().formatObject(arg8);
+		final WebDriverObject object3 = new ObjectConverter().formatObject(arg9);
+		final WebDriverObject object4 = new ObjectConverter().formatObject(arg10);
+		final WebDriverObject object5 = new ObjectConverter().formatObject(arg11);
 		// Method_clickByTextInSequence
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				return null;
+				try {
+					return new WebObjects().Method_clickByTextInSequence(arg0, arg1, arg3, arg4, arg2, arg6, arg13, arg5,
+							arg12, arg16, arg14, arg15, arg19, arg17, arg18, object1, object2, object3, object4, object5);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}).executeKeyword();
 		return false;
 
 	}
 
-	public boolean Web_SelectByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
+	public boolean Web_SelectByText(final String arg0, final int arg1, final boolean arg2, final boolean arg3, ORObject arg4) {
 		ContextInitiator.addFunction("Web_SelectByText");
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		final WebDriverObject object = new ObjectConverter().formatObject(arg4);
 		// Method_SelectByText
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				return null;
+				try {
+					return new ByTextKeywords().Method_SelectByText(arg0, arg1, arg2, arg3, object);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}).executeKeyword();
 		return false;
 
 	}
 
-	public boolean Web_TypeByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4, ORObject arg5) {
+	public boolean Web_TypeByText(final String arg0, final int arg1, final boolean arg2, final String arg3, final boolean arg4, ORObject arg5) {
 		ContextInitiator.addFunction("Web_TypeByText");
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3), String.valueOf(arg4));
+		final WebDriverObject object = new ObjectConverter().formatObject(arg5);
 		// Method_typeTextUsingText
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				return null;
+				try {
+					return new EditBox().Method_typeTextUsingText(arg0, arg1, arg2, arg3, arg4, object);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}).executeKeyword();
 		return false;
@@ -3015,56 +3095,85 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean Web_SelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, String arg4,
-			ORObject arg5) {
+	public boolean Web_SelectCheckboxByText(final String arg0, final int arg1, final boolean arg2, final boolean arg3,
+			final String arg4, ORObject arg5) {
 		ContextInitiator.addFunction("Web_SelectCheckboxByText");
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2),
+				String.valueOf(arg3), String.valueOf(arg4));
+		final WebDriverObject object = new ObjectConverter().formatObject(arg5);
 		// Method_selectCheckBoxByText
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				return null;
+				try {
+					return new Checkbox().Method_selectCheckBoxByText(arg0, arg1, arg2, arg3, arg4, object);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}).executeKeyword();
 		return false;
 
 	}
 
-	public boolean Web_DeSelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
+	public boolean Web_DeSelectCheckboxByText(final String arg0, final int arg1, final boolean arg2, final boolean arg3,
+			ORObject arg4) {
 		ContextInitiator.addFunction("Web_DeSelectCheckboxByText");
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2),
+				String.valueOf(arg3));
+		final WebDriverObject object = new ObjectConverter().formatObject(arg4);
 		// Method_deSelectCheckBoxByText
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				return null;
+				try {
+					return new Checkbox().Method_deSelectCheckBoxByText(arg0, arg1, arg2, arg3, object);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}).executeKeyword();
 		return false;
 
 	}
 
-	public boolean Web_SelectRadioButtonByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
+	public boolean Web_SelectRadioButtonByText(final String arg0, final int arg1, final boolean arg2,
+			final boolean arg3, ORObject arg4) {
 		ContextInitiator.addFunction("Web_SelectRadioButtonByText");
-
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2),
+				String.valueOf(arg3));
+		final WebDriverObject object = new ObjectConverter().formatObject(arg4);
 		// Method_selectRadioButtonByText
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				return null;
+				try {
+					return new Radio().Method_selectRadioButtonByText(arg0, arg1, arg2, arg3, object);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}).executeKeyword();
 		return false;
 
 	}
 
-	public boolean Web_SelectDropDownByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4,
-			boolean arg5, ORObject arg6) {
+	public boolean Web_SelectDropDownByText(final String arg0, final int arg1, final boolean arg2, final String arg3,
+			final boolean arg4, final boolean arg5, ORObject arg6) {
 		ContextInitiator.addFunction("Web_SelectDropDownByText");
+		final WebDriverObject object = new ObjectConverter().formatObject(arg6);
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
-				return null;
+				try {
+					return new DropDown().Method_selectDropDownByText(arg0, arg1, arg2, arg3, arg4, arg5, object);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}).executeKeyword();
 		// Method_selectDropDownByText
@@ -3789,22 +3898,10 @@ public class OpKeyGenericKeywords {
 
 	}
 
-	public boolean Web_ResizeBrowser(final int arg0, int arg1) {
-		ContextInitiator.addFunction("Web_ResizeBrowser");
-
-		// Method_setViewPort
-		FunctionResult result = new KeywordExecutor(new Runnable() {
-
-			public FunctionResult run() {
-				return null;
-			}
-		}).executeKeyword();
-		return false;
-
-	}
-
 	public boolean RightClickAndSelectByText(final ORObject arg0, String arg1) {
 		ContextInitiator.addFunction("RightClickAndSelectByText");
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+
 		FunctionResult result = new KeywordExecutor(new Runnable() {
 
 			public FunctionResult run() {
