@@ -214,12 +214,6 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					} catch (Exception ex) {
 						CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
 					}
-					System.out.println("\n<---------------- Selected Device Details ---------------->\n" + "Device ID: "
-							+ getMobileDeviceExecutionDetail().getDeviceId() + "\n" + "Device Name: "
-							+ getMobileDeviceExecutionDetail().getDeviceName() + "\n" + "Device Version: "
-							+ getMobileDeviceExecutionDetail().getDeviceVersion() + "\n" + "Device API Level: "
-							+ getMobileDeviceExecutionDetail().getDeviceAPILevel() + "\n" + "Device ABI: "
-							+ getMobileDeviceExecutionDetail().getDeviceABI() + "\n");
 					runButton.setEnabled(true);
 
 					ExecutionSession session = getExecutionSession();
@@ -245,17 +239,14 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			}
 		});
-		// setMessage("Select The Plugin, and Click \"Run\"");
+		
 		setTitle("Execution Wizard");
-
 		try {
 			initPluginNames();
-
 		} catch (SetupConfigurationException e1) {
 			CustomMessageDialogUtil.openErrorDialog("OpKey", e1.getMessage());
 		}
 		return area;
-
 	}
 
 	private void initExecutionSession(Artifact artifact) {
@@ -459,7 +450,6 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 							getMobileDeviceExecutionDetail().getDeviceName(),
 							getMobileDeviceExecutionDetail().getDeviceABI(),
 							getMobileDeviceExecutionDetail().getDeviceAPILevel());
-
 				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
