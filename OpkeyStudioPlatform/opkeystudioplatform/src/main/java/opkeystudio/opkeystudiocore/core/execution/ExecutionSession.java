@@ -3,6 +3,8 @@ package opkeystudio.opkeystudiocore.core.execution;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
+
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -14,7 +16,7 @@ public class ExecutionSession {
 	private Artifact artifact;
 	private String artifactFilePackageClass;
 	private String reportFolderDir;
-
+	private MobileDevice mobileDevice;
 	private Map<String, String> pluginSettings = new HashMap<String, String>();
 
 	public ExecutionSession(String sessionName, String buildName) {
@@ -104,5 +106,13 @@ public class ExecutionSession {
 
 	public String getPluginSetting(String key) {
 		return getPluginSettings().get(key);
+	}
+
+	public MobileDevice getMobileDevice() {
+		return mobileDevice;
+	}
+
+	public void setMobileDevice(MobileDevice mobileDevice) {
+		this.mobileDevice = mobileDevice;
 	}
 }

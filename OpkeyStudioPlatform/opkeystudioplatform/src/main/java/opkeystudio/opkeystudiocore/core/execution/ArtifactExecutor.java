@@ -144,6 +144,7 @@ public class ArtifactExecutor {
 		ExecutionSession session = getExecutionSession();
 		sinfo.setSessionName(session.getSessionName());
 		sinfo.setPluginSettings(session.getPluginSettings());
+		sinfo.setMobileDevice(session.getMobileDevice());
 		sinfo.setDefaultPluginLocation("");
 		sinfo.setReportFilePath(session.getReportFolderDir() + File.separator + "Report.html");
 		return sinfo;

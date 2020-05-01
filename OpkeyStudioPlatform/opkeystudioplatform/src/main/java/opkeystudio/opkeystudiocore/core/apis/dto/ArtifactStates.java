@@ -1,5 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
+
 public class ArtifactStates {
 	private int clustering_key;
 	private String state_id;
@@ -17,6 +19,7 @@ public class ArtifactStates {
 	private boolean isfreezable;
 
 	public int getClustering_key() {
+
 		return clustering_key;
 	}
 
