@@ -41,6 +41,11 @@ public class CompilerUtilities {
 		return getAllFiles(file, ".jar");
 	}
 
+	public List<File> getAllPluginsLibraries() {
+		String pluginBaseFolder = Utilities.getInstance().getDefaultPluginsDir();
+		return getAllFiles(new File(pluginBaseFolder), ".jar");
+	}
+
 	public List<File> getAllAssocitedLibraries(String pluginName) {
 		List<File> allFiles = new ArrayList<File>();
 		allFiles.addAll(getPluginBaseLibraries());
@@ -48,8 +53,7 @@ public class CompilerUtilities {
 		allFiles.addAll(getReportingUtilJars());
 		allFiles.addAll(getPluginRunnerJar(pluginName));
 		allFiles.addAll(getPluginsLibraries(pluginName));
-		
-		
+
 		return allFiles;
 	}
 
@@ -70,7 +74,7 @@ public class CompilerUtilities {
 
 	public String getClassPathOFAllAssociatedLibs(String pluginName) {
 		String classPath = "";
-		List<File> files =getAllAssocitedLibraries(pluginName);
+		List<File> files = getAllAssocitedLibraries(pluginName);
 
 		for (File file : files) {
 			if (!classPath.isEmpty()) {
@@ -80,7 +84,7 @@ public class CompilerUtilities {
 		}
 		return classPath;
 	}
-	
+
 	public List<CompileError> filterErrors(List<CompileError> errors, Kind kind) {
 		List<CompileError> filteredErrors = new ArrayList<CompileError>();
 		for (CompileError ce : errors) {
