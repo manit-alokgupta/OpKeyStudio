@@ -25,6 +25,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
+
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
@@ -226,6 +228,15 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					session.addPluginSetting("DeviceVersion", getMobileDeviceExecutionDetail().getDeviceVersion());
 					session.addPluginSetting("DeviceApiLevel", getMobileDeviceExecutionDetail().getDeviceAPILevel());
 					session.addPluginSetting("DeviceABI", getMobileDeviceExecutionDetail().getDeviceABI());
+					
+					MobileDevice device = new MobileDevice();
+					device.setDisplayName(getMobileDeviceExecutionDetail().getDeviceName());
+					device.setIPAddress("");
+					device.setOperatingSystem("Android");
+					device.setSerialNumber(getMobileDeviceExecutionDetail().getDeviceId());
+					device.setVersion(getMobileDeviceExecutionDetail().getDeviceVersion());
+
+					session.setMobileDevice(device);
 				}
 			}
 
