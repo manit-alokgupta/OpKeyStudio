@@ -1,4 +1,4 @@
-package com.opkey.OpKeyGenericPlugin;
+package com.opkey.web;
 
 public class DataTypeConverter {
 	public static boolean getBoolean(String bool) {

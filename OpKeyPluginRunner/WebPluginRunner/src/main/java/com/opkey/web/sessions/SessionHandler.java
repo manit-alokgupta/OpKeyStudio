@@ -1,4 +1,4 @@
-package com.opkey.sessions;
+package com.opkey.web.sessions;
 
 import java.io.File;
 

@@ -1,12 +1,8 @@
-package com.opkey.OpKeyGenericPlugin;
-
-import java.awt.AWTException;
+package com.opkey.web;
 
 import com.crestech.opkey.plugin.ResultCodes;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.Result;
-import com.crestech.opkey.plugin.exceptionhandling.ArgumentDataMissingException;
-import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ObjectNotFoundException;
 import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ToolNotSetException;
 import com.crestech.opkey.plugin.webdriver.keywords.Browser;
 import com.crestech.opkey.plugin.webdriver.keywords.Button;
@@ -22,13 +18,11 @@ import com.crestech.opkey.plugin.webdriver.keywords.WebObjects;
 import com.crestech.opkey.plugin.webdriver.keywords.Window;
 import com.crestech.opkey.plugin.webdriver.keywords.byText.ByTextKeywords;
 import com.crestech.opkey.plugin.webdriver.object.WebDriverObject;
-import com.opkey.ObjectFromatter.ObjectConverter;
-import com.opkey.context.ContextInitiator;
-import com.opkey.executor.KeywordExecutor;
-import com.opkey.executor.Runnable;
+import com.opkey.web.ObjectFromatter.ObjectConverter;
+import com.opkey.web.context.ContextInitiator;
+import com.opkey.web.executor.KeywordExecutor;
+import com.opkey.web.executor.Runnable;
 import com.opkeystudio.runtime.ORObject;
-
-import javafx.scene.control.CheckBox;
 
 public class OpKeyGenericKeywords {
 

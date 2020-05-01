@@ -1,10 +1,10 @@
-package com.opkey.executor;
+package com.opkey.web.executor;
 
 import com.crestech.opkey.plugin.ResultCodes;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.Result;
 import com.crestech.opkey.plugin.contexts.Context;
-import com.opkey.OpKeyGenericPlugin.ReportHelper;
+import com.opkey.web.ReportHelper;
 
 public class KeywordExecutor {
 	private Runnable keywordRunnable;
