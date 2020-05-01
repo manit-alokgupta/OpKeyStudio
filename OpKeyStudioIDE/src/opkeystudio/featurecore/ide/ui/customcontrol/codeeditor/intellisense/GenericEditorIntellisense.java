@@ -7,7 +7,8 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileInputStream;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Parameter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -35,20 +36,19 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.CodeCompletionProvider;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaBasicCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCompletionProvider;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableTypeCompletion;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranpiledClassInfo;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranspiledClassInfo;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GenericEditorIntellisense extends JavaCompletionProvider {
 
-	private List<TranpiledClassInfo> transpiledClasses = new ArrayList<TranpiledClassInfo>();
+	private List<TranspiledClassInfo> transpiledClasses = new ArrayList<TranspiledClassInfo>();
 	private List<VariableToken> allvariabletokens = new ArrayList<VariableToken>();
 	private static GenericEditorIntellisense instance;
 
@@ -68,7 +68,10 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	private void addLibraryClassInformation() {
 		List<File> jarFiles = new CompilerUtilities().getAllPluginRunnerJar();
-		parseClassesForIntellisense(jarFiles);
+		jarFiles.addAll(new CompilerUtilities().getPluginBaseLibraries());
+		jarFiles.addAll(new CompilerUtilities().getAllPluginsLibraries());
+		List<Class> allClasses = getAllReflectionsClassesFromJars(jarFiles);
+		parseAllClassesForIntellisense(allClasses);
 	}
 
 	private URLClassLoader getURLClassLoaderOfClasses(List<File> allLibs) throws MalformedURLException {
@@ -88,7 +91,11 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				if (className.contains("$")) {
 					continue;
 				}
-				allClases.add(className);
+				if (className.contains("org.openqa") || className.contains("java.lang")
+						|| className.contains("java.util") || className.contains("java.io")
+						|| className.contains("com.opkey")) {
+					allClases.add(className);
+				}
 			}
 		}
 		return allClases;
@@ -118,7 +125,8 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return listofClasses;
 	}
 
-	private void parseClassesForIntellisense(List<File> jarFiles) {
+	private List<Class> getAllReflectionsClassesFromJars(List<File> jarFiles) {
+		List<Class> allClasses = new ArrayList<Class>();
 		try {
 			System.out.println("Fetching Class Information");
 			URLClassLoader classLoader = getURLClassLoaderOfClasses(jarFiles);
@@ -129,12 +137,9 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				}
 				try {
 					@SuppressWarnings("rawtypes")
-					Class classToLoad = Class.forName(className.replaceAll(".class", ""), true, classLoader);
-					String modifiers = Modifier.toString(classToLoad.getModifiers());
-					modifiers = modifiers.toLowerCase();
-					System.out.println("Reflection Class " + classToLoad.getName());
-					// parseClass(classToLoad);
-
+					Class loadedClass = Class.forName(className.replaceAll(".class", ""), true, classLoader);
+					System.out.println("Reflection Class " + loadedClass.getName());
+					allClasses.add(loadedClass);
 				} catch (NoClassDefFoundError e) {
 					e.printStackTrace();
 				} catch (IncompatibleClassChangeError e) {
@@ -158,12 +163,72 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				}
 			}
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allClasses;
+	}
+
+	private void parseAllClassesForIntellisense(List<Class> allclasses) {
+		for (Class _class : allclasses) {
+			parseClass(_class);
+		}
+	}
+
+	private void parseClass(@SuppressWarnings("rawtypes") Class _class) {
+		TranspiledClassInfo classInfo = new TranspiledClassInfo(_class);
+		addTranspiledClasses(classInfo);
+		createConstructorIntellisense(_class);
+	}
+
+	public void createConstructorIntellisense(@SuppressWarnings("rawtypes") Class _class) {
+		try {
+			@SuppressWarnings("rawtypes")
+			Constructor[] _constructors = _class.getConstructors();
+			for (@SuppressWarnings("rawtypes")
+			Constructor constructor : _constructors) {
+				Parameter[] parameters = constructor.getParameters();
+				String parametersString = "";
+				String argumentsString = "";
+				for (Parameter param : parameters) {
+					if (!parametersString.isEmpty()) {
+						parametersString += ", ";
+					}
+					if (!argumentsString.isEmpty()) {
+						argumentsString += ", ";
+					}
+					String paramType = param.getType().getSimpleName();
+					String argName = param.getName();
+					parametersString += paramType;
+					argumentsString += argName;
+				}
+
+				String dataToShow = constructor.getName() + "(" + parametersString + ")";
+				String dataToEnter = constructor.getName() + "(" + argumentsString + ")";
+				addConstructorTypeBasicCompletion(dataToShow, dataToEnter);
+			}
+			addConstructorTypeBasicCompletion(_class.getName(), _class.getName());
+		} catch (NoClassDefFoundError e) {
+			e.printStackTrace();
+		} catch (IncompatibleClassChangeError e) {
+			e.printStackTrace();
+		} catch (UnsupportedClassVersionError e) {
+			e.printStackTrace();
+		} catch (RuntimeErrorException e) {
+			e.printStackTrace();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		} catch (ExceptionInInitializerError e) {
+			e.printStackTrace();
+		} catch (UnsatisfiedLinkError e) {
+			e.printStackTrace();
+		} catch (LinkageError e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public JavaCompletionProvider getClassMethodsCompletionProvider(TranpiledClassInfo tranpiledClassInfo) {
+	public JavaCompletionProvider getClassMethodsCompletionProvider(TranspiledClassInfo tranpiledClassInfo) {
 		GenericEditorIntellisense provider = new GenericEditorIntellisense();
 		List<MethodSource<JavaClassSource>> methods = tranpiledClassInfo.getClassSource().getMethods();
 		for (MethodSource<JavaClassSource> method : methods) {
@@ -213,7 +278,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		for (File file : allFiles) {
 			String codeData = Utilities.getInstance().readTextFile(file);
 			JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
-			this.addTranspiledClasses(new TranpiledClassInfo(classSource));
+			this.addTranspiledClasses(new TranspiledClassInfo(classSource));
 			parseConstructors(classSource);
 			parseClassMethods(classSource);
 		}
@@ -314,15 +379,15 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		}
 	}
 
-	public List<TranpiledClassInfo> getTranspiledClasses() {
+	public List<TranspiledClassInfo> getTranspiledClasses() {
 		return transpiledClasses;
 	}
 
-	private void addTranspiledClasses(TranpiledClassInfo classInfo) {
+	private void addTranspiledClasses(TranspiledClassInfo classInfo) {
 		this.getTranspiledClasses().add(classInfo);
 	}
 
-	public void setTranspiledClasses(List<TranpiledClassInfo> transpiledClasses) {
+	public void setTranspiledClasses(List<TranspiledClassInfo> transpiledClasses) {
 		this.transpiledClasses = transpiledClasses;
 	}
 
@@ -347,17 +412,30 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return null;
 	}
 
-	public TranpiledClassInfo findAutoCompleteToken(String tokenString) {
-		List<TranpiledClassInfo> allTokens = getTranspiledClasses();
-		for (TranpiledClassInfo token : allTokens) {
-			String className = token.getClassSource().getName();
-			System.out.println(">>ClassName " + className);
-			if (className.endsWith("." + tokenString)) {
-				System.out.println("ClassName " + token.getClassSource().getName());
-				return token;
+	public TranspiledClassInfo findAutoCompleteToken(String tokenString) {
+		List<TranspiledClassInfo> allTokens = getTranspiledClasses();
+		for (TranspiledClassInfo token : allTokens) {
+			if (token.getClassSource() != null) {
+				String className = token.getClassSource().getName();
+				System.out.println(">>ClassName " + className);
+				if (className.endsWith("." + tokenString)) {
+					System.out.println("ClassName " + token.getClassSource().getName());
+					return token;
+				}
+				if (className.trim().equals(tokenString.trim())) {
+					return token;
+				}
 			}
-			if (className.trim().equals(tokenString.trim())) {
-				return token;
+			if (token.getReflectionClassObject() != null) {
+				String className = token.getReflectionClassObject().getName();
+				System.out.println(">>ClassName " + className);
+				if (className.endsWith("." + tokenString)) {
+					System.out.println("ClassName " + token.getReflectionClassObject().getName());
+					return token;
+				}
+				if (className.trim().equals(tokenString.trim())) {
+					return token;
+				}
 			}
 		}
 		return null;

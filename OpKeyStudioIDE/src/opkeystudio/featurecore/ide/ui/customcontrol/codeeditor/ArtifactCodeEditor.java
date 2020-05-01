@@ -26,7 +26,7 @@ import org.fife.ui.rsyntaxtextarea.Token;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranpiledClassInfo;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranspiledClassInfo;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -152,7 +152,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 					if (varToken != null) {
 						tokenData = varToken.getClassName();
 					}
-					TranpiledClassInfo autocompletetoken = GenericEditorIntellisense.getInstance()
+					TranspiledClassInfo autocompletetoken = GenericEditorIntellisense.getInstance()
 							.findAutoCompleteToken(tokenData);
 					if (autocompletetoken != null) {
 						JavaCompletionProvider provider = GenericEditorIntellisense.getInstance().getClassMethodsCompletionProvider(autocompletetoken);
