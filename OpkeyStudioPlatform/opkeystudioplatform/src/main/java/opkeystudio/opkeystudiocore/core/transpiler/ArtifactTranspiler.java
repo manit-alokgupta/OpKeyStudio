@@ -75,7 +75,8 @@ public class ArtifactTranspiler {
 			ArtifactTranspiler.getInstance().addPackageName(artifact.getPackageName());
 		}
 		ArtifactTranspiler.getInstance().addPackageName("allartifacts");
-		ArtifactTranspiler.getInstance().addPackageName("com.opkey.OpKeyGenericPlugin");
+		ArtifactTranspiler.getInstance().addPackageName("com.opkey.web");
+		ArtifactTranspiler.getInstance().addPackageName("com.opkey.appium");
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
 		ArtifactTranspiler.getInstance().addPackageName("com.ssts.reporting");
 	}

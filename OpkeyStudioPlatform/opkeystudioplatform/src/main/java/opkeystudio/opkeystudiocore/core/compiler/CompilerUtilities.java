@@ -50,10 +50,11 @@ public class CompilerUtilities {
 		List<File> allFiles = new ArrayList<File>();
 		allFiles.addAll(getPluginBaseLibraries());
 		allFiles.addAll(getPluginRunnerJar("System"));
+		allFiles.addAll(getPluginRunnerJar("Appium"));
 		allFiles.addAll(getReportingUtilJars());
 		allFiles.addAll(getPluginRunnerJar(pluginName));
 		allFiles.addAll(getPluginsLibraries(pluginName));
-
+		allFiles.addAll(getPluginsLibraries("Appium"));
 		return allFiles;
 	}
 

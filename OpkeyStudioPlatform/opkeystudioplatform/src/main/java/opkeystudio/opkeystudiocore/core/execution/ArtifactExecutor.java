@@ -155,8 +155,9 @@ public class ArtifactExecutor {
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException,
 			SecurityException, IllegalArgumentException, InvocationTargetException {
 		SessionInfo info = getSessionInfo();
+		String pluginName = getExecutionSession().getPluginName().toLowerCase();
 		URLClassLoader classLoader = getClassLoader();
-		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
+		Class classToLoad = Class.forName("com.opkey." + pluginName + ".sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("beforeSessionStart", SessionInfo.class);
 		Object result = method.invoke(instance, info);
@@ -166,8 +167,9 @@ public class ArtifactExecutor {
 	private void callExecuteSessionEnd() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
 		SessionInfo info = getSessionInfo();
+		String pluginName = getExecutionSession().getPluginName().toLowerCase();
 		URLClassLoader classLoader = getClassLoader();
-		Class classToLoad = Class.forName("com.opkey.sessions.SessionHandler", true, classLoader);
+		Class classToLoad = Class.forName("com.opkey." + pluginName + ".sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds", SessionInfo.class);
 		Object result = method.invoke(instance, info);

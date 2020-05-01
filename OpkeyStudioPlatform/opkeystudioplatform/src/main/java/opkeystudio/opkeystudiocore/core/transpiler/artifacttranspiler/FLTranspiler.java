@@ -1,6 +1,7 @@
 package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.forge.roaster.Roaster;
@@ -45,6 +46,7 @@ public class FLTranspiler extends AbstractTranspiler {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(artifact.getVariableName()).setPublic();
 		List<FlowStep> flowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(artifact.getId());
+		new TranspilerUtilities().processFlowStepsForAppium(flowSteps);
 		String methodBodyCode = "";
 		for (String varName : new TCFLCodeConstruct().getDefaultKeywordsClassVariables()) {
 			methodBodyCode += newLineChar + varName + newLineChar;

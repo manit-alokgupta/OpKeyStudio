@@ -28,7 +28,11 @@ public class TCFLCodeConstruct {
 				return addDataRepositoryIterations(artifact, flowStep, code);
 			}
 			if (isOpKeyGenericKeyword(flowStep)) {
-				String code = getKeywordCode(artifact, flowStep, "genericKeywords");
+				String variableName = "genericKeywords";
+				if (flowStep.isAppiumType()) {
+					variableName = "appiumKeywords";
+				}
+				String code = getKeywordCode(artifact, flowStep, variableName);
 				code = addOutputVariables(artifact, flowStep, code);
 				return addDataRepositoryIterations(artifact, flowStep, code);
 			}
@@ -38,7 +42,8 @@ public class TCFLCodeConstruct {
 				return addDataRepositoryIterations(artifact, flowStep, code);
 			}
 			if (isPluginSpecificKeyword(flowStep)) {
-				String code = getKeywordCode(artifact, flowStep, "genericKeywords");
+				String varName = getPluginSpecificVarName(flowStep);
+				String code = getKeywordCode(artifact, flowStep, varName);
 				code = addOutputVariables(artifact, flowStep, code);
 				return addDataRepositoryIterations(artifact, flowStep, code);
 			}
@@ -48,6 +53,14 @@ public class TCFLCodeConstruct {
 			return getFunctionLibraryCode(artifact, flowStep);
 		}
 		return "";
+	}
+
+	private String getPluginSpecificVarName(FlowStep flowStep) {
+		String pluginName = flowStep.getKeyword().getPluginName().toLowerCase();
+		if (pluginName.contains("appium")) {
+			return "appiumKeywords";
+		}
+		return "genericKeywords";
 	}
 
 	private String getKeywordCode(Artifact artifact, FlowStep flowStep, String refvarName) {
@@ -369,6 +382,7 @@ public class TCFLCodeConstruct {
 		ArrayList<String> variables = new ArrayList<String>();
 		variables.add("OpKeyGenericKeywords genericKeywords= new OpKeyGenericKeywords();");
 		variables.add("OpKeySystemKeywords systemKeywords= new OpKeySystemKeywords();");
+		variables.add("OpKeyAppiumKeywords appiumKeywords= new OpKeyAppiumKeywords();");
 		return variables;
 	}
 }

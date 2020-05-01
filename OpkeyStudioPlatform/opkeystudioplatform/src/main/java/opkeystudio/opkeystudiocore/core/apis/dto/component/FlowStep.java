@@ -70,6 +70,8 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 
 	private String variableName;
 
+	private boolean appiumType;
+
 	public String getKeywordid() {
 		return keywordid;
 	}
@@ -308,5 +310,13 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 
 	public void setCodedFunctionLibrary(boolean codedFunctionLibrary) {
 		this.codedFunctionLibrary = codedFunctionLibrary;
+	}
+
+	public boolean isAppiumType() {
+		return appiumType;
+	}
+
+	public void setAppiumType(boolean appiumType) {
+		this.appiumType = appiumType;
 	}
 }
