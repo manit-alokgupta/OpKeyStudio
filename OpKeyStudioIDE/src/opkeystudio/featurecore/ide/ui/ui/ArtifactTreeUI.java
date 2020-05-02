@@ -1,6 +1,11 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -8,7 +13,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -758,10 +762,10 @@ public class ArtifactTreeUI extends SuperComposite {
 		});
 
 		toolbarRefresh.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				new RefreshArtifactTree().refreshArtifactTree();				
+				new RefreshArtifactTree().refreshArtifactTree();
 			}
 
 			@Override
@@ -1165,8 +1169,22 @@ public class ArtifactTreeUI extends SuperComposite {
 	}
 
 	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
-		new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
-		artifactTree.renderArtifacts();
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				MessageDialogs msd = new MessageDialogs();
+				msd.openProgressDialog(null, String.format("Please wait. Creating Artifact '%s'", artifactName), false,
+						new IRunnableWithProgress() {
+
+							@Override
+							public void run(IProgressMonitor monitor)
+									throws InvocationTargetException, InterruptedException {
+								new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
+							}
+						});
+				artifactTree.renderArtifacts();
+				msd.closeProgressDialog();
+			}
+		});
 	}
 
 	public void toggleRenameToolbarItem(boolean status) {
