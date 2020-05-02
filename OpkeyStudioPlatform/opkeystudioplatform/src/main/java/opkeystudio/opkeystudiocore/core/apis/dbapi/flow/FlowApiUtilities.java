@@ -19,6 +19,7 @@ import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -315,9 +316,19 @@ public class FlowApiUtilities {
 
 	public List<FlowOutputObject> getAllFlowOutputObject(Artifact artifact, FlowStep flowStep) {
 		List<FlowOutputObject> flowOutputObjects = new ArrayList<FlowOutputObject>();
-		for (FlowOutputArgument flowOutputArgument : flowStep.getFlowOutputArgs()) {
+		for (int i = 0; i < flowStep.getFlowOutputArgs().size(); i++) {
+			FlowOutputArgument flowOutputArgument = flowStep.getFlowOutputArgs().get(i);
+			String dataType = "";
+			if (flowStep.getKeyword() != null) {
+				dataType = flowStep.getKeyword().getOutputtype();
+			}
+			if (flowStep.getFunctionLibraryComponent() != null) {
+				ComponentOutputArgument outPutArg = flowStep.getFunctionLibraryComponent().getComponentOutputArguments()
+						.get(i);
+				dataType = outPutArg.getType();
+			}
 			FlowOutputObject flowOutPutObject = new FlowOutputObject();
-			flowOutPutObject.setDataType(flowStep.getKeyword().getOutputtype());
+			flowOutPutObject.setDataType(dataType);
 			flowOutPutObject.setOutputVariableName(flowOutputArgument.getOutputvariablename());
 			flowOutputObjects.add(flowOutPutObject);
 		}

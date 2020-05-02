@@ -51,6 +51,8 @@ public class TCFLCodeConstruct {
 
 		if (isFunctionLibraryType(flowStep)) {
 			return getFunctionLibraryCode(artifact, flowStep);
+			// String mainCode = getFunctionLibraryCode(artifact, flowStep);
+			// return addOutputVariables(artifact, flowStep, mainCode);
 		}
 		return "";
 	}
@@ -144,7 +146,6 @@ public class TCFLCodeConstruct {
 			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
 		}
 		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().execute(" + value + ");";
-		System.out.println(code);
 		return code;
 	}
 
