@@ -159,28 +159,27 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				}
 				try {
 					Class loadedClass = Class.forName(className.replaceAll(".class", ""), true, classLoader);
-					System.out.println("Reflection Class " + loadedClass.getName());
 					allClasses.add(loadedClass);
 				} catch (NoClassDefFoundError e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (IncompatibleClassChangeError e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (UnsupportedClassVersionError e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (RuntimeErrorException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (RuntimeException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (ExceptionInInitializerError e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (UnsatisfiedLinkError e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (LinkageError e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		} catch (MalformedURLException e) {
@@ -196,18 +195,18 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		}
 	}
 
-	private void parseClass(@SuppressWarnings("rawtypes") Class _class) {
+	@SuppressWarnings("rawtypes")
+	private void parseClass(Class _class) {
 		TranspiledClassInfo classInfo = new TranspiledClassInfo(_class);
 		addTranspiledClasses(classInfo);
 		createConstructorIntellisense(_class);
 	}
 
-	public void createConstructorIntellisense(@SuppressWarnings("rawtypes") Class _class) {
+	@SuppressWarnings("rawtypes")
+	public void createConstructorIntellisense(Class _class) {
 		try {
-			@SuppressWarnings("rawtypes")
 			Constructor[] _constructors = _class.getConstructors();
-			for (@SuppressWarnings("rawtypes")
-			Constructor constructor : _constructors) {
+			for (Constructor constructor : _constructors) {
 				Parameter[] parameters = constructor.getParameters();
 				String parametersString = "";
 				String argumentsString = "";
