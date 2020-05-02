@@ -18,6 +18,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.fife.ui.autocomplete.AutoCompletionEvent;
+import org.fife.ui.autocomplete.AutoCompletionListener;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -129,6 +131,19 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 		RTextScrollPane textScrollPane = new RTextScrollPane(this);
 		mainEditorPanel.add(textScrollPane);
 		frame.add(mainEditorPanel);
+		autoCompletion.addAutoCompletionListener(new AutoCompletionListener() {
+
+			@Override
+			public void autoCompleteUpdate(AutoCompletionEvent arg0) {
+				System.out.println(arg0.getEventType().toString());
+				if (arg0.getEventType().toString().equals("POPUP_HIDDEN")) {
+					System.out.println("Resetting Intellisense Data");
+					JavaCompletionProvider provider = GenericEditorIntellisense.getInstance();
+					autoCompletion.setCompletionProvider(provider);
+				}
+			}
+		});
+
 		this.addKeyListener(new KeyListener() {
 
 			@Override
@@ -154,7 +169,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 						JavaCompletionProvider provider = GenericEditorIntellisense.getInstance()
 								.getClassMethodsCompletionProvider(autocompletetoken);
 						autoCompletion.setCompletionProvider(provider);
-						autoCompletion.doCompletion();
 					}
 				} else {
 					// CompletionProvider provider = GenericEditorIntellisense.getInstance();
