@@ -22,6 +22,9 @@ public class ProjectImporter {
 			if (!file.isFile()) {
 				return;
 			}
+			String projectName = file.getParentFile().getName();
+			System.out.println("File System Project Name " + projectName);
+			ServiceRepository.getInstance().setProjectName(projectName);
 			ServiceRepository.getInstance().setExortedDBFilePath(dbFilePath);
 			SQLiteCommunicator sqlComm = new SQLiteCommunicator(dbFilePath);
 			try {

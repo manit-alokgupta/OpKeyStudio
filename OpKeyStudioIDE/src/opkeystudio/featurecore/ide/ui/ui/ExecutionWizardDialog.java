@@ -31,6 +31,7 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
@@ -222,7 +223,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					session.addPluginSetting("DeviceVersion", getMobileDeviceExecutionDetail().getDeviceVersion());
 					session.addPluginSetting("DeviceApiLevel", getMobileDeviceExecutionDetail().getDeviceAPILevel());
 					session.addPluginSetting("DeviceABI", getMobileDeviceExecutionDetail().getDeviceABI());
-					
+
 					MobileDevice device = new MobileDevice();
 					device.setDisplayName(getMobileDeviceExecutionDetail().getDeviceName());
 					device.setIPAddress("");
@@ -239,7 +240,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			}
 		});
-		
+
 		setTitle("Execution Wizard");
 		try {
 			initPluginNames();
@@ -259,15 +260,20 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		System.out.println("Artifact File path " + artifactFile.getAbsolutePath());
 		String artifactPath = artifactFile.getAbsolutePath();
 		artifactPath = artifactPath.replaceAll("\\\\", "OPKEY_SLASH");
-		String dir = Utilities.getInstance().getTranspiledArtifactsFolder() + File.separator;
-		dir = dir.replaceAll("\\\\", "OPKEY_SLASH").replaceAll("/", "OPKEY_SLASH");
 
-		String packageClassName = artifactPath.replaceAll(dir, "");
+		String codeDir = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getProjectsFolder();
+		codeDir = codeDir + File.separator + ServiceRepository.getInstance().getProjectName();
+		codeDir = codeDir + File.separator + "codes" + File.separator;
+
+		String artifactPackageClass = codeDir.replaceAll("\\\\", "OPKEY_SLASH").replaceAll("/", "OPKEY_SLASH");
+
+		String packageClassName = artifactPath.replaceAll(artifactPackageClass, "");
 		packageClassName = packageClassName.split("\\.")[0];
 		packageClassName = packageClassName.replaceAll("OPKEY_SLASH", ".");
 		System.out.println("Package Name " + packageClassName);
 		ExecutionSession eSession = new ExecutionSession(artifactFile.getName() + "_", "Build_");
 		eSession.setArtifactFilePackageClass(packageClassName);
+		eSession.setArtifactCodeDirPath(codeDir);
 		setExecutionSession(eSession);
 	}
 

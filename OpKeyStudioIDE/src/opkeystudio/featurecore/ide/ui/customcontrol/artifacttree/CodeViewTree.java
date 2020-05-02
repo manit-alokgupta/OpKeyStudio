@@ -336,6 +336,24 @@ public class CodeViewTree extends CustomTree {
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
+
+		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getTranspiledArtifactsFolder();
+
+		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getProjectsFolder();
+		projectFolderPath = projectFolderPath + File.separator + ServiceRepository.getInstance().getProjectName();
+		projectFolderPath = projectFolderPath + File.separator + "codes";
+
+		File codeFolder = new File(projectFolderPath);
+		if (!codeFolder.exists()) {
+			codeFolder.mkdir();
+		}
+		try {
+			FileUtils.copyDirectory(new File(transpileDirpath), new File(projectFolderPath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.removeAll();
 		CodeViewTreeItem rootNode = new CodeViewTreeItem(this, 0);
 		rootNode.setText("Code WorkSpace");
@@ -348,11 +366,8 @@ public class CodeViewTree extends CustomTree {
 		srcNode.setExpanded(true);
 		srcNode.setSystemFolder(true);
 		addIcon(srcNode);
-		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getTranspiledArtifactsFolder();
-		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getProjectsFolder();
-		File transpileDirFolder = new File(transpileDirpath);
-		File[] files = transpileDirFolder.listFiles();
+		
+		File[] files = codeFolder.listFiles();
 		for (File file : files) {
 			renderFiles(srcNode, file);
 		}
