@@ -81,7 +81,6 @@ public class ServiceRepository {
 	}
 
 	public String[] getAllVaraiblesType() {
-		return new String[] { "String", "Boolean", "Integer", "Double", "DateTime", "MobileDevice", "MobileApplication",
-				"File", "List", "KeyValuePair" };
+		return new String[] { "String", "Boolean", "Integer", "Double", "", "MobileDevice", "MobileApplication" };
 	}
 }
