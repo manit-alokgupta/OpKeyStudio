@@ -562,7 +562,6 @@ public class TestCaseView extends SuperComposite {
 
 			}
 		});
-		flowStepTable.renderFlowSteps();
 
 		itemRun.addSelectionListener(new SelectionListener() {
 
@@ -590,6 +589,7 @@ public class TestCaseView extends SuperComposite {
 			}
 		});
 
+		flowStepTable.renderFlowSteps();
 		addButtonListeners();
 		populateInputTabData();
 	}
