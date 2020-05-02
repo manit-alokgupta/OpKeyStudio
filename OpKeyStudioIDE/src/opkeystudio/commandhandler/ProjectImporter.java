@@ -27,7 +27,6 @@ public class ProjectImporter {
 			try {
 				sqlComm.connect();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			SQLiteCommunicator.getOpKeyDBCommunicator(sqlComm);

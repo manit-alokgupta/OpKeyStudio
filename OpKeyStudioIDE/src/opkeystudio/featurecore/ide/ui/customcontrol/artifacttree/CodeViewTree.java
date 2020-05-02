@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -136,7 +133,7 @@ public class CodeViewTree extends CustomTree {
 				e.printStackTrace();
 			}
 		}
-		renderArtifacts();
+		renderCodeViewTree();
 	}
 
 	public void renameSelectedFile() {
@@ -177,7 +174,7 @@ public class CodeViewTree extends CustomTree {
 		selectedCodeFile.delete();
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.writeToFile(new File(parentFolder + File.separator + fileName + ".java"), classSource.toString());
-		renderArtifacts();
+		renderCodeViewTree();
 	}
 
 	public void createNewJavaFile() {
@@ -252,7 +249,7 @@ public class CodeViewTree extends CustomTree {
 
 		class1.setPackage(packageName);
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
-		renderArtifacts();
+		renderCodeViewTree();
 	}
 
 	public void createNewFolder() {
@@ -292,7 +289,7 @@ public class CodeViewTree extends CustomTree {
 			return;
 		}
 		file.mkdir();
-		renderArtifacts();
+		renderCodeViewTree();
 	}
 
 	public void setArtifactsData(List<Artifact> artifacts) {
@@ -335,7 +332,7 @@ public class CodeViewTree extends CustomTree {
 		this.setRedraw(true);
 	}
 
-	public void renderArtifacts() {
+	public void renderCodeViewTree() {
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
@@ -353,6 +350,7 @@ public class CodeViewTree extends CustomTree {
 		addIcon(srcNode);
 		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getTranspiledArtifactsFolder();
+		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getProjectsFolder();
 		File transpileDirFolder = new File(transpileDirpath);
 		File[] files = transpileDirFolder.listFiles();
 		for (File file : files) {
