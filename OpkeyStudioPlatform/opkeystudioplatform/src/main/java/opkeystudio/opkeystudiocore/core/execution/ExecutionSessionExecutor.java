@@ -36,8 +36,12 @@ public class ExecutionSessionExecutor {
 		String pluginName = session.getPluginName();
 		Artifact artifact = session.getArtifact();
 
-		String transpiledFilesDir = Utilities.getInstance().getTranspiledArtifactsFolder();
-
+		String transpiledFilesDir = null;
+		if (session.getArtifactFilePackageClass() != null) {
+			transpiledFilesDir = session.getArtifactCodeDirPath();
+		} else {
+			transpiledFilesDir = Utilities.getInstance().getTranspiledArtifactsFolder();
+		}
 		createExecutionSession(session.getSessionName());
 		String artifactCodesDirPath = getSessionArtifacCodesFolder(session.getSessionName());
 
@@ -55,6 +59,7 @@ public class ExecutionSessionExecutor {
 			return executeArtifactFile(session, artifactCodesDirPath, session.getArtifactFilePackageClass(),
 					pluginName);
 		}
+
 		return executeArtifact(session, artifactCodesDirPath, artifact, pluginName);
 	}
 

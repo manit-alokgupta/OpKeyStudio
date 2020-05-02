@@ -16,6 +16,9 @@ public class ExecutionSession {
 	private Artifact artifact;
 	private String artifactFilePackageClass;
 	private String reportFolderDir;
+
+	private String artifactCodeDirPath;
+
 	private MobileDevice mobileDevice;
 	private Map<String, String> pluginSettings = new HashMap<String, String>();
 
@@ -114,5 +117,13 @@ public class ExecutionSession {
 
 	public void setMobileDevice(MobileDevice mobileDevice) {
 		this.mobileDevice = mobileDevice;
+	}
+
+	public String getArtifactCodeDirPath() {
+		return artifactCodeDirPath;
+	}
+
+	public void setArtifactCodeDirPath(String artifactCodeDirPath) {
+		this.artifactCodeDirPath = artifactCodeDirPath;
 	}
 }

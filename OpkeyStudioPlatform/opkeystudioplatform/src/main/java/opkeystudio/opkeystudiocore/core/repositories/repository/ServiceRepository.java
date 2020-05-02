@@ -6,6 +6,9 @@ import java.util.Map;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
 
 public class ServiceRepository {
+
+	private String projectName;
+
 	private Map<String, Object> serviceRepositoriesVariables = new HashMap<>();
 	private static ServiceRepository serviceRepository;
 
@@ -82,5 +85,13 @@ public class ServiceRepository {
 
 	public String[] getAllVaraiblesType() {
 		return new String[] { "String", "Boolean", "Integer", "Double", "", "MobileDevice", "MobileApplication" };
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 }
