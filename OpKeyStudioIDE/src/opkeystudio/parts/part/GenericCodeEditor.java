@@ -7,9 +7,11 @@ import javax.annotation.PreDestroy;
 
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyArtifactPersistListenerDispatcher;
 
 public class GenericCodeEditor {
 
@@ -33,4 +35,8 @@ public class GenericCodeEditor {
 
 	}
 
+	@PersistState
+	public void persistState() {
+		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+	}
 }

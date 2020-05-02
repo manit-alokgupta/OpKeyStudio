@@ -229,23 +229,23 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			}
 			addConstructorTypeBasicCompletion(_class.getName(), _class.getName());
 		} catch (NoClassDefFoundError e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IncompatibleClassChangeError e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (UnsupportedClassVersionError e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (RuntimeErrorException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (RuntimeException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (ExceptionInInitializerError e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (UnsatisfiedLinkError e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (LinkageError e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

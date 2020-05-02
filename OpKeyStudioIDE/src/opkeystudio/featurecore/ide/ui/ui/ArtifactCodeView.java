@@ -16,10 +16,12 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.ArtifactCodeEditor;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -67,6 +69,7 @@ public class ArtifactCodeView extends SuperComposite {
 		setLayout(new GridLayout(1, false));
 		initGenericEditorUI();
 		initCodeViewFile();
+		addGenericListner();
 		displayCodeViewFileData();
 	}
 
@@ -116,6 +119,16 @@ public class ArtifactCodeView extends SuperComposite {
 		initDRUI();
 		initDataRepositoryCode();
 		getJavaEditor().setEditable(editable);
+	}
+
+	private void addGenericListner() {
+		this.addOpKeyGlobalEventListener(new ArtifactPersistListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				handleRefreshOnSave();
+			}
+		});
 	}
 
 	private void initCodeViewFile() {
@@ -233,11 +246,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String code = getJavaEditor().getText();
-				File file = getCodeViewFile();
-				opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
-				saveButton.setEnabled(false);
-
+				saveGenericCodeEditorFile();
 			}
 
 			@Override
@@ -251,6 +260,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				handleRefreshOnSave();
 				displayCodeViewFileData();
 			}
 
@@ -259,6 +269,23 @@ public class ArtifactCodeView extends SuperComposite {
 
 			}
 		});
+	}
+
+	private void saveGenericCodeEditorFile() {
+		String code = getJavaEditor().getText();
+		File file = getCodeViewFile();
+		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
+		saveButton.setEnabled(false);
+	}
+
+	private void handleRefreshOnSave() {
+		if (saveButton.getEnabled() == true) {
+			boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+					String.format("Do you want to save '%s'?", getCodeViewFile().getName()));
+			if (status == true) {
+				saveGenericCodeEditorFile();
+			}
+		}
 	}
 
 	public void openExecutionWizard() {

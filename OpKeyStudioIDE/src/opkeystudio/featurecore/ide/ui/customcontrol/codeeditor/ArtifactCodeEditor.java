@@ -176,7 +176,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 			public void keyPressed(KeyEvent e) {
 				if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
 					System.out.println("Saving");
-					saveToggled = true;
 					Display.getDefault().asyncExec(new Runnable() {
 
 						@Override
