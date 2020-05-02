@@ -1,6 +1,5 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
