@@ -62,6 +62,7 @@ public class CustomTable extends Table {
 			}
 			this.setSelection(this.getSelectedRowIndex());
 			if (this.getTablecursor() != null) {
+				System.out.println("Table Cursor Found");
 				int column = this.getSelectedColumn();
 				this.getTablecursor().setSelection(this.getSelectedRowIndex(), column);
 				this.getTablecursor().notifyListeners(SWT.Selection, null);

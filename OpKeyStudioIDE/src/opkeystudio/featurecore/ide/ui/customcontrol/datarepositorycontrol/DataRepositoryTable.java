@@ -130,7 +130,6 @@ public class DataRepositoryTable extends CustomTable {
 
 			}
 		});
-		renderAllDRDetails();
 		this.addPaintListener(new PaintListener() {
 
 			@Override
@@ -191,6 +190,7 @@ public class DataRepositoryTable extends CustomTable {
 
 			}
 		});
+		renderAllDRDetails();
 	}
 
 	private void disposeControlEditor(ControlEditor editor) {
