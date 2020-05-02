@@ -52,7 +52,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranspiledClassInfo;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
-import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GenericEditorIntellisense extends JavaCompletionProvider {
@@ -251,6 +250,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	public JavaCompletionProvider getClassMethodsCompletionProvider(TranspiledClassInfo tranpiledClassInfo) {
 		GenericEditorIntellisense provider = new GenericEditorIntellisense();
 
@@ -366,7 +366,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private void parseClassMethods(JavaClassSource classSource) {
 		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
 	}
-
+	
 	public void addBasicCompletion(String data) {
 		if (this.getCompletionByInputText(data) == null) {
 			JavaBasicCompletion bc = new JavaBasicCompletion(this, data);
