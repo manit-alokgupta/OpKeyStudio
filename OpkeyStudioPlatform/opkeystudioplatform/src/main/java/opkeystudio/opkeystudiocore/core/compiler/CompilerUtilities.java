@@ -51,10 +51,12 @@ public class CompilerUtilities {
 		allFiles.addAll(getPluginBaseLibraries());
 		allFiles.addAll(getPluginRunnerJar("System"));
 		allFiles.addAll(getPluginRunnerJar("Appium"));
+		allFiles.addAll(getPluginRunnerJar("Web"));
 		allFiles.addAll(getReportingUtilJars());
 		allFiles.addAll(getPluginRunnerJar(pluginName));
 		allFiles.addAll(getPluginsLibraries(pluginName));
 		allFiles.addAll(getPluginsLibraries("Appium"));
+		allFiles.addAll(getPluginsLibraries("Web"));
 		return allFiles;
 	}
 
