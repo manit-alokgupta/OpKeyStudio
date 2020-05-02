@@ -13,6 +13,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
@@ -240,12 +241,13 @@ public class FlowApiUtilities {
 		return flowInputObjects;
 	}
 
-	public List<FlowInputObject> getAllFlowInputObject_FL(Artifact artifact,
+	public List<FlowInputObject> getAllFlowInputObject_FL(Artifact artifact, FunctionLibraryComponent functionLibrary,
 			List<FlowInputArgument> flowInputArguments) {
 		List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
 
-		for (FlowInputArgument flowInputArgument : flowInputArguments) {
-			ComponentInputArgument componentInputArgument = flowInputArgument.getComponentInputArgument();
+		for (int i = 0; i < flowInputArguments.size(); i++) {
+			FlowInputArgument flowInputArgument = flowInputArguments.get(i);
+			ComponentInputArgument componentInputArgument = functionLibrary.getComponentInputArguments().get(i);
 			if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());

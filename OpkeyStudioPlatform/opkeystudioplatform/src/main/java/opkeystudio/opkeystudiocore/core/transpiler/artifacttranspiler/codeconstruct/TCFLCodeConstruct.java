@@ -135,7 +135,7 @@ public class TCFLCodeConstruct {
 		FunctionLibraryComponent libraryComponent = flowStep.getFunctionLibraryComponent();
 		List<FlowInputArgument> componentInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject_FL(artifact,
-				componentInputArguments);
+				libraryComponent, componentInputArguments);
 		String value = "";
 		for (FlowInputObject flowInputObject : flowInputObjects) {
 			if (!value.isEmpty()) {
