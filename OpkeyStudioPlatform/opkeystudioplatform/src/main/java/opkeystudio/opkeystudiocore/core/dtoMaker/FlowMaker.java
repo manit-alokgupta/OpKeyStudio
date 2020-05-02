@@ -295,6 +295,7 @@ public class FlowMaker {
 			List<KeyWordInputArgument> keywordInputArguments = flowStep.getKeyword().getKeywordInputArguments();
 			for (KeyWordInputArgument keywordInputArgument : keywordInputArguments) {
 				FlowInputArgument flowInputArgument = new FlowInputArgument();
+				flowInputArgument.setKeywordInputArgument(keywordInputArgument);
 				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 					flowInputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
 					flowInputArgument.setStepid(flowStep.getStepid());

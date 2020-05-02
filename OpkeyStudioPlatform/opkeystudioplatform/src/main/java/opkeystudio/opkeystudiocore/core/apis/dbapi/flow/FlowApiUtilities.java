@@ -55,7 +55,7 @@ public class FlowApiUtilities {
 		return "Output: <>";
 	}
 
-	public String getFlowInputPutArgumentsString(Artifact artifact, FlowStep flowStep) {
+	public String getFlowInputPutArgumentsString_2(Artifact artifact, FlowStep flowStep) {
 		String outData = "";
 		List<FlowInputArgument> flowStepInputargs = flowStep.getFlowInputArgs();
 		if (flowStepInputargs.size() == 0) {
@@ -75,41 +75,59 @@ public class FlowApiUtilities {
 		return "Input: <>";
 	}
 
-	public String getFlowInputPutArgumentsString_2(Artifact artifact, FlowStep flowStep) {
+	public String getFlowInputPutArgumentsString(Artifact artifact, FlowStep flowStep) {
 		String outData = "";
-		List<FlowInputObject> flowInputObjects = getAllFlowInputObject(artifact, flowStep.getFlowInputArgs());
-		if (flowInputObjects.size() == 0) {
-			return "";
-		}
-		for (FlowInputObject inputObject : flowInputObjects) {
+		try {
+			List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
+			if (flowStep.getKeyword() != null) {
+				flowInputObjects = getAllFlowInputObject(artifact, flowStep.getFlowInputArgs());
+				if (flowInputObjects.size() == 0) {
+					return "";
+				}
+			}
+
+			if (flowStep.getFunctionLibraryComponent() != null) {
+				flowInputObjects = getAllFlowInputObject_FL(artifact, flowStep.getFunctionLibraryComponent(),
+						flowStep.getFlowInputArgs());
+				if (flowInputObjects.size() == 0) {
+					return "";
+				}
+			}
+			for (FlowInputObject inputObject : flowInputObjects) {
+				if (!outData.isEmpty()) {
+					outData += ", ";
+				}
+				if (inputObject.isStaticValueDataExist()) {
+					outData += "StaticValue:" + inputObject.getStaticValueData();
+				}
+				if (inputObject.isGlobalVariableDataExist()) {
+					GlobalVariable globalVariable = GlobalLoader.getInstance()
+							.getGlobalVariableById(inputObject.getGlobalVariableData());
+					outData += "GV:" + globalVariable.getName();
+				}
+				if (inputObject.isDataRepositoryColumnDataExist()) {
+					String columnId = inputObject.getDataRepositoryColumnData();
+					DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
+					outData += "DR:" + drColumn.getName();
+				}
+				if (inputObject.isFlowInputDataExist()) {
+					String flowInputId = inputObject.getFlowInputData();
+					ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
+							.getComponentInputArgumentById(flowInputId);
+					outData += "Input:" + flowOutputArgument.getName();
+				}
+				if (inputObject.isFlowOutputDataExist()) {
+					String flowOutputId = inputObject.getFlowOutputData();
+					FlowOutputArgument flowOutputArgument = GlobalLoader.getInstance()
+							.getFlowOutputArgumentById(flowOutputId);
+					outData += "Output:" + flowOutputArgument.getOutputvariablename();
+				}
+			}
 			if (!outData.isEmpty()) {
-				outData += ", ";
+				return "Input: " + "<" + outData + ">";
 			}
-			if (inputObject.isStaticValueDataExist()) {
-				outData += "StaticValue:" + inputObject.getStaticValueData();
-			}
-			if (inputObject.isGlobalVariableDataExist()) {
-				GlobalVariable globalVariable = GlobalLoader.getInstance()
-						.getGlobalVariableById(inputObject.getGlobalVariableData());
-				outData += "GV:" + globalVariable.getName();
-			}
-			if (inputObject.isDataRepositoryColumnDataExist()) {
-				String columnId = inputObject.getDataRepositoryColumnData();
-				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
-				outData += "DR:" + drColumn.getName();
-			}
-			if (inputObject.isFlowInputDataExist()) {
-				String flowInputId = inputObject.getFlowInputData();
-				ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
-						.getComponentInputArgumentById(flowInputId);
-				outData += "Input:" + flowOutputArgument.getName();
-			}
-			if (inputObject.isFlowOutputDataExist()) {
-				outData += "Output:";
-			}
-		}
-		if (!outData.isEmpty()) {
-			return "Input: " + "<" + outData + ">";
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return "Input: <>";
 	}
