@@ -231,7 +231,6 @@ public class ArtifactTree extends CustomTree {
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<Artifact> artifacts = getArtifactsData();
-		setArtifactsData(artifacts);
 		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getParentid() == null) {
