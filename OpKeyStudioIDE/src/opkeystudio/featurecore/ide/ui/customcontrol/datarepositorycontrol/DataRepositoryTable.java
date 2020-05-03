@@ -18,6 +18,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
@@ -36,6 +37,7 @@ public class DataRepositoryTable extends CustomTable {
 	private DRColumnAttributes selectedDRColumnAttribute;
 	private DRCellAttributes selectedDRCEllAttribute;
 	private int selectedDRRow;
+	private TableCursor cursor;
 
 	public DataRepositoryTable(Composite parent, int style, DataRepositoryView parentView) {
 		super(parent, style);
@@ -44,6 +46,7 @@ public class DataRepositoryTable extends CustomTable {
 	}
 
 	private void init() {
+		this.setHeaderBackground(SWTResourceManager.getColor(248, 248, 245));
 		getParentDataRepositoryView().toggleMoveColumnLeftButton(false);
 		getParentDataRepositoryView().toggleMoveColumnRightButton(false);
 		getParentDataRepositoryView().toggleMoveRowDownButton(false);
@@ -55,7 +58,7 @@ public class DataRepositoryTable extends CustomTable {
 		getParentDataRepositoryView().toggleRenameColumnButton(false);
 		getParentDataRepositoryView().toggleSaveButton(false);
 
-		TableCursor cursor = new TableCursor(this, 0);
+		cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
@@ -201,6 +204,21 @@ public class DataRepositoryTable extends CustomTable {
 		}
 	}
 
+	private int getColumnIndex(TableColumn[] columns, TableColumn column) {
+		if (columns == null) {
+			return -1;
+		}
+		if (columns.length == 0) {
+			return -1;
+		}
+		for (int i = 0; i < columns.length; i++) {
+			if (columns[i] == column) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	private void initializeHeaders(List<DRColumnAttributes> columnAttributes) {
 		this.removeAll();
 		for (TableColumn column : this.getColumns()) {
@@ -210,6 +228,22 @@ public class DataRepositoryTable extends CustomTable {
 			if (header.isDeleted() == false) {
 				TableColumn column = new TableColumn(this, SWT.LEFT | SWT.FULL_SELECTION);
 				column.setText(header.getName());
+				column.addSelectionListener(new SelectionListener() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						TableColumn[] columns = getColumns();
+						int selectedIndex = getColumnIndex(columns, column);
+						System.out.println(">>Column Index " + selectedIndex);
+						selectColumnByCursor(cursor, selectedIndex);
+					}
+
+					@Override
+					public void widgetDefaultSelected(SelectionEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
 			}
 		}
 		for (int i = 0; i < this.getColumns().length; i++) {
