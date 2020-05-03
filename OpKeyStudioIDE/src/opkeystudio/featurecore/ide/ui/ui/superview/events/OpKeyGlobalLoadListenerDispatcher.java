@@ -3,11 +3,14 @@ package opkeystudio.featurecore.ide.ui.ui.superview.events;
 import java.util.ArrayList;
 import java.util.List;
 
-import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
+import org.eclipse.swt.widgets.Composite;
+
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 
 public class OpKeyGlobalLoadListenerDispatcher {
 	private static OpKeyGlobalLoadListenerDispatcher instance = null;
-	private List<SuperComposite> superComposites = new ArrayList<>();
+	private List<Composite> superComposites = new ArrayList<>();
 
 	public static OpKeyGlobalLoadListenerDispatcher getInstance() {
 		if (instance == null) {
@@ -16,7 +19,7 @@ public class OpKeyGlobalLoadListenerDispatcher {
 		return instance;
 	}
 
-	public void addSuperComposite(SuperComposite scomposite) {
+	public void addSuperComposite(Composite scomposite) {
 		this.superComposites.add(scomposite);
 	}
 
@@ -25,11 +28,19 @@ public class OpKeyGlobalLoadListenerDispatcher {
 	}
 
 	public void fireAllSuperCompositeGlobalListener() {
-		for (SuperComposite scomp : this.superComposites) {
+		for (Composite scomp : this.superComposites) {
 			if (scomp.isDisposed()) {
 				continue;
 			}
-			scomp.fireGlobalListener();
+			if (scomp instanceof CustomTable) {
+				CustomTable table = (CustomTable) scomp;
+				table.fireGlobalListener();
+			}
+
+			if (scomp instanceof CustomTree) {
+				CustomTree table = (CustomTree) scomp;
+				table.fireGlobalListener();
+			}
 		}
 	}
 }

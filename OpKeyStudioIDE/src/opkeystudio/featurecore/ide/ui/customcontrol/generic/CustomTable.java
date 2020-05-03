@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
 import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 
 public class CustomTable extends Table {
 	private int selectedRowIndex = 0;
@@ -36,6 +37,7 @@ public class CustomTable extends Table {
 
 			}
 		});
+		OpKeyGlobalLoadListenerDispatcher.getInstance().addSuperComposite(this);
 	}
 
 	public Object getControlData() {

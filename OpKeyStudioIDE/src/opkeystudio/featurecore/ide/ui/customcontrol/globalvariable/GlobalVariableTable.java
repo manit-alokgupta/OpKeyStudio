@@ -28,6 +28,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.GlobalVariableDialog;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
@@ -56,8 +58,18 @@ public class GlobalVariableTable extends CustomTable {
 		setParentTestCaseView(testCaseView);
 		initHeaders();
 		refreshGlobalVariables();
+		initGlobalLoadeListener();
 	}
-
+	
+	private void initGlobalLoadeListener() {
+		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
+			
+			@Override
+			public void handleGlobalEvent() {
+				refreshGlobalVariables();
+			}
+		});
+	}
 	private void initHeaders() {
 		if (isInsideArtifact()) {
 			for (String header : tableHeaders_arti) {
@@ -362,6 +374,7 @@ public class GlobalVariableTable extends CustomTable {
 		}
 		GlobalLoader.getInstance().initGlobalVariables();
 		refreshGlobalVariables();
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		return true;
 	}
 
