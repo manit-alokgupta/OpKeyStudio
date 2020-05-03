@@ -17,6 +17,7 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
@@ -48,6 +49,7 @@ public class GenericTree extends CustomTree {
 		this.setParentTestCaseView(testCaseView);
 		init();
 		initKeywords("");
+		addGlobalLoadListener();
 	}
 
 	public GenericTree(Composite parent, int style, TestCaseView testCaseView, TREETYPE treetype) {
@@ -55,14 +57,31 @@ public class GenericTree extends CustomTree {
 		this.setParentTestCaseView(testCaseView);
 		this.setTreeType(treetype);
 		initByTreeType();
-		intGlobalListener();
+		intDRGlobalListener();
 	}
 
-	private void intGlobalListener() {
-		this.addGestureListener(new GestureListener() {
+	private void addGlobalLoadListener() {
+		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
 
 			@Override
-			public void gesture(GestureEvent e) {
+			public void handleGlobalEvent() {
+				if (isFlTree()) {
+					initFunctionLibraries("");
+					return;
+				}
+				if (isCflTree()) {
+					initCodedFunctionLibraries("");
+					return;
+				}
+			}
+		});
+	}
+
+	private void intDRGlobalListener() {
+		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
+
+			@Override
+			public void handleGlobalEvent() {
 				initByTreeType();
 
 			}
