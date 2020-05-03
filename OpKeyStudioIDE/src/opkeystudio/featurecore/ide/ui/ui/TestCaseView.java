@@ -600,11 +600,10 @@ public class TestCaseView extends SuperComposite {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
 			ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
 			executionWizard.open();
-		}
-		finally {
+		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
-		
+
 	}
 
 	private void populateFlowStepsData(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
@@ -775,8 +774,6 @@ public class TestCaseView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				saveAll();
-				getCodedFunctionView().refreshTCFLCode();
-				OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 			}
 
 			@Override
@@ -871,23 +868,63 @@ public class TestCaseView extends SuperComposite {
 			toggleSaveButton(false);
 			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
 			if (status) {
-				new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
+				saveAll();
 			}
 		}
-		flowStepTable.renderFlowSteps();
-		getCodedFunctionView().refreshTCFLCode();
 	}
 
 	public void saveAll() {
 		if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			List<ComponentInputArgument> componentInputArgs = bottomFactory.getInputTable().getComponentInputData();
 			List<ComponentOutputArgument> componentOutputArgs = bottomFactory.getOutputTable().getComponentOutputData();
+			boolean isUniqueInputName = isComponentInputArgumentNameAreUnique(componentInputArgs);
+			boolean isUniqueOutputName = isComponentOutputArgumentNameAreUnique(componentOutputArgs);
+			if (isUniqueInputName == false) {
+				toggleSaveButton(false);
+				flowStepTable.renderFlowSteps();
+				getCodedFunctionView().refreshTCFLCode();
+				bottomFactory.getInputTable().renderAllBottomFactoryInputData();
+				new MessageDialogs().openErrorDialog("OpKey", "Variable Name Must Be Unique");
+				return;
+			}
+			if (isUniqueOutputName == false) {
+				toggleSaveButton(false);
+				flowStepTable.renderFlowSteps();
+				getCodedFunctionView().refreshTCFLCode();
+				bottomFactory.getOutputTable().renderAllBottomFactoryOutputData();
+				new MessageDialogs().openErrorDialog("OpKey", "Variable Name Must Be Unique");
+				return;
+			}
 			new FunctionLibraryConstruct().saveComponentInputArguments(componentInputArgs);
 			new FunctionLibraryConstruct().saveComponentOutputArguments(componentOutputArgs);
 		}
 		new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
 		flowStepTable.renderFlowSteps();
 		toggleSaveButton(false);
+		getCodedFunctionView().refreshTCFLCode();
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+	}
+
+	private boolean isComponentInputArgumentNameAreUnique(List<ComponentInputArgument> componentInputArguments) {
+		List<String> variableNames = new ArrayList<String>();
+		for (ComponentInputArgument ci : componentInputArguments) {
+			if (variableNames.contains(ci.getName().toLowerCase())) {
+				return false;
+			}
+			variableNames.add(ci.getName().toLowerCase());
+		}
+		return true;
+	}
+
+	private boolean isComponentOutputArgumentNameAreUnique(List<ComponentOutputArgument> componentInputArguments) {
+		List<String> variableNames = new ArrayList<String>();
+		for (ComponentOutputArgument co : componentInputArguments) {
+			if (variableNames.contains(co.getName().toLowerCase())) {
+				return false;
+			}
+			variableNames.add(co.getName().toLowerCase());
+		}
+		return true;
 	}
 
 	public FlowStepTable getFlowStepTable() {

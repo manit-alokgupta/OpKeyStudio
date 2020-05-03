@@ -92,14 +92,7 @@ public class OutputTable extends CustomTable {
 
 					@Override
 					public void focusLost(FocusEvent e) {
-						String value = getColumnTextWithCursor(cursor, 0);
 						text.dispose();
-						boolean isunique = isColumnDataUnique(value, 0);
-						if (isunique == false) {
-							componentOutputArgument.setModified(false);
-							renderAllBottomFactoryOutputData();
-							new MessageDialogs().openErrorDialog("OpKey", "Variable Name Must Be Unique");
-						}
 					}
 
 					@Override

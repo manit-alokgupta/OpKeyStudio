@@ -561,12 +561,10 @@ public class InputDataTable extends CustomTable {
 		}
 
 		if (flowStep.getCodedFunctionArtifact() != null) {
-			System.out.println("CFL Input Size " + flowStep.getCodedFunctionArtifact().getCflInputParameters().size());
 			setCflInputArguments(flowStep.getCodedFunctionArtifact().getCflInputParameters());
 		} else {
 			setCflInputArguments(new ArrayList<CFLInputParameter>());
 		}
-		System.out.println("Flow Input Size " + flowStep.getFlowInputArgs().size());
 		setFlowInputArgs(flowStep.getFlowInputArgs());
 	}
 
