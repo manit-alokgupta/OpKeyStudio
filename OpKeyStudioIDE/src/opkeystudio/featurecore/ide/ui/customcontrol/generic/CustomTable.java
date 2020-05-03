@@ -11,11 +11,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
+import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
+
 public class CustomTable extends Table {
 	private int selectedRowIndex = 0;
 	private Object controlData;
 	private int selectedColumn = 0;
 	private TableCursor tablecursor;
+
+	private List<GlobalLoadListener> listeners = new ArrayList<>();
 
 	public CustomTable(Composite parent, int style) {
 		super(parent, style);
@@ -157,5 +161,19 @@ public class CustomTable extends Table {
 			return "";
 		}
 		return text;
+	}
+
+	public void addOpKeyGlobalLoadListener(GlobalLoadListener listener) {
+		listeners.add(listener);
+	}
+
+	public void removeOpKeyGlobalLoadListener(GlobalLoadListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireGlobalListener() {
+		for (GlobalLoadListener listener : this.listeners) {
+			listener.handleGlobalEvent();
+		}
 	}
 }

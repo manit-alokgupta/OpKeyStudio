@@ -10,9 +10,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
+
 public class CustomTree extends Tree {
 	private TreeItem defaultSelectedItem;
-
+	private List<GlobalLoadListener> listeners = new ArrayList<>();
+	
 	public CustomTree(Composite parent, int style) {
 		super(parent, style);
 		init();
@@ -98,5 +101,19 @@ public class CustomTree extends Tree {
 
 	public void setDefaultSelectedItem(TreeItem defaultSelectedItem) {
 		this.defaultSelectedItem = defaultSelectedItem;
+	}
+	
+	public void addOpKeyGlobalLoadListener(GlobalLoadListener listener) {
+		listeners.add(listener);
+	}
+
+	public void removeOpKeyGlobalLoadListener(GlobalLoadListener listener) {
+		listeners.remove(listener);
+	}
+
+	public void fireGlobalListener() {
+		for (GlobalLoadListener listener : this.listeners) {
+			listener.handleGlobalEvent();
+		}
 	}
 }
