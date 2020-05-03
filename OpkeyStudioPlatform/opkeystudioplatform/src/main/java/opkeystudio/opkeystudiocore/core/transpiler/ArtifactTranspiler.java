@@ -34,8 +34,12 @@ public class ArtifactTranspiler {
 	}
 
 	public void setPackageProperties() {
-		ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
 		List<Artifact> allArtifacts = GlobalLoader.getInstance().getAllArtifacts();
+		setPackageProperties(allArtifacts);
+	}
+
+	public void setPackageProperties(List<Artifact> allArtifacts) {
+		ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
 				continue;
@@ -120,8 +124,8 @@ public class ArtifactTranspiler {
 
 	private void resetTranspiledArtifactsFolder() {
 		try {
-			FileUtils.deleteDirectory(
-					new File(Utilities.getInstance().getProjectTranspiledArtifactsFolder() + File.separator + "allartifacts"));
+			FileUtils.deleteDirectory(new File(
+					Utilities.getInstance().getProjectTranspiledArtifactsFolder() + File.separator + "allartifacts"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

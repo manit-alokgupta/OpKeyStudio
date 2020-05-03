@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
@@ -32,9 +33,9 @@ public class GlobalLoader {
 
 	private List<FlowInputArgument> componentflowInputArguments = new ArrayList<>();
 	private List<FlowOutputArgument> componentflowOutputArguments = new ArrayList<>();
-	
-	private List<ComponentInputArgument> componentInputArguments=new ArrayList<ComponentInputArgument>();
-	
+
+	private List<ComponentInputArgument> componentInputArguments = new ArrayList<ComponentInputArgument>();
+
 	private List<ORObject> allORObjects = new ArrayList<ORObject>();
 	private List<Artifact> allArtifacts = new ArrayList<Artifact>();
 	private List<ObjectAttributeProperty> objectAttributeProperties = new ArrayList<>();
@@ -63,6 +64,7 @@ public class GlobalLoader {
 
 			@Override
 			public void run() {
+				globalLoader.initAllArtifacts();
 				globalLoader.initGlobalVariables();
 				globalLoader.initAllFlowInputArguments();
 				globalLoader.initAllFlowOutputArguments();
@@ -87,6 +89,10 @@ public class GlobalLoader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void initAllArtifacts() {
+		this.allArtifacts = new ArtifactApi().getAllArtificates();
 	}
 
 	public void initGlobalVariables() {
@@ -297,7 +303,7 @@ public class GlobalLoader {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void initAllComponentInputParameters() {
 		String query = "select * from component_input_parameters order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
@@ -355,10 +361,6 @@ public class GlobalLoader {
 
 	public List<Artifact> getAllArtifacts() {
 		return allArtifacts;
-	}
-
-	public void setAllArtifacts(List<Artifact> allArtifacts) {
-		this.allArtifacts = allArtifacts;
 	}
 
 	public GlobalVariable getGlobalVariableById(String gvid) {

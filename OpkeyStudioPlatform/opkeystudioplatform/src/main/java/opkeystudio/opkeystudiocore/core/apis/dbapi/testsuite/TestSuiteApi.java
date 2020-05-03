@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
@@ -32,7 +33,7 @@ public class TestSuiteApi {
 
 	private Artifact getArtifact(String id) {
 
-		return new ArtifactApi().getArtifact(id).get(0);
+		return GlobalLoader.getInstance().getArtifactById(id);
 	}
 
 	public List<TestSuiteStep> getAllTestSuitesStepsWithArtifact(String testSuiteId) {
