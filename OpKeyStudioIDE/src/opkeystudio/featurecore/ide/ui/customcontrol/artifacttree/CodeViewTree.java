@@ -338,7 +338,7 @@ public class CodeViewTree extends CustomTree {
 		}
 
 		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getTranspiledArtifactsFolder();
+				.getProjectTranspiledArtifactsFolder();
 
 		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getProjectsFolder();
 		projectFolderPath = projectFolderPath + File.separator + ServiceRepository.getInstance().getProjectName();

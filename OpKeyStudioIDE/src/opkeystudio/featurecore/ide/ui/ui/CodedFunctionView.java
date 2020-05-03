@@ -139,7 +139,7 @@ public class CodedFunctionView extends SuperComposite {
 	private void initTestCaseCode() {
 		Artifact artifact = getParentTestCaseView().getArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));
@@ -149,7 +149,7 @@ public class CodedFunctionView extends SuperComposite {
 	private void initTestSuiteCode() {
 		Artifact artifact = getParentTestSuiteView().getArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));
@@ -159,7 +159,7 @@ public class CodedFunctionView extends SuperComposite {
 	private void initObjectRepositoryCode() {
 		Artifact artifact = getParentObjectRepositoryView().getArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));
@@ -169,7 +169,7 @@ public class CodedFunctionView extends SuperComposite {
 	private void initDataRepositoryCode() {
 		Artifact artifact = getParentDataRepositoryView().getArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));

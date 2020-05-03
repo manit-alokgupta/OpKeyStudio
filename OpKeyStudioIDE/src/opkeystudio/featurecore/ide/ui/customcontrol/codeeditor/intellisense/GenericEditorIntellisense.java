@@ -346,7 +346,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	private void addOpKeyTranspiledClassInformation() {
-		String mainDirPath = Utilities.getInstance().getTranspiledArtifactsFolder();
+		String mainDirPath = Utilities.getInstance().getProjectTranspiledArtifactsFolder();
 		List<File> allFiles = new CompilerUtilities().getAllFiles(new File(mainDirPath), ".java");
 		for (File file : allFiles) {
 			String codeData = Utilities.getInstance().readTextFile(file);
