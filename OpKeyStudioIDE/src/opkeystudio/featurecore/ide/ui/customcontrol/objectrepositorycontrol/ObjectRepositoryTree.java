@@ -10,6 +10,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
@@ -24,12 +25,23 @@ public class ObjectRepositoryTree extends CustomTree {
 	public ObjectRepositoryTree(Composite parent, int style, TestCaseView testCaseView) {
 		super(parent, style);
 		this.setParentTestCaseView(testCaseView);
+		initGlobalLoadListener();
 	}
 
 	public ObjectRepositoryTree(Composite parent, int style, ObjectRepositoryView orView) {
 		super(parent, style);
 		this.setParentORView(orView);
 		renderObjectRepositories();
+	}
+
+	private void initGlobalLoadListener() {
+		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				fetchAndRenderORTree();
+			}
+		});
 	}
 
 	public void setAllORObjects(List<ORObject> objectRepository) {

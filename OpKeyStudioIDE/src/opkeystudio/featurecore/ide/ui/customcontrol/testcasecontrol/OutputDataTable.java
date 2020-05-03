@@ -24,6 +24,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
@@ -51,11 +52,22 @@ public class OutputDataTable extends CustomTable {
 		this.setParentTestCaseView(parentView);
 		setTableType(tableType);
 		init();
+		initGlobalLoadListener();
 	}
 
 	public OutputDataTable(Composite parent, int style) {
 		super(parent, style);
 		init();
+	}
+
+	private void initGlobalLoadListener() {
+		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
+			
+			@Override
+			public void handleGlobalEvent() {
+				renderOutPutTableAll();
+			}
+		});
 	}
 
 	private void initForSelectionTable() {

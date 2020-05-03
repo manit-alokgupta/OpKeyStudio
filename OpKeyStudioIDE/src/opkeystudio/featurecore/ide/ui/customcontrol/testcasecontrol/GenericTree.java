@@ -3,6 +3,8 @@ package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.swt.events.GestureEvent;
+import org.eclipse.swt.events.GestureListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
@@ -53,6 +55,18 @@ public class GenericTree extends CustomTree {
 		this.setParentTestCaseView(testCaseView);
 		this.setTreeType(treetype);
 		initByTreeType();
+		intGlobalListener();
+	}
+
+	private void intGlobalListener() {
+		this.addGestureListener(new GestureListener() {
+
+			@Override
+			public void gesture(GestureEvent e) {
+				initByTreeType();
+
+			}
+		});
 	}
 
 	private void initByTreeType() {
