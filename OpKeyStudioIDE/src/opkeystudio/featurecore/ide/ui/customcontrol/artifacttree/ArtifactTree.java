@@ -16,7 +16,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -157,10 +156,10 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public void renderArtifacts() {
-
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
+		GlobalLoader.getInstance().initAllArguments();
 		this.removeAll();
 		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
 		if (isAttachedinTestSuite()) {
@@ -172,10 +171,9 @@ public class ArtifactTree extends CustomTree {
 		addIcon(rootNode);
 		List<Artifact> artifacts = new ArrayList<>();
 		if (isAttachedinTestSuite()) {
-			artifacts = new ArtifactApi().getAllArtificatesByType("Flow");
+			artifacts = GlobalLoader.getInstance().getAllArtifactByType("Flow");
 		} else {
-			artifacts = new ArtifactApi().getAllArtificates();
-			GlobalLoader.getInstance().setAllArtifacts(artifacts);
+			artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		}
 		setArtifactsData(artifacts);
 		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
@@ -200,7 +198,6 @@ public class ArtifactTree extends CustomTree {
 			renderAllArtifactTree(topMostNode, artifacts);
 		}
 		expandAll(rootNode);
-		GlobalLoader.getInstance().initAllArguments();
 		new ArtifactTranspiler().setPackageProperties();
 		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
@@ -255,7 +252,6 @@ public class ArtifactTree extends CustomTree {
 			refreshAllArtifactTree(topMostNode, artifacts);
 		}
 		expandAll(rootNode);
-		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {

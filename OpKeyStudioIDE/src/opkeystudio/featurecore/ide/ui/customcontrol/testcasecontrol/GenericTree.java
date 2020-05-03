@@ -22,6 +22,7 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
@@ -315,7 +316,7 @@ public class GenericTree extends CustomTree {
 		setKeywordTree(false);
 		setCflTree(false);
 		this.removeAll();
-		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("Component");
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("Component");
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Function Library");
 		rootNode.setExpanded(true);
@@ -336,7 +337,7 @@ public class GenericTree extends CustomTree {
 		setKeywordTree(false);
 		setCflTree(true);
 		this.removeAll();
-		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("CodedFunction");
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("CodedFunction");
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Coded Function Library");
 		rootNode.setExpanded(true);
@@ -389,7 +390,7 @@ public class GenericTree extends CustomTree {
 		rootNode.setExpanded(true);
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		addIcon(rootNode);
-		List<Artifact> artifacts = new ArtifactApi().getAllArtificatesByType("DataRepository");
+		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("DataRepository");
 		for (Artifact drArtifact : artifacts) {
 			CustomTreeItem drNode = new CustomTreeItem(rootNode, 0);
 			drNode.setText(drArtifact.getName());

@@ -20,7 +20,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -95,11 +95,11 @@ public class TestObjectTable extends CustomTable {
 					return;
 				}
 				String orId = orobject.getOr_id();
-				List<Artifact> artifacts = new ArtifactApi().getArtifact(orId);
-				if (artifacts.size() == 0) {
+				Artifact artifact = GlobalLoader.getInstance().getArtifactById(orId);
+				if (artifact == null) {
 					return;
 				}
-				Utilities.getInstance().openArtifacts(artifacts.get(0));
+				Utilities.getInstance().openArtifacts(artifact);
 			}
 
 			@Override

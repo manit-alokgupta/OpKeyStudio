@@ -559,7 +559,7 @@ public class ArtifactTreeUI extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				artifactTree.refereshArtifacts();
+				artifactTree.renderArtifacts();
 
 				System.out.println("Refresh Success");
 			}
