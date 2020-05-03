@@ -14,6 +14,7 @@ import opkeystudio.core.utils.ArtifactTranspilerAsync;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
@@ -202,7 +203,7 @@ public class ArtifactTree extends CustomTree {
 		GlobalLoader.getInstance().initAllArguments();
 		new ArtifactTranspiler().setPackageProperties();
 		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
-
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
 	public void highlightArtifact(String artifactId) {
@@ -255,6 +256,7 @@ public class ArtifactTree extends CustomTree {
 			refreshAllArtifactTree(topMostNode, artifacts);
 		}
 		expandAll(rootNode);
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {

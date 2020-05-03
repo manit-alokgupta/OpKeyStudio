@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.TableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -31,6 +32,17 @@ public class ComponentArgumentInputTable extends CustomTable {
 		super(parent, style);
 		this.setParentTestCaseView(parentTestCaseView);
 		init();
+		addGlobalListener();
+	}
+
+	private void addGlobalListener() {
+		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				renderTable();
+			}
+		});
 	}
 
 	private void init() {
