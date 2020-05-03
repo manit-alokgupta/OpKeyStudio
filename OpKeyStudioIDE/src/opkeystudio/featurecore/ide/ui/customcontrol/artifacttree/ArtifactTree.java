@@ -21,7 +21,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
-import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class ArtifactTree extends CustomTree {
 	private TestSuiteView parentTestSuiteView;
@@ -198,7 +197,6 @@ public class ArtifactTree extends CustomTree {
 			renderAllArtifactTree(topMostNode, artifacts);
 		}
 		expandAll(rootNode);
-		new ArtifactTranspiler().setPackageProperties();
 		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
