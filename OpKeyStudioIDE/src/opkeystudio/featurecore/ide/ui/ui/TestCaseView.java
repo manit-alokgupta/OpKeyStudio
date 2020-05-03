@@ -884,7 +884,7 @@ public class TestCaseView extends SuperComposite {
 				flowStepTable.renderFlowSteps();
 				getCodedFunctionView().refreshTCFLCode();
 				bottomFactory.getInputTable().renderAllBottomFactoryInputData();
-				new MessageDialogs().openErrorDialog("OpKey", "Variable Name Must Be Unique");
+				new MessageDialogs().openErrorDialog("OpKey", "Name of input parameters must be unique");
 				return;
 			}
 			if (isUniqueOutputName == false) {
@@ -892,7 +892,7 @@ public class TestCaseView extends SuperComposite {
 				flowStepTable.renderFlowSteps();
 				getCodedFunctionView().refreshTCFLCode();
 				bottomFactory.getOutputTable().renderAllBottomFactoryOutputData();
-				new MessageDialogs().openErrorDialog("OpKey", "Variable Name Must Be Unique");
+				new MessageDialogs().openErrorDialog("OpKey", "Name of output parameters must be unique");
 				return;
 			}
 			new FunctionLibraryConstruct().saveComponentInputArguments(componentInputArgs);
