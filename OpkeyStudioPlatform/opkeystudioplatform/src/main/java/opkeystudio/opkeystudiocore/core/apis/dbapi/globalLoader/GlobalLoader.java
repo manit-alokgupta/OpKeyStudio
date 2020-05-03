@@ -24,6 +24,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalLoader {
@@ -93,6 +94,7 @@ public class GlobalLoader {
 
 	private void initAllArtifacts() {
 		this.allArtifacts = new ArtifactApi().getAllArtificates();
+		ArtifactTranspiler.getInstance().setPackageProperties(this.allArtifacts);
 	}
 
 	public void initGlobalVariables() {
