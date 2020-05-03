@@ -30,6 +30,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+
 public class Utilities {
 	private static Utilities util;
 	private String defaultInstallDir;
@@ -110,7 +112,16 @@ public class Utilities {
 				+ File.separator + "Sessions";
 	}
 
-	public String getTranspiledArtifactsFolder() {
+	public String getProjectTranspiledArtifactsFolder() {
+		String path = getProjectsFolder() + File.separator + ServiceRepository.getInstance().getProjectName()
+				+ File.separator + "TranspiledArtifacts";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
+		return path;
+	}
+
+	public String getTranspiledArtifactsFolder_2() {
 		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "TranspiledArtifacts";
 	}

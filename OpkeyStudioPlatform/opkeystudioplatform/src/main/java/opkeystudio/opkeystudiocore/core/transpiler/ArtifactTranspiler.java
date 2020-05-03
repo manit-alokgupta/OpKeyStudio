@@ -121,7 +121,7 @@ public class ArtifactTranspiler {
 	private void resetTranspiledArtifactsFolder() {
 		try {
 			FileUtils.deleteDirectory(
-					new File(Utilities.getInstance().getTranspiledArtifactsFolder() + File.separator + "allartifacts"));
+					new File(Utilities.getInstance().getProjectTranspiledArtifactsFolder() + File.separator + "allartifacts"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -18,7 +18,7 @@ public class ArtifactParser {
 		if (artifact.getFile_type_enum() != MODULETYPE.Flow && artifact.getFile_type_enum() != MODULETYPE.Component) {
 			return;
 		}
-		String filePath = Utilities.getInstance().getTranspiledArtifactsFolder() + File.separator
+		String filePath = Utilities.getInstance().getProjectTranspiledArtifactsFolder() + File.separator
 				+ artifact.getPackagePath() + File.separator + artifact.getVariableName() + ".java";
 		String javaContents = Utilities.getInstance().readTextFile(new File(filePath));
 		JavaClassSource classSorce = (JavaClassSource) Roaster.parse(javaContents);

@@ -13,7 +13,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class ORTranspiler extends AbstractTranspiler {
 	public ORTranspiler() {
 		setFileExtension(".java");
-		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
+		setTranspiledDataFolder(Utilities.getInstance().getProjectTranspiledArtifactsFolder());
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class FLTranspiler extends AbstractTranspiler {
 
 	public FLTranspiler() {
 		setFileExtension(".java");
-		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
+		setTranspiledDataFolder(Utilities.getInstance().getProjectTranspiledArtifactsFolder());
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class ExecutionSessionExecutor {
 		if (session.getArtifactFilePackageClass() != null) {
 			transpiledFilesDir = session.getArtifactCodeDirPath();
 		} else {
-			transpiledFilesDir = Utilities.getInstance().getTranspiledArtifactsFolder();
+			transpiledFilesDir = Utilities.getInstance().getProjectTranspiledArtifactsFolder();
 		}
 		createExecutionSession(session.getSessionName());
 		String artifactCodesDirPath = getSessionArtifacCodesFolder(session.getSessionName());

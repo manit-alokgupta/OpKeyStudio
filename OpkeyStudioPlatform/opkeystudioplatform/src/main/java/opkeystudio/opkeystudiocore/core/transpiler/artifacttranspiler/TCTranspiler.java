@@ -19,7 +19,7 @@ public class TCTranspiler extends AbstractTranspiler {
 
 	public TCTranspiler() {
 		setFileExtension(".java");
-		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
+		setTranspiledDataFolder(Utilities.getInstance().getProjectTranspiledArtifactsFolder());
 	}
 
 	@Override

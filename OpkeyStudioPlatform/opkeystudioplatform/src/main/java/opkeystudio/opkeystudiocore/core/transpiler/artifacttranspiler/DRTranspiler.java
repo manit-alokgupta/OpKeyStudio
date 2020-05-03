@@ -13,7 +13,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class DRTranspiler extends AbstractTranspiler {
 	public DRTranspiler() {
 		setFileExtension(".java");
-		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
+		setTranspiledDataFolder(Utilities.getInstance().getProjectTranspiledArtifactsFolder());
 	}
 
 	@Override

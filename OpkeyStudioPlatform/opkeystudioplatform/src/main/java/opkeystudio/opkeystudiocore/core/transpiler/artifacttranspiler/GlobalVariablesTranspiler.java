@@ -12,7 +12,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 public class GlobalVariablesTranspiler extends AbstractTranspiler {
 	public GlobalVariablesTranspiler() {
 		setFileExtension(".java");
-		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
+		setTranspiledDataFolder(Utilities.getInstance().getProjectTranspiledArtifactsFolder());
 	}
 
 	public void transpile() {

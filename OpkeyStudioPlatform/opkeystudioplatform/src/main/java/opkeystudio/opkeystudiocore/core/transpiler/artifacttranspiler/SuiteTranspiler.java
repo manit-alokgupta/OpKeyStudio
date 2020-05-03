@@ -18,7 +18,7 @@ public class SuiteTranspiler extends AbstractTranspiler {
 
 	public SuiteTranspiler() {
 		setFileExtension(".java");
-		setTranspiledDataFolder(Utilities.getInstance().getTranspiledArtifactsFolder());
+		setTranspiledDataFolder(Utilities.getInstance().getProjectTranspiledArtifactsFolder());
 	}
 
 	@Override
