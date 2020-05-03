@@ -28,6 +28,7 @@ public class OpKeyGlobalLoadListenerDispatcher {
 	}
 
 	public void fireAllSuperCompositeGlobalListener() {
+		
 		for (Composite scomp : this.superComposites) {
 			if (scomp.isDisposed()) {
 				continue;

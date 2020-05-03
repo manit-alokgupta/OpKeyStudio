@@ -618,7 +618,7 @@ public class TestCaseView extends SuperComposite {
 			getStepDetailLabel().setText(stepDetails);
 			inputDataTable.renderInputTable(flowStep);
 			outputDataTable.renderOutPutTableFlowStep(flowStep);
-			outputVariableTable.renderOutPutTableAll();
+			outputVariableTable.renderOutPutTableAll(flowStep);
 			renderTestObjectTable(flowStep, true);
 
 			toggleDeleteButton(true);

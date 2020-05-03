@@ -62,10 +62,15 @@ public class OutputDataTable extends CustomTable {
 
 	private void initGlobalLoadListener() {
 		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
-			
+
 			@Override
 			public void handleGlobalEvent() {
-				renderOutPutTableAll();
+				if (getTableType() == TABLE_TYPE.SELECTIONTABLE) {
+					renderOutPutTableAll(getFlowStep());
+				}
+				if (getTableType() == TABLE_TYPE.INPUTTABLE) {
+					renderOutPutTableFlowStep(getFlowStep());
+				}
 			}
 		});
 	}
@@ -252,6 +257,9 @@ public class OutputDataTable extends CustomTable {
 	}
 
 	public void renderOutPutTableFlowStep(FlowStep flowStep) {
+		if (flowStep == null) {
+			return;
+		}
 		this.initOutputTableArguments(flowStep);
 		this.removeAll();
 		System.out.println("Called Output variable " + flowOutputArgs.size());
@@ -274,10 +282,14 @@ public class OutputDataTable extends CustomTable {
 		}
 	}
 
-	public void renderOutPutTableAll() {
+	public void renderOutPutTableAll(FlowStep flowStep) {
 		this.removeAll();
-		List<FlowOutputArgument> flowOutPutArgs = new FlowApi().fetchFlowStepOutputArguments(
-				getParentTestCaseView().getFlowStepTable().getSelectedFlowStep().getFlow_stepid());
+		this.setFlowStep(flowStep);
+		if (this.getFlowStep() == null) {
+			return;
+		}
+		List<FlowOutputArgument> flowOutPutArgs = new FlowApi()
+				.fetchFlowStepOutputArguments(this.getFlowStep().getFlow_stepid());
 		for (FlowOutputArgument flowOutPutArg : flowOutPutArgs) {
 			if (flowOutPutArg.getOutputvariablename() != null) {
 				CustomTableItem cti = new CustomTableItem(this, 0);
