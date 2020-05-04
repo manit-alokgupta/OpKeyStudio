@@ -102,7 +102,7 @@ public class ExecutionSessionExecutor {
 				+ "ArtifactCodes";
 	}
 
-	private String getSessionLogsFolder(String sessionName) {
+	public String getSessionLogsFolder(String sessionName) {
 		return Utilities.getInstance().getSessionsFolder() + File.separator + sessionName + File.separator + "logs";
 	}
 
