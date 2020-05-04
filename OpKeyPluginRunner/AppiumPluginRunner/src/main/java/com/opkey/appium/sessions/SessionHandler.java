@@ -5,6 +5,7 @@ import java.io.File;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 import com.opkeystudio.core.sessioninterfaces.ExecutionSession;
 import com.opkeystudio.core.sessions.SessionInfo;
+import com.opkeystudio.core.sessions.SessionInfoConverter;
 import com.plugin.appium.Finder;
 import com.plugin.appium.exceptionhandlers.ToolNotSetException;
 import com.ssts.reporting.IReport;
@@ -12,17 +13,19 @@ import com.ssts.reporting.ReportBuilder;
 import com.ssts.reporting.ReportFormat;
 
 public class SessionHandler implements ExecutionSession {
-	
+
 	private static SessionInfo sessionInfo;
 
-	public void afterSessionEnds(SessionInfo sessionInfo) {
+	public void afterSessionEnds(Object sessionObject) {
+		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
 		/*
 		 * Report.get().endTestCase(); Report.get().endSuite();
 		 */
 		ReportBuilder.get().close();
 	}
 
-	public void beforeSessionStart(SessionInfo sessionInfo) {
+	public void beforeSessionStart(Object sessionObject) {
+		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
 		SessionHandler.sessionInfo = sessionInfo;
 		MobileDevice device = sessionInfo.getMobileDevice();
 
@@ -38,14 +41,14 @@ public class SessionHandler implements ExecutionSession {
 
 	}
 
-	public void pauseExecutionSession(SessionInfo sessionInfo) {
-
+	public void pauseExecutionSession(Object sessionObject) {
+		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
 	}
 
-	public void resumeExecutionSession(SessionInfo sessionInfo) {
-
+	public void resumeExecutionSession(Object sessionObject) {
+		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
 	}
-	
+
 	public static SessionInfo getSessionInfo() {
 		return SessionHandler.sessionInfo;
 	}
