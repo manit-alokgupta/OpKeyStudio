@@ -256,7 +256,7 @@ public class CodeViewTree extends CustomTree {
 		Set<String> packages = ArtifactTranspiler.getInstance().getAllPackagesNames();
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(fileName).setPublic();
-		class1.addMethod().setName("main").setBody("System.out.println(\"Hello from OpKey E\");").setPublic()
+		class1.addMethod().setName("main").setBody("System.out.println(\"Hello from OpKey E\");").addThrows("Exception").setPublic()
 				.setStatic(true).addParameter("String[]", "args");
 		for (String packag : packages) {
 			class1.addImport(packag + ".*");
