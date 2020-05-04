@@ -232,8 +232,6 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	
-
 	public boolean ScrollDown()
 			throws ToolNotSetException, InterruptedException, KeywordMethodOrArgumentValidationFailException {
 
@@ -643,7 +641,7 @@ public class OpKeyAppiumKeywords {
 	}
 
 	/* WebDriverException */
-	
+
 	/* WebDriverException */
 	public boolean GoBackAndWait(int arg0) {
 
@@ -1075,19 +1073,30 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public int GetDropDownItemCount(ORObject arg0) throws Exception {
+//	public int GetDropDownItemCount(ORObject arg0) throws Exception {
+//
+//		System.out.println(">>Keyword Called GetDropDownItemCount");
+//
+//		ContextInitiator.addFunction("GetDropDownItemCount");
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//		// Method_getDropDownItemCount
+//
+//		return DataType.getInt(new DropDown().Method_getDropDownItemCount(object).getOutput());
+//
+//	}
 
-		System.out.println(">>Keyword Called GetDropDownItemCount");
-
-		ContextInitiator.addFunction("GetDropDownItemCount");
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		// Method_getDropDownItemCount
-
-		return DataType.getInt(new DropDown().Method_getDropDownItemCount(object).getOutput());
-
-	}
-
-	
+//	public int GetDropDownItemCount(ORObject arg0) throws Exception {
+//
+//		System.out.println(">>Keyword Called GetDropDownItemCount");
+//
+//		ContextInitiator.addFunction("GetDropDownItemCount");
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//		// Method_getDropDownItemCount
+//
+//		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_getDropDownItemCount(object)); 
+//		return DataType.getInt(functionResult.getOutput());
+//
+//	}
 
 	public boolean VerifyDropDownItemExists(ORObject arg0, String arg1) throws Exception {
 
@@ -1237,7 +1246,6 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	
 	public boolean VerifyObjectExists(ORObject arg0) throws ToolNotSetException {
 
 		System.out.println(">>Keyword Called VerifyObjectExists");
@@ -2122,17 +2130,17 @@ public class OpKeyAppiumKeywords {
 //		return new EditBox().Method_getTextFromEditBox(object).getOutput();
 //	}
 
-	public int GetRadioButtonCount(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
-		System.out.println(">>Keyword Called GetRadioButtonCount");
-
-		ContextInitiator.addFunction("GetRadioButtonCount");
-		// Method_getRadioButtonCount
-
-		return DataType.getInt(new Deprecate().Method_getRadioButtonCount(object).getOutput());
-
-	}
+//	public int GetRadioButtonCount(ORObject arg0) throws Exception {
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//
+//		System.out.println(">>Keyword Called GetRadioButtonCount");
+//
+//		ContextInitiator.addFunction("GetRadioButtonCount");
+//		// Method_getRadioButtonCount
+//
+//		return DataType.getInt(new Deprecate().Method_getRadioButtonCount(object).getOutput());
+//
+//	}
 
 	public boolean TypeTextAndEnterTextArea(ORObject arg0, String arg1) throws Exception {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -2581,17 +2589,17 @@ public class OpKeyAppiumKeywords {
 //		return "";
 //
 //	}
-
-	public int GetLinkCount() throws Exception {
-
-		System.out.println(">>Keyword Called GetLinkCount");
-
-		ContextInitiator.addFunction(DataType.getMethodName());
-		// Method_getLinkCount
-
-		return DataType.getInt(new Links().Method_getLinkCount().getOutput());
-
-	}
+//
+//	public int GetLinkCount() throws Exception {
+//
+//		System.out.println(">>Keyword Called GetLinkCount");
+//
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		// Method_getLinkCount
+//
+//		return DataType.getInt(new Links().Method_getLinkCount().getOutput());
+//
+//	}
 
 	public boolean VerifyLinkCount(int arg0) throws Exception {
 
@@ -2839,17 +2847,17 @@ public class OpKeyAppiumKeywords {
 //
 //	}
 
-	public int GetElementIndex(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
-		System.out.println(">>Keyword Called GetElementIndex");
-
-		ContextInitiator.addFunction(DataType.getMethodName());
-		// Method_GetElementIndex
-
-		return DataType.getInt(new Deprecate().Method_GetElementIndex(object).getOutput());
-
-	}
+//	public int GetElementIndex(ORObject arg0) throws Exception {
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//
+//		System.out.println(">>Keyword Called GetElementIndex");
+//
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		// Method_GetElementIndex
+//
+//		return DataType.getInt(new Deprecate().Method_GetElementIndex(object).getOutput());
+//
+//	}
 
 	//// Start
 
@@ -3723,31 +3731,31 @@ public class OpKeyAppiumKeywords {
 //
 //	}
 
-	public int GetTableRowNumber(ORObject arg0, int arg1, String arg2) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//	public int GetTableRowNumber(ORObject arg0, int arg1, String arg2) throws Exception {
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//
+//		System.out.println(">>Keyword Called GetTableRowNumber");
+//
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+//		// Method_TableGetTextRow
+//
+//		return DataType.getInt(new Table().Method_TableGetTextRow(object, arg1, arg2).getOutput());
+//
+//	}
 
-		System.out.println(">>Keyword Called GetTableRowNumber");
-
-		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
-		// Method_TableGetTextRow
-
-		return DataType.getInt(new Table().Method_TableGetTextRow(object, arg1, arg2).getOutput());
-
-	}
-
-	public int GetTableColumnNumber(ORObject arg0, int arg1, String arg2) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
-		System.out.println(">>Keyword Called GetTableColumnNumber");
-
-		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
-		// Method_TableGetTextColumn
-
-		return DataType.getInt(new Table().Method_TableGetTextColumn(object, arg1, arg2).getOutput());
-
-	}
+//	public int GetTableColumnNumber(ORObject arg0, int arg1, String arg2) throws Exception {
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//
+//		System.out.println(">>Keyword Called GetTableColumnNumber");
+//
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+//		// Method_TableGetTextColumn
+//
+//		return DataType.getInt(new Table().Method_TableGetTextColumn(object, arg1, arg2).getOutput());
+//
+//	}
 
 //	public String GetDropDownToolTip(ORObject arg0) throws Exception {
 //		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -3849,17 +3857,17 @@ public class OpKeyAppiumKeywords {
 	 * @throws Exception
 	 *****************************/
 
-	public int GetTextAreaLength(ORObject arg0) throws Exception {
-		ContextInitiator.addFunction(DataType.getMethodName());
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
-		System.out.println(">>Keyword Called GetTextAreaLength");
-
-		// Method_GetTextAreaLength
-
-		return DataType.getInt(new TextArea().Method_GetTextAreaLength(object).getOutput());
-
-	}
+//	public int GetTextAreaLength(ORObject arg0) throws Exception {
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//
+//		System.out.println(">>Keyword Called GetTextAreaLength");
+//
+//		// Method_GetTextAreaLength
+//
+//		return DataType.getInt(new TextArea().Method_GetTextAreaLength(object).getOutput());
+//
+//	}
 
 //	public String GetTextAreaColumnRowLength(ORObject arg0) throws Exception {
 //		ContextInitiator.addFunction(DataType.getMethodName());
@@ -3897,30 +3905,30 @@ public class OpKeyAppiumKeywords {
 //
 //	}
 
-	public int GetTableRowCount(ORObject arg0) throws Exception {
-		ContextInitiator.addFunction(DataType.getMethodName());
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
-		System.out.println(">>Keyword Called GetTableRowCount");
-
-		// Method_getTableRowCount
-
-		return DataType.getInt(new Table().Method_getTableRowCount(object).getOutput());
-
-	}
-
-	public int GetTableColumnCount(ORObject arg0, int arg1) throws Exception {
-		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
-		System.out.println(">>Keyword Called GetTableColumnCount");
-
-		// Method_getTableColCount
-
-		return DataType.getInt(new Table().Method_getTableColCount(object, arg1).getOutput());
-
-	}
+//	public int GetTableRowCount(ORObject arg0) throws Exception {
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//
+//		System.out.println(">>Keyword Called GetTableRowCount");
+//
+//		// Method_getTableRowCount
+//
+//		return DataType.getInt(new Table().Method_getTableRowCount(object).getOutput());
+//
+//	}
+//
+//	public int GetTableColumnCount(ORObject arg0, int arg1) throws Exception {
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//
+//		System.out.println(">>Keyword Called GetTableColumnCount");
+//
+//		// Method_getTableColCount
+//
+//		return DataType.getInt(new Table().Method_getTableColCount(object, arg1).getOutput());
+//
+//	}
 
 //	public String GetObjectCSSProperty(ORObject arg0, String arg1) throws Exception {
 //		ContextInitiator.addFunction(DataType.getMethodName());
@@ -4360,19 +4368,19 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public int GetObjectCount(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6,
-			String arg7, String arg8, String arg9) throws InterruptedException, ToolNotSetException {
-		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-
-		System.out.println(">>Keyword Called GetObjectCount");
-
-		// Method_getObjectCount
-
-		return DataType.getInt(new WebObjects()
-				.Method_getObjectCount(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9).getOutput());
-
-	}
+//	public int GetObjectCount(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6,
+//			String arg7, String arg8, String arg9) throws InterruptedException, ToolNotSetException {
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+//
+//		System.out.println(">>Keyword Called GetObjectCount");
+//
+//		// Method_getObjectCount
+//
+//		return DataType.getInt(new WebObjects()
+//				.Method_getObjectCount(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9).getOutput());
+//
+//	}
 
 //	public String GetObjectText(ORObject arg0, String arg1, String arg2) throws Exception {
 //		String methodName = DataType.getMethodName();
@@ -4866,17 +4874,17 @@ public class OpKeyAppiumKeywords {
 //
 //	}
 
-	public int GetEditBoxLength(ORObject arg0) throws Exception {
-
-		System.out.println(">>Keyword Called GetEditBoxLength");
-
-		// Method_getEditboxLength
-
-		ContextInitiator.addFunction(DataType.getMethodName());
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		return DataType.getInt(new EditBox().Method_getEditboxLength(object).getOutput());
-
-	}
+//	public int GetEditBoxLength(ORObject arg0) throws Exception {
+//
+//		System.out.println(">>Keyword Called GetEditBoxLength");
+//
+//		// Method_getEditboxLength
+//
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		AppiumObject object = new ObjectConverter().formatObject(arg0);
+//		return DataType.getInt(new EditBox().Method_getEditboxLength(object).getOutput());
+//
+//	}
 
 //	public String GetEditboxValue(ORObject arg0) {
 //
@@ -4928,16 +4936,16 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public int GetImageCount() throws Exception {
-
-		System.out.println(">>Keyword Called GetImageCount");
-
-		// Method_getImageCount
-
-		ContextInitiator.addFunction(DataType.getMethodName());
-		return DataType.getInt(new Image().Method_getImageCount().getOutput());
-
-	}
+//	public int GetImageCount() throws Exception {
+//
+//		System.out.println(">>Keyword Called GetImageCount");
+//
+//		// Method_getImageCount
+//
+//		ContextInitiator.addFunction(DataType.getMethodName());
+//		return DataType.getInt(new Image().Method_getImageCount().getOutput());
+//
+//	}
 
 //	public String GetDropdownDefaultItem(ORObject arg0) throws Exception {
 //
@@ -5313,16 +5321,17 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(bool);
 
 	}
-	
+
 	public String GetAllWindows() throws ToolNotSetException {
 
 		System.out.println(">>Keyword Called GetAllWindows");
 
 		ContextInitiator.addFunction("GetAllWindows");
 		// Method_getAllWindow
-		FunctionResult functionResult = FunctionCaller.execute(()-> new AndroidWindowHandling().Method_getAllWindow()); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new AndroidWindowHandling().Method_getAllWindow());
+		return functionResult.getOutput();
 	}
-	
+
 	public String FetchBrowserURL() {
 
 		System.out.println(">>Keyword Called FetchBrowserURL");
@@ -5346,7 +5355,7 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-public String GetSelectedDropDownItem(ORObject arg0) throws Exception {
+	public String GetSelectedDropDownItem(ORObject arg0) throws Exception {
 
 		System.out.println(">>Keyword Called GetSelectedDropDownItem");
 
@@ -5354,10 +5363,12 @@ public String GetSelectedDropDownItem(ORObject arg0) throws Exception {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getSelectedDropDownItem
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_getSelectedDropDownItem(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new DropDown().Method_getSelectedDropDownItem(object));
+		return functionResult.getOutput();
 
 	}
-	
+
 	public String GetTableCellText(ORObject arg0, int arg1, int arg2, String arg3, String arg4) throws Exception {
 
 		System.out.println(">>Keyword Called GetTableCellText");
@@ -5367,11 +5378,13 @@ public String GetSelectedDropDownItem(ORObject arg0) throws Exception {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_GetCellText
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_GetCellText(object, arg1, arg2, arg3, arg4)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_GetCellText(object, arg1, arg2, arg3, arg4));
+		return functionResult.getOutput();
 
 	}
 
-public String GetAllButtons() {
+	public String GetAllButtons() {
 
 		System.out.println(">>Keyword Called GetAllButtons");
 
@@ -5388,7 +5401,8 @@ public String GetAllButtons() {
 
 		ContextInitiator.addFunction("GetAllFields");
 		// Method_getAllFields
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_getAllFields()); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_getAllFields());
+		return functionResult.getOutput();
 	}
 
 	public String GetAllLinks() throws ToolNotSetException, InterruptedException {
@@ -5397,9 +5411,10 @@ public String GetAllButtons() {
 
 		ContextInitiator.addFunction("GetAllLinks");
 		// Method_getAllLinks
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_getAllLinks()); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_getAllLinks());
+		return functionResult.getOutput();
 	}
-	
+
 	public String GetFullTableText(ORObject arg0) throws Exception {
 
 		System.out.println(">>Keyword Called GetFullTableText");
@@ -5407,7 +5422,8 @@ public String GetAllButtons() {
 		ContextInitiator.addFunction("GetFullTableText");
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getFullTableText
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_getFullTableText(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getFullTableText(object));
+		return functionResult.getOutput();
 	}
 
 	public String GetSelectedRadioButtonFromGroup(ORObject arg0, int arg1) throws Exception {
@@ -5418,16 +5434,19 @@ public String GetAllButtons() {
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getSelectedRadioButtonFromGroup
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_getSelectedRadioButtonFromGroup(object, arg1)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Deprecate().Method_getSelectedRadioButtonFromGroup(object, arg1));
+		return functionResult.getOutput();
 	}
 
-public String GetAllTitles(String arg0) throws Exception {
+	public String GetAllTitles(String arg0) throws Exception {
 
 		System.out.println(">>Keyword Called GetAllTitles");
 
 		ContextInitiator.addFunction("GetAllTitles");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0); // Method_GetAllTitles
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_GetAllTitles(arg0)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_GetAllTitles(arg0));
+		return functionResult.getOutput();
 	}
 
 	public String ReturnConcatenated(String arg0, String arg1, String arg2) throws Exception {
@@ -5438,12 +5457,13 @@ public String GetAllTitles(String arg0) throws Exception {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2);
 		// Method_returnConcatenated
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_returnConcatenated(arg0, arg1, arg2)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Deprecate().Method_returnConcatenated(arg0, arg1, arg2));
+		return functionResult.getOutput();
 
 	}
 
-
-public String GetPropertyValue(ORObject arg0, String arg1) throws Exception {
+	public String GetPropertyValue(ORObject arg0, String arg1) throws Exception {
 
 		System.out.println(">>Keyword Called GetPropertyValue");
 
@@ -5451,7 +5471,9 @@ public String GetPropertyValue(ORObject arg0, String arg1) throws Exception {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getPropertyValue
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_getPropertyValue(object, arg1)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new WebObjects().Method_getPropertyValue(object, arg1));
+		return functionResult.getOutput();
 	}
 
 	public String GetTextFromEditBox(ORObject arg0) throws Exception {
@@ -5461,9 +5483,9 @@ public String GetPropertyValue(ORObject arg0, String arg1) throws Exception {
 		ContextInitiator.addFunction("GetTextFromEditBox");
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getTextFromEditBox
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_getTextFromEditBox(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_getTextFromEditBox(object));
+		return functionResult.getOutput();
 	}
-
 
 	public String GetTextfromTextArea(ORObject arg0) throws Exception {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -5485,7 +5507,7 @@ public String GetPropertyValue(ORObject arg0, String arg1) throws Exception {
 		return "";
 
 	}
-	
+
 	public String CopyFromClipBoard() throws Exception {
 
 		System.out.println(">>Keyword Called CopyFromClipBoard");
@@ -5493,10 +5515,11 @@ public String GetPropertyValue(ORObject arg0, String arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_copyFromClipBoard
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new UnCategorised().Method_copyFromClipBoard()); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new UnCategorised().Method_copyFromClipBoard());
+		return functionResult.getOutput();
 
 	}
-	
+
 	public String GetPopupText(ORObject arg0, String arg1, String arg2) throws Exception {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -5506,11 +5529,13 @@ public String GetPropertyValue(ORObject arg0, String arg1) throws Exception {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_Getpopuptext
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new PopUp().Method_Getpopuptext(object, arg1, arg2)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new PopUp().Method_Getpopuptext(object, arg1, arg2));
+		return functionResult.getOutput();
 
 	}
 
-public String GetDropDownToolTip(ORObject arg0) throws Exception {
+	public String GetDropDownToolTip(ORObject arg0) throws Exception {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">>Keyword Called GetDropDownToolTip");
@@ -5518,7 +5543,8 @@ public String GetDropDownToolTip(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_getDropDownToolTip
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_getDropDownToolTip(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_getDropDownToolTip(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5530,7 +5556,8 @@ public String GetDropDownToolTip(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_getEditBoxToolTip
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_getEditBoxToolTip(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_getEditBoxToolTip(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5542,7 +5569,8 @@ public String GetDropDownToolTip(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_getTextAreaToolTip
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_getTextAreaToolTip(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_getTextAreaToolTip(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5554,7 +5582,8 @@ public String GetDropDownToolTip(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_getButtonToolTip
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Button().Method_getButtonToolTip(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Button().Method_getButtonToolTip(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5566,7 +5595,8 @@ public String GetDropDownToolTip(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_getCheckBoxToolTip
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Checkbox().Method_getCheckBoxToolTip(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_getCheckBoxToolTip(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5578,7 +5608,8 @@ public String GetDropDownToolTip(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_getLinkToolTip
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Links().Method_getLinkToolTip(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_getLinkToolTip(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5590,7 +5621,8 @@ public String GetDropDownToolTip(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_getObjectToolTip
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_getObjectToolTip(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectToolTip(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5602,11 +5634,12 @@ public String GetDropDownToolTip(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		// Method_getImageToolTip
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Image().Method_getImageToolTip(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_getImageToolTip(object));
+		return functionResult.getOutput();
 
 	}
 
-public String GetTextAreaColumnRowLength(ORObject arg0) throws Exception {
+	public String GetTextAreaColumnRowLength(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -5614,7 +5647,9 @@ public String GetTextAreaColumnRowLength(ORObject arg0) throws Exception {
 
 		// Method_GetTextAreaColRowLength
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_GetTextAreaColRowLength(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new TextArea().Method_GetTextAreaColRowLength(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5638,11 +5673,12 @@ public String GetTextAreaColumnRowLength(ORObject arg0) throws Exception {
 
 		// Method_getObjectValue
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_getObjectValue(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectValue(object));
+		return functionResult.getOutput();
 
 	}
 
-public String GetObjectCSSProperty(ORObject arg0, String arg1) throws Exception {
+	public String GetObjectCSSProperty(ORObject arg0, String arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -5651,7 +5687,9 @@ public String GetObjectCSSProperty(ORObject arg0, String arg1) throws Exception 
 
 		// Method_getObjectCSSProperty
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_getObjectCSSProperty(object, arg1)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new WebObjects().Method_getObjectCSSProperty(object, arg1));
+		return functionResult.getOutput();
 
 	}
 
@@ -5663,7 +5701,8 @@ public String GetObjectCSSProperty(ORObject arg0, String arg1) throws Exception 
 
 		// Method_getCheckboxStatus
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Checkbox().Method_getCheckboxStatus(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_getCheckboxStatus(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5676,11 +5715,13 @@ public String GetObjectCSSProperty(ORObject arg0, String arg1) throws Exception 
 
 		// Method_getObjectProperty
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_getObjectProperty(object, arg1)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new WebObjects().Method_getObjectProperty(object, arg1));
+		return functionResult.getOutput();
 
 	}
 
-public String GetTextAreavalue(ORObject arg0) throws Exception {
+	public String GetTextAreavalue(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -5688,10 +5729,11 @@ public String GetTextAreavalue(ORObject arg0) throws Exception {
 
 		// Method_getTextAreavalue
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_getTextAreavalue(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_getTextAreavalue(object));
+		return functionResult.getOutput();
 
 	}
-	
+
 	public String GetObjectHeightWidth(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -5700,10 +5742,12 @@ public String GetTextAreavalue(ORObject arg0) throws Exception {
 
 		// Method_getObjectHeightWidth
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_getObjectHeightWidth(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new WebObjects().Method_getObjectHeightWidth(object));
+		return functionResult.getOutput();
 
 	}
-	
+
 	public String GetObjectText(ORObject arg0, String arg1, String arg2) throws Exception {
 		String methodName = DataType.getMethodName();
 		ContextInitiator.addFunction(methodName);
@@ -5723,7 +5767,7 @@ public String GetTextAreavalue(ORObject arg0) throws Exception {
 		return "";
 
 	}
-	
+
 	public String GetTextFromTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4,
 			int arg5, String arg6, String arg7, String arg8, String arg9, String arg10, String arg11, String arg12) {
 		ContextInitiator.addFunction(DataType.getMethodName());
@@ -5737,7 +5781,7 @@ public String GetTextAreavalue(ORObject arg0) throws Exception {
 		return "";
 
 	}
-	
+
 	public String GetAllColumnText(ORObject arg0, String arg1, String arg2) throws Exception {
 
 		System.out.println(">>Keyword Called GetAllColumnText");
@@ -5747,7 +5791,9 @@ public String GetTextAreavalue(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_getAllColText(object, arg1, arg2)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_getAllColText(object, arg1, arg2));
+		return functionResult.getOutput();
 
 	}
 
@@ -5760,7 +5806,9 @@ public String GetTextAreavalue(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_getSingleColText(object, arg1, arg2)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_getSingleColText(object, arg1, arg2));
+		return functionResult.getOutput();
 
 	}
 
@@ -5773,7 +5821,9 @@ public String GetTextAreavalue(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_getAllRowText(object, arg1, arg2)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_getAllRowText(object, arg1, arg2));
+		return functionResult.getOutput();
 
 	}
 
@@ -5786,12 +5836,13 @@ public String GetTextAreavalue(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_getSingleRowText(object, arg1, arg2)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_getSingleRowText(object, arg1, arg2));
+		return functionResult.getOutput();
 
 	}
 
-
-public String GetSelectedDropDownItemInTableCell(ORObject arg0, int arg1, int arg2, int arg3) throws Exception {
+	public String GetSelectedDropDownItemInTableCell(ORObject arg0, int arg1, int arg2, int arg3) throws Exception {
 
 		System.out.println(">>Keyword Called GetSelectedDropDownItemInTableCell");
 
@@ -5801,12 +5852,13 @@ public String GetSelectedDropDownItemInTableCell(ORObject arg0, int arg1, int ar
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2),
 				String.valueOf(arg3));
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_getSelectedDropDownInTableCell(object, arg1, arg2, arg3)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_getSelectedDropDownInTableCell(object, arg1, arg2, arg3));
+		return functionResult.getOutput();
 
 	}
 
-
-public String FetchObjectPropertyInTableCell(ORObject arg0, int arg1, int arg2, String arg3, int arg4, String arg5)
+	public String FetchObjectPropertyInTableCell(ORObject arg0, int arg1, int arg2, String arg3, int arg4, String arg5)
 			throws Exception {
 
 		System.out.println(">>Keyword Called FetchObjectPropertyInTableCell");
@@ -5817,10 +5869,12 @@ public String FetchObjectPropertyInTableCell(ORObject arg0, int arg1, int arg2, 
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3),
 				String.valueOf(arg4), arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_fetchObjectPropertyInTableCell(object, arg1, arg2, arg3, arg4, arg5)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_fetchObjectPropertyInTableCell(object, arg1, arg2, arg3, arg4, arg5));
+		return functionResult.getOutput();
 
 	}
-	
+
 	public String CaptureObjectSnapshot(ORObject arg0) {
 
 		System.out.println(">>Keyword Called CaptureObjectSnapshot");
@@ -5841,11 +5895,13 @@ public String FetchObjectPropertyInTableCell(ORObject arg0, int arg1, int arg2, 
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_getEditboxDefaultvalue(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new EditBox().Method_getEditboxDefaultvalue(object));
+		return functionResult.getOutput();
 
 	}
 
-public String GetEditboxValue(ORObject arg0) {
+	public String GetEditboxValue(ORObject arg0) {
 
 		System.out.println(">>Keyword Called GetEditboxValue");
 
@@ -5865,7 +5921,8 @@ public String GetEditboxValue(ORObject arg0) {
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_getEditboxValue(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_getEditboxValue(object));
+		return functionResult.getOutput();
 
 	}
 
@@ -5877,11 +5934,12 @@ public String GetEditboxValue(ORObject arg0) {
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_getTextAreaName(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_getTextAreaName(object));
+		return functionResult.getOutput();
 
 	}
 
-public String GetDropdownDefaultItem(ORObject arg0) throws Exception {
+	public String GetDropdownDefaultItem(ORObject arg0) throws Exception {
 
 		System.out.println(">>Keyword Called GetDropdownDefaultItem");
 
@@ -5889,11 +5947,13 @@ public String GetDropdownDefaultItem(ORObject arg0) throws Exception {
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_getDropDownDefaultValue(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new DropDown().Method_getDropDownDefaultValue(object));
+		return functionResult.getOutput();
 
 	}
 
-public String GetTableColumnHeader(ORObject arg0, int arg1) throws Exception {
+	public String GetTableColumnHeader(ORObject arg0, int arg1) throws Exception {
 
 		System.out.println(">>Keyword Called GetTableColumnHeader");
 
@@ -5902,11 +5962,13 @@ public String GetTableColumnHeader(ORObject arg0, int arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_getTableColumnHeader(object, arg1)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_getTableColumnHeader(object, arg1));
+		return functionResult.getOutput();
 
 	}
 
-public String GetCompleteTableText(ORObject arg0) throws Exception {
+	public String GetCompleteTableText(ORObject arg0) throws Exception {
 
 		System.out.println(">>Keyword Called GetCompleteTableText");
 
@@ -5914,10 +5976,11 @@ public String GetCompleteTableText(ORObject arg0) throws Exception {
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_getCompleteTableText(object)); return functionResult.getOutput();
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getCompleteTableText(object));
+		return functionResult.getOutput();
 
 	}
-	
+
 	public String VisualComparisonForPage(String arg0, String arg1, boolean arg2, boolean arg3) {
 
 		System.out.println(">>Keyword Called VisualComparisonForPage");
@@ -5942,6 +6005,169 @@ public String GetCompleteTableText(ORObject arg0) throws Exception {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		return "";
+
+	}
+
+	public int GetRadioButtonCount(ORObject arg0) throws Exception {
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
+		System.out.println(">>Keyword Called GetRadioButtonCount");
+
+		ContextInitiator.addFunction("GetRadioButtonCount");
+		// Method_getRadioButtonCount
+
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Deprecate().Method_getRadioButtonCount(object));
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetLinkCount() throws Exception {
+
+		System.out.println(">>Keyword Called GetLinkCount");
+
+		ContextInitiator.addFunction(DataType.getMethodName());
+		// Method_getLinkCount
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_getLinkCount());
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetElementIndex(ORObject arg0) throws Exception {
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
+		System.out.println(">>Keyword Called GetElementIndex");
+
+		ContextInitiator.addFunction(DataType.getMethodName());
+		// Method_GetElementIndex
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_GetElementIndex(object));
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetTableColumnNumber(ORObject arg0, int arg1, String arg2) throws Exception {
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
+		System.out.println(">>Keyword Called GetTableColumnNumber");
+
+		ContextInitiator.addFunction(DataType.getMethodName());
+		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		// Method_TableGetTextColumn
+
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_TableGetTextColumn(object, arg1, arg2));
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetTextAreaLength(ORObject arg0) throws Exception {
+		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
+		System.out.println(">>Keyword Called GetTextAreaLength");
+
+		// Method_GetTextAreaLength
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_GetTextAreaLength(object));
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetTableRowCount(ORObject arg0) throws Exception {
+		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
+		System.out.println(">>Keyword Called GetTableRowCount");
+
+		// Method_getTableRowCount
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getTableRowCount(object));
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetTableColumnCount(ORObject arg0, int arg1) throws Exception {
+		ContextInitiator.addFunction(DataType.getMethodName());
+		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
+		System.out.println(">>Keyword Called GetTableColumnCount");
+
+		// Method_getTableColCount
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getTableColCount(object, arg1));
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetObjectCount(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6,
+			String arg7, String arg8, String arg9) throws InterruptedException, ToolNotSetException {
+		ContextInitiator.addFunction(DataType.getMethodName());
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+
+		System.out.println(">>Keyword Called GetObjectCount");
+
+		// Method_getObjectCount
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectCount(arg0, arg1,
+				arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9));
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetEditBoxLength(ORObject arg0) throws Exception {
+
+		System.out.println(">>Keyword Called GetEditBoxLength");
+
+		// Method_getEditboxLength
+
+		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_getEditboxLength(object));
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetImageCount() throws Exception {
+
+		System.out.println(">>Keyword Called GetImageCount");
+
+		// Method_getImageCount
+
+		ContextInitiator.addFunction(DataType.getMethodName());
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_getImageCount());
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetDropDownItemCount(ORObject arg0) throws Exception {
+
+		System.out.println(">>Keyword Called GetDropDownItemCount");
+
+		ContextInitiator.addFunction("GetDropDownItemCount");
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+		// Method_getDropDownItemCount
+
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new DropDown().Method_getDropDownItemCount(object));
+		return DataType.getInt(functionResult.getOutput());
+
+	}
+
+	public int GetTableRowNumber(ORObject arg0, int arg1, String arg2) throws Exception {
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
+		System.out.println(">>Keyword Called GetTableRowNumber");
+
+		ContextInitiator.addFunction(DataType.getMethodName());
+		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		// Method_TableGetTextRow
+
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new Table().Method_TableGetTextRow(object, arg1, arg2));
+		return DataType.getInt(functionResult.getOutput());
 
 	}
 }
