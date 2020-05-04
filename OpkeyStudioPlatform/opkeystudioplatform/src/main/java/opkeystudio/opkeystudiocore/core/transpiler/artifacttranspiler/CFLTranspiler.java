@@ -17,8 +17,6 @@ import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CFLTranspiler extends AbstractTranspiler {
-	private String newLineChar = "\n";
-
 	public CFLTranspiler() {
 		setFileExtension(".java");
 		setTranspiledDataFolder(Utilities.getInstance().getProjectTranspiledArtifactsFolder());
@@ -45,13 +43,18 @@ public class CFLTranspiler extends AbstractTranspiler {
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(artofact);
 		List<CFLInputParameter> inputParams = GlobalLoader.getInstance().getCFLInputParameters(artofact);
 		List<CFLOutputParameter> outputParams = GlobalLoader.getInstance().getCFLOutputParameters(artofact);
-		CFLCode cflcode = cflcodes.get(0);
-		String imports = "";
-		if (cflcode.getImportpackages() != null) {
-			imports = cflcode.getImportpackages();
+		if (cflcodes.size() > 0) {
+			CFLCode cflcode = cflcodes.get(0);
+			String imports = "";
+			if (cflcode.getImportpackages() != null) {
+				imports = cflcode.getImportpackages();
+			}
+			String code = new CodedFunctionApi().getCodedFLCodeWithBody(artofact.getVariableName(),
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, inputParams, outputParams);
+			return (JavaClassSource) Roaster.parse(code);
 		}
-		String code = new CodedFunctionApi().getCodedFLCodeWithBody(artofact.getVariableName(), cflcode.getUsercode(),
-				cflcode.getPrivateuserfunctions(), imports, inputParams, outputParams);
+		String code = new CodedFunctionApi().getCodedFLCodeWithBody(artofact.getVariableName(), "", "", "", inputParams,
+				outputParams);
 		return (JavaClassSource) Roaster.parse(code);
 	}
 }

@@ -51,6 +51,9 @@ public class FLTranspiler extends AbstractTranspiler {
 			methodBodyCode += newLineChar + varName + newLineChar;
 		}
 		for (FlowStep flowStep : flowSteps) {
+			if (flowStep.isShouldrun() == false) {
+				continue;
+			}
 			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(artifact, flowStep);
 			methodBodyCode += flowStepCode;
 		}

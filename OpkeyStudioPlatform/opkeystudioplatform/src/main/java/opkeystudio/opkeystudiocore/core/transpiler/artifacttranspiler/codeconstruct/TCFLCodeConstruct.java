@@ -7,6 +7,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -53,6 +54,9 @@ public class TCFLCodeConstruct {
 			return getFunctionLibraryCode(artifact, flowStep);
 			// String mainCode = getFunctionLibraryCode(artifact, flowStep);
 			// return addOutputVariables(artifact, flowStep, mainCode);
+		}
+		if (isCodedFunctionType(flowStep)) {
+			return getCodedFunctionCode(artifact, flowStep);
 		}
 		return "";
 	}
@@ -146,6 +150,22 @@ public class TCFLCodeConstruct {
 			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
 		}
 		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().execute(" + value + ");";
+		return code;
+	}
+
+	private String getCodedFunctionCode(Artifact artifact, FlowStep flowStep) {
+		CodedFunctionArtifact libraryComponent = flowStep.getCodedFunctionArtifact();
+		List<FlowInputArgument> componentInputArguments = flowStep.getFlowInputArgs();
+		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject_CFL(artifact,
+				libraryComponent, componentInputArguments);
+		String value = "";
+		for (FlowInputObject flowInputObject : flowInputObjects) {
+			if (!value.isEmpty()) {
+				value += ", ";
+			}
+			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
+		}
+		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().run(" + value + ");";
 		return code;
 	}
 
@@ -374,6 +394,13 @@ public class TCFLCodeConstruct {
 
 	private boolean isFunctionLibraryType(FlowStep flowStep) {
 		if (flowStep.getFunctionLibraryComponent() != null) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isCodedFunctionType(FlowStep flowStep) {
+		if (flowStep.getCodedFunctionArtifact() != null) {
 			return true;
 		}
 		return false;
