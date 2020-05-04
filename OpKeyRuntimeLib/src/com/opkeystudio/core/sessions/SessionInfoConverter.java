@@ -51,12 +51,10 @@ public class SessionInfoConverter {
 
 	@SuppressWarnings("unchecked")
 	private static MobileDevice convertObjectIntoMobileDevice(Object object) {
+		if (object == null) {
+			return null;
+		}
 		MobileDevice device = new MobileDevice();
-		device.getDisplayName();
-		device.getIPAddress();
-		device.getOperatingSystem();
-		device.getSerialNumber();
-		device.getVersion();
 		@SuppressWarnings("rawtypes")
 		Class _class = object.getClass();
 		try {
