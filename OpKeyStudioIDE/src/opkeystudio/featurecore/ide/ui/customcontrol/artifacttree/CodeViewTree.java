@@ -21,11 +21,13 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.CodeViewTreeUI;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class CodeViewTree extends CustomTree {
@@ -36,6 +38,7 @@ public class CodeViewTree extends CustomTree {
 	public CodeViewTree(Composite parent, int style, CodeViewTreeUI parentArtifactCodeViewTreeUI) {
 		super(parent, style);
 		this.setParentArtifactCodeViewTreeUI(parentArtifactCodeViewTreeUI);
+		SystemRepository.getInstance().setCodeViewTreeControl(this);
 		init();
 	}
 
@@ -137,11 +140,10 @@ public class CodeViewTree extends CustomTree {
 				}
 			}
 			renderCodeViewTree();
-		}
-		finally {
+		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
-		
+
 	}
 
 	public void renameSelectedFile() {
@@ -177,7 +179,8 @@ public class CodeViewTree extends CustomTree {
 				return;
 			}
 
-			String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(selectedCodeFile);
+			String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+					.readTextFile(selectedCodeFile);
 			JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
 			classSource.setName(fileName);
 			String parentFolder = selectedCodeFile.getParentFile().getAbsolutePath();
@@ -185,11 +188,10 @@ public class CodeViewTree extends CustomTree {
 			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 					.writeToFile(new File(parentFolder + File.separator + fileName + ".java"), classSource.toString());
 			renderCodeViewTree();
-		}
-		finally {
+		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
-		
+
 	}
 
 	public void createNewJavaFile() {
@@ -256,8 +258,8 @@ public class CodeViewTree extends CustomTree {
 		Set<String> packages = ArtifactTranspiler.getInstance().getAllPackagesNames();
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(fileName).setPublic();
-		class1.addMethod().setName("main").setBody("System.out.println(\"Hello from OpKey E\");").addThrows("Exception").setPublic()
-				.setStatic(true).addParameter("String[]", "args");
+		class1.addMethod().setName("main").setBody("System.out.println(\"Hello from OpKey E\");").addThrows("Exception")
+				.setPublic().setStatic(true).addParameter("String[]", "args");
 		for (String packag : packages) {
 			class1.addImport(packag + ".*");
 		}
@@ -351,7 +353,7 @@ public class CodeViewTree extends CustomTree {
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
-
+		
 		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder();
 
@@ -381,7 +383,7 @@ public class CodeViewTree extends CustomTree {
 		srcNode.setExpanded(true);
 		srcNode.setSystemFolder(true);
 		addIcon(srcNode);
-		
+
 		File[] files = codeFolder.listFiles();
 		for (File file : files) {
 			renderFiles(srcNode, file);

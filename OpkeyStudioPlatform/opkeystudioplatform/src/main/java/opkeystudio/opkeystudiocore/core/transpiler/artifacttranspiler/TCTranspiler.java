@@ -43,16 +43,19 @@ public class TCTranspiler extends AbstractTranspiler {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(artifact.getVariableName()).setPublic();
 		List<FlowStep> flowSteps = FlowApi.getInstance().getAllFlowSteps(artifact.getId());
-		new TranspilerUtilities().processFlowStepsForAppium(artifact,flowSteps);
+		new TranspilerUtilities().processFlowStepsForAppium(artifact, flowSteps);
 		String methodBodyCode = "";
 		for (String varName : new TCFLCodeConstruct().getDefaultKeywordsClassVariables()) {
 			methodBodyCode += newLineChar + varName + newLineChar;
 		}
 		for (FlowStep flowStep : flowSteps) {
+			if (flowStep.isShouldrun() == false) {
+				continue;
+			}
 			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(artifact, flowStep);
 			methodBodyCode += flowStepCode;
 		}
-		
+
 		String reportingStart = String.format("ReportBuilder.get().beginTestCase(%s);",
 				"\"" + artifact.getName() + "\"");
 		String reportingEnd = "ReportBuilder.get().endTestCase();";

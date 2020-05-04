@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -29,6 +30,7 @@ import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSessionExecutor;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ExecutionResultView extends SuperComposite {
 
@@ -91,6 +93,10 @@ public class ExecutionResultView extends SuperComposite {
 				}
 				logTextView.setForeground(new Color(logTextView.getDisplay(), 0, 0, 255));
 				logTextView.setText(text);
+				String sessioName = getExecutionSession().getSessionName();
+				String logFilePath = new ExecutionSessionExecutor().getSessionLogsFolder(sessioName) + File.separator
+						+ sessioName + ".txt";
+				Utilities.getInstance().writeToFile(new File(logFilePath), text);
 			}
 		});
 	}

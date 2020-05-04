@@ -396,6 +396,7 @@ public class Utilities {
 		if (str == null) {
 			return false;
 		}
+		str = str.replaceAll(" ", "");
 		String replacedStr = str.replaceAll("[0-9]", "");
 		if (!replacedStr.equals(str)) {
 			return true;
@@ -407,6 +408,7 @@ public class Utilities {
 		if (str == null) {
 			return false;
 		}
+		str = str.replaceAll(" ", "");
 		String replacedStr = str.replaceAll("[^a-zA-Z0-9]", "");
 		if (!replacedStr.equals(str)) {
 			return true;
@@ -418,6 +420,7 @@ public class Utilities {
 		if (str == null) {
 			return false;
 		}
+		str = str.replaceAll(" ", "");
 		str = String.valueOf(str.charAt(0));
 		String replacedStr = str.replaceAll("[0-9]", "");
 		if (!replacedStr.equals(str)) {
@@ -430,6 +433,7 @@ public class Utilities {
 		if (str == null) {
 			return false;
 		}
+		str = str.replaceAll(" ", "");
 		str = String.valueOf(str.charAt(0));
 		String replacedStr = str.replaceAll("[^a-zA-Z0-9]", "");
 		if (!replacedStr.equals(str)) {

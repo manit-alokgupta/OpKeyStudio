@@ -3,6 +3,7 @@ package opkeystudio.opkeystudiocore.core.collections;
 import java.util.ArrayList;
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
@@ -29,6 +30,7 @@ public class FlowInputObject {
 	private String dataType;
 	private KeyWordInputArgument keywordInputArgument;
 	private ComponentInputArgument componentInputArgument;
+	private CFLInputParameter cflInputArgument;
 
 	public boolean isStaticValueDataExist() {
 		return staticValueDataExist;
@@ -170,5 +172,13 @@ public class FlowInputObject {
 	public void setFlowInputData(String flowInputData) {
 		this.setFlowInputDataExist(true);
 		this.flowInputData = flowInputData;
+	}
+
+	public CFLInputParameter getCflInputArgument() {
+		return cflInputArgument;
+	}
+
+	public void setCflInputArgument(CFLInputParameter cflInputArgument) {
+		this.cflInputArgument = cflInputArgument;
 	}
 }
