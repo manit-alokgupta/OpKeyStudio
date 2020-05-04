@@ -900,9 +900,9 @@ public class OpKeyGenericKeywords {
 		// Method_selectWindow
 		try {
 			FunctionResult functionResult = new Window().Method_selectWindow(arg0, arg1);
-			// ReportHelper.addReportStep(methodName, functionResult);
+			ReportHelper.addReportStep(methodName, functionResult);
 		} catch (Exception e) {
-			// ReportHelper.addReportStep(methodName, e);
+			ReportHelper.addReportStep(methodName, e);
 			e.printStackTrace();
 		}
 		return false;
