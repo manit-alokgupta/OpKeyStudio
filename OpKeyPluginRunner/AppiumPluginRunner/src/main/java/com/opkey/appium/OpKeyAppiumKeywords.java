@@ -564,6 +564,7 @@ public class OpKeyAppiumKeywords {
 			ReportHelper.addReportStep(methodName, functionResult);
 			;
 		} catch (Exception e) {
+			e.printStackTrace();
 			ReportHelper.addReportStep(methodName, e);
 			throw new ToolNotSetException();
 		}
@@ -2186,7 +2187,7 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	// //////Start
+	// 
 	
 	public boolean TypeTextAndEnterTextArea(ORObject arg0, String arg1) throws Exception {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -2499,6 +2500,7 @@ public class OpKeyAppiumKeywords {
 
 	}
 	
+//////Start
 	public boolean SelectRadioButtonOnIndexBasis(ORObject arg0, int arg1) {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
