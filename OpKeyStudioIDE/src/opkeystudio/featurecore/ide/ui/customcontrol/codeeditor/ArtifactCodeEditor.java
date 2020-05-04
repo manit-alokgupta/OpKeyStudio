@@ -148,10 +148,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (saveToggled) {
-					saveToggled = false;
-					return;
-				}
 				new CodeParser().createIntellisenseDataFromCurrentText(getArtifactCodeEditorInstance());
 
 				char keyChar = e.getKeyChar();
