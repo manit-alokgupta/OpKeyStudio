@@ -30,6 +30,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListene
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstructApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 
@@ -366,8 +367,7 @@ public class DataRepositoryView extends SuperComposite {
 	}
 
 	public Artifact getCurrentArtifact() {
-		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		return (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
 	}
 	
 	public Artifact getArtifact() {

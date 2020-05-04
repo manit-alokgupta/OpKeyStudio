@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class RefreshArtifactTree {
@@ -26,9 +28,14 @@ public class RefreshArtifactTree {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
 			ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 			tree.renderArtifacts();
+			GenericEditorIntellisense.getInstance().disposeIntellisense();
+			CodeViewTree ctree = (CodeViewTree) SystemRepository.getInstance().getCodeViewTreeControl();
+			if (ctree != null) {
+				ctree.renderCodeViewTree();
+			}
 		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
-		
+
 	}
 }

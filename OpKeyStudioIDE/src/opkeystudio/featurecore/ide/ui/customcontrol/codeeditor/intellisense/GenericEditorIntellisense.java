@@ -67,6 +67,10 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return instance;
 	}
 
+	public void disposeIntellisense() {
+		instance = null;
+	}
+
 	private void initIntellisense() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
@@ -489,9 +493,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		for (TranspiledClassInfo token : allTokens) {
 			if (token.getClassSource() != null) {
 				String className = token.getClassSource().getName();
-				System.out.println(">>ClassName " + className);
 				if (className.endsWith("." + tokenString)) {
-					System.out.println("ClassName " + token.getClassSource().getName());
 					return token;
 				}
 				if (className.trim().equals(tokenString.trim())) {
@@ -500,9 +502,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			}
 			if (token.getReflectionClassObject() != null) {
 				String className = token.getReflectionClassObject().getName();
-				System.out.println(">>ClassName " + className);
 				if (className.endsWith("." + tokenString)) {
-					System.out.println("ClassName " + token.getReflectionClassObject().getName());
 					return token;
 				}
 				if (className.trim().equals(tokenString.trim())) {

@@ -614,6 +614,9 @@ public class InputDataTable extends CustomTable {
 						String valueData = flowInputArg.getStaticvalue();
 						if (valueData == null) {
 							valueData = "";
+							if (keywordInputArg.getDatatype().toString().equals("Boolean")) {
+								valueData = "false";
+							}
 						}
 						cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getName(),
 								valueData });

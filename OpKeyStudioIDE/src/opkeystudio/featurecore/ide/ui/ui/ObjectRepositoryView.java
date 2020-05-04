@@ -41,6 +41,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -808,8 +809,7 @@ public class ObjectRepositoryView extends SuperComposite {
 	}
 
 	public Artifact getCurrentArtifact() {
-		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		return (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
 	}
 	
 	public Artifact getArtifact() {

@@ -39,6 +39,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
@@ -546,8 +547,7 @@ public class TestSuiteView extends SuperComposite {
 	}
 
 	public Artifact getCurrentArtifact() {
-		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		return (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
 	}
 	
 	public Artifact getArtifact() {
