@@ -21,5 +21,13 @@ public class SystemRepository {
 		return this.systemRepositoryVariable.get("opkeystudio.artifacttreecontrol");
 	}
 	
+	public void setCodeViewTreeControl(Object object) {
+		this.systemRepositoryVariable.put("opkeystudio.CodeViewtreecontrol", object);
+	}
+
+	public Object getCodeViewTreeControl() {
+		return this.systemRepositoryVariable.get("opkeystudio.CodeViewtreecontrol");
+	}
+	
 	
 }
