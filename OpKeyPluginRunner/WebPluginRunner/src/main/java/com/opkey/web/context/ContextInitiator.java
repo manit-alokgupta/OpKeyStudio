@@ -15,10 +15,7 @@ import com.crestech.opkey.plugin.webdriver.pluginSpecific.Context.CurrentKeyword
 
 public class ContextInitiator {
 	public void initContext() {
-		FunctionCall fc = new FunctionCall();
-		Context.set(new InvocationContext(fc));
 		initSettings();
-		initHacks_Jugaad();
 	}
 
 	public static void addDataRgumentsInFunctionCall(String... args) {
@@ -39,17 +36,23 @@ public class ContextInitiator {
 	}
 
 	public static void addFunction(String functionName) {
-		System.out.println("[Function Call "+functionName+"]");
+		System.out.println("[Function Call " + functionName + "]");
+		FunctionCall fc = new FunctionCall();
 		Function function = new Function();
 		function.setCallTimeoutInMillis(90000);
 		function.setMethodName(functionName);
-		Context.current().getFunctionCall().setFunction(function);
+		fc.setFunction(function);
+
+		Context.set(new InvocationContext(fc));
 		WebDriverDispatcher.preKeywordClearance();
+		
+		WebDriverDispatcher.currentKeyword = new CurrentKeyword();
 	}
 
 	private Map<String, String> getSettings() {
 		String defaultInstallDir = new File("").getAbsolutePath();
-	//	defaultInstallDir = "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE";
+		// defaultInstallDir =
+		// "C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE";
 		Map<String, String> settingsMap = new HashMap<String, String>();
 		settingsMap.put("XMLHttpRequestTimeOut", "30");
 		settingsMap.put("UseWaitForPageLoad", "true");
@@ -93,7 +96,5 @@ public class ContextInitiator {
 		return settingsMap;
 	}
 
-	private void initHacks_Jugaad() {
-		WebDriverDispatcher.currentKeyword = new CurrentKeyword();
-	}
+	
 }
