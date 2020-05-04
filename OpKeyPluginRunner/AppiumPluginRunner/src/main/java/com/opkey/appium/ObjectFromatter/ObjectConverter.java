@@ -13,13 +13,15 @@ import com.plugin.appium.exceptionhandlers.ObjectPropertiesNotSufficientExceptio
 
 public class ObjectConverter {
 	public AppiumObject formatObject(ORObject orobject) {
-		ORObject SmartSoftwareTestingSolutions = new ORObject();
-		SmartSoftwareTestingSolutions.addProperty("type", "HTML PAGE").addProperty("tag", "html")
-				.addProperty("index", "0").addProperty("title", "Smart Software Testing Solutions")
-				.addProperty("x", "0").addProperty("y", "0").addProperty("url", "http://sstsinc.com/")
-				.addProperty("src", "http://sstsinc.com/").addProperty("titleindex", "0");
-		Object _object = convertORObjectToOpKeyObject(orobject);
+		
 		try {
+			ORObject SmartSoftwareTestingSolutions = new ORObject();
+			SmartSoftwareTestingSolutions.addProperty("type", "HTML PAGE").addProperty("tag", "html")
+					.addProperty("index", "0").addProperty("title", "Smart Software Testing Solutions")
+					.addProperty("x", "0").addProperty("y", "0").addProperty("url", "http://sstsinc.com/")
+					.addProperty("src", "http://sstsinc.com/").addProperty("titleindex", "0");
+			Object _object = convertORObjectToOpKeyObject(orobject);
+			
 			AppiumObject webdriverobject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
 			Object _parentobject = convertORObjectToOpKeyObject(SmartSoftwareTestingSolutions);
 			AppiumObject parentobject = new ObjectFormatter().formatObjectToWebDriverObject(_parentobject);
