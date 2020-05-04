@@ -1,7 +1,6 @@
 package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.forge.roaster.Roaster;

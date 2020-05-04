@@ -108,7 +108,7 @@ public class ArtifactExecutor {
 		Class classToLoad = Class.forName(artifactClassNAME, true, child);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("execute");
-		Object result = method.invoke(instance);
+		method.invoke(instance);
 
 		callExecuteSessionEnd();
 		cleanExecutionSession();
@@ -160,7 +160,7 @@ public class ArtifactExecutor {
 		Class classToLoad = Class.forName("com.opkey." + pluginName + ".sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("beforeSessionStart", SessionInfo.class);
-		Object result = method.invoke(instance, info);
+		method.invoke(instance, info);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -172,7 +172,7 @@ public class ArtifactExecutor {
 		Class classToLoad = Class.forName("com.opkey." + pluginName + ".sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds", SessionInfo.class);
-		Object result = method.invoke(instance, info);
+		method.invoke(instance, info);
 	}
 
 	public void stopExecutionSession() {
