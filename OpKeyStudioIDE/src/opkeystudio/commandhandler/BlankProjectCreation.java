@@ -24,8 +24,8 @@ public class BlankProjectCreation {
 	@Execute
 	public void execute(Shell shell) throws IOException {
 		try {
-			Utilities.getInstance().setDefaultShell(shell);
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
+			Utilities.getInstance().setDefaultShell(shell);
 			String projectName = new MessageDialogs().openInputDialogAandGetValue("OpKey",
 					"Please Provide The Project Name", "");
 			if (projectName == null) {

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -106,75 +107,89 @@ public class CodeViewTree extends CustomTree {
 	}
 
 	public void deleteSelectedFile() {
-		File selectedCodeFile = getSelectedArtifact();
-		if (selectedCodeFile == null) {
-			return;
-		}
-
-		boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-				String.format("Do ypu really want to delete '%s'?", selectedCodeFile.getName()));
-		if (!status) {
-			return;
-		}
-		if (selectedCodeFile.isFile()) {
-			try {
-				FileUtils.forceDelete(selectedCodeFile);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
+			File selectedCodeFile = getSelectedArtifact();
+			if (selectedCodeFile == null) {
+				return;
 			}
-		}
 
-		if (selectedCodeFile.isDirectory()) {
-			try {
-				FileUtils.deleteDirectory(selectedCodeFile);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+					String.format("Do you really want to delete '%s'?", selectedCodeFile.getName()));
+			if (!status) {
+				return;
 			}
+			if (selectedCodeFile.isFile()) {
+				try {
+					FileUtils.forceDelete(selectedCodeFile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			if (selectedCodeFile.isDirectory()) {
+				try {
+					FileUtils.deleteDirectory(selectedCodeFile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			renderCodeViewTree();
 		}
-		renderCodeViewTree();
+		finally {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
+		}
+		
 	}
 
 	public void renameSelectedFile() {
-		File selectedCodeFile = getSelectedArtifact();
-		if (selectedCodeFile == null) {
-			return;
-		}
-		String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
-				"NewClass");
-		if (fileName == null) {
-			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
-			return;
-		}
-		if (fileName.trim().isEmpty()) {
-			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
-			return;
-		}
+		try {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
+			File selectedCodeFile = getSelectedArtifact();
+			if (selectedCodeFile == null) {
+				return;
+			}
+			String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
+					"NewClass");
+			if (fileName == null) {
+				new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
+				return;
+			}
+			if (fileName.trim().isEmpty()) {
+				new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
+				return;
+			}
 
-		boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.isStringContainsSpecialCharacters(fileName);
-		boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.isStringStartsWithNumbers(fileName);
+			boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+					.isStringContainsSpecialCharacters(fileName);
+			boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+					.isStringStartsWithNumbers(fileName);
 
-		if (cond1) {
-			new MessageDialogs().openErrorDialog("OpKey", "File Name must not contain special characters");
-			return;
+			if (cond1) {
+				new MessageDialogs().openErrorDialog("OpKey", "File Name must not contain special characters");
+				return;
+			}
+
+			if (cond2) {
+				new MessageDialogs().openErrorDialog("OpKey", "File Name must not starts with number");
+				return;
+			}
+
+			String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(selectedCodeFile);
+			JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
+			classSource.setName(fileName);
+			String parentFolder = selectedCodeFile.getParentFile().getAbsolutePath();
+			selectedCodeFile.delete();
+			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+					.writeToFile(new File(parentFolder + File.separator + fileName + ".java"), classSource.toString());
+			renderCodeViewTree();
 		}
-
-		if (cond2) {
-			new MessageDialogs().openErrorDialog("OpKey", "File Name must not starts with number");
-			return;
+		finally {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
-
-		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(selectedCodeFile);
-		JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
-		classSource.setName(fileName);
-		String parentFolder = selectedCodeFile.getParentFile().getAbsolutePath();
-		selectedCodeFile.delete();
-		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.writeToFile(new File(parentFolder + File.separator + fileName + ".java"), classSource.toString());
-		renderCodeViewTree();
+		
 	}
 
 	public void createNewJavaFile() {

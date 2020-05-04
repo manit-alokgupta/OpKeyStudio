@@ -228,13 +228,20 @@ public class Utilities {
 	}
 
 	public void renameArtifactLabel(Artifact artifact, String renamedData) {
-		MPart mpart = getArtifactMPart(artifact);
-		if (mpart == null) {
-			return;
+		try {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
+			MPart mpart = getArtifactMPart(artifact);
+			if (mpart == null) {
+				return;
+			}
+			mpart.getTransientData().put("opkeystudio.artifactData", artifact);
+			mpart.setLabel(renamedData);
+			mpart.setTooltip(renamedData);
 		}
-		mpart.getTransientData().put("opkeystudio.artifactData", artifact);
-		mpart.setLabel(renamedData);
-		mpart.setTooltip(renamedData);
+		finally {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
+		}
+		
 	}
 
 	public Shell getDefaultShell() {
