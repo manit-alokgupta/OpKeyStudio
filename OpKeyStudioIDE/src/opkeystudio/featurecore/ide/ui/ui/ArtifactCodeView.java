@@ -3,6 +3,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
@@ -15,6 +16,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
+import org.jboss.forge.roaster.Roaster;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.MethodSource;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
@@ -71,6 +75,7 @@ public class ArtifactCodeView extends SuperComposite {
 		initCodeViewFile();
 		addGenericListner();
 		displayCodeViewFileData();
+		checkClassIsRunnable();
 	}
 
 	public ArtifactCodeView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
@@ -137,6 +142,25 @@ public class ArtifactCodeView extends SuperComposite {
 		setCodeViewFile(codeViewFile);
 	}
 
+	private void checkClassIsRunnable() {
+		File file = getCodeViewFile();
+		String code = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
+		JavaClassSource classSource = (JavaClassSource) Roaster.parse(code);
+		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
+		for (MethodSource<JavaClassSource> method : methods) {
+			if (method != null) {
+				System.out.println("Method Name " + method.getName());
+				if (method.isPublic()) {
+					if (method.isStatic()) {
+						runButton.setEnabled(true);
+						return;
+					}
+				}
+			}
+		}
+		runButton.setEnabled(false);
+	}
+
 	private void displayCodeViewFileData() {
 		File file = getCodeViewFile();
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
@@ -190,6 +214,7 @@ public class ArtifactCodeView extends SuperComposite {
 		runButton = new ToolItem(toolBar, SWT.NONE);
 		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
 		runButton.setToolTipText("Run");
+		runButton.setEnabled(false);
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		saveButton = new ToolItem(toolBar, SWT.NONE);
 		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
@@ -247,6 +272,7 @@ public class ArtifactCodeView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				saveGenericCodeEditorFile();
+				checkClassIsRunnable();
 			}
 
 			@Override
@@ -262,6 +288,7 @@ public class ArtifactCodeView extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				handleRefreshOnSave();
 				displayCodeViewFileData();
+				checkClassIsRunnable();
 			}
 
 			@Override
