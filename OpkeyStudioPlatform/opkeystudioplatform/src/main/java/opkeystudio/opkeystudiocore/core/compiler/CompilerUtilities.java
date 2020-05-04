@@ -32,7 +32,7 @@ public class CompilerUtilities {
 		return getAllFiles(file, ".jar");
 	}
 
-	private List<File> getPluginsLibraries(String pluginName) {
+	public List<File> getPluginsLibraries(String pluginName) {
 		String pluginBaseFolder = Utilities.getInstance().getDefaultPluginsDir() + File.separator + pluginName;
 		File file = new File(pluginBaseFolder);
 		if (!file.exists()) {

@@ -100,11 +100,10 @@ public class ArtifactExecutor {
 		for (int i = 0; i < allLibs.size(); i++) {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
 		}
-		URLClassLoader child = new URLClassLoader(allJarsAndClasses, ArtifactExecutor.class.getClassLoader());
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses);
 		setClassLoader(child);
 
 		callExecuteSessionStart();
-
 		Class classToLoad = Class.forName(artifactClassNAME, true, child);
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("execute");
@@ -123,7 +122,7 @@ public class ArtifactExecutor {
 		for (int i = 0; i < allLibs.size(); i++) {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
 		}
-		URLClassLoader child = new URLClassLoader(allJarsAndClasses, ArtifactExecutor.class.getClassLoader());
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses);
 		setClassLoader(child);
 
 		callExecuteSessionStart();
@@ -159,7 +158,7 @@ public class ArtifactExecutor {
 		URLClassLoader classLoader = getClassLoader();
 		Class classToLoad = Class.forName("com.opkey." + pluginName + ".sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
-		Method method = instance.getClass().getDeclaredMethod("beforeSessionStart", SessionInfo.class);
+		Method method = instance.getClass().getDeclaredMethod("beforeSessionStart", Object.class);
 		method.invoke(instance, info);
 	}
 
@@ -171,7 +170,7 @@ public class ArtifactExecutor {
 		URLClassLoader classLoader = getClassLoader();
 		Class classToLoad = Class.forName("com.opkey." + pluginName + ".sessions.SessionHandler", true, classLoader);
 		Object instance = classToLoad.newInstance();
-		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds", SessionInfo.class);
+		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds", Object.class);
 		method.invoke(instance, info);
 	}
 
