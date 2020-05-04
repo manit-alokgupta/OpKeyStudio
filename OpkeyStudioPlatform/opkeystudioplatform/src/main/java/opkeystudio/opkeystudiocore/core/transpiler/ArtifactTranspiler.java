@@ -13,6 +13,7 @@ import org.apache.commons.io.FileUtils;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.CFLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.GlobalVariablesTranspiler;
@@ -112,6 +113,7 @@ public class ArtifactTranspiler {
 			new TCTranspiler().transpile(artifact);
 			new FLTranspiler().transpile(artifact);
 			new SuiteTranspiler().transpile(artifact);
+			new CFLTranspiler().transpile(artifact);
 		}
 	}
 
