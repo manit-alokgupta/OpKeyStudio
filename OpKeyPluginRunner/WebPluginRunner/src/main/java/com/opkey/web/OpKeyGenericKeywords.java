@@ -47,6 +47,8 @@ public class OpKeyGenericKeywords {
 				}
 			}
 		}).executeKeyword();
+
+		ReportHelper.addReportStep("TypeTextOnEditBox", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -68,6 +70,8 @@ public class OpKeyGenericKeywords {
 				}
 			}
 		}).executeKeyword();
+
+		ReportHelper.addReportStep("TypeKeysOnEditBox", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -86,6 +90,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
+		ReportHelper.addReportStep("VerifyEditBox", result);
 		return Boolean.getBoolean(result.getOutput());
 	}
 
@@ -126,6 +131,7 @@ public class OpKeyGenericKeywords {
 				}
 			}
 		}).executeKeyword();
+		ReportHelper.addReportStep("SelectDropDownItem", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -144,6 +150,7 @@ public class OpKeyGenericKeywords {
 				}
 			}
 		}).executeKeyword();
+		ReportHelper.addReportStep("SelectCheckBox", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -163,6 +170,7 @@ public class OpKeyGenericKeywords {
 				}
 			}
 		}).executeKeyword();
+		ReportHelper.addReportStep("SelectRadioButton", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -183,7 +191,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		//ReportHelper.addReportStep("Click", result);
+		ReportHelper.addReportStep("Click", result);
 		return Boolean.getBoolean(result.getOutput());
 	}
 
@@ -325,7 +333,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		//ReportHelper.addReportStep("RefreshAndWait", result);
+		ReportHelper.addReportStep("RefreshAndWait", result);
 		return Boolean.getBoolean(result.getOutput());
 	}
 
@@ -345,7 +353,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		//ReportHelper.addReportStep("ClearEditField", result);
+		ReportHelper.addReportStep("ClearEditField", result);
 		return Boolean.getBoolean(result.getOutput());
 	}
 
@@ -590,7 +598,7 @@ public class OpKeyGenericKeywords {
 		WebDriverObject object = new ObjectConverter().formatObject(arg0);
 		// Method_ObjectExists
 
-//		//ReportHelper.addReportStep("VerifyObjectExists", new Exception("Exception while VerifyObjectExists"));
+//		ReportHelper.addReportStep("VerifyObjectExists", new Exception("Exception while VerifyObjectExists"));
 		return false;
 
 	}
@@ -872,7 +880,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		//ReportHelper.addReportStep("CloseAllBrowsers", result);
+		ReportHelper.addReportStep("CloseAllBrowsers", result);
 		return Boolean.getBoolean(result.getOutput());
 
 	}
@@ -2185,7 +2193,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		// //ReportHelper.addReportStep("NavigateTo", new Exception("Methond not
+		// ReportHelper.addReportStep("NavigateTo", new Exception("Methond not
 		// implemented yet."));
 		return false;
 
@@ -2894,7 +2902,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		// //ReportHelper.addReportStep("GetObjectText", new Exception("exception while
+		// ReportHelper.addReportStep("GetObjectText", new Exception("exception while
 		// runnging GetObjectText"));
 		return "";
 
@@ -2911,7 +2919,7 @@ public class OpKeyGenericKeywords {
 			}
 		}).executeKeyword();
 
-		// //ReportHelper.addReportStep("VerifyEditBoxExist", new Exception("Object not
+		// ReportHelper.addReportStep("VerifyEditBoxExist", new Exception("Object not
 		// found"));
 		return false;
 
