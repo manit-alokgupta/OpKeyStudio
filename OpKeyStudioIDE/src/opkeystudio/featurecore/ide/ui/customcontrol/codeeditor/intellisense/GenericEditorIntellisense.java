@@ -44,7 +44,6 @@ import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
 import opkeystudio.core.utils.MessageDialogs;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.EditorTools;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaBasicCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCompletionProvider;
@@ -100,7 +99,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		for (int i = 0; i < allLibs.size(); i++) {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
 		}
-		URLClassLoader child = new URLClassLoader(allJarsAndClasses, EditorTools.class.getClassLoader());
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses);
 		return child;
 	}
 
@@ -158,28 +157,28 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 					continue;
 				}
 				try {
-					Class loadedClass = Class.forName(className.replaceAll(".class", ""), true, classLoader);
+					Class loadedClass = classLoader.loadClass(className);
 					allClasses.add(loadedClass);
 				} catch (NoClassDefFoundError e) {
-					//e.printStackTrace();
+					// e.printStackTrace();
 				} catch (IncompatibleClassChangeError e) {
-					//e.printStackTrace();
+					// e.printStackTrace();
 				} catch (ClassNotFoundException e) {
-					//e.printStackTrace();
+					// e.printStackTrace();
 				} catch (UnsupportedClassVersionError e) {
-					//e.printStackTrace();
+					// e.printStackTrace();
 				} catch (RuntimeErrorException e) {
-					//e.printStackTrace();
+					// e.printStackTrace();
 				} catch (RuntimeException e) {
-					//e.printStackTrace();
+					e.printStackTrace();
 				} catch (ExceptionInInitializerError e) {
-					//e.printStackTrace();
+					e.printStackTrace();
 				} catch (UnsatisfiedLinkError e) {
-					//e.printStackTrace();
+					e.printStackTrace();
 				} catch (LinkageError e) {
-					//e.printStackTrace();
+					e.printStackTrace();
 				} catch (Exception e) {
-					//e.printStackTrace();
+					e.printStackTrace();
 				}
 			}
 		} catch (MalformedURLException e) {
@@ -229,23 +228,23 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			}
 			addConstructorTypeBasicCompletion(_class.getName(), _class.getName());
 		} catch (NoClassDefFoundError e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		} catch (IncompatibleClassChangeError e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (UnsupportedClassVersionError e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (RuntimeErrorException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (RuntimeException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (ExceptionInInitializerError e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (UnsatisfiedLinkError e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (LinkageError e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -365,7 +364,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private void parseClassMethods(JavaClassSource classSource) {
 		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
 	}
-	
+
 	public void addBasicCompletion(String data) {
 		if (this.getCompletionByInputText(data) == null) {
 			JavaBasicCompletion bc = new JavaBasicCompletion(this, data);
