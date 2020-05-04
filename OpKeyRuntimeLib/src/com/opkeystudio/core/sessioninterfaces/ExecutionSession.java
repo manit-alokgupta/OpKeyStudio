@@ -1,10 +1,8 @@
 package com.opkeystudio.core.sessioninterfaces;
 
-import com.opkeystudio.core.sessions.SessionInfo;
-
 public interface ExecutionSession {
-	public void beforeSessionStart(SessionInfo sessionInfo);
-	public void afterSessionEnds(SessionInfo sessionInfo);
-	public void pauseExecutionSession(SessionInfo sessionInfo);
-	public void resumeExecutionSession(SessionInfo sessionInfo);
+	public void beforeSessionStart(Object sessionInfo);
+	public void afterSessionEnds(Object sessionInfo);
+	public void pauseExecutionSession(Object sessionInfo);
+	public void resumeExecutionSession(Object sessionInfo);
 }
