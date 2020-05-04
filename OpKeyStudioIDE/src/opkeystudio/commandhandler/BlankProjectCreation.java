@@ -47,7 +47,7 @@ public class BlankProjectCreation {
 
 			filePath = filePath + File.separator + "artifacts.db";
 			FileUtils.copyFile(new File(blankDbFile), new File(filePath));
-
+			ServiceRepository.getInstance().setProjectName(projectName);
 			if (filePath != null) {
 				File file = new File(filePath);
 				if (!file.exists()) {
@@ -71,7 +71,8 @@ public class BlankProjectCreation {
 				project.setP_id(opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getUniqueUUID(""));
 				project.setName(projectName);
 				project.setCreatedby(userId);
-				project.setCreatedon(opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getCurrentDateTime());
+				project.setCreatedon(
+						opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getCurrentDateTime());
 				project.setCreatedon_tz(
 						opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getCurrentTimeZone());
 
@@ -80,11 +81,10 @@ public class BlankProjectCreation {
 				tree.renderArtifacts();
 			}
 			new Utilities().closeAllMparts();
-		}
-		finally {
+		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
-		
+
 	}
 
 }
