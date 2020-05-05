@@ -12,6 +12,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -652,28 +653,35 @@ public class ObjectRepositoryView extends SuperComposite {
 	}
 
 	private void handleSaveOnRefresh() {
-		if (saveObject.isEnabled()) {
-			opkeystudio.core.utils.Utilities.getInstance().activateMpart(getCurrentMPart());
-			toggleDeleteAttributeButton(false);
-			toggleAddAttributeButton(false);
+		try {
+			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+			if (saveObject.isEnabled()) {
+				opkeystudio.core.utils.Utilities.getInstance().activateMpart(getCurrentMPart());
+				toggleDeleteAttributeButton(false);
+				toggleAddAttributeButton(false);
 
-			int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation", "Do you want to save changes?");
-			if (result != 0) {
+				int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation", "Do you want to save changes?");
+				if (result != 0) {
+					toggleSaveButton(false);
+					objectRepositoryTree.renderObjectRepositories();
+					return;
+				}
+				List<ORObject> allors = objectRepositoryTree.getAllORObjects();
+				new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
 				toggleSaveButton(false);
 				objectRepositoryTree.renderObjectRepositories();
-				return;
+				toggleSaveButton(false);
 			}
-			List<ORObject> allors = objectRepositoryTree.getAllORObjects();
-			new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
-			toggleSaveButton(false);
-			objectRepositoryTree.renderObjectRepositories();
-			toggleSaveButton(false);
-		}
 
-		toggleDeleteAttributeButton(false);
-		toggleAddAttributeButton(false);
-		objectRepositoryTree.renderObjectRepositories();
-		getCodedFunctionView().refreshORCode();
+			toggleDeleteAttributeButton(false);
+			toggleAddAttributeButton(false);
+			objectRepositoryTree.renderObjectRepositories();
+			getCodedFunctionView().refreshORCode();
+		}
+		finally {
+			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+		}
+		
 
 	}
 
@@ -724,57 +732,72 @@ public class ObjectRepositoryView extends SuperComposite {
 	}
 
 	public void renameFunction() {
-		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-		ORObject obRepo = selectedTreeItem.getORObject();
-		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "OpKey", "Enter name to rename",
-				obRepo.getName(), null);
+		try {
+			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
+			ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
+			ORObject obRepo = selectedTreeItem.getORObject();
+			InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "OpKey", "Enter name to rename",
+					obRepo.getName(), null);
 
-		if (input.open() != InputDialog.OK) {
-			return;
+			if (input.open() != InputDialog.OK) {
+				return;
+			}
+			if (input.getValue().trim().isEmpty()) {
+				MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input", "Please Enter Some Value");
+				return;
+			}
+			obRepo.setName(input.getValue());
+			obRepo.setModified(true);
+			toggleSaveButton(true);
+			objectRepositoryTree.refreshObjectRepositories();
 		}
-		if (input.getValue().trim().isEmpty()) {
-			MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input", "Please Enter Some Value");
-			return;
+		finally {
+			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
 		}
-		obRepo.setName(input.getValue());
-		obRepo.setModified(true);
-		toggleSaveButton(true);
-		objectRepositoryTree.refreshObjectRepositories();
+		
 	}
 
 	public void deleteFunction() {
-		boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
-				"Do you want to delete '" + objectRepositoryTree.getSelectedTreeItem().getText() + "'?");
-		if (!result) {
-			return;
-		}
+		try {
+			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+			boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
+					"Do you want to delete '" + objectRepositoryTree.getSelectedTreeItem().getText() + "'?");
+			if (!result) {
+				return;
+			}
 
-		ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
-		obRepo = selectedTreeItem.getORObject();
-		boolean isUsed = new ObjectRepositoryApiUtilities().isORObjectUsed(obRepo);
-		if (isUsed) {
-			new MessageDialogs().openInformationDialog("Can't delete ORObject",
-					"Unable to delete " + obRepo.getName() + " as it is being used in some higher components");
-			return;
-		}
-		if (obRepo.getParent_object_id() == null) {
-			TreeItem[] treeItems = selectedTreeItem.getItems();
-			for (TreeItem treeItem : treeItems) {
-				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) treeItem;
-				ORObject orobject = item.getORObject();
-				boolean isused = new ObjectRepositoryApiUtilities().isORObjectUsed(orobject);
-				if (isused) {
-					new MessageDialogs().openInformationDialog("Can't delete ORObject",
-							"Unable to delete " + obRepo.getName() + " as it is being used in some higher components");
-					return;
+			ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
+			obRepo = selectedTreeItem.getORObject();
+			boolean isUsed = new ObjectRepositoryApiUtilities().isORObjectUsed(obRepo);
+			if (isUsed) {
+				new MessageDialogs().openInformationDialog("Can't delete ORObject",
+						"Unable to delete " + obRepo.getName() + " as it is being used in some higher components");
+				return;
+			}
+			if (obRepo.getParent_object_id() == null) {
+				TreeItem[] treeItems = selectedTreeItem.getItems();
+				for (TreeItem treeItem : treeItems) {
+					ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) treeItem;
+					ORObject orobject = item.getORObject();
+					boolean isused = new ObjectRepositoryApiUtilities().isORObjectUsed(orobject);
+					if (isused) {
+						new MessageDialogs().openInformationDialog("Can't delete ORObject",
+								"Unable to delete " + obRepo.getName() + " as it is being used in some higher components");
+						return;
+					}
 				}
 			}
+			objectAttributeTable.clearAllDatas();
+			System.out.println("Deleting.. " + obRepo.getObject_id());
+			obRepo.setDeleted(true);
+			toggleSaveButton(true);
+			objectRepositoryTree.refreshObjectRepositories();
+			
 		}
-		objectAttributeTable.clearAllDatas();
-		System.out.println("Deleting.. " + obRepo.getObject_id());
-		obRepo.setDeleted(true);
-		toggleSaveButton(true);
-		objectRepositoryTree.refreshObjectRepositories();
+		finally {
+			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+		}
+		
 	}
 
 	private void renderObjectAttributeProperty(ObjectRepositoryTreeItem item) {
