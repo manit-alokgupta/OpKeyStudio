@@ -251,7 +251,7 @@ public class EditorTools {
 		for (int i = 0; i < allLibs.size(); i++) {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
 		}
-		URLClassLoader child = new URLClassLoader(allJarsAndClasses, EditorTools.class.getClassLoader());
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses);
 		return child;
 	}
 
