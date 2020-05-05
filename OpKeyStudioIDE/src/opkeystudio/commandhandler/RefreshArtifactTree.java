@@ -24,8 +24,6 @@ public class RefreshArtifactTree {
 	}
 
 	public void refreshArtifactTree() {
-		try {
-			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
 			ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 			tree.renderArtifacts();
 			GenericEditorIntellisense.getInstance().disposeIntellisense();
@@ -33,9 +31,7 @@ public class RefreshArtifactTree {
 			if (ctree != null) {
 				ctree.renderCodeViewTree();
 			}
-		} finally {
-			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
-		}
+		
 
 	}
 }

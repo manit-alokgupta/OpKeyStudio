@@ -12,6 +12,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -685,47 +686,54 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
-				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
-						"Rename " + artifact.getName(), artifact.getName());
-				if (renamedText == null) {
-					System.out.println("cancel pressed ");
-					return;
-				}
-				while (renamedText.trim().isEmpty()) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
-					renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					Artifact artifact = artifactTree.getSelectedArtifact();
+					String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 							"Rename " + artifact.getName(), artifact.getName());
 					if (renamedText == null) {
-						System.out.println("cancel pressed inside while loop");
+						System.out.println("cancel pressed ");
 						return;
 					}
-				}
+					while (renamedText.trim().isEmpty()) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+						renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
+								"Rename " + artifact.getName(), artifact.getName());
+						if (renamedText == null) {
+							System.out.println("cancel pressed inside while loop");
+							return;
+						}
+					}
 
-				boolean startsWithNumber = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-						.isStringStartsWithNumbers(renamedText);
-				boolean containsSpecialCharacters = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-						.isStringContainsSpecialCharacters(renamedText);
+					boolean startsWithNumber = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+							.isStringStartsWithNumbers(renamedText);
+					boolean containsSpecialCharacters = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+							.isStringContainsSpecialCharacters(renamedText);
 
-				if (startsWithNumber) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
-							"Name should not start with number.");
-					return;
-				}
+					if (startsWithNumber) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name should not start with number.");
+						return;
+					}
 
-				if (containsSpecialCharacters) {
-					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
-							"Name should not contain any special characters.");
-					return;
+					if (containsSpecialCharacters) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name should not contain any special characters.");
+						return;
+					}
+					artifact.setName(renamedText);
+					new ArtifactApi().updateArtifact(artifact);
+					Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
+					toggleRenameToolbarItem(false);
+					toogleDeleteToolbarItem(false);
+					toogleNewToolbarMenuItem(false);
+					toogleNewToolbarItem(false);
+					artifactTree.renderArtifacts();
 				}
-				artifact.setName(renamedText);
-				new ArtifactApi().updateArtifact(artifact);
-				Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
-				toggleRenameToolbarItem(false);
-				toogleDeleteToolbarItem(false);
-				toogleNewToolbarMenuItem(false);
-				toogleNewToolbarItem(false);
-				artifactTree.renderArtifacts();
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
+				
 
 			}
 
@@ -739,18 +747,25 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
-				boolean status = new MessageDialogs().openConfirmDialog("Delete",
-						"Do you want to delete " + artifact.getName() + "?");
-				if (!status) {
-					return;
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					Artifact artifact = artifactTree.getSelectedArtifact();
+					boolean status = new MessageDialogs().openConfirmDialog("Delete",
+							"Do you want to delete " + artifact.getName() + "?");
+					if (!status) {
+						return;
+					}
+					new ArtifactApi().deleteArtifact(artifact);
+					toggleRenameToolbarItem(false);
+					toogleDeleteToolbarItem(false);
+					toogleNewToolbarMenuItem(false);
+					toogleNewToolbarItem(false);
+					artifactTree.renderArtifacts();
 				}
-				new ArtifactApi().deleteArtifact(artifact);
-				toggleRenameToolbarItem(false);
-				toogleDeleteToolbarItem(false);
-				toogleNewToolbarMenuItem(false);
-				toogleNewToolbarItem(false);
-				artifactTree.renderArtifacts();
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
+				
 
 			}
 
@@ -764,7 +779,14 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				new RefreshArtifactTree().refreshArtifactTree();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					new RefreshArtifactTree().refreshArtifactTree();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
+				
 			}
 
 			@Override
