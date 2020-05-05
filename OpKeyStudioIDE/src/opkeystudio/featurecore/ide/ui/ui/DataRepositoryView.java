@@ -7,10 +7,12 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolBar;
@@ -199,7 +201,13 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
 				dataRepositoryTable.addDRColumn();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
 			}
 
 			@Override
@@ -212,7 +220,13 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
 				dataRepositoryTable.addDRRow();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
 
 			}
 
@@ -225,7 +239,14 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dataRepositoryTable.renameDRColumn();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					dataRepositoryTable.renameDRColumn();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
+				
 			}
 
 			@Override
@@ -238,7 +259,13 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dataRepositoryTable.deleteDRColumn();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					dataRepositoryTable.deleteDRColumn();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
 			}
 
 			@Override
@@ -251,7 +278,13 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dataRepositoryTable.moveColumnLeft();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					dataRepositoryTable.moveColumnLeft();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
 			}
 
 			@Override
@@ -264,7 +297,13 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dataRepositoryTable.moveColumnRight();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					dataRepositoryTable.moveColumnRight();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
 			}
 
 			@Override
@@ -277,7 +316,14 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dataRepositoryTable.deleteDRRow();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					dataRepositoryTable.deleteDRRow();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
+				
 			}
 
 			@Override
@@ -290,7 +336,13 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dataRepositoryTable.moveRowUp();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					dataRepositoryTable.moveRowUp();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
 			}
 
 			@Override
@@ -303,7 +355,13 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dataRepositoryTable.moveRowDown();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					dataRepositoryTable.moveRowDown();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
 			}
 
 			@Override
@@ -316,10 +374,17 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				saveDR();
-				dataRepositoryTable.renderAllDRDetails();
-				getCodedFunctionView().refreshDRCode();
-				OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					saveDR();
+					dataRepositoryTable.renderAllDRDetails();
+					getCodedFunctionView().refreshDRCode();
+					OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+				}
+				
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
 			}
 
 			@Override
@@ -332,7 +397,13 @@ public class DataRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				handleSaveOnRefresh();
+				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					handleSaveOnRefresh();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				}
 			}
 
 			@Override
