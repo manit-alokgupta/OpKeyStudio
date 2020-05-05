@@ -3235,7 +3235,7 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean VerifyEditBoxEditable(ORObject arg0) throws Exception {
+	public boolean VerifyEditBoxEditable(ORObject arg0) {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">>Keyword Called VerifyEditBoxEditable");
