@@ -232,13 +232,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				Display.getDefault().asyncExec(new Runnable() {
 
-					@Override
-					public void run() {
-						saveButton.setEnabled(true);
-					}
-				});
 			}
 
 			@Override
@@ -249,8 +243,25 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
+				if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+					System.out.println("Saving");
+					Display.getDefault().asyncExec(new Runnable() {
 
+						@Override
+						public void run() {
+							saveGenericCodeEditorFile();
+							saveButton.setEnabled(false);
+						}
+					});
+					return;
+				}
+				Display.getDefault().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						saveButton.setEnabled(true);
+					}
+				});
 			}
 		});
 		runButton.addSelectionListener(new SelectionListener() {

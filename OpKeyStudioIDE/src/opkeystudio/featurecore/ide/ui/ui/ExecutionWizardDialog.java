@@ -37,6 +37,9 @@ import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
 import pcloudystudio.core.vncutils.AndroidVNCLauncher;
 import pcloudystudio.pcloudystudio.core.execution.MobileDeviceExecutionDetail;
+
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
@@ -123,7 +126,19 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		sessionNameTextField = new Text(container, SWT.BORDER);
 		sessionNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 15, 1));
 		sessionNameTextField.setText(getExecutionSession().getSessionName());
+		sessionNameTextField.addKeyListener(new KeyListener() {
 
+			@Override
+			public void keyReleased(KeyEvent e) {
+				getExecutionSession().setSessionName(sessionNameTextField.getText());
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		Label lblNewLabel_1 = new Label(container, SWT.NONE);
 		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
 		lblNewLabel_1.setText("Build Name:");
