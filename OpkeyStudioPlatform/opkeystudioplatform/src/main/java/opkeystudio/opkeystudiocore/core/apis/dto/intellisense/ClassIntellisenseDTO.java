@@ -1,9 +1,14 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.intellisense;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClassIntellisenseDTO {
 	private String classname;
 	private String datatoshow;
 	private String datatoenter;
+
+	private List<MethodIntellisenseDTO> methodintellisensedtos = new ArrayList<>();
 
 	public ClassIntellisenseDTO() {
 
@@ -37,5 +42,13 @@ public class ClassIntellisenseDTO {
 
 	public void setDatatoenter(String datatoenter) {
 		this.datatoenter = datatoenter;
+	}
+
+	public List<MethodIntellisenseDTO> getMethodintellisensedtos() {
+		return methodintellisensedtos;
+	}
+
+	public void setMethodintellisensedtos(List<MethodIntellisenseDTO> methodintellisensedtos) {
+		this.methodintellisensedtos = methodintellisensedtos;
 	}
 }
