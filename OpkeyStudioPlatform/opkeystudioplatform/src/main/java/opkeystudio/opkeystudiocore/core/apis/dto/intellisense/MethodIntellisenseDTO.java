@@ -4,9 +4,17 @@ public class MethodIntellisenseDTO {
 	private String classname;
 	private String datatoshow;
 	private String datatoenter;
+	private String returntype;
 
 	public MethodIntellisenseDTO() {
 
+	}
+
+	public MethodIntellisenseDTO(String classname, String datatoshow, String datatoenter, String returntype) {
+		this.setClassname(classname);
+		this.setDatatoshow(datatoshow);
+		this.setDatatoenter(datatoenter);
+		this.setReturntype(returntype);
 	}
 
 	public String getClassname() {
@@ -31,5 +39,13 @@ public class MethodIntellisenseDTO {
 
 	public void setDatatoenter(String datatoenter) {
 		this.datatoenter = datatoenter;
+	}
+
+	public String getReturntype() {
+		return returntype;
+	}
+
+	public void setReturntype(String returntype) {
+		this.returntype = returntype;
 	}
 }

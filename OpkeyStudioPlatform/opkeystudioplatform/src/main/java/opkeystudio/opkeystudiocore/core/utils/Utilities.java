@@ -140,6 +140,10 @@ public class Utilities {
 		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "commons";
 	}
 
+	public String getMainIntellisenseFolder() {
+		return getCommonsFolder() + File.separator + "intellisense" + File.separator + "mainintellisense";
+	}
+
 	public String getCommons_DBStructureFolder() {
 		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "commons" + File.separator
 				+ "DBStructure";
