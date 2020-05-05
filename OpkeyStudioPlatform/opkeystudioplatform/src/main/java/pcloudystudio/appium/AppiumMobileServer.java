@@ -12,10 +12,10 @@ public class AppiumMobileServer {
 			if (port != null && hostAddress != null) {
 				runtime.exec("cmd.exe /c start cmd.exe /k \"appium -a" + " " + hostAddress + " " + "-p" + " " + port
 						+ " " + "--session-override" + "\"");
-				Thread.sleep(4000);
+				Thread.sleep(5000);
 			} else {
 				runtime.exec("cmd.exe /c start cmd.exe /k \"appium -a 127.0.0.1 -p 4723 --session-override\"");
-				Thread.sleep(4000);
+				Thread.sleep(5000);
 			}
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
