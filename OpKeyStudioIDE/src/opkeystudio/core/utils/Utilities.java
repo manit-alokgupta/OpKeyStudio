@@ -109,6 +109,12 @@ public class Utilities {
 					EPartService partService = Utilities.getInstance().getEpartService();
 					partService.hidePart(mpart, true);
 				}
+
+				Object codeEditorPart = mpart.getTransientData().get("opkeystudio.codeFile");
+				if (codeEditorPart != null) {
+					EPartService partService = Utilities.getInstance().getEpartService();
+					partService.hidePart(mpart, true);
+				}
 			}
 		} catch (InjectionException e) {
 			e.printStackTrace();

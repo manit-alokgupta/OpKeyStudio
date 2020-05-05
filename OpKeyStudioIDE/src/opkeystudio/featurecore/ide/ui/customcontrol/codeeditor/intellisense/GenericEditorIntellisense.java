@@ -405,6 +405,8 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private void parseConstructors(JavaClassSource javaClassSource) {
 		String className = javaClassSource.getName();
 		addConstructorTypeBasicCompletion(className, className);
+		className = className + "()";
+		addConstructorTypeBasicCompletion(className, className);
 	}
 
 	private void parseClassMethods(JavaClassSource classSource) {
