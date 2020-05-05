@@ -2,9 +2,13 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.com
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.ClassIntellisenseDTO;
+
 public class TranspiledClassInfo {
 	private JavaClassSource classSource;
 	private Class reflectionClassObject;
+
+	private ClassIntellisenseDTO classIntellisenseDTO;
 
 	public TranspiledClassInfo(JavaClassSource classSource) {
 		this.setClassSource(classSource);
@@ -12,6 +16,10 @@ public class TranspiledClassInfo {
 
 	public TranspiledClassInfo(Class classSource) {
 		this.setReflectionClassObject(classSource);
+	}
+
+	public TranspiledClassInfo(ClassIntellisenseDTO classIntellisenseDTO) {
+		this.setClassIntellisenseDTO(classIntellisenseDTO);
 	}
 
 	public JavaClassSource getClassSource() {
@@ -28,5 +36,13 @@ public class TranspiledClassInfo {
 
 	public void setReflectionClassObject(Class reflectionClassObject) {
 		this.reflectionClassObject = reflectionClassObject;
+	}
+
+	public ClassIntellisenseDTO getClassIntellisenseDTO() {
+		return classIntellisenseDTO;
+	}
+
+	public void setClassIntellisenseDTO(ClassIntellisenseDTO classIntellisenseDTO) {
+		this.classIntellisenseDTO = classIntellisenseDTO;
 	}
 }

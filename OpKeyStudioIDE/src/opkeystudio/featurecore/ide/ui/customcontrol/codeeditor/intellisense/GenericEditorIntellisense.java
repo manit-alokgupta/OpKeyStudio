@@ -37,6 +37,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
+import org.fife.ui.autocomplete.Completion;
 import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.FieldSource;
@@ -52,6 +53,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranspiledClassInfo;
 import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.ClassIntellisenseDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.MethodIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -84,7 +86,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 						addSimpleKeywords();
 						addOpKeyTranspiledClassInformation();
-						addLibraryClassInformation();
+						addClassInformationFromSenseFile();
 					}
 				});
 				msd.closeProgressDialog();
@@ -92,15 +94,32 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		});
 	}
 
-	private void addClassInformationFromSenseFile() throws IOException {
+	@SuppressWarnings("unchecked")
+	private void addClassInformationFromSenseFile() {
 		List<File> allFiles = new CompilerUtilities()
 				.getAllFiles(new File(Utilities.getInstance().getMainIntellisenseFolder()), ".sense");
 		for (int i = 0; i < allFiles.size(); i++) {
 			File file = allFiles.get(i);
-			ClassIntellisenseDTO classDTO = (ClassIntellisenseDTO) Utilities.getInstance().getXMLDeSerializedData(file,
-					ClassIntellisenseDTO.class);
-			System.out.println(i + "  " + allFiles.size() + "    " + classDTO.getDatatoshow());
-			getSenseClasses().add(classDTO);
+			try {
+				List<ClassIntellisenseDTO> classDTOs = (List<ClassIntellisenseDTO>) Utilities.getInstance()
+						.getXMLDeSerializedDataForClassIntellisenseDTO(file);
+				setSenseClasses(classDTOs);
+				List<Completion> basicCompletions = new ArrayList<Completion>();
+				for (ClassIntellisenseDTO classIntellisense : classDTOs) {
+					TranspiledClassInfo classInfo = new TranspiledClassInfo(classIntellisense);
+					addTranspiledClasses(classInfo);
+					JavaBasicCompletion classbc = getConstructorTypeBasicCompletion(classIntellisense.getClassname(),
+							classIntellisense.getClassname());
+					JavaBasicCompletion bc = getConstructorTypeBasicCompletion(classIntellisense.getDatatoshow(),
+							classIntellisense.getDatatoenter());
+					basicCompletions.add(classbc);
+					basicCompletions.add(bc);
+				}
+				this.addCompletions(basicCompletions);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -309,6 +328,14 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				parseMethod(provider, method);
 			}
 		}
+		if (tranpiledClassInfo.getClassIntellisenseDTO() != null) {
+			List<MethodIntellisenseDTO> methods = tranpiledClassInfo.getClassIntellisenseDTO()
+					.getMethodintellisensedtos();
+			for (MethodIntellisenseDTO method : methods) {
+				provider.addMethodTypeBasicCompletion(method.getDatatoshow(), method.getDatatoenter(),
+						method.getReturntype());
+			}
+		}
 		return provider;
 	}
 
@@ -390,6 +417,19 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			bc.setTextToEnter(data);
 			this.addCompletion(bc);
 		}
+	}
+
+	private JavaBasicCompletion getConstructorTypeBasicCompletion(String dataToShow, String dataToEnter) {
+		String[] dataArray = dataToShow.split("\\.");
+		String datatoShow = dataArray[dataArray.length - 1];
+		JavaBasicCompletion bc = new JavaBasicCompletion(this, datatoShow);
+		bc.setShortDescription(dataToShow);
+		bc.setTextToEnter(dataToEnter);
+		Image img = ResourceManager.getPluginImage("OpKeyStudio", "icons/intellisense/class.ico");
+		BufferedImage image = convertToAWT(img.getImageData());
+		Icon icon = new ImageIcon(image);
+		bc.setIcon(icon);
+		return bc;
 	}
 
 	private void addConstructorTypeBasicCompletion(String dataToShow, String dataToEnter) {
@@ -524,6 +564,16 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 					return token;
 				}
 			}
+			if (token.getClassIntellisenseDTO() != null) {
+				String className = token.getClassIntellisenseDTO().getClassname();
+				if (className.endsWith("." + tokenString)) {
+					return token;
+				}
+				if (className.trim().equals(tokenString.trim())) {
+					return token;
+				}
+			}
+
 		}
 		return null;
 	}
