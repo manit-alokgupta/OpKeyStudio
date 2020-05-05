@@ -7,6 +7,7 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -50,6 +51,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCompletionPro
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranspiledClassInfo;
+import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.ClassIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -58,6 +60,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private List<TranspiledClassInfo> transpiledClasses = new ArrayList<TranspiledClassInfo>();
 	private List<VariableToken> allvariabletokens = new ArrayList<VariableToken>();
 	private static GenericEditorIntellisense instance;
+	private List<ClassIntellisenseDTO> senseClasses = new ArrayList<ClassIntellisenseDTO>();
 
 	public static GenericEditorIntellisense getInstance() {
 		if (instance == null) {
@@ -87,6 +90,18 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				msd.closeProgressDialog();
 			}
 		});
+	}
+
+	private void addClassInformationFromSenseFile() throws IOException {
+		List<File> allFiles = new CompilerUtilities()
+				.getAllFiles(new File(Utilities.getInstance().getMainIntellisenseFolder()), ".sense");
+		for (int i = 0; i < allFiles.size(); i++) {
+			File file = allFiles.get(i);
+			ClassIntellisenseDTO classDTO = (ClassIntellisenseDTO) Utilities.getInstance().getXMLDeSerializedData(file,
+					ClassIntellisenseDTO.class);
+			System.out.println(i + "  " + allFiles.size() + "    " + classDTO.getDatatoshow());
+			getSenseClasses().add(classDTO);
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -511,6 +526,14 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			}
 		}
 		return null;
+	}
+
+	public List<ClassIntellisenseDTO> getSenseClasses() {
+		return senseClasses;
+	}
+
+	public void setSenseClasses(List<ClassIntellisenseDTO> senseClasses) {
+		this.senseClasses = senseClasses;
 	}
 
 }
