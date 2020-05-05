@@ -26,10 +26,14 @@ import javax.xml.bind.DatatypeConverter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.ClassIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class Utilities {
@@ -187,15 +191,27 @@ public class Utilities {
 		return path;
 	}
 
+	public void writeXMLSerializedData(File file, Object object) throws IOException {
+		XmlMapper mapper = new XmlMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		mapper.writeValue(file, object);
+	}
+
 	public String getXMLSerializedData(Object object) throws JsonProcessingException {
 		XmlMapper mapper = new XmlMapper();
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		return mapper.writeValueAsString(object);
 	}
 
-	public Object getXMLDeSerializedData(File filepath, Class<?> _class) throws IOException {
+	public Object getXMLDeSerializedData(File filepath, Class _class) throws IOException {
 		XmlMapper mapper = new XmlMapper();
 		return mapper.readValue(filepath, _class);
+	}
+
+	public Object getXMLDeSerializedDataForClassIntellisenseDTO(File filepath) throws IOException {
+		XmlMapper mapper = new XmlMapper();
+		CollectionType type1 = mapper.getTypeFactory().constructCollectionType(List.class, ClassIntellisenseDTO.class);
+		return mapper.readValue(filepath, type1);
 	}
 
 	public Object getXMLDeSerializedData(String data, Class<?> _class) throws IOException {
