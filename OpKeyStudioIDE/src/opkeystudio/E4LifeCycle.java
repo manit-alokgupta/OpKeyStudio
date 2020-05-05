@@ -26,6 +26,7 @@ public class E4LifeCycle {
 		Utilities.getInstance().setDefaultInstallDir(new File("").getAbsolutePath());
 		Utilities.getInstance().initializeOpKeyStudioPath();
 		KeywordManager.getInstance().loadAllKeywords();
+		opkeystudio.core.utils.Utilities.getInstance().initCodeEditorSuperConstructor();
 	}
 
 	@PreSave

@@ -1,9 +1,11 @@
 package opkeystudio.core.utils;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.UUID;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.InjectionException;
@@ -11,6 +13,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Display;
@@ -19,6 +22,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.ArtifactCodeEditor;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
@@ -36,7 +40,7 @@ public class Utilities {
 	}
 
 	public void setShellCursor(int i) {
-		//defaultShell.setCursor(new Cursor(Display.getCurrent(), i));
+		// defaultShell.setCursor(new Cursor(Display.getCurrent(), i));
 	}
 
 	public EPartService getEpartService() {
@@ -237,11 +241,27 @@ public class Utilities {
 			mpart.getTransientData().put("opkeystudio.artifactData", artifact);
 			mpart.setLabel(renamedData);
 			mpart.setTooltip(renamedData);
-		}
-		finally {
+		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
-		
+
+	}
+
+	public void initCodeEditorSuperConstructor() {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				MessageDialogs msd = new MessageDialogs();
+				msd.openProgressDialog(null, "Loading OpKey Studio's Features", false, new IRunnableWithProgress() {
+
+					@Override
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						new ArtifactCodeEditor();
+					}
+				});
+				msd.closeProgressDialog();
+			}
+		});
+
 	}
 
 	public Shell getDefaultShell() {

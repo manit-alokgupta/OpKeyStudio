@@ -48,6 +48,10 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 	private ArtifactCodeView codeFunctionView;
 	private JavaAutoCompletion autoCompletion;
 
+	public ArtifactCodeEditor() {
+		super();
+	}
+
 	public ArtifactCodeEditor(Composite parent, ArtifactCodeView parentView, boolean enableIntellisense) {
 
 		super();
