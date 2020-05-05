@@ -11,7 +11,7 @@ import org.apache.commons.io.IOUtils;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class AndroidVNCLauncher {
-	
+
 	private String port = "5801";
 	private String VncDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "VncServer"
 			+ File.separator + "vncserver" + File.separator + "PreCompiled_libs";
@@ -21,18 +21,19 @@ public class AndroidVNCLauncher {
 
 	public AndroidVNCLauncher() throws IOException, InterruptedException {
 		AndroidVNCUtil.getInstance();
-		
+
 	}
 
-	public void startVncServer(String deviceId,String deviceName,String deviceAbi,String deviceSdk) throws IOException, InterruptedException {
+	public void startVncServer(String deviceId, String deviceName, String deviceAbi, String deviceSdk)
+			throws IOException, InterruptedException {
 
 		Boolean directoryStatus = AndroidVNCUtil.checkIfDirectoryExist(VncDirectory);
 		if (!directoryStatus) {
 			try {
 				copyZip();
-				//Thread.sleep(2000);
+				// Thread.sleep(2000);
 				Utilities.getInstance().extractZipFolder(zipPath, zipExtractPath);
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -96,10 +97,11 @@ public class AndroidVNCLauncher {
 		}
 	}
 
-	public void startMobicast(String deviceId,String deviceName,String deviceAbi,String deviceSdk) throws IOException, InterruptedException {
-		 
+	public void startMobicast(String deviceId, int deviceVersion, String deviceName, String deviceAbi, String deviceSdk)
+			throws IOException, InterruptedException {
+
 		if (AndroidVNCUtil.checkIfDeviceIsConnected(deviceId)) {
-			AndroidVNCUtil.installInputServiceApk(deviceId);
+			AndroidVNCUtil.installInputServiceApk(deviceId, deviceVersion);
 
 			AndroidVNCUtil.StartInputService(deviceId);
 

@@ -16,6 +16,7 @@ public class AndroidVNCLauncherHandler {
 	String deviceId = "";
 	String deviceAbi = "";
 	String deviceSdk = "";
+	String deviceVersion;
 
 	@Execute
 	public void execute(Shell parentShell) throws IOException, InterruptedException {
@@ -31,6 +32,8 @@ public class AndroidVNCLauncherHandler {
 			deviceAbi = MobileDeviceUtil.getDeviceProperty(deviceId, MobileDeviceUtil.ANDROID_DEVICE_ABI_PROPERTY);
 			deviceSdk = MobileDeviceUtil.getDeviceProperty(deviceId,
 					MobileDeviceUtil.ANDROID_DEVICE_API_LEVEL_PROPERTY);
+			deviceVersion = MobileDeviceUtil.getDeviceProperty(deviceId,
+					MobileDeviceUtil.ANDROID_DEVICE_VERSION_PROPERTY);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -54,7 +57,14 @@ public class AndroidVNCLauncherHandler {
 		java.util.concurrent.Executors.newSingleThreadExecutor().execute(new Runnable() {
 			public void run() {
 				try {
-					starter.startMobicast(deviceId, deviceName, deviceAbi, deviceSdk);
+					int version=0;
+					if (deviceVersion.indexOf('.') != -1)
+						version = Integer.valueOf(deviceVersion.substring(0,deviceVersion.indexOf('.')));
+					else
+						version = Integer.valueOf(deviceVersion);
+					
+					System.out.println("Version##### "+version);
+					starter.startMobicast(deviceId, version, deviceName, deviceAbi, deviceSdk);
 
 				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();

@@ -12,15 +12,15 @@ public class AndroidVNCUtil {
 
 	private static AndroidVNCUtil obj;
 	private static Process vncServerProcess = null;
-	
+
 	private static String PreCompiledLibDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator
 			+ "VncServer" + File.separator + "vncserver" + File.separator + "PreCompiled_libs"; // "
-	
+
 	private static String ResourceDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator
-			+ "VncServer" + File.separator + "vncserver" + File.separator + "Resources"+File.separator ; 
+			+ "VncServer" + File.separator + "vncserver" + File.separator + "Resources" + File.separator;
 	private static String MobileLibDirectory = "/data/local/tmp/pcloudy-libs";
-	
-	private static String adbPath=String.valueOf(System.getenv("ANDROID_HOME"))+ File.separator + "platform-tools";
+
+	private static String adbPath = String.valueOf(System.getenv("ANDROID_HOME")) + File.separator + "platform-tools";
 
 	private AndroidVNCUtil() {
 	}
@@ -84,7 +84,6 @@ public class AndroidVNCUtil {
 		}
 	}
 
-
 	public static void MakingRequiredDirectory(String id) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("Making lib directory in ");
@@ -129,7 +128,8 @@ public class AndroidVNCUtil {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("pushing vnc server");
 		String command = "adb -s " + id + " push " + AndroidVNCUtil.PreCompiledLibDirectory + "/libs/" + abi
-				+ "/androidvncserver" + " " + AndroidVNCUtil.MobileLibDirectory; // give the source for precompiled directory
+				+ "/androidvncserver" + " " + AndroidVNCUtil.MobileLibDirectory; // give the source for precompiled
+		// directory
 		System.out.println("command is  " + command);
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
@@ -212,8 +212,8 @@ public class AndroidVNCUtil {
 			throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("pushing minicapso file");
-		String command = "adb -s " + id + " push  " + AndroidVNCUtil.PreCompiledLibDirectory + "/aosp/android-" + sdk + "/"
-				+ abi + "/minicap.so" + "   " + MobileLibDirectory;
+		String command = "adb -s " + id + " push  " + AndroidVNCUtil.PreCompiledLibDirectory + "/aosp/android-" + sdk
+				+ "/" + abi + "/minicap.so" + "   " + MobileLibDirectory;
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
 		process.waitFor();
@@ -287,10 +287,17 @@ public class AndroidVNCUtil {
 
 	}
 
-	public static void installInputServiceApk(String id) throws IOException, InterruptedException {
+	public static void installInputServiceApk(String id, int deviceVersion) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
-		System.out.println("pushing inputservice.apk");
-		String command = "adb -s " + id + " install " + ResourceDirectory + "inputservice.apk";
+		String command = null;
+		if (deviceVersion <= 9) {
+			System.out.println("pushing inputservice_up_to_version_9.apk");
+			command = "adb -s " + id + " install " + ResourceDirectory + "inputservice_up_to_version_9.apk";
+		} else if (deviceVersion == 10) {
+			System.out.println("pushing inputservice_for_version_10.apk");
+			command = "adb -s " + id + " install " + ResourceDirectory + "inputservice_for_version_10.apk";
+		}
+
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
 		process.waitFor();
@@ -328,14 +335,14 @@ public class AndroidVNCUtil {
 	public static void LunchVnc(String id, String deviceName, String port) throws IOException, InterruptedException {
 		Runtime runtime = Runtime.getRuntime();
 		System.out.println("Launching Vnc");
-		String command = "java -jar " + ResourceDirectory + "opkeyvnc.jar" + " " + '"'+port+'"' + " " + '"'+deviceName+'"' + " " + '"'+id+'"'
-				+ " " + adbPath;
+		String command = "java -jar " + ResourceDirectory + "opkeyvnc.jar" + " " + '"' + port + '"' + " " + '"'
+				+ deviceName + '"' + " " + '"' + id + '"' + " " + adbPath;
 
 		StringBuilder builder = new StringBuilder();
 		Process process = runtime.exec(command);
 		process.waitFor();
 		vncServerProcess.destroy();
-		
+
 		String line;
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
@@ -353,8 +360,8 @@ public class AndroidVNCUtil {
 		String command = "adb -s " + id
 				+ " shell export CLASSPATH=/data/app/com.pcloudy.inputservice-1/base.apk; exec app_process /system/bin com.pcloudy.inputservice.Agent";
 		System.out.println("command is" + " " + command);
-		String [] cmd= {adbPath+ File.separator + "adb",command};
-		ProcessBuilder pb=new ProcessBuilder(cmd);
+		String[] cmd = { adbPath + File.separator + "adb", command };
+		ProcessBuilder pb = new ProcessBuilder(cmd);
 		StringBuilder builder = new StringBuilder();
 		Process process = pb.start();
 		process.waitFor();
