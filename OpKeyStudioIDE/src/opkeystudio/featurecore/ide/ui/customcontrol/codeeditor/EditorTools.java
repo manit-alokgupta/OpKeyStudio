@@ -192,6 +192,8 @@ public class EditorTools {
 					// TODO: handle exception
 				} catch (UnsatisfiedLinkError e) {
 					// TODO: handle exception
+				} catch (VerifyError e) {
+					// TODO: handle exception
 				} catch (LinkageError e) {
 					// TODO: handle exception
 				} catch (Exception e) {
