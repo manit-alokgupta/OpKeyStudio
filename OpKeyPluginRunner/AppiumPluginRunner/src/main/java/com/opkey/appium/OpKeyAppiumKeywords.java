@@ -1227,17 +1227,9 @@ public class OpKeyAppiumKeywords {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_ObjectExists
 
-		try {
-			FunctionResult functionResult = new WebObjects().Method_ObjectExists(object);
-			ReportHelper.addReportStep(methodName, functionResult);
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_ObjectExists(object));
+		return DataType.getBoolean(functionResult.getOutput());
 
-			String bool = functionResult.getOutput();
-			return DataType.getBoolean(bool);
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-		}
-
-		return false;
 	}
 
 	public int GetChildObjectCount(ORObject arg0, String arg1, String arg2, String arg3)
@@ -3945,40 +3937,48 @@ public class OpKeyAppiumKeywords {
 			throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), arg4, arg5);
-		AppiumObject object = new ObjectConverter().formatObject(arg3);
+
+		FunctionResult functionResult;
+		if (arg3 != null) {
+			AppiumObject object = new ObjectConverter().formatObject(arg3);
+			functionResult = FunctionCaller
+					.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, object, arg4, arg5));
+		} else {
+			functionResult = FunctionCaller
+					.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, null, arg4, arg5));
+		}
+
 		System.out.println(">>Keyword Called Web_ClickByText");
 
 		// Method_clickByText
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, object, arg4, arg5));
 		return DataType.getBoolean(functionResult.getOutput());
+
 	}
 
-	
 	public boolean Web_ClickByTextInSequence(String arg0, int arg1, int arg2, boolean arg3, String arg4, int arg5,
 			boolean arg6, ORObject arg7, ORObject arg8, ORObject arg9, ORObject arg10, ORObject arg11, boolean arg12,
 			String arg13, int arg14, boolean arg15, String arg16, int arg17, boolean arg18, String arg19) {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
-	
+
 		String text1 = arg0;
 		String text2 = arg4;
 		String text3 = arg13;
 		String text4 = arg16;
 		String text5 = arg19;
-		
+
 		int index1 = arg1;
 		int index2 = arg2;
 		int index3 = arg5;
 		int index4 = arg14;
 		int index5 = arg17;
-		
+
 		boolean isContains1 = arg3;
 		boolean isContains2 = arg6;
 		boolean isContains3 = arg12;
 		boolean isContains4 = arg15;
 		boolean isContains5 = arg18;
-		
+
 		AppiumObject object1 = new ObjectConverter().formatObject(arg7);
 		AppiumObject object2 = new ObjectConverter().formatObject(arg8);
 		AppiumObject object3 = new ObjectConverter().formatObject(arg9);
@@ -3990,10 +3990,8 @@ public class OpKeyAppiumKeywords {
 		// Method_clickByTextInSequence
 		FunctionResult functionResult = FunctionCaller
 				.execute(() -> new ActionByText().Method_clickByTextInSequence(text1, index1, isContains1, text2,
-						index2, isContains2, text3, index3, isContains3, text4,
-						index4, isContains4, text5, index5, isContains5,
-						object1, object2, object3, object4,
-						object5));
+						index2, isContains2, text3, index3, isContains3, text4, index4, isContains4, text5, index5,
+						isContains5, object1, object2, object3, object4, object5));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -4477,8 +4475,9 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new UnCategorised().Method_ignoreXMLHttpRequest(arg0));
+
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new UnCategorised().Method_ignoreXMLHttpRequest(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -4493,8 +4492,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0), String.valueOf(arg1), String.valueOf(arg2),
 				String.valueOf(arg3));
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Browser().Method_syncBrowser());
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Browser().Method_syncBrowser());
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -4508,8 +4507,9 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_TypeTextInContentEditable(object, arg1));
+
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new EditBox().Method_TypeTextInContentEditable(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -4555,8 +4555,9 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_typeTextandEnterEditBox(object, arg1));
+
+		FunctionResult functionResult = FunctionCaller
+				.execute(() -> new EditBox().Method_typeTextandEnterEditBox(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -4620,7 +4621,7 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction("FetchBrowserURL");
 		// Method_fetchBrowserURL
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Browser().Method_fetchBrowserURL()); 
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Browser().Method_fetchBrowserURL());
 		return functionResult.getOutput();
 	}
 
@@ -4633,7 +4634,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_fetchBrowserTitle
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Browser().Method_fetchBrowserTitle_1()); 
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Browser().Method_fetchBrowserTitle_1());
 		return functionResult.getOutput();
 
 	}
@@ -4674,8 +4675,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("GetAllButtons");
 		// Method_getAllButtons
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_getAllButtons());
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_getAllButtons());
 		return functionResult.getOutput();
 
 	}
@@ -5194,8 +5194,7 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new EditBox().Method_getEditboxValue(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_getEditboxValue(object));
 		return functionResult.getOutput();
 
 	}
@@ -5268,7 +5267,7 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	/*MethodNotFound*/
+	/* MethodNotFound */
 	public String VisualComparisonForPage(String arg0, String arg1, boolean arg2, boolean arg3) {
 
 		System.out.println(">>Keyword Called VisualComparisonForPage");

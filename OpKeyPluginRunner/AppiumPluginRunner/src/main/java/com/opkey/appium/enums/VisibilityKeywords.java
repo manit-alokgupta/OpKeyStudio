@@ -8,6 +8,6 @@ public enum VisibilityKeywords {
 	VerifyEditBoxExist,
 	VerifyEditBoxnotExist,
 	VerifyTextAreaExist,
-	VerifyTextAreanotExist
-
+	VerifyTextAreanotExist,
+	VerifyObjectExists
 }

@@ -10,5 +10,6 @@ public enum GetKeywords {
 	GetTextFromEditBox,
 	GetTextFromTextArea,
 	GetCurrentOrientation,
-	GetLocation
+	GetLocation,
+	GetTextfromTextArea
 }
