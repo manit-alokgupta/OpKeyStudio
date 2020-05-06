@@ -54,6 +54,12 @@ public class ArtifactExecutor {
 						| InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
 					e.printStackTrace();
+					try {
+						callExecuteSessionEnd();
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+							| NoSuchMethodException | SecurityException | IllegalArgumentException
+							| InvocationTargetException e1) {
+					}
 				}
 				setExecutionCompleted(true);
 			}
@@ -81,7 +87,12 @@ public class ArtifactExecutor {
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
 						| InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
-					e.printStackTrace();
+					try {
+						callExecuteSessionEnd();
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+							| NoSuchMethodException | SecurityException | IllegalArgumentException
+							| InvocationTargetException e1) {
+					}
 				}
 				setExecutionCompleted(true);
 			}
