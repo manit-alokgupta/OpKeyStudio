@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
@@ -27,8 +28,11 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.Cod
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
@@ -52,13 +56,15 @@ public class ArtifactCodeView extends SuperComposite {
 	private CodedFunctionBottomFactoryUI bottomFactoryUi;
 	private String codedFLClassPath;
 	private String artifactOpkeyDataLibraryPath;
-
 	private String artifactAssociatedLibraryPath;
 	private Artifact artifact;
 	private TestCaseView parentTestCaseView;
 	private ObjectRepositoryView parentObjectRepositoryView;
 	private DataRepositoryView parentDataRepositoryView;
 	private TestSuiteView parentTestSuiteView;
+
+	private CodedFunctionView parentCodedFunctionView;
+	private CodedFunctionArtifact codedFunctionArtifact;
 	private boolean embeddedInsideTestCaseView = false;
 	private boolean embeddedInsideObjectRepositoryView = false;
 	private boolean embeddedInsideDataRepositoryView = false;
@@ -76,6 +82,17 @@ public class ArtifactCodeView extends SuperComposite {
 		addGenericListner();
 		displayCodeViewFileData();
 		checkClassIsRunnable();
+	}
+
+	public ArtifactCodeView(Composite parent, int style, boolean isGenericEditor, boolean iscfleditor) {
+		super(parent, style);
+		this.setGenericEditor(isGenericEditor);
+		setLayout(new GridLayout(1, false));
+		initArtifact();
+		initCFLEditorUI();
+		initCFLCode();
+		CodedFunctionArtifact cartifact = FlowApi.getInstance().getCodedFunctionArtifact(getArtifact().getId()).get(0);
+		setCodedFunctionArtifact(cartifact);
 	}
 
 	public ArtifactCodeView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
@@ -177,6 +194,16 @@ public class ArtifactCodeView extends SuperComposite {
 		getJavaEditor().setArtifactJavaCode(codeData);
 	}
 
+	private void initCFLCode() {
+		Artifact artifact = getArtifact();
+		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				+ artifact.getVariableName() + ".java";
+		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.readTextFile(new File(codeFilePath));
+		getJavaEditor().setArtifactJavaCode(codeData);
+	}
+
 	private void initTestSuiteCode() {
 		Artifact artifact = getParentTestSuiteView().getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
@@ -268,7 +295,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				openExecutionWizard();
+				openGenericEditorExecutionWizard();
 			}
 
 			@Override
@@ -309,6 +336,106 @@ public class ArtifactCodeView extends SuperComposite {
 		});
 	}
 
+	private void initCFLEditorUI() {
+		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
+		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+
+		runButton = new ToolItem(toolBar, SWT.NONE);
+		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
+		runButton.setToolTipText("Run");
+		new ToolItem(toolBar, SWT.SEPARATOR);
+		saveButton = new ToolItem(toolBar, SWT.NONE);
+		saveButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SAVE_ICON));
+		saveButton.setToolTipText("Save");
+		saveButton.setEnabled(false);
+		new ToolItem(toolBar, SWT.SEPARATOR);
+		refreshButton = new ToolItem(toolBar, SWT.NONE);
+		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
+		refreshButton.setToolTipText("Refresh Source Code");
+
+		editor = new ArtifactCodeEditor(this, this, true, true);
+		editor.setArtifact(getArtifact());
+
+		bottomFactoryUi = new CodedFunctionBottomFactoryUI(this, SWT.NONE, this);
+		bottomFactoryUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		bottomFactoryUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		editor.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+					System.out.println("Saving");
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							saveButton.setEnabled(false);
+						}
+					});
+					return;
+				}
+				Display.getDefault().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						saveButton.setEnabled(true);
+					}
+				});
+			}
+		});
+		runButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				openCFLEditorExecutionWizard();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		saveButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		refreshButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+	}
+
 	private void saveGenericCodeEditorFile() {
 		String code = getJavaEditor().getText();
 		File file = getCodeViewFile();
@@ -326,8 +453,13 @@ public class ArtifactCodeView extends SuperComposite {
 		}
 	}
 
-	public void openExecutionWizard() {
-		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this);
+	public void openGenericEditorExecutionWizard() {
+		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this, true);
+		executionWizard.open();
+	}
+
+	public void openCFLEditorExecutionWizard() {
+		ExecutionWizardDialog executionWizard = new ExecutionWizardDialog(getShell(), this, true, true);
 		executionWizard.open();
 	}
 
@@ -649,5 +781,21 @@ public class ArtifactCodeView extends SuperComposite {
 
 	public File getCodeViewFile() {
 		return this.codeViewFile;
+	}
+
+	public CodedFunctionView getParentCodedFunctionView() {
+		return parentCodedFunctionView;
+	}
+
+	public void setParentCodedFunctionView(CodedFunctionView parentCodedFunctionView) {
+		this.parentCodedFunctionView = parentCodedFunctionView;
+	}
+
+	public CodedFunctionArtifact getCodedFunctionArtifact() {
+		return codedFunctionArtifact;
+	}
+
+	public void setCodedFunctionArtifact(CodedFunctionArtifact codedFunctionArtifact) {
+		this.codedFunctionArtifact = codedFunctionArtifact;
 	}
 }

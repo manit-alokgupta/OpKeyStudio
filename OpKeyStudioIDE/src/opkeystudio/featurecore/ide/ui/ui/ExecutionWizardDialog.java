@@ -84,14 +84,22 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		initExecutionSession(parentTestSuiteView.getArtifact());
 	}
 
-	public ExecutionWizardDialog(Shell parentShell, ArtifactCodeView parentArtifactCodeView) {
+	public ExecutionWizardDialog(Shell parentShell, ArtifactCodeView parentArtifactCodeView,
+			boolean executingFromGenericEditor) {
 		super(parentShell);
 		this.setParentArtifactCodeView(parentArtifactCodeView);
-		this.setExecutingFromGenericEditor(true);
+		this.setExecutingFromGenericEditor(executingFromGenericEditor);
 		setHelpAvailable(false);
 		initExecutionSession(parentArtifactCodeView.getCodeViewFile());
 	}
 
+	public ExecutionWizardDialog(Shell parentShell, ArtifactCodeView parentArtifactCodeView,
+			boolean executingFromGenericEditor, boolean isCflEditor) {
+		super(parentShell);
+		this.setParentArtifactCodeView(parentArtifactCodeView);
+		setHelpAvailable(false);
+		initExecutionSession(parentArtifactCodeView.getArtifact());
+	}
 	/**
 	 * Create contents of the dialog.
 	 * 

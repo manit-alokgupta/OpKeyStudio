@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
+import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
@@ -67,6 +68,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	private Display display;
 
 	private CodedFunctionView parentCodedView;
+	private ArtifactCodeView parentArtifactCodeView;
 	private CFLCompilationResultTable compilationResultsTable;
 
 	/**
@@ -79,6 +81,271 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
+
+	@SuppressWarnings("unused")
+	public CodedFunctionBottomFactoryUI(Composite parent, int style, ArtifactCodeView parentTestCaseView) {
+		super(parent, style);
+		setParentArtifactCodeView(parentTestCaseView);
+		display = getParent().getDisplay();
+		setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		Composite composite = new Composite(this, SWT.NONE);
+		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		composite.setLayout(new GridLayout(1, false));
+
+		ExpandBar expandBar = new ExpandBar(composite, SWT.NONE);
+		expandBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
+
+		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
+		item.setText("Coded FL Arguments");
+		item.setHeight(350);
+		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
+		Group grpMenu = new Group(expandBar, SWT.NONE);
+		grpMenu.setText("Menu");
+		item.setControl(grpMenu);
+		grpMenu.setLayout(new GridLayout(1, false));
+
+		TabFolder tabFolder = new TabFolder(grpMenu, SWT.NONE);
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tabFolder.setBounds(0, 0, 120, 43);
+		tabFolder.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+
+		TabItem associateLibrariesTagItem = new TabItem(tabFolder, SWT.NONE);
+		associateLibrariesTagItem.setText("Associate Libraries");
+		associateLibrariesTagItem.setToolTipText("Associate Libraries");
+		associateLibrariesTagItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
+
+		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
+		associateLibrariesTagItem.setControl(composite_7);
+		composite_7.setLayout(new GridLayout(1, false));
+		composite_7.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+
+		ToolBar toolBar_1 = new ToolBar(composite_7, SWT.FLAT | SWT.RIGHT);
+		toolBar_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		toolBar_1.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+
+		addLibrary = new ToolItem(toolBar_1, SWT.NONE);
+		addLibrary.setWidth(27);
+		addLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
+		addLibrary.setToolTipText("Add 2");
+		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
+
+		deleteLibrary = new ToolItem(toolBar_1, SWT.NONE);
+		deleteLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		deleteLibrary.setToolTipText("Delete");
+		deleteLibrary.setEnabled(false);
+
+		associateLibraries = new CFLLibraryAssociateTable(composite_7, SWT.BORDER | SWT.FULL_SELECTION, this);
+//		tagsTable = new Table(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		associateLibraries.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associateLibraries.setHeaderVisible(true);
+		associateLibraries.setLinesVisible(true);
+
+		TabItem associateORTabItem = new TabItem(tabFolder, SWT.NONE);
+		associateORTabItem.setText("Associate OR");
+		associateORTabItem.setToolTipText("Associate OR");
+		associateORTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
+
+		Composite associateORHolder = new Composite(tabFolder, SWT.NONE);
+		associateORTabItem.setControl(associateORHolder);
+		associateORHolder.setLayout(new GridLayout(1, false));
+		associateORHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+
+		ToolBar toolBar_3 = new ToolBar(associateORHolder, SWT.FLAT | SWT.RIGHT);
+		toolBar_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+
+		refreshORTable = new ToolItem(toolBar_3, SWT.NONE);
+		refreshORTable.setToolTipText("Refresh");
+		refreshORTable.setText("Refresh");
+		refreshORTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
+
+		associateor = new CFLOrAssociate(associateORHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
+		associateor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associateor.setHeaderVisible(true);
+		associateor.setLinesVisible(true);
+
+		TabItem associateDRTabItem = new TabItem(tabFolder, SWT.NONE);
+		associateDRTabItem.setText("Associate DR");
+		associateDRTabItem.setToolTipText("Associate DR");
+		associateDRTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
+
+		Composite associateDRHolder = new Composite(tabFolder, SWT.NONE);
+		associateDRTabItem.setControl(associateDRHolder);
+		associateDRHolder.setLayout(new GridLayout(1, false));
+		associateDRHolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+
+		ToolBar toolBar_DR_3 = new ToolBar(associateDRHolder, SWT.FLAT | SWT.RIGHT);
+		toolBar_DR_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar_DR_3.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+
+		refreshDRTable = new ToolItem(toolBar_DR_3, SWT.NONE);
+		refreshDRTable.setToolTipText("Refresh");
+		refreshDRTable.setText("Refresh");
+		refreshDRTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
+
+		associatedr = new CFLDRAssociate(associateDRHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
+		associatedr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		associatedr.setHeaderVisible(true);
+		associatedr.setLinesVisible(true);
+
+		inputTabItem = new TabItem(tabFolder, SWT.NONE);
+		inputTabItem.setText("Input");
+		inputTabItem.setToolTipText("Input");
+		inputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
+
+		Composite composite_11 = new Composite(tabFolder, SWT.NONE);
+		inputTabItem.setControl(composite_11);
+		composite_11.setLayout(new GridLayout(1, false));
+
+		ToolBar inputTabToolBar = new ToolBar(composite_11, SWT.FLAT | SWT.RIGHT);
+		inputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		inputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+
+		addInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		addInputItem.setToolTipText("Add");
+		addInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
+
+		ToolItem toolItem = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+
+		deleteInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		deleteInputItem.setToolTipText("Delete");
+		deleteInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		deleteInputItem.setEnabled(false);
+
+		ToolItem toolItem_1 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+
+		moveUpInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		moveUpInputItem.setToolTipText("Move Up");
+		moveUpInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
+		moveUpInputItem.setEnabled(false);
+
+		ToolItem toolItem_2 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+
+		moveDownInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		moveDownInputItem.setToolTipText("Move Down");
+		moveDownInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
+		moveDownInputItem.setEnabled(false);
+
+		ToolItem toolItem_3 = new ToolItem(inputTabToolBar, SWT.SEPARATOR);
+
+		refreshInputItem = new ToolItem(inputTabToolBar, SWT.NONE);
+		refreshInputItem.setToolTipText("Refresh");
+		refreshInputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
+
+		inputTable = new CFLInputTable(composite_11, SWT.BORDER | SWT.FULL_SELECTION, this);
+		inputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		inputTable.setHeaderVisible(true);
+		inputTable.setLinesVisible(true);
+
+		outputTabItem = new TabItem(tabFolder, SWT.NONE);
+		outputTabItem.setText("Output");
+		outputTabItem.setToolTipText("Output");
+		outputTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+		Composite composite_12 = new Composite(tabFolder, SWT.NONE);
+		outputTabItem.setControl(composite_12);
+		composite_12.setLayout(new GridLayout(1, false));
+
+		ToolBar outputTabToolBar = new ToolBar(composite_12, SWT.FLAT | SWT.RIGHT);
+		outputTabToolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		outputTabToolBar.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
+
+		addOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		addOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
+		addOutputItem.setToolTipText("Add");
+
+		ToolItem toolItem_4 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+
+		deleteOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		deleteOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		deleteOutputItem.setToolTipText("Delete");
+		deleteOutputItem.setEnabled(false);
+
+		ToolItem toolItem_5 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+
+		moveUpOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		moveUpOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
+		moveUpOutputItem.setToolTipText("Move Up");
+		moveUpOutputItem.setEnabled(false);
+
+		ToolItem toolItem_6 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+
+		moveDownOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		moveDownOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
+		moveDownOutputItem.setToolTipText("Move Down");
+		moveDownOutputItem.setEnabled(false);
+
+		ToolItem toolItem_7 = new ToolItem(outputTabToolBar, SWT.SEPARATOR);
+
+		refreshOutputItem = new ToolItem(outputTabToolBar, SWT.NONE);
+		refreshOutputItem.setToolTipText("Refresh");
+		refreshOutputItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_ICON));
+
+		outputTable = new CFLOutputTable(composite_12, SWT.BORDER | SWT.FULL_SELECTION, this);
+		outputTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		outputTable.setHeaderVisible(true);
+		outputTable.setLinesVisible(true);
+
+		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
+		compilationResultsTabItem.setText("Compilation Results");
+		compilationResultsTabItem
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
+
+		Composite compilationResultsComposite = new Composite(tabFolder, SWT.NONE);
+		compilationResultsTabItem.setControl(compilationResultsComposite);
+		compilationResultsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		compilationResultsTable = new CFLCompilationResultTable(compilationResultsComposite,
+				SWT.BORDER | SWT.FULL_SELECTION, this);
+		compilationResultsTable.setHeaderVisible(true);
+		compilationResultsTable.setLinesVisible(true);
+
+		TabItem consoleLogTabItem = new TabItem(tabFolder, SWT.NONE);
+		consoleLogTabItem.setText("Console");
+		consoleLogTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CONSOLE_ICON));
+
+		Composite consoleLogComposite = new Composite(tabFolder, SWT.NONE);
+		consoleLogTabItem.setControl(consoleLogComposite);
+		consoleLogComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		consoleLogTextView = new StyledText(consoleLogComposite, SWT.BORDER | SWT.V_SCROLL);
+
+		consoleLogTextView.setEditable(false);
+
+		expandBar.addListener(SWT.Expand, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				display.asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						parent.layout();
+					}
+				});
+			}
+		});
+		expandBar.addListener(SWT.Collapse, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				display.asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						parent.layout();
+					}
+				});
+			}
+		});
+		initTableListeners();
+		addButtonListeners();
+	}
+
 	@SuppressWarnings("unused")
 	public CodedFunctionBottomFactoryUI(Composite parent, int style, CodedFunctionView parentTestCaseView) {
 		super(parent, style);
@@ -714,5 +981,13 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 	public CFLOutputTable getCFLOutputTable() {
 		return this.outputTable;
+	}
+
+	public ArtifactCodeView getParentArtifactCodeView() {
+		return parentArtifactCodeView;
+	}
+
+	public void setParentArtifactCodeView(ArtifactCodeView parentArtifactCodeView) {
+		this.parentArtifactCodeView = parentArtifactCodeView;
 	}
 }
