@@ -26,11 +26,42 @@ public class ContextInitiator {
 			dataArgument.setArgumentName("args" + i);
 			dataArgument.setArgumentPosition(i);
 			dataArgument.setValue(arg);
+			//dataArgument.setDataType("String");
 			dataarguments.getDataArgument().add(dataArgument);
 		}
 		Context.current().getFunctionCall().setDataArguments(dataarguments);
+		
 	}
-
+	
+	public static void addDataRgumentsInFunctionCall(Object... args) {
+		DataArguments dataarguments = new DataArguments();
+		for (int i = 0; i < args.length; i++) {
+			Object arg = args[i];
+			DataArgument dataArgument = new DataArgument();
+			dataArgument.setArgumentName("args" + i);
+			dataArgument.setArgumentPosition(i);
+			dataArgument.setValue(arg.toString());
+			
+			setArgumentType(dataArgument, arg);
+			dataarguments.getDataArgument().add(dataArgument);
+		}
+		Context.current().getFunctionCall().setDataArguments(dataarguments);
+		
+	}
+	
+	private static void setArgumentType(DataArgument dataArgument, Object arg) {
+		System.out.println(arg.toString());
+		if(arg instanceof String) {
+			dataArgument.setDataType("String");
+		}else if(arg instanceof Integer) {
+			dataArgument.setDataType("Integer");
+		}else if(arg instanceof Double) {
+			dataArgument.setDataType("Double");
+		}else if(arg instanceof Boolean) {
+			dataArgument.setDataType("Boolean");
+		}
+	}
+	
 	private void initSettings() {
 		Context.session().setSettings(getSettings());
 	}

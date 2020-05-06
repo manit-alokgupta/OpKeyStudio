@@ -14,6 +14,15 @@ import com.plugin.appium.exceptionhandlers.ObjectPropertiesNotSufficientExceptio
 public class ObjectConverter {
 	public AppiumObject formatObject(ORObject orobject) {
 		
+		if (orobject == null) {
+			ORObject parentObject = new ORObject();
+			parentObject.addProperty("", "").addProperty("", "");
+
+			orobject = new ORObject();
+			orobject.addProperty("", "");
+			orobject.setParentORObject(parentObject);
+		}
+		
 		try {
 			ORObject SmartSoftwareTestingSolutions = new ORObject();
 			SmartSoftwareTestingSolutions.addProperty("type", "HTML PAGE").addProperty("tag", "html")

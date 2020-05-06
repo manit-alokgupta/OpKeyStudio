@@ -70,7 +70,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Links().Method_verifyLinkCount(arg0));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -90,7 +90,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Image().Method_verifyImageCount(arg0));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -366,7 +366,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new WebObjects().Method_verifyChildObjectCount(objectarg0, arg1, arg2, arg3, arg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -410,7 +410,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3), arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_verifyCheckboxStatusInTableCell(objectarg0, arg1, arg2, arg3, arg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -441,7 +441,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_verifyEditBoxLength(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -504,7 +504,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_verifyEditBoxnotExist(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -672,7 +672,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new DropDown().Method_verifyDropDownItemCount(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -734,7 +734,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_verifyTableColumnCount(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -745,7 +745,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_verifyTableRowText(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -756,7 +756,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_VerifyRadioButtonNotSelected(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -778,7 +778,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_verifyTableColumnText(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -789,7 +789,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_verifyTextAreaLength(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -810,7 +810,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Radio().Method_VerifyRadioButtonSelected(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -832,7 +832,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_verifyTableRowCount(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -884,7 +884,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_verifyTextareaColsRowLength(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -904,7 +904,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2, String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_verifyTableRowNumber(objectarg0, arg1, arg2, arg3));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -937,7 +937,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2, String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_verifyTableColumnNumber(objectarg0, arg1, arg2, arg3));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -948,7 +948,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, arg4, arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_verifyTextInTable(objectarg0, arg1, arg2, arg3, arg4, arg5));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -980,7 +980,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_selectMultipleDropDownItemAndWait(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -991,7 +991,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3), arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_deSelectMultipleDropDownItemInTableCell(objectarg0, arg1, arg2, arg3, arg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1002,7 +1002,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3), arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_selectMultipleDropdownItemInTableCell(objectarg0, arg1, arg2, arg3, arg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1013,7 +1013,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_getSelectedDropDownInTableCell(objectarg0, arg1, arg2, arg3));
 		return functionResult.getOutput();
@@ -1024,7 +1024,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_selectDropDownItemAndWait(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1045,7 +1045,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_doubleClickInTableCell(objectarg0, arg1, arg2, arg3, arg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1056,7 +1056,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_selectGroupRadioButton(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1116,7 +1116,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3), arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg5 = new ObjectConverter().formatObject(arg5);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Checkbox().Method_selectCheckBoxByText(arg0, arg1, arg2, arg3, arg4, objectarg5));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1157,7 +1157,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_deSelectCheckBoxAndWait(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1168,7 +1168,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, String.valueOf(arg4), String.valueOf(arg5));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_clickTableCellAndWait(objectarg0, arg1, arg2, arg3, arg4, arg5));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1201,7 +1201,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_getSingleRowText(objectarg0, arg1, arg2));
 		return functionResult.getOutput();
@@ -1223,7 +1223,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Window().Method_closeSelectedWindow(arg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -1233,7 +1233,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_clickButtonAndWait(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1244,7 +1244,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_clickButtonInTableCell(objectarg0, arg1, arg2, arg3));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1275,7 +1275,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_selectRadioButtonAndWait(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1318,7 +1318,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_selectRadioButtonOnIndexBasis(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1329,7 +1329,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_clickLinkInTableCell(objectarg0, arg1, arg2, arg3));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1351,7 +1351,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3), arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_selectDropDownInTableCell(objectarg0, arg1, arg2, arg3, arg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1381,7 +1381,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_TableGetTextRow(objectarg0, arg1, arg2));
 		return DataTypeConverter.getInt(functionResult.getOutput());
@@ -1402,7 +1402,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Radio().Method_SelectRadio(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1423,7 +1423,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_getSingleColText(objectarg0, arg1, arg2));
 		return functionResult.getOutput();
@@ -1434,7 +1434,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, String.valueOf(arg4), arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_fetchObjectPropertyInTableCell(objectarg0, arg1, arg2, arg3, arg4, arg5));
 		return functionResult.getOutput();
@@ -1445,7 +1445,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new WebObjects().Method_waitForObjectEditable(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1456,7 +1456,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_waitForObjectProperty(objectarg0, arg1, arg2, arg3));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1487,7 +1487,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_getSelectedRadioButtonFromGroup(objectarg0, arg1));
 		return functionResult.getOutput();
@@ -1508,7 +1508,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_deselectDropDownItemAndWait(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1540,7 +1540,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_doubleClickAndWait(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1600,7 +1600,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_selectCheckBoxAndWait(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1632,7 +1632,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_dragAndDropAndWait(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1680,7 +1680,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_waitForEditBoxDisabled(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1701,7 +1701,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Window().Method_waitForWindowLoad(arg0, arg1, arg2, arg3));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -1711,7 +1711,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_WebGetTableColCount(objectarg0, arg1));
 		return DataTypeConverter.getInt(functionResult.getOutput());
@@ -1722,7 +1722,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, String.valueOf(arg4), arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_typeOnObjecttInTableCell(objectarg0, arg1, arg2, arg3, arg4, arg5));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1733,7 +1733,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_getTableColCount(objectarg0, arg1));
 		return DataTypeConverter.getInt(functionResult.getOutput());
@@ -1753,7 +1753,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new EditBox().Method_waitForEditBoxEnabled(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1784,7 +1784,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new WebObjects().Method_waitforobjectenable(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1814,7 +1814,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new ImageComparisionUsingNodeJS().Custom_visualComparionForPage(arg0, arg1, arg2, arg3));
 		return functionResult.getOutput();
 	}
@@ -1844,7 +1844,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_selectRadioButtobTableCell(objectarg0, arg1, arg2, arg3));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1855,7 +1855,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Image().Method_clickImageByAltText(arg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -1876,7 +1876,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 		WebDriverObject objectarg4 = new ObjectConverter().formatObject(arg4);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Checkbox().Method_deSelectCheckBoxByText(arg0, arg1, arg2, arg3, objectarg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1897,7 +1897,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, String.valueOf(arg4), arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_typeTextInTableCell(objectarg0, arg1, arg2, arg3, arg4, arg5));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1908,7 +1908,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new WebObjects().Method_waitforobjectvisible(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1919,7 +1919,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), arg3, String.valueOf(arg4), String.valueOf(arg5));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3, arg4, arg5);
 		WebDriverObject objectarg6 = new ObjectConverter().formatObject(arg6);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new DropDown().Method_selectDropDownByText(arg0, arg1, arg2, arg3, arg4, arg5, objectarg6));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -1971,7 +1971,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_getTableColumnHeader(objectarg0, arg1));
 		return functionResult.getOutput();
@@ -2001,7 +2001,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_clickOnObjectInTableCell(objectarg0, arg1, arg2, arg3, arg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2012,7 +2012,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new WebObjects().Method_rightClickAndSelect(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2023,7 +2023,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 		WebDriverObject objectarg4 = new ObjectConverter().formatObject(arg4);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Radio().Method_selectRadioButtonByText(arg0, arg1, arg2, arg3, objectarg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2043,7 +2043,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0), String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Browser().Method_syncBrowser(arg0, arg1, arg2, arg3));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -2075,7 +2075,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new WebObjects().Method_waitForObjectdisable(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2106,7 +2106,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_TableGetTextColumn(objectarg0, arg1, arg2));
 		return DataTypeConverter.getInt(functionResult.getOutput());
@@ -2154,7 +2154,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_typeKeysAndWait(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2176,7 +2176,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Links().Method_waitforLink(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2187,7 +2187,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new WebObjects().Method_waitforObject(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2219,7 +2219,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_goBackAndWait(arg0));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -2249,7 +2249,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_refreshAndWait(arg0));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -2268,7 +2268,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_goForwardAndWait(arg0));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -2345,7 +2345,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_GetCellText(objectarg0, arg1, arg2, arg3, arg4));
 		return functionResult.getOutput();
@@ -2356,7 +2356,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Table().Method_clickTableCell(objectarg0, arg1, arg2, arg3, arg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2367,7 +2367,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Image().Method_waitforImageLoad(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2481,7 +2481,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Window().Method_setFocousOnWindow(arg0));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -2570,7 +2570,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Window().Method_selectWindow(arg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
@@ -2648,7 +2648,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_typeTextAndWait(objectarg0, arg1, arg2));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2786,7 +2786,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2);
 		WebDriverObject objectarg3 = new ObjectConverter().formatObject(arg3);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new ByTextKeywords().Method_mouseHoverOnText(arg0, arg1, arg2, objectarg3));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2887,7 +2887,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 		WebDriverObject objectarg4 = new ObjectConverter().formatObject(arg4);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new ByTextKeywords().Method_SelectByText(arg0, arg1, arg2, arg3, objectarg4));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -2898,7 +2898,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), arg3, String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3, arg4);
 		WebDriverObject objectarg5 = new ObjectConverter().formatObject(arg5);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new EditBox().Method_typeTextUsingText(arg0, arg1, arg2, arg3, arg4, objectarg5));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -3009,7 +3009,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), arg4, arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg4, arg5);
 		WebDriverObject objectarg3 = new ObjectConverter().formatObject(arg3);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new WebObjects().Method_clickByText(arg0, arg1, arg2, objectarg3, arg4, arg5));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
@@ -3095,7 +3095,7 @@ public class OpKeyGenericKeywords {
 		String keywordName = DataTypeConverter.getMethodName();
 		ContextInitiator.addFunction(keywordName);
 		System.out.println("Keyword called: " + keywordName);
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Deprecate().Method_nextPageObject(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());

@@ -4,8 +4,6 @@ import java.awt.AWTException;
 import java.io.File;
 import java.io.IOException;
 
-import javax.xml.crypto.Data;
-
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileApplication;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
@@ -155,7 +153,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called Flick");
 
 		ContextInitiator.addFunction("Flick");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0), String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		// Method_flick
 		try {
 			FunctionResult functionResult = new Gestures().Method_flick(arg0, arg1);
@@ -648,7 +646,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called GoBackAndWait");
 
 		ContextInitiator.addFunction("GoBackAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_goBackAndWait
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_goBackAndWait(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
@@ -855,7 +853,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called SelectRadioButton");
 
 		ContextInitiator.addFunction("SelectRadioButton");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1)); // Method_SelectRadio
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_SelectRadio
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
 			FunctionResult functionResult = new Radio().Method_SelectRadio(object, arg1);
@@ -894,7 +892,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called RefreshAndWait");
 
 		ContextInitiator.addFunction("RefreshAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_refreshAndWait
 
 		try {
@@ -915,7 +913,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called TypeTextAndWait");
 
 		ContextInitiator.addFunction("TypeTextAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2)); // Method_typeTextAndWait
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2); // Method_typeTextAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
 			FunctionResult functionResult = new Deprecate().Method_typeTextAndWait(object, arg1, arg2);
@@ -935,7 +933,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called TypeKeysAndWait");
 
 		ContextInitiator.addFunction("TypeKeysAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_typeKeysAndWait
 		try {
@@ -1037,7 +1035,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called DeSelectDropDownItemAndWait");
 
 		ContextInitiator.addFunction("DeSelectDropDownItemAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_deselectDropDownItemAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
@@ -1058,7 +1056,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called DeSelectAllDropDownItemsAndWait");
 
 		ContextInitiator.addFunction("DeSelectAllDropDownItemsAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_deselectAllDropDownItemsAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
@@ -1136,7 +1134,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called SelectCheckBoxAndWait");
 
 		ContextInitiator.addFunction("SelectCheckBoxAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_selectCheckBoxAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
@@ -1157,7 +1155,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called DeSelectCheckBoxAndWait");
 
 		ContextInitiator.addFunction("DeSelectCheckBoxAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1)); // Method_deSelectCheckBoxAndWait
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_deSelectCheckBoxAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
 			FunctionResult functionResult = new Deprecate().Method_deSelectCheckBoxAndWait(object, arg1);
@@ -1177,7 +1175,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called SelectRadioButtonAndWait");
 
 		ContextInitiator.addFunction("SelectRadioButtonAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1)); // Method_selectRadioButtonAndWait
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_selectRadioButtonAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
 			FunctionResult functionResult = new Deprecate().Method_selectRadioButtonAndWait(object, arg1);
@@ -1197,8 +1195,8 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called ClickTableCell");
 
 		ContextInitiator.addFunction("ClickTableCell");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3,
-				String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
+				arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickTableCell
 
@@ -1391,7 +1389,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called WaitForObject");
 
 		ContextInitiator.addFunction("WaitForObject");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1)); // Method_waitforObject
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_waitforObject
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
 			FunctionResult functionResult = new WebObjects().Method_waitforObject(object, arg1);
@@ -1431,7 +1429,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called DoubleClickAndWait");
 
 		ContextInitiator.addFunction("DoubleClickAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_doubleClickAndWait
 
@@ -1495,7 +1493,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called DragAndDropAndWait");
 
 		ContextInitiator.addFunction("DragAndDropAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2)); // Method_dragAndDropAndWait
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2); // Method_dragAndDropAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
 			FunctionResult functionResult = new Deprecate().Method_dragAndDropAndWait(object, arg1, arg2);
@@ -1515,7 +1513,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called GoForwardAndWait");
 
 		ContextInitiator.addFunction("GoForwardAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_goForwardAndWait
 		try {
 			FunctionResult functionResult = new Deprecate().Method_goForwardAndWait(arg0);
@@ -1555,7 +1553,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called SelectDropDownItemAndWait");
 
 		ContextInitiator.addFunction("SelectDropDownItemAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2)); // Method_selectDropDownItemAndWait
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2); // Method_selectDropDownItemAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
 			FunctionResult functionResult = new Deprecate().Method_selectDropDownItemAndWait(object, arg1, arg2);
@@ -1575,7 +1573,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyTextInTableCell");
 
 		ContextInitiator.addFunction("VerifyTextInTableCell");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, arg4, arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextInTable
 		try {
@@ -1597,8 +1595,8 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called ClickTableCellAndWait");
 
 		ContextInitiator.addFunction("ClickTableCellAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3,
-				String.valueOf(arg4), String.valueOf(arg5));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
+				arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickTableCellAndWait
 		try {
@@ -1619,7 +1617,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called WaitForObjectProperty");
 
 		ContextInitiator.addFunction("WaitForObjectProperty");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_waitForObjectProperty
 		try {
@@ -1659,7 +1657,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called RunScriptAndWait");
 
 		ContextInitiator.addFunction("RunScriptAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_runScriptAndWait
 		try {
@@ -1697,7 +1695,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called SelectWindow");
 
 		ContextInitiator.addFunction("SelectWindow");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		// Method_selectWindow
 		try {
 			FunctionResult functionResult = new Window().Method_selectWindow(arg0, arg1);
@@ -1716,7 +1714,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called CloseSelectedWindow");
 
 		ContextInitiator.addFunction("CloseSelectedWindow");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		// Method_closeSelectedWindow
 		try {
 			FunctionResult functionResult = new Window().Method_closeSelectedWindow(arg0);
@@ -1735,7 +1733,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called SetFocusOnWindow");
 
 		ContextInitiator.addFunction("SetFocusOnWindow");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_setFocousOnWindow
 		try {
 			FunctionResult functionResult = new Window().Method_setFocousOnWindow(arg0);
@@ -1796,7 +1794,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyEditBoxNotExist");
 
 		ContextInitiator.addFunction("VerifyEditBoxNotExist");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1)); // Method_verifyEditBoxnotExist
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_verifyEditBoxnotExist
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyEditBoxnotExist(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
@@ -1866,7 +1864,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called ClickButtonAndWait");
 
 		ContextInitiator.addFunction("ClickButtonAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1)); // Method_clickButtonAndWait
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_clickButtonAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
 			FunctionResult functionResult = new Deprecate().Method_clickButtonAndWait(object, arg1);
@@ -1886,7 +1884,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyRadioButtonSelected");
 
 		ContextInitiator.addFunction("VerifyRadioButtonSelected");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1)); // Method_VerifyRadioButtonSelected
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_VerifyRadioButtonSelected
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
 			FunctionResult functionResult = new Radio().Method_VerifyRadioButtonSelected(object, arg1);
@@ -1907,7 +1905,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyRadioButtonNotSelected");
 
 		ContextInitiator.addFunction("VerifyRadioButtonNotSelected");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_VerifyRadioButtonNotSelected
 
 		try {
@@ -2080,7 +2078,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyTableColumnNumber");
 
 		ContextInitiator.addFunction("VerifyTableColumnNumber");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2, String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		// Method_verifyTableColumnNumber
 
 		FunctionResult functionResult = FunctionCaller
@@ -2095,7 +2093,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyTableColumnText");
 
 		ContextInitiator.addFunction("VerifyTableColumnText");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_verifyTableColumnText
 
 		FunctionResult functionResult = FunctionCaller
@@ -2110,7 +2108,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyTableRowText");
 
 		ContextInitiator.addFunction("VerifyTableRowText");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_verifyTableRowText
 
 		FunctionResult functionResult = FunctionCaller
@@ -2155,7 +2153,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called SelectMultipleDropDownItemAndWait");
 
 		ContextInitiator.addFunction("SelectMultipleDropDownItemAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_selectMultipleDropDownItemAndWait
 
 		FunctionResult functionResult = FunctionCaller
@@ -2235,8 +2233,8 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called ClickLinkInTableCell");
 
 		ContextInitiator.addFunction("ClickLinkInTableCell");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2),
-				String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2,
+				arg3);
 		// Method_clickLinkInTableCell
 
 		FunctionResult functionResult = FunctionCaller
@@ -2319,7 +2317,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called SelectRadioButtonOnIndexBasis");
 
 		ContextInitiator.addFunction("SelectRadioButtonOnIndexBasis");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_selectRadioButtonOnIndexBasis
 
 		FunctionResult functionResult = FunctionCaller
@@ -2376,7 +2374,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyTableRowNumber");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2, String.valueOf(arg3)); // Method_verifyTableRowNumber
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3); // Method_verifyTableRowNumber
 
 		FunctionResult functionResult = new FunctionResult();
 		return DataType.getBoolean(functionResult.getOutput());
@@ -2404,7 +2402,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyTextAreaLength");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_verifyTextAreaLength
 
 		FunctionResult functionResult = FunctionCaller
@@ -2568,8 +2566,8 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called ClickButtonInTableCell");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2),
-				String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2,
+				arg3);
 		// Method_clickButtonInTableCell
 
 		FunctionResult functionResult = FunctionCaller
@@ -2583,7 +2581,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyImageCount");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_verifyImageCount
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_verifyImageCount(arg0));
@@ -2639,7 +2637,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called WaitforImageLoad");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_waitforImageLoad
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_waitforImageLoad(object, arg1));
@@ -2744,7 +2742,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called WaitforLink");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_waitforLink
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_waitforLink(object, arg1));
@@ -2863,7 +2861,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called WaitForEditBoxDisabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_waitForEditBoxDisabled
 
 		FunctionResult functionResult = FunctionCaller
@@ -2878,7 +2876,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called WaitForEditBoxEnabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_waitForEditBoxEnabled
 
 		FunctionResult functionResult = FunctionCaller
@@ -3110,7 +3108,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyDropDownItemCount");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_verifyDropDownItemCount
 
 		FunctionResult functionResult = FunctionCaller
@@ -3176,7 +3174,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyEditBoxLength");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_verifyEditBoxLength
 
 		FunctionResult functionResult = FunctionCaller
@@ -3286,7 +3284,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called VerifyTextareaColsRowLength");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_verifyTextareaColsRowLength
 
 		FunctionResult functionResult = FunctionCaller
@@ -3329,7 +3327,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called NextPageObject");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_nextPageObject
 
 		FunctionResult functionResult = FunctionCaller
@@ -3344,7 +3342,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called SelectGroupRadioButton");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_selectGroupRadioButton
 
 		FunctionResult functionResult = FunctionCaller
@@ -3620,7 +3618,7 @@ public class OpKeyAppiumKeywords {
 	public boolean VerifyCheckboxStatusInTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4)
 			throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3),
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
 				arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -3644,8 +3642,8 @@ public class OpKeyAppiumKeywords {
 
 	public boolean SelectRadioButtonInTableCell(ORObject arg0, int arg1, int arg2, int arg3) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2),
-				String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2,
+				arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		String methodName = DataType.getMethodName();
@@ -3667,7 +3665,7 @@ public class OpKeyAppiumKeywords {
 
 	public boolean RightClickOnObject(ORObject arg0, int arg1) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		String methodName = DataType.getMethodName();
@@ -3690,7 +3688,7 @@ public class OpKeyAppiumKeywords {
 	public boolean SelectCheckBoxinTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4)
 			throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3),
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
 				arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -3714,7 +3712,7 @@ public class OpKeyAppiumKeywords {
 
 	public boolean WaitForObjectVisible(ORObject arg0, int arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		String methodName = DataType.getMethodName();
@@ -3727,7 +3725,7 @@ public class OpKeyAppiumKeywords {
 
 	public boolean WaitForObjectEditable(ORObject arg0, int arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">>Keyword Called WaitForObjectEditable");
@@ -3743,8 +3741,8 @@ public class OpKeyAppiumKeywords {
 	public boolean TypeTextInTableCell(ORObject arg0, int arg1, int arg2, String arg3, int arg4, String arg5)
 			throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3,
-				String.valueOf(arg4), arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
+				arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">>Keyword Called TypeTextInTableCell");
@@ -3759,7 +3757,7 @@ public class OpKeyAppiumKeywords {
 
 	public boolean WaitForObjectEnable(ORObject arg0, int arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">>Keyword Called WaitForObjectEnable");
@@ -3775,8 +3773,8 @@ public class OpKeyAppiumKeywords {
 	public boolean Swipe(double arg0, double arg1, double arg2, double arg3, double arg4)
 			throws ToolNotSetException, KeywordMethodOrArgumentValidationFailException, InterruptedException {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0), String.valueOf(arg2), String.valueOf(arg3),
-				String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg2, arg3,
+				arg4);
 
 		System.out.println(">>Keyword Called Swipe");
 
@@ -3829,7 +3827,7 @@ public class OpKeyAppiumKeywords {
 
 	public boolean SwipeObject(ORObject arg0, int arg1, String arg2) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">>Keyword Called SwipeObject");
@@ -3844,7 +3842,7 @@ public class OpKeyAppiumKeywords {
 
 	public boolean Swipe(int arg0, String arg1) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0), arg1);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 
 		System.out.println(">>Keyword Called Swipe");
 
@@ -3872,7 +3870,7 @@ public class OpKeyAppiumKeywords {
 	public boolean ClickInTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4, int arg5,
 			String arg6, String arg7, String arg8, String arg9, String arg10, String arg11, String arg12) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, String.valueOf(arg5), arg6, arg7, arg8,
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8,
 				arg9, arg10, arg11, arg12);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -3904,7 +3902,7 @@ public class OpKeyAppiumKeywords {
 	public boolean Web_ClickByText(String arg0, int arg1, boolean arg2, ORObject arg3, String arg4, String arg5)
 			throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), arg4, arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg4, arg5);
 
 		FunctionResult functionResult;
 		if (arg3 != null) {
@@ -3967,7 +3965,7 @@ public class OpKeyAppiumKeywords {
 	// Start//
 	public boolean Web_SelectByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg4);
 
 		System.out.println(">>Keyword Called Web_SelectByText");
@@ -3981,8 +3979,8 @@ public class OpKeyAppiumKeywords {
 	public boolean Web_TypeByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4, ORObject arg5)
 			throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2), arg3,
-				String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3,
+				arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg5);
 
 		System.out.println(">>Keyword Called Web_TypeByText");
@@ -3996,7 +3994,7 @@ public class OpKeyAppiumKeywords {
 
 	public boolean MouseHoverOnText(String arg0, int arg1, boolean arg2, ORObject arg3) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg3);
 
 		System.out.println(">>Keyword Called MouseHoverOnText");
@@ -4010,7 +4008,7 @@ public class OpKeyAppiumKeywords {
 
 	public boolean ClickImageByTitleAlt(String arg0, int arg1, boolean arg2) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2);
 
 		System.out.println(">>Keyword Called ClickImageByTitle/Alt");
 
@@ -4025,8 +4023,8 @@ public class OpKeyAppiumKeywords {
 	public boolean Web_SelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, String arg4,
 			ORObject arg5) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2),
-				String.valueOf(arg3), String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
+				arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg5);
 
 		System.out.println(">>Keyword Called Web_SelectCheckboxByText");
@@ -4040,8 +4038,8 @@ public class OpKeyAppiumKeywords {
 
 	public boolean Web_DeSelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2),
-				String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
+				arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg4);
 
 		System.out.println(">>Keyword Called Web_DeSelectCheckboxByText");
@@ -4055,8 +4053,8 @@ public class OpKeyAppiumKeywords {
 
 	public boolean Web_SelectRadioButtonByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2),
-				String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
+				arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg4);
 
 		System.out.println(">>Keyword Called Web_SelectRadioButtonByText");
@@ -4072,8 +4070,8 @@ public class OpKeyAppiumKeywords {
 	public boolean Web_SelectDropDownByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4,
 			boolean arg5, ORObject arg6) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg2),
-				String.valueOf(arg4), String.valueOf(arg5));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
+				arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg6);
 
 		System.out.println(">>Keyword Called Web_SelectDropDownByText");
@@ -4139,8 +4137,8 @@ public class OpKeyAppiumKeywords {
 		// Method_selectDropDownInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3),
-				String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
+				arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		FunctionResult functionResult = FunctionCaller
@@ -4157,7 +4155,7 @@ public class OpKeyAppiumKeywords {
 		// Method_deSelectMultipleDropDownItemInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3),
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
 				arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -4175,7 +4173,7 @@ public class OpKeyAppiumKeywords {
 		// Method_selectMultipleDropdownItemInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3),
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
 				arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
@@ -4192,8 +4190,8 @@ public class OpKeyAppiumKeywords {
 		// Method_clickOnObjectInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3),
-				String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
+				arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		FunctionResult functionResult = FunctionCaller
@@ -4210,8 +4208,8 @@ public class OpKeyAppiumKeywords {
 		// Method_typeOnObjecttInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3),
-				String.valueOf(arg4), arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
+				arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		String bool = "false";
 		return DataType.getBoolean(bool);
@@ -4225,7 +4223,7 @@ public class OpKeyAppiumKeywords {
 		// Method_waitForObjectdisable
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		FunctionResult functionResult = FunctionCaller
@@ -4259,7 +4257,7 @@ public class OpKeyAppiumKeywords {
 		// Method_verifyChildObjectCount
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, String.valueOf(arg4));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = FunctionCaller
 				.execute(() -> new ActionByText().Method_verifyChildObjectCount(object, arg1, arg2, arg3, arg4));
@@ -4288,7 +4286,7 @@ public class OpKeyAppiumKeywords {
 		// Method_verifyTableColumnCount
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = FunctionCaller
 				.execute(() -> new Table().Method_verifyTableColumnCount(object, arg1, arg2));
@@ -4303,7 +4301,7 @@ public class OpKeyAppiumKeywords {
 		// Method_verifyTableRowCount
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = FunctionCaller
 				.execute(() -> new Table().Method_verifyTableRowCount(object, arg1));
@@ -4362,7 +4360,7 @@ public class OpKeyAppiumKeywords {
 		// Method_WebGetTableColCount
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		return DataType.getInt("0");
 
@@ -4416,8 +4414,8 @@ public class OpKeyAppiumKeywords {
 		// Method_waitForWindowLoad
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, String.valueOf(arg1), String.valueOf(arg3),
-				String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg3,
+				arg3);
 		String bool = "false";
 		return DataType.getBoolean(bool);
 
@@ -4458,8 +4456,8 @@ public class OpKeyAppiumKeywords {
 		// Method_syncBrowser
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0), String.valueOf(arg1), String.valueOf(arg2),
-				String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
+				arg3);
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Browser().Method_syncBrowser());
 		return DataType.getBoolean(functionResult.getOutput());
@@ -4538,7 +4536,7 @@ public class OpKeyAppiumKeywords {
 		// Method_setViewPort
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg0), String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		String bool = "false";
 		return DataType.getBoolean(bool);
 
@@ -4626,7 +4624,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called GetTableCellText");
 
 		ContextInitiator.addFunction("GetTableCellText");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), arg3, arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_GetCellText
 
@@ -4684,7 +4682,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called GetSelectedRadioButtonFromGroup");
 
 		ContextInitiator.addFunction("GetSelectedRadioButtonFromGroup");
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getSelectedRadioButtonFromGroup
 		FunctionResult functionResult = FunctionCaller
@@ -5057,7 +5055,7 @@ public class OpKeyAppiumKeywords {
 		// Method_getSingleColText
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = FunctionCaller
 				.execute(() -> new Table().Method_getSingleColText(object, arg1, arg2));
@@ -5087,7 +5085,7 @@ public class OpKeyAppiumKeywords {
 		// Method_getSingleRowText
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = FunctionCaller
 				.execute(() -> new Table().Method_getSingleRowText(object, arg1, arg2));
@@ -5102,8 +5100,8 @@ public class OpKeyAppiumKeywords {
 		// Method_getSelectedDropDownInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2),
-				String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2,
+				arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = FunctionCaller
 				.execute(() -> new Table().Method_getSelectedDropDownInTableCell(object, arg1, arg2, arg3));
@@ -5119,8 +5117,8 @@ public class OpKeyAppiumKeywords {
 		// Method_fetchObjectPropertyInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), String.valueOf(arg2), String.valueOf(arg3),
-				String.valueOf(arg4), arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
+				arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = FunctionCaller
 				.execute(() -> new Table().Method_fetchObjectPropertyInTableCell(object, arg1, arg2, arg3, arg4, arg5));
@@ -5214,7 +5212,7 @@ public class OpKeyAppiumKeywords {
 		// Method_getTableColumnHeader
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		FunctionResult functionResult = FunctionCaller
 				.execute(() -> new Table().Method_getTableColumnHeader(object, arg1));
@@ -5243,7 +5241,7 @@ public class OpKeyAppiumKeywords {
 		// Custom_visualComparionForPage
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, String.valueOf(arg2), String.valueOf(arg3));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 		return "";
 
 	}
@@ -5308,7 +5306,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called GetTableColumnNumber");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_TableGetTextColumn
 
 		FunctionResult functionResult = FunctionCaller
@@ -5345,7 +5343,7 @@ public class OpKeyAppiumKeywords {
 
 	public int GetTableColumnCount(ORObject arg0, int arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1));
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">>Keyword Called GetTableColumnCount");
@@ -5417,7 +5415,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called GetTableRowNumber");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1), arg2);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_TableGetTextRow
 
 		FunctionResult functionResult = FunctionCaller
