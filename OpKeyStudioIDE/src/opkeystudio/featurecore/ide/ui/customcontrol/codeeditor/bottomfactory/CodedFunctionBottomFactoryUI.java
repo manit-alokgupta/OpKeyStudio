@@ -734,7 +734,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			}
 		});
-		
 
 		addLibrary.addSelectionListener(new SelectionListener() {
 
@@ -747,8 +746,9 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 				String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 				if (filePath != null) {
 					File libraryToAssociate = new File(filePath);
-					long filesize = libraryToAssociate.length();
-					if (filesize > 1499999) {
+					long filesize = (long) getFileSizeInMb(libraryToAssociate);
+					System.out.println("File Size " + filesize);
+					if (filesize > 14) {
 						new MessageDialogs().openErrorDialog("OpKey",
 								"File can't be added. File Size is greater than 15mb");
 						return;
@@ -756,7 +756,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 					new CodedFunctionApi().addLibraryFileInDb(getParentArtifactCodeView().getArtifact(),
 							libraryToAssociate);
 					associateLibraries.renderAssociatedLibraries();
-					//getParentArtifactCodeView().refreshIntellisense(false);
+					// getParentArtifactCodeView().refreshIntellisense(false);
 				}
 			}
 
@@ -805,6 +805,13 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			}
 		});
+	}
+
+	private double getFileSizeInMb(File file) {
+		double bytes = file.length();
+		double kilobytes = (bytes / 1024);
+		double megabytes = (kilobytes / 1024);
+		return megabytes;
 	}
 
 	public void refreshBottomFactory() throws JsonParseException, JsonMappingException, IOException, SQLException {
