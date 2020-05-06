@@ -14,8 +14,8 @@ import com.opkeystudio.runtime.ORObject;
 
 public class ObjectConverter {
 	public WebDriverObject formatObject(ORObject orobject) {
-		Object _object = convertORObjectToOpKeyObject(orobject);
 		try {
+			Object _object = convertORObjectToOpKeyObject(orobject);
 			WebDriverObject webdriverobject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
 			if (orobject.getParentORObject() != null) {
 				Object _parentobject = convertORObjectToOpKeyObject(orobject.getParentORObject());
