@@ -32,6 +32,14 @@ public class ArtifactCompiler {
 		return compileFiles(allFiles, librariesClassPath);
 	}
 
+	public List<CompileError> compileCFLArtifact(String rootDir, String artifactPath, String pluginName) {
+		List<File> allFiles = new ArrayList<File>();
+		allFiles.add(new File(artifactPath));
+		String librariesClassPath = new CompilerUtilities().getClassPathOFAllAssociatedLibs_CFL(pluginName);
+		librariesClassPath = librariesClassPath + ";" + rootDir;
+		return compileFiles(allFiles, librariesClassPath);
+	}
+
 	private List<CompileError> compileFiles(List<File> files, String librariesClassPath) {
 		ArrayList<CompileError> compilerErrors = new ArrayList<CompileError>();
 		Thread compilerThread = new Thread(new Runnable() {

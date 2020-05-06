@@ -90,6 +90,20 @@ public class CompilerUtilities {
 		return classPath;
 	}
 
+	public String getClassPathOFAllAssociatedLibs_CFL(String pluginName) {
+		String classPath = "";
+		List<File> files = getAllAssocitedLibraries(pluginName);
+		List<File> allCflFiles = getAllFiles(new File(Utilities.getInstance().getProjectJavaLibrrayFolder()), ".jar");
+		files.addAll(allCflFiles);
+		for (File file : files) {
+			if (!classPath.isEmpty()) {
+				classPath += ";";
+			}
+			classPath += file.getAbsolutePath();
+		}
+		return classPath;
+	}
+
 	public List<CompileError> filterErrors(List<CompileError> errors, Kind kind) {
 		List<CompileError> filteredErrors = new ArrayList<CompileError>();
 		for (CompileError ce : errors) {
