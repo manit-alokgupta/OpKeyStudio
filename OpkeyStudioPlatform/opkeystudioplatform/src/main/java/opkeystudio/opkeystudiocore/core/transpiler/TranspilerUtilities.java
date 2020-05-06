@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -64,6 +65,9 @@ public class TranspilerUtilities {
 		List<String> appiumKeywords = getGenericAppiumKeywords();
 		List<String> webKeywords = getGenericWebKeywords();
 		for (FlowStep flowStep : flowSteps) {
+			if (flowStep.isShouldrun() == false) {
+				continue;
+			}
 			if (flowStep.getKeyword() != null) {
 				String keywordName = flowStep.getKeyword().getName().trim();
 				if (appiumKeywords.contains(keywordName)) {
@@ -73,8 +77,25 @@ public class TranspilerUtilities {
 				if (webKeywords.contains(keywordName)) {
 					isMobileKeyword = false;
 				}
+				flowStep.setAppiumType(isMobileKeyword);
 			}
 			if (flowStep.getFunctionLibraryComponent() != null) {
+				List<FlowStep> flflowSteps = FunctionLibraryApi.getInstance()
+						.getAllFlowSteps(flowStep.getFunctionLibraryComponent().getId());
+				for (FlowStep flstep : flflowSteps) {
+					if (flstep.getKeyword() != null) {
+						String keywordName = flstep.getKeyword().getName().trim();
+						if (appiumKeywords.contains(keywordName)) {
+							isMobileKeyword = true;
+						}
+
+						if (webKeywords.contains(keywordName)) {
+							isMobileKeyword = false;
+						}
+						flstep.setAppiumType(isMobileKeyword);
+					}
+				}
+				
 				if (isMobileKeyword) {
 					TranspilerUtilities.getInstance()
 							.addAppiumTypeFunctionLibraries(flowStep.getFunctionLibraryComponent().getId());
@@ -83,7 +104,6 @@ public class TranspilerUtilities {
 							.removeAppiumTypeFunctionLibraries(flowStep.getFunctionLibraryComponent().getId());
 				}
 			}
-			flowStep.setAppiumType(isMobileKeyword);
 		}
 	}
 
