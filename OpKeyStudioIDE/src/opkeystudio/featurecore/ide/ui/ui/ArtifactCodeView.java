@@ -402,7 +402,7 @@ public class ArtifactCodeView extends SuperComposite {
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		refreshButton.setToolTipText("Refresh Source Code");
 
-		editor = new ArtifactCodeEditor(this, this, true, true);
+		editor = new ArtifactCodeEditor(this, this, true, true, true);
 		editor.setArtifact(getArtifact());
 
 		bottomFactoryUi = new CodedFunctionBottomFactoryUI(this, SWT.NONE, this);
@@ -530,12 +530,15 @@ public class ArtifactCodeView extends SuperComposite {
 					if (method.getBody() != null) {
 						CFLCode cflCode = getCodedFunctionArtifact().getCflCode();
 						cflCode.setUsercode(method.getBody());
+						cflCode.setAdded(true);
+						cflCode.setModified(true);
+						System.out.println("Method Body " + method.getBody());
 						new CodedFunctionApi().saveCFLCode(getArtifact(), cflCode);
 					}
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		new CFLTranspiler().transpile(getArtifact());
 

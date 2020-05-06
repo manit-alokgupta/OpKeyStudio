@@ -2,8 +2,11 @@ package opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
@@ -30,12 +33,15 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.IntellisenseMaker;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CodedFunctionBottomFactoryUI extends Composite {
 
@@ -756,7 +762,25 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 					new CodedFunctionApi().addLibraryFileInDb(getParentArtifactCodeView().getArtifact(),
 							libraryToAssociate);
 					associateLibraries.renderAssociatedLibraries();
-					// getParentArtifactCodeView().refreshIntellisense(false);
+					Display.getDefault().asyncExec(new Runnable() {
+						public void run() {
+							MessageDialogs msd = new MessageDialogs();
+							msd.openProgressDialog(null, "Preparing library to be used with CFL", false,
+									new IRunnableWithProgress() {
+
+										@Override
+										public void run(IProgressMonitor monitor)
+												throws InvocationTargetException, InterruptedException {
+											File outPutDir = new File(
+													Utilities.getInstance().getProjectIntellisenseFolder());
+											new IntellisenseMaker().createSenseFileOfJavaLibrary(libraryToAssociate,
+													outPutDir);
+										}
+									});
+							msd.closeProgressDialog();
+							GenericEditorIntellisense.getCFLInstance().refreshCFLIntellisense();
+						}
+					});
 				}
 			}
 

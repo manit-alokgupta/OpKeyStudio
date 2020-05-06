@@ -62,6 +62,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private List<TranspiledClassInfo> transpiledClasses = new ArrayList<TranspiledClassInfo>();
 	private List<VariableToken> allvariabletokens = new ArrayList<VariableToken>();
 	private static GenericEditorIntellisense instance;
+	private static GenericEditorIntellisense cflinstance;
 	private List<ClassIntellisenseDTO> senseClasses = new ArrayList<ClassIntellisenseDTO>();
 
 	public static GenericEditorIntellisense getInstance() {
@@ -72,6 +73,14 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return instance;
 	}
 
+	public static GenericEditorIntellisense getCFLInstance() {
+		if (cflinstance == null) {
+			cflinstance = new GenericEditorIntellisense();
+			cflinstance.initCFLIntellisense();
+		}
+		return cflinstance;
+	}
+
 	public void disposeIntellisense() {
 		instance = null;
 	}
@@ -79,6 +88,11 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	public void refreshIntellisense() {
 		instance = new GenericEditorIntellisense();
 		instance.initIntellisense();
+	}
+
+	public void refreshCFLIntellisense() {
+		instance = new GenericEditorIntellisense();
+		instance.initCFLIntellisense();
 	}
 
 	private void initIntellisense() {
@@ -91,7 +105,25 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 						addSimpleKeywords();
 						addOpKeyTranspiledClassInformation();
-						addClassInformationFromSenseFile();
+						addClassInformationFromSenseFile(false);
+					}
+				});
+				msd.closeProgressDialog();
+			}
+		});
+	}
+
+	private void initCFLIntellisense() {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				MessageDialogs msd = new MessageDialogs();
+				msd.openProgressDialog(null, "Intellisense Initializing", false, new IRunnableWithProgress() {
+
+					@Override
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						addSimpleKeywords();
+						addOpKeyTranspiledClassInformation();
+						addClassInformationFromSenseFile(true);
 					}
 				});
 				msd.closeProgressDialog();
@@ -100,9 +132,15 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void addClassInformationFromSenseFile() {
+	private void addClassInformationFromSenseFile(boolean iscfl) {
 		List<File> allFiles = new CompilerUtilities()
 				.getAllFiles(new File(Utilities.getInstance().getMainIntellisenseFolder()), ".sense");
+
+		if (iscfl) {
+			List<File> cfllibsfile = new CompilerUtilities()
+					.getAllFiles(new File(Utilities.getInstance().getProjectIntellisenseFolder()), ".sense");
+			allFiles.addAll(cfllibsfile);
+		}
 		for (int i = 0; i < allFiles.size(); i++) {
 			File file = allFiles.get(i);
 			try {

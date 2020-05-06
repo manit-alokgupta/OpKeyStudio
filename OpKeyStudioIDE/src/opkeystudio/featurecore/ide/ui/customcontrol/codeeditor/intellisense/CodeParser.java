@@ -9,6 +9,11 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.ArtifactCodeEdito
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableToken;
 
 public class CodeParser {
+	private boolean cflEditor;
+
+	public CodeParser(boolean cflEditor) {
+		this.setCflEditor(cflEditor);
+	}
 
 	public Token getRecentToken(ArtifactCodeEditor codeEditor) {
 		int caretLineNumber = codeEditor.getCaretLineNumber();
@@ -64,9 +69,22 @@ public class CodeParser {
 					varClassName = lineTokens.get(i - 2).getLexeme();
 				}
 				VariableToken varToken = new VariableToken(varName, varClassName);
-				GenericEditorIntellisense.getInstance().addVariableToken(varToken);
-				GenericEditorIntellisense.getInstance().addBasicCompletion(varName);
+				if (isCflEditor()) {
+					GenericEditorIntellisense.getCFLInstance().addVariableToken(varToken);
+					GenericEditorIntellisense.getCFLInstance().addBasicCompletion(varName);
+				} else {
+					GenericEditorIntellisense.getInstance().addVariableToken(varToken);
+					GenericEditorIntellisense.getInstance().addBasicCompletion(varName);
+				}
 			}
 		}
+	}
+
+	public boolean isCflEditor() {
+		return cflEditor;
+	}
+
+	public void setCflEditor(boolean cflEditor) {
+		this.cflEditor = cflEditor;
 	}
 }
