@@ -70,6 +70,8 @@ public class CodedFunctionApi {
 			addCFInputParam(inputParam);
 			updateCFInputParam(inputParam);
 		}
+		GlobalLoader.getInstance().initAllCFLInputParameters();
+		GlobalLoader.getInstance().initAllCFLOutputParameters();
 	}
 
 	public void saveAllCFLOutputParams(List<CFLOutputParameter> outputParametrs) {
@@ -78,6 +80,8 @@ public class CodedFunctionApi {
 			addCFOutputParam(outputParam);
 			updateCFOutputParam(outputParam);
 		}
+		GlobalLoader.getInstance().initAllCFLInputParameters();
+		GlobalLoader.getInstance().initAllCFLOutputParameters();
 	}
 
 	private void deleteCFInputParam(CFLInputParameter cfinput) {
