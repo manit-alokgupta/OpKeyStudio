@@ -1,9 +1,14 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.text.BadLocationException;
+import javax.tools.Diagnostic.Kind;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
@@ -38,6 +43,9 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
+import opkeystudio.opkeystudiocore.core.compiler.ArtifactCompiler;
+import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
+import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.CFLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
@@ -78,6 +86,7 @@ public class ArtifactCodeView extends SuperComposite {
 	private boolean genericEditor = false;
 
 	private File codeViewFile;
+	private List<Object> highlightedLines = new ArrayList<>();
 
 	public ArtifactCodeView(Composite parent, int style, boolean isGenericEditor) {
 		super(parent, style);
@@ -481,11 +490,38 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void saveCFLCode() {
+		for (Object highLightedLines : getHighlightedLines()) {
+			editor.removeLineHighlight(highLightedLines);
+		}
+		String code = editor.getText();
+		String rootCodeDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectArtifactCodesFolder();
+		File cflArtifact = getCodeViewFile();
+		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(cflArtifact, code);
+		String cflArtifactPath = cflArtifact.getAbsolutePath();
+		List<CompileError> compileErrors = new ArtifactCompiler().compileCFLArtifact(rootCodeDirpath, cflArtifactPath,
+				"Web");
+
+		compileErrors = new CompilerUtilities().filterErrors(compileErrors, Kind.ERROR);
+		bottomFactoryUi.getCompilationResultTable().renderCompilingError(new ArrayList<CompileError>());
+		if (compileErrors.size() > 0) {
+			for (CompileError error : compileErrors) {
+				Object lineHighlightObject;
+				try {
+					lineHighlightObject = editor.addLineHighlight(((int) error.getLineNumber()) - 1, Color.RED);
+					addHighlightedLines(lineHighlightObject);
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			bottomFactoryUi.getCompilationResultTable().renderCompilingError(compileErrors);
+			return;
+		}
 		List<CFLInputParameter> inputParams = bottomFactoryUi.getCFLInputTable().getCflInputParameters();
 		List<CFLOutputParameter> outputParams = bottomFactoryUi.getCFLOutputTable().getCflOutputParameters();
 		new CodedFunctionApi().saveAllCFLInputParams(inputParams);
 		new CodedFunctionApi().saveAllCFLOutputParams(outputParams);
-		String code = editor.getText();
 		try {
 			JavaClassSource classSource = (JavaClassSource) Roaster.parse(code);
 			List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
@@ -879,5 +915,13 @@ public class ArtifactCodeView extends SuperComposite {
 
 	public void setCodedFunctionArtifact(CodedFunctionArtifact codedFunctionArtifact) {
 		this.codedFunctionArtifact = codedFunctionArtifact;
+	}
+
+	public List<Object> getHighlightedLines() {
+		return highlightedLines;
+	}
+
+	public void addHighlightedLines(Object highlightedLines) {
+		this.highlightedLines.add(highlightedLines);
 	}
 }
