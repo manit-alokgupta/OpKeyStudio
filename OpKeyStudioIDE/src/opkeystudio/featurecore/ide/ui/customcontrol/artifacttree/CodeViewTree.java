@@ -21,6 +21,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.CodeViewTreeUI;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -192,7 +193,9 @@ public class CodeViewTree extends CustomTree {
 			} catch (Exception e) {
 				new MessageDialogs().openErrorDialog("OpKey",
 						String.format("Unable to rename file to name '%s'. Please provide a different name", fileName));
+				return;
 			}
+			GenericEditorIntellisense.getInstance().refreshIntellisense();
 		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
@@ -276,7 +279,9 @@ public class CodeViewTree extends CustomTree {
 		} catch (Exception e) {
 			new MessageDialogs().openErrorDialog("OpKey",
 					String.format("Unable to create file with name '%s'. Please provide a different name", fileName));
+			return;
 		}
+		GenericEditorIntellisense.getInstance().refreshIntellisense();
 	}
 
 	public void createNewFolder() {
@@ -367,9 +372,8 @@ public class CodeViewTree extends CustomTree {
 		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder();
 
-		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getProjectsFolder();
-		projectFolderPath = projectFolderPath + File.separator + ServiceRepository.getInstance().getProjectName();
-		projectFolderPath = projectFolderPath + File.separator + "codes";
+		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectArtifactCodesFolder();
 
 		File codeFolder = new File(projectFolderPath);
 		if (!codeFolder.exists()) {

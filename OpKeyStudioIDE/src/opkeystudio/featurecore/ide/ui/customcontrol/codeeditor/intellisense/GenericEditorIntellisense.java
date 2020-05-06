@@ -76,6 +76,11 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		instance = null;
 	}
 
+	public void refreshIntellisense() {
+		instance = new GenericEditorIntellisense();
+		instance.initIntellisense();
+	}
+
 	private void initIntellisense() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
@@ -390,15 +395,21 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		this.addCompletion(new ShorthandCompletion(this, "syserr", "System.err.println(", "System.err.println();"));
 	}
 
-	private void addOpKeyTranspiledClassInformation() {
-		String mainDirPath = Utilities.getInstance().getProjectTranspiledArtifactsFolder();
+	public void addOpKeyTranspiledClassInformation() {
+		String mainDirPath = Utilities.getInstance().getProjectArtifactCodesFolder();
 		List<File> allFiles = new CompilerUtilities().getAllFiles(new File(mainDirPath), ".java");
 		for (File file : allFiles) {
-			String codeData = Utilities.getInstance().readTextFile(file);
-			JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
-			this.addTranspiledClasses(new TranspiledClassInfo(classSource));
-			parseConstructors(classSource);
-			parseClassMethods(classSource);
+			try {
+				String codeData = Utilities.getInstance().readTextFile(file);
+				JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
+				boolean isAdded = this.addTranspiledClasses(new TranspiledClassInfo(classSource));
+				if (isAdded == false) {
+					parseConstructors(classSource);
+					parseClassMethods(classSource);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 	}
 
@@ -516,8 +527,18 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return transpiledClasses;
 	}
 
-	private void addTranspiledClasses(TranspiledClassInfo classInfo) {
+	private boolean addTranspiledClasses(TranspiledClassInfo classInfo) {
+		List<TranspiledClassInfo> classInfos = this.getTranspiledClasses();
+		for (TranspiledClassInfo ci : classInfos) {
+			if (classInfo.getClassSource() != null) {
+				if (ci.getClassSource().getName().equals(classInfo.getClassSource().getName())) {
+					ci.setClassSource(classInfo.getClassSource());
+					return true;
+				}
+			}
+		}
 		this.getTranspiledClasses().add(classInfo);
+		return false;
 	}
 
 	public void setTranspiledClasses(List<TranspiledClassInfo> transpiledClasses) {
