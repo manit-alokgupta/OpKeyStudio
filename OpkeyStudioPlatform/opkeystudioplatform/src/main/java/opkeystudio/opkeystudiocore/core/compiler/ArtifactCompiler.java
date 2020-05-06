@@ -24,6 +24,14 @@ public class ArtifactCompiler {
 		return compileFiles(allFiles, librariesClassPath);
 	}
 
+	public List<CompileError> compileArtifact(String rootDir, String artifactPath, String pluginName) {
+		List<File> allFiles = new ArrayList<File>();
+		allFiles.add(new File(artifactPath));
+		String librariesClassPath = new CompilerUtilities().getClassPathOFAllAssociatedLibs(pluginName);
+		librariesClassPath = librariesClassPath + ";" + rootDir;
+		return compileFiles(allFiles, librariesClassPath);
+	}
+
 	private List<CompileError> compileFiles(List<File> files, String librariesClassPath) {
 		ArrayList<CompileError> compilerErrors = new ArrayList<CompileError>();
 		Thread compilerThread = new Thread(new Runnable() {
@@ -42,10 +50,10 @@ public class ArtifactCompiler {
 
 						CompilationTask task = compiler.getTask(null, manager, diagnostics, optionList, null, sources);
 						task.call();
-						
+
 					} catch (NullPointerException e) {
 						throw new Exception("Diaganostics might be null, Running through a JRE?");
-						
+
 					} catch (IOException e) {
 
 					}
