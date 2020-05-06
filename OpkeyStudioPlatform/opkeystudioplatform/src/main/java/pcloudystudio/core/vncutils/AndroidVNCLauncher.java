@@ -102,8 +102,8 @@ public class AndroidVNCLauncher {
 
 		if (AndroidVNCUtil.checkIfDeviceIsConnected(deviceId)) {
 			AndroidVNCUtil.installInputServiceApk(deviceId, deviceVersion);
-
-			AndroidVNCUtil.StartInputService(deviceId);
+            String path=AndroidVNCUtil.getInputServicePath(deviceId) ;
+			AndroidVNCUtil.StartInputService(deviceId,path);
 
 			AndroidVNCUtil.PortForward(deviceId, port);
 
