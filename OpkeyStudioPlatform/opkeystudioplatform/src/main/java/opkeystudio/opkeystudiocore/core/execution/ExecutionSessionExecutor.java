@@ -46,7 +46,26 @@ public class ExecutionSessionExecutor {
 		String artifactCodesDirPath = getSessionArtifacCodesFolder(session.getSessionName());
 
 		FileUtils.copyDirectory(new File(transpiledFilesDir), new File(artifactCodesDirPath));
-		List<CompileError> compileErrors = new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath, pluginName);
+		session.setReportFolderDir(getSessionReportFolder(session.getSessionName()));
+		if (session.getArtifactFilePackageClass() != null) {
+			List<CompileError> compileErrors = new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath,
+					pluginName);
+			compileErrors = new CompilerUtilities().filterErrors(compileErrors, Kind.ERROR);
+			if (compileErrors.size() > 0) {
+				ArtifactExecutor retObject = new ArtifactExecutor(session);
+				retObject.setContainsErrors(true);
+				retObject.setCompileErrors(compileErrors);
+				return retObject;
+			}
+			return executeArtifactFile(session, artifactCodesDirPath, session.getArtifactFilePackageClass(),
+					pluginName);
+		}
+
+		String artifactCodePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator
+				+ artifact.getVariableName() + ".java";
+		System.out.println("Compiling " + artifactCodePath);
+		List<CompileError> compileErrors = new ArtifactCompiler().compileArtifact(artifactCodesDirPath,
+				artifactCodePath, pluginName);
 		compileErrors = new CompilerUtilities().filterErrors(compileErrors, Kind.ERROR);
 		if (compileErrors.size() > 0) {
 			ArtifactExecutor retObject = new ArtifactExecutor(session);
@@ -54,12 +73,6 @@ public class ExecutionSessionExecutor {
 			retObject.setCompileErrors(compileErrors);
 			return retObject;
 		}
-		session.setReportFolderDir(getSessionReportFolder(session.getSessionName()));
-		if (session.getArtifactFilePackageClass() != null) {
-			return executeArtifactFile(session, artifactCodesDirPath, session.getArtifactFilePackageClass(),
-					pluginName);
-		}
-
 		return executeArtifact(session, artifactCodesDirPath, artifact, pluginName);
 	}
 
