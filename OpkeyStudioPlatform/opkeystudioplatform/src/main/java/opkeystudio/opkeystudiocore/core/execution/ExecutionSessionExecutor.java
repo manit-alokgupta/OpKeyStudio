@@ -74,6 +74,9 @@ public class ExecutionSessionExecutor {
 			retObject.setCompileErrors(compileErrors);
 			return retObject;
 		}
+		if (session.isCflArtifact()) {
+			return executeCFLArtifact(session, artifactCodesDirPath, artifact, pluginName);
+		}
 		return executeArtifact(session, artifactCodesDirPath, artifact, pluginName);
 	}
 
@@ -81,6 +84,13 @@ public class ExecutionSessionExecutor {
 			String pluginName) {
 		ArtifactExecutor executor = new ArtifactExecutor(esession);
 		executor.executeArtifact(sessionRootDir, artifact, pluginName);
+		return executor;
+	}
+
+	private ArtifactExecutor executeCFLArtifact(ExecutionSession esession, String sessionRootDir, Artifact artifact,
+			String pluginName) {
+		ArtifactExecutor executor = new ArtifactExecutor(esession);
+		executor.executeCFL(sessionRootDir, artifact, pluginName);
 		return executor;
 	}
 

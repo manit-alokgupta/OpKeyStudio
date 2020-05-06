@@ -132,6 +132,15 @@ public class Utilities {
 		return path;
 	}
 	
+	public String getProjectJavaLibrrayFolder() {
+		String path = getProjectsFolder() + File.separator + ServiceRepository.getInstance().getProjectName()
+				+ File.separator + "Libraries";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
+		return path;
+	}
+	
 	public String getTranspiledArtifactsFolder_2() {
 		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "TranspiledArtifacts";

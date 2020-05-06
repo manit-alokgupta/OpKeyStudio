@@ -21,6 +21,7 @@ public class ExecutionSession {
 	private String artifactJavaFilePath;
 	private MobileDevice mobileDevice;
 	private Map<String, String> pluginSettings = new HashMap<String, String>();
+	private boolean cflArtifact;
 
 	public ExecutionSession(String sessionName, String buildName) {
 		this.setSessionName((sessionName + "_" + Utilities.getInstance().getCurrentDateTime()).replaceAll(" ", "_")
@@ -133,5 +134,13 @@ public class ExecutionSession {
 
 	public void setArtifactJavaFilePath(String artifactJavaFilePath) {
 		this.artifactJavaFilePath = artifactJavaFilePath;
+	}
+
+	public boolean isCflArtifact() {
+		return cflArtifact;
+	}
+
+	public void setCflArtifact(boolean cflArtifact) {
+		this.cflArtifact = cflArtifact;
 	}
 }
