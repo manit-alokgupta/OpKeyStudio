@@ -40,6 +40,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.CFLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
@@ -96,8 +97,8 @@ public class ArtifactCodeView extends SuperComposite {
 		setLayout(new GridLayout(1, false));
 		initArtifact();
 		initCFLEditorUI();
-		initCFLCode();
 		initCodedFunctionArtifact();
+		initCFLCode();
 	}
 
 	public ArtifactCodeView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
@@ -188,8 +189,7 @@ public class ArtifactCodeView extends SuperComposite {
 			cartifact.setCflInputParameters(inputParams);
 			cartifact.setCflOutputParameters(outputParams);
 		}
-		
-		
+
 		setCodedFunctionArtifact(cartifact);
 	}
 
@@ -241,6 +241,7 @@ public class ArtifactCodeView extends SuperComposite {
 				+ artifact.getVariableName() + ".java";
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));
+		setCodeViewFile(new File(codeFilePath));
 		getJavaEditor().setArtifactJavaCode(codeData);
 	}
 
@@ -399,6 +400,9 @@ public class ArtifactCodeView extends SuperComposite {
 		bottomFactoryUi = new CodedFunctionBottomFactoryUI(this, SWT.NONE, this);
 		bottomFactoryUi.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		bottomFactoryUi.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		bottomFactoryUi.getCFLInputTable().renderCFLInputParameters();
+		bottomFactoryUi.getCFLOutputTable().renderCFLOutputParameters();
+
 		editor.addKeyListener(new KeyListener() {
 
 			@Override
@@ -420,6 +424,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 						@Override
 						public void run() {
+							saveCFLCode();
 							saveButton.setEnabled(false);
 						}
 					});
@@ -452,7 +457,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				saveCFLCode();
 			}
 
 			@Override
@@ -466,7 +471,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
+				handleSaveOnRefreshCFL();
 			}
 
 			@Override
@@ -474,6 +479,43 @@ public class ArtifactCodeView extends SuperComposite {
 
 			}
 		});
+	}
+
+	private void saveCFLCode() {
+		List<CFLInputParameter> inputParams = bottomFactoryUi.getCFLInputTable().getCflInputParameters();
+		List<CFLOutputParameter> outputParams = bottomFactoryUi.getCFLOutputTable().getCflOutputParameters();
+		new CodedFunctionApi().saveAllCFLInputParams(inputParams);
+		new CodedFunctionApi().saveAllCFLOutputParams(outputParams);
+		String code = editor.getText();
+		try {
+			JavaClassSource classSource = (JavaClassSource) Roaster.parse(code);
+			List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
+			for (MethodSource<JavaClassSource> method : methods) {
+				if (method.getName().equals("run")) {
+					if (method.getBody() != null) {
+						CFLCode cflCode = getCodedFunctionArtifact().getCflCode();
+						cflCode.setUsercode(method.getBody());
+						new CodedFunctionApi().saveCFLCode(getArtifact(), cflCode);
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		new CFLTranspiler().transpile(getArtifact());
+
+		initCFLCode();
+		toggleSaveButton(false);
+	}
+
+	private void handleSaveOnRefreshCFL() {
+		if (saveButton.getEnabled() == true) {
+			boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+					String.format("Do you want to save '%s'?", getArtifact().getName()));
+			if (status) {
+				saveCFLCode();
+			}
+		}
 	}
 
 	private void saveGenericCodeEditorFile() {

@@ -129,7 +129,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		addLibrary = new ToolItem(toolBar_1, SWT.NONE);
 		addLibrary.setWidth(27);
 		addLibrary.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
-		addLibrary.setToolTipText("Add 2");
+		addLibrary.setToolTipText("Add Library");
 		ToolItem toolItem1 = new ToolItem(toolBar_1, SWT.SEPARATOR);
 
 		deleteLibrary = new ToolItem(toolBar_1, SWT.NONE);
@@ -253,18 +253,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 				SWT.BORDER | SWT.FULL_SELECTION, this);
 		compilationResultsTable.setHeaderVisible(true);
 		compilationResultsTable.setLinesVisible(true);
-
-		TabItem consoleLogTabItem = new TabItem(tabFolder, SWT.NONE);
-		consoleLogTabItem.setText("Console");
-		consoleLogTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CONSOLE_ICON));
-
-		Composite consoleLogComposite = new Composite(tabFolder, SWT.NONE);
-		consoleLogTabItem.setControl(consoleLogComposite);
-		consoleLogComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		consoleLogTextView = new StyledText(consoleLogComposite, SWT.BORDER | SWT.V_SCROLL);
-
-		consoleLogTextView.setEditable(false);
 
 		expandBar.addListener(SWT.Expand, new Listener() {
 
@@ -753,7 +741,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String[] filterExt = { "*.jar" };
-				FileDialog dialog = new FileDialog(parentCodedView.getShell(), SWT.OPEN);
+				FileDialog dialog = new FileDialog(getParentArtifactCodeView().getShell(), SWT.OPEN);
 				dialog.setFilterExtensions(filterExt);
 				dialog.open();
 				String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
