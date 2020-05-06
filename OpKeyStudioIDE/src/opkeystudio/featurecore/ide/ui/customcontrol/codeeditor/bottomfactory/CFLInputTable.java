@@ -121,7 +121,7 @@ public class CFLInputTable extends CustomTable {
 							componentInputAargument.setModified(true);
 							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
 						}
-						setColumnTextWithCursor(cursor,selectedColumn, text.getText());
+						setColumnTextWithCursor(cursor, selectedColumn, text.getText());
 					}
 				});
 
@@ -378,6 +378,8 @@ public class CFLInputTable extends CustomTable {
 
 	public void deleteBottomFactoryInputData() {
 		CFLInputParameter componentInputArgument = getSelectedCFLInputArgument();
+		componentInputArgument.setAdded(false);
+		componentInputArgument.setModified(false);
 		componentInputArgument.setDeleted(true);
 		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
 		refreshCFLInputParameters();

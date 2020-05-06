@@ -345,6 +345,8 @@ public class CFLOutputTable extends CustomTable {
 
 	public void deleteBottomFactoryOutputData() {
 		CFLOutputParameter componentInputArgument = getSelectedComponentOutputArgument();
+		componentInputArgument.setAdded(false);
+		componentInputArgument.setModified(false);
 		componentInputArgument.setDeleted(true);
 		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
 		refreshCFLOutputParameters();

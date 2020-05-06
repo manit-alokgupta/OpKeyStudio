@@ -21,7 +21,6 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.CodeViewTreeUI;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -154,7 +153,7 @@ public class CodeViewTree extends CustomTree {
 				return;
 			}
 			String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
-					"NewClass");
+					selectedCodeFile.getName().split("\\.")[0]);
 			if (fileName == null) {
 				new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
 				return;
@@ -164,6 +163,7 @@ public class CodeViewTree extends CustomTree {
 				return;
 			}
 
+			fileName = fileName.split("\\.")[0];
 			boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 					.isStringContainsSpecialCharacters(fileName);
 			boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
@@ -179,15 +179,20 @@ public class CodeViewTree extends CustomTree {
 				return;
 			}
 
-			String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-					.readTextFile(selectedCodeFile);
-			JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
-			classSource.setName(fileName);
-			String parentFolder = selectedCodeFile.getParentFile().getAbsolutePath();
-			selectedCodeFile.delete();
-			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-					.writeToFile(new File(parentFolder + File.separator + fileName + ".java"), classSource.toString());
-			renderCodeViewTree();
+			try {
+				String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.readTextFile(selectedCodeFile);
+				JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
+				classSource.setName(fileName);
+				String parentFolder = selectedCodeFile.getParentFile().getAbsolutePath();
+				selectedCodeFile.delete();
+				opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(
+						new File(parentFolder + File.separator + fileName + ".java"), classSource.toString());
+				renderCodeViewTree();
+			} catch (Exception e) {
+				new MessageDialogs().openErrorDialog("OpKey",
+						String.format("Unable to rename file to name '%s'. Please provide a different name", fileName));
+			}
 		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
@@ -255,18 +260,23 @@ public class CodeViewTree extends CustomTree {
 			}
 			packageName += pname;
 		}
-		Set<String> packages = ArtifactTranspiler.getInstance().getAllPackagesNames();
-		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
-		class1.setName(fileName).setPublic();
-		class1.addMethod().setName("main").setBody("System.out.println(\"Hello from OpKey E\");").addThrows("Exception")
-				.setPublic().setStatic(true).addParameter("String[]", "args");
-		for (String packag : packages) {
-			class1.addImport(packag + ".*");
-		}
+		try {
+			Set<String> packages = ArtifactTranspiler.getInstance().getAllPackagesNames();
+			JavaClassSource class1 = Roaster.create(JavaClassSource.class);
+			class1.setName(fileName).setPublic();
+			class1.addMethod().setName("main").setBody("System.out.println(\"Hello from OpKey E\");")
+					.addThrows("Exception").setPublic().setStatic(true).addParameter("String[]", "args");
+			for (String packag : packages) {
+				class1.addImport(packag + ".*");
+			}
 
-		class1.setPackage(packageName);
-		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
-		renderCodeViewTree();
+			class1.setPackage(packageName);
+			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
+			renderCodeViewTree();
+		} catch (Exception e) {
+			new MessageDialogs().openErrorDialog("OpKey",
+					String.format("Unable to create file with name '%s'. Please provide a different name", fileName));
+		}
 	}
 
 	public void createNewFolder() {
@@ -353,7 +363,7 @@ public class CodeViewTree extends CustomTree {
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
-		
+
 		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder();
 

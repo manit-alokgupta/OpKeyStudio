@@ -525,9 +525,9 @@ public class CodedFunctionView extends SuperComposite {
 				editor.getCflCode().setModified(true);
 				new CodedFunctionApi().saveCFLCode(getArtifact(), editor.getCflCode());
 				toggleSaveButton(false);
-				renderCFLCode();
 			}
 		}
+		renderCFLCode();
 		toggleSaveButton(false);
 	}
 
