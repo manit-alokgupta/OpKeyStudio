@@ -48,8 +48,9 @@ public class ExecutionSessionExecutor {
 		FileUtils.copyDirectory(new File(transpiledFilesDir), new File(artifactCodesDirPath));
 		session.setReportFolderDir(getSessionReportFolder(session.getSessionName()));
 		if (session.getArtifactFilePackageClass() != null) {
-			List<CompileError> compileErrors = new ArtifactCompiler().compileAllArtifacts(artifactCodesDirPath,
-					pluginName);
+			String javaFilePath = artifactCodesDirPath + File.separator + session.getArtifactJavaFilePath();
+			List<CompileError> compileErrors = new ArtifactCompiler().compileArtifact(artifactCodesDirPath,
+					javaFilePath, pluginName);
 			compileErrors = new CompilerUtilities().filterErrors(compileErrors, Kind.ERROR);
 			if (compileErrors.size() > 0) {
 				ArtifactExecutor retObject = new ArtifactExecutor(session);

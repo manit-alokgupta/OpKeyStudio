@@ -1,6 +1,5 @@
 package opkeystudio.opkeystudiocore.core.execution;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ public class ExecutionSession {
 	private String reportFolderDir;
 
 	private String artifactCodeDirPath;
-
+	private String artifactJavaFilePath;
 	private MobileDevice mobileDevice;
 	private Map<String, String> pluginSettings = new HashMap<String, String>();
 
@@ -126,5 +125,13 @@ public class ExecutionSession {
 
 	public void setArtifactCodeDirPath(String artifactCodeDirPath) {
 		this.artifactCodeDirPath = artifactCodeDirPath;
+	}
+
+	public String getArtifactJavaFilePath() {
+		return artifactJavaFilePath;
+	}
+
+	public void setArtifactJavaFilePath(String artifactJavaFilePath) {
+		this.artifactJavaFilePath = artifactJavaFilePath;
 	}
 }
