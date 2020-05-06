@@ -1,4 +1,4 @@
-package com.opkey.appium.enums;
+package com.opkey.web.enums;
 
 public enum VisibilityKeywords {
 	VerifyObjectVisible,
@@ -25,5 +25,4 @@ public enum VisibilityKeywords {
 	VerifyMultipleDropDownItemExist,
 	VerifyEditBoxExistAndWait,
 	Web_VerifyListItemExists,
-	VerifyCheckboxEnabled
 }

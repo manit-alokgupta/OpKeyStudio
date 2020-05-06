@@ -8,6 +8,7 @@ import com.opkeystudio.core.sessions.SessionInfo;
 import com.opkeystudio.core.sessions.SessionInfoConverter;
 import com.plugin.appium.Finder;
 import com.plugin.appium.exceptionhandlers.ToolNotSetException;
+import com.plugin.appium.keywords.AppiumSpecificKeyword.Connect2AppiumServer;
 import com.ssts.reporting.IReport;
 import com.ssts.reporting.ReportBuilder;
 import com.ssts.reporting.ReportFormat;
@@ -21,6 +22,11 @@ public class SessionHandler implements ExecutionSession {
 		/*
 		 * Report.get().endTestCase(); Report.get().endSuite();
 		 */
+		
+		try {
+			new Connect2AppiumServer().Method_closeApplication();
+		} catch (Exception e) {
+		}
 		ReportBuilder.get().close();
 	}
 

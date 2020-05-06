@@ -833,18 +833,12 @@ public class OpKeyAppiumKeywords {
 		String methodName = DataType.getMethodName();
 		System.out.println(">>Keyword Called SelectCheckBox");
 
-		ContextInitiator.addFunction("SelectCheckBox");
+		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_selectCheckBox
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		try {
-			FunctionResult functionResult = new Checkbox().Method_selectCheckBox(object, arg1);
-			String boolString = functionResult.getOutput();
-			ReportHelper.addReportStep(methodName, functionResult);
-			return DataType.getBoolean(boolString);
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-		}
-		return false;
+		
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Checkbox().Method_selectCheckBox(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean SelectRadioButton(ORObject arg0, int arg1) throws Exception {
@@ -1133,7 +1127,7 @@ public class OpKeyAppiumKeywords {
 		String methodName = DataType.getMethodName();
 		System.out.println(">>Keyword Called SelectCheckBoxAndWait");
 
-		ContextInitiator.addFunction("SelectCheckBoxAndWait");
+		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_selectCheckBoxAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -3852,6 +3846,54 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(boolString);
 
 	}
+	
+	public boolean Mobile_SwipeTowards(String arg0) {
+		ContextInitiator.addFunction(DataType.getMethodName());
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
+		
+		//Method_SwipeTowards
+		
+		System.out.println(">>Keyword Called Mobile_SwipeTowards");
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_SwipeTowards(arg0));
+		return DataType.getBoolean(functionResult.getOutput());
+	}
+	
+	public boolean Mobile_SwipeOnObject(ORObject arg0, String arg1) throws Exception {
+		ContextInitiator.addFunction(DataType.getMethodName());
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+		
+		//Method_SwipeOnObject
+		
+		System.out.println(">>Keyword Called Mobile_SwipeOnObject");
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_SwipeOnObject(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
+	}
+	
+	public boolean Mobile_SwipeToObject(ORObject arg0, String arg1) throws Exception {
+		ContextInitiator.addFunction(DataType.getMethodName());
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+		
+		//Mobile_SwipeToObject
+		
+		System.out.println(">>Keyword Called Mobile_SwipeToObject");
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_SwipeToObject(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
+	}
+	
+	public boolean Mobile_SwipeToText(ORObject arg0, String arg1, int arg2, boolean arg3, String arg4) throws Exception {
+		ContextInitiator.addFunction(DataType.getMethodName());
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+		
+		//Method_SwipeToText
+		
+		System.out.println(">>Keyword Called Method_SwipeToText");
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_SwipeToText(object, arg1, arg2, arg3, arg4));
+		return DataType.getBoolean(functionResult.getOutput());
+	}
+	
 
 	// Argument mismatch
 	public boolean VerifyEditBoxExist() {
