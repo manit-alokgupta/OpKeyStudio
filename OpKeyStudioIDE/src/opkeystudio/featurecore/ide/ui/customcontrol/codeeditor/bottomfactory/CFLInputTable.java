@@ -109,17 +109,17 @@ public class CFLInputTable extends CustomTable {
 						if (selectedColumn == 0) {
 							componentInputAargument.setName(text.getText());
 							componentInputAargument.setModified(true);
-							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+							getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 						}
 						if (selectedColumn == 2) {
 							componentInputAargument.setDefaultvalue(text.getText());
 							componentInputAargument.setModified(true);
-							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+							getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 						}
 						if (selectedColumn == 4) {
 							componentInputAargument.setDescription(text.getText());
 							componentInputAargument.setModified(true);
-							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+							getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 						}
 						setColumnTextWithCursor(cursor, selectedColumn, text.getText());
 					}
@@ -195,7 +195,7 @@ public class CFLInputTable extends CustomTable {
 				setSelection(inputTableItem);
 				bottomFactoryInput.setModified(true);
 				bottomFactoryInput.setIsmandatory(isOptional.getSelection());
-				getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+				getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 			}
 
 			@Override
@@ -212,7 +212,7 @@ public class CFLInputTable extends CustomTable {
 				setSelection(inputTableItem);
 				bottomFactoryInput.setModified(true);
 				bottomFactoryInput.setType(selectedData);
-				getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+				getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 			}
 
 			@Override
@@ -236,7 +236,7 @@ public class CFLInputTable extends CustomTable {
 	public void renderCFLInputParameters() {
 		disposeAllTableEditors();
 		this.removeAll();
-		Artifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifact();
+		Artifact artifact = getParentBottomFactoryUI().getParentArtifactCodeView().getArtifact();
 		List<CFLInputParameter> cflInputParameters = new CodedFunctionApi().getCodedFLInputParameters(artifact);
 		Collections.sort(cflInputParameters);
 		this.setCflInputParameters(cflInputParameters);
@@ -355,7 +355,7 @@ public class CFLInputTable extends CustomTable {
 		selectRow(selectedIndex - 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
-		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLInputParameters();
 
 	}
@@ -372,7 +372,7 @@ public class CFLInputTable extends CustomTable {
 		selectRow(selectedIndex + 1);
 		bottomFactoryInput1.setModified(true);
 		bottomFactoryInput2.setModified(true);
-		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLInputParameters();
 	}
 
@@ -381,18 +381,18 @@ public class CFLInputTable extends CustomTable {
 		componentInputArgument.setAdded(false);
 		componentInputArgument.setModified(false);
 		componentInputArgument.setDeleted(true);
-		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLInputParameters();
 	}
 
 	public void addBlankInputPArameter() {
 		String variableName = this.getUniqueColumnData("input-parameter-", 0);
-		CodedFunctionArtifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
+		CodedFunctionArtifact artifact = getParentBottomFactoryUI().getParentArtifactCodeView()
 				.getCodedFunctionArtifact();
 		CFLInputParameter inputParameter = new CFLDMaker().createCFInputParameterDTO(artifact, variableName,
 				getSelectedCFLInputArgument(), this.getCflInputParameters());
 		this.getCflInputParameters().add(inputParameter);
-		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLInputParameters();
 	}
 

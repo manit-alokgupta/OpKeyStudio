@@ -22,6 +22,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CFLLibraryAssociateTable extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -74,7 +75,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 	public void renderAssociatedLibraries() {
 		disposeAllTableEditors();
 		this.removeAll();
-		Artifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifact();
+		Artifact artifact = getParentBottomFactoryUI().getParentArtifactCodeView().getArtifact();
 		List<String> libraryMapsFID = new ArrayList<String>();
 		List<MainFileStoreDTO> filteredMainFileStoreDtos = new ArrayList<MainFileStoreDTO>();
 		List<CFLibraryMap> libraryMaps = GlobalLoader.getInstance().getAllLibraryMaps();
@@ -89,7 +90,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 				}
 			}
 		}
-		String path = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifactAssociatedLibraryPath();
+		String path = Utilities.getInstance().getProjectJavaLibrrayFolder();
 		for (MainFileStoreDTO fileStoreDto : filteredMainFileStoreDtos) {
 			if (fileStoreDto.getFilename().contains("opkeylibs")) {
 				continue;

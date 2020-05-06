@@ -61,6 +61,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Composite area;
 	private Button btnRefreshDeviceList;
 	private boolean isAppiumPluginExecution;
+	private boolean isCFLArtifact;
 
 	/**
 	 * Create the dialog.
@@ -96,10 +97,12 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	public ExecutionWizardDialog(Shell parentShell, ArtifactCodeView parentArtifactCodeView,
 			boolean executingFromGenericEditor, boolean isCflEditor) {
 		super(parentShell);
+		setCFLArtifact(true);
 		this.setParentArtifactCodeView(parentArtifactCodeView);
 		setHelpAvailable(false);
 		initExecutionSession(parentArtifactCodeView.getArtifact());
 	}
+
 	/**
 	 * Create contents of the dialog.
 	 * 
@@ -276,6 +279,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private void initExecutionSession(Artifact artifact) {
 		ExecutionSession eSession = new ExecutionSession(artifact.getName() + "_", "Build_");
 		eSession.setArtifact(artifact);
+		eSession.setCflArtifact(isCFLArtifact);
 		setExecutionSession(eSession);
 	}
 
@@ -510,5 +514,13 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 	public void setExecutingFromGenericEditor(boolean executingFromGenericEditor) {
 		this.executingFromGenericEditor = executingFromGenericEditor;
+	}
+
+	public boolean isCFLArtifact() {
+		return isCFLArtifact;
+	}
+
+	public void setCFLArtifact(boolean isCFLArtifact) {
+		this.isCFLArtifact = isCFLArtifact;
 	}
 }

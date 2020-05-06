@@ -12,6 +12,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
+import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyArtifactPersistListenerDispatcher;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -21,7 +22,8 @@ public class CodedFunctionPart {
 
 	@PostConstruct
 	public void postConstruct(Composite parent) throws IOException {
-		new CodedFunctionView(parent, 0);
+		//new CodedFunctionView(parent, 0);
+		new ArtifactCodeView(parent, 0, false, true);
 	}
 
 	@PreDestroy
@@ -47,7 +49,7 @@ public class CodedFunctionPart {
 	public void save() {
 
 	}
-	
+
 	@PersistState
 	public void persistState() {
 		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();

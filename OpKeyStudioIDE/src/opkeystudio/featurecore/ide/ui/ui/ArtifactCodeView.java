@@ -29,8 +29,13 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.Gene
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
@@ -92,8 +97,7 @@ public class ArtifactCodeView extends SuperComposite {
 		initArtifact();
 		initCFLEditorUI();
 		initCFLCode();
-		CodedFunctionArtifact cartifact = FlowApi.getInstance().getCodedFunctionArtifact(getArtifact().getId()).get(0);
-		setCodedFunctionArtifact(cartifact);
+		initCodedFunctionArtifact();
 	}
 
 	public ArtifactCodeView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
@@ -152,6 +156,41 @@ public class ArtifactCodeView extends SuperComposite {
 				handleRefreshOnSave();
 			}
 		});
+	}
+
+	private void initCodedFunctionArtifact() {
+		CodedFunctionArtifact cartifact = FlowApi.getInstance().getCodedFunctionArtifact(getArtifact().getId()).get(0);
+		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
+		List<CFLInputParameter> inputParams = GlobalLoader.getInstance().getCFLInputParameters(getArtifact());
+		List<CFLOutputParameter> outputParams = GlobalLoader.getInstance().getCFLOutputParameters(getArtifact());
+		if (cflcodes.size() > 0) {
+			CFLCode cflcode = cflcodes.get(0);
+			String imports = "";
+			if (cflcode.getImportpackages() != null) {
+				imports = cflcode.getImportpackages();
+			}
+			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, inputParams, outputParams);
+			cartifact.setCflCode(cflcode);
+			cartifact.setCflInputParameters(inputParams);
+			cartifact.setCflOutputParameters(outputParams);
+		}
+		if (cflcodes.size() == 0) {
+			CFLCode cflcode = new CFLCode();
+			cflcode.setAdded(true);
+			cflcode.setCf_id(getArtifact().getId());
+			cflcode.setUsercode("");
+			cflcode.setLanguage("JAVA");
+			cflcode.setPluginid("2626b33a-a06c-408c-8f69-f8f1490a49bb");
+			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "", inputParams, outputParams);
+			cartifact.setCflCode(cflcode);
+			cartifact.setCflInputParameters(inputParams);
+			cartifact.setCflOutputParameters(outputParams);
+		}
+		
+		
+		setCodedFunctionArtifact(cartifact);
 	}
 
 	private void initCodeViewFile() {

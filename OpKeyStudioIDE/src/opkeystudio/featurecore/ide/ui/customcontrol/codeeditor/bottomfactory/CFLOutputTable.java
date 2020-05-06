@@ -108,12 +108,12 @@ public class CFLOutputTable extends CustomTable {
 						if (selectedColumn == 0) {
 							componentOutputArgument.setName(text.getText());
 							componentOutputArgument.setModified(true);
-							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+							getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 						}
 						if (selectedColumn == 3) {
 							componentOutputArgument.setDescription(text.getText());
 							componentOutputArgument.setModified(true);
-							getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+							getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 						}
 						setColumnTextWithCursor(cursor, selectedColumn, text.getText());
 					}
@@ -174,7 +174,7 @@ public class CFLOutputTable extends CustomTable {
 				String selectedDataType = combo.getItem(selected);
 				bottomFactoryOutput.setModified(true);
 				bottomFactoryOutput.setType(selectedDataType);
-				getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+				getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 			}
 
 			@Override
@@ -196,7 +196,7 @@ public class CFLOutputTable extends CustomTable {
 	public void renderCFLOutputParameters() {
 		disposeAllTableEditors();
 		this.removeAll();
-		Artifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getArtifact();
+		Artifact artifact = getParentBottomFactoryUI().getParentArtifactCodeView().getArtifact();
 		List<CFLOutputParameter> outputParameters = new CodedFunctionApi().getCodedFLOutputParameters(artifact);
 		this.setCflOutputParameters(outputParameters);
 		for (CFLOutputParameter cfloutputparam : outputParameters) {
@@ -253,7 +253,7 @@ public class CFLOutputTable extends CustomTable {
 		selectRow(selectedIndex - 1);
 		bottomFactoryOutput1.setModified(true);
 		bottomFactoryOutput2.setModified(true);
-		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLOutputParameters();
 
 	}
@@ -269,7 +269,7 @@ public class CFLOutputTable extends CustomTable {
 		selectRow(selectedIndex + 1);
 		bottomFactoryOutput1.setModified(true);
 		bottomFactoryOutput2.setModified(true);
-		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLOutputParameters();
 
 	}
@@ -334,12 +334,12 @@ public class CFLOutputTable extends CustomTable {
 
 	public void addBlankOutputPrameter() {
 		String variableName = this.getUniqueColumnData("output-parameter-", 0);
-		CodedFunctionArtifact artifact = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
+		CodedFunctionArtifact artifact = getParentBottomFactoryUI().getParentArtifactCodeView()
 				.getCodedFunctionArtifact();
 		CFLOutputParameter inputParameter = new CFLDMaker().createCFOutputParameterDTO(artifact, variableName,
 				getSelectedComponentOutputArgument(), this.getCflOutputParameters());
 		this.getCflOutputParameters().add(inputParameter);
-		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLOutputParameters();
 	}
 
@@ -348,7 +348,7 @@ public class CFLOutputTable extends CustomTable {
 		componentInputArgument.setAdded(false);
 		componentInputArgument.setModified(false);
 		componentInputArgument.setDeleted(true);
-		getParentBottomFactoryUI().getParentCodedFunctionView().toggleSaveButton(true);
+		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLOutputParameters();
 	}
 
