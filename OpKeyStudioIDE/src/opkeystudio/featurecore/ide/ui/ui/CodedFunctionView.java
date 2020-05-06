@@ -222,8 +222,8 @@ public class CodedFunctionView extends SuperComposite {
 				}
 
 				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialogOnBackgroundThread(getParent().getShell(), "Please Wait Execution is on Progress...", true,
-						new IRunnableWithProgress() {
+				msd.openProgressDialogOnBackgroundThread(getParent().getShell(),
+						"Please Wait Execution is on Progress...", true, new IRunnableWithProgress() {
 
 							@Override
 							public void run(IProgressMonitor monitor)
@@ -483,8 +483,8 @@ public class CodedFunctionView extends SuperComposite {
 		if (saveButton.getEnabled() == false) {
 			return;
 		}
-		List<CFLInputParameter> inputParameters=bottomFactoryUi.getCFLInputTable().getCflInputParameters();
-		List<CFLOutputParameter> outPutParameters=bottomFactoryUi.getCFLOutputTable().getCflOutputParameters();
+		List<CFLInputParameter> inputParameters = bottomFactoryUi.getCFLInputTable().getCflInputParameters();
+		List<CFLOutputParameter> outPutParameters = bottomFactoryUi.getCFLOutputTable().getCflOutputParameters();
 		new CodedFunctionApi().saveAllCFLInputParams(inputParameters);
 		new CodedFunctionApi().saveAllCFLOutputParams(outPutParameters);
 		JavaAutoCompletion completion = editor.getAutoCompletion();
@@ -517,14 +517,16 @@ public class CodedFunctionView extends SuperComposite {
 		String code = editor.getText();
 
 		JavaClassSource classSource = Roaster.parse(JavaClassSource.class, code);
-		MethodSource<JavaClassSource> methodSource = classSource.getMethod("run");
-		if (methodSource != null) {
-			if (methodSource.getBody() != null) {
-				editor.getCflCode().setUsercode(methodSource.getBody());
-				editor.getCflCode().setAdded(true);
-				editor.getCflCode().setModified(true);
-				new CodedFunctionApi().saveCFLCode(getArtifact(), editor.getCflCode());
-				toggleSaveButton(false);
+		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
+		for (MethodSource<JavaClassSource> method : methods) {
+			if (method.getName().equals("run")) {
+				if (method.getBody() != null) {
+					editor.getCflCode().setUsercode(method.getBody());
+					editor.getCflCode().setAdded(true);
+					editor.getCflCode().setModified(true);
+					new CodedFunctionApi().saveCFLCode(getArtifact(), editor.getCflCode());
+					toggleSaveButton(false);
+				}
 			}
 		}
 		renderCFLCode();
