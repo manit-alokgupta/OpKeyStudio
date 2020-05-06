@@ -4,6 +4,8 @@ import java.awt.AWTException;
 import java.io.File;
 import java.io.IOException;
 
+import javax.xml.crypto.Data;
+
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileApplication;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
@@ -1080,15 +1082,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_verifyDropDownItemExists
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		try {
-			FunctionResult functionResult = new DropDown().Method_verifyDropDownItemExists(object, arg1);
-			String boolString = functionResult.getOutput();
-			ReportHelper.addReportStep(methodName, functionResult);
-			return DataType.getBoolean(boolString);
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-		}
-		return false;
+		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_verifyDropDownItemExists(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
@@ -1803,16 +1798,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("VerifyEditBoxNotExist");
 		ContextInitiator.addDataRgumentsInFunctionCall(String.valueOf(arg1)); // Method_verifyEditBoxnotExist
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		try {
-			FunctionResult functionResult = new Deprecate().Method_verifyEditBoxnotExist(object, arg1);
-			String boolString = functionResult.getOutput();
-			ReportHelper.addReportStep(methodName, functionResult);
-			return DataType.getBoolean(boolString);
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-		}
-		return false;
-
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyEditBoxnotExist(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean VerifyEditBoxToolTip(ORObject arg0, String arg1) throws Exception {
@@ -3578,24 +3565,14 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean GetObjectEnabled(ORObject arg0) throws Exception {
+		String methodName = DataType.getMethodName();
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
-		String methodName = DataType.getMethodName();
 		System.out.println(">>Keyword Called GetObjectEnabled");
 
 		// Method_getObjectEnabled
-
-		try {
-			FunctionResult functionResult = new WebObjects().Method_getObjectEnabled(object);
-			String boolString = functionResult.getOutput();
-			ReportHelper.addReportStep(methodName, functionResult);
-			return DataType.getBoolean(boolString);
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-		}
-		return false;
-
+		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_getObjectEnabled(object));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean ExcelCompare(String arg0, String arg1, String arg2, String arg3) throws Exception {
@@ -3744,17 +3721,8 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called WaitForObjectVisible");
 
 		// Method_waitforobjectvisible
-
-		try {
-			FunctionResult functionResult = new WebObjects().Method_waitforobjectvisible(object, arg1);
-			String boolString = functionResult.getOutput();
-			ReportHelper.addReportStep(methodName, functionResult);
-			return DataType.getBoolean(boolString);
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-		}
-		return false;
-
+		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_waitforobjectvisible(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean WaitForObjectEditable(ORObject arg0, int arg1) throws Exception {

@@ -20,7 +20,7 @@ public class FunctionCaller {
 			functionResult = (FunctionResult) task.call();
 			ReportHelper.addReportStep(methodName, validateFunctionResult(functionResult, methodName));
 		} catch (Exception e) {
-			functionResult = validateErrorAndReport(methodName, e);
+			functionResult = validateExceptionAndReport(methodName, e);
 			e.printStackTrace();
 		}
 
@@ -36,9 +36,10 @@ public class FunctionCaller {
 		System.out.println("Void: " + timeTaken);
 	}
 
-	private static FunctionResult validateErrorAndReport(String keywordName, Exception exception) {
+	private static FunctionResult validateExceptionAndReport(String keywordName, Exception exception) {
+		System.out.println("Validate exception and report");
 		if (isVisibilityKeyword(keywordName) || isGetKeyword(keywordName)) {
-			FunctionResult functionResult = getTimeOutFR(false);
+			FunctionResult functionResult = getPassTimeOutFR(false);
 			ReportHelper.addReportStep(keywordName, functionResult);
 			return functionResult;
 		} else {
@@ -50,24 +51,30 @@ public class FunctionCaller {
 		}
 	}
 
-	private static FunctionResult validateFunctionResult(FunctionResult fr, String keywordName) {
-		if (fr == null) {
+	private static FunctionResult validateFunctionResult(FunctionResult functionResult, String keywordName) {
+		System.out.println("Validate function result: " + functionResult);
+		printFunctionResult(functionResult);
+		
+		if (functionResult == null && isGetKeyword(keywordName) || isVisibilityKeyword(keywordName)) {
+			System.out.println("#1. Found Visibility/get type keyword");
+			return Result.PASS().setOutput(false).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
+		}else if(functionResult == null) {
 			return Result.FAIL().setOutput(false).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
-		} else if (isVisibilityKeyword(keywordName) || isGetKeyword(keywordName)) {
-			System.out.println("Found Visibility/get type keyword");
-			if (fr.getOutput() == null || fr.getOutput().isEmpty()) {
-				return Result.PASS().setOutput(false).setMessage(fr.getMessage()).make();
-			} else {
-				return Result.PASS().setOutput(fr.getOutput()).setMessage(fr.getMessage()).make();
-			}
 		}
-		return fr;
+		else if (isVisibilityKeyword(keywordName) || isGetKeyword(keywordName)) {
+			System.out.println("#2. Found Visibility/get type keyword");
+			if (functionResult.getOutput() == null || functionResult.getOutput().isEmpty()) {
+				return Result.PASS().setOutput(false).setMessage(functionResult.getMessage()).make();
+			} else {
+				return Result.PASS().setOutput(functionResult.getOutput()).setMessage(functionResult.getMessage()).make();
+			} 
+		}
+		return functionResult;
 	}
 
 	public static boolean isVisibilityKeyword(String keywordName) {
 		for (VisibilityKeywords vk : VisibilityKeywords.values()) {
 			if (vk.name().equals(keywordName)) {
-				
 				System.out.println("Found VISIBILITY keyword: " + keywordName);
 				return true;
 			}
@@ -77,7 +84,7 @@ public class FunctionCaller {
 	}
 	
 	public static void main(String[] args) {
-		isVisibilityKeyword("VerifyObjectExists");
+		isGetKeyword("GetObjectEnabled");
 	}
 
 	public static boolean isGetKeyword(String keywordName) {
@@ -91,7 +98,16 @@ public class FunctionCaller {
 		return false;
 	}
 
-	private static FunctionResult getTimeOutFR(boolean status) {
+	private static FunctionResult getPassTimeOutFR(boolean status) {
 		return Result.PASS().setOutput(status).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
+	}
+	
+	private static void printFunctionResult(FunctionResult functionResult) {
+		System.out.println("FunctionResult: " + functionResult);
+		if(functionResult !=null) {
+			System.out.println("Output: " + functionResult.getOutput());
+			System.out.println("Status: " + functionResult.getStatus());
+			System.out.println("Message: " + functionResult.getMessage());
+		}
 	}
 }
