@@ -249,7 +249,7 @@ public class FlowApiUtilities {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
 					flowInputObject.setStaticValueData(flowInputArgument.getStaticvalue());
 				}
-				if (flowInputArgument.getDatasource() == DataSource.StaticValue
+				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
 						&& flowInputObject.getDataType().equals("ORObject")) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
 					flowInputObject.setStaticObjectData(flowInputArgument.getStaticobjectid());
