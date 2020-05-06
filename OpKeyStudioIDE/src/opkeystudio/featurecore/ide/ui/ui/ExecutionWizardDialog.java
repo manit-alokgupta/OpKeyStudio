@@ -289,6 +289,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		ExecutionSession eSession = new ExecutionSession(artifactFile.getName() + "_", "Build_");
 		eSession.setArtifactFilePackageClass(packageClassName);
 		eSession.setArtifactCodeDirPath(codeDir);
+
+		String packagePath = packageClassName.replaceAll("\\.", "\\\\") + ".java";
+		eSession.setArtifactJavaFilePath(packagePath);
 		setExecutionSession(eSession);
 	}
 
