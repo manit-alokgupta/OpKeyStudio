@@ -212,9 +212,14 @@ public class FlowApiUtilities {
 				flowInputObject.setDataType(keywordInputArgument.getDatatype());
 				flowInputObject.setKeywordInputArgument(keywordInputArgument);
 				if (flowInputArgument.getDatasource() == DataSource.StaticValue
-						&& flowInputArgument.getStaticobjectid() == null) {
+						&& !flowInputObject.getDataType().equals("ORObject")) {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
 					flowInputObject.setStaticValueData(flowInputArgument.getStaticvalue());
+				}
+				if (flowInputArgument.getDatasource() == DataSource.StaticValue
+						&& flowInputObject.getDataType().equals("ORObject")) {
+					flowInputObject.setDataSource(flowInputArgument.getDatasource());
+					flowInputObject.setStaticObjectData(flowInputArgument.getStaticobjectid());
 				}
 				if (flowInputArgument.getDatasource() == DataSource.ValueFromGlobalVariable) {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
@@ -240,9 +245,14 @@ public class FlowApiUtilities {
 				flowInputObject.setDataType(keywordInputArgument.getDatatype());
 				flowInputObject.setKeywordInputArgument(keywordInputArgument);
 				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
-						&& flowInputArgument.getStaticobjectid() == null) {
+						&& !flowInputObject.getDataType().equals("ORObject")) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
 					flowInputObject.setStaticValueData(flowInputArgument.getStaticvalue());
+				}
+				if (flowInputArgument.getDatasource() == DataSource.StaticValue
+						&& flowInputObject.getDataType().equals("ORObject")) {
+					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
+					flowInputObject.setStaticObjectData(flowInputArgument.getStaticobjectid());
 				}
 				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromGlobalVariable) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
@@ -369,7 +379,7 @@ public class FlowApiUtilities {
 		}
 		return flowInputObjects;
 	}
-	
+
 	public List<FlowOutputObject> getAllFlowOutputObject(Artifact artifact, FlowStep flowStep) {
 		List<FlowOutputObject> flowOutputObjects = new ArrayList<FlowOutputObject>();
 		for (int i = 0; i < flowStep.getFlowOutputArgs().size(); i++) {

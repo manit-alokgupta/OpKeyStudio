@@ -80,55 +80,54 @@ public class TCFLCodeConstruct {
 			if (!argumentCall.isEmpty()) {
 				argumentCall += ", ";
 			}
-
-			if (flowInputObject.getDataType().equals("ORObject")) {
+			if (flowInputObject.isStaticObjectDataExist()) {
+				System.out.println("Cond 1 " + flowInputObject.getDataType());
 				if (flowStep.getOrObject().size() == 0) {
 					argumentCall += "null";
-					continue;
+				} else {
+					ORObject orobject = flowStep.getOrObject().get(0);
+					Artifact orartifact = GlobalLoader.getInstance().getArtifactById(orobject.getOr_id());
+					String varName = orartifact.getVariableName() + "." + orobject.getVariableName();
+					argumentCall += varName;
 				}
-				ORObject orobject = flowStep.getOrObject().get(0);
-				Artifact orartifact = GlobalLoader.getInstance().getArtifactById(orobject.getOr_id());
-				String varName = orartifact.getVariableName() + "." + orobject.getVariableName();
-				argumentCall += varName;
-				continue;
 			}
 
 			if (flowInputObject.isStaticValueDataExist()) {
+				System.out.println("Cond 2 " + flowInputObject.getDataType());
 				String value = formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
 				argumentCall += value;
-				continue;
 			}
 
 			if (flowInputObject.isGlobalVariableDataExist()) {
+				System.out.println("Cond 3 " + flowInputObject.getDataType());
 				GlobalVariable globalVariable = GlobalLoader.getInstance()
 						.getGlobalVariableById(flowInputObject.getGlobalVariableData());
 
 				argumentCall += "OpKeyGlobalVariables." + globalVariable.getVariableName();
-				continue;
 			}
 
 			if (flowInputObject.isFlowOutputDataExist()) {
+				System.out.println("Cond 4 " + flowInputObject.getDataType());
 				String flowOutputId = flowInputObject.getFlowOutputData();
 				FlowOutputArgument flowOutputArgument = GlobalLoader.getInstance()
 						.getFlowOutputArgumentById(flowOutputId);
 				argumentCall += flowOutputArgument.getVariableName();
-				continue;
 			}
 
 			if (flowInputObject.isFlowInputDataExist()) {
+				System.out.println("Cond 5 " + flowInputObject.getDataType());
 				String flowInputId = flowInputObject.getFlowInputData();
 				System.out.println(">>Flow Input Id " + flowInputId);
 				ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
 						.getComponentInputArgumentById(flowInputId);
 				argumentCall += flowOutputArgument.getVariableName();
-				continue;
 			}
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {
+				System.out.println("Cond 6 " + flowInputObject.getDataType());
 				String columnId = flowInputObject.getDataRepositoryColumnData();
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
 				String columnName = drColumn.getVariableName();
 				argumentCall += columnName;
-				continue;
 			}
 		}
 		System.out.println(argumentCall);

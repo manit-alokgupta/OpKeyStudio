@@ -78,6 +78,11 @@ public class FlowInputObject {
 
 	public void setStaticValueData(String staticValueData) {
 		this.setStaticValueDataExist(true);
+		this.setStaticObjectDataExist(false);
+		this.setFlowOutputDataExist(false);
+		this.setFlowInputDataExist(false);
+		this.setGlobalVariableDataExist(false);
+		this.setDataRepositoryColumnDataExist(false);
 		this.staticValueData = staticValueData;
 	}
 
@@ -87,6 +92,11 @@ public class FlowInputObject {
 
 	public void setFlowOutputData(String flowOutputData) {
 		this.setFlowOutputDataExist(true);
+		this.setStaticObjectDataExist(false);
+		this.setStaticValueDataExist(false);
+		this.setFlowInputDataExist(false);
+		this.setGlobalVariableDataExist(false);
+		this.setDataRepositoryColumnDataExist(false);
 		this.flowOutputData = flowOutputData;
 	}
 
@@ -96,6 +106,11 @@ public class FlowInputObject {
 
 	public void setStaticObjectData(String staticObjectData) {
 		this.setStaticObjectDataExist(true);
+		this.setFlowOutputDataExist(false);
+		this.setStaticValueDataExist(false);
+		this.setFlowInputDataExist(false);
+		this.setGlobalVariableDataExist(false);
+		this.setDataRepositoryColumnDataExist(false);
 		this.staticObjectData = staticObjectData;
 	}
 
@@ -105,6 +120,11 @@ public class FlowInputObject {
 
 	public void setGlobalVariableData(String globalVariableData) {
 		this.setGlobalVariableDataExist(true);
+		this.setStaticObjectDataExist(false);
+		this.setFlowOutputDataExist(false);
+		this.setStaticValueDataExist(false);
+		this.setFlowInputDataExist(false);
+		this.setDataRepositoryColumnDataExist(false);
 		this.globalVariableData = globalVariableData;
 	}
 
@@ -114,6 +134,11 @@ public class FlowInputObject {
 
 	public void setDataRepositoryColumnData(String dataRepositoryColumnData) {
 		this.setDataRepositoryColumnDataExist(true);
+		this.setStaticObjectDataExist(false);
+		this.setFlowOutputDataExist(false);
+		this.setStaticValueDataExist(false);
+		this.setFlowInputDataExist(false);
+		this.setGlobalVariableDataExist(false);
 		this.dataRepositoryColumnData = dataRepositoryColumnData;
 	}
 
@@ -171,6 +196,11 @@ public class FlowInputObject {
 
 	public void setFlowInputData(String flowInputData) {
 		this.setFlowInputDataExist(true);
+		this.setStaticObjectDataExist(false);
+		this.setFlowOutputDataExist(false);
+		this.setStaticValueDataExist(false);
+		this.setGlobalVariableDataExist(false);
+		this.setDataRepositoryColumnDataExist(false);
 		this.flowInputData = flowInputData;
 	}
 
