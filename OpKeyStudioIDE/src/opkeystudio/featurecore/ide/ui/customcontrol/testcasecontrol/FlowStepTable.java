@@ -595,6 +595,8 @@ public class FlowStepTable extends CustomTable {
 			return;
 		}
 		FlowStep flowStep = getSelectedFlowStep();
+		flowStep.setAdded(false);
+		flowStep.setModified(false);
 		flowStep.setDeleted(true);
 		refreshFlowSteps();
 		getParentTestCaseView().toggleSaveButton(true);

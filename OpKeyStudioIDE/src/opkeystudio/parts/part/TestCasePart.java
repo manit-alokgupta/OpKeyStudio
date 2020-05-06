@@ -25,8 +25,9 @@ public class TestCasePart {
 
 	@PreDestroy
 	public void preDestroy() {
-		
+
 	}
+
 	@Focus
 	public void onFocus() {
 		System.out.println("Focused");
@@ -47,7 +48,7 @@ public class TestCasePart {
 		System.out.println("Console Window Save");
 
 	}
-	
+
 	@PersistState
 	public void persistState() {
 		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();

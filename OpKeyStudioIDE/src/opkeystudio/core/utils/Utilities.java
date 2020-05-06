@@ -92,6 +92,14 @@ public class Utilities {
 		return null;
 	}
 
+	public void closeActivePart() {
+		MPart part = getActivePart();
+		if (part == null) {
+			EPartService partService = Utilities.getInstance().getEpartService();
+			partService.hidePart(part, true);
+		}
+	}
+
 	public void closeAllMparts() {
 		try {
 			Collection<MPart> allParts = getAllParts();

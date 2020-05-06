@@ -865,10 +865,10 @@ public class TestCaseView extends SuperComposite {
 	private void handleSaveOnRefresh() {
 		if (itemSave.isEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
-			toggleSaveButton(false);
 			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
 			if (status) {
 				saveAll();
+				toggleSaveButton(false);
 			}
 		}
 	}
