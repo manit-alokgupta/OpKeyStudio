@@ -291,7 +291,7 @@ public class AndroidVNCUtil {
 		Runtime runtime = Runtime.getRuntime();
 		String command = null;
 		if (deviceVersion <= 9) {
-			System.out.println("pushing inputservice_up_to_version_9.apk");
+			System.out.println("installing inputservice_up_to_version_9.apk");
 			command = "adb -s " + id + " install " + ResourceDirectory + "inputservice_up_to_version_9.apk";
 		} else if (deviceVersion == 10) {
 			System.out.println("pushing inputservice_for_version_10.apk");
@@ -355,10 +355,32 @@ public class AndroidVNCUtil {
 
 	}
 
-	public static void StartInputService(String id) throws IOException, InterruptedException {
+	public static String getInputServicePath(String id) throws IOException, InterruptedException {
+		Runtime runtime = Runtime.getRuntime();
+		System.out.println("getting input service path");
+		String path = null;
+		String command = "adb -s " + id + " shell pm path com.pcloudy.services";
+		System.out.println("command is" + " " + command);
+		Process process = runtime.exec(command);
+		process.waitFor();
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
+		while ((path = reader.readLine()) != null) {
+			System.out.println(path);
+			break;
+		}
+		reader.close();
+		if (path != null) { // path contains package:so removing it.
+			path = path.replace("package:", "");
+			return path.trim();
+		} else
+			return "/data/app/com.pcloudy.inputservice-1/base.ap"; // this means device not contains any base.apk
+	}
+
+	public static void StartInputService(String id,String baseApkpath) throws IOException, InterruptedException {
 		System.out.println("starting input service");
 		String command = "adb -s " + id
-				+ " shell export CLASSPATH=/data/app/com.pcloudy.inputservice-1/base.apk; exec app_process /system/bin com.pcloudy.inputservice.Agent";
+				+ " shell export CLASSPATH="+baseApkpath+";"+"exec app_process /system/bin com.pcloudy.inputservice.Agent";
 		System.out.println("command is" + " " + command);
 		String[] cmd = { adbPath + File.separator + "adb", command };
 		ProcessBuilder pb = new ProcessBuilder(cmd);
