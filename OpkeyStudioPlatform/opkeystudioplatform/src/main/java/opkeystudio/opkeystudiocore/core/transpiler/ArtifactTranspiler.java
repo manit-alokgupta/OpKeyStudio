@@ -107,11 +107,18 @@ public class ArtifactTranspiler {
 		resetTranspiledArtifactsFolder();
 		new GlobalVariablesTranspiler().transpile();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
+
+		for (Artifact artifact : artifacts) {
+			new TCTranspiler().transpile(artifact);
+		}
+
+		for (Artifact artifact : artifacts) {
+			new FLTranspiler().transpile(artifact);
+		}
+
 		for (Artifact artifact : artifacts) {
 			new ORTranspiler().transpile(artifact);
 			new DRTranspiler().transpile(artifact);
-			new TCTranspiler().transpile(artifact);
-			new FLTranspiler().transpile(artifact);
 			new SuiteTranspiler().transpile(artifact);
 			new CFLTranspiler().transpile(artifact);
 		}
