@@ -131,7 +131,7 @@ public class Utilities {
 		}
 		return path;
 	}
-	
+
 	public String getProjectJavaLibrrayFolder() {
 		String path = getProjectsFolder() + File.separator + ServiceRepository.getInstance().getProjectName()
 				+ File.separator + "Libraries";
@@ -140,7 +140,16 @@ public class Utilities {
 		}
 		return path;
 	}
-	
+
+	public String getProjectIntellisenseFolder() {
+		String path = getProjectsFolder() + File.separator + ServiceRepository.getInstance().getProjectName()
+				+ File.separator + "Intellisense";
+		if (!new File(path).exists()) {
+			new File(path).mkdir();
+		}
+		return path;
+	}
+
 	public String getTranspiledArtifactsFolder_2() {
 		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "TranspiledArtifacts";
@@ -207,10 +216,15 @@ public class Utilities {
 		return path;
 	}
 
-	public void writeXMLSerializedData(File file, Object object) throws IOException {
+	public void writeXMLSerializedData(File file, Object object) {
 		XmlMapper mapper = new XmlMapper();
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		mapper.writeValue(file, object);
+		try {
+			mapper.writeValue(file, object);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getXMLSerializedData(Object object) throws JsonProcessingException {
