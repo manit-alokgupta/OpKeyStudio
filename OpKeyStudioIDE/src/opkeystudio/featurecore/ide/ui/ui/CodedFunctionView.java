@@ -83,7 +83,6 @@ public class CodedFunctionView extends SuperComposite {
 		setParentTestCaseView(parentTestCaseView);
 		setEmbeddedInsideTestCaseView(true);
 		initArtifact();
-		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
 		initTCFLUI();
 		initTestCaseCode();
@@ -95,7 +94,6 @@ public class CodedFunctionView extends SuperComposite {
 		setParentTestSuiteView(parentTestCaseView);
 		setEmbeddedInsideTestSuiteView(true);
 		initArtifact();
-		Utilities.getInstance().setPluginName("Web");
 		setLayout(new GridLayout(1, false));
 		initTSUI();
 		initTestSuiteCode();
@@ -128,6 +126,7 @@ public class CodedFunctionView extends SuperComposite {
 
 	public CodedFunctionView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
+		Utilities.getInstance().setPluginName("Web");
 		initArtifact();
 		setLayout(new GridLayout(1, false));
 		initCFUI();

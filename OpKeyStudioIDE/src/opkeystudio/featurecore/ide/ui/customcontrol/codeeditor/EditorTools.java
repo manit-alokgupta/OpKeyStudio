@@ -267,7 +267,7 @@ public class EditorTools {
 		for (int i = 0; i < allLibs.size(); i++) {
 			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
 		}
-		URLClassLoader child = new URLClassLoader(allJarsAndClasses, EditorTools.class.getClassLoader());
+		URLClassLoader child = new URLClassLoader(allJarsAndClasses);
 		@SuppressWarnings("rawtypes")
 		Class classToLoad = Class.forName(codedflfile.getName().replaceAll(".class", ""), true, child);
 		Object instance = classToLoad.newInstance();
