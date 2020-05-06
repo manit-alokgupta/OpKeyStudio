@@ -22,7 +22,10 @@ public class App {
 				"C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE\\resources\\libraries\\PluginRunner"),
 				".jar"));
 		files.addAll(new CompilerUtilities().getAllFiles(new File(
-				"C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE\\resources\\libraries\\PluginRunner"),
+				"C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE\\resources\\libraries\\Plugins\\Appium"),
+				".jar"));
+		files.addAll(new CompilerUtilities().getAllFiles(new File(
+				"C:\\Users\\neon.nishant\\Desktop\\OpKeyStudioEclipse\\trunk\\OpKeyStudioIDE\\resources\\libraries\\Plugins\\Web"),
 				".jar"));
 		List<ClassIntellisenseDTO> classes = new Tools().getAllReflectionsClassesFromJars(files);
 
