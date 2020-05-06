@@ -479,7 +479,7 @@ public class ArtifactCodeView extends SuperComposite {
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		refreshButton.setToolTipText("Refresh TC/FL Code");
 
-		editor = new ArtifactCodeEditor(this, this, true);
+		editor = new ArtifactCodeEditor(this, this, false);
 		editor.setArtifact(getArtifact());
 		refreshButton.addSelectionListener(new SelectionListener() {
 
