@@ -380,7 +380,7 @@ public class AndroidVNCUtil {
 	public static void StartInputService(String id,String baseApkpath) throws IOException, InterruptedException {
 		System.out.println("starting input service");
 		String command = "adb -s " + id
-				+ " shell export CLASSPATH="+baseApkpath+";"+"exec app_process /system/bin com.pcloudy.inputservice.Agent";
+				+ " shell export CLASSPATH="+baseApkpath+";"+" exec app_process /system/bin com.pcloudy.inputservice.Agent";
 		System.out.println("command is" + " " + command);
 		String[] cmd = { adbPath + File.separator + "adb", command };
 		ProcessBuilder pb = new ProcessBuilder(cmd);
