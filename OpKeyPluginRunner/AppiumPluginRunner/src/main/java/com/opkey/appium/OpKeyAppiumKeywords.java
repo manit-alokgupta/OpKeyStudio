@@ -1403,6 +1403,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called Wait");
 
 		ContextInitiator.addFunction("Wait");
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_wait
 
 		try {
