@@ -74,6 +74,7 @@ public class FLTranspiler extends AbstractTranspiler {
 		String reportingEnd = "ReportBuilder.get().endFunctionLibrary();";
 		methodBodyCode = reportingStart + methodBodyCode + reportingEnd;
 
+		System.out.println(methodBodyCode);
 		method.setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
 		return class1;
 	}

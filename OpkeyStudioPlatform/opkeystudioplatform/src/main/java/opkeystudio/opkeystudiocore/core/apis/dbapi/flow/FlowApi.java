@@ -238,4 +238,18 @@ public class FlowApi {
 		}
 		return new ArrayList<FlowOutputArgument>();
 	}
+	
+	public List<FlowOutputArgument> fetchComponentStepOutputArguments(String flowStepId) {
+		String query = String.format("SELECT * FROM component_step_output_arguments where componentstep_id!='%s'", flowStepId);
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<FlowOutputArgument>();
+	}
 }
