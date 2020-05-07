@@ -27,6 +27,10 @@ public class ImportLocalDB {
 			dialog.open();
 			String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 			if (filePath != null) {
+				System.out.println("FilePath " + filePath);
+				if (!new File(filePath).isFile()) {
+					return;
+				}
 				String projectName = new MessageDialogs().openInputDialogAandGetValue("OpKey",
 						"Please Provide The Project Name", "");
 				if (projectName == null) {

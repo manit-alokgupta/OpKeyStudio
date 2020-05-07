@@ -751,6 +751,9 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 				dialog.open();
 				String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 				if (filePath != null) {
+					if (!new File(filePath).isFile()) {
+						return;
+					}
 					File libraryToAssociate = new File(filePath);
 					long filesize = (long) getFileSizeInMb(libraryToAssociate);
 					System.out.println("File Size " + filesize);
