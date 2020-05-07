@@ -411,7 +411,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(600, 400);
+		return new Point(650, 540);
 	}
 
 	public TestSuiteView getParentTestSuiteView() {
