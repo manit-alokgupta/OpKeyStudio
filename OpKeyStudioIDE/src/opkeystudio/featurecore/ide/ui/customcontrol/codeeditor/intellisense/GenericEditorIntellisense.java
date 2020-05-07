@@ -117,7 +117,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog(null, "Intellisense Initializing", false, new IRunnableWithProgress() {
+				msd.openProgressDialog(null, "CFL Intellisense Initializing", false, new IRunnableWithProgress() {
 
 					@Override
 					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {

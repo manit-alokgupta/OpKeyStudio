@@ -171,16 +171,28 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 			@Override
 			public void autoCompleteUpdate(AutoCompletionEvent arg0) {
 				System.out.println(arg0.getEventType().toString());
-				if (arg0.getEventType().toString().equals("POPUP_HIDDEN")) {
-					System.out.println("Resetting Intellisense Data");
-					if (isCflEditor()) {
-						CompletionProvider provider = GenericEditorIntellisense.getCFLInstance();
-						autoCompletion = new JavaAutoCompletion(provider);
-					} else {
-						CompletionProvider provider = GenericEditorIntellisense.getInstance();
-						autoCompletion = new JavaAutoCompletion(provider);
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						if (arg0.getEventType().toString().equals("POPUP_HIDDEN")) {
+							System.out.println("Resetting Intellisense Data");
+							if (isCflEditor()) {
+								CompletionProvider provider = GenericEditorIntellisense.getCFLInstance();
+								autoCompletion.setCompletionProvider(provider);
+							} else {
+								CompletionProvider provider = GenericEditorIntellisense.getInstance();
+								autoCompletion.setCompletionProvider(provider);
+							}
+						}
 					}
-				}
+				}).start();
+
 			}
 		});
 
