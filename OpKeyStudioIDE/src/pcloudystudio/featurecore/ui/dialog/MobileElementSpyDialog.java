@@ -112,18 +112,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		DIALOG_TITLE = "Mobile Object Spy";
 	}
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
-	public MobileElementSpyDialog(Shell parent, int style) {
-		super(parent, style);
-		setText("SWT Dialog");
-		this.inspectorController = new MobileElementInspectorController();
-	}
-
 	public MobileElementSpyDialog(Shell parent, int style, ObjectRepositoryView parentObjectRepositoryView) {
 		super(parent, style);
 		this.setParentObjectRepositoryView(parentObjectRepositoryView);
@@ -131,11 +119,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		this.inspectorController = new MobileElementInspectorController();
 	}
 
-	/**
-	 * Open the dialog.
-	 * 
-	 * @return the result
-	 */
 	public Object open() {
 		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
@@ -153,9 +136,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		return result;
 	}
 
-	/**
-	 * Create contents of the dialog.
-	 */
 	private void createContents() {
 		shlSpyMobile = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
