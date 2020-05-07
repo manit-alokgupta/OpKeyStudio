@@ -19,10 +19,13 @@ public class SessionHandler implements ExecutionSession {
 
 	public void afterSessionEnds(Object sessionObject) {
 		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
+		String deviceApiLevel = sessionInfo.getPluginSetting("DeviceApiLevel"); // device SDK
+		String deviceAbi = sessionInfo.getPluginSetting("DeviceABI"); // device ABI
+
 		/*
 		 * Report.get().endTestCase(); Report.get().endSuite();
 		 */
-		
+
 		try {
 			new Connect2AppiumServer().Method_closeApplication();
 		} catch (Exception e) {
@@ -32,6 +35,9 @@ public class SessionHandler implements ExecutionSession {
 
 	public void beforeSessionStart(Object sessionObject) {
 		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
+		String deviceApiLevel = sessionInfo.getPluginSetting("DeviceApiLevel"); // device SDK
+		String deviceAbi = sessionInfo.getPluginSetting("DeviceABI"); // device ABI
+
 		SessionHandler.sessionInfo = sessionInfo;
 		MobileDevice device = sessionInfo.getMobileDevice();
 
