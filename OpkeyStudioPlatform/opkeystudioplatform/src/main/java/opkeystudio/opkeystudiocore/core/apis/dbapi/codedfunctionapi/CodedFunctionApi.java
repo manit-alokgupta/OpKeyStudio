@@ -373,6 +373,12 @@ public class CodedFunctionApi {
 		if (dataType.equals("Integer")) {
 			return "int";
 		}
-		return "String";
+		if (dataType.equals("Boolean")) {
+			return "boolean";
+		}
+		if (dataType.equals("String")) {
+			return "String";
+		}
+		return dataType;
 	}
 }
