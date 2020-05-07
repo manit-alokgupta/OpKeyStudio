@@ -24,6 +24,7 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.CodeViewTreeUI;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -40,6 +41,18 @@ public class CodeViewTree extends CustomTree {
 		this.setParentArtifactCodeViewTreeUI(parentArtifactCodeViewTreeUI);
 		SystemRepository.getInstance().setCodeViewTreeControl(this);
 		init();
+		initCodeViewTreeLoader();
+	}
+
+	private void initCodeViewTreeLoader() {
+		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				System.out.println("Global Code View Tree Loader Called");
+				renderCodeViewTree();
+			}
+		});
 	}
 
 	private void init() {
