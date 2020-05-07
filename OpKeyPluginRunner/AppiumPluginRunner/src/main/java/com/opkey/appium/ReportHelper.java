@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.DataArguments;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.DataArguments.DataArgument;
+import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments;
+import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments.ObjectArgument;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.contexts.Context;
 import com.ssts.reporting.ReportBuilder;
@@ -33,6 +35,14 @@ public class ReportHelper {
 	
 	public static List<String> getParameters() {
 		List<String> parameterList = new ArrayList<String>();
+		
+		ObjectArguments objectArguments = Context.current().getFunctionCall().getObjectArguments();
+		if(objectArguments!=null && objectArguments.getObjectArgument() !=null) {
+			for(ObjectArgument objectArgument: objectArguments.getObjectArgument()) {
+				parameterList.add(objectArgument.getArgumentName() + ":" + objectArgument.getObject().getLogicalName());
+			}
+		}
+		
 		DataArguments dataArguments = Context.current().getFunctionCall().getDataArguments();
 		if(dataArguments!=null && dataArguments.getDataArgument() !=null) {
 			for(DataArgument dataArgument: dataArguments.getDataArgument()) {

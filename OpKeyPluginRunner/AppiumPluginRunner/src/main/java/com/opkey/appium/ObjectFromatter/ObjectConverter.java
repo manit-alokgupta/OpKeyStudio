@@ -3,9 +3,13 @@ package com.opkey.appium.ObjectFromatter;
 import java.util.Map;
 import java.util.Set;
 
+import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall;
+import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments;
+import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments.ObjectArgument;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Properties;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Properties.Property;
+import com.crestech.opkey.plugin.contexts.Context;
 import com.opkeystudio.runtime.ORObject;
 import com.plugin.appium.AppiumObject;
 import com.plugin.appium.ObjectFormatter;
@@ -36,6 +40,9 @@ public class ObjectConverter {
 			AppiumObject parentobject = new ObjectFormatter().formatObjectToWebDriverObject(_parentobject);
 			webdriverobject.setParentObject(parentobject);
 			System.out.println(">>Object " + webdriverobject.toString());
+			
+			this.setObjectArgumentInFunctionCall(orobject);
+			
 			return webdriverobject;
 		} catch (ObjectPropertiesNotSufficientException e) {
 			// TODO Auto-generated catch block
@@ -72,5 +79,16 @@ public class ObjectConverter {
 			}
 		}
 		return "";
+	}
+	
+	private void setObjectArgumentInFunctionCall(ORObject obj) {
+		ObjectArguments oArgs = new ObjectArguments();
+		ObjectArgument oArg = new ObjectArgument();
+		oArg.setArgumentName("Object");
+		Object orObj = new Object();
+		orObj.setLogicalName(getLogicalNameOfORObject(obj));
+		oArg.setObject(orObj);
+		oArgs.getObjectArgument().add(oArg);
+		Context.current().getFunctionCall().setObjectArguments(oArgs);	
 	}
 }
