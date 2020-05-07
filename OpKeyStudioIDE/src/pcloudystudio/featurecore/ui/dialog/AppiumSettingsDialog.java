@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -100,16 +99,15 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	public Object open() {
-		
 		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
 		createContents();
 		shlAppiumSettings.open();
 		shlAppiumSettings.layout();
 		Display display = getParent().getDisplay();
-		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		Cursor arrow = new Cursor(display, SWT.CURSOR_ARROW);
 		getParent().setCursor(arrow);
-		
+
 		while (!shlAppiumSettings.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -118,19 +116,10 @@ public class AppiumSettingsDialog extends Dialog {
 		return result;
 	}
 
-	public static Shell getScreenCentredShell() {
-		Display display = PlatformUI.getWorkbench().getDisplay();
-		Shell centreShell = new Shell(display);
-		Point size = centreShell.computeSize(-1, -1);
-		Rectangle screen = display.getMonitors()[0].getBounds();
-		centreShell.setBounds((screen.width - size.x) / 2, (screen.height - size.y) / 2, size.x, size.y);
-		return centreShell;
-	}
-
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -199,7 +188,7 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumConfiguration
-						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumConfiguration.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
@@ -289,7 +278,7 @@ public class AppiumSettingsDialog extends Dialog {
 					while (capabilityTable.getSelectionIndex() != -1)
 						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
-				
+
 			}
 		});
 		btnDelete.setEnabled(false);
@@ -551,7 +540,7 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		manuallybtnRefresh.setBounds(475, 13, 18, 18);
 		manuallybtnRefresh
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
 		manuallybtnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallybtnRefresh.setToolTipText("Refresh Table");
 
@@ -649,7 +638,7 @@ public class AppiumSettingsDialog extends Dialog {
 		editor.grabHorizontal = true;
 		capabilityTable.addListener(SWT.MouseDown, new Listener() {
 			public void handleEvent(Event event) {
-				
+
 				Rectangle clientArea = capabilityTable.getClientArea();
 				Point pt = new Point(event.x, event.y);
 				int index = capabilityTable.getTopIndex();
@@ -960,10 +949,9 @@ public class AppiumSettingsDialog extends Dialog {
 
 		}
 		return false;
-		
-		
+
 	}
-	
+
 	static void selectionAtEnd(CCombo c) {
 		String text = c.getText();
 		int endSelection = text.length();

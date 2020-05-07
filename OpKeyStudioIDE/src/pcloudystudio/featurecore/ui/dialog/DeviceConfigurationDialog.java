@@ -62,17 +62,6 @@ public class DeviceConfigurationDialog extends Dialog {
 	private Label lblNoDeviceConnected;
 	private Button btnHelp;
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
-	public DeviceConfigurationDialog(Shell parent, int style) {
-		super(parent, style);
-		setText("SWT Dialog");
-	}
-
 	public DeviceConfigurationDialog(Shell parent, int style, ObjectRepositoryView objectRepositoryView) {
 		super(parent, style);
 		this.setParentObjectRepositoryView(objectRepositoryView);
@@ -81,19 +70,14 @@ public class DeviceConfigurationDialog extends Dialog {
 		this.ANDROID_FILTER_EXTS = new String[] { "*.apk" };
 	}
 
-	/**
-	 * Open the dialog.
-	 * 
-	 * @return the result
-	 */
 	public Object open() {
-		Cursor waitCursor=new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT);
+		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
 		createContents();
 		shlDeviceConfiguration.open();
 		shlDeviceConfiguration.layout();
 		Display display = getParent().getDisplay();
-		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		Cursor arrow = new Cursor(display, SWT.CURSOR_ARROW);
 		getParent().setCursor(arrow);
 		while (!shlDeviceConfiguration.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -103,9 +87,6 @@ public class DeviceConfigurationDialog extends Dialog {
 		return result;
 	}
 
-	/**
-	 * Create contents of the dialog.
-	 */
 	private void createContents() {
 		shlDeviceConfiguration = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL | SWT.BORDER);
 		shlDeviceConfiguration
@@ -274,7 +255,8 @@ public class DeviceConfigurationDialog extends Dialog {
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 					AppiumConfiguration
 					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
-					AppiumConfiguration.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					AppiumConfiguration
+					.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 					AppiumConfiguration.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				}
@@ -303,7 +285,8 @@ public class DeviceConfigurationDialog extends Dialog {
 							String previousDeviceModelName = MobileDeviceUtil.getDeviceProperty(
 									MobileDeviceUtil.getSelectedAndroidDeviceId(selectedDevice),
 									MobileDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY);
-							MobileDesiredCapabilities.getMapOfCapabilities().replace("deviceName", previousDeviceModelName);
+							MobileDesiredCapabilities.getMapOfCapabilities().replace("deviceName",
+									previousDeviceModelName);
 						} else {
 							MobileDesiredCapabilities.getMapOfCapabilities().put("udid", selectedDeviceUDID);
 							String previousDeviceModelName = MobileDeviceUtil.getDeviceProperty(
