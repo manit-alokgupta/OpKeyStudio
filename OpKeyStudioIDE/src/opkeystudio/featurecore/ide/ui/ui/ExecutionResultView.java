@@ -67,19 +67,19 @@ public class ExecutionResultView extends SuperComposite {
 		msd.openProgressDialogOnBackgroundThread(getParent().getShell(), "Please Wait Execution is on Progress...",
 				true, new IRunnableWithProgress() {
 
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
-						ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
-						if (executorExecutor.isContainsErrors()) {
-							displayCompileErrors(executorExecutor.getCompileErrors());
-							return;
-						}
-						setArtifactExecutor(executorExecutor);
-						startExecutionLogsFetch(executorExecutor);
+			@Override
+			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
+				ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
+				if (executorExecutor.isContainsErrors()) {
+					displayCompileErrors(executorExecutor.getCompileErrors());
+					return;
+				}
+				setArtifactExecutor(executorExecutor);
+				startExecutionLogsFetch(executorExecutor);
 
-					}
-				});
+			}
+		});
 		msd.closeProgressDialog();
 	}
 
@@ -112,7 +112,7 @@ public class ExecutionResultView extends SuperComposite {
 				String errorLogs = "Errors while Compiling Artifacts";
 				for (CompileError error : errors) {
 					errorLogs += System.lineSeparator() + error.getSource().getName() + System.lineSeparator()
-							+ error.getMessage() + System.lineSeparator();
+					+ error.getMessage() + System.lineSeparator();
 				}
 				logTextView.setForeground(new Color(logTextView.getDisplay(), 255, 0, 0));
 				logTextView.setText(errorLogs);
@@ -133,12 +133,11 @@ public class ExecutionResultView extends SuperComposite {
 					ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
 					if (standardOutPut != null && standardErrorOutput != null) {
 						String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
-								+ standardErrorOutput.toString();
+						+ standardErrorOutput.toString();
 						try {
 							standardOutPut.flush();
 							standardErrorOutput.flush();
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						displayLogs(consoleOutPut);
@@ -148,6 +147,9 @@ public class ExecutionResultView extends SuperComposite {
 
 							@Override
 							public void run() {
+								if (showLogView.isDisposed()) {
+									return;
+								}
 								showLogView.setEnabled(true);
 							}
 						});
@@ -156,7 +158,6 @@ public class ExecutionResultView extends SuperComposite {
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -193,7 +194,6 @@ public class ExecutionResultView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -213,7 +213,6 @@ public class ExecutionResultView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
