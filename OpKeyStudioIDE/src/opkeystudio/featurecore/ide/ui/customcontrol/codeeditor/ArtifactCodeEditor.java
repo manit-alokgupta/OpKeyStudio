@@ -171,12 +171,12 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 			@Override
 			public void autoCompleteUpdate(AutoCompletionEvent arg0) {
 				System.out.println(arg0.getEventType().toString());
-				new Thread(new Runnable() {
+				Thread thread = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
 						try {
-							Thread.sleep(2000);
+							Thread.sleep(500);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -191,7 +191,8 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 							}
 						}
 					}
-				}).start();
+				});
+				thread.start();
 
 			}
 		});
