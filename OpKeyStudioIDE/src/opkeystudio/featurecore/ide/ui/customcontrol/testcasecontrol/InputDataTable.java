@@ -432,18 +432,22 @@ public class InputDataTable extends CustomTable {
 		}
 
 		if (dataSourceType == DataSource.ValueFromOutputArgument) {
-
+			System.out.println("Called ValueFromOutputArgument");
 			String flow_step_oa_id = null;
 			if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 				flow_step_oa_id = flowInputArgument.getComponentstep_oa_id();
-			} else {
+			} else if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
 				flow_step_oa_id = flowInputArgument.getFlow_step_oa_id();
 			}
 			if (flow_step_oa_id == null) {
 				return;
 			}
-			List<FlowOutputArgument> flowOutPutArguments = new FlowApiUtilities()
-					.getAllFlowOutPutArgument(flow_step_oa_id);
+			List<FlowOutputArgument> flowOutPutArguments = new ArrayList<FlowOutputArgument>();
+			if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+				flowOutPutArguments = new FlowApiUtilities().getAllComponentOutPutArgument(flow_step_oa_id);
+			} else if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
+				flowOutPutArguments = new FlowApiUtilities().getAllFlowOutPutArgument(flow_step_oa_id);
+			}
 			if (flowOutPutArguments.size() == 0) {
 				return;
 			}
