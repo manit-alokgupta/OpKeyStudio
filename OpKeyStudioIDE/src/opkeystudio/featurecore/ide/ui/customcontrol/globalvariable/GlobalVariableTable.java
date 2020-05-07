@@ -34,6 +34,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.GlobalVariablesTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariableTable extends CustomTable {
@@ -60,16 +61,17 @@ public class GlobalVariableTable extends CustomTable {
 		refreshGlobalVariables();
 		initGlobalLoadeListener();
 	}
-	
+
 	private void initGlobalLoadeListener() {
 		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
-			
+
 			@Override
 			public void handleGlobalEvent() {
 				refreshGlobalVariables();
 			}
 		});
 	}
+
 	private void initHeaders() {
 		if (isInsideArtifact()) {
 			for (String header : tableHeaders_arti) {
@@ -375,6 +377,7 @@ public class GlobalVariableTable extends CustomTable {
 		GlobalLoader.getInstance().initGlobalVariables();
 		refreshGlobalVariables();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		new GlobalVariablesTranspiler().transpile();
 		return true;
 	}
 
