@@ -1795,3 +1795,4 @@ Automatic-Module-Name: opkeystudioplatform
 Bundle-ActivationPolicy: lazy
 Require-Bundle: opkeystudioplatform,
  opkeystudioplatform
+Import-Package: com.fasterxml.jackson.annotation
