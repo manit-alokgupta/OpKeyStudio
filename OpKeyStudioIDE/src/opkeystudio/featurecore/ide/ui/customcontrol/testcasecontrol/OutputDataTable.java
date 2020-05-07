@@ -310,7 +310,7 @@ public class OutputDataTable extends CustomTable {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { flowOutPutArg.getOutputvariablename(), "" });
 				cti.setControlData(flowOutPutArg);
-				cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+				cti.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			}
 		}
 	}

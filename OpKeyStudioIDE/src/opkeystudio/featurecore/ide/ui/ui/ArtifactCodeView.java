@@ -214,13 +214,15 @@ public class ArtifactCodeView extends SuperComposite {
 		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
 		for (MethodSource<JavaClassSource> method : methods) {
 			if (method != null) {
-				System.out.println("Method Name " + method.getName());
-				if (method.isPublic()) {
-					if (method.isStatic()) {
-						runButton.setEnabled(true);
-						return;
+				if (method.getName().equals("main")) {
+					if (method.isPublic()) {
+						if (method.isStatic()) {
+							runButton.setEnabled(true);
+							return;
+						}
 					}
 				}
+
 			}
 		}
 		runButton.setEnabled(false);
@@ -359,7 +361,6 @@ public class ArtifactCodeView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				saveGenericCodeEditorFile();
-				checkClassIsRunnable();
 			}
 
 			@Override
@@ -562,6 +563,7 @@ public class ArtifactCodeView extends SuperComposite {
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
 		GenericEditorIntellisense.getInstance().addOpKeyTranspiledClassInformation();
 		saveButton.setEnabled(false);
+		checkClassIsRunnable();
 	}
 
 	private void handleRefreshOnSave() {
