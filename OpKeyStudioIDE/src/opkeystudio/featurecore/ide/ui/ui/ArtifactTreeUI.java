@@ -33,6 +33,7 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTreeItem;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
@@ -74,7 +75,7 @@ public class ArtifactTreeUI extends SuperComposite {
 	 * @param style
 	 * @throws IOException
 	 */
-	ArtifactTree artifactTree;
+	private ArtifactTree artifactTree;
 	private Text txtSearch;
 
 	@SuppressWarnings("unused")
@@ -687,7 +688,7 @@ public class ArtifactTreeUI extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					Artifact artifact = artifactTree.getSelectedArtifact();
 					String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 							"Rename " + artifact.getName(), artifact.getName());
@@ -696,7 +697,8 @@ public class ArtifactTreeUI extends SuperComposite {
 						return;
 					}
 					while (renamedText.trim().isEmpty()) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name can not be empty");
 						renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 								"Rename " + artifact.getName(), artifact.getName());
 						if (renamedText == null) {
@@ -729,11 +731,9 @@ public class ArtifactTreeUI extends SuperComposite {
 					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
 					artifactTree.renderArtifacts();
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
-				}
-				
 
 			}
 
@@ -748,7 +748,7 @@ public class ArtifactTreeUI extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					Artifact artifact = artifactTree.getSelectedArtifact();
 					boolean status = new MessageDialogs().openConfirmDialog("Delete",
 							"Do you want to delete " + artifact.getName() + "?");
@@ -761,11 +761,9 @@ public class ArtifactTreeUI extends SuperComposite {
 					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
 					artifactTree.renderArtifacts();
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
-				}
-				
 
 			}
 
@@ -780,13 +778,12 @@ public class ArtifactTreeUI extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					new RefreshArtifactTree().refreshArtifactTree();
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
-				}
-				
+
 			}
 
 			@Override

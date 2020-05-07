@@ -151,7 +151,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 			CompletionProvider provider = GenericEditorIntellisense.getCFLInstance();
 			autoCompletion = new JavaAutoCompletion(provider);
 		} else {
-			CompletionProvider provider = GenericEditorIntellisense.getInstance();
+			CompletionProvider provider = GenericEditorIntellisense.getCodeEditorInstance();
 			autoCompletion = new JavaAutoCompletion(provider);
 		}
 		autoCompletion.setListCellRenderer(new JavaCellRenderer());
@@ -186,7 +186,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 								CompletionProvider provider = GenericEditorIntellisense.getCFLInstance();
 								autoCompletion.setCompletionProvider(provider);
 							} else {
-								CompletionProvider provider = GenericEditorIntellisense.getInstance();
+								CompletionProvider provider = GenericEditorIntellisense.getCodeEditorInstance();
 								autoCompletion.setCompletionProvider(provider);
 							}
 						}
@@ -225,14 +225,14 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 						Token lastToken = new CodeParser(isCflEditor()).getRecentToken(getArtifactCodeEditorInstance());
 						String tokenData = lastToken.getLexeme();
 						System.out.println(">>Last Token " + tokenData);
-						VariableToken varToken = GenericEditorIntellisense.getInstance().findVariableToken(tokenData);
+						VariableToken varToken = GenericEditorIntellisense.getCodeEditorInstance().findVariableToken(tokenData);
 						if (varToken != null) {
 							tokenData = varToken.getClassName();
 						}
-						TranspiledClassInfo autocompletetoken = GenericEditorIntellisense.getInstance()
+						TranspiledClassInfo autocompletetoken = GenericEditorIntellisense.getCodeEditorInstance()
 								.findAutoCompleteToken(tokenData);
 						if (autocompletetoken != null) {
-							JavaCompletionProvider provider = GenericEditorIntellisense.getInstance()
+							JavaCompletionProvider provider = GenericEditorIntellisense.getCodeEditorInstance()
 									.getClassMethodsCompletionProvider(autocompletetoken);
 							autoCompletion.setCompletionProvider(provider);
 						}

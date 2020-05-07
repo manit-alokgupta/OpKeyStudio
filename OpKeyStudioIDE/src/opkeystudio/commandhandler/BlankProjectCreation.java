@@ -81,7 +81,6 @@ public class BlankProjectCreation {
 				ServiceRepository.getInstance().setDefaultProject(project);
 				ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 				tree.renderArtifacts();
-				GenericEditorIntellisense.getInstance().disposeIntellisense();
 				CodeViewTree ctree = (CodeViewTree) SystemRepository.getInstance().getCodeViewTreeControl();
 				if (ctree != null) {
 					ctree.renderCodeViewTree();

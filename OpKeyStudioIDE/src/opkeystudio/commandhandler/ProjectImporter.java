@@ -39,7 +39,6 @@ public class ProjectImporter {
 			ServiceRepository.getInstance().setDefaultProject(projects.get(0));
 			ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 			tree.renderArtifacts();
-			GenericEditorIntellisense.getInstance().disposeIntellisense();
 			CodeViewTree ctree = (CodeViewTree) SystemRepository.getInstance().getCodeViewTreeControl();
 			if (ctree != null) {
 				ctree.renderCodeViewTree();

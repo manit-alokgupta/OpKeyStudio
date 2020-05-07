@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -51,6 +52,7 @@ public class FlowStepTable extends CustomTable {
 	private MenuItem movedownMenuItem;
 	private MenuItem setToRunMenuItem;
 	private MenuItem skipfromRunMenuItem;
+	private TableCursor tableCursor;
 
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
@@ -581,6 +583,7 @@ public class FlowStepTable extends CustomTable {
 		this.getFlowStepsData().add(flowStep);
 		this.refreshFlowSteps();
 		getParentTestCaseView().toggleSaveButton(true);
+		selectNextRowByCursor(getTableCursor(), 1);
 	}
 
 	public void deleteStep() throws JsonParseException, JsonMappingException, SQLException, IOException {
@@ -659,6 +662,14 @@ public class FlowStepTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public TableCursor getTableCursor() {
+		return tableCursor;
+	}
+
+	public void setTableCursor(TableCursor tableCursor) {
+		this.tableCursor = tableCursor;
 	}
 
 }

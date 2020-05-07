@@ -208,7 +208,6 @@ public class CodeViewTree extends CustomTree {
 						String.format("Unable to rename file to name '%s'. Please provide a different name", fileName));
 				return;
 			}
-			GenericEditorIntellisense.getInstance().refreshIntellisense();
 		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
@@ -294,7 +293,6 @@ public class CodeViewTree extends CustomTree {
 					String.format("Unable to create file with name '%s'. Please provide a different name", fileName));
 			return;
 		}
-		GenericEditorIntellisense.getInstance().refreshIntellisense();
 	}
 
 	public void createNewFolder() {
@@ -416,6 +414,7 @@ public class CodeViewTree extends CustomTree {
 			renderFiles(srcNode, file);
 		}
 		expandAll(rootNode);
+		GenericEditorIntellisense.getCodeEditorInstance().refreshCodeEditorIntellisense();
 	}
 
 	private void renderFiles(CodeViewTreeItem parentNode, File rootFile) {

@@ -73,8 +73,8 @@ public class CodeParser {
 					GenericEditorIntellisense.getCFLInstance().addVariableToken(varToken);
 					GenericEditorIntellisense.getCFLInstance().addBasicCompletion(varName);
 				} else {
-					GenericEditorIntellisense.getInstance().addVariableToken(varToken);
-					GenericEditorIntellisense.getInstance().addBasicCompletion(varName);
+					GenericEditorIntellisense.getCodeEditorInstance().addVariableToken(varToken);
+					GenericEditorIntellisense.getCodeEditorInstance().addBasicCompletion(varName);
 				}
 			}
 		}

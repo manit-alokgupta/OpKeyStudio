@@ -65,7 +65,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private static GenericEditorIntellisense cflinstance;
 	private List<ClassIntellisenseDTO> senseClasses = new ArrayList<ClassIntellisenseDTO>();
 
-	public static GenericEditorIntellisense getInstance() {
+	public static GenericEditorIntellisense getCodeEditorInstance() {
 		if (instance == null) {
 			instance = new GenericEditorIntellisense();
 			instance.initIntellisense();
@@ -81,11 +81,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return cflinstance;
 	}
 
-	public void disposeIntellisense() {
-		instance = null;
-	}
-
-	public void refreshIntellisense() {
+	public void refreshCodeEditorIntellisense() {
 		instance = new GenericEditorIntellisense();
 		instance.initIntellisense();
 	}

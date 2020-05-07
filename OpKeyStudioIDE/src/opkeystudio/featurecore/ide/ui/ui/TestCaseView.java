@@ -468,6 +468,7 @@ public class TestCaseView extends SuperComposite {
 		setCodedFunctionView(codedFunctionView);
 
 		cursor.setMenu(flowStepTable.getMenu());
+		flowStepTable.setTableCursor(cursor);
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -607,6 +608,7 @@ public class TestCaseView extends SuperComposite {
 	}
 
 	private void populateFlowStepsData(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
+		System.out.println("Called populateFlowStepsData");
 		if (flowStep != null) {
 			setSelectedFlowStep(flowStep);
 			String stepDetails = "";

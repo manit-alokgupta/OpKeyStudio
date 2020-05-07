@@ -561,7 +561,7 @@ public class ArtifactCodeView extends SuperComposite {
 		String code = getJavaEditor().getText();
 		File file = getCodeViewFile();
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
-		GenericEditorIntellisense.getInstance().addOpKeyTranspiledClassInformation();
+		GenericEditorIntellisense.getCodeEditorInstance().addOpKeyTranspiledClassInformation();
 		saveButton.setEnabled(false);
 		checkClassIsRunnable();
 	}
