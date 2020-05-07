@@ -14,6 +14,7 @@ import com.opkeystudio.runtime.ORObject;
 
 public class ObjectConverter {
 	public WebDriverObject formatObject(ORObject orobject) {
+		
 		if (orobject == null) {
 			ORObject parentObject = new ORObject();
 			parentObject.addProperty("", "").addProperty("", "");
