@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ServiceRepository {
 
@@ -92,6 +93,9 @@ public class ServiceRepository {
 	}
 
 	public void setProjectName(String projectName) {
+		projectName = projectName.replaceAll(" ", "OPKEYNEONSPACE112463743");
+		projectName = Utilities.getInstance().removeSpecialCharacters(projectName);
+		projectName = projectName.replaceAll("OPKEYNEONSPACE112463743", " ");
 		this.projectName = projectName;
 	}
 }
