@@ -464,6 +464,8 @@ public class SuiteStepTable extends CustomTable {
 			return;
 		}
 		TestSuiteStep suiteStep = getSelectedTestSuite();
+		suiteStep.setAdded(false);
+		suiteStep.setModified(false);
 		suiteStep.setDeleted(true);
 		refreshAllTestSuites();
 		getParentTestSuiteView().toggleSaveButton(true);
