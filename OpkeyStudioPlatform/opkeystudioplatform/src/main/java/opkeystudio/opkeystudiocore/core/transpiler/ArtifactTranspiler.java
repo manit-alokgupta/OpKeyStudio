@@ -43,7 +43,7 @@ public class ArtifactTranspiler {
 		ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
-				continue;
+				// continue;
 			}
 			int count = 0;
 			String packagePath = "allartifacts";
