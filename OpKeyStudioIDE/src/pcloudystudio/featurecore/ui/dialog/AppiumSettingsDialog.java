@@ -251,7 +251,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeAddCapability.setBounds(20, 5, 612, 42);
 
 		btnAdd = new Button(compositeAddCapability, SWT.NONE);
-		btnAdd.setImage(ImageConstants.IMG_16_ADD_CAPABILITY);
+		btnAdd.setImage(ImageConstants.IMG_16_ADD_TO_TABLE);
 		btnAdd.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
