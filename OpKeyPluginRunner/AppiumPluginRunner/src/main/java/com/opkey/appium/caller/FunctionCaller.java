@@ -66,8 +66,6 @@ public class FunctionCaller {
 			System.out.println("#2. Found Visibility/get type keyword");
 			if (functionResult.getOutput() == null || functionResult.getOutput().isEmpty()) {
 				return Result.PASS().setOutput(false).setMessage(functionResult.getMessage()).make();
-			} else {
-				return Result.PASS().setOutput(functionResult.getOutput()).setMessage(functionResult.getMessage()).make();
 			} 
 		}
 		return functionResult;

@@ -3883,7 +3883,7 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 	
-	public boolean MOBILE_SetSeekbar(ORObject arg0, int arg1) {
+	public boolean Mobile_SetSeekbar(ORObject arg0, int arg1) {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -3944,14 +3944,10 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg4, arg5);
 
 		FunctionResult functionResult;
-		if (arg3 != null) {
-			AppiumObject object = new ObjectConverter().formatObject(arg3);
-			functionResult = FunctionCaller
-					.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, object, arg4, arg5));
-		} else {
-			functionResult = FunctionCaller
-					.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, null, arg4, arg5));
-		}
+		
+		AppiumObject object = new ObjectConverter().formatObject(arg3);
+		functionResult = FunctionCaller
+				.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, object, arg4, arg5));
 
 		System.out.println(">>Keyword Called Web_ClickByText");
 
