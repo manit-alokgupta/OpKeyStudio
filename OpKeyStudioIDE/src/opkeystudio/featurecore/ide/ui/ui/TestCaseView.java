@@ -569,6 +569,11 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				boolean status = handleSaveOnRefresh();
+				if (status == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Unable to Execute. Please save your data first.");
+					return;
+				}
 				openExecutionWizard();
 			}
 
@@ -621,7 +626,7 @@ public class TestCaseView extends SuperComposite {
 			}
 			return;
 		}
-		
+
 		if (flowStep != null) {
 			setSelectedFlowStep(flowStep);
 			String stepDetails = "";
@@ -713,6 +718,10 @@ public class TestCaseView extends SuperComposite {
 
 	public void toggleRefreshButton(boolean status) {
 		itemRefresh.setEnabled(status);
+	}
+
+	public void toggleRunButton(boolean status) {
+		itemRun.setEnabled(status);
 	}
 
 	public void toggleSaveButton(boolean status) {
@@ -879,15 +888,18 @@ public class TestCaseView extends SuperComposite {
 
 	}
 
-	private void handleSaveOnRefresh() {
+	private boolean handleSaveOnRefresh() {
 		if (itemSave.isEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
 			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
 			if (status) {
 				saveAll();
 				toggleSaveButton(false);
+				return true;
 			}
+			return false;
 		}
+		return true;
 	}
 
 	public void saveAll() {
