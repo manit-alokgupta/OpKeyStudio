@@ -16,14 +16,9 @@ import com.plugin.appium.exceptionhandlers.ObjectPropertiesNotSufficientExceptio
 
 public class ObjectConverter {
 	public AppiumObject formatObject(ORObject orobject) {
-		
+		System.out.println("@orobject: ===============" + orobject);
 		if (orobject == null) {
-			ORObject parentObject = new ORObject();
-			parentObject.addProperty("", "").addProperty("", "");
-
-			orobject = new ORObject();
-			orobject.addProperty("", "");
-			orobject.setParentORObject(parentObject);
+			return new AppiumObject(false);
 		}
 		
 		try {
@@ -47,7 +42,8 @@ public class ObjectConverter {
 			e.printStackTrace();
 			System.out.println("Warning: " + e.getMessage());
 		}
-		return null;
+		AppiumObject ob1 = new AppiumObject(false);
+		return new AppiumObject(false);
 	}
 
 	private Object convertORObjectToOpKeyObject(ORObject orobject) {
