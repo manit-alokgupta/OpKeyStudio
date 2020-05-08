@@ -23,6 +23,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class ArtifactTree extends CustomTree {
 	private TestSuiteView parentTestSuiteView;
@@ -199,6 +200,9 @@ public class ArtifactTree extends CustomTree {
 			renderAllArtifactTree(topMostNode, artifacts);
 		}
 		expandAll(rootNode);
+		if (isAttachedinTestSuite() == false) {
+			ArtifactTranspiler.getInstance().setPackageProperties();
+		}
 		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
@@ -219,7 +223,7 @@ public class ArtifactTree extends CustomTree {
 
 	public void refereshArtifacts() {
 		try {
-			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 			this.removeAll();
 			ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
 			if (isAttachedinTestSuite()) {
@@ -254,11 +258,13 @@ public class ArtifactTree extends CustomTree {
 				refreshAllArtifactTree(topMostNode, artifacts);
 			}
 			expandAll(rootNode);
+			if (isAttachedinTestSuite() == false) {
+				ArtifactTranspiler.getInstance().setPackageProperties();
+			}
+		} finally {
+			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
-		finally {
-			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
-		}
-		
+
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {
