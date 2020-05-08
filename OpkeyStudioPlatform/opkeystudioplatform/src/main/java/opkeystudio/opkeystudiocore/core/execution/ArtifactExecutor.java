@@ -102,7 +102,7 @@ public class ArtifactExecutor {
 		executionThread.start();
 		setExecutionThread(executionThread);
 	}
-	
+
 	public void executeArtifactFile(String sessionRootDir, String artifactClassName, String pluginName) {
 		System.out.println(">>Artifact Code Folder " + sessionRootDir);
 		System.out.println(">>Executing Artifact " + artifactClassName);
@@ -152,9 +152,25 @@ public class ArtifactExecutor {
 		callExecuteSessionStart();
 		Class classToLoad = Class.forName(artifactClassNAME, true, child);
 		Object instance = classToLoad.newInstance();
-		Method method = instance.getClass().getDeclaredMethod("execute");
-		method.invoke(instance);
-
+		Method[] methods = instance.getClass().getDeclaredMethods();
+		for (Method method : methods) {
+			if (method.getName().equals("execute")) {
+				try {
+					method.invoke(instance);
+					break;
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+			if (method.getName().equals("executeDefault")) {
+				try {
+					method.invoke(instance);
+					break;
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
 		callExecuteSessionEnd();
 		cleanExecutionSession();
 	}
@@ -175,13 +191,30 @@ public class ArtifactExecutor {
 		callExecuteSessionStart();
 		Class classToLoad = Class.forName(artifactClassNAME, true, child);
 		Object instance = classToLoad.newInstance();
-		Method method = instance.getClass().getDeclaredMethod("run");
-		method.invoke(instance);
+		Method[] methods = instance.getClass().getDeclaredMethods();
+		for (Method method : methods) {
+			if (method.getName().equals("run")) {
+				try {
+					method.invoke(instance);
+					break;
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+			if (method.getName().equals("executeDefault")) {
+				try {
+					method.invoke(instance);
+					break;
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
 
 		callExecuteSessionEnd();
 		cleanExecutionSession();
 	}
-	
+
 	private void executeMainFunction(String sessionRootDir, String artifactClassNAME, String pluginName)
 			throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

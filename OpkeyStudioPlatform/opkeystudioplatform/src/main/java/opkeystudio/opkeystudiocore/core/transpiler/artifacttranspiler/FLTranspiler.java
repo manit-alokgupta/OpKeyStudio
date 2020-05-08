@@ -47,6 +47,7 @@ public class FLTranspiler extends AbstractTranspiler {
 		List<FlowStep> flowSteps = FunctionLibraryApi.getInstance().getAllFlowSteps(artifact.getId());
 		new TranspilerUtilities().processFlowStepsForAppium(artifact, flowSteps);
 		String methodBodyCode = "";
+		String defaultMethodBody = "execute(%s);";
 		for (String varName : new TCFLCodeConstruct().getDefaultKeywordsClassVariables()) {
 			methodBodyCode += newLineChar + varName + newLineChar;
 		}
@@ -60,6 +61,7 @@ public class FLTranspiler extends AbstractTranspiler {
 
 		List<ComponentInputArgument> componentInputArguments = FunctionLibraryApi.getInstance()
 				.getAllComponentInputArgument(artifact.getId());
+		MethodSource<JavaClassSource> defaultmethod = class1.addMethod();
 		MethodSource<JavaClassSource> method = class1.addMethod();
 
 		for (ComponentInputArgument cia : componentInputArguments) {
@@ -69,14 +71,63 @@ public class FLTranspiler extends AbstractTranspiler {
 			method.addParameter(dataType, varName);
 		}
 
+		String defaultArguments = "";
+		for (ComponentInputArgument cia : componentInputArguments) {
+			System.out.println("DataType " + cia.getType() + "  " + cia.getDefaultvalue());
+			if (!defaultArguments.isEmpty()) {
+				defaultArguments += ", ";
+			}
+			String dataType = convertDataType(cia.getType());
+			String defaultValue = cia.getDefaultvalue();
+			String convertedDefaultValue = getDataAsDataType(dataType, defaultValue);
+			defaultArguments += convertedDefaultValue;
+		}
+
+		defaultMethodBody = String.format(defaultMethodBody, defaultArguments);
 		String reportingStart = String.format("ReportBuilder.get().beginFunctionLibrary(%s);",
 				"\"" + artifact.getName() + "\"");
 		String reportingEnd = "ReportBuilder.get().endFunctionLibrary();";
 		methodBodyCode = reportingStart + methodBodyCode + reportingEnd;
 
-		System.out.println(methodBodyCode);
+		defaultmethod.setName("executeDefault").setPublic().setBody(defaultMethodBody).addThrows("Exception");
 		method.setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
+		System.out.println(">>Method Name " + method.toSignature());
 		return class1;
+	}
+
+	private String getDataAsDataType(String dataType, String data) {
+		if (dataType.equals("int")) {
+			if (data == null) {
+				return "0";
+			}
+			return data;
+		}
+		if (dataType.equals("double")) {
+			if (data == null) {
+				return "0";
+			}
+			return data;
+		}
+		if (dataType.equals("float")) {
+			if (data == null) {
+				return "0";
+			}
+			return data;
+		}
+		if (dataType.equals("boolean")) {
+			if (data == null) {
+				return "false";
+			}
+			return data;
+		}
+
+		if (dataType.equals("String")) {
+			if (data == null) {
+				data = "";
+			}
+			return "\"" + data + "\"";
+		}
+		return data;
 	}
 
 	private String convertDataType(String dataType) {
