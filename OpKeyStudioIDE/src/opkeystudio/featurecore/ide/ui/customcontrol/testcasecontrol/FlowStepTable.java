@@ -461,8 +461,10 @@ public class FlowStepTable extends CustomTable {
 
 	private void displayFlowSteps(List<FlowStep> flowSteps) {
 		setFlowStepsData(flowSteps);
+		List<FlowStep> allSteps = new ArrayList<FlowStep>();
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.isDeleted() == false) {
+				allSteps.add(flowStep);
 				String orname = "";
 				String keyWordName = "";
 				if (flowStep.getOrObject().size() > 0) {
@@ -521,6 +523,11 @@ public class FlowStepTable extends CustomTable {
 					}
 				}
 			}
+		}
+		if (allSteps.size() == 0) {
+			getParentTestCaseView().toggleDeleteButton(false);
+			getParentTestCaseView().toggleMovedownButton(false);
+			getParentTestCaseView().toggleMoveupButton(false);
 		}
 		selectDefaultRow();
 	}
