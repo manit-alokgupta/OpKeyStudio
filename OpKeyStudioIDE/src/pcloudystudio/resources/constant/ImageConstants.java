@@ -7,9 +7,9 @@ import org.eclipse.swt.graphics.Image;
 import pcloudystudio.resources.image.ImageManager;
 
 public class ImageConstants {
-	public static final Image IMG_16_ADD_TO_TABLE;
+	public static final Image IMG_16_ADD_CAPABILITY;
 
 	static {
-		IMG_16_ADD_TO_TABLE = ImageManager.getImage("add_to_table_16.png");
+		IMG_16_ADD_CAPABILITY = ImageManager.getImage("add_capability_16.png");
 	}
 }
