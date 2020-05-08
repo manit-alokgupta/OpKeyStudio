@@ -121,6 +121,8 @@ public class GenericTree extends CustomTree {
 						isblank = false;
 					}
 					if (isblank) {
+						selectedFlowStep.setModified(false);
+						selectedFlowStep.setAdded(false);
 						selectedFlowStep.setDeleted(true);
 					}
 				}

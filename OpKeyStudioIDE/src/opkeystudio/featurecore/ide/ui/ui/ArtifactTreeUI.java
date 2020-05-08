@@ -1186,9 +1186,12 @@ public class ArtifactTreeUI extends SuperComposite {
 		return true;
 	}
 
+	Artifact artifact;
+
 	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
+
 				MessageDialogs msd = new MessageDialogs();
 				msd.openProgressDialog(null, String.format("Please wait. Creating Artifact '%s'", artifactName), false,
 						new IRunnableWithProgress() {
@@ -1196,11 +1199,12 @@ public class ArtifactTreeUI extends SuperComposite {
 							@Override
 							public void run(IProgressMonitor monitor)
 									throws InvocationTargetException, InterruptedException {
-								new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
+								artifact = new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
 							}
 						});
 				artifactTree.renderArtifacts();
 				msd.closeProgressDialog();
+				Utilities.getInstance().openArtifacts(artifact);
 			}
 		});
 	}
