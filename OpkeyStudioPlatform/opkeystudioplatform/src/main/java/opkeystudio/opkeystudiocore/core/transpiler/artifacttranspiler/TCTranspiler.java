@@ -1,6 +1,8 @@
 package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.forge.roaster.Roaster;
@@ -9,6 +11,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct.TCFLCodeConstruct;
@@ -48,6 +51,15 @@ public class TCTranspiler extends AbstractTranspiler {
 		for (String varName : new TCFLCodeConstruct().getDefaultKeywordsClassVariables()) {
 			methodBodyCode += newLineChar + varName + newLineChar;
 		}
+		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
+		for (FlowStep flowStep : flowSteps) {
+			for (FlowInputArgument inputArg : flowStep.getFlowInputArgs()) {
+				flowInputArguments.add(inputArg.clone());
+			}
+		}
+
+		Collections.reverse(flowInputArguments);
+
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.isShouldrun() == false) {
 				continue;
@@ -55,6 +67,9 @@ public class TCTranspiler extends AbstractTranspiler {
 			String flowStepCode = new TCFLCodeConstruct().convertToFunctionCode(artifact, flowStep);
 			methodBodyCode += flowStepCode;
 		}
+
+		methodBodyCode = new TCFLCodeConstruct().addDataRepositoryIterations(artifact, flowInputArguments,
+				methodBodyCode);
 
 		String reportingStart = String.format("ReportBuilder.get().beginTestCase(%s);",
 				"\"" + artifact.getName() + "\"");

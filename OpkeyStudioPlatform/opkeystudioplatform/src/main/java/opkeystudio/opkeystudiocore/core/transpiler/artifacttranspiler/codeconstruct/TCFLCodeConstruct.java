@@ -25,8 +25,7 @@ public class TCFLCodeConstruct {
 		if (isKeywordType(flowStep)) {
 			if (isConstructFlowKeyword(flowStep)) {
 				String code = getConstructFlowKeywordCode(artifact, flowStep);
-				code = addOutputVariables(artifact, flowStep, code);
-				return addDataRepositoryIterations(artifact, flowStep, code);
+				return addOutputVariables(artifact, flowStep, code);
 			}
 			if (isOpKeyGenericKeyword(flowStep)) {
 				String variableName = "genericKeywords";
@@ -34,19 +33,16 @@ public class TCFLCodeConstruct {
 					variableName = "appiumKeywords";
 				}
 				String code = getKeywordCode(artifact, flowStep, variableName);
-				code = addOutputVariables(artifact, flowStep, code);
-				return addDataRepositoryIterations(artifact, flowStep, code);
+				return addOutputVariables(artifact, flowStep, code);
 			}
 			if (isSystemKeyword(flowStep)) {
 				String code = getKeywordCode(artifact, flowStep, "systemKeywords");
-				code = addOutputVariables(artifact, flowStep, code);
-				return addDataRepositoryIterations(artifact, flowStep, code);
+				return addOutputVariables(artifact, flowStep, code);
 			}
 			if (isPluginSpecificKeyword(flowStep)) {
 				String varName = getPluginSpecificVarName(flowStep);
 				String code = getKeywordCode(artifact, flowStep, varName);
-				code = addOutputVariables(artifact, flowStep, code);
-				return addDataRepositoryIterations(artifact, flowStep, code);
+				return addOutputVariables(artifact, flowStep, code);
 			}
 		}
 
@@ -329,10 +325,9 @@ public class TCFLCodeConstruct {
 		return outputCode + mainCode;
 	}
 
-	private String addDataRepositoryIterations(Artifact artifact, FlowStep flowStep, String mainCode) {
+	public String addDataRepositoryIterations(Artifact artifact, List<FlowInputArgument> flowInputArguments, String mainCode) {
 		String forLoopParameters = "";
 		String bodyCode = mainCode;
-		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
 				flowInputArguments);
 		String forLoopFormat = "for(%s) {%s}";
