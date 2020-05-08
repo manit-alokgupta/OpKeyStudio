@@ -120,7 +120,7 @@ public class AppiumSettingsDialog extends Dialog {
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
 		shlAppiumSettings
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -143,7 +143,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		clblLogo = new CLabel(compositeTopHeading, SWT.NONE);
 		clblLogo.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		clblLogo.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/appium_logo.jpg"));
+		clblLogo.setImage(ImageConstants.IMG_APPIUM_LOGO);
 		clblLogo.setBounds(519, 10, 113, 33);
 
 		Label lblProvideAppiumHost = new Label(compositeTopHeading, SWT.NONE);
@@ -205,7 +205,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		Button btnBrowse = new Button(compositeAppiumSettings, SWT.NONE);
 		btnBrowse.setBounds(520, 97, 18, 18);
-		btnBrowse.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browse.png"));
+		btnBrowse.setImage(ImageConstants.IMG_16_BROWSE);
 		btnBrowse.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnBrowse.setToolTipText("Browse");
 
@@ -270,7 +270,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeForDeleteButton.setBounds(46, 5, 33, 33);
 
 		btnDelete = new Button(compositeForDeleteButton, SWT.PUSH);
-		btnDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/delete_icon.png"));
+		btnDelete.setImage(ImageConstants.IMG_16_DELETE_CAPABILITY);
 		btnDelete.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -346,7 +346,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeForBtnAddToTable.setBounds(445, 13, 18, 18);
 
 		btnAddToTable = new Button(compositeForBtnAddToTable, SWT.NONE);
-		btnAddToTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotableicon.png"));
+		btnAddToTable.setImage(ImageConstants.IMG_16_ADD_TO_TABLE);
 		btnAddToTable.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -407,7 +407,7 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 		btnRefresh.setBounds(470, 13, 18, 18);
-		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		btnRefresh.setImage(ImageConstants.IMG_16_REFRESH_TABLE);
 		btnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefresh.setToolTipText("Refresh Table");
 
@@ -470,7 +470,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeForBtnAddToTable2.setBounds(450, 13, 18, 18);
 
 		addToTable2 = new Button(compositeForBtnAddToTable2, SWT.NONE);
-		addToTable2.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotableicon.png"));
+		addToTable2.setImage(ImageConstants.IMG_16_ADD_TO_TABLE);
 		addToTable2.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		addToTable2.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -495,7 +495,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeForBtnAddToTable2.setToolTipText("Add to table");
 
 		manuallyCancel = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
-		manuallyCancel.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/cancelicon.png"));
+		manuallyCancel.setImage(ImageConstants.IMG_16_CANCEL);
 		manuallyCancel.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallyCancel.setToolTipText("Cancel");
 		manuallyCancel.addSelectionListener(new SelectionAdapter() {
@@ -541,7 +541,7 @@ public class AppiumSettingsDialog extends Dialog {
 		});
 		manuallybtnRefresh.setBounds(475, 13, 18, 18);
 		manuallybtnRefresh
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		.setImage(ImageConstants.IMG_16_REFRESH_TABLE);
 		manuallybtnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallybtnRefresh.setToolTipText("Refresh Table");
 

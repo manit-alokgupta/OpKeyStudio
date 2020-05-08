@@ -44,6 +44,8 @@ import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.AppiumMobileServer;
 import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.core.utils.MobileDeviceUtil;
+import pcloudystudio.resources.constant.ImageConstants;
+import pcloudystudio.resources.image.ImageManager;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
 
 public class DeviceConfigurationDialog extends Dialog {
@@ -90,7 +92,7 @@ public class DeviceConfigurationDialog extends Dialog {
 	private void createContents() {
 		shlDeviceConfiguration = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL | SWT.BORDER);
 		shlDeviceConfiguration
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 		shlDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shlDeviceConfiguration.setSize(624, 262);
 		shlDeviceConfiguration.setText("Configuration Dashboard");
@@ -127,7 +129,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnHelp = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnHelp.setToolTipText("Help");
 		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnHelp.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/help_13.png"));
+		btnHelp.setImage(ImageConstants.IMG_13_HELP);
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -173,7 +175,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnRefresh.setToolTipText("Refresh");
 		btnRefresh.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		btnRefresh.setImage(ImageConstants.IMG_16_REFRESH_TABLE);
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -219,7 +221,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnBrowseAPK.setToolTipText("Browse Application");
 		btnBrowseAPK.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnBrowseAPK.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browse.png"));
+		btnBrowseAPK.setImage(ImageConstants.IMG_16_BROWSE);
 		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
