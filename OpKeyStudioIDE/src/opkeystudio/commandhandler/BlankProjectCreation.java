@@ -13,7 +13,6 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -46,6 +45,11 @@ public class BlankProjectCreation {
 
 			if (!new File(filePath).exists()) {
 				new File(filePath).mkdir();
+			} else {
+				new MessageDialogs().openErrorDialog("OpKey",
+						String.format("Project name '%s' already exists. Please provide a different name.",
+								ServiceRepository.getInstance().getProjectName()));
+				return;
 			}
 
 			filePath = filePath + File.separator + "artifacts.db";
