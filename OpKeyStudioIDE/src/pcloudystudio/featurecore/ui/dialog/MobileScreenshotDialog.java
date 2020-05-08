@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.ResourceManager;
 
+import pcloudystudio.resources.constant.ImageConstants;
 import pcloudystudio.spytreecomponents.MobileElement;
 
 import org.eclipse.swt.SWT;
@@ -211,7 +212,7 @@ public class MobileScreenshotDialog extends Dialog {
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(DIALOG_TITLE);
-		shell.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		shell.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 	}
 
 	@Override

@@ -66,6 +66,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import pcloudystudio.appium.MobileDriverObject;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.resources.constant.ImageConstants;
 import pcloudystudio.spytreecomponents.BasicMobileElement;
 import pcloudystudio.spytreecomponents.MobileElement;
 import pcloudystudio.spytreecomponents.MobileElementLabelProvider;
@@ -138,7 +139,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 
 	private void createContents() {
 		shlSpyMobile = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		shlSpyMobile.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlSpyMobile.setSize(new Point(800, 700));
 		shlSpyMobile.setText(DIALOG_TITLE);
@@ -358,7 +359,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		btnHelp = new Button(bottomComposite, SWT.NONE);
 		btnHelp.setToolTipText("Help");
 		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnHelp.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/help_16.png"));
+		btnHelp.setImage(ImageConstants.IMG_16_HELP);
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
