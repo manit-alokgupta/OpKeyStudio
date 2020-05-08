@@ -1189,6 +1189,22 @@ public class ArtifactTreeUI extends SuperComposite {
 	Artifact artifact;
 
 	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
+		boolean startsWithNumber = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.isStringStartsWithNumbers(artifactName);
+		boolean containsSpecialCharacters = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.isStringContainsSpecialCharacters(artifactName);
+
+		if (startsWithNumber) {
+			MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+					"Name should not start with number.");
+			return;
+		}
+
+		if (containsSpecialCharacters) {
+			MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+					"Name should not contain any special characters.");
+			return;
+		}
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 

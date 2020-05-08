@@ -210,19 +210,21 @@ public class ArtifactCodeView extends SuperComposite {
 	private void checkClassIsRunnable() {
 		File file = getCodeViewFile();
 		String code = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
-		JavaClassSource classSource = (JavaClassSource) Roaster.parse(code);
-		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
-		for (MethodSource<JavaClassSource> method : methods) {
-			if (method != null) {
-				if (method.getName().equals("main")) {
-					if (method.isPublic()) {
-						if (method.isStatic()) {
-							runButton.setEnabled(true);
-							return;
+		Object classObject = Roaster.parse(code);
+		if (classObject instanceof JavaClassSource) {
+			JavaClassSource classSource = (JavaClassSource) classObject;
+			List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
+			for (MethodSource<JavaClassSource> method : methods) {
+				if (method != null) {
+					if (method.getName().equals("main")) {
+						if (method.isPublic()) {
+							if (method.isStatic()) {
+								runButton.setEnabled(true);
+								return;
+							}
 						}
 					}
 				}
-
 			}
 		}
 		runButton.setEnabled(false);
@@ -520,6 +522,7 @@ public class ArtifactCodeView extends SuperComposite {
 					e.printStackTrace();
 				}
 			}
+			toggleSaveButton(false);
 			bottomFactoryUi.getCompilationResultTable().renderCompilingError(compileErrors);
 			return;
 		}
