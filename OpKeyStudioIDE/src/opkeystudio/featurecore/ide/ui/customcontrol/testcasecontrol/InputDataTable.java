@@ -622,6 +622,26 @@ public class InputDataTable extends CustomTable {
 								valueData = "false";
 							}
 						}
+						if (keywordInputArg.getDatatype().toString().equals("Boolean")) {
+							if (valueData != null) {
+								if (valueData.equals("0")) {
+									valueData = "false";
+									flowInputArg.setStaticvalue(valueData);
+								}
+								if (valueData.equals("1")) {
+									valueData = "true";
+									flowInputArg.setStaticvalue(valueData);
+								}
+								if (valueData.equals("False")) {
+									valueData = "false";
+									flowInputArg.setStaticvalue(valueData);
+								}
+								if (valueData.equals("True")) {
+									valueData = "true";
+									flowInputArg.setStaticvalue(valueData);
+								}
+							}
+						}
 						cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getName(),
 								valueData });
 						cti.setControlData(flowInputArg);
