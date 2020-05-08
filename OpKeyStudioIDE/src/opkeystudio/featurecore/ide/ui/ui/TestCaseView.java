@@ -609,6 +609,19 @@ public class TestCaseView extends SuperComposite {
 
 	private void populateFlowStepsData(FlowStep flowStep) throws JsonParseException, JsonMappingException, IOException {
 		System.out.println("Called populateFlowStepsData");
+		if (flowStep == null) {
+			toggleDeleteButton(false);
+			toggleMoveupButton(false);
+			toggleMovedownButton(false);
+			System.out.println("2 Table Items Count " + flowStepTable.getItemCount());
+			if (flowStepTable.getItemCount() == 0) {
+				toggleDeleteButton(false);
+				toggleMoveupButton(false);
+				toggleMovedownButton(false);
+			}
+			return;
+		}
+		
 		if (flowStep != null) {
 			setSelectedFlowStep(flowStep);
 			String stepDetails = "";
@@ -635,10 +648,12 @@ public class TestCaseView extends SuperComposite {
 			} else {
 				toggleMovedownButton(true);
 			}
-		} else {
-			toggleDeleteButton(false);
-			toggleMoveupButton(false);
-			toggleMovedownButton(false);
+			System.out.println("1 Table Items Count " + flowStepTable.getItemCount());
+			if (flowStepTable.getItemCount() == 0) {
+				toggleDeleteButton(false);
+				toggleMoveupButton(false);
+				toggleMovedownButton(false);
+			}
 		}
 	}
 
