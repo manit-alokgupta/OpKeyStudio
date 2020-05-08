@@ -116,9 +116,11 @@ public class ArtifactExporting {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		ServiceRepository.getInstance().setProjectName(projectName);
 		String downloadFileId = Utilities.getInstance().getUniqueUUID("");
 		String projectsFolder = Utilities.getInstance().getProjectsFolder();
-		String artifactDownloadFolder = projectsFolder + File.separator + projectName;
+		String artifactDownloadFolder = projectsFolder + File.separator
+				+ ServiceRepository.getInstance().getProjectName();
 		if (!new File(artifactDownloadFolder).exists()) {
 			new File(artifactDownloadFolder).mkdir();
 		}
