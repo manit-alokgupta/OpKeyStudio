@@ -4,7 +4,6 @@ package pcloudystudio.spytreecomponents;
 // Copyright © 2020 SSTS Inc. All rights reserved.
 
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.wb.swt.ResourceManager;
 
 import pcloudystudio.resources.constant.ImageConstants;
 import pcloudystudio.spytreecomponents.providers.TypeCheckedStyleTreeCellLabelProvider;
@@ -19,7 +18,7 @@ public class MobileElementLabelProvider extends TypeCheckedStyleTreeCellLabelPro
 	}
 
 	protected Image getImage(TreeMobileElement element) {
-		return ImageConstants.IMG_16_HELP;
+		return ImageConstants.IMG_16_TEST_OBJECT;
 	}
 
 	protected String getElementToolTipText(TreeMobileElement element) {

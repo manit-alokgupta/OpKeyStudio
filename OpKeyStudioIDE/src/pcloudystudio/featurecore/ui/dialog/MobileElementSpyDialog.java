@@ -56,7 +56,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 
@@ -69,9 +68,9 @@ import pcloudystudio.core.utils.CustomMessageDialogUtil;
 import pcloudystudio.resources.constant.ImageConstants;
 import pcloudystudio.spytreecomponents.BasicMobileElement;
 import pcloudystudio.spytreecomponents.MobileElement;
+import pcloudystudio.spytreecomponents.MobileElementInspectorController;
 import pcloudystudio.spytreecomponents.MobileElementLabelProvider;
 import pcloudystudio.spytreecomponents.MobileElementTreeContentProvider;
-import pcloudystudio.spytreecomponents.MobileElementInspectorController;
 import pcloudystudio.spytreecomponents.TreeMobileElement;
 
 public class MobileElementSpyDialog extends Dialog implements MobileElementInspectorDialog {
