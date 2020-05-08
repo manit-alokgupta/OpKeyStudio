@@ -1,13 +1,12 @@
 package pcloudystudio.core.utils;
 
-import org.eclipse.jface.dialogs.InputDialog;
-
 //Created by Alok Gupta on 20/02/2020.
 //Copyright © 2020 SSTS Inc. All rights reserved.
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.jface.dialogs.InputDialog;
 
 public class CustomMessageDialogUtil {
 
@@ -32,7 +31,7 @@ public class CustomMessageDialogUtil {
 		int result = mDialog.open();
 		return result;
 	}
-	
+
 	public static String openInputDialog(String dialogTitle, String dialogContent, String defaultValue) {
 		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), dialogTitle, dialogContent,
 				defaultValue, null);

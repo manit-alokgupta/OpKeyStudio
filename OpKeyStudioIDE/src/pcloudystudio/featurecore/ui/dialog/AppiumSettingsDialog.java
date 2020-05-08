@@ -44,6 +44,7 @@ import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.resources.constant.ImageConstants;
 
 public class AppiumSettingsDialog extends Dialog {
 
@@ -250,7 +251,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeAddCapability.setBounds(20, 5, 612, 42);
 
 		btnAdd = new Button(compositeAddCapability, SWT.NONE);
-		btnAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/add_icon.png"));
+		btnAdd.setImage(ImageConstants.IMG_16_ADD_TO_TABLE);
 		btnAdd.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
