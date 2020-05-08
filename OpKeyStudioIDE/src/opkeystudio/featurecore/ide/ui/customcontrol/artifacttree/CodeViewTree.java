@@ -158,7 +158,7 @@ public class CodeViewTree extends CustomTree {
 		}
 
 	}
-
+	
 	public void renameSelectedFile() {
 		try {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
@@ -177,6 +177,7 @@ public class CodeViewTree extends CustomTree {
 				return;
 			}
 
+			fileName = fileName.replaceAll(" ", "");
 			fileName = fileName.split("\\.")[0];
 			boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 					.isStringContainsSpecialCharacters(fileName);
@@ -231,6 +232,7 @@ public class CodeViewTree extends CustomTree {
 			return;
 		}
 
+		fileName = fileName.replaceAll(" ", "");
 		boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.isStringContainsSpecialCharacters(fileName);
 		boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
@@ -249,12 +251,6 @@ public class CodeViewTree extends CustomTree {
 		if (file.exists()) {
 			new MessageDialogs().openErrorDialog("OpKey", "File Name must be unique");
 			return;
-		}
-		try {
-			file.createNewFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 		List<String> packagesName = new ArrayList<String>();
@@ -286,6 +282,12 @@ public class CodeViewTree extends CustomTree {
 			}
 
 			class1.setPackage(packageName);
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
 			renderCodeViewTree();
 		} catch (Exception e) {
@@ -311,6 +313,7 @@ public class CodeViewTree extends CustomTree {
 			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
 			return;
 		}
+		fileName = fileName.replaceAll(" ", "");
 		boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.isStringContainsSpecialCharacters(fileName);
 		boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
