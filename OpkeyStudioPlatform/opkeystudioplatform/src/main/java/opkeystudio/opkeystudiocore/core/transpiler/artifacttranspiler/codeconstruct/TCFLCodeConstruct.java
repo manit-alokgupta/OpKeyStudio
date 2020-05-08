@@ -331,9 +331,11 @@ public class TCFLCodeConstruct {
 
 	private String addDataRepositoryIterations(Artifact artifact, FlowStep flowStep, String mainCode) {
 		String forLoopParameters = "";
+		String bodyCode = mainCode;
 		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
 				flowInputArguments);
+		String forLoopFormat = "for(%s) {%s}";
 		for (FlowInputObject flowInputObject : flowInputObjects) {
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {
 				String columnId = flowInputObject.getDataRepositoryColumnData();
@@ -344,15 +346,15 @@ public class TCFLCodeConstruct {
 						+ "\"" + columnName + "\"" + ")";
 				forLoopParameters = "String " + columnName + ":" + path;
 				System.out.println(forLoopParameters);
-				break;
+				bodyCode = String.format(forLoopFormat, forLoopParameters, bodyCode);
+
 			}
 		}
 		if (forLoopParameters.isEmpty()) {
 			return mainCode;
 		}
-		String forLoopFormat = "for(%s) {%s}";
-		String forLoopCode = String.format(forLoopFormat, forLoopParameters, mainCode);
-		return forLoopCode;
+
+		return bodyCode;
 	}
 
 	private boolean isKeywordType(FlowStep flowStep) {
