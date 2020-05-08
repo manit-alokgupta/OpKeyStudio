@@ -158,7 +158,7 @@ public class CodeViewTree extends CustomTree {
 		}
 
 	}
-	
+
 	public void renameSelectedFile() {
 		try {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
@@ -417,7 +417,7 @@ public class CodeViewTree extends CustomTree {
 			renderFiles(srcNode, file);
 		}
 		expandAll(rootNode);
-		GenericEditorIntellisense.getCodeEditorInstance().refreshCodeEditorIntellisense();
+		GenericEditorIntellisense.getGenericInstanceoOfCodeEditor().refreshCodeEditorIntellisense();
 	}
 
 	private void renderFiles(CodeViewTreeItem parentNode, File rootFile) {

@@ -81,8 +81,12 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return cflinstance;
 	}
 
-	public void refreshCodeEditorIntellisense() {
+	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
 		instance = new GenericEditorIntellisense();
+		return instance;
+	}
+
+	public void refreshCodeEditorIntellisense() {
 		instance.initIntellisense();
 	}
 

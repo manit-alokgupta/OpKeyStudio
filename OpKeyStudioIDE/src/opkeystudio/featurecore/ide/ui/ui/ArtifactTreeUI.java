@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -33,7 +34,6 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTreeItem;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
@@ -285,16 +285,14 @@ public class ArtifactTreeUI extends SuperComposite {
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Name", "Name " + artifact.getName(),
 							artifact.getName());
 					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
 						return;
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
@@ -327,11 +325,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Suite);
@@ -365,11 +362,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Folder);
@@ -402,11 +398,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
@@ -439,11 +434,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
@@ -535,11 +529,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					return;
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(renamedText)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(renamedText);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				artifact.setName(renamedText);
@@ -593,11 +586,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
@@ -646,11 +638,10 @@ public class ArtifactTreeUI extends SuperComposite {
 							"Name should not contain any special characters.");
 					return;
 				}
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.CodedFunction);
@@ -815,11 +806,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				String artifactId = null;
@@ -859,11 +849,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				toogleNewToolbarItem(false);
@@ -899,11 +888,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				toogleNewToolbarItem(false);
@@ -937,11 +925,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				toogleNewToolbarItem(false);
@@ -1005,11 +992,10 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
-					if (artifactN.getName().equals(inputValue)) {
-						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
-						return;
-					}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
 				}
 
 				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
@@ -1184,6 +1170,20 @@ public class ArtifactTreeUI extends SuperComposite {
 			}
 		});
 
+	}
+
+	private boolean isArtifactNameIsUnique(String artifactName) {
+		ArtifactTreeItem treeitem = artifactTree.getSelectedArtifactTreeItem();
+		if (treeitem == null) {
+			return true;
+		}
+		TreeItem[] items = treeitem.getItems();
+		for (TreeItem item : items) {
+			if (item.getText().equals(artifactName)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
