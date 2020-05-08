@@ -3,7 +3,6 @@ package com.opkey.appium.ObjectFromatter;
 import java.util.Map;
 import java.util.Set;
 
-import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments.ObjectArgument;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object;
@@ -35,18 +34,18 @@ public class ObjectConverter {
 					.addProperty("src", "http://sstsinc.com/").addProperty("titleindex", "0");
 			Object _object = convertORObjectToOpKeyObject(orobject);
 			
-			AppiumObject webdriverobject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
+			AppiumObject appiumObject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
 			Object _parentobject = convertORObjectToOpKeyObject(SmartSoftwareTestingSolutions);
 			AppiumObject parentobject = new ObjectFormatter().formatObjectToWebDriverObject(_parentobject);
-			webdriverobject.setParentObject(parentobject);
-			System.out.println(">>Object " + webdriverobject.toString());
+			appiumObject.setParentObject(parentobject);
+			System.out.println(">>Object " + appiumObject.toString());
 			
 			this.setObjectArgumentInFunctionCall(orobject);
 			
-			return webdriverobject;
+			return appiumObject;
 		} catch (ObjectPropertiesNotSufficientException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Warning: " + e.getMessage());
 		}
 		return null;
 	}
@@ -72,13 +71,15 @@ public class ObjectConverter {
 	}
 
 	private String getLogicalNameOfORObject(ORObject orobject) {
-		Map<String, String> allProperties = orobject.getAllProperties();
-		for (String key : allProperties.keySet()) {
-			if (key.toLowerCase().equals("logicalname")) {
-				return allProperties.get(key);
-			}
+		
+		if(orobject.getAllProperties().containsKey("logicalname")) {
+			return orobject.getAllProperties().get("logicalname");
+		}else if(orobject.getAllProperties().containsKey("name")) {
+			return orobject.getAllProperties().get("name");
+		}else if(orobject.getAllProperties().containsKey("text")) {
+			return orobject.getAllProperties().get("text");
 		}
-		return "";
+		return "no-name";
 	}
 	
 	private void setObjectArgumentInFunctionCall(ORObject obj) {
