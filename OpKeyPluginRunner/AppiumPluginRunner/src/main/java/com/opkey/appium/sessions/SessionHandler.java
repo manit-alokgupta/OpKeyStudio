@@ -16,6 +16,8 @@ import com.ssts.reporting.ReportFormat;
 public class SessionHandler implements ExecutionSession {
 
 	private static SessionInfo sessionInfo;
+	public static File reportFilePath;
+	public static File screenshotPath;
 
 	public void afterSessionEnds(Object sessionObject) {
 		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
@@ -46,11 +48,14 @@ public class SessionHandler implements ExecutionSession {
 		System.out.println("Device Id :" + device.getSerialNumber());
 		System.out.println("Device Version :" + device.getVersion());
 		System.out.println("Device OS :" + device.getOperatingSystem());
-
-		ReportBuilder builder = ReportBuilder.atPath(new File(sessionInfo.getReportFilePath()));
+		
+		File htmlFile = new File(sessionInfo.getReportFilePath());
+		reportFilePath = htmlFile.getParentFile();
+		ReportBuilder builder = ReportBuilder.atPath(htmlFile);
 		IReport report = builder.withName(sessionInfo.getSessionName()).withFormat(ReportFormat.HTML).build();
 		// you may now get this instance with Report.get()
 
+		setScreenshotDirPath();
 	}
 
 	public void pauseExecutionSession(Object sessionObject) {
@@ -64,5 +69,9 @@ public class SessionHandler implements ExecutionSession {
 	public static SessionInfo getSessionInfo() {
 		return SessionHandler.sessionInfo;
 	}
-
+	
+	public static void setScreenshotDirPath() {
+		screenshotPath = new File(reportFilePath.getPath() + File.separator + "screenshot");
+		screenshotPath.mkdir();
+	}
 }

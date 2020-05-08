@@ -519,20 +519,18 @@ public class OpKeyAppiumKeywords {
 		}
 	}
 
-	public boolean Mobile_LaunchAndroidApplication(MobileDevice device, String androidApplicationPathh)
+	public boolean Mobile_LaunchAndroidApplication(MobileDevice device1, String androidApplicationPathh)
 			throws Exception {
 		String methodName = DataType.getMethodName();
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(androidApplicationPathh); // Method_SetPickerValue
 
-		device = SessionHandler.getSessionInfo().getMobileDevice();
+		final MobileDevice device = SessionHandler.getSessionInfo().getMobileDevice();
 		System.out.println("@AppPath: " + androidApplicationPathh);
 		System.out.println("Name " + device.getDisplayName());
 		System.out.println("os " + device.getOperatingSystem());
 		System.out.println("sn " + device.getSerialNumber());
 		System.out.println("ver " + device.getVersion());
-		// device.setOperatingSystem("android");
-		// device.setVersion("8.1");
 
 		MobileApplication mobileApplication = new MobileApplication();
 		mobileApplication.setApplicationPath(androidApplicationPathh);
@@ -545,23 +543,14 @@ public class OpKeyAppiumKeywords {
 				"C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
 		Context.session().getSettings().put("Host", "localhost");
 		Context.session().getSettings().put("Port", "4723");
-//		Context.session().getSettings().put("Host", "");
-//		Context.session().getSettings().put("Port", "");
 		Context.session().getSettings().put("PlatformVersion", device.getVersion());
 
-		try {
-			FunctionResult functionResult = new Connect2AppiumServer().Method_Launch_AndroidApplication(device,
-					mobileApplication);
-			ReportHelper.addReportStep(methodName, functionResult);
-			;
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-			e.printStackTrace();
-			throw new ToolNotSetException();
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Connect2AppiumServer().Method_Launch_AndroidApplication(device,
+				mobileApplication));
+		
+		return DataType.getBoolean(functionResult.getOutput());
+		
 		}
-
-		return false;
-	}
 
 	public boolean LaunchSafariOn_iOS(String arg0, String arg1) {
 

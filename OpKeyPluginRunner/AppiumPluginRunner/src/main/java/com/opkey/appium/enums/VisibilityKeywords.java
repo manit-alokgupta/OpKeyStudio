@@ -24,5 +24,6 @@ public enum VisibilityKeywords {
 	VerifyMultipleDropDownItemExist,
 	VerifyEditBoxExistAndWait,
 	Web_VerifyListItemExists,
-	VerifyCheckboxEnabled
+	VerifyCheckboxEnabled,
+	VerifyEditboxName
 }

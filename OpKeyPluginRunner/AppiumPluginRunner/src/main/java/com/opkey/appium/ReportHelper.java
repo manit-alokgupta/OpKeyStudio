@@ -1,5 +1,6 @@
 package com.opkey.appium;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,14 @@ public class ReportHelper {
 		List<String> parameterList = new ArrayList<String>();
 
 		parameterList = getParameters();
-		ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
-				functionResult.getOutput());
+		
+		if(functionResult.getSnapshotPath() != null) {
+			ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
+					functionResult.getOutput(), new File(functionResult.getSnapshotPath()));
+		}else {
+			ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
+					functionResult.getOutput());
+		}
 	}
 
 	public static void addReportStep(String methodName, Exception e) {
