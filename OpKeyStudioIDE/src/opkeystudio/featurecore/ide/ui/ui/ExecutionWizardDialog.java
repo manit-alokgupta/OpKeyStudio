@@ -74,7 +74,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		this.setParentTestCaseView(parentTestCaseView);
 		this.setExecutingFromTestCaseView(true);
 		setHelpAvailable(false);
-		initExecutionSession(parentTestCaseView.getArtifact());
+		initExecutionSession(parentTestCaseView.getCurrentArtifact());
 	}
 
 	public ExecutionWizardDialog(Shell parentShell, TestSuiteView parentTestSuiteView) {
@@ -82,7 +82,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		this.setParentTestSuiteView(parentTestSuiteView);
 		this.setExecutingFromTestSuiteView(true);
 		setHelpAvailable(false);
-		initExecutionSession(parentTestSuiteView.getArtifact());
+		initExecutionSession(parentTestSuiteView.getCurrentArtifact());
 	}
 
 	public ExecutionWizardDialog(Shell parentShell, ArtifactCodeView parentArtifactCodeView,
@@ -100,7 +100,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		setCFLArtifact(true);
 		this.setParentArtifactCodeView(parentArtifactCodeView);
 		setHelpAvailable(false);
-		initExecutionSession(parentArtifactCodeView.getArtifact());
+		initExecutionSession(parentArtifactCodeView.getCurrentArtifact());
 	}
 
 	/**

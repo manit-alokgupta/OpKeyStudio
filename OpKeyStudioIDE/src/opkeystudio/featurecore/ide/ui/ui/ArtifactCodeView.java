@@ -228,6 +228,10 @@ public class ArtifactCodeView extends SuperComposite {
 		runButton.setEnabled(false);
 	}
 
+	public Artifact getCurrentArtifact() {
+		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
+	}
+
 	private void displayCodeViewFileData() {
 		File file = getCodeViewFile();
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
@@ -245,7 +249,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initCFLCode() {
-		Artifact artifact = getArtifact();
+		Artifact artifact = getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
