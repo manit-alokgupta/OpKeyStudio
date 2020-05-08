@@ -589,6 +589,7 @@ public class FlowStepTable extends CustomTable {
 				this.getFlowStepsData());
 		this.getFlowStepsData().add(flowStep);
 		this.refreshFlowSteps();
+		selectNextRowByCursor(getTableCursor(), 1);
 		getParentTestCaseView().toggleSaveButton(true);
 	}
 

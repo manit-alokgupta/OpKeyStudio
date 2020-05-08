@@ -79,6 +79,18 @@ public class CustomTable extends Table {
 		}
 	}
 
+	public void selectNextRowByCursor(TableCursor cursor, int column) {
+		if (cursor != null) {
+			try {
+				cursor.setSelection(this.getSelectedRowIndex() + 1, column);
+				cursor.notifyListeners(SWT.Selection, null);
+				this.notifyListeners(SWT.Selection, null);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+	}
+
 	public void selectColumnByCursor(TableCursor cursor, int columnIndex) {
 		if (cursor != null) {
 			System.out.println("Table Cursor Found");
