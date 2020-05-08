@@ -67,6 +67,8 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private static GenericEditorIntellisense instance;
 	private static GenericEditorIntellisense cflinstance;
 	private List<ClassIntellisenseDTO> senseClasses = new ArrayList<ClassIntellisenseDTO>();
+	private static boolean refreshCodeEditorIntellisenseRunning = false;
+	private static boolean refreshCFLEditorIntellisenseRunning = false;
 
 	public static GenericEditorIntellisense getCodeEditorInstance() {
 		if (instance == null) {
@@ -89,49 +91,55 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return instance;
 	}
 
+	public static GenericEditorIntellisense getCFLInstanceoOfCodeEditor() {
+		instance = new GenericEditorIntellisense();
+		return instance;
+	}
+
 	public void refreshCodeEditorIntellisense() {
+		if (refreshCodeEditorIntellisenseRunning) {
+			System.out.println("Already Refresh Intellisense Running");
+			return;
+		}
+		refreshCodeEditorIntellisenseRunning = true;
 		instance.initIntellisense();
 	}
 
 	public void refreshCFLIntellisense() {
-		instance = new GenericEditorIntellisense();
+		if (refreshCFLEditorIntellisenseRunning) {
+			System.out.println("Already CFL Refresh Intellisense Running");
+			return;
+		}
+		refreshCFLEditorIntellisenseRunning = true;
 		instance.initCFLIntellisense();
 	}
 
 	private void initIntellisense() {
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog(null, "Intellisense Initializing", false, new IRunnableWithProgress() {
+		Job intellisenseJob = Job.create("Update Intellisense", new ICoreRunnable() {
 
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						addSimpleKeywords();
-						addOpKeyTranspiledClassInformation();
-						addClassInformationFromSenseFile(false);
-					}
-				});
-				msd.closeProgressDialog();
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				addSimpleKeywords();
+				addOpKeyTranspiledClassInformation();
+				addClassInformationFromSenseFile(false);
+				refreshCodeEditorIntellisenseRunning = false;
 			}
 		});
+		intellisenseJob.schedule();
 	}
 
 	private void initCFLIntellisense() {
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog(null, "CFL Intellisense Initializing", false, new IRunnableWithProgress() {
+		Job intellisenseJob = Job.create("Update Intellisense", new ICoreRunnable() {
 
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						addSimpleKeywords();
-						addOpKeyTranspiledClassInformation();
-						addClassInformationFromSenseFile(true);
-					}
-				});
-				msd.closeProgressDialog();
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				addSimpleKeywords();
+				addOpKeyTranspiledClassInformation();
+				addClassInformationFromSenseFile(true);
+				refreshCFLEditorIntellisenseRunning = false;
 			}
 		});
+		intellisenseJob.schedule();
 	}
 
 	@SuppressWarnings("unchecked")

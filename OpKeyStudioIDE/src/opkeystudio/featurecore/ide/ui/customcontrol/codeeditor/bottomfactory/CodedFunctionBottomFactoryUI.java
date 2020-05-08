@@ -781,7 +781,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 										}
 									});
 							msd.closeProgressDialog();
-							GenericEditorIntellisense.getCFLInstance().refreshCFLIntellisense();
+							GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
 						}
 					});
 				}
