@@ -12,13 +12,14 @@ import com.opkey.appium.enums.VisibilityKeywords;
 
 public class FunctionCaller {
 	public static <T> FunctionResult execute(Callable<T> task) {
-		FunctionResult functionResult;
+		FunctionResult functionResult = null;
 		String methodName = Context.current().getFunctionCall().getFunction().getMethodName();
 		long startTime = System.currentTimeMillis();
 
 		try {
 			functionResult = (FunctionResult) task.call();
-			ReportHelper.addReportStep(methodName, validateFunctionResult(functionResult, methodName));
+			functionResult = validateFunctionResult(functionResult, methodName);
+			ReportHelper.addReportStep(methodName, functionResult);
 		} catch (Exception e) {
 			functionResult = validateExceptionAndReport(methodName, e);
 			e.printStackTrace();
@@ -38,7 +39,7 @@ public class FunctionCaller {
 
 	private static FunctionResult validateExceptionAndReport(String keywordName, Exception exception) {
 		System.out.println("Validate exception and report");
-		if (isVisibilityKeyword(keywordName) || isGetKeyword(keywordName)) {
+		if (isGetKeyword(keywordName)) {
 			FunctionResult functionResult = getPassTimeOutFR(false);
 			ReportHelper.addReportStep(keywordName, functionResult);
 			return functionResult;
@@ -46,7 +47,7 @@ public class FunctionCaller {
 			FunctionResult functionResult = Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION)
 					.setMessage(exception.getMessage()).setOutput(false).make();
 
-			ReportHelper.addReportStep(keywordName, exception);
+			ReportHelper.addReportStep(keywordName, functionResult);
 			return functionResult;
 		}
 	}
@@ -55,8 +56,8 @@ public class FunctionCaller {
 		System.out.println("Validate function result: " + functionResult);
 		printFunctionResult(functionResult);
 		
-		if (functionResult == null && isGetKeyword(keywordName) || isVisibilityKeyword(keywordName)) {
-			System.out.println("#1. Found Visibility/get type keyword");
+		if (functionResult == null && isGetKeyword(keywordName)) {
+			System.out.println("#1. Found get type keyword");
 			return Result.PASS().setOutput(false).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
 		}else if(functionResult == null) {
 			return Result.FAIL().setOutput(false).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
@@ -81,10 +82,6 @@ public class FunctionCaller {
 		}
 		System.out.println("Not Found VISIBILITY keyword: " + keywordName);
 		return false;
-	}
-	
-	public static void main(String[] args) {
-		isGetKeyword("GetObjectEnabled");
 	}
 
 	public static boolean isGetKeyword(String keywordName) {

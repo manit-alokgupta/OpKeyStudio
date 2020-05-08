@@ -4,7 +4,6 @@ public enum VisibilityKeywords {
 	VerifyObjectVisible,
 	VerifyImageNotVisible,
 	VerifyImageVisible,
-	GetObjectVisibility,
 	VerifyEditBoxExist,
 	VerifyEditBoxnotExist,
 	VerifyTextAreaExist,
