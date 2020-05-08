@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary;
 
 import java.util.List;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.keyword.KeywordConstructApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
@@ -42,6 +43,11 @@ public class FunctionLibraryConstruct {
 			addComponentInputArgument(flowInputArgument);
 			updateComponentInputArgument(flowInputArgument);
 		}
+		GlobalLoader.getInstance().initAllComponentInputParameters();
+		GlobalLoader.getInstance().initAllComponentFlowOutputArguments();
+		GlobalLoader.getInstance().initAllComponentFlowInputArguments();
+		GlobalLoader.getInstance().initAllFlowInputArguments();
+		GlobalLoader.getInstance().initAllFlowOutputArguments();
 	}
 
 	private void saveFlowInputArguments(List<FlowInputArgument> flowInputArguments) {
@@ -50,6 +56,7 @@ public class FunctionLibraryConstruct {
 			addFlowInputArgument(flowInputArgument);
 			updateFlowInputArgument(flowInputArgument);
 		}
+		
 	}
 
 	public void saveComponentOutputArguments(List<ComponentOutputArgument> componentOutputArguments) {
@@ -58,6 +65,11 @@ public class FunctionLibraryConstruct {
 			addComponentOutputArgument(flowOutputArgument);
 			updateComponentOutputArgument(flowOutputArgument);
 		}
+		GlobalLoader.getInstance().initAllComponentInputParameters();
+		GlobalLoader.getInstance().initAllComponentFlowOutputArguments();
+		GlobalLoader.getInstance().initAllComponentFlowInputArguments();
+		GlobalLoader.getInstance().initAllFlowInputArguments();
+		GlobalLoader.getInstance().initAllFlowOutputArguments();
 	}
 
 	private void saveFlowOutputArguments(List<FlowOutputArgument> flowOutputArguments) {

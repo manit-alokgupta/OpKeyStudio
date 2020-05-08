@@ -22,8 +22,11 @@ public class FlowConstruct {
 		System.out.println("Saving " + artifact.getFile_type_enum());
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 			new FunctionLibraryConstruct().saveAllComponentSteps(allFlowSteps);
-			GlobalLoader.getInstance().initAllComponentFlowInputArguments();
+			GlobalLoader.getInstance().initAllComponentInputParameters();
 			GlobalLoader.getInstance().initAllComponentFlowOutputArguments();
+			GlobalLoader.getInstance().initAllComponentFlowInputArguments();
+			GlobalLoader.getInstance().initAllFlowInputArguments();
+			GlobalLoader.getInstance().initAllFlowOutputArguments();
 			return;
 		}
 
