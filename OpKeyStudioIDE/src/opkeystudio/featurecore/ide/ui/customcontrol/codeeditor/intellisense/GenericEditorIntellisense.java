@@ -119,10 +119,12 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
+				System.out.println("Started Code Editor initIntellisense");
 				addSimpleKeywords();
 				addOpKeyTranspiledClassInformation();
 				addClassInformationFromSenseFile(false);
 				refreshCodeEditorIntellisenseRunning = false;
+				System.out.println("Completed Code Editor initIntellisense");
 			}
 		});
 		intellisenseJob.schedule();
@@ -133,10 +135,12 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
+				System.out.println("Started CFL Editor initIntellisense");
 				addSimpleKeywords();
 				addOpKeyTranspiledClassInformation();
 				addClassInformationFromSenseFile(true);
 				refreshCFLEditorIntellisenseRunning = false;
+				System.out.println("Completed CFL Editor initIntellisense");
 			}
 		});
 		intellisenseJob.schedule();
