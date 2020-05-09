@@ -18,6 +18,7 @@ public class ObjectConverter {
 	public AppiumObject formatObject(ORObject orobject) {
 		System.out.println("@orobject: ===============" + orobject);
 		if (orobject == null) {
+			this.setObjectArgumentInFunctionCall("No attachment found");
 			return new AppiumObject(false);
 		}
 		
@@ -84,6 +85,17 @@ public class ObjectConverter {
 		oArg.setArgumentName("Object");
 		Object orObj = new Object();
 		orObj.setLogicalName(getLogicalNameOfORObject(obj));
+		oArg.setObject(orObj);
+		oArgs.getObjectArgument().add(oArg);
+		Context.current().getFunctionCall().setObjectArguments(oArgs);
+	}
+	
+	private void setObjectArgumentInFunctionCall(String logicalName) {
+		ObjectArguments oArgs = new ObjectArguments();
+		ObjectArgument oArg = new ObjectArgument();
+		oArg.setArgumentName("Object");
+		Object orObj = new Object();
+		orObj.setLogicalName(logicalName);
 		oArg.setObject(orObj);
 		oArgs.getObjectArgument().add(oArg);
 		Context.current().getFunctionCall().setObjectArguments(oArgs);

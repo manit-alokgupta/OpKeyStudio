@@ -19,9 +19,7 @@ public class ReportHelper {
 		Status status = Status.valueOf(functionResult.getStatus().toUpperCase());
 		System.out.println("@Status: " + status);
 		
-		List<String> parameterList = new ArrayList<String>();
-
-		parameterList = getParameters();
+		List<String> parameterList = getParameters();
 		
 		if(functionResult.getSnapshotPath() != null) {
 			ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
