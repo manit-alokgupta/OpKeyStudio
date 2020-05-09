@@ -11,7 +11,7 @@ public class CFLInputParameter extends Modified implements Comparable<CFLInputPa
 	@DBField
 	private String tracking_id;
 	@DBField
-	private String cf_id;
+	private String component_id;
 	@DBField
 	private String name;
 	@DBField
@@ -53,12 +53,12 @@ public class CFLInputParameter extends Modified implements Comparable<CFLInputPa
 		this.tracking_id = tracking_id;
 	}
 
-	public String getCf_id() {
-		return cf_id;
+	public String getComponent_id() {
+		return component_id;
 	}
 
-	public void setCf_id(String cf_id) {
-		this.cf_id = cf_id;
+	public void setComponent_id(String component_id) {
+		this.component_id = component_id;
 	}
 
 	public String getName() {

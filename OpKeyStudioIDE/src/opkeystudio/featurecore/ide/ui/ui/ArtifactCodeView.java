@@ -187,7 +187,7 @@ public class ArtifactCodeView extends SuperComposite {
 		if (cflcodes.size() == 0) {
 			CFLCode cflcode = new CFLCode();
 			cflcode.setAdded(true);
-			cflcode.setCf_id(getArtifact().getId());
+			cflcode.setComponent_id(getArtifact().getId());
 			cflcode.setUsercode("");
 			cflcode.setLanguage("JAVA");
 			cflcode.setPluginid("2626b33a-a06c-408c-8f69-f8f1490a49bb");

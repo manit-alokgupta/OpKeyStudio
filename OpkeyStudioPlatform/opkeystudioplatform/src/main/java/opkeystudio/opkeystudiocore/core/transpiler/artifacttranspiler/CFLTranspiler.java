@@ -25,9 +25,10 @@ public class CFLTranspiler extends AbstractTranspiler {
 	@Override
 	public void transpile(Artifact artifact) {
 		try {
-			if (artifact.getFile_type_enum() != MODULETYPE.CodedFunction) {
+			if (artifact.getFile_type_enum() != MODULETYPE.CodedFunction && artifact.getFile_type_enum() != MODULETYPE.Component) {
 				return;
 			}
+			
 			File file = createArtifactFile(artifact);
 			JavaClassSource classSource = getCFLJavaClassSource(artifact);
 			new TranspilerUtilities().addPackageName(artifact, classSource);

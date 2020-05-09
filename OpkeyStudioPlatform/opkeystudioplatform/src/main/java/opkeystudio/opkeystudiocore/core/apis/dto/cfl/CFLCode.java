@@ -7,7 +7,7 @@ public class CFLCode extends Modified {
 	private int clustering_key;
 
 	@DBField
-	private String cf_id;
+	private String component_id;
 	@DBField
 	private String pluginid;
 	@DBField
@@ -27,12 +27,12 @@ public class CFLCode extends Modified {
 		this.clustering_key = clustering_key;
 	}
 
-	public String getCf_id() {
-		return cf_id;
+	public String getComponent_id() {
+		return component_id;
 	}
 
-	public void setCf_id(String cf_id) {
-		this.cf_id = cf_id;
+	public void setComponent_id(String component_id) {
+		this.component_id = component_id;
 	}
 
 

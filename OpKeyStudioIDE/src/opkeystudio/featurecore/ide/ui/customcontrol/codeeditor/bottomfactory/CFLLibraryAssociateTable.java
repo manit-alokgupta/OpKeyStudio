@@ -80,7 +80,7 @@ public class CFLLibraryAssociateTable extends CustomTable {
 		List<MainFileStoreDTO> filteredMainFileStoreDtos = new ArrayList<MainFileStoreDTO>();
 		List<CFLibraryMap> libraryMaps = GlobalLoader.getInstance().getAllLibraryMaps();
 		for (CFLibraryMap libraryMap : libraryMaps) {
-			if (libraryMap.getCf_id().equals(artifact.getId())) {
+			if (libraryMap.getComponent_id().equals(artifact.getId())) {
 				libraryMapsFID.add(libraryMap.getF_id());
 				List<MainFileStoreDTO> mainFileStoreDTOS = GlobalLoader.getInstance().getAllMainFileStoreDtos();
 				for (MainFileStoreDTO mainFileStoreDto : mainFileStoreDTOS) {

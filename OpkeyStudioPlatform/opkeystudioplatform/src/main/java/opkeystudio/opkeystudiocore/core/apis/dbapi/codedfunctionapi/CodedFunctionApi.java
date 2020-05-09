@@ -42,7 +42,7 @@ public class CodedFunctionApi {
 		}
 		if (cflcode.isModified()) {
 			query = new QueryMaker().createUpdateQuery(cflcode, "cf_code",
-					String.format("Where CF_ID='%s'", cflcode.getCf_id()));
+					String.format("Where Component_ID='%s'", cflcode.getComponent_id()));
 			System.out.println(query);
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
@@ -57,7 +57,7 @@ public class CodedFunctionApi {
 		List<CFLCode> cflCodes = new ArrayList<CFLCode>();
 		List<CFLCode> allcflCodes = GlobalLoader.getInstance().getAllCfCodes();
 		for (CFLCode cfcode : allcflCodes) {
-			if (cfcode.getCf_id().equals(artifact.getId())) {
+			if (cfcode.getComponent_id().equals(artifact.getId())) {
 				cflCodes.add(cfcode);
 			}
 		}
@@ -86,21 +86,21 @@ public class CodedFunctionApi {
 
 	private void deleteCFInputParam(CFLInputParameter cfinput) {
 		if (cfinput.isDeleted()) {
-			String query = String.format("delete from cf_input_parameters where ip_id ='%s'", cfinput.getIp_id());
+			String query = String.format("delete from component_input_parameters where ip_id ='%s'", cfinput.getIp_id());
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void addCFInputParam(CFLInputParameter cfinput) {
 		if (cfinput.isAdded()) {
-			String query = new QueryMaker().createInsertQuery(cfinput, "cf_input_parameters", "");
+			String query = new QueryMaker().createInsertQuery(cfinput, "component_input_parameters", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void updateCFInputParam(CFLInputParameter cfinput) {
 		if (cfinput.isModified()) {
-			String query = new QueryMaker().createUpdateQuery(cfinput, "cf_input_parameters",
+			String query = new QueryMaker().createUpdateQuery(cfinput, "component_input_parameters",
 					String.format("WHERE ip_id='%s'", cfinput.getIp_id()));
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
@@ -108,28 +108,28 @@ public class CodedFunctionApi {
 
 	private void deleteCFOutputParam(CFLOutputParameter cfoutput) {
 		if (cfoutput.isDeleted()) {
-			String query = String.format("delete from cf_output_parameters where op_id ='%s'", cfoutput.getOp_id());
+			String query = String.format("delete from component_output_parameters where op_id ='%s'", cfoutput.getOp_id());
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void addCFOutputParam(CFLOutputParameter cfoutput) {
 		if (cfoutput.isAdded()) {
-			String query = new QueryMaker().createInsertQuery(cfoutput, "cf_output_parameters", "");
+			String query = new QueryMaker().createInsertQuery(cfoutput, "component_output_parameters", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	private void updateCFOutputParam(CFLOutputParameter cfoutput) {
 		if (cfoutput.isModified()) {
-			String query = new QueryMaker().createUpdateQuery(cfoutput, "cf_output_parameters",
+			String query = new QueryMaker().createUpdateQuery(cfoutput, "component_output_parameters",
 					String.format("WHERE op_id='%s'", cfoutput.getOp_id()));
 			QueryExecutor.getInstance().executeUpdateQuery(query);
 		}
 	}
 
 	public List<CFLInputParameter> getCodedFLInputParameters(Artifact artifact) {
-		String query = String.format("select * from cf_input_parameters WHERE cf_id='%s' ORDER BY position asc;",
+		String query = String.format("select * from component_input_parameters WHERE component_id='%s' ORDER BY position asc;",
 				artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		System.out.println(result);
@@ -145,7 +145,7 @@ public class CodedFunctionApi {
 	}
 
 	public List<CFLOutputParameter> getCodedFLOutputParameters(Artifact artifact) {
-		String query = String.format("select * from cf_output_parameters WHERE cf_id='%s' ORDER BY position asc;",
+		String query = String.format("select * from component_output_parameters WHERE component_id='%s' ORDER BY position asc;",
 				artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		System.out.println(result);
@@ -161,7 +161,7 @@ public class CodedFunctionApi {
 	}
 
 	public List<CFLibraryMap> getCodedFLLibrary(Artifact artifact) {
-		String query = String.format("select * from cf_library_map WHERE cf_id='%s'", artifact.getId());
+		String query = String.format("select * from cf_library_map WHERE component_id='%s'", artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		System.out.println(result);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
@@ -250,13 +250,13 @@ public class CodedFunctionApi {
 				List<CFLibraryMap> filteredLibraryMaps = new ArrayList<CFLibraryMap>();
 				List<CFLibraryMap> libraryMaps = GlobalLoader.getInstance().getAllLibraryMaps();
 				for (CFLibraryMap libraryMap : libraryMaps) {
-					if (libraryMap.getCf_id().equals(artifact.getId())) {
+					if (libraryMap.getComponent_id().equals(artifact.getId())) {
 						filteredLibraryMaps.add(libraryMap);
 					}
 				}
 				if (filteredLibraryMaps.size() == 0) {
 					CFLibraryMap cflibraryMap = new CFLibraryMap();
-					cflibraryMap.setCf_id(artifact.getId());
+					cflibraryMap.setComponent_id(artifact.getId());
 					cflibraryMap.setF_id(f_id);
 					String cflmQuery = new QueryMaker().createInsertQuery(cflibraryMap, "cf_library_map", "");
 					QueryExecutor.getInstance().executeUpdateQuery(cflmQuery);
@@ -269,7 +269,7 @@ public class CodedFunctionApi {
 					}
 					if (libraryMappingFound == false) {
 						CFLibraryMap cflibraryMap = new CFLibraryMap();
-						cflibraryMap.setCf_id(artifact.getId());
+						cflibraryMap.setComponent_id(artifact.getId());
 						cflibraryMap.setF_id(f_id);
 						String cflmQuery = new QueryMaker().createInsertQuery(cflibraryMap, "cf_library_map", "");
 						QueryExecutor.getInstance().executeUpdateQuery(cflmQuery);
@@ -282,7 +282,7 @@ public class CodedFunctionApi {
 		}
 
 		CFLibraryMap cflibraryMap = new CFLibraryMap();
-		cflibraryMap.setCf_id(artifact.getId());
+		cflibraryMap.setComponent_id(artifact.getId());
 		cflibraryMap.setF_id(Utilities.getInstance().getUniqueUUID(""));
 		String cflmQuery = new QueryMaker().createInsertQuery(cflibraryMap, "cf_library_map", "");
 		QueryExecutor.getInstance().executeUpdateQuery(cflmQuery);

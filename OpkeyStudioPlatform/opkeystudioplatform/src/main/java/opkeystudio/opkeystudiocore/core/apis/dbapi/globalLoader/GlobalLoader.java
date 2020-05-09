@@ -261,7 +261,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllCFLInputParameters() {
-		String query = "select * from cf_input_parameters order by position asc";
+		String query = "select * from component_input_parameters order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLInputParameter.class);
@@ -277,7 +277,7 @@ public class GlobalLoader {
 	}
 
 	public void initAllCFLOutputParameters() {
-		String query = "select * from cf_output_parameters order by position asc";
+		String query = "select * from component_output_parameters order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CFLOutputParameter.class);
@@ -523,7 +523,7 @@ public class GlobalLoader {
 		List<CFLInputParameter> inputParams = new ArrayList<CFLInputParameter>();
 		List<CFLInputParameter> cflInputParameters = GlobalLoader.getInstance().getAllCFLInputParameters();
 		for (CFLInputParameter cflInputParam : cflInputParameters) {
-			if (cflInputParam.getCf_id().equals(cfartifact.getId())) {
+			if (cflInputParam.getComponent_id().equals(cfartifact.getId())) {
 				inputParams.add(cflInputParam);
 			}
 		}
@@ -534,7 +534,7 @@ public class GlobalLoader {
 		List<CFLOutputParameter> outputParams = new ArrayList<CFLOutputParameter>();
 		List<CFLOutputParameter> cflOutputParameters = GlobalLoader.getInstance().getAllCFLOutputParameters();
 		for (CFLOutputParameter cflOutputParam : cflOutputParameters) {
-			if (cflOutputParam.getCf_id().equals(cfartifact.getId())) {
+			if (cflOutputParam.getComponent_id().equals(cfartifact.getId())) {
 				outputParams.add(cflOutputParam);
 			}
 		}

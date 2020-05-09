@@ -23,7 +23,7 @@ public class CFLDMaker {
 
 		CFLInputParameter cfinputparameter = new CFLInputParameter();
 		cfinputparameter.setAdded(true);
-		cfinputparameter.setCf_id(artifact.getCflCode().getCf_id());
+		cfinputparameter.setComponent_id(artifact.getCflCode().getComponent_id());
 		cfinputparameter.setName(variablename);
 		cfinputparameter.setType("String");
 		cfinputparameter.setIp_id(Utilities.getInstance().getUniqueUUID(""));
@@ -52,7 +52,7 @@ public class CFLDMaker {
 
 		CFLOutputParameter cfinputparameter = new CFLOutputParameter();
 		cfinputparameter.setAdded(true);
-		cfinputparameter.setCf_id(artifact.getCflCode().getCf_id());
+		cfinputparameter.setComponent_id(artifact.getCflCode().getComponent_id());
 		cfinputparameter.setName(variablename);
 		cfinputparameter.setType("String");
 		cfinputparameter.setOp_id(Utilities.getInstance().getUniqueUUID(""));
