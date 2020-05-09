@@ -822,8 +822,13 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 					MainFileStoreDTO file = (MainFileStoreDTO) item.getControlData();
 					System.out.println("Deleting File " + file.getFilename());
 					new CodedFunctionApi().deleteAssociatedLibrary(file.getF_id());
+					File filePath = new File(Utilities.getInstance().getProjectJavaLibrrayFolder() + File.separator
+							+ file.getFilename() + ".jar");
+					filePath.delete();
 					associateLibraries.renderAssociatedLibraries();
+					toggleDeleteLibraryButton(false);
 				}
+				toggleDeleteLibraryButton(false);
 			}
 
 			@Override
