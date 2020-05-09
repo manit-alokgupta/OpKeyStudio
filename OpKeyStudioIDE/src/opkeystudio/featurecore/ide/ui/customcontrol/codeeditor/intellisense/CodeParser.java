@@ -22,7 +22,7 @@ public class CodeParser {
 		while (tokens.getNextToken() != null) {
 			String tokenData = tokens.getLexeme().trim();
 			if (!tokenData.isEmpty()) {
-				if (!tokenData.equals("(") && !tokenData.equals(")")) {
+				if (!tokenData.equals("(") && !tokenData.equals(")") && !tokenData.equals(".") && !tokenData.equals(" ")) {
 					alltokens.add(tokens);
 				}
 			}
