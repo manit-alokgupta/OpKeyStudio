@@ -227,9 +227,11 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 					});
 					return;
 				}
-				
+
 				if ((e.getKeyCode() == KeyEvent.VK_SPACE) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+					System.out.println("Pressed CTRL AND SPACE");
 					initMethodIntellisense();
+					return;
 				}
 			}
 		});
