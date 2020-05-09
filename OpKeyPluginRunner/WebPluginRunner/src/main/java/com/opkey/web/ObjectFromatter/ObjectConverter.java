@@ -27,6 +27,7 @@ public class ObjectConverter {
 			orobject.setParentORObject(parentObject);
 		}
 		try {
+			this.setObjectArgumentInFunctionCall(orobject);
 			Object _object = convertORObjectToOpKeyObject(orobject);
 			WebDriverObject webdriverobject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
 			if (orobject.getParentORObject() != null) {
@@ -36,8 +37,7 @@ public class ObjectConverter {
 				System.out.println(">>Parent Object " + parentobject.toString());
 			}
 			System.out.println(">>Current Object " + webdriverobject.toString());
-			
-			this.setObjectArgumentInFunctionCall(orobject);
+		
 			return webdriverobject;
 		} catch (ObjectPropertiesNotSufficientException e) {
 			e.printStackTrace();
@@ -58,6 +58,9 @@ public class ObjectConverter {
 		Set<String> propertyNames = allProperties.keySet();
 		for (String propertyName : propertyNames) {
 			String propertyValue = allProperties.get(propertyName);
+			
+			System.out.println(propertyName + " @: " + propertyValue );
+			
 			Property property = new Property();
 			property.setName(propertyName);
 			property.setValue(propertyValue);

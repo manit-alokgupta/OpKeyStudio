@@ -34,7 +34,7 @@ public class ReportHelper {
 
 	public static void addReportStep(String methodName, Exception e) {
 
-		List<String> parameterList = new ArrayList<String>();
+		List<String> parameterList = getParameters();
 		
 		ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), Status.FAIL,
 				e.getMessage());
@@ -42,6 +42,16 @@ public class ReportHelper {
 	
 	public static List<String> getParameters() {
 		List<String> parameterList = new ArrayList<String>();
+		
+		System.out.println("ObjectArg: " + Context.current().getFunctionCall().getObjectArguments());
+		ObjectArguments orArguments = Context.current().getFunctionCall().getObjectArguments();
+		
+		
+		if(orArguments !=null && orArguments.getObjectArgument() !=null) {
+			for(ObjectArgument objectArg: orArguments.getObjectArgument()) {
+				parameterList.add(objectArg.getArgumentName() + ":" + objectArg.getObject().getLogicalName());
+			}
+		}
 		
 		ObjectArguments objectArguments = Context.current().getFunctionCall().getObjectArguments();
 		if(objectArguments!=null && objectArguments.getObjectArgument() !=null) {

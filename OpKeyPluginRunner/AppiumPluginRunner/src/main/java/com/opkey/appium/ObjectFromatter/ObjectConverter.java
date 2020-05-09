@@ -22,6 +22,9 @@ public class ObjectConverter {
 		}
 		
 		try {
+			
+			this.setObjectArgumentInFunctionCall(orobject);
+			
 			ORObject SmartSoftwareTestingSolutions = new ORObject();
 			SmartSoftwareTestingSolutions.addProperty("type", "HTML PAGE").addProperty("tag", "html")
 					.addProperty("index", "0").addProperty("title", "Smart Software Testing Solutions")
@@ -34,8 +37,6 @@ public class ObjectConverter {
 			AppiumObject parentobject = new ObjectFormatter().formatObjectToWebDriverObject(_parentobject);
 			appiumObject.setParentObject(parentobject);
 			System.out.println(">>Object " + appiumObject.toString());
-			
-			this.setObjectArgumentInFunctionCall(orobject);
 			
 			return appiumObject;
 		} catch (ObjectPropertiesNotSufficientException e) {
@@ -67,12 +68,11 @@ public class ObjectConverter {
 	}
 
 	private String getLogicalNameOfORObject(ORObject orobject) {
-		
-		if(orobject.getAllProperties().containsKey("logicalname")) {
+		if (orobject.getAllProperties().containsKey("logicalname")) {
 			return orobject.getAllProperties().get("logicalname");
-		}else if(orobject.getAllProperties().containsKey("name")) {
+		} else if (orobject.getAllProperties().containsKey("name")) {
 			return orobject.getAllProperties().get("name");
-		}else if(orobject.getAllProperties().containsKey("text")) {
+		} else if (orobject.getAllProperties().containsKey("text")) {
 			return orobject.getAllProperties().get("text");
 		}
 		return "no-name";
@@ -86,6 +86,6 @@ public class ObjectConverter {
 		orObj.setLogicalName(getLogicalNameOfORObject(obj));
 		oArg.setObject(orObj);
 		oArgs.getObjectArgument().add(oArg);
-		Context.current().getFunctionCall().setObjectArguments(oArgs);	
+		Context.current().getFunctionCall().setObjectArguments(oArgs);
 	}
 }
