@@ -515,6 +515,7 @@ public class ArtifactCodeView extends SuperComposite {
 			for (CompileError error : compileErrors) {
 				Object lineHighlightObject;
 				try {
+					editor.setHighlightCurrentLine(false);
 					lineHighlightObject = editor.addLineHighlight(((int) error.getLineNumber()) - 1, Color.RED);
 					addHighlightedLines(lineHighlightObject);
 				} catch (BadLocationException e) {
@@ -526,6 +527,7 @@ public class ArtifactCodeView extends SuperComposite {
 			bottomFactoryUi.getCompilationResultTable().renderCompilingError(compileErrors);
 			return;
 		}
+		editor.setHighlightCurrentLine(true);
 		List<CFLInputParameter> inputParams = bottomFactoryUi.getCFLInputTable().getCflInputParameters();
 		List<CFLOutputParameter> outputParams = bottomFactoryUi.getCFLOutputTable().getCflOutputParameters();
 		new CodedFunctionApi().saveAllCFLInputParams(inputParams);
