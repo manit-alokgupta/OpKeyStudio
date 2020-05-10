@@ -73,7 +73,13 @@ public class CustomTable extends Table {
 				this.getTablecursor().setSelection(this.getSelectedRowIndex(), column);
 				this.getTablecursor().notifyListeners(SWT.Selection, null);
 			}
-			this.notifyListeners(SWT.Selection, null);
+			if (this.getSelectedRowIndex() == -1 && this.getItemCount() > 0) {
+				this.setSelection(this.getSelectedRowIndex() + 1);
+				this.notifyListeners(SWT.Selection, null);
+			} else {
+				this.setSelection(this.getSelectedRowIndex());
+				this.notifyListeners(SWT.Selection, null);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

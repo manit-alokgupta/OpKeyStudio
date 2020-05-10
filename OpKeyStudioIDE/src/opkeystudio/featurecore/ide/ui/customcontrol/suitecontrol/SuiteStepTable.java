@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -64,6 +66,12 @@ public class SuiteStepTable extends CustomTable {
 		movedownMenuItem.setEnabled(false);
 		setToRunMenuItem.setEnabled(false);
 		skipfromRunMenuItem.setEnabled(false);
+	}
+
+	private void toggleContextMenuOff() {
+		if (this.getItemCount() == 0) {
+			disableMenuItem();
+		}
 	}
 
 	public void toggleCopyMenuItem(boolean status) {
@@ -265,6 +273,25 @@ public class SuiteStepTable extends CustomTable {
 		});
 		this.setMenu(menu);
 		disableMenuItem();
+
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				toggleContextMenuOff();
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				toggleContextMenuOff();
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+
+			}
+		});
+
 		this.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -483,6 +510,9 @@ public class SuiteStepTable extends CustomTable {
 			suiteStepTableItem.setTestSuiteData(testSuite);
 			addTableEditor(suiteStepTableItem);
 		}
+		if (testSuites.size() == 0) {
+			getParentTestSuiteView().toggleDeleteButton(false);
+		}
 		selectDefaultRow();
 	}
 
@@ -499,6 +529,9 @@ public class SuiteStepTable extends CustomTable {
 				suiteStepTableItem.setTestSuiteData(testSuite);
 				addTableEditor(suiteStepTableItem);
 			}
+		}
+		if (this.getItemCount() == 0) {
+			getParentTestSuiteView().toggleDeleteButton(false);
 		}
 		selectDefaultRow();
 	}
