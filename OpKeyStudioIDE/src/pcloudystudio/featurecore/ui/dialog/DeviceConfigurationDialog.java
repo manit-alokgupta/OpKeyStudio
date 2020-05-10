@@ -29,7 +29,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -39,14 +38,13 @@ import io.appium.java_client.android.AndroidDriver;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
-import pcloudystudio.appium.MobileDriverObject;
 import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.AppiumMobileServer;
 import pcloudystudio.appium.MobileDesiredCapabilities;
+import pcloudystudio.appium.MobileDriverObject;
+import pcloudystudio.core.utils.CustomMessageDialogUtil;
 import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.resources.constant.ImageConstants;
-import pcloudystudio.resources.image.ImageManager;
-import pcloudystudio.core.utils.CustomMessageDialogUtil;
 
 public class DeviceConfigurationDialog extends Dialog {
 
