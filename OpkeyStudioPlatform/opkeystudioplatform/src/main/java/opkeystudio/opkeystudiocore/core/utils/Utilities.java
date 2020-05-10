@@ -425,6 +425,9 @@ public class Utilities {
 	}
 
 	public String removeSpecialCharacters(String input) {
+		if (input == null) {
+			return "";
+		}
 		return input.replaceAll("[^a-zA-Z0-9]", "");
 	}
 

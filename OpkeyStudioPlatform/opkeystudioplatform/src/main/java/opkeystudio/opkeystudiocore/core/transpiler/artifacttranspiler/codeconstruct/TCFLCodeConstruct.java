@@ -349,7 +349,7 @@ public class TCFLCodeConstruct {
 		List<FlowOutputObject> flowOutputObjects = new FlowApiUtilities().getAllFlowOutputObject(artifact, flowStep);
 		for (FlowOutputObject flowOutPutObject : flowOutputObjects) {
 			String dataType = flowOutPutObject.getDataType();
-			String outputVariableName = flowOutPutObject.getOutputVariableName();
+			String outputVariableName = flowOutPutObject.getVariableName();
 			if (outputVariableName != null) {
 				if (!outputVariableName.isEmpty()) {
 					if (dataType.equals("String")) {
