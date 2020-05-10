@@ -208,6 +208,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void checkClassIsRunnable() {
+		initCodeViewFile();
 		File file = getCodeViewFile();
 		String code = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
 		Object classObject = Roaster.parse(code);
@@ -235,6 +236,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void displayCodeViewFileData() {
+		initCodeViewFile();
 		File file = getCodeViewFile();
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
 		getJavaEditor().setArtifactJavaCode(codeData);
@@ -497,6 +499,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void saveCFLCode() {
+		initCodeViewFile();
 		for (Object highLightedLines : getHighlightedLines()) {
 			editor.removeLineHighlight(highLightedLines);
 		}
@@ -567,6 +570,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void saveGenericCodeEditorFile() {
+		initCodeViewFile();
 		String code = getJavaEditor().getText();
 		File file = getCodeViewFile();
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
@@ -576,6 +580,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void handleRefreshOnSave() {
+		initCodeViewFile();
 		if (saveButton.getEnabled() == true) {
 			boolean status = new MessageDialogs().openConfirmDialog("OpKey",
 					String.format("Do you want to save '%s'?", getCodeViewFile().getName()));
