@@ -15,7 +15,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 
 public class CustomTable extends Table {
-	private int selectedRowIndex = 0;
+	private int selectedRowIndex = -1;
 	private Object controlData;
 	private int selectedColumn = 0;
 	private TableCursor tablecursor;
@@ -82,11 +82,12 @@ public class CustomTable extends Table {
 	public void selectNextRowByCursor(TableCursor cursor, int column) {
 		if (cursor != null) {
 			try {
+				System.out.println(">>Selecting Row " + this.getSelectedRowIndex());
 				cursor.setSelection(this.getSelectedRowIndex() + 1, column);
 				cursor.notifyListeners(SWT.Selection, null);
 				this.notifyListeners(SWT.Selection, null);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 		}
 	}
