@@ -265,15 +265,51 @@ public class TCFLCodeConstruct {
 		return "";
 	}
 
+	private String getStringValueOfFormat(String value) {
+		return String.format("String.valueOf(%s)", value);
+	}
+
 	private String getArgsOfIFKeyword(List<FlowInputObject> flowInputObjects) {
 		String conditionData = "";
 		for (FlowInputObject flowInputObject : flowInputObjects) {
 			if (flowInputObject.isStaticValueDataExist()) {
-				conditionData += convertToConditionData(flowInputObject.getStaticValueData());
+				String value = flowInputObject.getStaticValueData();
+				if (value != null) {
+					if (!value.isEmpty()) {
+						value = convertToConditionData(value);
+						conditionData += value;
+					}
+				}
 			}
-			System.out.println(
-					">.IF condition " + flowInputObject.getDataType() + "  " + flowInputObject.getStaticValueData());
+
+			if (flowInputObject.isGlobalVariableDataExist()) {
+				GlobalVariable globalVariable = GlobalLoader.getInstance()
+						.getGlobalVariableById(flowInputObject.getGlobalVariableData());
+				conditionData += getStringValueOfFormat("OpKeyGlobalVariables." + globalVariable.getVariableName());
+			}
+
+			if (flowInputObject.isFlowOutputDataExist()) {
+				String flowOutputId = flowInputObject.getFlowOutputData();
+				FlowOutputArgument flowOutputArgument = GlobalLoader.getInstance()
+						.getFlowOutputArgumentById(flowOutputId);
+				conditionData += getStringValueOfFormat(flowOutputArgument.getVariableName());
+			}
+
+			if (flowInputObject.isFlowInputDataExist()) {
+				String flowInputId = flowInputObject.getFlowInputData();
+				ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
+						.getComponentInputArgumentById(flowInputId);
+				conditionData += getStringValueOfFormat(flowOutputArgument.getVariableName());
+			}
+			if (flowInputObject.isDataRepositoryColumnDataExist()) {
+				String columnId = flowInputObject.getDataRepositoryColumnData();
+				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
+				String columnName = drColumn.getVariableName();
+				conditionData += getStringValueOfFormat(columnName);
+			}
 		}
+
+		System.out.println(">>Condition String " + conditionData);
 		if (conditionData.trim().isEmpty()) {
 			return "true";
 		}
@@ -305,7 +341,7 @@ public class TCFLCodeConstruct {
 		if (data.isEmpty()) {
 			return "";
 		}
-		return "\"" + data + "\"";
+		return getStringValueOfFormat("\"" + data + "\"");
 	}
 
 	private String addOutputVariables(Artifact artifact, FlowStep flowStep, String mainCode) {
