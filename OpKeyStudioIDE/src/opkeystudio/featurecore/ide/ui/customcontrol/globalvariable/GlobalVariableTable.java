@@ -45,6 +45,8 @@ public class GlobalVariableTable extends CustomTable {
 	String[] tableHeaders_gv = { "Name", "Data Type", "Value", "Externally Updatable" };
 	String[] tableHeaders_arti = { "Name", "Data Type", "Value" };
 
+	private TableCursor tableCursor;
+
 	public GlobalVariableTable(Composite parent, int style, GlobalVariableDialog gvDialog) {
 		super(parent, style);
 		setInsideArtifact(false);
@@ -107,19 +109,19 @@ public class GlobalVariableTable extends CustomTable {
 	}
 
 	private void init() {
-		TableCursor cursor = new TableCursor(this, 0);
-		ControlEditor controlEditor = new ControlEditor(cursor);
+		tableCursor = new TableCursor(this, 0);
+		ControlEditor controlEditor = new ControlEditor(tableCursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
-		cursor.addSelectionListener(new SelectionListener() {
+		tableCursor.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// thisTable.deselectAll();
-				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
+				CustomTableItem selectedTableItem = (CustomTableItem) tableCursor.getRow();
 				GlobalVariable globalVariable = (GlobalVariable) selectedTableItem.getControlData();
-				int selectedColumn = cursor.getColumn();
-				CustomText text = new CustomText(cursor, 0);
+				int selectedColumn = tableCursor.getColumn();
+				CustomText text = new CustomText(tableCursor, 0);
 				if (selectedColumn == 0) {
 					text.setText(globalVariable.getName());
 				}
@@ -403,6 +405,10 @@ public class GlobalVariableTable extends CustomTable {
 
 	public void setInsideArtifact(boolean insideArtifact) {
 		this.insideArtifact = insideArtifact;
+	}
+
+	public TableCursor getTableCursor() {
+		return this.tableCursor;
 	}
 
 	public GlobalVariable getSelectedGlobalVariable() {
