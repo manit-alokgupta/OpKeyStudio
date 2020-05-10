@@ -12,6 +12,7 @@ public class ServiceRepository {
 
 	private Map<String, Object> serviceRepositoriesVariables = new HashMap<>();
 	private static ServiceRepository serviceRepository;
+	private boolean dbContainsSecuredData = true;
 
 	public static ServiceRepository getInstance() {
 		if (serviceRepository == null) {
@@ -75,6 +76,7 @@ public class ServiceRepository {
 	public String getOpKeyImportSessionId() {
 		return (String) getServiceRepositoryVariable("opkeystudio.opkeyimportsessionid");
 	}
+
 	public void setExortedDBFilePath(String path) {
 		setServiceRepositoryVariable("opkeystudio.exporteddbfilepath", path);
 	}
@@ -104,5 +106,13 @@ public class ServiceRepository {
 		projectName = Utilities.getInstance().removeSpecialCharacters(projectName);
 		projectName = projectName.replaceAll("OPKEYNEONSPACE112463743", " ");
 		this.projectName = projectName;
+	}
+
+	public boolean isDbContainsSecuredData() {
+		return dbContainsSecuredData;
+	}
+
+	public void setDbContainsSecuredData(boolean dbContainsSecuredData) {
+		this.dbContainsSecuredData = dbContainsSecuredData;
 	}
 }
