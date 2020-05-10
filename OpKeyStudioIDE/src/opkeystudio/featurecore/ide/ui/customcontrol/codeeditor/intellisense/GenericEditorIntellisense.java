@@ -478,7 +478,9 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public VariableToken findVariableToken(String varName) {
-		for (VariableToken varToken : getAllvariabletokens()) {
+		List<VariableToken> tokens = getAllvariabletokens();
+		for (int i = 0; i < tokens.size(); i++) {
+			VariableToken varToken = tokens.get(i);
 			if (varToken.getVariableName().equals(varName)) {
 				return varToken;
 			}
@@ -488,7 +490,8 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	public TranspiledClassInfo findAutoCompleteToken(String tokenString) {
 		List<TranspiledClassInfo> allTokens = getTranspiledClasses();
-		for (TranspiledClassInfo token : allTokens) {
+		for (int i = 0; i < allTokens.size(); i++) {
+			TranspiledClassInfo token = allTokens.get(i);
 			if (token.getClassSource() != null) {
 				String className = token.getClassSource().getName();
 				if (className.endsWith("." + tokenString)) {
