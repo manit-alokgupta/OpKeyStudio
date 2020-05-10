@@ -83,7 +83,8 @@ public class MessageDialogs {
 		progressDialog.open();
 	}
 
-	public void openProgressDialogOnBackgroundThread(Shell shell, String message, boolean cancelabel, IRunnableWithProgress runnable) {
+	public void openProgressDialogOnBackgroundThread(Shell shell, String message, boolean cancelabel,
+			IRunnableWithProgress runnable) {
 		if (shell == null) {
 			shell = Display.getDefault().getActiveShell();
 		}
