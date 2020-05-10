@@ -187,6 +187,12 @@ public class TCFLCodeConstruct {
 			if (data.isEmpty()) {
 				data = "false";
 			}
+			if (data.trim().equals("1")) {
+				return "true";
+			}
+			if (data.trim().equals("0")) {
+				return "false";
+			}
 			return data.toLowerCase();
 		}
 		if (dataType.equals("File")) {
@@ -325,7 +331,8 @@ public class TCFLCodeConstruct {
 		return outputCode + mainCode;
 	}
 
-	public String addDataRepositoryIterations(Artifact artifact, List<FlowInputArgument> flowInputArguments, String mainCode) {
+	public String addDataRepositoryIterations(Artifact artifact, List<FlowInputArgument> flowInputArguments,
+			String mainCode) {
 		String forLoopParameters = "";
 		String bodyCode = mainCode;
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,

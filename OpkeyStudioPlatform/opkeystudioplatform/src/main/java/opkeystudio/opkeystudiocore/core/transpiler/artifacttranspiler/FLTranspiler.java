@@ -11,6 +11,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibra
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct.TCFLCodeConstruct;
@@ -71,6 +72,13 @@ public class FLTranspiler extends AbstractTranspiler {
 			method.addParameter(dataType, varName);
 		}
 
+		List<ComponentOutputArgument> outPutArguments = FunctionLibraryApi.getInstance()
+				.getAllComponentOutputArgument(artifact.getId());
+
+		for (ComponentOutputArgument compOutputArg : outPutArguments) {
+			String dataType = convertDataType(compOutputArg.getType());
+			method.setReturnType(dataType);
+		}
 		String defaultArguments = "";
 		for (ComponentInputArgument cia : componentInputArguments) {
 			System.out.println("DataType " + cia.getType() + "  " + cia.getDefaultvalue());
