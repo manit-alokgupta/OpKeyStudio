@@ -499,7 +499,6 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void saveCFLCode() {
-		initCodeViewFile();
 		for (Object highLightedLines : getHighlightedLines()) {
 			editor.removeLineHighlight(highLightedLines);
 		}
