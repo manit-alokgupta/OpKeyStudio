@@ -66,7 +66,6 @@ public class CustomTable extends Table {
 			if (this.getItemCount() == 0) {
 				return;
 			}
-			this.setSelection(this.getSelectedRowIndex());
 			if (this.getTablecursor() != null) {
 				System.out.println("Table Cursor Found");
 				int column = this.getSelectedColumn();
@@ -76,12 +75,27 @@ public class CustomTable extends Table {
 			if (this.getSelectedRowIndex() == -1 && this.getItemCount() > 0) {
 				this.setSelection(this.getSelectedRowIndex() + 1);
 				this.notifyListeners(SWT.Selection, null);
-			} else {
-				this.setSelection(this.getSelectedRowIndex());
-				this.notifyListeners(SWT.Selection, null);
+				return;
 			}
+			this.setSelection(this.getSelectedRowIndex());
+			this.notifyListeners(SWT.Selection, null);
+
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void selectNextRow() {
+		try {
+			if (this.getSelectedRowIndex() == 0 && this.getItemCount() == 1) {
+				this.setSelection(this.getSelectedRowIndex());
+				this.notifyListeners(SWT.Selection, null);
+				return;
+			}
+			this.setSelection(this.getSelectedRowIndex() + 1);
+			this.notifyListeners(SWT.Selection, null);
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 

@@ -92,6 +92,7 @@ public class SuiteTestCaseTree extends ArtifactTree {
 
 		getParentTestSuiteView().getSuiteStepTable().getTestSuiteData().add(testSuiteStep);
 		getParentTestSuiteView().getSuiteStepTable().refreshAllTestSuites();
+		getParentTestSuiteView().getSuiteStepTable().selectNextRow();
 		getParentTestSuiteView().toggleSaveButton(true);
 	}
 
