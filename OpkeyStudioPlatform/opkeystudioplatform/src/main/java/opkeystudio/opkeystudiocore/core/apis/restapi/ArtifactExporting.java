@@ -88,6 +88,7 @@ public class ArtifactExporting {
 			String sessionData = new ArtifactExporting().checkForSecuredData(nodeIds, "Opkey");
 			System.out.println(">>Secured Data Status " + sessionData);
 			sessionData = sessionData.replaceAll("\"", "");
+			ServiceRepository.getInstance().setOpKeyImportSessionId(sessionData);
 			String securedDataStatus = new ArtifactExporting().getSecureDataStatus(sessionData);
 			System.out.println(">>Secured Data Data " + securedDataStatus);
 			String exportArtifactId = new ArtifactExporting().exportArtificate(nodeIds, "Opkey", sessionData,

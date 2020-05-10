@@ -68,6 +68,13 @@ public class ServiceRepository {
 		return (String) getServiceRepositoryVariable("opkeystudio.opkeyapisessionid");
 	}
 
+	public void setOpKeyImportSessionId(String sessionId) {
+		setServiceRepositoryVariable("opkeystudio.opkeyimportsessionid", sessionId);
+	}
+
+	public String getOpKeyImportSessionId() {
+		return (String) getServiceRepositoryVariable("opkeystudio.opkeyimportsessionid");
+	}
 	public void setExortedDBFilePath(String path) {
 		setServiceRepositoryVariable("opkeystudio.exporteddbfilepath", path);
 	}
