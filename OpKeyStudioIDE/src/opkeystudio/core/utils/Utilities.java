@@ -81,7 +81,7 @@ public class Utilities {
 		System.out.println("All Parts " + allParts.size());
 		for (MPart mpart : allParts) {
 			System.out.println("Mpart Searching");
-			File artifact_0 = (File) mpart.getTransientData().get("");
+			File artifact_0 = (File) mpart.getTransientData().get("opkeystudio.codeFile");
 			if (artifact_0 == null) {
 				continue;
 			}
