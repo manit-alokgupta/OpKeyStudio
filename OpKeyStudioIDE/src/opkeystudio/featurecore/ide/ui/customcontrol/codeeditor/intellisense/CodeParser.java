@@ -31,6 +31,22 @@ public class CodeParser {
 		Token lastToken = alltokens.get(alltokens.size() - 1);
 		return lastToken;
 	}
+	
+	public List<Token> getAllTokenOfCurrentLine(ArtifactCodeEditor codeEditor) {
+		int caretLineNumber = codeEditor.getCaretLineNumber();
+		Token tokens = codeEditor.getTokenListFor(caretLineNumber, codeEditor.getCaretPosition());
+		List<Token> alltokens = new ArrayList<Token>();
+		while (tokens.getNextToken() != null) {
+			String tokenData = tokens.getLexeme().trim();
+			if (!tokenData.isEmpty()) {
+				if (!tokenData.equals("(") && !tokenData.equals(")") && !tokenData.equals(".") && !tokenData.equals(" ")) {
+					alltokens.add(tokens);
+				}
+			}
+			tokens = tokens.getNextToken();
+		}
+		return alltokens;
+	}
 
 	public void createIntellisenseDataFromCurrentText(ArtifactCodeEditor codeEditor) {
 		try {

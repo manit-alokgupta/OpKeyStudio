@@ -81,8 +81,11 @@ public class CodeViewTree extends CustomTree {
 				if (treeItem == null) {
 					return;
 				}
+				getParentArtifactCodeViewTreeUI().toggleRefreshMenuItem(true);
 				File selectedFile = treeItem.getArtifactFile();
 				if (treeItem.isSystemFolder()) {
+					getParentArtifactCodeViewTreeUI().toggleNewToolbarItem(false);
+					getParentArtifactCodeViewTreeUI().toggleNewToolbarMenuItem(false);
 					getParentArtifactCodeViewTreeUI().toggleDeleteToolbarItem(false);
 					getParentArtifactCodeViewTreeUI().toggleRenameToolbarItem(false);
 					return;
@@ -101,7 +104,6 @@ public class CodeViewTree extends CustomTree {
 					getParentArtifactCodeViewTreeUI().toggleNewToolbarMenuItem(false);
 					getParentArtifactCodeViewTreeUI().toggleOpenMenuItem(true);
 				}
-
 			}
 
 			@Override
@@ -290,11 +292,13 @@ public class CodeViewTree extends CustomTree {
 			}
 			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
 			renderCodeViewTree();
+			Utilities.getInstance().openSelectedFileInGenericCodeEditor(file);
 		} catch (Exception e) {
 			new MessageDialogs().openErrorDialog("OpKey",
 					String.format("Unable to create file with name '%s'. Please provide a different name", fileName));
 			return;
 		}
+		
 	}
 
 	public void createNewFolder() {

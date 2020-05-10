@@ -147,6 +147,8 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 		this.setAutoIndentEnabled(true);
 		this.setMarkAllOnOccurrenceSearches(true);
 		this.setMarkOccurrences(true);
+		this.setClearWhitespaceLinesEnabled(true);
+		this.setLineWrap(true);
 		if (isCflEditor()) {
 			CompletionProvider provider = GenericEditorIntellisense.getCFLInstance();
 			autoCompletion = new JavaAutoCompletion(provider);
