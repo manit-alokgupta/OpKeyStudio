@@ -1,7 +1,10 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -480,6 +483,7 @@ public class ArtifactTreeUI extends SuperComposite {
 									+ "' as it is being used:");
 					return;
 				}
+				deleteArtifactJavaFile(artifact);
 				new ArtifactApi().deleteArtifact(artifact);
 				Utilities.getInstance().closeArtifactPart(artifact);
 				artifactTree.renderArtifacts();
@@ -502,7 +506,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					System.out.println("cancel pressed ");
 					return;
 				}
-				while (renamedText.trim().isEmpty()) {
+				if (renamedText.trim().isEmpty()) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
 					renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 							"Rename " + artifact.getName(), artifact.getName());
@@ -534,7 +538,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
 					return;
 				}
-
+				deleteArtifactJavaFile(artifact);
 				artifact.setName(renamedText);
 				new ArtifactApi().updateArtifact(artifact);
 				Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
@@ -687,7 +691,7 @@ public class ArtifactTreeUI extends SuperComposite {
 						System.out.println("cancel pressed ");
 						return;
 					}
-					while (renamedText.trim().isEmpty()) {
+					if (renamedText.trim().isEmpty()) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
 								"Name can not be empty");
 						renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
@@ -714,6 +718,7 @@ public class ArtifactTreeUI extends SuperComposite {
 								"Name should not contain any special characters.");
 						return;
 					}
+					deleteArtifactJavaFile(artifact);
 					artifact.setName(renamedText);
 					new ArtifactApi().updateArtifact(artifact);
 					Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
@@ -746,6 +751,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					if (!status) {
 						return;
 					}
+					deleteArtifactJavaFile(artifact);
 					new ArtifactApi().deleteArtifact(artifact);
 					toggleRenameToolbarItem(false);
 					toogleDeleteToolbarItem(false);
@@ -1170,6 +1176,45 @@ public class ArtifactTreeUI extends SuperComposite {
 			}
 		});
 
+	}
+
+	private void deleteArtifactJavaFile(Artifact artifact) {
+		String ext = ".java";
+		if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
+			ext = "";
+		}
+		String filePath1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectArtifactCodesFolder() + File.separator + artifact.getPackagePath() + File.separator
+				+ artifact.getVariableName() + ext;
+		File file1 = new File(filePath1);
+		System.out.println(">>Deleting Artifact Java File " + file1.getAbsolutePath());
+		if (file1.exists()) {
+			if (file1.isDirectory()) {
+				try {
+					FileUtils.deleteDirectory(file1);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				file1.delete();
+			}
+		}
+
+		String filepath2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
+				+ artifact.getVariableName() + ext;
+		File file2 = new File(filepath2);
+		if (file2.exists()) {
+			if (file2.isDirectory()) {
+				try {
+					FileUtils.deleteDirectory(file2);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				file2.delete();
+			}
+		}
 	}
 
 	private boolean isArtifactNameIsUnique(String artifactName) {

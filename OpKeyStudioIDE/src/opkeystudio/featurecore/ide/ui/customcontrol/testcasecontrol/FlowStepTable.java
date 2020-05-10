@@ -9,6 +9,8 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -76,6 +78,12 @@ public class FlowStepTable extends CustomTable {
 		movedownMenuItem.setEnabled(false);
 		setToRunMenuItem.setEnabled(false);
 		skipfromRunMenuItem.setEnabled(false);
+	}
+
+	private void turnOffContextMenu() {
+		if (this.getItemCount() == 0) {
+			disableMenuItem();
+		}
 	}
 
 	public void toggleCopyMenuItem(boolean status) {
@@ -308,6 +316,24 @@ public class FlowStepTable extends CustomTable {
 		});
 		this.setMenu(menu);
 		disableMenuItem();
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				turnOffContextMenu();
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				turnOffContextMenu();
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				turnOffContextMenu();
+			}
+		});
+		
 		this.addSelectionListener(new SelectionListener() {
 
 			@Override
