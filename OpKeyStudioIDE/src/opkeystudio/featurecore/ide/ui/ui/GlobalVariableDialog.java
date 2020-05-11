@@ -157,9 +157,9 @@ public class GlobalVariableDialog extends Dialog {
 									+ " as it is being used in some higher components.");
 					return;
 				}
-				globalVariablesTable.deleteGlobalVariableStep();
 				toggleSaveToolItem(true);
 				toggleDeleteToolItem(false);
+				globalVariablesTable.deleteGlobalVariableStep();
 			}
 		});
 

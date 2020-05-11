@@ -63,25 +63,32 @@ public class CustomTable extends Table {
 
 	public void selectDefaultRow() {
 		try {
-			if (this.getItemCount() == 0) {
-				return;
-			}
-			if (this.getTablecursor() != null) {
-				System.out.println("Table Cursor Found");
-				int column = this.getSelectedColumn();
-				this.getTablecursor().setSelection(this.getSelectedRowIndex(), column);
-				this.getTablecursor().notifyListeners(SWT.Selection, null);
-			}
-			if (this.getSelectedRowIndex() == -1 && this.getItemCount() > 0) {
-				this.setSelection(this.getSelectedRowIndex() + 1);
+			selectTableRow(this.getSelectedRowIndex());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void selectLastRow() {
+		selectTableRow(this.getItemCount()-1);
+	}
+
+	private void selectTableRow(int rowno) {
+		try {
+			if (rowno == -1 && this.getItemCount() > 0) {
+				this.setSelection(rowno + 1);
 				this.notifyListeners(SWT.Selection, null);
 				return;
 			}
-			this.setSelection(this.getSelectedRowIndex());
+			if (rowno + 1 > this.getItemCount()) {
+				this.setSelection(rowno - 1);
+				this.notifyListeners(SWT.Selection, null);
+				return;
+			}
+			this.setSelection(rowno);
 			this.notifyListeners(SWT.Selection, null);
-
 		} catch (Exception e) {
-			e.printStackTrace();
+
 		}
 	}
 
@@ -118,8 +125,10 @@ public class CustomTable extends Table {
 	public void selectNextRowByCursor(TableCursor cursor, int column) {
 		if (cursor != null) {
 			try {
-				System.out.println(">>Selecting Row " + this.getSelectedRowIndex());
-				cursor.setSelection(this.getSelectedRowIndex() + 1, column);
+				int rowNo = this.getSelectedRowIndex();
+				selectTableRow(rowNo);
+				System.out.println(">>Selecting Row " + rowNo);
+				cursor.setSelection(rowNo + 1, column);
 				cursor.notifyListeners(SWT.Selection, null);
 				this.notifyListeners(SWT.Selection, null);
 			} catch (Exception e) {
