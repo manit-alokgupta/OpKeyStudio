@@ -170,7 +170,6 @@ public class CodeViewTree extends CustomTree {
 			String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
 					selectedCodeFile.getName().split("\\.")[0]);
 			if (fileName == null) {
-				new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
 				return;
 			}
 			if (fileName.trim().isEmpty()) {
@@ -226,7 +225,6 @@ public class CodeViewTree extends CustomTree {
 		String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
 				"NewClass");
 		if (fileName == null) {
-			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
 			return;
 		}
 		if (fileName.trim().isEmpty()) {
@@ -310,7 +308,6 @@ public class CodeViewTree extends CustomTree {
 		String fileName = new MessageDialogs().openInputDialogAandGetValue("OpKey", "Enter New Java File Name",
 				"NewFolder");
 		if (fileName == null) {
-			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
 			return;
 		}
 		if (fileName.trim().isEmpty()) {
