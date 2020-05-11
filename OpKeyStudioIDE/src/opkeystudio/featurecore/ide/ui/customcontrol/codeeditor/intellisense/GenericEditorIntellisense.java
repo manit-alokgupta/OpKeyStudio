@@ -43,6 +43,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCompletionPro
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableToken;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.VariableTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranspiledClassInfo;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.ClassIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.MethodIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
@@ -136,8 +137,21 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	@SuppressWarnings("unchecked")
 	private void addClassInformationFromSenseFile(boolean iscfl) {
-		List<File> allFiles = new CompilerUtilities()
-				.getAllFiles(new File(Utilities.getInstance().getMainIntellisenseFolder()), ".sense");
+		List<File> allFiles = new ArrayList<File>();
+
+		List<Completion> allCompletions = new ArrayList<Completion>();
+		for (ClassIntellisenseDTO classIntellisense : GlobalLoader.getInstance().getAllOpKeyClassesIntellisense()) {
+			getSenseClasses().add(classIntellisense);
+			TranspiledClassInfo classInfo = new TranspiledClassInfo(classIntellisense);
+			addTranspiledClasses(classInfo);
+			JavaBasicCompletion classbc = getConstructorTypeBasicCompletion(classIntellisense.getClassname(),
+					classIntellisense.getClassname());
+			JavaBasicCompletion bc = getConstructorTypeBasicCompletion(classIntellisense.getDatatoshow(),
+					classIntellisense.getDatatoenter());
+			allCompletions.add(classbc);
+			allCompletions.add(bc);
+		}
+		this.addCompletions(allCompletions);
 
 		if (iscfl) {
 			List<File> cfllibsfile = new CompilerUtilities()
@@ -149,7 +163,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			try {
 				List<ClassIntellisenseDTO> classDTOs = (List<ClassIntellisenseDTO>) Utilities.getInstance()
 						.getXMLDeSerializedDataForClassIntellisenseDTO(file);
-				setSenseClasses(classDTOs);
+				getSenseClasses().addAll(classDTOs);
 				List<Completion> basicCompletions = new ArrayList<Completion>();
 				for (ClassIntellisenseDTO classIntellisense : classDTOs) {
 					TranspiledClassInfo classInfo = new TranspiledClassInfo(classIntellisense);
