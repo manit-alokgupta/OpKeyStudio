@@ -64,7 +64,7 @@ import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import pcloudystudio.appium.MobileDriverObject;
-import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 import pcloudystudio.resources.constant.ImageConstants;
 import pcloudystudio.spytreecomponents.BasicMobileElement;
 import pcloudystudio.spytreecomponents.MobileElement;

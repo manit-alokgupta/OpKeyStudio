@@ -1,4 +1,4 @@
-package pcloudystudio.core.utils.notifier;
+package pcloudystudio.core.utils.notification;
 
 //Created by Alok Gupta on 20/02/2020.
 //Copyright © 2020 SSTS Inc. All rights reserved.
@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import pcloudystudio.core.utils.notification.NotificationColorsFactory.NotificationTheme;
 import pcloudystudio.resources.constant.ImageConstants;
 
 public class CustomNotificationUtil {
@@ -35,7 +36,10 @@ public class CustomNotificationUtil {
 	}
 
 	public static void notifyMe(String title, String message) {
-
+		int[] counter = new int[1];
+		counter[0] = 0;
+		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
+		counter[0]++;
 	}
 
 	public static void openInformationNotification(String title, String message) {

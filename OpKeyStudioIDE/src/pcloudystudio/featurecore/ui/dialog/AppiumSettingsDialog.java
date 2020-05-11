@@ -43,7 +43,7 @@ import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.MobileDesiredCapabilities;
-import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 import pcloudystudio.resources.constant.ImageConstants;
 
 public class AppiumSettingsDialog extends Dialog {

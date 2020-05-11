@@ -51,7 +51,7 @@ import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.appium.AppiumConfiguration;
-import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
 import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 

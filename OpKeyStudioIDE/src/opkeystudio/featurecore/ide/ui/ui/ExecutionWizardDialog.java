@@ -38,7 +38,7 @@ import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.core.utils.MobileDeviceUtil;
-import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 import pcloudystudio.core.vncutils.AndroidVNCLauncher;
 import pcloudystudio.pcloudystudio.core.execution.MobileDeviceExecutionDetail;
 import pcloudystudio.resources.constant.ImageConstants;

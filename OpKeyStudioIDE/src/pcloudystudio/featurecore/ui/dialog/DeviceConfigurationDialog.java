@@ -43,7 +43,7 @@ import pcloudystudio.appium.AppiumMobileServer;
 import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.appium.MobileDriverObject;
 import pcloudystudio.core.utils.MobileDeviceUtil;
-import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 import pcloudystudio.resources.constant.ImageConstants;
 
 public class DeviceConfigurationDialog extends Dialog {
