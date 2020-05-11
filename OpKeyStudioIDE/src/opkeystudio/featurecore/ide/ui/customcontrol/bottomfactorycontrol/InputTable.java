@@ -33,6 +33,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.utils.OpKeyVariables;
 
 public class InputTable extends CustomTable {
 
@@ -200,8 +201,8 @@ public class InputTable extends CustomTable {
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
 		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
-		combo.setItems(ServiceRepository.getInstance().getAllVaraiblesType());
-		combo.select(Utilities.getInstance().getIndexOfItem(ServiceRepository.getInstance().getAllVaraiblesType(),
+		combo.setItems(OpKeyVariables.getInstance().getAllFLInputVariablesType());
+		combo.select(Utilities.getInstance().getIndexOfItem(OpKeyVariables.getInstance().getAllFLInputVariablesType(),
 				bottomFactoryInput.getType()));
 		combo.setControlData(bottomFactoryInput);
 
