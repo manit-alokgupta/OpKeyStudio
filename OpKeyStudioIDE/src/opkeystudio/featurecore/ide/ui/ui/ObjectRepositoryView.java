@@ -3,7 +3,6 @@ package opkeystudio.featurecore.ide.ui.ui;
 import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 //import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
 import org.eclipse.swt.SWT;
@@ -673,7 +672,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				toggleDeleteAttributeButton(false);
 				toggleAddAttributeButton(false);
 
-				int result = CustomMessageDialogUtil.openConfirmDialog("Opkey", "Do you want to save changes?");
+				int result = CustomMessageDialogUtil.openConfirmDialog("OpKey", "Do you want to save changes?");
 				if (result != 0) {
 					toggleSaveButton(false);
 					objectRepositoryTree.renderObjectRepositories();
@@ -747,18 +746,18 @@ public class ObjectRepositoryView extends SuperComposite {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 			ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 			ORObject obRepo = selectedTreeItem.getORObject();
-			InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), "OpKey", "Enter name to rename",
-					obRepo.getName(), null);
+			String input = CustomMessageDialogUtil.openInputDialog("OpKey", "Rename Object: " + obRepo.getName(),
+					obRepo.getName());
 
-			if (input.open() != InputDialog.OK) {
+			if (input == null) {
 				return;
 			}
-			if (input.getValue().trim().isEmpty()) {
+			if (input.trim().isEmpty()) {
 				MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input",
 						"Please Enter Some Value");
 				return;
 			}
-			obRepo.setName(input.getValue());
+			obRepo.setName(input.trim());
 			obRepo.setModified(true);
 			toggleSaveButton(true);
 			objectRepositoryTree.refreshObjectRepositories();
