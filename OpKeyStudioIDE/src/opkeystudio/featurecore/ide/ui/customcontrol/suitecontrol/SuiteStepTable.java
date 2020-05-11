@@ -25,6 +25,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import opkeystudio.core.utils.CopyPasteOperation;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
@@ -34,6 +35,7 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.dtoMaker.SuiteMaker;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 
 public class SuiteStepTable extends CustomTable {
@@ -148,9 +150,12 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				toggleCopyMenuItem(false);
-				togglePasteMenuItem(true);
+				TestSuiteStep suiteStep = getSelectedTestSuite();
+				if (suiteStep != null) {
+					CopyPasteOperation.getInstance().setTestSuiteStep(suiteStep);
+					toggleCopyMenuItem(false);
+					togglePasteMenuItem(true);
+				}
 			}
 
 			@Override
@@ -163,7 +168,15 @@ public class SuiteStepTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				TestSuiteStep pasteSuiteStep = CopyPasteOperation.getInstance().getTestSuiteStep();
+				TestSuiteStep selectedTestSuiteStep = getSelectedTestSuite();
 
+				TestSuiteStep replicaStep = new SuiteMaker().createSuiteStepReplica(
+						getParentTestSuiteView().getArtifact(), selectedTestSuiteStep, pasteSuiteStep,
+						getTestSuiteData());
+				getTestSuiteData().add(replicaStep);
+				refreshAllTestSuites();
+				getParentTestSuiteView().toggleSaveButton(true);
 				toggleCopyMenuItem(true);
 				togglePasteMenuItem(false);
 			}
