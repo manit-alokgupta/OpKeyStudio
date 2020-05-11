@@ -364,7 +364,7 @@ public class DataRepositoryTable extends CustomTable {
 
 	public void addDRColumn() {
 		String data = new MessageDialogs().openInputDialogAandGetValue("Enter ColumnName", "Enter the DR Column Name",
-				"");
+				"Column-" + this.getColumnCount());
 		if (data == null) {
 			return;
 		}
@@ -397,6 +397,10 @@ public class DataRepositoryTable extends CustomTable {
 	}
 
 	public void deleteDRRow() {
+		boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you really want to delete this row?");
+		if (status == false) {
+			return;
+		}
 		List<DRCellAttributes> drcellattributes = getSelectedRowDRCells();
 		for (DRCellAttributes drCellAttribute : drcellattributes) {
 			drCellAttribute.setDeleted(true);
