@@ -519,13 +519,16 @@ public class OpKeyAppiumKeywords {
 		}
 	}
 
-	public boolean Mobile_LaunchAndroidApplication(MobileDevice device1, String androidApplicationPathh)
+	public boolean Mobile_LaunchAndroidApplication(MobileDevice deviceToBeIgnored, String androidApplicationPathh)
 			throws Exception {
 		String methodName = DataType.getMethodName();
-		ContextInitiator.addFunction(methodName);
-		ContextInitiator.addDataRgumentsInFunctionCall(device1.getDisplayName(), androidApplicationPathh); // Method_SetPickerValue
 
-		final MobileDevice device = SessionHandler.getSessionInfo().mobileDevice;
+
+		final MobileDevice device = SessionHandler.getSessionInfo().getMobileDevice();
+		ContextInitiator.addFunction(methodName);
+		ContextInitiator.addDataRgumentsInFunctionCall(device.getDisplayName(), androidApplicationPathh); // Method_SetPickerValue
+		
+
 		System.out.println("@AppPath: " + androidApplicationPathh);
 		System.out.println("Name " + device.getDisplayName());
 		System.out.println("os " + device.getOperatingSystem());
