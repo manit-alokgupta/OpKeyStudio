@@ -98,6 +98,16 @@ public class FLTranspiler extends AbstractTranspiler {
 		String reportingEnd = "ReportBuilder.get().endFunctionLibrary();";
 		methodBodyCode = reportingStart + methodBodyCode + reportingEnd;
 
+		String returnType = method.getReturnType().getName();
+		if (returnType.equals("boolean")) {
+			methodBodyCode += "return false;";
+		} else if (returnType.equals("int")) {
+			methodBodyCode += "return 0;";
+		} else if (returnType.equals("double")) {
+			methodBodyCode += "return 0;";
+		} else {
+			methodBodyCode += "return null;";
+		}
 		defaultmethod.setName("executeDefault").setPublic().setBody(defaultMethodBody).addThrows("Exception");
 		method.setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
 		return class1;
