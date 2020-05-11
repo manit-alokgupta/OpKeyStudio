@@ -107,11 +107,11 @@ public class InputDataTable extends CustomTable {
 		ControlEditor editor = new ControlEditor(cursor);
 		editor.grabHorizontal = true;
 		editor.grabVertical = true;
-
-		cursor.addSelectionListener(new SelectionListener() {
-
+		
+		cursor.addMouseListener(new MouseListener() {
+			
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void mouseUp(MouseEvent e) {
 				CustomTableItem row = (CustomTableItem) cursor.getRow();
 				FlowInputArgument flowInputArgument = (FlowInputArgument) row.getControlData();
 				String dataType = "";
@@ -231,12 +231,17 @@ public class InputDataTable extends CustomTable {
 					}
 				} else {
 					disposeControlEditor(editor);
-				}
+				}				
 			}
-
+			
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-
+			public void mouseDown(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				
 			}
 		});
 	}

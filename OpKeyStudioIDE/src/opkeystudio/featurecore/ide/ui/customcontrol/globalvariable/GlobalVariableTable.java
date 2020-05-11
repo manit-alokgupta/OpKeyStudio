@@ -11,6 +11,8 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -133,23 +135,25 @@ public class GlobalVariableTable extends CustomTable {
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
 		setTableCursor(tableCursor);
-		tableCursor.addSelectionListener(new SelectionListener() {
+		tableCursor.addMouseListener(new MouseListener() {
 
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// thisTable.deselectAll();
+			public void mouseUp(MouseEvent e) {
 				CustomTableItem selectedTableItem = (CustomTableItem) tableCursor.getRow();
 				GlobalVariable globalVariable = (GlobalVariable) selectedTableItem.getControlData();
 				int selectedColumn = tableCursor.getColumn();
 				CustomText text = new CustomText(tableCursor, 0);
 				if (selectedColumn == 0) {
 					text.setText(globalVariable.getName());
+					text.setFocus();
 				}
 				if (selectedColumn == 2) {
 					if (globalVariable.getValue() == null) {
 						text.setText("");
+						text.setFocus();
 					} else {
 						text.setText(globalVariable.getValue());
+						text.setFocus();
 					}
 				}
 				text.addFocusListener(new FocusListener() {
@@ -185,7 +189,13 @@ public class GlobalVariableTable extends CustomTable {
 			}
 
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
