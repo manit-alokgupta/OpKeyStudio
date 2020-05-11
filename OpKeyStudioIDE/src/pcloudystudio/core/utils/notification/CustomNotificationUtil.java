@@ -36,10 +36,8 @@ public class CustomNotificationUtil {
 	}
 
 	public static void notifyMe(String title, String message) {
-		int[] counter = new int[1];
-		counter[0] = 0;
-		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
-		counter[0]++;
+		// TODO: Check this with Notify and check disposed case of implementation
+
 	}
 
 	public static void openInformationNotification(String title, String message) {
