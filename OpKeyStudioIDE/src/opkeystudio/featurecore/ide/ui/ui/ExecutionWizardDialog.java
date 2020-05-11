@@ -109,6 +109,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		setMessage("Use this wizard to execute your Web or Mobile Tests");
 		area = (Composite) super.createDialogArea(parent);
 		container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout(15, false));
