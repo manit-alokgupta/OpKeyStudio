@@ -299,7 +299,7 @@ public class TestCaseView extends SuperComposite {
 
 		searchBox = new Text(composite_12, SWT.BORDER);
 		searchBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		searchBox.setToolTipText("Search");
+		searchBox.setToolTipText("Search Keyword");
 		searchBox.setMessage("Search Keyword");
 		searchBox.addKeyListener(new KeyListener() {
 
@@ -825,6 +825,8 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				searchBox.setMessage("Search Keyword");
+				searchBox.setToolTipText("Search Keyword");
 				allDataTreeView.initKeywords("");
 
 			}
@@ -839,6 +841,8 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				searchBox.setMessage("Search Function Library");
+				searchBox.setToolTipText("Search Function Library");
 				allDataTreeView.initFunctionLibraries("");
 			}
 
@@ -852,6 +856,8 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				searchBox.setMessage("Search Coded Function Library");
+				searchBox.setToolTipText("Search Coded Function Library");
 				allDataTreeView.initCodedFunctionLibraries("");
 			}
 
