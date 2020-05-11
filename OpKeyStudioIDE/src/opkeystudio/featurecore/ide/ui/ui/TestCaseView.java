@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,17 +51,22 @@ import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
@@ -103,6 +109,7 @@ public class TestCaseView extends SuperComposite {
 	private ArtifactTreeItem artifactTreeItem;
 	private TabFolder datasTabHolder;
 	private Artifact artifact;
+	
 	/**
 	 * Create the composite.
 	 * 
@@ -113,18 +120,70 @@ public class TestCaseView extends SuperComposite {
 	private ArtifactCodeView codedFunctionView;
 	private MPart currentMpart;
 
+	private CodedFunctionArtifact codedFunctionArtifact;
+	private ArtifactCodeView codedFunctionCodeView;
+	
 	public TestCaseView(Composite parent, int style) {
 		super(parent, style);
 		initArtifact();
+		initCodedFunctionArtifact();
 		initTestCaseUI();
 		toggleMovedownButton(false);
 		toggleMoveupButton(false);
 		toggleDeleteButton(false);
 		toggleAddButton(true);
 		addOpKeyGlobalListener();
+		
+	}
+	
+	private void initCodedFunctionArtifact() {
+		if(artifact.getFile_type_enum() == MODULETYPE.Component) {
+			String myID = getArtifact().getId();
+			FunctionLibraryComponent flComponent = FlowApi.getInstance().getFunctionLibraryComponent(myID).get(0);
+		
+			flComponent.setComponentInputArguments(FlowApi.getInstance().getAllComponentInputArgument(myID));
+			
+			flComponent.setComponentOutputArguments(FlowApi.getInstance().getAllComponentOutputArgument(myID));
+			
+			CodedFunctionArtifact cflArtifact = new CodedFunctionArtifact();
+			cflArtifact.setParentccomponent(flComponent);
+			
+			List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
+			
+			if (cflcodes.size() > 0) {
+				CFLCode cflcode = cflcodes.get(0);
+				String imports = "";
+				if (cflcode.getImportpackages() != null) {
+					imports = cflcode.getImportpackages();
+				}
+				String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
+						cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, flComponent.getComponentInputArguments(), flComponent.getComponentOutputArguments());
+				cflArtifact.setCflCode(cflcode);
+				//cartifact.setCflInputParameters(inputParams);
+				//cartifact.setCflOutputParameters(outputParams);
+			}
+			if (cflcodes.size() == 0) {
+				CFLCode cflcode = new CFLCode();
+				cflcode.setAdded(true);
+				cflcode.setComponent_id(getArtifact().getId());
+				cflcode.setUsercode("");
+				cflcode.setLanguage("JAVA");
+				cflcode.setPluginid("2626b33a-a06c-408c-8f69-f8f1490a49bb");
+				String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
+						cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "", flComponent.getComponentInputArguments(), flComponent.getComponentOutputArguments());
+				cflArtifact.setCflCode(cflcode);
 
+			   setCodedFunctionArtifact(cflArtifact);
+				
+				
+			}
+		}
+		else {
+			setCodedFunctionArtifact(null);
+		}
 	}
 
+	
 	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
@@ -467,6 +526,9 @@ public class TestCaseView extends SuperComposite {
 		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, false);
 		setCodedFunctionView(codedFunctionView);
 
+		ArtifactCodeView codedFunctionCodeView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, false,true);
+		setCodedFunctionCodeView(codedFunctionCodeView);
+		
 		cursor.setMenu(flowStepTable.getMenu());
 		flowStepTable.setTableCursor(cursor);
 		cursor.addSelectionListener(new SelectionListener() {
@@ -980,5 +1042,21 @@ public class TestCaseView extends SuperComposite {
 
 	public void setCurrentMpart(MPart currentMpart) {
 		this.currentMpart = currentMpart;
+	}
+
+	public CodedFunctionArtifact getCodedFunctionArtifact() {
+		return codedFunctionArtifact;
+	}
+
+	public void setCodedFunctionArtifact(CodedFunctionArtifact codedFunctionArtifact) {
+		this.codedFunctionArtifact = codedFunctionArtifact;
+	}
+
+	public ArtifactCodeView getCodedFunctionCodeView() {
+		return codedFunctionCodeView;
+	}
+
+	public void setCodedFunctionCodeView(ArtifactCodeView codedFunctionCodeView) {
+		this.codedFunctionCodeView = codedFunctionCodeView;
 	}
 }

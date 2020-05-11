@@ -155,8 +155,7 @@ public class TCFLCodeConstruct {
 	private String getCodedFunctionCode(Artifact artifact, FlowStep flowStep) {
 		CodedFunctionArtifact libraryComponent = flowStep.getCodedFunctionArtifact();
 		List<FlowInputArgument> componentInputArguments = flowStep.getFlowInputArgs();
-		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject_CFL(artifact,
-				libraryComponent, componentInputArguments);
+		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject_FL(artifact, libraryComponent.getParentccomponent(), componentInputArguments);
 		String value = "";
 		for (FlowInputObject flowInputObject : flowInputObjects) {
 			if (!value.isEmpty()) {
@@ -164,7 +163,7 @@ public class TCFLCodeConstruct {
 			}
 			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
 		}
-		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().run(" + value + ");";
+		String code = newLineChar + " new " + libraryComponent.getParentccomponent().getVariableName() + "().run(" + value + ");";
 		return code;
 	}
 

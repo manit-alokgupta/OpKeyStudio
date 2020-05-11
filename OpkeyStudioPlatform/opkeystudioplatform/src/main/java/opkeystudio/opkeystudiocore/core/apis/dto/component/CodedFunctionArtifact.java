@@ -7,10 +7,9 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 
-public class CodedFunctionArtifact extends Artifact {
+public class CodedFunctionArtifact {
 	private CFLCode cflCode;
-	private List<CFLInputParameter> cflInputParameters = new ArrayList<CFLInputParameter>();
-	private List<CFLOutputParameter> cflOutputParameters = new ArrayList<CFLOutputParameter>();
+	private FunctionLibraryComponent parentccomponent;
 
 	public CFLCode getCflCode() {
 		return cflCode;
@@ -20,19 +19,11 @@ public class CodedFunctionArtifact extends Artifact {
 		this.cflCode = cflCode;
 	}
 
-	public List<CFLInputParameter> getCflInputParameters() {
-		return cflInputParameters;
+	public FunctionLibraryComponent getParentccomponent() {
+		return parentccomponent;
 	}
 
-	public void setCflInputParameters(List<CFLInputParameter> cflInputParameters) {
-		this.cflInputParameters = cflInputParameters;
-	}
-
-	public List<CFLOutputParameter> getCflOutputParameters() {
-		return cflOutputParameters;
-	}
-
-	public void setCflOutputParameters(List<CFLOutputParameter> cflOutputParameters) {
-		this.cflOutputParameters = cflOutputParameters;
+	public void setParentccomponent(FunctionLibraryComponent parentccomponent) {
+		this.parentccomponent = parentccomponent;
 	}
 }

@@ -564,11 +564,12 @@ public class InputDataTable extends CustomTable {
 			setComponentInputArgs(new ArrayList<>());
 		}
 
-		if (flowStep.getCodedFunctionArtifact() != null) {
-			setCflInputArguments(flowStep.getCodedFunctionArtifact().getCflInputParameters());
-		} else {
-			setCflInputArguments(new ArrayList<CFLInputParameter>());
-		}
+		/*
+		 * if (flowStep.getCodedFunctionArtifact() != null) {
+		 * setCflInputArguments(flowStep.getCodedFunctionArtifact().
+		 * getCflInputParameters()); } else { setCflInputArguments(new
+		 * ArrayList<CFLInputParameter>()); }
+		 */
 		setFlowInputArgs(flowStep.getFlowInputArgs());
 	}
 

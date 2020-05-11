@@ -35,6 +35,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.Cod
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
@@ -42,6 +43,9 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
@@ -547,8 +551,16 @@ public class CodedFunctionView extends SuperComposite {
 
 	public void renderCFLCode() {
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
-		List<CFLInputParameter> inputParams = GlobalLoader.getInstance().getCFLInputParameters(getArtifact());
-		List<CFLOutputParameter> outputParams = GlobalLoader.getInstance().getCFLOutputParameters(getArtifact());
+		
+		String myID = getArtifact().getId();
+		FunctionLibraryComponent flComponent = FlowApi.getInstance().getFunctionLibraryComponent(myID).get(0);
+	
+		List<ComponentInputArgument> componentInputArgs = FlowApi.getInstance().getAllComponentInputArgument(getArtifact().getId());
+		List<ComponentOutputArgument> componentOutputArgs = FlowApi.getInstance().getAllComponentOutputArgument(getArtifact().getId());	
+		
+		flComponent.setComponentInputArguments(componentInputArgs);
+		flComponent.setComponentOutputArguments(componentOutputArgs);
+		
 		if (cflcodes.size() > 0) {
 			CFLCode cflcode = cflcodes.get(0);
 			String imports = "";
@@ -556,13 +568,14 @@ public class CodedFunctionView extends SuperComposite {
 				imports = cflcode.getImportpackages();
 			}
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, inputParams, outputParams);
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, componentInputArgs, componentOutputArgs);
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
 			CodedFunctionArtifact cfa = new CodedFunctionArtifact();
+			cfa.setParentccomponent(flComponent);
 			cfa.setCflCode(editor.getCflCode());
-			cfa.setCflInputParameters(inputParams);
-			cfa.setCflOutputParameters(outputParams);
+			//cfa.setCflInputParameters(inputParams);
+			//cfa.setCflOutputParameters(outputParams);
 			editor.setCodedFunctionArtifact(cfa);
 		}
 		if (cflcodes.size() == 0) {
@@ -573,13 +586,14 @@ public class CodedFunctionView extends SuperComposite {
 			cflcode.setLanguage("JAVA");
 			cflcode.setPluginid("2626b33a-a06c-408c-8f69-f8f1490a49bb");
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "", inputParams, outputParams);
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "", componentInputArgs, componentOutputArgs);
 			editor.setJavaCode(code);
 			editor.setCflCode(cflcode);
 			CodedFunctionArtifact cfa = new CodedFunctionArtifact();
+			cfa.setParentccomponent(flComponent);
 			cfa.setCflCode(editor.getCflCode());
-			cfa.setCflInputParameters(inputParams);
-			cfa.setCflOutputParameters(outputParams);
+			//cfa.setCflInputParameters(inputParams);
+			//cfa.setCflOutputParameters(outputParams);
 			editor.setCodedFunctionArtifact(cfa);
 		}
 	}

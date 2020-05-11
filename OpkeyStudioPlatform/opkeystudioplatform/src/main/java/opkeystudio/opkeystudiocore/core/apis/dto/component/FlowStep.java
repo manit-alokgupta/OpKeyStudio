@@ -31,6 +31,8 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 	private int position;
 
 	private Keyword keyword;
+	
+	private String mode;
 
 	private FunctionLibraryComponent functionLibraryComponent;
 	private CodedFunctionArtifact codedFunctionArtifact;
@@ -318,5 +320,13 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 
 	public void setAppiumType(boolean appiumType) {
 		this.appiumType = appiumType;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
 	}
 }

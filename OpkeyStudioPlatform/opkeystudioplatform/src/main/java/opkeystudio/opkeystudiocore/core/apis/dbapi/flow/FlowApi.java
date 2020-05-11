@@ -146,20 +146,6 @@ public class FlowApi {
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flowStep.setOrObject(allORObject);
 				flowStep.setIsfunctionlibraryStep(true);
-			} else if (flowStep.getCodedfunction_id() != null) {
-				CodedFunctionArtifact codedFunctionArtifact = getCodedFunctionArtifact(flowStep.getCodedfunction_id())
-						.get(0);
-				List<CFLInputParameter> cflInputParams = new CodedFunctionApi().getCodedFLInputParameters(codedFunctionArtifact);
-				List<CFLOutputParameter> cflOutputParams = new CodedFunctionApi().getCodedFLOutputParameters(codedFunctionArtifact);
-				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
-				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-
-				codedFunctionArtifact.setCflInputParameters(cflInputParams);
-				codedFunctionArtifact.setCflOutputParameters(cflOutputParams);
-				flowStep.setCodedFunctionArtifact(codedFunctionArtifact);
-				flowStep.setFlowInputArgs(fis);
-				flowStep.setFlowOutputArgs(fos);
-				flowStep.setCodedFunctionLibrary(true);
 			}
 		}
 		return flowSteps;

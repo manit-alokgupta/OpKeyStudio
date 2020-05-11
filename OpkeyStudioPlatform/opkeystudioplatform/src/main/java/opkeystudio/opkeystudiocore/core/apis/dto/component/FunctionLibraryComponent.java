@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionLibraryComponent extends Artifact {
+
 	private List<ComponentInputArgument> componentInputArguments = new ArrayList<ComponentInputArgument>();
 	private List<ComponentOutputArgument> componentOutputArguments = new ArrayList<ComponentOutputArgument>();
-
+	
 	public List<ComponentInputArgument> getComponentInputArguments() {
 		return componentInputArguments;
 	}

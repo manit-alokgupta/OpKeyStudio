@@ -19,7 +19,7 @@ public abstract class AbstractTranspiler {
 			file1.mkdirs();
 		}
 		filePath = getTranspiledDataFolder() + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + getFileExtension();
+				+ artifact.getVariableName()+"_Coded"+ getFileExtension();
 		File file2 = new File(filePath);
 		if (!file2.exists()) {
 			try {

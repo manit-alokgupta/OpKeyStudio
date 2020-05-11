@@ -105,7 +105,6 @@ public class ArtifactCodeView extends SuperComposite {
 		setLayout(new GridLayout(1, false));
 		initArtifact();
 		initCFLEditorUI();
-		initCodedFunctionArtifact();
 		initCFLCode();
 	}
 
@@ -165,40 +164,6 @@ public class ArtifactCodeView extends SuperComposite {
 				handleRefreshOnSave();
 			}
 		});
-	}
-
-	private void initCodedFunctionArtifact() {
-		CodedFunctionArtifact cartifact = FlowApi.getInstance().getCodedFunctionArtifact(getArtifact().getId()).get(0);
-		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
-		List<CFLInputParameter> inputParams = GlobalLoader.getInstance().getCFLInputParameters(getArtifact());
-		List<CFLOutputParameter> outputParams = GlobalLoader.getInstance().getCFLOutputParameters(getArtifact());
-		if (cflcodes.size() > 0) {
-			CFLCode cflcode = cflcodes.get(0);
-			String imports = "";
-			if (cflcode.getImportpackages() != null) {
-				imports = cflcode.getImportpackages();
-			}
-			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, inputParams, outputParams);
-			cartifact.setCflCode(cflcode);
-			cartifact.setCflInputParameters(inputParams);
-			cartifact.setCflOutputParameters(outputParams);
-		}
-		if (cflcodes.size() == 0) {
-			CFLCode cflcode = new CFLCode();
-			cflcode.setAdded(true);
-			cflcode.setComponent_id(getArtifact().getId());
-			cflcode.setUsercode("");
-			cflcode.setLanguage("JAVA");
-			cflcode.setPluginid("2626b33a-a06c-408c-8f69-f8f1490a49bb");
-			String code = new CodedFunctionApi().getCodedFLCodeWithBody(getArtifact().getVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), "", inputParams, outputParams);
-			cartifact.setCflCode(cflcode);
-			cartifact.setCflInputParameters(inputParams);
-			cartifact.setCflOutputParameters(outputParams);
-		}
-
-		setCodedFunctionArtifact(cartifact);
 	}
 
 	private void initCodeViewFile() {

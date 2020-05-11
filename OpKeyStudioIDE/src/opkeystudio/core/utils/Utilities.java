@@ -178,7 +178,7 @@ public class Utilities {
 			}
 			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 				EPartService partService = Utilities.getInstance().getEpartService();
-				MPart part = partService.createPart("opkeystudio.partdescriptor.codeFunctionViewer");
+				MPart part = partService.createPart("opkeystudio.partdescriptor.functionLibraryViewer");
 				part.setLabel(artifact.getName());
 				part.setTooltip(artifact.getName());
 				part.getTransientData().put("opkeystudio.artifactData", artifact);

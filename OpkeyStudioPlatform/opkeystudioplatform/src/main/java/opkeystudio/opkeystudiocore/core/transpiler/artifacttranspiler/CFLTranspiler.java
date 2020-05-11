@@ -7,12 +7,15 @@ import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -25,7 +28,7 @@ public class CFLTranspiler extends AbstractTranspiler {
 	@Override
 	public void transpile(Artifact artifact) {
 		try {
-			if (artifact.getFile_type_enum() != MODULETYPE.CodedFunction && artifact.getFile_type_enum() != MODULETYPE.Component) {
+			if (artifact.getFile_type_enum() != MODULETYPE.Component) {
 				return;
 			}
 			
@@ -42,8 +45,8 @@ public class CFLTranspiler extends AbstractTranspiler {
 
 	private JavaClassSource getCFLJavaClassSource(Artifact artofact) {
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(artofact);
-		List<CFLInputParameter> inputParams = GlobalLoader.getInstance().getCFLInputParameters(artofact);
-		List<CFLOutputParameter> outputParams = GlobalLoader.getInstance().getCFLOutputParameters(artofact);
+		List<ComponentInputArgument> componentInputArgs = FlowApi.getInstance().getAllComponentInputArgument(artofact.getId());
+		List<ComponentOutputArgument> componentOutputArgs = FlowApi.getInstance().getAllComponentOutputArgument(artofact.getId());	
 		if (cflcodes.size() > 0) {
 			CFLCode cflcode = cflcodes.get(0);
 			String imports = "";
@@ -51,11 +54,11 @@ public class CFLTranspiler extends AbstractTranspiler {
 				imports = cflcode.getImportpackages();
 			}
 			String code = new CodedFunctionApi().getCodedFLCodeWithBody(artofact.getVariableName(),
-					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, inputParams, outputParams);
+					cflcode.getUsercode(), cflcode.getPrivateuserfunctions(), imports, componentInputArgs, componentOutputArgs);
 			return (JavaClassSource) Roaster.parse(code);
 		}
-		String code = new CodedFunctionApi().getCodedFLCodeWithBody(artofact.getVariableName(), "", "", "", inputParams,
-				outputParams);
+		String code = new CodedFunctionApi().getCodedFLCodeWithBody(artofact.getVariableName(), "", "", "", componentInputArgs,
+				componentOutputArgs);
 		return (JavaClassSource) Roaster.parse(code);
 	}
 }
