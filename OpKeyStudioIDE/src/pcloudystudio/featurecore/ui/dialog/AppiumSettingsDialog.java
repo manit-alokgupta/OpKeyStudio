@@ -219,7 +219,7 @@ public class AppiumSettingsDialog extends Dialog {
 					appiumDirectory.setText(dir);
 					if (!appiumDirectory.getText()
 							.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-						CustomNotificationUtil.openErrorDialog("Error",
+						CustomNotificationUtil.openErrorNotification("Error",
 								"Invalid Appium Directory! Please select valid Appium Directory.");
 						appiumDirectory.setText("");
 					}
@@ -616,7 +616,7 @@ public class AppiumSettingsDialog extends Dialog {
 						shlAppiumSettings.close();
 						openDeviceConfigurationDialog();
 					} else {
-						CustomNotificationUtil.openInformationDialog("Please Note", "Settings Saved Successfully!");
+						CustomNotificationUtil.openInformationNotification("Please Note", "Settings Saved Successfully!");
 					}
 				}
 			}
@@ -703,29 +703,29 @@ public class AppiumSettingsDialog extends Dialog {
 
 	public Boolean validate() {
 		if (serverAddress.getText().isEmpty()) {
-			CustomNotificationUtil.openInformationDialog("Please Note", "Host Address can't be empty!");
+			CustomNotificationUtil.openInformationNotification("Please Note", "Host Address can't be empty!");
 			serverAddress.setFocus();
 			return false;
 		} else if (!validateLocalHost(serverAddress.getText())) {
-			CustomNotificationUtil.openErrorDialog("Error", "Invalid Host Address!");
+			CustomNotificationUtil.openErrorNotification("Error", "Invalid Host Address!");
 			serverAddress.setFocus();
 			return false;
 		} else if (portNumber.getText().isEmpty()) {
-			CustomNotificationUtil.openInformationDialog("Please Note", "Port can't be empty!");
+			CustomNotificationUtil.openInformationNotification("Please Note", "Port can't be empty!");
 
 			portNumber.setFocus();
 			return false;
 		} else if (!validatePort(portNumber.getText())) {
-			CustomNotificationUtil.openErrorDialog("Error", "Invalid Port!");
+			CustomNotificationUtil.openErrorNotification("Error", "Invalid Port!");
 			portNumber.setText("");
 			portNumber.setFocus();
 			return false;
 		} else if (appiumDirectory.getText().isEmpty() || appiumDirectory.getText().equals("")) {
-			CustomNotificationUtil.openInformationDialog("Please Note", "Appium Directory can't be empty!");
+			CustomNotificationUtil.openInformationNotification("Please Note", "Appium Directory can't be empty!");
 			return false;
 		} else if (!appiumDirectory.getText()
 				.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-			CustomNotificationUtil.openErrorDialog("Error",
+			CustomNotificationUtil.openErrorNotification("Error",
 					"Invalid Appium Directory! Please select valid Appium Directory.");
 			return false;
 		}
@@ -753,16 +753,16 @@ public class AppiumSettingsDialog extends Dialog {
 
 	public Boolean validateCapabilityNameAndValue(String capName, String capValue, String capType) {
 		if (capName.isEmpty() || capName.equals("")) {
-			CustomNotificationUtil.openErrorDialog("Error", "Capability Name can't be empty!");
+			CustomNotificationUtil.openErrorNotification("Error", "Capability Name can't be empty!");
 			return false;
 		}
 		if (capValue.isEmpty() || capValue.equals("")) {
-			CustomNotificationUtil.openErrorDialog("Error",
+			CustomNotificationUtil.openErrorNotification("Error",
 					"Capability Value can't be empty! \nProvide capability value first.");
 			return false;
 		}
 		if (capType.isEmpty() || capType.equals("")) {
-			CustomNotificationUtil.openErrorDialog("Error", "Capability data type can't be empty!");
+			CustomNotificationUtil.openErrorNotification("Error", "Capability data type can't be empty!");
 			return false;
 		}
 		return true;

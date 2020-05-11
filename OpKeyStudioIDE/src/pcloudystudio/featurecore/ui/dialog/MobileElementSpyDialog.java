@@ -203,7 +203,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 							captureObjectAction();
 						}
 					} catch (Exception ex) {
-						CustomNotificationUtil.openErrorDialog("Error", ex.getMessage());
+						CustomNotificationUtil.openErrorNotification("Error", ex.getMessage());
 					}
 				}
 			}
@@ -229,7 +229,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 					deviceView.close();
 					MobileDriverObject.getDriver().quit();
 				} catch (Exception ex) {
-					CustomNotificationUtil.openErrorDialog("Error", ex.getMessage());
+					CustomNotificationUtil.openErrorNotification("Error", ex.getMessage());
 				}
 			}
 		});
@@ -300,7 +300,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 									return;
 
 								while (renamedText.trim().isEmpty()) {
-									CustomNotificationUtil.openErrorDialog("Error", "Name can't be empty!");
+									CustomNotificationUtil.openErrorNotification("Error", "Name can't be empty!");
 									renamedText = CustomNotificationUtil.openInputDialog("Rename",
 											"One object is already added with the same name in the OR. \nRename Object: "
 													+ objectName,
@@ -326,7 +326,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 						ex.printStackTrace();
 					}
 				} else {
-					CustomNotificationUtil.openErrorDialog("Error", "Object Name field can't be empty!");
+					CustomNotificationUtil.openErrorNotification("Error", "Object Name field can't be empty!");
 				}
 			}
 		});
@@ -362,7 +362,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				CustomNotificationUtil.openInformationDialog("Help", "Please contact support@opkey.com");
+				CustomNotificationUtil.openInformationNotification("Help", "Please contact support@opkey.com");
 			}
 		});
 		btnHelp.setBounds(5, 5, 20, 20);
@@ -673,7 +673,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 			clearPropertiesTableData();
 			textObjectName.setText("");
 			deviceView.close();
-			CustomNotificationUtil.openErrorDialog("Error", ex.getMessage());
+			CustomNotificationUtil.openErrorNotification("Error", ex.getMessage());
 			return;
 		}
 

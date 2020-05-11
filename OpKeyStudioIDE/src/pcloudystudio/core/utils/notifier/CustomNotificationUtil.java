@@ -38,14 +38,14 @@ public class CustomNotificationUtil {
 
 	}
 
-	public static void openInformationDialog(String title, String message) {
+	public static void openInformationNotification(String title, String message) {
 		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
 				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 2, 0,
 				"OK");
 		mDialog.open();
 	}
 
-	public static void openErrorDialog(String title, String message) {
+	public static void openErrorNotification(String title, String message) {
 		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
 				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 1, 0,
 				"OK");
