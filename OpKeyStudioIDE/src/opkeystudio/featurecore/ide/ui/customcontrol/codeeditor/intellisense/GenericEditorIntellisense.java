@@ -82,13 +82,17 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
-		instance.dispose();
+		if (instance != null) {
+			instance.dispose();
+		}
 		instance = new GenericEditorIntellisense();
 		return instance;
 	}
 
 	public static GenericEditorIntellisense getCFLInstanceoOfCodeEditor() {
-		cflinstance.dispose();
+		if (cflinstance != null) {
+			cflinstance.dispose();
+		}
 		cflinstance = new GenericEditorIntellisense();
 		return cflinstance;
 	}
