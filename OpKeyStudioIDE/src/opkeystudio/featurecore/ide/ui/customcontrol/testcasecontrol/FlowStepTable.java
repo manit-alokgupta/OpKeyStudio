@@ -54,7 +54,6 @@ public class FlowStepTable extends CustomTable {
 	private MenuItem movedownMenuItem;
 	private MenuItem setToRunMenuItem;
 	private MenuItem skipfromRunMenuItem;
-	private TableCursor tableCursor;
 
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
@@ -708,14 +707,6 @@ public class FlowStepTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
-	}
-
-	public TableCursor getTableCursor() {
-		return tableCursor;
-	}
-
-	public void setTableCursor(TableCursor tableCursor) {
-		this.tableCursor = tableCursor;
 	}
 
 }

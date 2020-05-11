@@ -75,14 +75,22 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return cflinstance;
 	}
 
+	private void dispose() {
+		transpiledClasses.clear();
+		allvariabletokens.clear();
+		senseClasses.clear();
+	}
+
 	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
+		instance.dispose();
 		instance = new GenericEditorIntellisense();
 		return instance;
 	}
 
 	public static GenericEditorIntellisense getCFLInstanceoOfCodeEditor() {
-		instance = new GenericEditorIntellisense();
-		return instance;
+		cflinstance.dispose();
+		cflinstance = new GenericEditorIntellisense();
+		return cflinstance;
 	}
 
 	public void refreshCodeEditorIntellisense() {
@@ -100,7 +108,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			return;
 		}
 		refreshCFLEditorIntellisenseRunning = true;
-		instance.initCFLIntellisense();
+		cflinstance.initCFLIntellisense();
 	}
 
 	private void initIntellisense() {

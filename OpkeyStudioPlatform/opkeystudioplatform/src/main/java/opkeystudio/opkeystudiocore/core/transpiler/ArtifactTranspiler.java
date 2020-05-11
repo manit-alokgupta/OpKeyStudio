@@ -89,6 +89,7 @@ public class ArtifactTranspiler {
 		ArtifactTranspiler.getInstance().addPackageName("java.io");
 		ArtifactTranspiler.getInstance()
 				.addPackageName("com.crestech.opkey.plugin.communication.contracts.functioncall");
+		ArtifactTranspiler.getInstance().addPackageName("com.crestech.opkey.plugin.codedfl");
 		TranspilerUtilities.getInstance().clearAppiumTypeFunctionLibraries();
 	}
 

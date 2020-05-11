@@ -20,6 +20,27 @@ public class VariableComposer {
 		if (opkeyDataType.equals("File")) {
 			return "java.io.File";
 		}
+
+		if (opkeyDataType.equals("CollectionOfString")) {
+			return "String[]";
+		}
+
+		if (opkeyDataType.equals("CollectionOfInteger")) {
+			return "Integer[]";
+		}
+
+		if (opkeyDataType.equals("CollectionOfDouble")) {
+			return "Double[]";
+		}
+
+		if (opkeyDataType.equals("CollectionOfDateTime")) {
+			return "Date[]";
+		}
+
+		if (opkeyDataType.equals("CollectionOfKeyValuePair")) {
+			return "KeyValuePair[]";
+		}
+
 		return opkeyDataType;
 	}
 }

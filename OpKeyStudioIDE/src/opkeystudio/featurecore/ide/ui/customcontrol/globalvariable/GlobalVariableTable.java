@@ -106,6 +106,24 @@ public class GlobalVariableTable extends CustomTable {
 			for (int i = 0; i < tableHeaders_gv.length; i++) {
 				this.getColumn(i).pack();
 			}
+			this.addSelectionListener(new SelectionListener() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					GlobalVariable gv = getSelectedGlobalVariable();
+					if (gv != null) {
+						getParentGlobalVariableView().toggleDeleteToolItem(true);
+						return;
+					}
+					getParentGlobalVariableView().toggleDeleteToolItem(false);
+				}
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+			});
 		}
 	}
 
@@ -114,6 +132,7 @@ public class GlobalVariableTable extends CustomTable {
 		ControlEditor controlEditor = new ControlEditor(tableCursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
+		setTableCursor(tableCursor);
 		tableCursor.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -287,6 +306,7 @@ public class GlobalVariableTable extends CustomTable {
 
 		}
 		this.globalVariables = globalvariables;
+		selectLastRow();
 	}
 
 	public void filterGlobalVariableTable(String searchValue) {
@@ -317,14 +337,7 @@ public class GlobalVariableTable extends CustomTable {
 				}
 			}
 		}
-	}
-
-	private void selectRow(int index) {
-		if (this.getItemCount() == 0) {
-			return;
-		}
-		this.setSelection(index);
-		this.notifyListeners(SWT.Selection, null);
+		selectLastRow();
 	}
 
 	public void addBlankGlobalVariableStep() {
@@ -350,17 +363,19 @@ public class GlobalVariableTable extends CustomTable {
 	}
 
 	public void deleteGlobalVariableStep() {
-		int selectedIndex = this.getSelectionIndex();
-		getGlobalVariablesData().get(selectedIndex).setDeleted(true);
+		GlobalVariable gv = getSelectedGlobalVariable();
+		if (gv != null) {
+			gv.setDeleted(true);
+		}
 		renderGlobalVariables();
-		selectRow(0);
+		selectDefaultRow();
 	}
 
 	public boolean saveAll() {
 
 		List<GlobalVariable> allGlobalVariables = getGlobalVariablesData();
 		for (GlobalVariable gv : allGlobalVariables) {
-			if (gv.isDeleted() || gv.isModified() || gv.isAdded()) {
+			if (gv.isModified() || gv.isAdded()) {
 				if (gv.getName().trim().isEmpty()) {
 					new MessageDialogs().openErrorDialog("OpKey", "Name Should Not Be Blank");
 					renderGlobalVariables();
@@ -414,6 +429,9 @@ public class GlobalVariableTable extends CustomTable {
 
 	public GlobalVariable getSelectedGlobalVariable() {
 		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
 			return null;
 		}
 		if (this.getSelection().length == 0) {

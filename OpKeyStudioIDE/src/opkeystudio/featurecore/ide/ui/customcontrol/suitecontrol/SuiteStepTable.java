@@ -510,10 +510,10 @@ public class SuiteStepTable extends CustomTable {
 			suiteStepTableItem.setTestSuiteData(testSuite);
 			addTableEditor(suiteStepTableItem);
 		}
+		selectDefaultRow();
 		if (testSuites.size() == 0) {
 			getParentTestSuiteView().toggleDeleteButton(false);
 		}
-		selectDefaultRow();
 	}
 
 	public void refreshAllTestSuites() {
@@ -530,10 +530,10 @@ public class SuiteStepTable extends CustomTable {
 				addTableEditor(suiteStepTableItem);
 			}
 		}
+		selectDefaultRow();
 		if (this.getItemCount() == 0) {
 			getParentTestSuiteView().toggleDeleteButton(false);
 		}
-		selectDefaultRow();
 	}
 
 	public TestSuiteStep getSelectedTestSuite() {

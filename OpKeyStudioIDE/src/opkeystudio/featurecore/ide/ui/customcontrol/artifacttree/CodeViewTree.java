@@ -296,7 +296,7 @@ public class CodeViewTree extends CustomTree {
 					String.format("Unable to create file with name '%s'. Please provide a different name", fileName));
 			return;
 		}
-		
+
 	}
 
 	public void createNewFolder() {
@@ -419,6 +419,7 @@ public class CodeViewTree extends CustomTree {
 		}
 		expandAll(rootNode);
 		GenericEditorIntellisense.getGenericInstanceoOfCodeEditor().refreshCodeEditorIntellisense();
+		GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
 	}
 
 	private void renderFiles(CodeViewTreeItem parentNode, File rootFile) {

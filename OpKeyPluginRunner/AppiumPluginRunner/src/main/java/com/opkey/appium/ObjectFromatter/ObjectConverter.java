@@ -44,7 +44,6 @@ public class ObjectConverter {
 			e.printStackTrace();
 			System.out.println("Warning: " + e.getMessage());
 		}
-		AppiumObject ob1 = new AppiumObject(false);
 		return new AppiumObject(false);
 	}
 
@@ -70,16 +69,27 @@ public class ObjectConverter {
 
 	private String getLogicalNameOfORObject(ORObject orobject) {
 		if (orobject.getAllProperties().containsKey("logicalname")) {
-			return orobject.getAllProperties().get("logicalname");
-		} else if (orobject.getAllProperties().containsKey("name")) {
-			return orobject.getAllProperties().get("name");
-		} else if (orobject.getAllProperties().containsKey("text")) {
-			return orobject.getAllProperties().get("text");
+			String value = orobject.getAllProperties().get("logicalname");
+			if(!value.isEmpty())
+				return value;
+		} 
+		
+		if (orobject.getAllProperties().containsKey("name")) {
+			String value = orobject.getAllProperties().get("name");
+			if(!value.isEmpty())
+				return value;
+		} 
+		
+		if (orobject.getAllProperties().containsKey("text")) {
+			String value = orobject.getAllProperties().get("text");
+			if(!value.isEmpty())
+				return value;
 		}
 		return "no-name";
 	}
 	
 	private void setObjectArgumentInFunctionCall(ORObject obj) {
+		System.out.println("--Setting object argument using object");
 		ObjectArguments oArgs = new ObjectArguments();
 		ObjectArgument oArg = new ObjectArgument();
 		oArg.setArgumentName("Object");
@@ -91,6 +101,7 @@ public class ObjectConverter {
 	}
 	
 	private void setObjectArgumentInFunctionCall(String logicalName) {
+		System.out.println("--Setting object argument using no-name");
 		ObjectArguments oArgs = new ObjectArguments();
 		ObjectArgument oArg = new ObjectArgument();
 		oArg.setArgumentName("Object");
