@@ -11,7 +11,7 @@ public class ImageConstants {
 	public static final Image IMG_16_ADD_CAPABILITY;
 	public static final Image IMG_16_ADD_TO_TABLE;
 	public static final Image IMG_16_BROWSE;
-	public static final Image IMG_16_REFRESH_TABLE;
+	public static final Image IMG_16_REFRESH_Button;
 	public static final Image IMG_16_DELETE_CAPABILITY;
 	public static final Image IMG_16_CANCEL;
 	public static final Image IMG_16_HELP;
@@ -24,7 +24,7 @@ public class ImageConstants {
 		IMG_16_ADD_CAPABILITY = ImageManager.getImage("add_capability_16.png");
 		IMG_16_ADD_TO_TABLE = ImageManager.getImage("add_to_table_16.png");
 		IMG_16_BROWSE = ImageManager.getImage("browse_16.png");
-		IMG_16_REFRESH_TABLE = ImageManager.getImage("refresh_table_16.png");
+		IMG_16_REFRESH_Button = ImageManager.getImage("refresh_table_16.png");
 		IMG_16_CANCEL = ImageManager.getImage("cancel_16.png");
 		IMG_16_DELETE_CAPABILITY = ImageManager.getImage("delete_capability_16.png");
 		IMG_16_HELP = ImageManager.getImage("help_16.png");

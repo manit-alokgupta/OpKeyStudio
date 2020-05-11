@@ -119,8 +119,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
-		shlAppiumSettings
-		.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
+		shlAppiumSettings.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -407,7 +406,7 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 		btnRefresh.setBounds(470, 13, 18, 18);
-		btnRefresh.setImage(ImageConstants.IMG_16_REFRESH_TABLE);
+		btnRefresh.setImage(ImageConstants.IMG_16_REFRESH_Button);
 		btnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefresh.setToolTipText("Refresh Table");
 
@@ -540,8 +539,7 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 		manuallybtnRefresh.setBounds(475, 13, 18, 18);
-		manuallybtnRefresh
-		.setImage(ImageConstants.IMG_16_REFRESH_TABLE);
+		manuallybtnRefresh.setImage(ImageConstants.IMG_16_REFRESH_Button);
 		manuallybtnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallybtnRefresh.setToolTipText("Refresh Table");
 

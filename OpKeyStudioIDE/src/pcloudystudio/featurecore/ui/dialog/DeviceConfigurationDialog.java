@@ -173,7 +173,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnRefresh.setToolTipText("Refresh");
 		btnRefresh.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnRefresh.setImage(ImageConstants.IMG_16_REFRESH_TABLE);
+		btnRefresh.setImage(ImageConstants.IMG_16_REFRESH_Button);
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
