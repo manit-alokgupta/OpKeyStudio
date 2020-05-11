@@ -14,6 +14,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgumen
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
+import opkeystudio.opkeystudiocore.core.transpiler.VariableComposer;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct.TCFLCodeConstruct;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -67,7 +68,7 @@ public class FLTranspiler extends AbstractTranspiler {
 
 		for (ComponentInputArgument cia : componentInputArguments) {
 			System.out.println("DataType " + cia.getType() + "  " + cia.getVariableName());
-			String dataType = convertDataType(cia.getType());
+			String dataType = new VariableComposer().convertOpKeyDataTypeToJavaDataType(cia.getType());
 			String varName = cia.getVariableName();
 			method.addParameter(dataType, varName);
 		}
@@ -76,7 +77,7 @@ public class FLTranspiler extends AbstractTranspiler {
 				.getAllComponentOutputArgument(artifact.getId());
 
 		for (ComponentOutputArgument compOutputArg : outPutArguments) {
-			String dataType = convertDataType(compOutputArg.getType());
+			String dataType = new VariableComposer().convertOpKeyDataTypeToJavaDataType(compOutputArg.getType());
 			method.setReturnType(dataType);
 		}
 		String defaultArguments = "";
@@ -85,7 +86,7 @@ public class FLTranspiler extends AbstractTranspiler {
 			if (!defaultArguments.isEmpty()) {
 				defaultArguments += ", ";
 			}
-			String dataType = convertDataType(cia.getType());
+			String dataType = new VariableComposer().convertOpKeyDataTypeToJavaDataType(cia.getType());
 			String defaultValue = cia.getDefaultvalue();
 			String convertedDefaultValue = getDataAsDataType(dataType, defaultValue);
 			defaultArguments += convertedDefaultValue;
@@ -99,7 +100,6 @@ public class FLTranspiler extends AbstractTranspiler {
 
 		defaultmethod.setName("executeDefault").setPublic().setBody(defaultMethodBody).addThrows("Exception");
 		method.setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
-		System.out.println(">>Method Name " + method.toSignature());
 		return class1;
 	}
 
@@ -136,22 +136,6 @@ public class FLTranspiler extends AbstractTranspiler {
 			return "\"" + data + "\"";
 		}
 		return data;
-	}
-
-	private String convertDataType(String dataType) {
-		if (dataType.equals("Integer")) {
-			return "int";
-		}
-		if (dataType.equals("Double")) {
-			return "double";
-		}
-		if (dataType.equals("Float")) {
-			return "float";
-		}
-		if (dataType.equals("Boolean")) {
-			return "boolean";
-		}
-		return "String";
 	}
 
 }

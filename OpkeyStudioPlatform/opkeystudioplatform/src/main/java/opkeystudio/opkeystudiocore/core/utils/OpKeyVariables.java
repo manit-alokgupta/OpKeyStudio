@@ -1,5 +1,7 @@
 package opkeystudio.opkeystudiocore.core.utils;
 
+import com.crestech.opkey.plugin.codedfl.KeyValuePair;
+
 public class OpKeyVariables {
 	private static OpKeyVariables instance;
 
@@ -12,31 +14,31 @@ public class OpKeyVariables {
 
 	public String[] getAllGlobalVariablesType() {
 		return new String[] { "String", "Boolean", "Integer", "Double", "DateTime", "MobileDevice", "MobileApplication",
-				"File", "List", "SecuredString", "Collections(String)", "Collections(Integer)", "Collections(Double)",
-				"Collections(DateTime)", "Collections(KeyValuePair)", "KeyValuePair" };
+				"File", "List", "SecuredString", "CollectionOfString", "CollectionOfInteger", "CollectionOfDouble",
+				"CollectionOfDateTime", "CollectionOfKeyValuePair", "KeyValuePair" };
 	}
 
 	public String[] getAllFLInputVariablesType() {
 		return new String[] { "String", "Boolean", "Integer", "Double", "DateTime", "MobileDevice", "MobileApplication",
-				"File", "List", "SecuredString", "Collections(String)", "Collections(Integer)", "Collections(Double)",
-				"Collections(DateTime)", "Collections(KeyValuePair)", "KeyValuePair" };
+				"File", "List", "SecuredString", "CollectionOfString", "CollectionOfInteger", "CollectionOfDouble",
+				"CollectionOfDateTime", "CollectionOfKeyValuePair", "KeyValuePair" };
 	}
 
 	public String[] getAllFLOutputVariablesType() {
-		return new String[] { "String", "Boolean", "Integer", "Double", "DateTime", "Collections(String)",
-				"Collections(Integer)", "Collections(Double)", "Collections(DateTime)", "Collections(KeyValuePair)",
+		return new String[] { "String", "Boolean", "Integer", "Double", "DateTime", "CollectionOfString",
+				"CollectionOfInteger", "CollectionOfDouble", "CollectionOfDateTime", "CollectionOfKeyValuePair",
 				"KeyValuePair" };
 	}
 
 	public String[] getAllCFLInputVariablesType() {
-		return new String[] { "String", "Boolean", "Integer", "Double", "DateTime", "ORObject", "Collections(String)",
-				"Collections(Integer)", "Collections(Double)", "Collections(DateTime)", "Collections(KeyValuePair)",
+		return new String[] { "String", "Boolean", "Integer", "Double", "DateTime", "ORObject", "CollectionOfString",
+				"CollectionOfInteger", "CollectionOfDouble", "CollectionOfDateTime", "CollectionOfKeyValuePair",
 				"KeyValuePair" };
 	}
 
 	public String[] getAllCFLOutputVariablesType() {
-		return new String[] { "String", "Boolean", "Integer", "Double", "DateTime", "Collections(String)",
-				"Collections(Integer)", "Collections(Double)", "Collections(DateTime)", "Collections(KeyValuePair)",
+		return new String[] { "String", "Boolean", "Integer", "Double", "DateTime", "CollectionOfString",
+				"CollectionOfInteger", "CollectionOfDouble", "CollectionOfDateTime", "CollectionOfKeyValuePair",
 				"KeyValuePair" };
 	}
 }
