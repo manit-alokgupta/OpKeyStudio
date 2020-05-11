@@ -37,4 +37,29 @@ public class SuiteMaker {
 		}
 		return testSuite;
 	}
+
+	public TestSuiteStep createSuiteStepReplica(Artifact artifact, TestSuiteStep selectedFlowStep,
+			TestSuiteStep pasteFlowStep, List<TestSuiteStep> testSuiteSteps) {
+		int selectedFlowStepIndex = testSuiteSteps.indexOf(selectedFlowStep);
+		int selectedFlowStepPosition = 0;
+		if (selectedFlowStep != null) {
+			selectedFlowStepPosition = selectedFlowStep.getPosition();
+		} else {
+			if (testSuiteSteps.size() > 0) {
+				TestSuiteStep lastFlowStep = testSuiteSteps.get(testSuiteSteps.size() - 1);
+				selectedFlowStepPosition = lastFlowStep.getPosition();
+			}
+		}
+
+		TestSuiteStep testSuiteStep = pasteFlowStep.clone();
+		testSuiteStep.setSuite_stepid(Utilities.getInstance().getUniqueUUID(""));
+		testSuiteStep.setPosition(selectedFlowStepPosition + 5);
+		testSuiteStep.setAdded(true);
+		for (int i = selectedFlowStepIndex + 1; i < testSuiteSteps.size(); i++) {
+			TestSuiteStep isuiteStep = testSuiteSteps.get(i);
+			isuiteStep.setPosition(isuiteStep.getPosition() + 10);
+			isuiteStep.setModified(true);
+		}
+		return testSuiteStep;
+	}
 }
