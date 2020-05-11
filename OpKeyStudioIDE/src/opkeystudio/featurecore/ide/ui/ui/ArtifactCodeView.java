@@ -537,11 +537,20 @@ public class ArtifactCodeView extends SuperComposite {
 		try {
 			JavaClassSource classSource = (JavaClassSource) Roaster.parse(code);
 			List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
+			String privateFunctions = "";
+			for (MethodSource<JavaClassSource> method : methods) {
+				if (!method.getName().equals("run") && !method.getName().equals("executeDefault") ) {
+					if (method.getBody() != null) {
+						privateFunctions += method.getBody();
+					}
+				}
+			}
 			for (MethodSource<JavaClassSource> method : methods) {
 				if (method.getName().equals("run")) {
 					if (method.getBody() != null) {
 						CFLCode cflCode = getCodedFunctionArtifact().getCflCode();
 						cflCode.setUsercode(method.getBody());
+						cflCode.setPrivateuserfunctions(privateFunctions);
 						cflCode.setAdded(true);
 						cflCode.setModified(true);
 						System.out.println("Method Body " + method.getBody());
