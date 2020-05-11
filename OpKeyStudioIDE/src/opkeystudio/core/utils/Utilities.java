@@ -1,6 +1,7 @@
 package opkeystudio.core.utils;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.UUID;
@@ -23,6 +24,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.ArtifactCodeEditor;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
@@ -292,7 +294,7 @@ public class Utilities {
 		}
 	}
 
-	public void initCodeEditorSuperConstructor() {
+	public void initAllPluginFeatures() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				MessageDialogs msd = new MessageDialogs();
@@ -301,6 +303,12 @@ public class Utilities {
 					@Override
 					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 						new ArtifactCodeEditor();
+						try {
+							GlobalLoader.getInstance().initAllClassInfoDTOS();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				});
 				msd.closeProgressDialog();
