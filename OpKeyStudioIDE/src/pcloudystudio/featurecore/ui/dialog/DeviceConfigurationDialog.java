@@ -42,8 +42,8 @@ import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.AppiumMobileServer;
 import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.appium.MobileDriverObject;
-import pcloudystudio.core.utils.CustomMessageDialogUtil;
 import pcloudystudio.core.utils.MobileDeviceUtil;
+import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
 import pcloudystudio.resources.constant.ImageConstants;
 
 public class DeviceConfigurationDialog extends Dialog {
@@ -131,7 +131,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				CustomMessageDialogUtil.openInformationDialog("Help", "Please contact support@opkey.com");
+				CustomNotificationUtil.openInformationDialog("Help", "Please contact support@opkey.com");
 			}
 		});
 		btnHelp.setBounds(305, 64, 18, 18);
@@ -234,7 +234,7 @@ public class DeviceConfigurationDialog extends Dialog {
 						applicationPathText.setText(file.toString());
 						applicationPathText.setEditable(true);
 					} else {
-						CustomMessageDialogUtil.openErrorDialog("Error",
+						CustomNotificationUtil.openErrorDialog("Error",
 								"Application APK file you provided doesn't exist!");
 					}
 				}
@@ -270,10 +270,10 @@ public class DeviceConfigurationDialog extends Dialog {
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
 				} else if (AppiumConfiguration.getPort() == null || AppiumConfiguration.getHostAddress() == null
 						|| AppiumConfiguration.getAppiumDirectory() == null) {
-					CustomMessageDialogUtil.openInformationDialog("Please Note",
+					CustomNotificationUtil.openInformationDialog("Please Note",
 							"Appium Settings are not configured! Go-To: Tools->Appium Settings.");
 				} else if (!exists) {
-					CustomMessageDialogUtil.openErrorDialog("Error", "Application file you entered is not valid!");
+					CustomNotificationUtil.openErrorDialog("Error", "Application file you entered is not valid!");
 					lblApplicationIsRequiredMessage.setVisible(false);
 				} else {
 					try {
@@ -312,7 +312,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					try {
 						showProgressDialog();
 					} catch (Exception ex) {
-						CustomMessageDialogUtil.openErrorDialog("Error",
+						CustomNotificationUtil.openErrorDialog("Error",
 								"Unable to start Application: Please check the Appium Server logs for more ... \n");
 					}
 
@@ -321,7 +321,7 @@ public class DeviceConfigurationDialog extends Dialog {
 						shlDeviceConfiguration.close();
 						new MobileElementSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
 					} else {
-						CustomMessageDialogUtil.openErrorDialog("Error",
+						CustomNotificationUtil.openErrorDialog("Error",
 								"Unable to start Application: Please check the Appium Server logs for more ... \n"
 										+ "org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session.");
 					}
@@ -364,7 +364,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					CustomMessageDialogUtil.openErrorDialog("Error",
+					CustomNotificationUtil.openErrorDialog("Error",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
 									+ ex.getMessage());
 				}
@@ -380,7 +380,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					CustomMessageDialogUtil.openErrorDialog("Error",
+					CustomNotificationUtil.openErrorDialog("Error",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
 									+ ex.getMessage());
 				}
@@ -405,7 +405,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					CustomMessageDialogUtil.openErrorDialog("Error",
+					CustomNotificationUtil.openErrorDialog("Error",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
 									+ ex.getMessage());
 				}
@@ -422,7 +422,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					CustomMessageDialogUtil.openErrorDialog("Error",
+					CustomNotificationUtil.openErrorDialog("Error",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
 									+ ex.getMessage());
 				}

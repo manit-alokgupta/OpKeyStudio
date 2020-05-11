@@ -51,7 +51,7 @@ import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.appium.AppiumConfiguration;
-import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
 import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
 import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 
@@ -682,7 +682,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				toggleDeleteAttributeButton(false);
 				toggleAddAttributeButton(false);
 
-				int result = CustomMessageDialogUtil.openConfirmDialog("OpKey", "Do you want to save changes?");
+				int result = CustomNotificationUtil.openConfirmDialog("OpKey", "Do you want to save changes?");
 				if (result != 0) {
 					toggleSaveButton(false);
 					objectRepositoryTree.renderObjectRepositories();
@@ -760,7 +760,7 @@ public class ObjectRepositoryView extends SuperComposite {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 			ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 			ORObject obRepo = selectedTreeItem.getORObject();
-			String input = CustomMessageDialogUtil.openInputDialog("OpKey", "Rename: " + obRepo.getName(),
+			String input = CustomNotificationUtil.openInputDialog("OpKey", "Rename: " + obRepo.getName(),
 					obRepo.getName());
 
 			if (input == null) {

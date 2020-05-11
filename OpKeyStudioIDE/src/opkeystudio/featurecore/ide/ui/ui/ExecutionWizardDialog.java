@@ -37,8 +37,8 @@ import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
-import pcloudystudio.core.utils.CustomMessageDialogUtil;
 import pcloudystudio.core.utils.MobileDeviceUtil;
+import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
 import pcloudystudio.core.vncutils.AndroidVNCLauncher;
 import pcloudystudio.pcloudystudio.core.execution.MobileDeviceExecutionDetail;
 import pcloudystudio.resources.constant.ImageConstants;
@@ -269,7 +269,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 						getMobileDeviceExecutionDetail().setDeviceABI(MobileDeviceUtil.getDeviceProperty(deviceID,
 								MobileDeviceUtil.ANDROID_DEVICE_ABI_PROPERTY));
 					} catch (Exception ex) {
-						CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
+						CustomNotificationUtil.openErrorDialog("Error", ex.getMessage());
 					}
 
 					ExecutionSession session = getExecutionSession();
@@ -300,7 +300,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		try {
 			initPluginNames();
 		} catch (SetupConfigurationException e1) {
-			CustomMessageDialogUtil.openErrorDialog("OpKey", e1.getMessage());
+			CustomNotificationUtil.openErrorDialog("OpKey", e1.getMessage());
 		}
 		return area;
 	}
@@ -368,7 +368,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			}
 			androidDeviceSelectionDropDown.select(0);
 		} catch (Exception ex) {
-			CustomMessageDialogUtil.openErrorDialog("Error",
+			CustomNotificationUtil.openErrorDialog("Error",
 					"Please Connect Your Device First" + "\n" + ex.getMessage());
 		}
 	}
@@ -409,7 +409,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 						} catch (IOException ex) {
 
-							CustomMessageDialogUtil.openErrorDialog("OpKey", ex.getMessage());
+							CustomNotificationUtil.openErrorDialog("OpKey", ex.getMessage());
 						}
 
 					}

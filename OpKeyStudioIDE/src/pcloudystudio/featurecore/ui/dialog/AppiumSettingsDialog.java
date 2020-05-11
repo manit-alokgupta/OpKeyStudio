@@ -43,7 +43,7 @@ import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.MobileDesiredCapabilities;
-import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
 import pcloudystudio.resources.constant.ImageConstants;
 
 public class AppiumSettingsDialog extends Dialog {
@@ -219,7 +219,7 @@ public class AppiumSettingsDialog extends Dialog {
 					appiumDirectory.setText(dir);
 					if (!appiumDirectory.getText()
 							.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-						CustomMessageDialogUtil.openErrorDialog("Error",
+						CustomNotificationUtil.openErrorDialog("Error",
 								"Invalid Appium Directory! Please select valid Appium Directory.");
 						appiumDirectory.setText("");
 					}
@@ -384,7 +384,7 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (checkIfTableIsModified(previousTablecount)) { // if false means table is not modified
-					int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation",
+					int result = CustomNotificationUtil.openConfirmDialog("Confirmation",
 							"Do You Want To Save Capabilities?");
 					System.out.println(result);
 					if (result == 0) {
@@ -514,7 +514,7 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (checkIfTableIsModified(previousTablecount)) { // if false means table is not modified
-					int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation",
+					int result = CustomNotificationUtil.openConfirmDialog("Confirmation",
 							"Do You Want To Save Capabilities?");
 					System.out.println(result);
 					if (result == 0) {
@@ -616,7 +616,7 @@ public class AppiumSettingsDialog extends Dialog {
 						shlAppiumSettings.close();
 						openDeviceConfigurationDialog();
 					} else {
-						CustomMessageDialogUtil.openInformationDialog("Please Note", "Settings Saved Successfully!");
+						CustomNotificationUtil.openInformationDialog("Please Note", "Settings Saved Successfully!");
 					}
 				}
 			}
@@ -703,29 +703,29 @@ public class AppiumSettingsDialog extends Dialog {
 
 	public Boolean validate() {
 		if (serverAddress.getText().isEmpty()) {
-			CustomMessageDialogUtil.openInformationDialog("Please Note", "Host Address can't be empty!");
+			CustomNotificationUtil.openInformationDialog("Please Note", "Host Address can't be empty!");
 			serverAddress.setFocus();
 			return false;
 		} else if (!validateLocalHost(serverAddress.getText())) {
-			CustomMessageDialogUtil.openErrorDialog("Error", "Invalid Host Address!");
+			CustomNotificationUtil.openErrorDialog("Error", "Invalid Host Address!");
 			serverAddress.setFocus();
 			return false;
 		} else if (portNumber.getText().isEmpty()) {
-			CustomMessageDialogUtil.openInformationDialog("Please Note", "Port can't be empty!");
+			CustomNotificationUtil.openInformationDialog("Please Note", "Port can't be empty!");
 
 			portNumber.setFocus();
 			return false;
 		} else if (!validatePort(portNumber.getText())) {
-			CustomMessageDialogUtil.openErrorDialog("Error", "Invalid Port!");
+			CustomNotificationUtil.openErrorDialog("Error", "Invalid Port!");
 			portNumber.setText("");
 			portNumber.setFocus();
 			return false;
 		} else if (appiumDirectory.getText().isEmpty() || appiumDirectory.getText().equals("")) {
-			CustomMessageDialogUtil.openInformationDialog("Please Note", "Appium Directory can't be empty!");
+			CustomNotificationUtil.openInformationDialog("Please Note", "Appium Directory can't be empty!");
 			return false;
 		} else if (!appiumDirectory.getText()
 				.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-			CustomMessageDialogUtil.openErrorDialog("Error",
+			CustomNotificationUtil.openErrorDialog("Error",
 					"Invalid Appium Directory! Please select valid Appium Directory.");
 			return false;
 		}
@@ -753,16 +753,16 @@ public class AppiumSettingsDialog extends Dialog {
 
 	public Boolean validateCapabilityNameAndValue(String capName, String capValue, String capType) {
 		if (capName.isEmpty() || capName.equals("")) {
-			CustomMessageDialogUtil.openErrorDialog("Error", "Capability Name can't be empty!");
+			CustomNotificationUtil.openErrorDialog("Error", "Capability Name can't be empty!");
 			return false;
 		}
 		if (capValue.isEmpty() || capValue.equals("")) {
-			CustomMessageDialogUtil.openErrorDialog("Error",
+			CustomNotificationUtil.openErrorDialog("Error",
 					"Capability Value can't be empty! \nProvide capability value first.");
 			return false;
 		}
 		if (capType.isEmpty() || capType.equals("")) {
-			CustomMessageDialogUtil.openErrorDialog("Error", "Capability data type can't be empty!");
+			CustomNotificationUtil.openErrorDialog("Error", "Capability data type can't be empty!");
 			return false;
 		}
 		return true;

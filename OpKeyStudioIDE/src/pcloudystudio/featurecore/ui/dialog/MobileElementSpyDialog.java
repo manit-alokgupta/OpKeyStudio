@@ -64,7 +64,7 @@ import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import pcloudystudio.appium.MobileDriverObject;
-import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.core.utils.notifier.CustomNotificationUtil;
 import pcloudystudio.resources.constant.ImageConstants;
 import pcloudystudio.spytreecomponents.BasicMobileElement;
 import pcloudystudio.spytreecomponents.MobileElement;
@@ -203,7 +203,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 							captureObjectAction();
 						}
 					} catch (Exception ex) {
-						CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
+						CustomNotificationUtil.openErrorDialog("Error", ex.getMessage());
 					}
 				}
 			}
@@ -229,7 +229,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 					deviceView.close();
 					MobileDriverObject.getDriver().quit();
 				} catch (Exception ex) {
-					CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
+					CustomNotificationUtil.openErrorDialog("Error", ex.getMessage());
 				}
 			}
 		});
@@ -292,7 +292,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 									&& obj.getParent_object_id().equals(foundParentObject.getObject_id())
 									&& obj.getName().equals(objectName)) {
 
-								renamedText = CustomMessageDialogUtil.openInputDialog("Rename",
+								renamedText = CustomNotificationUtil.openInputDialog("Rename",
 										"One object is already added with the same name in the OR. \nRename Object: "
 												+ objectName,
 												objectName);
@@ -300,8 +300,8 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 									return;
 
 								while (renamedText.trim().isEmpty()) {
-									CustomMessageDialogUtil.openErrorDialog("Error", "Name can't be empty!");
-									renamedText = CustomMessageDialogUtil.openInputDialog("Rename",
+									CustomNotificationUtil.openErrorDialog("Error", "Name can't be empty!");
+									renamedText = CustomNotificationUtil.openInputDialog("Rename",
 											"One object is already added with the same name in the OR. \nRename Object: "
 													+ objectName,
 													objectName);
@@ -326,7 +326,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 						ex.printStackTrace();
 					}
 				} else {
-					CustomMessageDialogUtil.openErrorDialog("Error", "Object Name field can't be empty!");
+					CustomNotificationUtil.openErrorDialog("Error", "Object Name field can't be empty!");
 				}
 			}
 		});
@@ -362,7 +362,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				CustomMessageDialogUtil.openInformationDialog("Help", "Please contact support@opkey.com");
+				CustomNotificationUtil.openInformationDialog("Help", "Please contact support@opkey.com");
 			}
 		});
 		btnHelp.setBounds(5, 5, 20, 20);
@@ -673,7 +673,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 			clearPropertiesTableData();
 			textObjectName.setText("");
 			deviceView.close();
-			CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
+			CustomNotificationUtil.openErrorDialog("Error", ex.getMessage());
 			return;
 		}
 
