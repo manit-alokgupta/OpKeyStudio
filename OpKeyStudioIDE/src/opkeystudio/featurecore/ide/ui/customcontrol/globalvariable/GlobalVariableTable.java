@@ -306,7 +306,9 @@ public class GlobalVariableTable extends CustomTable {
 
 		}
 		this.globalVariables = globalvariables;
-		selectLastRow();
+		if (isInsideArtifact() == false) {
+			selectLastRow();
+		}
 	}
 
 	public void filterGlobalVariableTable(String searchValue) {
@@ -337,7 +339,9 @@ public class GlobalVariableTable extends CustomTable {
 				}
 			}
 		}
-		selectLastRow();
+		if (isInsideArtifact() == false) {
+			selectLastRow();
+		}
 	}
 
 	public void addBlankGlobalVariableStep() {

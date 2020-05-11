@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.wb.swt.ResourceManager;
 
-import pcloudystudio.core.utils.notification.NotificationColorsFactory.NotificationTheme;
 import pcloudystudio.resources.constant.ImageConstants;
 
 public class CustomNotificationUtil {
