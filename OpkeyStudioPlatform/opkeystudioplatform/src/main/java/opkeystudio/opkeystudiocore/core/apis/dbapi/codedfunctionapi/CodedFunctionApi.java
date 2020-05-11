@@ -390,6 +390,14 @@ public class CodedFunctionApi {
 		defaultMethodBody = String.format(defaultMethodBody, defaultArguments);
 		System.out.println(defaultMethodBody);
 		defaultmethod.setName("executeDefault").setPublic().setBody(defaultMethodBody).addThrows("Exception");
+
+		if (outPutClass != null) {
+			if (!usercode.contains("OutputParameter outputParam") && !usercode.contains("return outputParam")) {
+				usercode = "OutputParameter outputParam=new OutputParameter();" + usercode + "return outputParam;";
+			}
+			method.setReturnType("OutputParameter");
+		}
+
 		method.setBody(usercode).addThrows("Exception");
 		return imports + "" + _class.toString();
 	}
