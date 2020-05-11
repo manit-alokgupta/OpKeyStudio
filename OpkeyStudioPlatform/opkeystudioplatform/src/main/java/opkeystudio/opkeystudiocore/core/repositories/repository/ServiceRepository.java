@@ -93,10 +93,6 @@ public class ServiceRepository {
 		return (Project) getServiceRepositoryVariable("opkeystudio.defaultProject");
 	}
 
-	public String[] getAllVaraiblesType() {
-		return new String[] { "String", "Boolean", "Integer", "Double", "MobileDevice", "MobileApplication" };
-	}
-
 	public String getProjectName() {
 		return projectName;
 	}
