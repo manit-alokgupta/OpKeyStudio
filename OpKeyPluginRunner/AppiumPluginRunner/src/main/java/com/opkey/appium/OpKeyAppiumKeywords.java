@@ -523,7 +523,7 @@ public class OpKeyAppiumKeywords {
 			throws Exception {
 		String methodName = DataType.getMethodName();
 		ContextInitiator.addFunction(methodName);
-		ContextInitiator.addDataRgumentsInFunctionCall(androidApplicationPathh); // Method_SetPickerValue
+		ContextInitiator.addDataRgumentsInFunctionCall(device.getDisplayName(), androidApplicationPathh); // Method_SetPickerValue
 
 		final MobileDevice device = SessionHandler.getSessionInfo().getMobileDevice();
 		System.out.println("@AppPath: " + androidApplicationPathh);
