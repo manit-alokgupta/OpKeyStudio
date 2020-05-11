@@ -15,6 +15,8 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -149,6 +151,16 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			}
 		});
+
+		sessionNameTextField.addVerifyListener(new VerifyListener() {
+
+			@Override
+			public void verifyText(VerifyEvent e) {
+
+				restrictInputString(e);
+			}
+		});
+
 		Label lblNewLabel_1 = new Label(container, SWT.NONE);
 		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
 		lblNewLabel_1.setText("Build Name:");
@@ -521,5 +533,19 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 	public void setCFLArtifact(boolean isCFLArtifact) {
 		this.isCFLArtifact = isCFLArtifact;
+	}
+
+	protected void restrictInputString(VerifyEvent event) {
+		Boolean isAllowed = false;
+		int textLength = sessionNameTextField.getText().length();
+		if (textLength <=100)
+			isAllowed = true;
+		else
+			isAllowed = false;
+
+		if (!isAllowed) {
+			event.doit = false;
+			return;
+		}
 	}
 }
