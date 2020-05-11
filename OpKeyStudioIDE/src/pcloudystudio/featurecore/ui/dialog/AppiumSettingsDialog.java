@@ -123,6 +123,9 @@ public class AppiumSettingsDialog extends Dialog {
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
+		
+		Label label = new Label(shlAppiumSettings, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label.setBounds(0, 0, 663, 2);
 
 		Rectangle parentSize = getParent().getBounds();
 		Rectangle shellSize = shlAppiumSettings.getBounds();

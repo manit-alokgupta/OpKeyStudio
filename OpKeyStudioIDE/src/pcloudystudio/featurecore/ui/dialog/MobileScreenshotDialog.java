@@ -38,7 +38,7 @@ import pcloudystudio.resources.constant.ImageConstants;
 import pcloudystudio.spytreecomponents.MobileElement;
 
 public class MobileScreenshotDialog extends Dialog {
-	private static String DIALOG_TITLE = "Mobile View";
+	private static String DIALOG_TITLE = "Mobile Screenshot";
 	private Image currentScreenShot;
 	private Canvas canvas;
 	public static int DIALOG_WIDTH = 400;

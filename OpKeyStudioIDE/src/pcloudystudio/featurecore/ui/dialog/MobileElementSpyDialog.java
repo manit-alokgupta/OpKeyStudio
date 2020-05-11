@@ -103,7 +103,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 	private Composite compositeObjectProperties;
 
 	public static Button btnClickAndMoveToNextScreen;
-	static Label lblAddToORConfirmation;
 	private Composite compositeLeftToolBar;
 	private Composite compositeRightToolBar;
 	private List<TreeMobileElement> allElements;
@@ -187,7 +186,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		btnClickAndMoveToNextScreen.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				lblAddToORConfirmation.setVisible(false);
 				if (MobileDriverObject.getInstance() != null) {
 					Object element = allObjectsCheckboxTreeViewer.getCheckedElements();
 					Widget item = CustomCheckBoxTree.getCheckedItem(element);
@@ -219,7 +217,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					btnCapture.setEnabled(false);
-					lblAddToORConfirmation.setVisible(false);
 					btnClickAndMoveToNextScreen.setEnabled(false);
 					btnStop.setEnabled(false);
 					btnAdd.setEnabled(false);
@@ -250,7 +247,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (textObjectName.getText().length() > 0) {
-					lblAddToORConfirmation.setVisible(false);
 					btnClickAndMoveToNextScreen.setEnabled(false);
 					btnStop.setEnabled(false);
 					btnCapture.setEnabled(false);
@@ -318,7 +314,8 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 										parentActivityPathName, parentActivityPathProperties, "Custom", "HTML Page",
 										foundParentObject, allORObjects);
 						getParentObjectRepositoryView().getObjectRepositoryTree().renderObjectRepositories();
-						lblAddToORConfirmation.setVisible(true);
+						CustomNotificationUtil.openInformationNotification("OpKey",
+								"Object has been added successifully!");
 						btnClickAndMoveToNextScreen.setEnabled(true);
 						btnStop.setEnabled(true);
 						btnCapture.setEnabled(true);
@@ -346,14 +343,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		gd_bottomComposite.widthHint = 400;
 		gd_bottomComposite.heightHint = 30;
 		bottomComposite.setLayoutData(gd_bottomComposite);
-
-		lblAddToORConfirmation = new Label(bottomComposite, SWT.NONE);
-		lblAddToORConfirmation.setVisible(false);
-		lblAddToORConfirmation.setText("Object has been added successifully!");
-		lblAddToORConfirmation.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		lblAddToORConfirmation.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
-		lblAddToORConfirmation.setBounds(489, 6, 265, 20);
-		lblAddToORConfirmation.setVisible(false);
 
 		btnHelp = new Button(bottomComposite, SWT.NONE);
 		btnHelp.setToolTipText("Help");
@@ -655,7 +644,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 	}
 
 	private void captureObjectAction() {
-		lblAddToORConfirmation.setVisible(false);
 		if (textObjectName.getText().length() > 0)
 			textObjectName.setText("");
 
