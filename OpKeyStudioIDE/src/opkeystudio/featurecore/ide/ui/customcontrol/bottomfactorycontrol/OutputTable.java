@@ -12,6 +12,8 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -79,10 +81,10 @@ public class OutputTable extends CustomTable {
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
 
-		cursor.addSelectionListener(new SelectionListener() {
-
+		cursor.addMouseListener(new MouseListener() {
+			
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void mouseUp(MouseEvent e) {
 				int selectedColumn = cursor.getColumn();
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
 				ComponentOutputArgument componentOutputArgument = (ComponentOutputArgument) selectedTableItem
@@ -135,10 +137,15 @@ public class OutputTable extends CustomTable {
 				controlEditor.setEditor(text);
 
 			}
-
+			
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
+			public void mouseDown(MouseEvent e) {
 
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				
 			}
 		});
 		renderAllBottomFactoryOutputData();
