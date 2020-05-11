@@ -47,6 +47,7 @@ public class ExecutionSessionExecutor {
 
 		FileUtils.copyDirectory(new File(transpiledFilesDir), new File(artifactCodesDirPath));
 		session.setReportFolderDir(getSessionReportFolder(session.getSessionName()));
+		session.setSessionDirectory(getSessionFolder(session.getSessionName()));
 		if (session.getArtifactFilePackageClass() != null) {
 			String javaFilePath = artifactCodesDirPath + File.separator + session.getArtifactJavaFilePath();
 			List<CompileError> compileErrors = new ArtifactCompiler().compileArtifact(artifactCodesDirPath,
@@ -132,6 +133,10 @@ public class ExecutionSessionExecutor {
 
 	private String getSessionReportFolder(String sessionName) {
 		return Utilities.getInstance().getSessionsFolder() + File.separator + sessionName + File.separator + "Reports";
+	}
+	
+	public File getSessionFolder(String sessionName) {
+		return new File(Utilities.getInstance().getSessionsFolder() + File.separator + sessionName);
 	}
 
 	public String getSorceFileExt() {

@@ -482,7 +482,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(device.getDisplayName(), url);
 		device.setOperatingSystem("Android");
 		try {
-			device = SessionHandler.getSessionInfo().getMobileDevice();
+			device = SessionHandler.getSessionInfo().mobileDevice;
 			System.out.println("Name " + device.getDisplayName());
 			System.out.println("os " + device.getOperatingSystem());
 			System.out.println("sn " + device.getSerialNumber());
@@ -525,7 +525,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(device1.getDisplayName(), androidApplicationPathh); // Method_SetPickerValue
 
-		final MobileDevice device = SessionHandler.getSessionInfo().getMobileDevice();
+		final MobileDevice device = SessionHandler.getSessionInfo().mobileDevice;
 		System.out.println("@AppPath: " + androidApplicationPathh);
 		System.out.println("Name " + device.getDisplayName());
 		System.out.println("os " + device.getOperatingSystem());
@@ -535,7 +535,7 @@ public class OpKeyAppiumKeywords {
 		MobileApplication mobileApplication = new MobileApplication();
 		mobileApplication.setApplicationPath(androidApplicationPathh);
 		mobileApplication.setDisplayName(new File(androidApplicationPathh).getName());
-		mobileApplication.setOperatingSystem(SessionHandler.getSessionInfo().getMobileDevice().getOperatingSystem());
+		mobileApplication.setOperatingSystem(SessionHandler.getSessionInfo().mobileDevice.getOperatingSystem());
 		mobileApplication.setPackage(System.getenv("APP_PACKAGE"));
 		mobileApplication.setMainActivity(System.getenv("APP_ACTIVITY"));
 

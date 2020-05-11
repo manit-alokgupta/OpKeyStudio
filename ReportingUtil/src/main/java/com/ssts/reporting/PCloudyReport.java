@@ -1,6 +1,7 @@
 package com.ssts.reporting;
 
 import java.io.File;
+import java.util.Map.Entry;
 
 import com.ssts.util.reporting.ExecutionResult;
 import com.ssts.util.reporting.SingleRunReport;
@@ -23,6 +24,10 @@ public class PCloudyReport implements IReport {
 		report = new SingleRunReport();
 		report.Header = builder.getSessionName();
 		report.ProjectLogo = "http://www.qatestingtools.com/sites/default/files/tools_shortcuts/OpKey%20150.png";
+
+		for (Entry<String, String> itm : builder.getSessionParameters().entrySet()) {
+			report.Enviroment.addDetail(itm.getKey(), itm.getValue());
+		}
 	}
 
 	public void addStep(String action, String[] parameters, Status status) {
