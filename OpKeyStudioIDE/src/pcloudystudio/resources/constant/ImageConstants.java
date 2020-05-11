@@ -18,7 +18,7 @@ public class ImageConstants {
 	public static final Image IMG_16_OPKEY_LOGO;
 	public static final Image IMG_APPIUM_LOGO;
 	public static final Image IMG_13_HELP;
-	public static final Image IMG_16_TEST_OBJECT;
+	public static final Image IMG_16_TEST_OBJECT_MOBILE;
 
 	static {
 		IMG_16_ADD_CAPABILITY = ImageManager.getImage("add_capability_16.png");
@@ -31,6 +31,6 @@ public class ImageConstants {
 		IMG_16_OPKEY_LOGO = ImageManager.getImage("opkey-16x16.png");
 		IMG_APPIUM_LOGO = ImageManager.getImage("appium_logo.jpg");
 		IMG_13_HELP = ImageManager.getImage("help_13.png");
-		IMG_16_TEST_OBJECT = ImageManager.getImage("test_object-16x16.png");
+		IMG_16_TEST_OBJECT_MOBILE = ImageManager.getImage("test_object_mobile-16x16.png");
 	}
 }

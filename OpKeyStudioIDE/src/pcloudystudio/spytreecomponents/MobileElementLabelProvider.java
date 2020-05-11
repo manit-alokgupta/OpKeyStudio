@@ -18,7 +18,7 @@ public class MobileElementLabelProvider extends TypeCheckedStyleTreeCellLabelPro
 	}
 
 	protected Image getImage(TreeMobileElement element) {
-		return ImageConstants.IMG_16_TEST_OBJECT;
+		return ImageConstants.IMG_16_TEST_OBJECT_MOBILE;
 	}
 
 	protected String getElementToolTipText(TreeMobileElement element) {
