@@ -4,8 +4,8 @@ package pcloudystudio.spytreecomponents;
 // Copyright © 2020 SSTS Inc. All rights reserved.
 
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.wb.swt.ResourceManager;
 
+import pcloudystudio.resources.constant.ImageConstants;
 import pcloudystudio.spytreecomponents.providers.TypeCheckedStyleTreeCellLabelProvider;
 
 public class MobileElementLabelProvider extends TypeCheckedStyleTreeCellLabelProvider<TreeMobileElement> {
@@ -18,7 +18,7 @@ public class MobileElementLabelProvider extends TypeCheckedStyleTreeCellLabelPro
 	}
 
 	protected Image getImage(TreeMobileElement element) {
-		return ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/test_object-16x16.png");
+		return ImageConstants.IMG_16_TEST_OBJECT_MOBILE;
 	}
 
 	protected String getElementToolTipText(TreeMobileElement element) {

@@ -147,11 +147,13 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 		this.setAutoIndentEnabled(true);
 		this.setMarkAllOnOccurrenceSearches(true);
 		this.setMarkOccurrences(true);
+		this.setClearWhitespaceLinesEnabled(true);
+		this.setLineWrap(true);
 		if (isCflEditor()) {
 			CompletionProvider provider = GenericEditorIntellisense.getCFLInstance();
 			autoCompletion = new JavaAutoCompletion(provider);
 		} else {
-			CompletionProvider provider = GenericEditorIntellisense.getInstance();
+			CompletionProvider provider = GenericEditorIntellisense.getCodeEditorInstance();
 			autoCompletion = new JavaAutoCompletion(provider);
 		}
 		autoCompletion.setListCellRenderer(new JavaCellRenderer());
@@ -171,12 +173,12 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 			@Override
 			public void autoCompleteUpdate(AutoCompletionEvent arg0) {
 				System.out.println(arg0.getEventType().toString());
-				new Thread(new Runnable() {
+				Thread thread = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
 						try {
-							Thread.sleep(2000);
+							Thread.sleep(500);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -186,12 +188,13 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 								CompletionProvider provider = GenericEditorIntellisense.getCFLInstance();
 								autoCompletion.setCompletionProvider(provider);
 							} else {
-								CompletionProvider provider = GenericEditorIntellisense.getInstance();
+								CompletionProvider provider = GenericEditorIntellisense.getCodeEditorInstance();
 								autoCompletion.setCompletionProvider(provider);
 							}
 						}
 					}
-				}).start();
+				});
+				thread.start();
 
 			}
 		});
@@ -204,38 +207,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 
 				char keyChar = e.getKeyChar();
 				if (keyChar == '.') {
-					if (isCflEditor()) {
-						Token lastToken = new CodeParser(isCflEditor()).getRecentToken(getArtifactCodeEditorInstance());
-						String tokenData = lastToken.getLexeme();
-						System.out.println(">>Last Token " + tokenData);
-						VariableToken varToken = GenericEditorIntellisense.getCFLInstance()
-								.findVariableToken(tokenData);
-						if (varToken != null) {
-							tokenData = varToken.getClassName();
-						}
-						TranspiledClassInfo autocompletetoken = GenericEditorIntellisense.getCFLInstance()
-								.findAutoCompleteToken(tokenData);
-						if (autocompletetoken != null) {
-							JavaCompletionProvider provider = GenericEditorIntellisense.getCFLInstance()
-									.getClassMethodsCompletionProvider(autocompletetoken);
-							autoCompletion.setCompletionProvider(provider);
-						}
-					} else {
-						Token lastToken = new CodeParser(isCflEditor()).getRecentToken(getArtifactCodeEditorInstance());
-						String tokenData = lastToken.getLexeme();
-						System.out.println(">>Last Token " + tokenData);
-						VariableToken varToken = GenericEditorIntellisense.getInstance().findVariableToken(tokenData);
-						if (varToken != null) {
-							tokenData = varToken.getClassName();
-						}
-						TranspiledClassInfo autocompletetoken = GenericEditorIntellisense.getInstance()
-								.findAutoCompleteToken(tokenData);
-						if (autocompletetoken != null) {
-							JavaCompletionProvider provider = GenericEditorIntellisense.getInstance()
-									.getClassMethodsCompletionProvider(autocompletetoken);
-							autoCompletion.setCompletionProvider(provider);
-						}
-					}
+					initMethodIntellisense();
 				}
 			}
 
@@ -257,8 +229,48 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 					});
 					return;
 				}
+
+				if ((e.getKeyCode() == KeyEvent.VK_SPACE) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+					System.out.println("Pressed CTRL AND SPACE");
+					initMethodIntellisense();
+					return;
+				}
 			}
 		});
+	}
+
+	private void initMethodIntellisense() {
+		if (isCflEditor()) {
+			Token lastToken = new CodeParser(isCflEditor()).getRecentToken(getArtifactCodeEditorInstance());
+			String tokenData = lastToken.getLexeme();
+			System.out.println(">>Last Token " + tokenData);
+			VariableToken varToken = GenericEditorIntellisense.getCFLInstance().findVariableToken(tokenData);
+			if (varToken != null) {
+				tokenData = varToken.getClassName();
+			}
+			TranspiledClassInfo autocompletetoken = GenericEditorIntellisense.getCFLInstance()
+					.findAutoCompleteToken(tokenData);
+			if (autocompletetoken != null) {
+				JavaCompletionProvider provider = GenericEditorIntellisense.getCFLInstance()
+						.getClassMethodsCompletionProvider(autocompletetoken);
+				autoCompletion.setCompletionProvider(provider);
+			}
+		} else {
+			Token lastToken = new CodeParser(isCflEditor()).getRecentToken(getArtifactCodeEditorInstance());
+			String tokenData = lastToken.getLexeme();
+			System.out.println(">>Last Token " + tokenData);
+			VariableToken varToken = GenericEditorIntellisense.getCodeEditorInstance().findVariableToken(tokenData);
+			if (varToken != null) {
+				tokenData = varToken.getClassName();
+			}
+			TranspiledClassInfo autocompletetoken = GenericEditorIntellisense.getCodeEditorInstance()
+					.findAutoCompleteToken(tokenData);
+			if (autocompletetoken != null) {
+				JavaCompletionProvider provider = GenericEditorIntellisense.getCodeEditorInstance()
+						.getClassMethodsCompletionProvider(autocompletetoken);
+				autoCompletion.setCompletionProvider(provider);
+			}
+		}
 	}
 
 	private ArtifactCodeEditor getArtifactCodeEditorInstance() {

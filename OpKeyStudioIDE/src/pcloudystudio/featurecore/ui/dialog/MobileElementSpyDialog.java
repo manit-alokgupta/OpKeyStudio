@@ -56,7 +56,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 
@@ -66,11 +65,12 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
 import pcloudystudio.appium.MobileDriverObject;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.resources.constant.ImageConstants;
 import pcloudystudio.spytreecomponents.BasicMobileElement;
 import pcloudystudio.spytreecomponents.MobileElement;
+import pcloudystudio.spytreecomponents.MobileElementInspectorController;
 import pcloudystudio.spytreecomponents.MobileElementLabelProvider;
 import pcloudystudio.spytreecomponents.MobileElementTreeContentProvider;
-import pcloudystudio.spytreecomponents.MobileElementInspectorController;
 import pcloudystudio.spytreecomponents.TreeMobileElement;
 
 public class MobileElementSpyDialog extends Dialog implements MobileElementInspectorDialog {
@@ -112,18 +112,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		DIALOG_TITLE = "Mobile Object Spy";
 	}
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
-	public MobileElementSpyDialog(Shell parent, int style) {
-		super(parent, style);
-		setText("SWT Dialog");
-		this.inspectorController = new MobileElementInspectorController();
-	}
-
 	public MobileElementSpyDialog(Shell parent, int style, ObjectRepositoryView parentObjectRepositoryView) {
 		super(parent, style);
 		this.setParentObjectRepositoryView(parentObjectRepositoryView);
@@ -131,11 +119,6 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		this.inspectorController = new MobileElementInspectorController();
 	}
 
-	/**
-	 * Open the dialog.
-	 * 
-	 * @return the result
-	 */
 	public Object open() {
 		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
@@ -153,12 +136,9 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		return result;
 	}
 
-	/**
-	 * Create contents of the dialog.
-	 */
 	private void createContents() {
 		shlSpyMobile = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlSpyMobile.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		shlSpyMobile.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 		shlSpyMobile.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlSpyMobile.setSize(new Point(800, 700));
 		shlSpyMobile.setText(DIALOG_TITLE);
@@ -378,7 +358,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 		btnHelp = new Button(bottomComposite, SWT.NONE);
 		btnHelp.setToolTipText("Help");
 		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnHelp.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/help_16.png"));
+		btnHelp.setImage(ImageConstants.IMG_16_HELP);
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

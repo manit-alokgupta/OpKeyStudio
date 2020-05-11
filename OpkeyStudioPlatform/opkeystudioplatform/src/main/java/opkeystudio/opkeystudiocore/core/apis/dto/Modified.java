@@ -10,7 +10,7 @@ public class Modified {
 	@DBField
 	private boolean added;
 	@DBField
-	private boolean visible=true;
+	private boolean visible = true;
 
 	public boolean isVisible() {
 		return visible;
@@ -33,6 +33,10 @@ public class Modified {
 	}
 
 	public void setDeleted(boolean deleted) {
+		if (deleted) {
+			this.modified = false;
+			this.added = false;
+		}
 		this.deleted = deleted;
 	}
 

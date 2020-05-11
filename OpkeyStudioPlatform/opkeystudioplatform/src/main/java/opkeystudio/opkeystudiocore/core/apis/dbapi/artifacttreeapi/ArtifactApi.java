@@ -73,7 +73,7 @@ public class ArtifactApi {
 		QueryExecutor.getInstance().executeUpdateQuery(updateQuery);
 	}
 
-	public void createArtifact(Artifact parentId, String artifactName, MODULETYPE artifactType) {
+	public Artifact createArtifact(Artifact parentId, String artifactName, MODULETYPE artifactType) {
 		Artifact artifact = new ArtifactMaker().getArtifactObject(parentId, artifactName, artifactType);
 		String query = new QueryMaker().createInsertQuery(artifact, "main_artifact_filesystem", "");
 		QueryExecutor.getInstance().executeUpdateQuery(query);
@@ -90,5 +90,6 @@ public class ArtifactApi {
 			GlobalLoader.getInstance().initAllDRColumns();
 			GlobalLoader.getInstance().initALLDRCells();
 		}
+		return artifact;
 	}
 }

@@ -29,7 +29,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -39,12 +38,13 @@ import io.appium.java_client.android.AndroidDriver;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
-import pcloudystudio.appium.MobileDriverObject;
 import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.AppiumMobileServer;
 import pcloudystudio.appium.MobileDesiredCapabilities;
-import pcloudystudio.core.utils.MobileDeviceUtil;
+import pcloudystudio.appium.MobileDriverObject;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.core.utils.MobileDeviceUtil;
+import pcloudystudio.resources.constant.ImageConstants;
 
 public class DeviceConfigurationDialog extends Dialog {
 
@@ -62,17 +62,6 @@ public class DeviceConfigurationDialog extends Dialog {
 	private Label lblNoDeviceConnected;
 	private Button btnHelp;
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
-	public DeviceConfigurationDialog(Shell parent, int style) {
-		super(parent, style);
-		setText("SWT Dialog");
-	}
-
 	public DeviceConfigurationDialog(Shell parent, int style, ObjectRepositoryView objectRepositoryView) {
 		super(parent, style);
 		this.setParentObjectRepositoryView(objectRepositoryView);
@@ -81,19 +70,14 @@ public class DeviceConfigurationDialog extends Dialog {
 		this.ANDROID_FILTER_EXTS = new String[] { "*.apk" };
 	}
 
-	/**
-	 * Open the dialog.
-	 * 
-	 * @return the result
-	 */
 	public Object open() {
-		Cursor waitCursor=new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT);
+		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
 		createContents();
 		shlDeviceConfiguration.open();
 		shlDeviceConfiguration.layout();
 		Display display = getParent().getDisplay();
-		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		Cursor arrow = new Cursor(display, SWT.CURSOR_ARROW);
 		getParent().setCursor(arrow);
 		while (!shlDeviceConfiguration.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -103,13 +87,10 @@ public class DeviceConfigurationDialog extends Dialog {
 		return result;
 	}
 
-	/**
-	 * Create contents of the dialog.
-	 */
 	private void createContents() {
 		shlDeviceConfiguration = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL | SWT.BORDER);
 		shlDeviceConfiguration
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 		shlDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shlDeviceConfiguration.setSize(624, 262);
 		shlDeviceConfiguration.setText("Configuration Dashboard");
@@ -146,7 +127,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnHelp = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnHelp.setToolTipText("Help");
 		btnHelp.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnHelp.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/help_13.png"));
+		btnHelp.setImage(ImageConstants.IMG_13_HELP);
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -192,7 +173,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		Button btnRefresh = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnRefresh.setToolTipText("Refresh");
 		btnRefresh.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		btnRefresh.setImage(ImageConstants.IMG_16_REFRESH_Button);
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -238,7 +219,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		Button btnBrowseAPK = new Button(compositeConfigurationSettings, SWT.NONE);
 		btnBrowseAPK.setToolTipText("Browse Application");
 		btnBrowseAPK.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnBrowseAPK.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browse.png"));
+		btnBrowseAPK.setImage(ImageConstants.IMG_16_BROWSE);
 		btnBrowseAPK.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -274,7 +255,8 @@ public class DeviceConfigurationDialog extends Dialog {
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 					AppiumConfiguration
 					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
-					AppiumConfiguration.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					AppiumConfiguration
+					.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 					AppiumConfiguration.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				}
@@ -303,7 +285,8 @@ public class DeviceConfigurationDialog extends Dialog {
 							String previousDeviceModelName = MobileDeviceUtil.getDeviceProperty(
 									MobileDeviceUtil.getSelectedAndroidDeviceId(selectedDevice),
 									MobileDeviceUtil.ANDROID_DEVICE_NAME_PROPERTY);
-							MobileDesiredCapabilities.getMapOfCapabilities().replace("deviceName", previousDeviceModelName);
+							MobileDesiredCapabilities.getMapOfCapabilities().replace("deviceName",
+									previousDeviceModelName);
 						} else {
 							MobileDesiredCapabilities.getMapOfCapabilities().put("udid", selectedDeviceUDID);
 							String previousDeviceModelName = MobileDeviceUtil.getDeviceProperty(

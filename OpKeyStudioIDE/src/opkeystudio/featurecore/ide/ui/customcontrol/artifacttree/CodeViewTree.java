@@ -26,7 +26,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.CodeViewTreeUI;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
@@ -82,8 +81,11 @@ public class CodeViewTree extends CustomTree {
 				if (treeItem == null) {
 					return;
 				}
+				getParentArtifactCodeViewTreeUI().toggleRefreshMenuItem(true);
 				File selectedFile = treeItem.getArtifactFile();
 				if (treeItem.isSystemFolder()) {
+					getParentArtifactCodeViewTreeUI().toggleNewToolbarItem(false);
+					getParentArtifactCodeViewTreeUI().toggleNewToolbarMenuItem(false);
 					getParentArtifactCodeViewTreeUI().toggleDeleteToolbarItem(false);
 					getParentArtifactCodeViewTreeUI().toggleRenameToolbarItem(false);
 					return;
@@ -102,7 +104,6 @@ public class CodeViewTree extends CustomTree {
 					getParentArtifactCodeViewTreeUI().toggleNewToolbarMenuItem(false);
 					getParentArtifactCodeViewTreeUI().toggleOpenMenuItem(true);
 				}
-
 			}
 
 			@Override
@@ -177,6 +178,7 @@ public class CodeViewTree extends CustomTree {
 				return;
 			}
 
+			fileName = fileName.replaceAll(" ", "");
 			fileName = fileName.split("\\.")[0];
 			boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 					.isStringContainsSpecialCharacters(fileName);
@@ -192,23 +194,23 @@ public class CodeViewTree extends CustomTree {
 				new MessageDialogs().openErrorDialog("OpKey", "File Name must not starts with number");
 				return;
 			}
-
+			String parentFolder = selectedCodeFile.getParentFile().getAbsolutePath();
+			File newFile = new File(parentFolder + File.separator + fileName + ".java");
+			Utilities.getInstance().updateCodeViewFile(selectedCodeFile, newFile);
 			try {
 				String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 						.readTextFile(selectedCodeFile);
 				JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
 				classSource.setName(fileName);
-				String parentFolder = selectedCodeFile.getParentFile().getAbsolutePath();
 				selectedCodeFile.delete();
-				opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(
-						new File(parentFolder + File.separator + fileName + ".java"), classSource.toString());
+				opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(newFile,
+						classSource.toString());
 				renderCodeViewTree();
 			} catch (Exception e) {
 				new MessageDialogs().openErrorDialog("OpKey",
 						String.format("Unable to rename file to name '%s'. Please provide a different name", fileName));
 				return;
 			}
-			GenericEditorIntellisense.getInstance().refreshIntellisense();
 		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
@@ -232,6 +234,7 @@ public class CodeViewTree extends CustomTree {
 			return;
 		}
 
+		fileName = fileName.replaceAll(" ", "");
 		boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.isStringContainsSpecialCharacters(fileName);
 		boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
@@ -250,12 +253,6 @@ public class CodeViewTree extends CustomTree {
 		if (file.exists()) {
 			new MessageDialogs().openErrorDialog("OpKey", "File Name must be unique");
 			return;
-		}
-		try {
-			file.createNewFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 		List<String> packagesName = new ArrayList<String>();
@@ -287,14 +284,21 @@ public class CodeViewTree extends CustomTree {
 			}
 
 			class1.setPackage(packageName);
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
 			renderCodeViewTree();
+			Utilities.getInstance().openSelectedFileInGenericCodeEditor(file);
 		} catch (Exception e) {
 			new MessageDialogs().openErrorDialog("OpKey",
 					String.format("Unable to create file with name '%s'. Please provide a different name", fileName));
 			return;
 		}
-		GenericEditorIntellisense.getInstance().refreshIntellisense();
+		
 	}
 
 	public void createNewFolder() {
@@ -313,6 +317,7 @@ public class CodeViewTree extends CustomTree {
 			new MessageDialogs().openErrorDialog("OpKey", "Please provide a valid name");
 			return;
 		}
+		fileName = fileName.replaceAll(" ", "");
 		boolean cond1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.isStringContainsSpecialCharacters(fileName);
 		boolean cond2 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
@@ -416,6 +421,7 @@ public class CodeViewTree extends CustomTree {
 			renderFiles(srcNode, file);
 		}
 		expandAll(rootNode);
+		GenericEditorIntellisense.getGenericInstanceoOfCodeEditor().refreshCodeEditorIntellisense();
 	}
 
 	private void renderFiles(CodeViewTreeItem parentNode, File rootFile) {
@@ -462,16 +468,13 @@ public class CodeViewTree extends CustomTree {
 	}
 
 	public void filterArtifactTree(String searchValue) {
-		List<Artifact> artifacts = this.getArtifactsData();
-		for (Artifact artifact : artifacts) {
-			if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
-				if (artifact.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
-					artifact.setVisible(true);
-				} else {
-					artifact.setVisible(false);
-				}
-			}
-		}
+		/*
+		 * List<Artifact> artifacts = this.getArtifactsData(); for (Artifact artifact :
+		 * artifacts) { if (artifact.getFile_type_enum() != MODULETYPE.Folder) { if
+		 * (artifact.getName().trim().toLowerCase().contains(searchValue.trim().
+		 * toLowerCase())) { artifact.setVisible(true); } else {
+		 * artifact.setVisible(false); } } }
+		 */
 	}
 
 	public CodeViewTreeUI getParentArtifactCodeViewTreeUI() {

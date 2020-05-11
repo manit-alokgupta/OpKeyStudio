@@ -208,17 +208,22 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void checkClassIsRunnable() {
+		initCodeViewFile();
 		File file = getCodeViewFile();
 		String code = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
-		JavaClassSource classSource = (JavaClassSource) Roaster.parse(code);
-		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
-		for (MethodSource<JavaClassSource> method : methods) {
-			if (method != null) {
-				System.out.println("Method Name " + method.getName());
-				if (method.isPublic()) {
-					if (method.isStatic()) {
-						runButton.setEnabled(true);
-						return;
+		Object classObject = Roaster.parse(code);
+		if (classObject instanceof JavaClassSource) {
+			JavaClassSource classSource = (JavaClassSource) classObject;
+			List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
+			for (MethodSource<JavaClassSource> method : methods) {
+				if (method != null) {
+					if (method.getName().equals("main")) {
+						if (method.isPublic()) {
+							if (method.isStatic()) {
+								runButton.setEnabled(true);
+								return;
+							}
+						}
 					}
 				}
 			}
@@ -226,7 +231,12 @@ public class ArtifactCodeView extends SuperComposite {
 		runButton.setEnabled(false);
 	}
 
+	public Artifact getCurrentArtifact() {
+		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
+	}
+
 	private void displayCodeViewFileData() {
+		initCodeViewFile();
 		File file = getCodeViewFile();
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
 		getJavaEditor().setArtifactJavaCode(codeData);
@@ -243,7 +253,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initCFLCode() {
-		Artifact artifact = getArtifact();
+		Artifact artifact = getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -359,7 +369,6 @@ public class ArtifactCodeView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				saveGenericCodeEditorFile();
-				checkClassIsRunnable();
 			}
 
 			@Override
@@ -400,7 +409,7 @@ public class ArtifactCodeView extends SuperComposite {
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
-		refreshButton.setToolTipText("Refresh Source Code");
+		refreshButton.setToolTipText("Refresh");
 
 		editor = new ArtifactCodeEditor(this, this, true, true, true);
 		editor.setArtifact(getArtifact());
@@ -508,6 +517,7 @@ public class ArtifactCodeView extends SuperComposite {
 			for (CompileError error : compileErrors) {
 				Object lineHighlightObject;
 				try {
+					editor.setHighlightCurrentLine(false);
 					lineHighlightObject = editor.addLineHighlight(((int) error.getLineNumber()) - 1, Color.RED);
 					addHighlightedLines(lineHighlightObject);
 				} catch (BadLocationException e) {
@@ -515,9 +525,11 @@ public class ArtifactCodeView extends SuperComposite {
 					e.printStackTrace();
 				}
 			}
+			toggleSaveButton(false);
 			bottomFactoryUi.getCompilationResultTable().renderCompilingError(compileErrors);
 			return;
 		}
+		editor.setHighlightCurrentLine(true);
 		List<CFLInputParameter> inputParams = bottomFactoryUi.getCFLInputTable().getCflInputParameters();
 		List<CFLOutputParameter> outputParams = bottomFactoryUi.getCFLOutputTable().getCflOutputParameters();
 		new CodedFunctionApi().saveAllCFLInputParams(inputParams);
@@ -557,14 +569,17 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void saveGenericCodeEditorFile() {
+		initCodeViewFile();
 		String code = getJavaEditor().getText();
 		File file = getCodeViewFile();
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
-		GenericEditorIntellisense.getInstance().addOpKeyTranspiledClassInformation();
+		GenericEditorIntellisense.getCodeEditorInstance().addOpKeyTranspiledClassInformation();
 		saveButton.setEnabled(false);
+		checkClassIsRunnable();
 	}
 
 	private void handleRefreshOnSave() {
+		initCodeViewFile();
 		if (saveButton.getEnabled() == true) {
 			boolean status = new MessageDialogs().openConfirmDialog("OpKey",
 					String.format("Do you want to save '%s'?", getCodeViewFile().getName()));

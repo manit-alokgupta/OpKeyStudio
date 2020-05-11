@@ -76,6 +76,23 @@ public class Utilities {
 		return null;
 	}
 
+	public MPart getArtifactMPart(File codeViewFile) {
+		Collection<MPart> allParts = getAllParts();
+		System.out.println("All Parts " + allParts.size());
+		for (MPart mpart : allParts) {
+			System.out.println("Mpart Searching");
+			File artifact_0 = (File) mpart.getTransientData().get("opkeystudio.codeFile");
+			if (artifact_0 == null) {
+				continue;
+			}
+			if (artifact_0.getAbsolutePath().equals(codeViewFile.getAbsolutePath())) {
+				System.out.println("ID FOUND " + artifact_0.getAbsolutePath());
+				return mpart;
+			}
+		}
+		return null;
+	}
+
 	public MPart getGenericEditorMPart(File artifact) {
 		Collection<MPart> allParts = getAllParts();
 		System.out.println("All Parts " + allParts.size());
@@ -258,7 +275,21 @@ public class Utilities {
 		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
+	}
 
+	public void updateCodeViewFile(File oldCodeViewFile, File newCodeViewFile) {
+		try {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
+			MPart mpart = getArtifactMPart(oldCodeViewFile);
+			if (mpart == null) {
+				return;
+			}
+			mpart.getTransientData().put("opkeystudio.codeFile", newCodeViewFile);
+			mpart.setLabel(newCodeViewFile.getName());
+			mpart.setTooltip(newCodeViewFile.getName());
+		} finally {
+			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
+		}
 	}
 
 	public void initCodeEditorSuperConstructor() {

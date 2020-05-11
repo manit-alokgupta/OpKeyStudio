@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class ImportLocalDB {
 
@@ -26,6 +27,10 @@ public class ImportLocalDB {
 			dialog.open();
 			String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 			if (filePath != null) {
+				System.out.println("FilePath " + filePath);
+				if (!new File(filePath).isFile()) {
+					return;
+				}
 				String projectName = new MessageDialogs().openInputDialogAandGetValue("OpKey",
 						"Please Provide The Project Name", "");
 				if (projectName == null) {
@@ -35,9 +40,9 @@ public class ImportLocalDB {
 					new MessageDialogs().openErrorDialog("OpKey", "Project name Should not be blank.");
 					return;
 				}
-
+				ServiceRepository.getInstance().setProjectName(projectName);
 				String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-						.getProjectsFolder() + File.separator + projectName;
+						.getProjectsFolder() + File.separator + ServiceRepository.getInstance().getProjectName();
 
 				if (!new File(projectFolderPath).exists()) {
 					new File(projectFolderPath).mkdir();

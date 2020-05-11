@@ -7,7 +7,6 @@ import java.util.List;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.project.ProjectDataApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
@@ -39,7 +38,6 @@ public class ProjectImporter {
 			ServiceRepository.getInstance().setDefaultProject(projects.get(0));
 			ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 			tree.renderArtifacts();
-			GenericEditorIntellisense.getInstance().disposeIntellisense();
 			CodeViewTree ctree = (CodeViewTree) SystemRepository.getInstance().getCodeViewTreeControl();
 			if (ctree != null) {
 				ctree.renderCodeViewTree();

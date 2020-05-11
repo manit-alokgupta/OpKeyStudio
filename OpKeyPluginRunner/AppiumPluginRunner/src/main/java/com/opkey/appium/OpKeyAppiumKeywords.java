@@ -31,6 +31,7 @@ import com.plugin.appium.keywords.AppiumSpecificKeyword.Connect2AppiumServer;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.Gestures;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.MenuHandling;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.Orientation;
+import com.plugin.appium.keywords.AppiumSpecificKeyword.Seekbar;
 import com.plugin.appium.keywords.AppiumSpecificKeyword.Toggle;
 import com.plugin.appium.keywords.GenericKeyword.Browser;
 import com.plugin.appium.keywords.GenericKeyword.Button;
@@ -279,8 +280,8 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction("Toggle");
 		// Method_Toggle
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
+			AppiumObject object = new ObjectConverter().formatObject(arg0);
 			FunctionResult functionResult = new Toggle().Method_Toggle(object);
 			String boolString = functionResult.getOutput();
 			ReportHelper.addReportStep(methodName, functionResult);
@@ -297,10 +298,9 @@ public class OpKeyAppiumKeywords {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">>Keyword Called Switch");
-
 		ContextInitiator.addFunction("Switch"); // Method_Switch
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
+			AppiumObject object = new ObjectConverter().formatObject(arg0);
 			FunctionResult functionResult = new com.plugin.appium.keywords.AppiumSpecificKeyword.Switch()
 					.Method_Switch(object);
 			String boolString = functionResult.getOutput();
@@ -320,8 +320,8 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called LongPress");
 
 		ContextInitiator.addFunction("LongPress"); // Method_LongPress
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
+			AppiumObject object = new ObjectConverter().formatObject(arg0);
 			FunctionResult functionResult = new Gestures().Method_LongPress(object);
 			String boolString = functionResult.getOutput();
 			ReportHelper.addReportStep(methodName, functionResult);
@@ -340,8 +340,8 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">>Keyword Called DoubleTouch");
 
 		ContextInitiator.addFunction("DoubleTouch"); // Method_DoubleTouch
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		try {
+			AppiumObject object = new ObjectConverter().formatObject(arg0);
 			FunctionResult functionResult = new Gestures().Method_DoubleTouch(object);
 			String boolString = functionResult.getOutput();
 			ReportHelper.addReportStep(methodName, functionResult);
@@ -519,20 +519,18 @@ public class OpKeyAppiumKeywords {
 		}
 	}
 
-	public boolean Mobile_LaunchAndroidApplication(MobileDevice device, String androidApplicationPathh)
+	public boolean Mobile_LaunchAndroidApplication(MobileDevice device1, String androidApplicationPathh)
 			throws Exception {
 		String methodName = DataType.getMethodName();
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(device.getDisplayName(), androidApplicationPathh); // Method_SetPickerValue
 
-		device = SessionHandler.getSessionInfo().getMobileDevice();
+		final MobileDevice device = SessionHandler.getSessionInfo().getMobileDevice();
 		System.out.println("@AppPath: " + androidApplicationPathh);
 		System.out.println("Name " + device.getDisplayName());
 		System.out.println("os " + device.getOperatingSystem());
 		System.out.println("sn " + device.getSerialNumber());
 		System.out.println("ver " + device.getVersion());
-		// device.setOperatingSystem("android");
-		// device.setVersion("8.1");
 
 		MobileApplication mobileApplication = new MobileApplication();
 		mobileApplication.setApplicationPath(androidApplicationPathh);
@@ -545,22 +543,14 @@ public class OpKeyAppiumKeywords {
 				"C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
 		Context.session().getSettings().put("Host", "localhost");
 		Context.session().getSettings().put("Port", "4723");
-//		Context.session().getSettings().put("Host", "");
-//		Context.session().getSettings().put("Port", "");
 		Context.session().getSettings().put("PlatformVersion", device.getVersion());
 
-		try {
-			FunctionResult functionResult = new Connect2AppiumServer().Method_Launch_AndroidApplication(device,
-					mobileApplication);
-			ReportHelper.addReportStep(methodName, functionResult);
-			;
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-			throw new ToolNotSetException();
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Connect2AppiumServer().Method_Launch_AndroidApplication(device,
+				mobileApplication));
+		
+		return DataType.getBoolean(functionResult.getOutput());
+		
 		}
-
-		return false;
-	}
 
 	public boolean LaunchSafariOn_iOS(String arg0, String arg1) {
 
@@ -698,18 +688,12 @@ public class OpKeyAppiumKeywords {
 		String methodName = DataType.getMethodName();
 		System.out.println(">>Keyword Called SelectCheckBox");
 
-		ContextInitiator.addFunction("SelectCheckBox");
+		ContextInitiator.addFunction(methodName);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_appiumSelectCheckBox
-		try {
-			FunctionResult functionResult = new AndroidCheckBox().Method_appiumSelectCheckBox(object);
-			String boolString = functionResult.getOutput();
-			ReportHelper.addReportStep(methodName, functionResult);
-			return DataType.getBoolean(boolString);
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-		}
-		return false;
+		
+		FunctionResult functionResult = FunctionCaller.execute(()-> new AndroidCheckBox().Method_appiumSelectCheckBox(object));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean TapOnCoordinates(ORObject arg0, String arg1, String arg2) throws ToolNotSetException, IOException,
@@ -1151,16 +1135,9 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("DeSelectCheckBoxAndWait");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_deSelectCheckBoxAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		try {
-			FunctionResult functionResult = new Deprecate().Method_deSelectCheckBoxAndWait(object, arg1);
-			String boolString = functionResult.getOutput();
-			ReportHelper.addReportStep(methodName, functionResult);
-			return DataType.getBoolean(boolString);
-		} catch (Exception e) {
-			ReportHelper.addReportStep(methodName, e);
-		}
-		return false;
-
+		
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_deSelectCheckBoxAndWait(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean SelectRadioButtonAndWait(ORObject arg0, int arg1) throws Exception {
@@ -3848,7 +3825,7 @@ public class OpKeyAppiumKeywords {
 
 	}
 	
-	public boolean Mobile_SwipeTowards(String arg0) {
+	public boolean SwipeTowards(String arg0) {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		
@@ -3859,7 +3836,7 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 	
-	public boolean Mobile_SwipeOnObject(ORObject arg0, String arg1) throws Exception {
+	public boolean SwipeOnObject(ORObject arg0, String arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -3871,7 +3848,7 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 	
-	public boolean Mobile_SwipeToObject(ORObject arg0, String arg1) throws Exception {
+	public boolean SwipeToObject(ORObject arg0, String arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -3883,7 +3860,7 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 	
-	public boolean Mobile_SwipeToText(ORObject arg0, String arg1, int arg2, boolean arg3, String arg4) throws Exception {
+	public boolean SwipeToText(ORObject arg0, String arg1, int arg2, boolean arg3, String arg4) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -3892,6 +3869,14 @@ public class OpKeyAppiumKeywords {
 		
 		System.out.println(">>Keyword Called Method_SwipeToText");
 		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_SwipeToText(object, arg1, arg2, arg3, arg4));
+		return DataType.getBoolean(functionResult.getOutput());
+	}
+	
+	public boolean Mobile_SetSeekbar(ORObject arg0, int arg1) {
+		ContextInitiator.addFunction(DataType.getMethodName());
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+		FunctionResult functionResult = FunctionCaller.execute(()-> new Seekbar().Method_SetSeekbar(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 	
@@ -3948,14 +3933,10 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg4, arg5);
 
 		FunctionResult functionResult;
-		if (arg3 != null) {
-			AppiumObject object = new ObjectConverter().formatObject(arg3);
-			functionResult = FunctionCaller
-					.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, object, arg4, arg5));
-		} else {
-			functionResult = FunctionCaller
-					.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, null, arg4, arg5));
-		}
+		
+		AppiumObject object = new ObjectConverter().formatObject(arg3);
+		functionResult = FunctionCaller
+				.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, object, arg4, arg5));
 
 		System.out.println(">>Keyword Called Web_ClickByText");
 

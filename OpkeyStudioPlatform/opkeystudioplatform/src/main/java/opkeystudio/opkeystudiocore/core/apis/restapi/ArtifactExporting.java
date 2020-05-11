@@ -88,6 +88,7 @@ public class ArtifactExporting {
 			String sessionData = new ArtifactExporting().checkForSecuredData(nodeIds, "Opkey");
 			System.out.println(">>Secured Data Status " + sessionData);
 			sessionData = sessionData.replaceAll("\"", "");
+			ServiceRepository.getInstance().setOpKeyImportSessionId(sessionData);
 			String securedDataStatus = new ArtifactExporting().getSecureDataStatus(sessionData);
 			System.out.println(">>Secured Data Data " + securedDataStatus);
 			String exportArtifactId = new ArtifactExporting().exportArtificate(nodeIds, "Opkey", sessionData,
@@ -116,9 +117,11 @@ public class ArtifactExporting {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		ServiceRepository.getInstance().setProjectName(projectName);
 		String downloadFileId = Utilities.getInstance().getUniqueUUID("");
 		String projectsFolder = Utilities.getInstance().getProjectsFolder();
-		String artifactDownloadFolder = projectsFolder + File.separator + projectName;
+		String artifactDownloadFolder = projectsFolder + File.separator
+				+ ServiceRepository.getInstance().getProjectName();
 		if (!new File(artifactDownloadFolder).exists()) {
 			new File(artifactDownloadFolder).mkdir();
 		}

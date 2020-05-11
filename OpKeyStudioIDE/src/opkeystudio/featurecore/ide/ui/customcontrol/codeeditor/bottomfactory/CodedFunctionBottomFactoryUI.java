@@ -751,6 +751,9 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 				dialog.open();
 				String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 				if (filePath != null) {
+					if (!new File(filePath).isFile()) {
+						return;
+					}
 					File libraryToAssociate = new File(filePath);
 					long filesize = (long) getFileSizeInMb(libraryToAssociate);
 					System.out.println("File Size " + filesize);
@@ -778,7 +781,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 										}
 									});
 							msd.closeProgressDialog();
-							GenericEditorIntellisense.getCFLInstance().refreshCFLIntellisense();
+							GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
 						}
 					});
 				}
@@ -819,8 +822,13 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 					MainFileStoreDTO file = (MainFileStoreDTO) item.getControlData();
 					System.out.println("Deleting File " + file.getFilename());
 					new CodedFunctionApi().deleteAssociatedLibrary(file.getF_id());
+					File filePath = new File(Utilities.getInstance().getProjectJavaLibrrayFolder() + File.separator
+							+ file.getFilename() + ".jar");
+					filePath.delete();
 					associateLibraries.renderAssociatedLibraries();
+					toggleDeleteLibraryButton(false);
 				}
+				toggleDeleteLibraryButton(false);
 			}
 
 			@Override

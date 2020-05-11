@@ -10,6 +10,9 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -22,7 +25,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
@@ -33,14 +35,11 @@ import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
-import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.core.vncutils.AndroidVNCLauncher;
 import pcloudystudio.pcloudystudio.core.execution.MobileDeviceExecutionDetail;
-
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.SelectionAdapter;
+import pcloudystudio.resources.constant.ImageConstants;
 
 public class ExecutionWizardDialog extends TitleAreaDialog {
 	private Combo pluginSelectionDropDown;
@@ -74,7 +73,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		this.setParentTestCaseView(parentTestCaseView);
 		this.setExecutingFromTestCaseView(true);
 		setHelpAvailable(false);
-		initExecutionSession(parentTestCaseView.getArtifact());
+		initExecutionSession(parentTestCaseView.getCurrentArtifact());
 	}
 
 	public ExecutionWizardDialog(Shell parentShell, TestSuiteView parentTestSuiteView) {
@@ -82,7 +81,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		this.setParentTestSuiteView(parentTestSuiteView);
 		this.setExecutingFromTestSuiteView(true);
 		setHelpAvailable(false);
-		initExecutionSession(parentTestSuiteView.getArtifact());
+		initExecutionSession(parentTestSuiteView.getCurrentArtifact());
 	}
 
 	public ExecutionWizardDialog(Shell parentShell, ArtifactCodeView parentArtifactCodeView,
@@ -100,7 +99,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		setCFLArtifact(true);
 		this.setParentArtifactCodeView(parentArtifactCodeView);
 		setHelpAvailable(false);
-		initExecutionSession(parentArtifactCodeView.getArtifact());
+		initExecutionSession(parentArtifactCodeView.getCurrentArtifact());
 	}
 
 	/**
@@ -208,8 +207,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		btnRefreshDeviceList = new Button(container, SWT.NONE);
 		btnRefreshDeviceList.setToolTipText("Refresh");
 		btnRefreshDeviceList.setCursor(SWTResourceManager.getCursor(SWT.CURSOR_HAND));
-		btnRefreshDeviceList
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		btnRefreshDeviceList.setImage(ImageConstants.IMG_16_REFRESH_Button);
 		btnRefreshDeviceList.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -339,7 +337,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			}
 			androidDeviceSelectionDropDown.select(0);
 		} catch (Exception ex) {
-			CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
+			CustomMessageDialogUtil.openErrorDialog("Error",
+					"Please Connect Your Device First" + "\n" + ex.getMessage());
 		}
 	}
 

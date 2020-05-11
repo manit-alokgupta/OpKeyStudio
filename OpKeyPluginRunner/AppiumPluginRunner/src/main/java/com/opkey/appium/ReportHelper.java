@@ -1,5 +1,6 @@
 package com.opkey.appium;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,16 +19,20 @@ public class ReportHelper {
 		Status status = Status.valueOf(functionResult.getStatus().toUpperCase());
 		System.out.println("@Status: " + status);
 		
-		List<String> parameterList = new ArrayList<String>();
-
-		parameterList = getParameters();
-		ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
-				functionResult.getOutput());
+		List<String> parameterList = getParameters();
+		
+		if(functionResult.getSnapshotPath() != null) {
+			ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
+					functionResult.getOutput(), new File(functionResult.getSnapshotPath()));
+		}else {
+			ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
+					functionResult.getOutput());
+		}
 	}
 
 	public static void addReportStep(String methodName, Exception e) {
 
-		List<String> parameterList = new ArrayList<String>();
+		List<String> parameterList = getParameters();
 		
 		ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), Status.FAIL,
 				e.getMessage());
@@ -35,6 +40,16 @@ public class ReportHelper {
 	
 	public static List<String> getParameters() {
 		List<String> parameterList = new ArrayList<String>();
+		
+		System.out.println("ObjectArg: " + Context.current().getFunctionCall().getObjectArguments());
+		ObjectArguments orArguments = Context.current().getFunctionCall().getObjectArguments();
+		
+		
+		if(orArguments !=null && orArguments.getObjectArgument() !=null) {
+			for(ObjectArgument objectArg: orArguments.getObjectArgument()) {
+				parameterList.add(objectArg.getArgumentName() + ":" + objectArg.getObject().getLogicalName());
+			}
+		}
 		
 		ObjectArguments objectArguments = Context.current().getFunctionCall().getObjectArguments();
 		if(objectArguments!=null && objectArguments.getObjectArgument() !=null) {

@@ -13,7 +13,6 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.Project;
 import opkeystudio.opkeystudiocore.core.communicator.SQLiteCommunicator;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -37,19 +36,24 @@ public class BlankProjectCreation {
 				new MessageDialogs().openErrorDialog("OpKey", "Project name Should not be blank.");
 				return;
 			}
+			ServiceRepository.getInstance().setProjectName(projectName);
 			String blankDbFile = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 					.getCommons_DBStructureFolder() + File.separator + "artifact_blankdb.db";
 
 			String filePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getProjectsFolder()
-					+ File.separator + projectName;
+					+ File.separator + ServiceRepository.getInstance().getProjectName();
 
 			if (!new File(filePath).exists()) {
 				new File(filePath).mkdir();
+			} else {
+				new MessageDialogs().openErrorDialog("OpKey",
+						String.format("Project name '%s' already exists. Please provide a different name.",
+								ServiceRepository.getInstance().getProjectName()));
+				return;
 			}
 
 			filePath = filePath + File.separator + "artifacts.db";
 			FileUtils.copyFile(new File(blankDbFile), new File(filePath));
-			ServiceRepository.getInstance().setProjectName(projectName);
 			if (filePath != null) {
 				File file = new File(filePath);
 				if (!file.exists()) {
@@ -71,7 +75,7 @@ public class BlankProjectCreation {
 				String userId = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getUniqueUUID("");
 				Project project = new Project();
 				project.setP_id(opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getUniqueUUID(""));
-				project.setName(projectName);
+				project.setName(ServiceRepository.getInstance().getProjectName());
 				project.setCreatedby(userId);
 				project.setCreatedon(
 						opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getCurrentDateTime());
@@ -81,7 +85,6 @@ public class BlankProjectCreation {
 				ServiceRepository.getInstance().setDefaultProject(project);
 				ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 				tree.renderArtifacts();
-				GenericEditorIntellisense.getInstance().disposeIntellisense();
 				CodeViewTree ctree = (CodeViewTree) SystemRepository.getInstance().getCodeViewTreeControl();
 				if (ctree != null) {
 					ctree.renderCodeViewTree();

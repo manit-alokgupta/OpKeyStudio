@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -45,6 +44,7 @@ import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.core.utils.CustomMessageDialogUtil;
+import pcloudystudio.resources.constant.ImageConstants;
 
 public class AppiumSettingsDialog extends Dialog {
 
@@ -100,16 +100,15 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	public Object open() {
-		
 		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
 		createContents();
 		shlAppiumSettings.open();
 		shlAppiumSettings.layout();
 		Display display = getParent().getDisplay();
-		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		Cursor arrow = new Cursor(display, SWT.CURSOR_ARROW);
 		getParent().setCursor(arrow);
-		
+
 		while (!shlAppiumSettings.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -118,19 +117,9 @@ public class AppiumSettingsDialog extends Dialog {
 		return result;
 	}
 
-	public static Shell getScreenCentredShell() {
-		Display display = PlatformUI.getWorkbench().getDisplay();
-		Shell centreShell = new Shell(display);
-		Point size = centreShell.computeSize(-1, -1);
-		Rectangle screen = display.getMonitors()[0].getBounds();
-		centreShell.setBounds((screen.width - size.x) / 2, (screen.height - size.y) / 2, size.x, size.y);
-		return centreShell;
-	}
-
 	private void createContents() {
 		shlAppiumSettings = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL);
-		shlAppiumSettings
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		shlAppiumSettings.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
@@ -153,7 +142,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		clblLogo = new CLabel(compositeTopHeading, SWT.NONE);
 		clblLogo.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
-		clblLogo.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/appium_logo.jpg"));
+		clblLogo.setImage(ImageConstants.IMG_APPIUM_LOGO);
 		clblLogo.setBounds(519, 10, 113, 33);
 
 		Label lblProvideAppiumHost = new Label(compositeTopHeading, SWT.NONE);
@@ -199,7 +188,7 @@ public class AppiumSettingsDialog extends Dialog {
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 				AppiumConfiguration
-						.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumConfiguration.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
@@ -215,7 +204,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 		Button btnBrowse = new Button(compositeAppiumSettings, SWT.NONE);
 		btnBrowse.setBounds(520, 97, 18, 18);
-		btnBrowse.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/browse.png"));
+		btnBrowse.setImage(ImageConstants.IMG_16_BROWSE);
 		btnBrowse.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnBrowse.setToolTipText("Browse");
 
@@ -261,7 +250,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeAddCapability.setBounds(20, 5, 612, 42);
 
 		btnAdd = new Button(compositeAddCapability, SWT.NONE);
-		btnAdd.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/add_icon.png"));
+		btnAdd.setImage(ImageConstants.IMG_16_ADD_CAPABILITY);
 		btnAdd.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -280,7 +269,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeForDeleteButton.setBounds(46, 5, 33, 33);
 
 		btnDelete = new Button(compositeForDeleteButton, SWT.PUSH);
-		btnDelete.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/delete_icon.png"));
+		btnDelete.setImage(ImageConstants.IMG_16_DELETE_CAPABILITY);
 		btnDelete.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -289,7 +278,7 @@ public class AppiumSettingsDialog extends Dialog {
 					while (capabilityTable.getSelectionIndex() != -1)
 						capabilityTable.remove(capabilityTable.getSelectionIndex());
 				}
-				
+
 			}
 		});
 		btnDelete.setEnabled(false);
@@ -356,7 +345,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeForBtnAddToTable.setBounds(445, 13, 18, 18);
 
 		btnAddToTable = new Button(compositeForBtnAddToTable, SWT.NONE);
-		btnAddToTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotableicon.png"));
+		btnAddToTable.setImage(ImageConstants.IMG_16_ADD_TO_TABLE);
 		btnAddToTable.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnAddToTable.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -417,7 +406,7 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 		btnRefresh.setBounds(470, 13, 18, 18);
-		btnRefresh.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		btnRefresh.setImage(ImageConstants.IMG_16_REFRESH_Button);
 		btnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		btnRefresh.setToolTipText("Refresh Table");
 
@@ -480,7 +469,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeForBtnAddToTable2.setBounds(450, 13, 18, 18);
 
 		addToTable2 = new Button(compositeForBtnAddToTable2, SWT.NONE);
-		addToTable2.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/addtotableicon.png"));
+		addToTable2.setImage(ImageConstants.IMG_16_ADD_TO_TABLE);
 		addToTable2.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		addToTable2.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -505,7 +494,7 @@ public class AppiumSettingsDialog extends Dialog {
 		compositeForBtnAddToTable2.setToolTipText("Add to table");
 
 		manuallyCancel = new Button(manuallyAddCapabilityComposite2, SWT.NONE);
-		manuallyCancel.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/cancelicon.png"));
+		manuallyCancel.setImage(ImageConstants.IMG_16_CANCEL);
 		manuallyCancel.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallyCancel.setToolTipText("Cancel");
 		manuallyCancel.addSelectionListener(new SelectionAdapter() {
@@ -550,8 +539,7 @@ public class AppiumSettingsDialog extends Dialog {
 			}
 		});
 		manuallybtnRefresh.setBounds(475, 13, 18, 18);
-		manuallybtnRefresh
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/refreshicon.png"));
+		manuallybtnRefresh.setImage(ImageConstants.IMG_16_REFRESH_Button);
 		manuallybtnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallybtnRefresh.setToolTipText("Refresh Table");
 
@@ -649,7 +637,7 @@ public class AppiumSettingsDialog extends Dialog {
 		editor.grabHorizontal = true;
 		capabilityTable.addListener(SWT.MouseDown, new Listener() {
 			public void handleEvent(Event event) {
-				
+
 				Rectangle clientArea = capabilityTable.getClientArea();
 				Point pt = new Point(event.x, event.y);
 				int index = capabilityTable.getTopIndex();
@@ -960,10 +948,9 @@ public class AppiumSettingsDialog extends Dialog {
 
 		}
 		return false;
-		
-		
+
 	}
-	
+
 	static void selectionAtEnd(CCombo c) {
 		String text = c.getText();
 		int endSelection = text.length();

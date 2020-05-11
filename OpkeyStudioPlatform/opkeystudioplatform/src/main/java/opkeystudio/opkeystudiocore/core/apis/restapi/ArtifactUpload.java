@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.crestech.opkey.plugin.base64.Base64;
+
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -20,22 +22,26 @@ public class ArtifactUpload {
 		return false;
 	}
 
-	public String uploadArtifactFile(File file) throws IOException {
+	public String uploadArtifactFile(File file, String securedPassword) throws IOException {
 		System.out.println("Artifact Uploading " + file.getAbsolutePath());
 		String charset = "UTF-8";
-
+		if (securedPassword != null) {
+			securedPassword = java.util.Base64.getEncoder().encodeToString(securedPassword.getBytes());
+		}
 		MultipartUtility multipart = new MultipartUtility(
-				"/api/ExportImportAPI/ImportArtifact?MainProcessType=Import&JobType=Opkey&IsImporting=true", charset);
+				"/api/ExportImportAPI/ImportArtifact?MainProcessType=Import&JobType=Opkey&IsImporting=true&SourceProjectPasword="
+						+ securedPassword,
+				charset);
 		multipart.addFilePart("MyFile", file);
 		return multipart.finish(); // response from server.
 	}
 
-	public String uploadCurrentUsedArtifact() {
+	public String uploadCurrentUsedArtifact(String securedPassword) {
 		String dbPath = ServiceRepository.getInstance().getExportedDBFilePath();
 		try {
 			File outZipFile = createZip(new File(dbPath));
 			System.out.println("File Zipped to " + outZipFile.getAbsolutePath());
-			String retData = uploadArtifactFile(outZipFile);
+			String retData = uploadArtifactFile(outZipFile, securedPassword);
 			System.out.println("Server Data " + retData);
 			return retData;
 		} catch (IOException e) {

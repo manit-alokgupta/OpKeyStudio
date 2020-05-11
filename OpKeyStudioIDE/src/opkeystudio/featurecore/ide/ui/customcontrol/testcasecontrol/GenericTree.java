@@ -3,8 +3,6 @@ package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.swt.events.GestureEvent;
-import org.eclipse.swt.events.GestureListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
@@ -19,7 +17,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
@@ -112,6 +109,23 @@ public class GenericTree extends CustomTree {
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = getParentTestCaseView().getArtifact();
 				FlowStep selectedFlowStep = getParentTestCaseView().getFlowStepTable().getSelectedFlowStep();
+				if (selectedFlowStep != null) {
+					boolean isblank = true;
+					if (selectedFlowStep.getKeyword() != null) {
+						isblank = false;
+					}
+					if (selectedFlowStep.getFunctionLibraryComponent() != null) {
+						isblank = false;
+					}
+					if (selectedFlowStep.getCodedFunctionArtifact() != null) {
+						isblank = false;
+					}
+					if (isblank) {
+						selectedFlowStep.setModified(false);
+						selectedFlowStep.setAdded(false);
+						selectedFlowStep.setDeleted(true);
+					}
+				}
 				Object selectedData = getSelectedData();
 				if (selectedData instanceof Artifact) {
 					Artifact selectedArtifact = (Artifact) selectedData;

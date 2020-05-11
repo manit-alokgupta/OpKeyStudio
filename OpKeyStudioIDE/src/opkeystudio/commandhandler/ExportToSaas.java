@@ -35,7 +35,7 @@ public class ExportToSaas {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				String retdata = new ArtifactUpload().uploadCurrentUsedArtifact();
+				String retdata = new ArtifactUpload().uploadCurrentUsedArtifact("");
 				if (retdata == null) {
 					Display.getDefault().asyncExec(new Runnable() {
 

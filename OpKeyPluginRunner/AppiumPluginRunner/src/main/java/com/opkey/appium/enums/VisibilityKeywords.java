@@ -4,7 +4,6 @@ public enum VisibilityKeywords {
 	VerifyObjectVisible,
 	VerifyImageNotVisible,
 	VerifyImageVisible,
-	GetObjectVisibility,
 	VerifyEditBoxExist,
 	VerifyEditBoxnotExist,
 	VerifyTextAreaExist,
@@ -25,5 +24,6 @@ public enum VisibilityKeywords {
 	VerifyMultipleDropDownItemExist,
 	VerifyEditBoxExistAndWait,
 	Web_VerifyListItemExists,
-	VerifyCheckboxEnabled
+	VerifyCheckboxEnabled,
+	VerifyEditboxName
 }

@@ -2203,6 +2203,16 @@ public class OpKeyGenericKeywords {
 		FunctionResult functionResult = KeywordExecutor.execute(() -> new Checkbox().Method_selectCheckBox(objectarg0, arg1));
 		return DataTypeConverter.getBoolean(functionResult.getOutput());
 	}
+	
+	@Keyword("class=Checkbox,method=Method_selectCheckBox")
+	public boolean SelectCheckBox(ORObject arg0){
+		String keywordName = DataTypeConverter.getMethodName();
+		ContextInitiator.addFunction(keywordName);
+		System.out.println("Keyword called: " + keywordName);
+		WebDriverObject objectarg0 = new ObjectConverter().formatObject(arg0);
+		FunctionResult functionResult = KeywordExecutor.execute(() -> new Checkbox().Method_selectCheckBox(objectarg0,"ON"));
+		return DataTypeConverter.getBoolean(functionResult.getOutput());
+	}
 
 	@Keyword("class=WebObjects,method=Method_dblClick")
 	public boolean DoubleClick(ORObject arg0){

@@ -3,7 +3,6 @@ package com.opkey.appium.ObjectFromatter;
 import java.util.Map;
 import java.util.Set;
 
-import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments.ObjectArgument;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object;
@@ -17,17 +16,16 @@ import com.plugin.appium.exceptionhandlers.ObjectPropertiesNotSufficientExceptio
 
 public class ObjectConverter {
 	public AppiumObject formatObject(ORObject orobject) {
-		
+		System.out.println("@orobject: ===============" + orobject);
 		if (orobject == null) {
-			ORObject parentObject = new ORObject();
-			parentObject.addProperty("", "").addProperty("", "");
-
-			orobject = new ORObject();
-			orobject.addProperty("", "");
-			orobject.setParentORObject(parentObject);
+			this.setObjectArgumentInFunctionCall("No attachment found");
+			return new AppiumObject(false);
 		}
 		
 		try {
+			
+			this.setObjectArgumentInFunctionCall(orobject);
+			
 			ORObject SmartSoftwareTestingSolutions = new ORObject();
 			SmartSoftwareTestingSolutions.addProperty("type", "HTML PAGE").addProperty("tag", "html")
 					.addProperty("index", "0").addProperty("title", "Smart Software Testing Solutions")
@@ -35,20 +33,19 @@ public class ObjectConverter {
 					.addProperty("src", "http://sstsinc.com/").addProperty("titleindex", "0");
 			Object _object = convertORObjectToOpKeyObject(orobject);
 			
-			AppiumObject webdriverobject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
+			AppiumObject appiumObject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
 			Object _parentobject = convertORObjectToOpKeyObject(SmartSoftwareTestingSolutions);
 			AppiumObject parentobject = new ObjectFormatter().formatObjectToWebDriverObject(_parentobject);
-			webdriverobject.setParentObject(parentobject);
-			System.out.println(">>Object " + webdriverobject.toString());
+			appiumObject.setParentObject(parentobject);
+			System.out.println(">>Object " + appiumObject.toString());
 			
-			this.setObjectArgumentInFunctionCall(orobject);
-			
-			return webdriverobject;
+			return appiumObject;
 		} catch (ObjectPropertiesNotSufficientException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Warning: " + e.getMessage());
 		}
-		return null;
+		AppiumObject ob1 = new AppiumObject(false);
+		return new AppiumObject(false);
 	}
 
 	private Object convertORObjectToOpKeyObject(ORObject orobject) {
@@ -72,13 +69,14 @@ public class ObjectConverter {
 	}
 
 	private String getLogicalNameOfORObject(ORObject orobject) {
-		Map<String, String> allProperties = orobject.getAllProperties();
-		for (String key : allProperties.keySet()) {
-			if (key.toLowerCase().equals("logicalname")) {
-				return allProperties.get(key);
-			}
+		if (orobject.getAllProperties().containsKey("logicalname")) {
+			return orobject.getAllProperties().get("logicalname");
+		} else if (orobject.getAllProperties().containsKey("name")) {
+			return orobject.getAllProperties().get("name");
+		} else if (orobject.getAllProperties().containsKey("text")) {
+			return orobject.getAllProperties().get("text");
 		}
-		return "";
+		return "no-name";
 	}
 	
 	private void setObjectArgumentInFunctionCall(ORObject obj) {
@@ -89,6 +87,17 @@ public class ObjectConverter {
 		orObj.setLogicalName(getLogicalNameOfORObject(obj));
 		oArg.setObject(orObj);
 		oArgs.getObjectArgument().add(oArg);
-		Context.current().getFunctionCall().setObjectArguments(oArgs);	
+		Context.current().getFunctionCall().setObjectArguments(oArgs);
+	}
+	
+	private void setObjectArgumentInFunctionCall(String logicalName) {
+		ObjectArguments oArgs = new ObjectArguments();
+		ObjectArgument oArg = new ObjectArgument();
+		oArg.setArgumentName("Object");
+		Object orObj = new Object();
+		orObj.setLogicalName(logicalName);
+		oArg.setObject(orObj);
+		oArgs.getObjectArgument().add(oArg);
+		Context.current().getFunctionCall().setObjectArguments(oArgs);
 	}
 }

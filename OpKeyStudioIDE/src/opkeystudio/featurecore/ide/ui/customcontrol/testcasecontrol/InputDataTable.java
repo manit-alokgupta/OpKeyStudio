@@ -432,18 +432,22 @@ public class InputDataTable extends CustomTable {
 		}
 
 		if (dataSourceType == DataSource.ValueFromOutputArgument) {
-
+			System.out.println("Called ValueFromOutputArgument");
 			String flow_step_oa_id = null;
 			if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 				flow_step_oa_id = flowInputArgument.getComponentstep_oa_id();
-			} else {
+			} else if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
 				flow_step_oa_id = flowInputArgument.getFlow_step_oa_id();
 			}
 			if (flow_step_oa_id == null) {
 				return;
 			}
-			List<FlowOutputArgument> flowOutPutArguments = new FlowApiUtilities()
-					.getAllFlowOutPutArgument(flow_step_oa_id);
+			List<FlowOutputArgument> flowOutPutArguments = new ArrayList<FlowOutputArgument>();
+			if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+				flowOutPutArguments = new FlowApiUtilities().getAllComponentOutPutArgument(flow_step_oa_id);
+			} else if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
+				flowOutPutArguments = new FlowApiUtilities().getAllFlowOutPutArgument(flow_step_oa_id);
+			}
 			if (flowOutPutArguments.size() == 0) {
 				return;
 			}
@@ -618,6 +622,26 @@ public class InputDataTable extends CustomTable {
 								valueData = "false";
 							}
 						}
+						if (keywordInputArg.getDatatype().toString().equals("Boolean")) {
+							if (valueData != null) {
+								if (valueData.equals("0")) {
+									valueData = "false";
+									flowInputArg.setStaticvalue(valueData);
+								}
+								if (valueData.equals("1")) {
+									valueData = "true";
+									flowInputArg.setStaticvalue(valueData);
+								}
+								if (valueData.equals("False")) {
+									valueData = "false";
+									flowInputArg.setStaticvalue(valueData);
+								}
+								if (valueData.equals("True")) {
+									valueData = "true";
+									flowInputArg.setStaticvalue(valueData);
+								}
+							}
+						}
 						cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getName(),
 								valueData });
 						cti.setControlData(flowInputArg);
@@ -639,17 +663,20 @@ public class InputDataTable extends CustomTable {
 				List<FlowInputArgument> filteredFlowInputArgs = new ArrayList<FlowInputArgument>();
 				for (int i1 = 0; i1 < flowInputArgs.size(); i1++) {
 					FlowInputArgument inputArgument = flowInputArgs.get(i1);
-					// if (inputArgument.getStaticobjectid() == null) {
 					filteredFlowInputArgs.add(inputArgument);
-					// }
 				}
 
 				if (filteredComponentInputArgs.size() == filteredFlowInputArgs.size()) {
-					ComponentInputArgument keywordInputArg = getComponentInputArgs().get(i);
+					ComponentInputArgument componentInputArg = getComponentInputArgs().get(i);
 					FlowInputArgument flowInputArg = flowInputArgs.get(i);
 					CustomTableItem cti = new CustomTableItem(this, 0);
-					cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
-							flowInputArg.getStaticvalue() });
+					String inputValue = flowInputArg.getStaticvalue();
+					if (inputValue == null) {
+						if (componentInputArg.getDefaultvalue() != null) {
+							inputValue = componentInputArg.getDefaultvalue();
+						}
+					}
+					cti.setText(new String[] { componentInputArg.getType(), componentInputArg.getName(), inputValue });
 					cti.setControlData(flowInputArg);
 					addInputTableEditor(cti);
 				}
@@ -672,11 +699,16 @@ public class InputDataTable extends CustomTable {
 				}
 
 				if (filteredComponentInputArgs.size() == filteredFlowInputArgs.size()) {
-					CFLInputParameter keywordInputArg = getCflInputArguments().get(i);
+					CFLInputParameter cflInputArgument = getCflInputArguments().get(i);
 					FlowInputArgument flowInputArg = flowInputArgs.get(i);
 					CustomTableItem cti = new CustomTableItem(this, 0);
-					cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
-							flowInputArg.getStaticvalue() });
+					String inputValue = flowInputArg.getStaticvalue();
+					if (inputValue == null) {
+						if (cflInputArgument.getDefaultvalue() != null) {
+							inputValue = cflInputArgument.getDefaultvalue();
+						}
+					}
+					cti.setText(new String[] { cflInputArgument.getType(), cflInputArgument.getName(), inputValue });
 					cti.setControlData(flowInputArg);
 					addInputTableEditor(cti);
 				}

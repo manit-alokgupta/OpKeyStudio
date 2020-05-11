@@ -28,6 +28,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
@@ -113,15 +114,21 @@ public class OutputDataTable extends CustomTable {
 
 				CustomTableItem selectedItem = (CustomTableItem) getSelection()[0];
 				FlowOutputArgument flowOutPitArgument = (FlowOutputArgument) selectedItem.getControlData();
-				System.out.println(flowOutPitArgument.getFlow_step_oa_id());
+				String flowOutputArgument = null;
+				if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+					flowOutputArgument = flowOutPitArgument.getComponentstep_oa_id();
+				}
+				if (parentTestCaseView.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
+					flowOutputArgument = flowOutPitArgument.getFlow_step_oa_id();
+				}
+				System.out.println(flowOutputArgument);
 				FlowInputArgument selectedFlowInputArgument = getParentTestCaseView().getInputDataTable()
 						.getSelectedFlowInputArgument();
 				if (selectedFlowInputArgument == null) {
 					return;
 				}
 				new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
-						selectedFlowInputArgument, flowOutPitArgument.getFlow_step_oa_id(),
-						DataSource.ValueFromOutputArgument);
+						selectedFlowInputArgument, flowOutputArgument, DataSource.ValueFromOutputArgument);
 
 				selectedFlowInputArgument.setModified(true);
 				try {
@@ -260,6 +267,7 @@ public class OutputDataTable extends CustomTable {
 		if (flowStep == null) {
 			return;
 		}
+		System.out.println("2 Flow Step is Null");
 		this.initOutputTableArguments(flowStep);
 		this.removeAll();
 		System.out.println("Called Output variable " + flowOutputArgs.size());
@@ -283,19 +291,26 @@ public class OutputDataTable extends CustomTable {
 	}
 
 	public void renderOutPutTableAll(FlowStep flowStep) {
-		this.removeAll();
-		this.setFlowStep(flowStep);
-		if (this.getFlowStep() == null) {
+		if (flowStep == null) {
+			System.out.println("1 Flow Step is Null");
 			return;
 		}
-		List<FlowOutputArgument> flowOutPutArgs = new FlowApi()
-				.fetchFlowStepOutputArguments(this.getFlowStep().getFlow_stepid());
+		this.removeAll();
+		this.setFlowStep(flowStep);
+		List<FlowOutputArgument> flowOutPutArgs = new ArrayList<FlowOutputArgument>();
+		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
+			flowOutPutArgs = new FlowApi().fetchFlowStepOutputArguments(this.getFlowStep().getFlow_stepid());
+		}
+		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+			flowOutPutArgs = new FlowApi().fetchComponentStepOutputArguments(this.getFlowStep().getStepcomponent_id());
+		}
 		for (FlowOutputArgument flowOutPutArg : flowOutPutArgs) {
 			if (flowOutPutArg.getOutputvariablename() != null) {
+				System.out.println("OUTPUT VAR " + flowOutPutArg);
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { flowOutPutArg.getOutputvariablename(), "" });
 				cti.setControlData(flowOutPutArg);
-				cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+				cti.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			}
 		}
 	}

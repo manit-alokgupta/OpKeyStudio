@@ -34,6 +34,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.GlobalVariablesTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariableTable extends CustomTable {
@@ -43,6 +44,8 @@ public class GlobalVariableTable extends CustomTable {
 	private List<GlobalVariable> globalVariables = new ArrayList<GlobalVariable>();
 	String[] tableHeaders_gv = { "Name", "Data Type", "Value", "Externally Updatable" };
 	String[] tableHeaders_arti = { "Name", "Data Type", "Value" };
+
+	private TableCursor tableCursor;
 
 	public GlobalVariableTable(Composite parent, int style, GlobalVariableDialog gvDialog) {
 		super(parent, style);
@@ -60,16 +63,17 @@ public class GlobalVariableTable extends CustomTable {
 		refreshGlobalVariables();
 		initGlobalLoadeListener();
 	}
-	
+
 	private void initGlobalLoadeListener() {
 		this.addOpKeyGlobalLoadListener(new GlobalLoadListener() {
-			
+
 			@Override
 			public void handleGlobalEvent() {
 				refreshGlobalVariables();
 			}
 		});
 	}
+
 	private void initHeaders() {
 		if (isInsideArtifact()) {
 			for (String header : tableHeaders_arti) {
@@ -105,19 +109,19 @@ public class GlobalVariableTable extends CustomTable {
 	}
 
 	private void init() {
-		TableCursor cursor = new TableCursor(this, 0);
-		ControlEditor controlEditor = new ControlEditor(cursor);
+		tableCursor = new TableCursor(this, 0);
+		ControlEditor controlEditor = new ControlEditor(tableCursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
-		cursor.addSelectionListener(new SelectionListener() {
+		tableCursor.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// thisTable.deselectAll();
-				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
+				CustomTableItem selectedTableItem = (CustomTableItem) tableCursor.getRow();
 				GlobalVariable globalVariable = (GlobalVariable) selectedTableItem.getControlData();
-				int selectedColumn = cursor.getColumn();
-				CustomText text = new CustomText(cursor, 0);
+				int selectedColumn = tableCursor.getColumn();
+				CustomText text = new CustomText(tableCursor, 0);
 				if (selectedColumn == 0) {
 					text.setText(globalVariable.getName());
 				}
@@ -375,6 +379,7 @@ public class GlobalVariableTable extends CustomTable {
 		GlobalLoader.getInstance().initGlobalVariables();
 		refreshGlobalVariables();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		new GlobalVariablesTranspiler().transpile();
 		return true;
 	}
 
@@ -400,6 +405,10 @@ public class GlobalVariableTable extends CustomTable {
 
 	public void setInsideArtifact(boolean insideArtifact) {
 		this.insideArtifact = insideArtifact;
+	}
+
+	public TableCursor getTableCursor() {
+		return this.tableCursor;
 	}
 
 	public GlobalVariable getSelectedGlobalVariable() {

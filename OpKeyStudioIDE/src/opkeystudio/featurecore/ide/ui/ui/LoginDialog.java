@@ -52,13 +52,13 @@ public class LoginDialog extends Dialog {
 	 * @return the result
 	 */
 	public Object open() {
-		Cursor waitCursor=new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT);
+		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
 		createContents();
 		shlLoginToOpkey.open();
 		shlLoginToOpkey.layout();
 		Display display = getParent().getDisplay();
-		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		Cursor arrow = new Cursor(display, SWT.CURSOR_ARROW);
 		getParent().setCursor(arrow);
 		while (!shlLoginToOpkey.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -82,12 +82,11 @@ public class LoginDialog extends Dialog {
 	 */
 	private void createContents() {
 		shlLoginToOpkey = new Shell(getParent(), SWT.DIALOG_TRIM);
-		shlLoginToOpkey
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		shlLoginToOpkey.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		shlLoginToOpkey.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlLoginToOpkey.setSize(466, 333);
 		shlLoginToOpkey.setText("Login to OpKey");
-		
+
 		Label labelSeparator = new Label(shlLoginToOpkey, SWT.SEPARATOR | SWT.HORIZONTAL);
 		labelSeparator.setBounds(0, 0, 460, 2);
 
@@ -150,7 +149,7 @@ public class LoginDialog extends Dialog {
 					}
 				} catch (IOException e1) {
 					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
-							"Please check your credential");
+							"Unable to connect. Please check whether you are connected to internet or not.");
 				} catch (Exception e2) {
 					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
 							"Wrong Domain Url provided. Please check.");

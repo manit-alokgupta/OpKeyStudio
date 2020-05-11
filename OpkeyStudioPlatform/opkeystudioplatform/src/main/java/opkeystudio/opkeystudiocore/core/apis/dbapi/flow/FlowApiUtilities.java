@@ -44,6 +44,21 @@ public class FlowApiUtilities {
 		return new ArrayList<FlowOutputArgument>();
 	}
 
+	public List<FlowOutputArgument> getAllComponentOutPutArgument(String flow_step_oa_id) {
+		String query = String.format("SELECT * from component_step_output_arguments WHERE componentstep_oa_id='%s'",
+				flow_step_oa_id);
+		String result = QueryExecutor.getInstance().executeQuery(query);
+		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);
+		try {
+			return mapper.readValue(result, type);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<FlowOutputArgument>();
+	}
+
 	public String getFlowOutPutArgumentsString(FlowStep flowStep) {
 		String outData = "";
 		List<FlowOutputArgument> flowStepOutputargs = flowStep.getFlowOutputArgs();
@@ -175,6 +190,7 @@ public class FlowApiUtilities {
 		}
 
 		if (sourceType == DataSource.ValueFromOutputArgument) {
+			System.out.println("ValueFromOutputArgument" + data);
 			if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 				flowInputArgument.setArg_datasource(DataSource.ValueFromOutputArgument);
 				flowInputArgument.setComponentstep_oa_id(data);
@@ -260,7 +276,7 @@ public class FlowApiUtilities {
 				}
 				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromOutputArgument) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
-					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
+					flowInputObject.setFlowOutputData(flowInputArgument.getComponentstep_oa_id());
 				}
 				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromInputParameter) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
@@ -318,7 +334,7 @@ public class FlowApiUtilities {
 				}
 				if (flowInputArgument.getArg_datasource() == DataSource.ValueFromOutputArgument) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
-					flowInputObject.setFlowOutputData(flowInputArgument.getFlow_step_oa_id());
+					flowInputObject.setFlowOutputData(flowInputArgument.getComponentstep_oa_id());
 				}
 				flowInputObjects.add(flowInputObject);
 			}

@@ -516,6 +516,7 @@ public class TestSuiteView extends SuperComposite {
 	public void saveSuiteSteps() {
 		new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
 		testSuiteTable.renderAllTestSuites();
+		getCodedFunctionView().refreshTSCode();
 		saveButton.setEnabled(false);
 	}
 
@@ -549,7 +550,7 @@ public class TestSuiteView extends SuperComposite {
 	public Artifact getCurrentArtifact() {
 		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
 	}
-	
+
 	public Artifact getArtifact() {
 		return this.artifact;
 	}

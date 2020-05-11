@@ -3,39 +3,39 @@ package pcloudystudio.featurecore.ui.dialog;
 //Created by Alok Gupta on 20/02/2020.
 //Copyright © 2020 SSTS Inc. All rights reserved.
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import java.io.File;
 import java.util.Map;
-import org.eclipse.swt.graphics.Drawable;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.ScrollBar;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Layout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.ResourceManager;
 
-import pcloudystudio.spytreecomponents.MobileElement;
-
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.Drawable;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Layout;
+import org.eclipse.swt.widgets.ScrollBar;
+import org.eclipse.swt.widgets.Shell;
+
+import pcloudystudio.resources.constant.ImageConstants;
+import pcloudystudio.spytreecomponents.MobileElement;
 
 public class MobileScreenshotDialog extends Dialog {
 	private static String DIALOG_TITLE = "Mobile View";
@@ -53,7 +53,8 @@ public class MobileScreenshotDialog extends Dialog {
 	private MobileElementInspectorDialog mobileInspetorDialog;
 	private ScrolledComposite scrolledComposite;
 
-	public MobileScreenshotDialog(Shell parentShell, MobileElementInspectorDialog mobileInspectorDialog, Point location) {
+	public MobileScreenshotDialog(Shell parentShell, MobileElementInspectorDialog mobileInspectorDialog,
+			Point location) {
 		super(parentShell);
 		this.currentX = 0.0;
 		this.currentY = 0.0;
@@ -86,7 +87,8 @@ public class MobileScreenshotDialog extends Dialog {
 				if (MobileScreenshotDialog.this.currentScreenShot != null
 						&& !MobileScreenshotDialog.this.currentScreenShot.isDisposed()) {
 					e.gc.drawImage(MobileScreenshotDialog.this.currentScreenShot, 0, 0);
-					if (MobileScreenshotDialog.this.currentWidth != 0.0 && MobileScreenshotDialog.this.currentHeight != 0.0) {
+					if (MobileScreenshotDialog.this.currentWidth != 0.0
+							&& MobileScreenshotDialog.this.currentHeight != 0.0) {
 						Color oldForegroundColor = e.gc.getForeground();
 						e.gc.setForeground(new Color((Device) Display.getCurrent(), new RGB(118, 198, 66)));
 						int x = MobileScreenshotDialog.safeRoundDouble(MobileScreenshotDialog.this.currentX);
@@ -162,8 +164,10 @@ public class MobileScreenshotDialog extends Dialog {
 			public void run() {
 				for (int i = 0; i < 9; ++i) {
 					if (i % 2 == 1) {
-						MobileScreenshotDialog.setCurrentX(MobileScreenshotDialog.this, x * MobileScreenshotDialog.this.hRatio);
-						MobileScreenshotDialog.setCurrentY(MobileScreenshotDialog.this, y * MobileScreenshotDialog.this.hRatio);
+						MobileScreenshotDialog.setCurrentX(MobileScreenshotDialog.this,
+								x * MobileScreenshotDialog.this.hRatio);
+						MobileScreenshotDialog.setCurrentY(MobileScreenshotDialog.this,
+								y * MobileScreenshotDialog.this.hRatio);
 						MobileScreenshotDialog.setCurrentWidth(MobileScreenshotDialog.this,
 								width * MobileScreenshotDialog.this.hRatio);
 						MobileScreenshotDialog.setCurrentHeight(MobileScreenshotDialog.this,
@@ -211,7 +215,7 @@ public class MobileScreenshotDialog extends Dialog {
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(DIALOG_TITLE);
-		shell.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
+		shell.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 	}
 
 	@Override

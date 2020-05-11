@@ -6,35 +6,27 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarInputStream;
 
 import javax.management.RuntimeErrorException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.Completion;
@@ -45,7 +37,6 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.FunctionTypeCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaBasicCompletion;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCompletionProvider;
@@ -64,8 +55,10 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	private static GenericEditorIntellisense instance;
 	private static GenericEditorIntellisense cflinstance;
 	private List<ClassIntellisenseDTO> senseClasses = new ArrayList<ClassIntellisenseDTO>();
+	private static boolean refreshCodeEditorIntellisenseRunning = false;
+	private static boolean refreshCFLEditorIntellisenseRunning = false;
 
-	public static GenericEditorIntellisense getInstance() {
+	public static GenericEditorIntellisense getCodeEditorInstance() {
 		if (instance == null) {
 			instance = new GenericEditorIntellisense();
 			instance.initIntellisense();
@@ -81,54 +74,64 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		return cflinstance;
 	}
 
-	public void disposeIntellisense() {
-		instance = null;
+	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
+		instance = new GenericEditorIntellisense();
+		return instance;
 	}
 
-	public void refreshIntellisense() {
+	public static GenericEditorIntellisense getCFLInstanceoOfCodeEditor() {
 		instance = new GenericEditorIntellisense();
+		return instance;
+	}
+
+	public void refreshCodeEditorIntellisense() {
+		if (refreshCodeEditorIntellisenseRunning) {
+			System.out.println("Already Refresh Intellisense Running");
+			return;
+		}
+		refreshCodeEditorIntellisenseRunning = true;
 		instance.initIntellisense();
 	}
 
 	public void refreshCFLIntellisense() {
-		instance = new GenericEditorIntellisense();
+		if (refreshCFLEditorIntellisenseRunning) {
+			System.out.println("Already CFL Refresh Intellisense Running");
+			return;
+		}
+		refreshCFLEditorIntellisenseRunning = true;
 		instance.initCFLIntellisense();
 	}
 
 	private void initIntellisense() {
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog(null, "Intellisense Initializing", false, new IRunnableWithProgress() {
+		Job intellisenseJob = Job.create("Update Intellisense", new ICoreRunnable() {
 
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						addSimpleKeywords();
-						addOpKeyTranspiledClassInformation();
-						addClassInformationFromSenseFile(false);
-					}
-				});
-				msd.closeProgressDialog();
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				System.out.println("Started Code Editor initIntellisense");
+				addSimpleKeywords();
+				addOpKeyTranspiledClassInformation();
+				addClassInformationFromSenseFile(false);
+				refreshCodeEditorIntellisenseRunning = false;
+				System.out.println("Completed Code Editor initIntellisense");
 			}
 		});
+		intellisenseJob.schedule();
 	}
 
 	private void initCFLIntellisense() {
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				MessageDialogs msd = new MessageDialogs();
-				msd.openProgressDialog(null, "CFL Intellisense Initializing", false, new IRunnableWithProgress() {
+		Job intellisenseJob = Job.create("Update Intellisense", new ICoreRunnable() {
 
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						addSimpleKeywords();
-						addOpKeyTranspiledClassInformation();
-						addClassInformationFromSenseFile(true);
-					}
-				});
-				msd.closeProgressDialog();
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				System.out.println("Started CFL Editor initIntellisense");
+				addSimpleKeywords();
+				addOpKeyTranspiledClassInformation();
+				addClassInformationFromSenseFile(true);
+				refreshCFLEditorIntellisenseRunning = false;
+				System.out.println("Completed CFL Editor initIntellisense");
 			}
 		});
+		intellisenseJob.schedule();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -164,122 +167,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	private void addLibraryClassInformation() {
-		List<File> jarFiles = new CompilerUtilities().getAllPluginRunnerJar();
-		jarFiles.addAll(new CompilerUtilities().getPluginBaseLibraries());
-		jarFiles.addAll(new CompilerUtilities().getAllPluginsLibraries());
-		List<Class> allClasses = getAllReflectionsClassesFromJars(jarFiles);
-		parseAllClassesForIntellisense(allClasses);
-	}
-
-	private URLClassLoader getURLClassLoaderOfClasses(List<File> allLibs) throws MalformedURLException {
-		URL[] allJarsAndClasses = new URL[allLibs.size()];
-		for (int i = 0; i < allLibs.size(); i++) {
-			allJarsAndClasses[i] = allLibs.get(i).toURI().toURL();
-		}
-		URLClassLoader child = new URLClassLoader(allJarsAndClasses);
-		return child;
-	}
-
-	private Set<String> getAllClassNameFromAllJar(List<File> pluginsLibrary) {
-		Set<String> allClases = new HashSet<String>();
-		for (File file : pluginsLibrary) {
-			List<String> classNames = getAllClassNamesFromJar(file.getAbsolutePath());
-			for (String className : classNames) {
-				if (className.contains("$")) {
-					continue;
-				}
-				if (className.contains("org.openqa") || className.contains("java.lang")
-						|| className.contains("java.util") || className.contains("java.io")
-						|| className.contains("com.opkey")) {
-					allClases.add(className);
-				}
-			}
-		}
-		return allClases;
-	}
-
-	private List<String> getAllClassNamesFromJar(String jarName) {
-		List<String> listofClasses = new ArrayList<String>();
-		try {
-			JarInputStream jarFile = new JarInputStream(new FileInputStream(jarName));
-			JarEntry jarEntry;
-
-			while (true) {
-				jarEntry = jarFile.getNextJarEntry();
-				if (jarEntry == null) {
-					break;
-				}
-				if ((jarEntry.getName().toLowerCase().endsWith(".class"))) {
-					String className = jarEntry.getName().replaceAll("/", "\\.");
-					String myClass = className.substring(0, className.lastIndexOf('.'));
-					listofClasses.add(myClass);
-				}
-			}
-			jarFile.close();
-		} catch (Exception e) {
-
-		}
-		return listofClasses;
-	}
-
-	@SuppressWarnings("rawtypes")
-	private List<Class> getAllReflectionsClassesFromJars(List<File> jarFiles) {
-		List<Class> allClasses = new ArrayList<Class>();
-		try {
-			System.out.println("Fetching Class Information");
-			URLClassLoader classLoader = getURLClassLoaderOfClasses(jarFiles);
-			Set<String> classNames = getAllClassNameFromAllJar(jarFiles);
-			for (String className : classNames) {
-				if (className.contains("$")) {
-					continue;
-				}
-				try {
-					Class loadedClass = classLoader.loadClass(className);
-					allClasses.add(loadedClass);
-				} catch (NoClassDefFoundError e) {
-					// e.printStackTrace();
-				} catch (IncompatibleClassChangeError e) {
-					// e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					// e.printStackTrace();
-				} catch (UnsupportedClassVersionError e) {
-					// e.printStackTrace();
-				} catch (RuntimeErrorException e) {
-					// e.printStackTrace();
-				} catch (RuntimeException e) {
-					e.printStackTrace();
-				} catch (ExceptionInInitializerError e) {
-					e.printStackTrace();
-				} catch (UnsatisfiedLinkError e) {
-					e.printStackTrace();
-				} catch (LinkageError e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		return allClasses;
-	}
-
-	@SuppressWarnings("rawtypes")
-	private void parseAllClassesForIntellisense(List<Class> allclasses) {
-		for (Class _class : allclasses) {
-			parseClass(_class);
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	private void parseClass(Class _class) {
-		TranspiledClassInfo classInfo = new TranspiledClassInfo(_class);
-		addTranspiledClasses(classInfo);
-		createConstructorIntellisense(_class);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -443,7 +330,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				boolean isAdded = this.addTranspiledClasses(new TranspiledClassInfo(classSource));
 				if (isAdded == false) {
 					parseConstructors(classSource);
-					parseClassMethods(classSource);
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -456,10 +342,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		addConstructorTypeBasicCompletion(className, className);
 		className = className + "()";
 		addConstructorTypeBasicCompletion(className, className);
-	}
-
-	private void parseClassMethods(JavaClassSource classSource) {
-		List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
 	}
 
 	public void addBasicCompletion(String data) {
@@ -596,7 +478,9 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public VariableToken findVariableToken(String varName) {
-		for (VariableToken varToken : getAllvariabletokens()) {
+		List<VariableToken> tokens = getAllvariabletokens();
+		for (int i = 0; i < tokens.size(); i++) {
+			VariableToken varToken = tokens.get(i);
 			if (varToken.getVariableName().equals(varName)) {
 				return varToken;
 			}
@@ -606,7 +490,8 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	public TranspiledClassInfo findAutoCompleteToken(String tokenString) {
 		List<TranspiledClassInfo> allTokens = getTranspiledClasses();
-		for (TranspiledClassInfo token : allTokens) {
+		for (int i = 0; i < allTokens.size(); i++) {
+			TranspiledClassInfo token = allTokens.get(i);
 			if (token.getClassSource() != null) {
 				String className = token.getClassSource().getName();
 				if (className.endsWith("." + tokenString)) {

@@ -43,7 +43,7 @@ public class ArtifactTranspiler {
 		ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
-				continue;
+				// continue;
 			}
 			int count = 0;
 			String packagePath = "allartifacts";
@@ -84,6 +84,8 @@ public class ArtifactTranspiler {
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.appium");
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
 		ArtifactTranspiler.getInstance().addPackageName("com.ssts.reporting");
+		ArtifactTranspiler.getInstance()
+				.addPackageName("com.crestech.opkey.plugin.communication.contracts.functioncall");
 		TranspilerUtilities.getInstance().clearAppiumTypeFunctionLibraries();
 	}
 

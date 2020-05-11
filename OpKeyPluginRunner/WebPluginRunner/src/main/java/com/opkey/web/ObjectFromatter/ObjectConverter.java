@@ -5,8 +5,11 @@ import java.util.Map;
 import java.util.Set;
 
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object;
+import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments;
+import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.ObjectArguments.ObjectArgument;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Properties;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.Object.Properties.Property;
+import com.crestech.opkey.plugin.contexts.Context;
 import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ObjectPropertiesNotSufficientException;
 import com.crestech.opkey.plugin.webdriver.object.ObjectFormatter;
 import com.crestech.opkey.plugin.webdriver.object.WebDriverObject;
@@ -14,6 +17,7 @@ import com.opkeystudio.runtime.ORObject;
 
 public class ObjectConverter {
 	public WebDriverObject formatObject(ORObject orobject) {
+
 		if (orobject == null) {
 			ORObject parentObject = new ORObject();
 			parentObject.addProperty("", "").addProperty("", "");
@@ -23,6 +27,7 @@ public class ObjectConverter {
 			orobject.setParentORObject(parentObject);
 		}
 		try {
+			this.setObjectArgumentInFunctionCall(orobject);
 			Object _object = convertORObjectToOpKeyObject(orobject);
 			WebDriverObject webdriverobject = new ObjectFormatter().formatObjectToWebDriverObject(_object);
 			if (orobject.getParentORObject() != null) {
@@ -32,6 +37,7 @@ public class ObjectConverter {
 				System.out.println(">>Parent Object " + parentobject.toString());
 			}
 			System.out.println(">>Current Object " + webdriverobject.toString());
+		
 			return webdriverobject;
 		} catch (ObjectPropertiesNotSufficientException e) {
 			e.printStackTrace();
@@ -52,6 +58,9 @@ public class ObjectConverter {
 		Set<String> propertyNames = allProperties.keySet();
 		for (String propertyName : propertyNames) {
 			String propertyValue = allProperties.get(propertyName);
+			
+			System.out.println(propertyName + " @: " + propertyValue );
+			
 			Property property = new Property();
 			property.setName(propertyName);
 			property.setValue(propertyValue);
@@ -64,12 +73,24 @@ public class ObjectConverter {
 	}
 
 	private String getLogicalNameOfORObject(ORObject orobject) {
-		Map<String, String> allProperties = orobject.getAllProperties();
-		for (String key : allProperties.keySet()) {
-			if (key.toLowerCase().equals("logicalname")) {
-				return allProperties.get(key);
-			}
+		if (orobject.getAllProperties().containsKey("logicalname")) {
+			return orobject.getAllProperties().get("logicalname");
+		} else if (orobject.getAllProperties().containsKey("name")) {
+			return orobject.getAllProperties().get("name");
+		} else if (orobject.getAllProperties().containsKey("text")) {
+			return orobject.getAllProperties().get("text");
 		}
-		return "";
+		return "no-name";
+	}
+
+	private void setObjectArgumentInFunctionCall(ORObject obj) {
+		ObjectArguments oArgs = new ObjectArguments();
+		ObjectArgument oArg = new ObjectArgument();
+		oArg.setArgumentName("Object");
+		Object orObj = new Object();
+		orObj.setLogicalName(getLogicalNameOfORObject(obj));
+		oArg.setObject(orObj);
+		oArgs.getObjectArgument().add(oArg);
+		Context.current().getFunctionCall().setObjectArguments(oArgs);
 	}
 }

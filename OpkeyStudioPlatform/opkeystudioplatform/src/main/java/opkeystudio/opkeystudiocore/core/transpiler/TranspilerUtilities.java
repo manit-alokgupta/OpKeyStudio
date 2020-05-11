@@ -8,6 +8,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -95,7 +96,7 @@ public class TranspilerUtilities {
 						flstep.setAppiumType(isMobileKeyword);
 					}
 				}
-				
+
 				if (isMobileKeyword) {
 					TranspilerUtilities.getInstance()
 							.addAppiumTypeFunctionLibraries(flowStep.getFunctionLibraryComponent().getId());

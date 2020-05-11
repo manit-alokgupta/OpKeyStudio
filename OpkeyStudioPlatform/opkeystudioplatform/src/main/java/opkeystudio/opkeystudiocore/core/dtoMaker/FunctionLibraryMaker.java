@@ -25,7 +25,7 @@ public class FunctionLibraryMaker {
 		ComponentInputArgument componentInputArgument = new ComponentInputArgument();
 		componentInputArgument.setIp_id(Utilities.getInstance().getUniqueUUID(""));
 		componentInputArgument.setComponent_id(artifact.getId());
-		componentInputArgument.setIsmandatory(true);
+		componentInputArgument.setIsmandatory(false);
 		componentInputArgument.setName(variableName);
 		componentInputArgument.setType("String");
 		componentInputArgument.setPosition(selectedComponentStepPosition + 5);

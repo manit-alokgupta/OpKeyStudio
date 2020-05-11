@@ -7,7 +7,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -51,6 +54,7 @@ public class FlowStepTable extends CustomTable {
 	private MenuItem movedownMenuItem;
 	private MenuItem setToRunMenuItem;
 	private MenuItem skipfromRunMenuItem;
+	private TableCursor tableCursor;
 
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
@@ -74,6 +78,12 @@ public class FlowStepTable extends CustomTable {
 		movedownMenuItem.setEnabled(false);
 		setToRunMenuItem.setEnabled(false);
 		skipfromRunMenuItem.setEnabled(false);
+	}
+
+	private void turnOffContextMenu() {
+		if (this.getItemCount() == 0) {
+			disableMenuItem();
+		}
 	}
 
 	public void toggleCopyMenuItem(boolean status) {
@@ -306,6 +316,24 @@ public class FlowStepTable extends CustomTable {
 		});
 		this.setMenu(menu);
 		disableMenuItem();
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				turnOffContextMenu();
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				turnOffContextMenu();
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				turnOffContextMenu();
+			}
+		});
+		
 		this.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -459,8 +487,10 @@ public class FlowStepTable extends CustomTable {
 
 	private void displayFlowSteps(List<FlowStep> flowSteps) {
 		setFlowStepsData(flowSteps);
+		List<FlowStep> allSteps = new ArrayList<FlowStep>();
 		for (FlowStep flowStep : flowSteps) {
 			if (flowStep.isDeleted() == false) {
+				allSteps.add(flowStep);
 				String orname = "";
 				String keyWordName = "";
 				if (flowStep.getOrObject().size() > 0) {
@@ -519,6 +549,24 @@ public class FlowStepTable extends CustomTable {
 					}
 				}
 			}
+		}
+		if (allSteps.size() == 0) {
+			getParentTestCaseView().toggleRunButton(false);
+			getParentTestCaseView().toggleDeleteButton(false);
+			getParentTestCaseView().toggleMovedownButton(false);
+			getParentTestCaseView().toggleMoveupButton(false);
+		}
+
+		boolean allStepsAreSkiped = true;
+		for (FlowStep flowStep : allSteps) {
+			if (flowStep.isShouldrun()) {
+				allStepsAreSkiped = false;
+			}
+		}
+		if (allStepsAreSkiped) {
+			getParentTestCaseView().toggleRunButton(false);
+		} else {
+			getParentTestCaseView().toggleRunButton(true);
 		}
 		selectDefaultRow();
 	}
@@ -580,6 +628,7 @@ public class FlowStepTable extends CustomTable {
 				this.getFlowStepsData());
 		this.getFlowStepsData().add(flowStep);
 		this.refreshFlowSteps();
+		selectNextRowByCursor(getTableCursor(), 1);
 		getParentTestCaseView().toggleSaveButton(true);
 	}
 
@@ -659,6 +708,14 @@ public class FlowStepTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public TableCursor getTableCursor() {
+		return tableCursor;
+	}
+
+	public void setTableCursor(TableCursor tableCursor) {
+		this.tableCursor = tableCursor;
 	}
 
 }

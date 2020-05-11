@@ -15,7 +15,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 
 public class CustomTable extends Table {
-	private int selectedRowIndex = 0;
+	private int selectedRowIndex = -1;
 	private Object controlData;
 	private int selectedColumn = 0;
 	private TableCursor tablecursor;
@@ -66,16 +66,65 @@ public class CustomTable extends Table {
 			if (this.getItemCount() == 0) {
 				return;
 			}
-			this.setSelection(this.getSelectedRowIndex());
 			if (this.getTablecursor() != null) {
 				System.out.println("Table Cursor Found");
 				int column = this.getSelectedColumn();
 				this.getTablecursor().setSelection(this.getSelectedRowIndex(), column);
 				this.getTablecursor().notifyListeners(SWT.Selection, null);
 			}
+			if (this.getSelectedRowIndex() == -1 && this.getItemCount() > 0) {
+				this.setSelection(this.getSelectedRowIndex() + 1);
+				this.notifyListeners(SWT.Selection, null);
+				return;
+			}
+			this.setSelection(this.getSelectedRowIndex());
+			this.notifyListeners(SWT.Selection, null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void selectNextRow() {
+		try {
+			if (this.getSelectedRowIndex() == 0 && this.getItemCount() == 1) {
+				this.setSelection(this.getSelectedRowIndex());
+				this.notifyListeners(SWT.Selection, null);
+				return;
+			}
+			this.setSelection(this.getSelectedRowIndex() + 1);
+			this.notifyListeners(SWT.Selection, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	public void selectDefaultRowByCursor(TableCursor cursor, int column) {
+		try {
+			if (this.getItemCount() == 0) {
+				return;
+			}
+			if (cursor != null) {
+				System.out.println("Table Cursor Found");
+				cursor.setSelection(this.getSelectedRowIndex(), column);
+				cursor.notifyListeners(SWT.Selection, null);
+			}
 			this.notifyListeners(SWT.Selection, null);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void selectNextRowByCursor(TableCursor cursor, int column) {
+		if (cursor != null) {
+			try {
+				System.out.println(">>Selecting Row " + this.getSelectedRowIndex());
+				cursor.setSelection(this.getSelectedRowIndex() + 1, column);
+				cursor.notifyListeners(SWT.Selection, null);
+				this.notifyListeners(SWT.Selection, null);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

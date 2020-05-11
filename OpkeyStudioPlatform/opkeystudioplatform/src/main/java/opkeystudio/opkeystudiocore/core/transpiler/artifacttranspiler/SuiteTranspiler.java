@@ -43,11 +43,13 @@ public class SuiteTranspiler extends AbstractTranspiler {
 		String methodBodyCode = "";
 		List<TestSuiteStep> suiteSteps = new TestSuiteApi().getAllTestSuitesStepsWithArtifact(artifact.getId());
 		for (TestSuiteStep suiteStep : suiteSteps) {
+			if (suiteStep.isShouldrun() == false) {
+				continue;
+			}
 			methodBodyCode += newLineChar + " new " + suiteStep.getArtifact().getVariableName() + "().execute();";
 		}
-		
-		String reportingStart = String.format("ReportBuilder.get().beginSuite(%s);",
-				"\"" + artifact.getName() + "\"");
+
+		String reportingStart = String.format("ReportBuilder.get().beginSuite(%s);", "\"" + artifact.getName() + "\"");
 		String reportingEnd = "ReportBuilder.get().endSuite();";
 		methodBodyCode = reportingStart + methodBodyCode + reportingEnd;
 		class1.addMethod().setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
