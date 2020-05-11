@@ -339,7 +339,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			}
 			androidDeviceSelectionDropDown.select(0);
 		} catch (Exception ex) {
-			CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
+			CustomMessageDialogUtil.openErrorDialog("Error","Please Connect Your Device First"+"\n"+ ex.getMessage());
 		}
 	}
 
