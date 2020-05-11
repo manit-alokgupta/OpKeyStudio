@@ -22,7 +22,6 @@ public class ExecutionSessionExecutor {
 		try {
 			return initExecute(session);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -102,21 +101,27 @@ public class ExecutionSessionExecutor {
 		return executor;
 	}
 
-	private void createExecutionSession(String sessionName) {
-		File file = new File(Utilities.getInstance().getSessionsFolder() + File.separator + sessionName);
-		if (!file.exists()) {
-			file.mkdir();
-		}
-		File file1 = new File(file.getAbsolutePath() + File.separator + "ArtifactCodes");
+	private void createExecutionSession(String sessionName) throws IOException {
+		File sessionFolder = new File(Utilities.getInstance().getSessionsFolder());
+		if (!sessionFolder.exists())
+			sessionFolder.mkdirs();
+
+		File currentSessionFolder = this.getSessionFolder(sessionName);
+		if (currentSessionFolder.exists())
+			throw new IOException("Session '" + sessionName + "' already exists at " + sessionFolder.getAbsolutePath());
+		else
+			currentSessionFolder.mkdir();
+
+		File file1 = new File(currentSessionFolder, "ArtifactCodes");
 		if (!file1.exists()) {
 			file1.mkdir();
 		}
-		File file2 = new File(file.getAbsolutePath() + File.separator + "logs");
+		File file2 = new File(currentSessionFolder, "logs");
 		if (!file2.exists()) {
 			file2.mkdir();
 		}
 
-		File file3 = new File(file.getAbsolutePath() + File.separator + "Reports");
+		File file3 = new File(currentSessionFolder, "Reports");
 		if (!file3.exists()) {
 			file3.mkdir();
 		}
@@ -134,7 +139,7 @@ public class ExecutionSessionExecutor {
 	private String getSessionReportFolder(String sessionName) {
 		return Utilities.getInstance().getSessionsFolder() + File.separator + sessionName + File.separator + "Reports";
 	}
-	
+
 	public File getSessionFolder(String sessionName) {
 		return new File(Utilities.getInstance().getSessionsFolder() + File.separator + sessionName);
 	}
