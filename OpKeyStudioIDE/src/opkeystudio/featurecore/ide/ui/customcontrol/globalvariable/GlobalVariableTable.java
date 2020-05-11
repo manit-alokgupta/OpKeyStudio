@@ -132,6 +132,7 @@ public class GlobalVariableTable extends CustomTable {
 		ControlEditor controlEditor = new ControlEditor(tableCursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
+		setTableCursor(tableCursor);
 		tableCursor.addSelectionListener(new SelectionListener() {
 
 			@Override

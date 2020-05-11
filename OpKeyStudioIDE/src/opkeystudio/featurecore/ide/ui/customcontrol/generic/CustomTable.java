@@ -18,10 +18,9 @@ public class CustomTable extends Table {
 	private int selectedRowIndex = -1;
 	private Object controlData;
 	private int selectedColumn = 0;
-	private TableCursor tablecursor;
 
 	private List<GlobalLoadListener> listeners = new ArrayList<>();
-
+	private TableCursor tableCursor;
 	public CustomTable(Composite parent, int style) {
 		super(parent, style);
 		this.addSelectionListener(new SelectionListener() {
@@ -153,14 +152,6 @@ public class CustomTable extends Table {
 		this.selectedColumn = selectedColumn;
 	}
 
-	public TableCursor getTablecursor() {
-		return tablecursor;
-	}
-
-	public void setTablecursor(TableCursor tablecursor) {
-		this.tablecursor = tablecursor;
-	}
-
 	private List<String> getTableColumnData(int columnIndex) {
 		List<String> columnDatas = new ArrayList<String>();
 		TableItem[] items = this.getItems();
@@ -243,5 +234,13 @@ public class CustomTable extends Table {
 		for (GlobalLoadListener listener : this.listeners) {
 			listener.handleGlobalEvent();
 		}
+	}
+	
+	public TableCursor getTableCursor() {
+		return tableCursor;
+	}
+
+	public void setTableCursor(TableCursor tableCursor) {
+		this.tableCursor = tableCursor;
 	}
 }

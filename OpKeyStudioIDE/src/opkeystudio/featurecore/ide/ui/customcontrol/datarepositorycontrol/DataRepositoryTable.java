@@ -62,7 +62,7 @@ public class DataRepositoryTable extends CustomTable {
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
-		setTablecursor(cursor);
+		setTableCursor(cursor);
 		cursor.addSelectionListener(new SelectionListener() {
 
 			@Override
