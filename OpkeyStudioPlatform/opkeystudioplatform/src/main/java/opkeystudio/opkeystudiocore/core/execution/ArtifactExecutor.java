@@ -1,8 +1,11 @@
 package opkeystudio.opkeystudiocore.core.execution;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -21,8 +24,8 @@ public class ArtifactExecutor {
 
 	private ExecutionSession executionSession;
 
-	private ByteArrayOutputStream standardOutput;
-	private ByteArrayOutputStream standardErrorOutput;
+	private File outLogFile;
+
 	private URLClassLoader classLoader;
 	private boolean executionCompleted = false;
 	private List<CompileError> compileErrors = new ArrayList<CompileError>();
@@ -42,12 +45,21 @@ public class ArtifactExecutor {
 			@Override
 			public void run() {
 				setExecutionCompleted(false);
-				java.io.ByteArrayOutputStream standrdout = new java.io.ByteArrayOutputStream();
-				java.io.ByteArrayOutputStream errorout = new java.io.ByteArrayOutputStream();
-				System.setOut(new java.io.PrintStream(standrdout));
-				System.setErr(new java.io.PrintStream(errorout));
-				setStandardOutput(standrdout);
-				setStandardErrorOutput(errorout);
+				outLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs.txt");
+				try {
+					outLogFile.getParentFile().mkdirs();
+					outLogFile.createNewFile();
+
+					OutputStream standrdout = new java.io.FileOutputStream(outLogFile, true);
+					OutputStream errorout = standrdout;// new java.io.FileOutputStream(outLog, true);
+
+					System.setOut(new java.io.PrintStream(standrdout, true));
+					System.setErr(new ErrorPrintStream(errorout, true));
+
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+
 				try {
 					execute(sessionRootDir, artifactClassName, pluginName);
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
@@ -77,12 +89,21 @@ public class ArtifactExecutor {
 			@Override
 			public void run() {
 				setExecutionCompleted(false);
-				java.io.ByteArrayOutputStream standrdout = new java.io.ByteArrayOutputStream();
-				java.io.ByteArrayOutputStream errorout = new java.io.ByteArrayOutputStream();
-				System.setOut(new java.io.PrintStream(standrdout));
-				System.setErr(new java.io.PrintStream(errorout));
-				setStandardOutput(standrdout);
-				setStandardErrorOutput(errorout);
+				outLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs.txt");
+				try {
+					outLogFile.getParentFile().mkdirs();
+					outLogFile.createNewFile();
+
+					OutputStream standrdout = new java.io.FileOutputStream(outLogFile, true);
+					OutputStream errorout = standrdout;// new java.io.FileOutputStream(outLog, true);
+
+					System.setOut(new java.io.PrintStream(standrdout, true));
+					System.setErr(new ErrorPrintStream(errorout, true));
+
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+
 				try {
 					executeCFL(sessionRootDir, artifactClassName, pluginName);
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
@@ -111,12 +132,21 @@ public class ArtifactExecutor {
 			@Override
 			public void run() {
 				setExecutionCompleted(false);
-				java.io.ByteArrayOutputStream standrdout = new java.io.ByteArrayOutputStream();
-				java.io.ByteArrayOutputStream errorout = new java.io.ByteArrayOutputStream();
-				System.setOut(new java.io.PrintStream(standrdout));
-				System.setErr(new java.io.PrintStream(errorout));
-				setStandardOutput(standrdout);
-				setStandardErrorOutput(errorout);
+				outLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs.txt");
+				try {
+					outLogFile.getParentFile().mkdirs();
+					outLogFile.createNewFile();
+
+					OutputStream standrdout = new java.io.FileOutputStream(outLogFile, true);
+					OutputStream errorout = standrdout;// new java.io.FileOutputStream(outLog, true);
+
+					System.setOut(new java.io.PrintStream(standrdout, true));
+					System.setErr(new ErrorPrintStream(errorout, true));
+
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+
 				try {
 					executeMainFunction(sessionRootDir, artifactClassName, pluginName);
 				} catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | SecurityException
@@ -280,12 +310,14 @@ public class ArtifactExecutor {
 
 	public void stopExecutionSession() {
 		try {
+
 			callExecuteSessionEnd();
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
 				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	public void cleanExecutionSession() {
@@ -303,22 +335,15 @@ public class ArtifactExecutor {
 
 	public void setExecutionCompleted(boolean executionCompleted) {
 		this.executionCompleted = executionCompleted;
+		System.err.println("Setting Execution Completed: " + executionCompleted);
+		System.err.println("ReSetting original PrintStream");
+		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+		System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+
 	}
 
-	public ByteArrayOutputStream getStandardErrorOutput() {
-		return standardErrorOutput;
-	}
-
-	public void setStandardErrorOutput(ByteArrayOutputStream standardErrorOutput) {
-		this.standardErrorOutput = standardErrorOutput;
-	}
-
-	public ByteArrayOutputStream getStandardOutput() {
-		return standardOutput;
-	}
-
-	public void setStandardOutput(ByteArrayOutputStream standardOutput) {
-		this.standardOutput = standardOutput;
+	public File getOutLogFile() {
+		return outLogFile;
 	}
 
 	public URLClassLoader getClassLoader() {
@@ -359,5 +384,20 @@ public class ArtifactExecutor {
 
 	public void setExecutionSession(ExecutionSession executionSession) {
 		this.executionSession = executionSession;
+	}
+
+	public class ErrorPrintStream extends PrintStream {
+
+		public static final String errorTag = "[Error] ";
+
+		public ErrorPrintStream(OutputStream out, boolean autoFlush) {
+			super(out, autoFlush);
+		}
+
+		@Override
+		public void println(String x) {
+			super.println(errorTag + x);
+		}
+
 	}
 }

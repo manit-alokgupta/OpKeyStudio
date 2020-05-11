@@ -173,6 +173,19 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		buildNameTextField = new Text(container, SWT.BORDER);
 		buildNameTextField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 15, 1));
 		buildNameTextField.setText(getExecutionSession().getBuildName());
+		buildNameTextField.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				getExecutionSession().setBuildName(buildNameTextField.getText());
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+			}
+		});
 
 		Label lblNewLabel_2 = new Label(container, SWT.NONE);
 		lblNewLabel_2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
@@ -204,7 +217,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					androidDeviceSelectionDropDown.setVisible(false);
 					isAppiumPluginExecution = false;
 				}
-				
+
 				checkIfRunButtonBeEnabled();
 			}
 
@@ -584,7 +597,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			runButton.setEnabled(false);
 			return;
 		}
-		
+
 		int index = pluginSelectionDropDown.getSelectionIndex();
 		if (index == 0) {
 			runButton.setEnabled(false);

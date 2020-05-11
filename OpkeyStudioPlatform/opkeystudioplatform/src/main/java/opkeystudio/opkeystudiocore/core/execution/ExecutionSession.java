@@ -93,12 +93,11 @@ public class ExecutionSession {
 	public void setSessionDirectory(File sessionDirectory) {
 		this.sessionDirecotry = sessionDirectory;
 	}
-	
+
 	public File getSessionDirectory() {
 		return this.sessionDirecotry;
 	}
-	
-	
+
 	public String getArtifactFilePackageClass() {
 		return artifactFilePackageClass;
 	}
@@ -153,5 +152,9 @@ public class ExecutionSession {
 
 	public void setCflArtifact(boolean cflArtifact) {
 		this.cflArtifact = cflArtifact;
+	}
+
+	public File getSessionLogDirectory() {
+		return new File(this.getSessionDirectory(), "Logs");
 	}
 }

@@ -1,9 +1,9 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -12,6 +12,7 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -27,10 +28,10 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
+import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor.ErrorPrintStream;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSessionExecutor;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
-import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ExecutionResultView extends SuperComposite {
 
@@ -67,23 +68,27 @@ public class ExecutionResultView extends SuperComposite {
 		msd.openProgressDialogOnBackgroundThread(getParent().getShell(), "Please Wait Execution is on Progress...",
 				true, new IRunnableWithProgress() {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
-				ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
-				if (executorExecutor.isContainsErrors()) {
-					displayCompileErrors(executorExecutor.getCompileErrors());
-					return;
-				}
-				setArtifactExecutor(executorExecutor);
-				startExecutionLogsFetch(executorExecutor);
+					@Override
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
+						ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
+						if (executorExecutor.isContainsErrors()) {
+							displayCompileErrors(executorExecutor.getCompileErrors());
+							return;
+						}
+						setArtifactExecutor(executorExecutor);
+						startExecutionLogsFetch(executorExecutor);
 
-			}
-		});
+					}
+				});
 		msd.closeProgressDialog();
 	}
 
-	private void displayLogs(String text) {
+	private void displayLogs(String out, String error) {
+		Color red = new Color(logTextView.getDisplay(), 255, 0, 0);
+		Color black = new Color(logTextView.getDisplay(), 0, 0, 0);
+		Color white = new Color(logTextView.getDisplay(), 255, 255, 255);
+
 		new MessageDialogs().executeDisplayAsync(new Runnable() {
 
 			@Override
@@ -91,12 +96,31 @@ public class ExecutionResultView extends SuperComposite {
 				if (logTextView.isDisposed()) {
 					return;
 				}
-				logTextView.setForeground(new Color(logTextView.getDisplay(), 0, 0, 255));
-				logTextView.setText(text);
-				String sessioName = getExecutionSession().getSessionName();
-				String logFilePath = new ExecutionSessionExecutor().getSessionLogsFolder(sessioName) + File.separator
-						+ sessioName + ".txt";
-				Utilities.getInstance().writeToFile(new File(logFilePath), text);
+
+				if (logTextView.getTextLimit() - logTextView.getText().length() > 50)
+					logTextView.setText("");
+
+// 				logTextView.setForeground(new Color(logTextView.getDisplay(), 0, 0, 255));
+
+				if (out != null) {
+					// add out
+					int start = logTextView.getText().length();
+					logTextView.append(out);
+					logTextView.setStyleRange(new StyleRange(start, out.length(), black, white));
+				}
+
+				if (error != null) {
+					// add err
+					int start = logTextView.getText().length();
+					logTextView.append(error);
+					logTextView.setStyleRange(new StyleRange(start, error.length(), red, white));
+				}
+				/*
+				 * String sessioName = getExecutionSession().getSessionName(); String
+				 * logFilePath = new ExecutionSessionExecutor().getSessionLogsFolder(sessioName)
+				 * + File.separator + sessioName + ".txt";
+				 * Utilities.getInstance().writeToFile(new File(logFilePath), text);
+				 */
 			}
 		});
 	}
@@ -112,7 +136,7 @@ public class ExecutionResultView extends SuperComposite {
 				String errorLogs = "Errors while Compiling Artifacts";
 				for (CompileError error : errors) {
 					errorLogs += System.lineSeparator() + error.getSource().getName() + System.lineSeparator()
-					+ error.getMessage() + System.lineSeparator();
+							+ error.getMessage() + System.lineSeparator();
 				}
 				logTextView.setForeground(new Color(logTextView.getDisplay(), 255, 0, 0));
 				logTextView.setText(errorLogs);
@@ -127,20 +151,36 @@ public class ExecutionResultView extends SuperComposite {
 
 			@Override
 			public void run() {
-				while (true) {
+				long readBytes = 0;
 
-					ByteArrayOutputStream standardOutPut = executor.getStandardOutput();
-					ByteArrayOutputStream standardErrorOutput = executor.getStandardErrorOutput();
-					if (standardOutPut != null && standardErrorOutput != null) {
-						String consoleOutPut = standardOutPut.toString() + System.lineSeparator()
-						+ standardErrorOutput.toString();
-						try {
-							standardOutPut.flush();
-							standardErrorOutput.flush();
-						} catch (IOException e1) {
-							e1.printStackTrace();
+				while (true) {
+					try {
+						if (executor.isExecutionCompleted() || showLogView.isDisposed())
+							return;
+						if (executor.getOutLogFile() == null)
+							continue;
+
+						try (FileInputStream fis = new FileInputStream(executor.getOutLogFile())) {
+							fis.skip(readBytes);
+							byte[] buffer = new byte[1024];
+							int bytesRead = fis.read(buffer, 0, buffer.length);
+							if (bytesRead > 0) {
+
+								readBytes += bytesRead;
+								String str = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
+								String out = null;
+								String err = null;
+								if (str.startsWith(ErrorPrintStream.errorTag))
+									err = str;
+								else
+									out = str;
+
+								displayLogs(out, err);
+							}
 						}
-						displayLogs(consoleOutPut);
+
+					} catch (IOException e1) {
+						e1.printStackTrace();
 					}
 					if (executor.isExecutionCompleted()) {
 						new MessageDialogs().executeDisplayAsync(new Runnable() {
