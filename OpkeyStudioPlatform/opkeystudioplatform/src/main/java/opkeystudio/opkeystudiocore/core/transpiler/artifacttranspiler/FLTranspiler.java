@@ -105,7 +105,7 @@ public class FLTranspiler extends AbstractTranspiler {
 			methodBodyCode += "return 0;";
 		} else if (returnType.equals("double")) {
 			methodBodyCode += "return 0;";
-		} else {
+		} else if (!returnType.equals("void")) {
 			methodBodyCode += "return null;";
 		}
 		defaultmethod.setName("executeDefault").setPublic().setBody(defaultMethodBody).addThrows("Exception");
