@@ -673,7 +673,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				toggleDeleteAttributeButton(false);
 				toggleAddAttributeButton(false);
 
-				int result = CustomMessageDialogUtil.openConfirmDialog("Confirmation", "Do you want to save changes?");
+				int result = CustomMessageDialogUtil.openConfirmDialog("Opkey", "Do you want to save changes?");
 				if (result != 0) {
 					toggleSaveButton(false);
 					objectRepositoryTree.renderObjectRepositories();
