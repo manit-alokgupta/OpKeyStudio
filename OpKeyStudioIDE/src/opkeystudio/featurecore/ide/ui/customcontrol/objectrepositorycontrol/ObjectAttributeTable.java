@@ -298,6 +298,7 @@ public class ObjectAttributeTable extends CustomTable {
 		}
 		getParentObjectRepositoryView().toggleAddAttributeButton(true);
 		getParentObjectRepositoryView().toggleDeleteAttributeButton(false);
+		selectLastRow();
 	}
 
 	public void clearAllDatas() {
