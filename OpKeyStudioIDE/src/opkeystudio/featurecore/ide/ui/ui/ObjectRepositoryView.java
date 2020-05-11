@@ -66,6 +66,7 @@ public class ObjectRepositoryView extends SuperComposite {
 	private ToolItem refreshObject;
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
+	private ToolItem objectType;
 	private ToolItem androidDeviceConfiguration;
 	private MenuItem copyMenuItem;
 	private MenuItem pasteMenuItem;
@@ -366,6 +367,11 @@ public class ObjectRepositoryView extends SuperComposite {
 		deleteObjectAttribute.setText("Delete");
 		deleteObjectAttribute.setToolTipText("Delete Property");
 
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
+
+		objectType = new ToolItem(toolBar_1, SWT.NONE);
+		objectType.setEnabled(false);
+
 		objectAttributeTable = new ObjectAttributeTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION, this);
 		objectAttributeTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectAttributeTable.setHeaderVisible(true);
@@ -411,6 +417,8 @@ public class ObjectRepositoryView extends SuperComposite {
 					} else {
 						toggleChildObjectToolItem(false);
 					}
+					toggleObjectTypeMenuItem(true);
+					objectType.setText("Object Type: " + objectRepositoryTree.getSelectedORObject().getOpkeytype());
 				} else {
 					toggleDeleteButton(false);
 					toggleRenameButton(false);
@@ -420,6 +428,8 @@ public class ObjectRepositoryView extends SuperComposite {
 					togglePasteMenuItem(false);
 					toggleDeleteMenuItem(false);
 					toggleChildObjectToolItem(false);
+					toggleObjectTypeMenuItem(false);
+					objectType.setText("");
 				}
 
 			}
@@ -731,6 +741,10 @@ public class ObjectRepositoryView extends SuperComposite {
 
 	public void toggleDeleteMenuItem(boolean status) {
 		deleteMenuItem.setEnabled(status);
+	}
+
+	public void toggleObjectTypeMenuItem(boolean status) {
+		objectType.setEnabled(status);
 	}
 
 	private void openAppiumSettingDialog() {
