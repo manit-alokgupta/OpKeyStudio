@@ -940,9 +940,9 @@ public class TestCaseView extends SuperComposite {
 		}
 		new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
 		flowStepTable.renderFlowSteps();
-		toggleSaveButton(false);
 		getCodedFunctionView().refreshTCFLCode();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		toggleSaveButton(false);
 	}
 
 	private boolean isComponentInputArgumentNameAreUnique(List<ComponentInputArgument> componentInputArguments) {
