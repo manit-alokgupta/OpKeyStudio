@@ -6,11 +6,14 @@ import java.util.Map;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 
 public class SessionInfo {
-	private String sessionName;
-	private String defaultPluginLocation;
-	private String reportFilePath;
-	private MobileDevice mobileDevice;
-	private Map<String, String> pluginSettings = new HashMap<String, String>();
+
+	public String sessionName;
+	public String buildName;
+	public String sessionDirectory;
+	public String defaultPluginLocation;
+	public String reportFilePath;
+	public MobileDevice mobileDevice;
+	public Map<String, String> pluginSettings = new HashMap<String, String>();
 
 	public String getSessionName() {
 		return sessionName;
@@ -59,4 +62,17 @@ public class SessionInfo {
 	public void setMobileDevice(MobileDevice mobileDevice) {
 		this.mobileDevice = mobileDevice;
 	}
+	
+	public void setBuildName(String buildName) {
+		this.buildName = buildName;
+	}
+	
+	public String getBuildName() {
+		return this.buildName;
+	}
+	
+	public String getSessionDirectory() {
+		return this.sessionDirectory;
+	}
+
 }

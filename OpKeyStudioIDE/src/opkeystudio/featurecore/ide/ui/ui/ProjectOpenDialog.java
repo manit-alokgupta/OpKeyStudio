@@ -29,9 +29,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.commandhandler.ProjectImporter;
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.ProjectFile;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ProjectOpenDialog extends TitleAreaDialog {
@@ -213,6 +215,12 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ProjectFile projectFile = getSelectedProject();
+				if (ServiceRepository.getInstance().getProjectName() != null) {
+					if (ServiceRepository.getInstance().getProjectName().equals(projectFile.getProjectName())) {
+						new MessageDialogs().openErrorDialog("OpKey", "Project Already Opened");
+						return;
+					}
+				}
 				File projectDir = new File(
 						Utilities.getInstance().getProjectsFolder() + File.separator + projectFile.getProjectName());
 				File[] files = projectDir.listFiles();

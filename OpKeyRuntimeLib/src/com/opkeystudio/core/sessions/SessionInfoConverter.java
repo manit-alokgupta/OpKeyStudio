@@ -6,10 +6,14 @@ import java.util.Map;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 
 public class SessionInfoConverter {
+	
 	@SuppressWarnings("unchecked")
 	public static SessionInfo convertIntoSessionInfo(Object object) {
+		
 		@SuppressWarnings("rawtypes")
 		Class _class = object.getClass();
+		System.out.println("Converting Into SessionInfo from: " + _class.getName());
+		
 		try {
 			String sessionName = (String) _class.getDeclaredMethod("getSessionName").invoke(object);
 			String defaultPluginLocation = (String) _class.getDeclaredMethod("getDefaultPluginLocation").invoke(object);
@@ -23,26 +27,25 @@ public class SessionInfoConverter {
 					.invoke(object);
 
 			SessionInfo info = new SessionInfo();
-			info.setSessionName(sessionName);
-			info.setDefaultPluginLocation(defaultPluginLocation);
-			info.setReportFilePath(reportFilePath);
-			info.setMobileDevice(mobileDevice);
-			info.setPluginSettings(pluginSettings);
+			info.sessionName = sessionName;
+			info.defaultPluginLocation = defaultPluginLocation;
+			info.reportFilePath = reportFilePath;
+			info.mobileDevice = mobileDevice;
+			info.pluginSettings = pluginSettings;
+			info.buildName = (String) _class.getDeclaredMethod("getBuildName").invoke(object);
+			info.sessionDirectory = (String) _class.getDeclaredMethod("getSessionDirectory").invoke(object);
+
 			return info;
+
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

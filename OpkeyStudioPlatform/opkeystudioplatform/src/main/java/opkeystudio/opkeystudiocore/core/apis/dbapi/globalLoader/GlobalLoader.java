@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
+import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.ClassIntellisenseDTO;
+import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -51,6 +54,7 @@ public class GlobalLoader {
 	private List<CFLOutputParameter> allCFLOutputParameters = new ArrayList<CFLOutputParameter>();
 
 	private List<MainFileStoreDTO> allMainFileStoreDtos = new ArrayList<MainFileStoreDTO>();
+	private List<ClassIntellisenseDTO> allOpKeyClassesIntellisense = new ArrayList<ClassIntellisenseDTO>();
 
 	public static GlobalLoader getInstance() {
 		if (globalLoader == null) {
@@ -90,6 +94,18 @@ public class GlobalLoader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void initAllClassInfoDTOS() throws IOException {
+		List<ClassIntellisenseDTO> outputDtos = new ArrayList<ClassIntellisenseDTO>();
+		List<File> allFiles = new CompilerUtilities()
+				.getAllFiles(new File(Utilities.getInstance().getMainIntellisenseFolder()), ".sense");
+		for (File file : allFiles) {
+			List<ClassIntellisenseDTO> classDTOs = (List<ClassIntellisenseDTO>) Utilities.getInstance()
+					.getXMLDeSerializedDataForClassIntellisenseDTO(file);
+			outputDtos.addAll(classDTOs);
+		}
+		setAllOpKeyClassesIntellisense(outputDtos);
 	}
 
 	private void initAllArtifacts() {
@@ -571,5 +587,13 @@ public class GlobalLoader {
 
 	public void setComponentInputArguments(List<ComponentInputArgument> componentInputArguments) {
 		this.componentInputArguments = componentInputArguments;
+	}
+
+	public List<ClassIntellisenseDTO> getAllOpKeyClassesIntellisense() {
+		return allOpKeyClassesIntellisense;
+	}
+
+	public void setAllOpKeyClassesIntellisense(List<ClassIntellisenseDTO> allOpKeyClassesIntellisense) {
+		this.allOpKeyClassesIntellisense = allOpKeyClassesIntellisense;
 	}
 }

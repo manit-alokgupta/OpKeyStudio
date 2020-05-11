@@ -26,8 +26,10 @@ public class SessionHandler implements ExecutionSession {
 
 	public void beforeSessionStart(Object sessionObject) {
 		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
-		ReportBuilder builder = ReportBuilder.atPath(new File(sessionInfo.getReportFilePath()));
-		IReport report = builder.withName(sessionInfo.getSessionName()).withFormat(ReportFormat.HTML).build();
+		ReportBuilder builder = ReportBuilder.atPath(new File(sessionInfo.reportFilePath));
+		builder.addSessionParameter("BuildName", sessionInfo.buildName);
+		builder.addSessionParameter("SessionDir", sessionInfo.sessionDirectory);
+		IReport report = builder.withName(sessionInfo.sessionName).withFormat(ReportFormat.HTML).build();
 	}
 
 	public void pauseExecutionSession(Object sessionInfo) {

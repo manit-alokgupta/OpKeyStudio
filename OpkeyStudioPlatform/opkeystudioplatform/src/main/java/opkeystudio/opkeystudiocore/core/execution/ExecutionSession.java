@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.execution;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class ExecutionSession {
 	private Artifact artifact;
 	private String artifactFilePackageClass;
 	private String reportFolderDir;
+	private File sessionDirecotry;
 
 	private String artifactCodeDirPath;
 	private String artifactJavaFilePath;
@@ -88,6 +90,15 @@ public class ExecutionSession {
 		this.reportFolderDir = reportFolderDir;
 	}
 
+	public void setSessionDirectory(File sessionDirectory) {
+		this.sessionDirecotry = sessionDirectory;
+	}
+	
+	public File getSessionDirectory() {
+		return this.sessionDirecotry;
+	}
+	
+	
 	public String getArtifactFilePackageClass() {
 		return artifactFilePackageClass;
 	}

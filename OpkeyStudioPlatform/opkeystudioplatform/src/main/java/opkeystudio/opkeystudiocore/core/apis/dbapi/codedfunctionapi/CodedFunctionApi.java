@@ -27,6 +27,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
+import opkeystudio.opkeystudiocore.core.transpiler.VariableComposer;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CodedFunctionApi {
@@ -352,6 +353,19 @@ public class CodedFunctionApi {
 		_class.addImport("org.openqa.selenium.By");
 		_class.addImport("org.openqa.selenium.WebDriver");
 		_class.addInterface("com.crestech.opkey.plugin.CodedFunctionLibrary");
+		JavaClassSource outPutClass = null;
+		for (CFLOutputParameter outPutParam : cflOutPutParameters) {
+			if (outPutClass == null) {
+				outPutClass = Roaster.create(JavaClassSource.class);
+				outPutClass.setName("OutputParameter").setPublic();
+			}
+			String dataType = new VariableComposer().convertOpKeyDataTypeToJavaDataType(outPutParam.getType());
+			outPutClass.addField().setName(outPutParam.getVariableName()).setType(dataType).setPublic();
+		}
+
+		if (outPutClass != null) {
+			_class.addNestedType(outPutClass);
+		}
 		MethodSource<JavaClassSource> defaultmethod = _class.addMethod();
 		MethodSource<JavaClassSource> method = _class.addMethod();
 		method.setName("run").setPublic();
@@ -376,6 +390,14 @@ public class CodedFunctionApi {
 		defaultMethodBody = String.format(defaultMethodBody, defaultArguments);
 		System.out.println(defaultMethodBody);
 		defaultmethod.setName("executeDefault").setPublic().setBody(defaultMethodBody).addThrows("Exception");
+
+		if (outPutClass != null) {
+			if (!usercode.contains("OutputParameter outputParam") && !usercode.contains("return outputParam")) {
+				usercode = "OutputParameter outputParam=new OutputParameter();" + usercode + "return outputParam;";
+			}
+			method.setReturnType("OutputParameter");
+		}
+
 		method.setBody(usercode).addThrows("Exception");
 		return imports + "" + _class.toString();
 	}

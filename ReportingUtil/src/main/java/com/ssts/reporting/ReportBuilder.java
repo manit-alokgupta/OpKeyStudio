@@ -1,12 +1,15 @@
 package com.ssts.reporting;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReportBuilder {
 
 	private File atPath;
 	private ReportFormat format;
 	private String SessionName;
+	private Map<String, String> sessionParameters = new HashMap<String, String>();
 
 	static IReport report;
 
@@ -39,6 +42,10 @@ public class ReportBuilder {
 		return this;
 	}
 
+	public void addSessionParameter(String name, String value) {
+		this.sessionParameters.put(name, value);
+	}
+
 	public IReport build() {
 		// report =new ExtentReport(this);
 		report = new PCloudyReport(this);
@@ -55,6 +62,10 @@ public class ReportBuilder {
 
 	public ReportFormat getFormat() {
 		return format;
+	}
+
+	public Map<String, String> getSessionParameters() {
+		return this.sessionParameters;
 	}
 
 //	enum ReportFormat {

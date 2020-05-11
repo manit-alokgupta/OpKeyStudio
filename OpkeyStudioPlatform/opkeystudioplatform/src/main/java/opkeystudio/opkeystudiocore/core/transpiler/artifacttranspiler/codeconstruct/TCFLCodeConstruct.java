@@ -349,17 +349,18 @@ public class TCFLCodeConstruct {
 		List<FlowOutputObject> flowOutputObjects = new FlowApiUtilities().getAllFlowOutputObject(artifact, flowStep);
 		for (FlowOutputObject flowOutPutObject : flowOutputObjects) {
 			String dataType = flowOutPutObject.getDataType();
-			String outputVariableName = flowOutPutObject.getVariableName();
-			if (outputVariableName != null) {
-				if (!outputVariableName.isEmpty()) {
+			String outputName = flowOutPutObject.getOutputVariableName();
+			String varName = flowOutPutObject.getVariableName();
+			if (outputName != null) {
+				if (!outputName.isEmpty()) {
 					if (dataType.equals("String")) {
-						outputCode = "String " + outputVariableName + " = ";
+						outputCode = "String " + varName + " = ";
 					}
 					if (dataType.equals("Integer")) {
-						outputCode = "int " + outputVariableName + " = ";
+						outputCode = "int " + varName + " = ";
 					}
 					if (dataType.equals("Boolean")) {
-						outputCode = "boolean " + outputVariableName + " = ";
+						outputCode = "boolean " + varName + " = ";
 					}
 				}
 			}

@@ -15,6 +15,8 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -102,6 +104,10 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		initExecutionSession(parentArtifactCodeView.getCurrentArtifact());
 	}
 
+	private ExecutionWizardDialog getThis() {
+		return this;
+	}
+
 	/**
 	 * Create contents of the dialog.
 	 * 
@@ -109,6 +115,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		setMessage("Use this wizard to execute your Web or Mobile Tests");
 		area = (Composite) super.createDialogArea(parent);
 		container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout(15, false));
@@ -141,6 +148,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				getExecutionSession().setSessionName(sessionNameTextField.getText());
+				checkIfRunButtonBeEnabled();
 			}
 
 			@Override
@@ -149,6 +157,15 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			}
 		});
+
+		sessionNameTextField.addVerifyListener(new VerifyListener() {
+
+			@Override
+			public void verifyText(VerifyEvent e) {
+				restrictInputString(e);
+			}
+		});
+
 		Label lblNewLabel_1 = new Label(container, SWT.NONE);
 		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
 		lblNewLabel_1.setText("Build Name:");
@@ -167,14 +184,14 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				checkIfRunButtonBeEnabled();
 				int index = pluginSelectionDropDown.getSelectionIndex();
 				if (index == 0) {
-					runButton.setEnabled(false);
 					return;
 				}
 				String pluginName = pluginSelectionDropDown.getItem(index);
 				getExecutionSession().setPluginName(pluginName);
-				runButton.setEnabled(true);
+
 				if (pluginName.contentEquals("Appium")) {
 					initDeviceNames();
 					lblDeviceSelection.setVisible(true);
@@ -187,6 +204,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					androidDeviceSelectionDropDown.setVisible(false);
 					isAppiumPluginExecution = false;
 				}
+				
+				checkIfRunButtonBeEnabled();
 			}
 
 			@Override
@@ -219,9 +238,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		androidDeviceSelectionDropDown.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				checkIfRunButtonBeEnabled();
 				int index = androidDeviceSelectionDropDown.getSelectionIndex();
 				if (index == 0) {
-					runButton.setEnabled(false);
 					return;
 				} else {
 					String deviceID = MobileDeviceUtil
@@ -239,7 +258,6 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					} catch (Exception ex) {
 						CustomMessageDialogUtil.openErrorDialog("Error", ex.getMessage());
 					}
-					runButton.setEnabled(true);
 
 					ExecutionSession session = getExecutionSession();
 					session.addPluginSetting("DeviceID", getMobileDeviceExecutionDetail().getDeviceId());
@@ -351,7 +369,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(Composite parent) {
 		runButton = createButton(parent, IDialogConstants.OK_ID, "Run", true);
 		runButton.setEnabled(false);
-		Button cancelButton = createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+
 		runButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -360,26 +378,39 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 					@Override
 					public void run() {
-						if (isAppiumPluginExecution) {
-							try {
-								startVnc();
-							} catch (Exception ex) {
-								ex.printStackTrace();
+
+						try {
+
+							executeSession();
+							// start VNC if Appium
+							if (isAppiumPluginExecution) {
+								try {
+									startVnc();
+								} catch (Exception ex) {
+									ex.printStackTrace();
+								}
 							}
+							container.dispose();
+							area.dispose();
+							close();
+
+						} catch (IOException ex) {
+
+							CustomMessageDialogUtil.openErrorDialog("OpKey", ex.getMessage());
 						}
-						executeSession();
+
 					}
 				});
-				container.dispose();
-				area.dispose();
-				close();
+
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-
+				e.doit = false;
 			}
 		});
+
+		Button cancelButton = createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 
 		cancelButton.addSelectionListener(new SelectionListener() {
 
@@ -395,8 +426,15 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		});
 	}
 
-	private void executeSession() {
+	private void executeSession() throws IOException {
+
 		ExecutionSession executionSession = getExecutionSession();
+		File newSessionFolder = new File(Utilities.getInstance().getSessionsFolder(),
+				executionSession.getSessionName());
+		if (newSessionFolder.exists())
+			throw new IOException("Session '" + executionSession.getSessionName() + "' already exists at "
+					+ newSessionFolder.getParentFile().getAbsolutePath());
+
 		EPartService partService = opkeystudio.core.utils.Utilities.getInstance().getEpartService();
 		MPart part = partService.createPart("opkeystudio.partdescriptor.executionResultPart");
 		part.setLabel(executionSession.getSessionName());
@@ -521,5 +559,47 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 	public void setCFLArtifact(boolean isCFLArtifact) {
 		this.isCFLArtifact = isCFLArtifact;
+	}
+
+	protected void restrictInputString(VerifyEvent event) {
+		Boolean isAllowed = false;
+		int textLength = sessionNameTextField.getText().length();
+		if (textLength <= 100)
+			isAllowed = true;
+		else
+			isAllowed = false;
+
+		if (!isAllowed) {
+			event.doit = false;
+			return;
+		}
+	}
+
+	private void checkIfRunButtonBeEnabled() {
+
+		File newSessionFolder = new File(Utilities.getInstance().getSessionsFolder(), sessionNameTextField.getText());
+		if (newSessionFolder.exists()) {
+			this.setErrorMessage("Session '" + executionSession.getSessionName() + "' already exists at "
+					+ newSessionFolder.getParentFile().getAbsolutePath());
+			runButton.setEnabled(false);
+			return;
+		}
+		
+		int index = pluginSelectionDropDown.getSelectionIndex();
+		if (index == 0) {
+			runButton.setEnabled(false);
+			this.setErrorMessage("Plugin not selected.");
+			return;
+		}
+
+		if (androidDeviceSelectionDropDown.getVisible() && androidDeviceSelectionDropDown.getSelectionIndex() == 0) {
+			runButton.setEnabled(false);
+			this.setErrorMessage("Select a MobileDevice");
+			return;
+
+		}
+		this.setErrorMessage(null);
+
+		runButton.setEnabled(true);
 	}
 }

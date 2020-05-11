@@ -33,6 +33,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.dtoMaker.CFLDMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.utils.OpKeyVariables;
 
 public class CFLOutputTable extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -158,8 +159,8 @@ public class CFLOutputTable extends CustomTable {
 		TableEditor editor1 = getTableEditor();
 
 		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
-		combo.setItems(ServiceRepository.getInstance().getAllVaraiblesType());
-		combo.select(Utilities.getInstance().getIndexOfItem(ServiceRepository.getInstance().getAllVaraiblesType(),
+		combo.setItems(OpKeyVariables.getInstance().getAllCFLOutputVariablesType());
+		combo.select(Utilities.getInstance().getIndexOfItem(OpKeyVariables.getInstance().getAllCFLOutputVariablesType(),
 				bottomFactoryOutput.getType()));
 		combo.setControlData(bottomFactoryOutput);
 

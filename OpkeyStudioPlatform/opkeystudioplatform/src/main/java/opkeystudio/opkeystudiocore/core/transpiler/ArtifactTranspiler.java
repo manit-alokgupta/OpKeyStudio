@@ -84,8 +84,12 @@ public class ArtifactTranspiler {
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.appium");
 		ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
 		ArtifactTranspiler.getInstance().addPackageName("com.ssts.reporting");
+
+		ArtifactTranspiler.getInstance().addPackageName("java.util");
+		ArtifactTranspiler.getInstance().addPackageName("java.io");
 		ArtifactTranspiler.getInstance()
 				.addPackageName("com.crestech.opkey.plugin.communication.contracts.functioncall");
+		ArtifactTranspiler.getInstance().addPackageName("com.crestech.opkey.plugin.codedfl");
 		TranspilerUtilities.getInstance().clearAppiumTypeFunctionLibraries();
 	}
 

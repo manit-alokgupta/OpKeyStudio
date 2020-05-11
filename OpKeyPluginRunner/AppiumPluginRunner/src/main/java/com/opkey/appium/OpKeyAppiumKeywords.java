@@ -366,7 +366,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(device.getDisplayName(), url);
 		device.setOperatingSystem("Android");
 		try {
-			device = SessionHandler.getSessionInfo().getMobileDevice();
+			device = SessionHandler.getSessionInfo().mobileDevice;
 			System.out.println("Name " + device.getDisplayName());
 			System.out.println("os " + device.getOperatingSystem());
 			System.out.println("sn " + device.getSerialNumber());
@@ -403,14 +403,16 @@ public class OpKeyAppiumKeywords {
 		}
 	}
 
-	public boolean Mobile_LaunchAndroidApplication(MobileDevice device1, String androidApplicationPathh)
+	public boolean Mobile_LaunchAndroidApplication(MobileDevice deviceToBeIgnored, String androidApplicationPathh)
 			throws Exception {
 		String methodName = DataType.getMethodName();
+
 
 		final MobileDevice device = SessionHandler.getSessionInfo().getMobileDevice();
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(device.getDisplayName(), androidApplicationPathh); // Method_SetPickerValue
 		
+
 		System.out.println("@AppPath: " + androidApplicationPathh);
 		System.out.println("Name " + device.getDisplayName());
 		System.out.println("os " + device.getOperatingSystem());
@@ -420,7 +422,7 @@ public class OpKeyAppiumKeywords {
 		MobileApplication mobileApplication = new MobileApplication();
 		mobileApplication.setApplicationPath(androidApplicationPathh);
 		mobileApplication.setDisplayName(new File(androidApplicationPathh).getName());
-		mobileApplication.setOperatingSystem(SessionHandler.getSessionInfo().getMobileDevice().getOperatingSystem());
+		mobileApplication.setOperatingSystem(SessionHandler.getSessionInfo().mobileDevice.getOperatingSystem());
 		mobileApplication.setPackage(System.getenv("APP_PACKAGE"));
 		mobileApplication.setMainActivity(System.getenv("APP_ACTIVITY"));
 

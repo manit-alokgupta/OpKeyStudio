@@ -35,6 +35,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariable
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.GlobalVariablesTranspiler;
+import opkeystudio.opkeystudiocore.core.utils.OpKeyVariables;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalVariableTable extends CustomTable {
@@ -205,8 +206,8 @@ public class GlobalVariableTable extends CustomTable {
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
 		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
-		combo.setItems(ServiceRepository.getInstance().getAllVaraiblesType());
-		combo.select(Utilities.getInstance().getIndexOfItem(ServiceRepository.getInstance().getAllVaraiblesType(),
+		combo.setItems(OpKeyVariables.getInstance().getAllGlobalVariablesType());
+		combo.select(Utilities.getInstance().getIndexOfItem(OpKeyVariables.getInstance().getAllGlobalVariablesType(),
 				globalVariable.getDatatype()));
 
 		combo.setControlData(globalVariable);

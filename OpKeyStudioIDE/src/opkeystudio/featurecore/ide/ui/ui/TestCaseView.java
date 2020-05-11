@@ -599,6 +599,11 @@ public class TestCaseView extends SuperComposite {
 		flowStepTable.renderFlowSteps();
 		addButtonListeners();
 		populateInputTabData();
+		goToTab(1);
+	}
+
+	private void goToTab(int tabno) {
+		testCaseArgumentsTabFolder.setSelection(tabno);
 	}
 
 	public void openExecutionWizard() {
