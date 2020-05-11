@@ -746,7 +746,7 @@ public class ObjectRepositoryView extends SuperComposite {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 			ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 			ORObject obRepo = selectedTreeItem.getORObject();
-			String input = CustomMessageDialogUtil.openInputDialog("OpKey", "Rename Object: " + obRepo.getName(),
+			String input = CustomMessageDialogUtil.openInputDialog("OpKey", "Rename: " + obRepo.getName(),
 					obRepo.getName());
 
 			if (input == null) {
