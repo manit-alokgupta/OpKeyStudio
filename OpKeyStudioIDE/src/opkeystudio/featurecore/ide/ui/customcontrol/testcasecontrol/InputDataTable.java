@@ -78,7 +78,7 @@ public class InputDataTable extends CustomTable {
 	public InputDataTable getCurrentInstance() {
 		return this;
 	}
-	
+
 	public void clearAllData() {
 		this.removeAll();
 	}
@@ -111,9 +111,9 @@ public class InputDataTable extends CustomTable {
 		ControlEditor editor = new ControlEditor(cursor);
 		editor.grabHorizontal = true;
 		editor.grabVertical = true;
-		
+
 		cursor.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseUp(MouseEvent e) {
 				CustomTableItem row = (CustomTableItem) cursor.getRow();
@@ -233,17 +233,17 @@ public class InputDataTable extends CustomTable {
 					}
 				} else {
 					disposeControlEditor(editor);
-				}				
+				}
 			}
-			
+
 			@Override
 			public void mouseDown(MouseEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				
+
 			}
 		});
 	}
@@ -601,6 +601,7 @@ public class InputDataTable extends CustomTable {
 		if (isConstructFlowIFKeyword(flowStep)) {
 			addIndexInFlowInputArgumentOfConstructFlowIFKeyword(flowStep);
 		}
+		boolean hasData = false;
 		List<FlowInputArgument> flowInputArgs = getFlowInputArgs();
 		if (getKeyWordInputArgs().size() > 0) {
 			for (int i = 0; i < getKeyWordInputArgs().size(); i++) {
@@ -647,6 +648,7 @@ public class InputDataTable extends CustomTable {
 								}
 							}
 						}
+						hasData = true;
 						cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getName(),
 								valueData });
 						cti.setControlData(flowInputArg);
@@ -681,6 +683,7 @@ public class InputDataTable extends CustomTable {
 							inputValue = componentInputArg.getDefaultvalue();
 						}
 					}
+					hasData = true;
 					cti.setText(new String[] { componentInputArg.getType(), componentInputArg.getName(), inputValue });
 					cti.setControlData(flowInputArg);
 					addInputTableEditor(cti);
@@ -713,11 +716,17 @@ public class InputDataTable extends CustomTable {
 							inputValue = cflInputArgument.getDefaultvalue();
 						}
 					}
+					hasData = true;
 					cti.setText(new String[] { cflInputArgument.getType(), cflInputArgument.getName(), inputValue });
 					cti.setControlData(flowInputArg);
 					addInputTableEditor(cti);
 				}
 			}
+		}
+		if (hasData == false) {
+			this.setEnabled(false);
+		} else {
+			this.setEnabled(true);
 		}
 		selectDefaultRow();
 	}
