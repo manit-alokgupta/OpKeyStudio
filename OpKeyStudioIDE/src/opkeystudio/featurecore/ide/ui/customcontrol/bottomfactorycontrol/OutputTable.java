@@ -135,6 +135,7 @@ public class OutputTable extends CustomTable {
 					}
 				});
 				if (selectedColumn == 0) {
+					text.setFocus();
 					if (componentOutputArgument.getName() != null) {
 						text.setText(componentOutputArgument.getName());
 					} else {
@@ -142,6 +143,7 @@ public class OutputTable extends CustomTable {
 					}
 				}
 				if (selectedColumn == 3) {
+					text.setFocus();
 					if (componentOutputArgument.getDescription() != null) {
 						text.setText(componentOutputArgument.getDescription());
 					} else {

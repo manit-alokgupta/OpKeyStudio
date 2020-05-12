@@ -143,6 +143,7 @@ public class CFLInputTable extends CustomTable {
 
 				System.out.println("SELECTED COLUMN " + selectedColumn);
 				if (selectedColumn == 0) {
+					text.setFocus();
 					if (componentInputAargument.getName() != null) {
 						text.setText(componentInputAargument.getName());
 					} else {
@@ -150,6 +151,7 @@ public class CFLInputTable extends CustomTable {
 					}
 				}
 				if (selectedColumn == 2) {
+					text.setFocus();
 					if (componentInputAargument.getDefaultvalue() != null) {
 						text.setText(componentInputAargument.getDefaultvalue());
 					} else {
@@ -157,6 +159,7 @@ public class CFLInputTable extends CustomTable {
 					}
 				}
 				if (selectedColumn == 4) {
+					text.setFocus();
 					if (componentInputAargument.getDescription() != null) {
 						text.setText(componentInputAargument.getDescription());
 					} else {
