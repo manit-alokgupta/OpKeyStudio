@@ -97,6 +97,9 @@ public class InputTable extends CustomTable {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
+				if (e.button == 3) {
+					return;
+				}
 				System.out.println(">>Cursor Focused");
 				int selectedColumn = cursor.getColumn();
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
@@ -178,6 +181,10 @@ public class InputTable extends CustomTable {
 			}
 		});
 		renderAllBottomFactoryInputData();
+	}
+
+	private void addTableCursor(MouseEvent e) {
+
 	}
 
 	private void initContextMenu() {
@@ -545,7 +552,6 @@ public class InputTable extends CustomTable {
 
 	public void toggleDeleteMenuItem(boolean status) {
 		deleteMenuItem.setEnabled(status);
-		;
 	}
 
 	public void toggleMoveUpMenuItem(boolean status) {
@@ -554,7 +560,6 @@ public class InputTable extends CustomTable {
 
 	public void toggleMoveDownMenuItem(boolean status) {
 		moveDownMenuItem.setEnabled(status);
-		;
 	}
 
 }
