@@ -278,10 +278,12 @@ public class BottomFactoryFLUi extends Composite {
 	}
 
 	public void toggleMoveUpInputButton(boolean status) {
+		inputTable.toggleMoveUpMenuItem(status);
 		moveUpInputItem.setEnabled(status);
 	}
 
 	public void toggleMoveDownInputButton(boolean status) {
+		inputTable.toggleMoveDownMenuItem(status);
 		moveDownInputItem.setEnabled(status);
 	}
 
@@ -298,6 +300,7 @@ public class BottomFactoryFLUi extends Composite {
 	}
 
 	public void toggleDeleteInputButton(boolean status) {
+		inputTable.toggleDeleteMenuItem(status);
 		deleteInputItem.setEnabled(status);
 	}
 
@@ -339,8 +342,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				inputTable.moveFl_BottomFactoryInputUp(inputTable.getSelectedInputParemeter(),
-						inputTable.getPrevInputParemeter());
+				inputTable.moveFl_BottomFactoryInputUp();
 
 			}
 
@@ -355,8 +357,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				inputTable.moveFl_BottomFactoryInputDown(inputTable.getSelectedInputParemeter(),
-						inputTable.getNextInputParemeter());
+				inputTable.moveFl_BottomFactoryInputDown();
 
 			}
 
