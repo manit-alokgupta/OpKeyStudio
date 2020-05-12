@@ -159,6 +159,8 @@ public class GlobalVariableDialog extends Dialog {
 				toggleSaveToolItem(true);
 				toggleDeleteToolItem(false);
 				globalVariablesTable.deleteGlobalVariableStep();
+				CustomNotificationUtil.openInformationNotification("OpKey",
+						"Selected Global Variable deleted successfully!");
 			}
 		});
 
