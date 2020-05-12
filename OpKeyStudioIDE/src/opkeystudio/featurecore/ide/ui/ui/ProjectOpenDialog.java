@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.commandhandler.ProjectImporter;
 import opkeystudio.core.utils.MessageDialogs;
@@ -87,6 +88,7 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
+		table.setHeaderBackground(SWTResourceManager.getColor(248, 248, 245));
 		table.setLinesVisible(true);
 		sashForm.setWeights(new int[] { 1 });
 		for (String header : tableHeaders) {
