@@ -29,6 +29,7 @@ import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class GenericTree extends CustomTree {
 	public enum TREETYPE {
@@ -141,6 +142,8 @@ public class GenericTree extends CustomTree {
 						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 						getParentTestCaseView().toggleSaveButton(true);
+						CustomNotificationUtil.openInformationNotification("OpKey",
+								flowStep.getKeyword().getName() + " added!");
 						return;
 					}
 
@@ -151,6 +154,8 @@ public class GenericTree extends CustomTree {
 						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 						getParentTestCaseView().toggleSaveButton(true);
+						CustomNotificationUtil.openInformationNotification("OpKey",
+								flowStep.getKeyword().getName() + " added!");
 						return;
 					}
 
@@ -161,6 +166,8 @@ public class GenericTree extends CustomTree {
 				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 				getParentTestCaseView().toggleSaveButton(true);
+				CustomNotificationUtil.openInformationNotification("OpKey",
+						flowStep.getKeyword().getName() + " added!");
 			}
 
 			@Override
