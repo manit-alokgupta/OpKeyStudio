@@ -275,21 +275,21 @@ public class TestCaseView extends SuperComposite {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar.setBounds(0, 0, 64, 64);
 
-		keywordButton = new ToolItem(toolBar, SWT.NONE);
+		keywordButton = new ToolItem(toolBar, SWT.CHECK);
 		keywordButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TEXT_KEYWORD_ICON));
 		keywordButton.setText("Keyword");
 		keywordButton.setToolTipText("Keyword");
-
+		keywordButton.setSelection(true);
 		new ToolItem(toolBar, SWT.SEPARATOR);
 
-		functionLibraryButton = new ToolItem(toolBar, SWT.NONE);
+		functionLibraryButton = new ToolItem(toolBar, SWT.CHECK);
 		functionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 		functionLibraryButton.setText("Function Library");
 		functionLibraryButton.setToolTipText("Function Library");
 
 		new ToolItem(toolBar, SWT.SEPARATOR);
 
-		codedFunctionLibraryButton = new ToolItem(toolBar, SWT.NONE);
+		codedFunctionLibraryButton = new ToolItem(toolBar, SWT.CHECK);
 		codedFunctionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		codedFunctionLibraryButton.setText("Coded Function Library");
 		codedFunctionLibraryButton.setToolTipText("Coded Function Library");
@@ -834,6 +834,9 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				keywordButton.setSelection(true);
+				functionLibraryButton.setSelection(false);
+				codedFunctionLibraryButton.setSelection(false);
 				searchBox.setMessage("Search Keyword");
 				searchBox.setToolTipText("Search Keyword");
 				allDataTreeView.initKeywords("");
@@ -850,6 +853,9 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				keywordButton.setSelection(false);
+				functionLibraryButton.setSelection(true);
+				codedFunctionLibraryButton.setSelection(false);
 				searchBox.setMessage("Search Function Library");
 				searchBox.setToolTipText("Search Function Library");
 				allDataTreeView.initFunctionLibraries("");
@@ -865,6 +871,9 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				keywordButton.setSelection(false);
+				functionLibraryButton.setSelection(false);
+				codedFunctionLibraryButton.setSelection(true);
 				searchBox.setMessage("Search Coded Function Library");
 				searchBox.setToolTipText("Search Coded Function Library");
 				allDataTreeView.initCodedFunctionLibraries("");
