@@ -95,7 +95,6 @@ public class DataRepositoryTable extends CustomTable {
 
 					@Override
 					public void focusGained(FocusEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -130,7 +129,6 @@ public class DataRepositoryTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -190,7 +188,6 @@ public class DataRepositoryTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -240,7 +237,6 @@ public class DataRepositoryTable extends CustomTable {
 
 					@Override
 					public void widgetDefaultSelected(SelectionEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -313,6 +309,11 @@ public class DataRepositoryTable extends CustomTable {
 		List<DRColumnAttributes> drDatas = getDrColumnAttributes();
 		renderDRDatas(drDatas);
 		selectDefaultRow();
+		getParentDataRepositoryView().toggleAddColumnButton(false);
+		getParentDataRepositoryView().toggleDeleteColumnButton(false);
+		getParentDataRepositoryView().toggleMoveColumnLeftButton(false);
+		getParentDataRepositoryView().toggleMoveColumnRightButton(false);
+		getParentDataRepositoryView().toggleRenameColumnButton(false);
 	}
 
 	public void addDRRow() {
@@ -468,6 +469,8 @@ public class DataRepositoryTable extends CustomTable {
 		selectedDRColumn.setModified(true);
 		nextDRColumn.setModified(true);
 		refreshAllDRDetails();
+		getParentDataRepositoryView().toggleMoveColumnLeftButton(true);
+		getParentDataRepositoryView().toggleMoveColumnRightButton(true);
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
@@ -486,6 +489,8 @@ public class DataRepositoryTable extends CustomTable {
 		selectedDRColumn.setModified(true);
 		previousDRColumn.setModified(true);
 		refreshAllDRDetails();
+		getParentDataRepositoryView().toggleMoveColumnLeftButton(true);
+		getParentDataRepositoryView().toggleMoveColumnRightButton(true);
 		getParentDataRepositoryView().toggleSaveButton(true);
 	}
 
