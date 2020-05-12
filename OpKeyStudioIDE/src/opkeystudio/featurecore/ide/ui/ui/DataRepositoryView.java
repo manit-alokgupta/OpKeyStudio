@@ -35,6 +35,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryConstruct
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class DataRepositoryView extends SuperComposite {
 	private DataRepositoryTable dataRepositoryTable;
@@ -202,11 +203,10 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
-				dataRepositoryTable.addDRColumn();
-				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
+					dataRepositoryTable.addDRColumn();
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 			}
 
@@ -221,11 +221,10 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
-				dataRepositoryTable.addDRRow();
-				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
+					dataRepositoryTable.addDRRow();
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 
 			}
@@ -240,13 +239,12 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.renameDRColumn();
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
-				}
-				
+
 			}
 
 			@Override
@@ -260,11 +258,10 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.deleteDRColumn();
-				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 			}
 
@@ -279,11 +276,10 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.moveColumnLeft();
-				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 			}
 
@@ -298,11 +294,10 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.moveColumnRight();
-				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 			}
 
@@ -317,13 +312,12 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.deleteDRRow();
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
-				}
-				
+
 			}
 
 			@Override
@@ -337,11 +331,11 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.moveRowUp();
-				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+					CustomNotificationUtil.openInformationNotification("OpKey", "Row is moved up!");
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 			}
 
@@ -356,11 +350,11 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.moveRowDown();
-				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+					CustomNotificationUtil.openInformationNotification("OpKey", "Row is moved down!");
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 			}
 
@@ -375,15 +369,15 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					saveDR();
 					dataRepositoryTable.renderAllDRDetails();
 					getCodedFunctionView().refreshDRCode();
 					OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 				}
-				
+
 				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 			}
 
@@ -398,11 +392,10 @@ public class DataRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					handleSaveOnRefresh();
-				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 			}
 
@@ -440,7 +433,7 @@ public class DataRepositoryView extends SuperComposite {
 	public Artifact getCurrentArtifact() {
 		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
 	}
-	
+
 	public Artifact getArtifact() {
 		return this.artifact;
 	}
