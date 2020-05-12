@@ -17,15 +17,15 @@ public class OpKeyStudioIcons {
 	public static String TC_ICON = artifactIconsDirPath + "tc.png";
 
 	// Common Icons
-	public static String ADD_COLUMN_ICON = commonIconsDirPath + "add column.png ";
-	public static String ADD_ROW_ICON = commonIconsDirPath + "add row.png";
+	public static String ADD_COLUMN_ICON = commonIconsDirPath + "add_column.png ";
+	public static String ADD_ROW_ICON = commonIconsDirPath + "add_row.png";
 	public static String ADD_ICON = commonIconsDirPath + "add.png";
 	public static String ADD_NEW_ICON = commonIconsDirPath + "addnew.png";
 	public static String ADD_NEW_TOOLBAR_ICON = commonIconsDirPath + "addnew_toolbar.png";
 	public static String BACKUP_CREATE_ICON = commonIconsDirPath + "backup create.png";
 	public static String CONTROLLER_ICON = commonIconsDirPath + "controller.png";
-	public static String DELETE_COLUMN_ICON = commonIconsDirPath + "delete column.png";
-	public static String DELETE_ROW_ICON = commonIconsDirPath + "delete row.png";
+	public static String DELETE_COLUMN_ICON = commonIconsDirPath + "delete_column.png";
+	public static String DELETE_ROW_ICON = commonIconsDirPath + "delete_row.png";
 	public static String DELETE_ICON = commonIconsDirPath + "delete.png";
 	public static String DELETE_TOOL_ICON = commonIconsDirPath + "delete_tool.png";
 	public static String DESCRIPTION_ICON = commonIconsDirPath + "discreption.png";
@@ -40,8 +40,8 @@ public class OpKeyStudioIcons {
 	public static String INPUTDATA_ICON = commonIconsDirPath + "inputdata.png";
 	public static String MAXIMIZE_ICON = commonIconsDirPath + "maximize.png";
 	public static String MINIMIZE_ICON = commonIconsDirPath + "minimize.png";
-	public static String MOVE_LEFT_ICON = commonIconsDirPath + "move left.png";
-	public static String MOVE_RIGHT_ICON = commonIconsDirPath + "move right.png";
+	public static String MOVE_LEFT_ICON = commonIconsDirPath + "move_left_icon.png";
+	public static String MOVE_RIGHT_ICON = commonIconsDirPath + "move_right.png";
 	public static String MOVE_DOWN_ICON = commonIconsDirPath + "movedown.png";
 	public static String MOVE_UP_ICON = commonIconsDirPath + "moveup.png";
 	public static String DR16_ICON = commonIconsDirPath + "or16.png";
