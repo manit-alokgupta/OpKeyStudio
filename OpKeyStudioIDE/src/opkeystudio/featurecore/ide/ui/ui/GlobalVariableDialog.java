@@ -34,6 +34,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.globalvariable.GlobalVariabl
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class GlobalVariableDialog extends Dialog {
 
@@ -79,13 +80,13 @@ public class GlobalVariableDialog extends Dialog {
 	 * @return the result
 	 */
 	public Object open() {
-		Cursor waitCursor=new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT);
+		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
 		createContents();
 		shlGlobalVariable.open();
 		shlGlobalVariable.layout();
 		Display display = getParent().getDisplay();
-		Cursor arrow=new Cursor(display,SWT.CURSOR_ARROW);
+		Cursor arrow = new Cursor(display, SWT.CURSOR_ARROW);
 		getParent().setCursor(arrow);
 		while (!shlGlobalVariable.isDisposed()) {
 			if (!display.readAndDispatch()) {
@@ -145,16 +146,14 @@ public class GlobalVariableDialog extends Dialog {
 				GlobalVariable globalVar = globalVariablesTable.getGlobalVariablesData().get(selectedIndex);
 				boolean canDelete = new MessageDialogs().openConfirmDialog("Delete Global Variable",
 						"Do you want to delete " + globalVar.getName() + "?");
-
 				if (!canDelete) {
 					return;
 				}
-
 				boolean isused = new GlobalVariableApiUtilities().isGlobalVariableUsed(globalVar);
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Can't delete Global Variable",
 							"Unable to delete GlobalVariable " + globalVar.getName()
-									+ " as it is being used in some higher components.");
+							+ " as it is being used in some higher components.");
 					return;
 				}
 				toggleSaveToolItem(true);
@@ -174,6 +173,7 @@ public class GlobalVariableDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				boolean savestatus = globalVariablesTable.saveAll();
 				if (savestatus) {
+					CustomNotificationUtil.openInformationNotification("OpKey", "Saved!");
 					toggleSaveToolItem(false);
 				}
 			}
@@ -195,13 +195,14 @@ public class GlobalVariableDialog extends Dialog {
 						boolean savestatus = globalVariablesTable.saveAll();
 						if (savestatus) {
 							toggleSaveToolItem(false);
+							CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 						}
 						return;
 					}
-
 				}
 				toggleSaveToolItem(false);
 				globalVariablesTable.refreshGlobalVariables();
+				CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 			}
 		});
 
@@ -212,7 +213,6 @@ public class GlobalVariableDialog extends Dialog {
 		txtSearch = new Text(composite_1, SWT.BORDER);
 		txtSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		txtSearch.setMessage("Search");
-
 		txtSearch.addKeyListener(new KeyListener() {
 
 			@Override
@@ -222,12 +222,10 @@ public class GlobalVariableDialog extends Dialog {
 				if (searchValue.length() >= 1 || searchValue.trim().isEmpty()) {
 					globalVariablesTable.filterGlobalVariableTable(searchValue);
 				}
-
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -292,12 +290,9 @@ public class GlobalVariableDialog extends Dialog {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
-
 		globalVariablesTable.refreshGlobalVariables();
-
 	}
 }
