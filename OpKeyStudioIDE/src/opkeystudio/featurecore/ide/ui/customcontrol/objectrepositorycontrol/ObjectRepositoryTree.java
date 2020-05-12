@@ -61,9 +61,13 @@ public class ObjectRepositoryTree extends CustomTree {
 		String objectType = orObject.getOpkeytype();
 		if (objectType.toLowerCase().contains("page")) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.PAGECONTROL_ICON));
-		} else if (objectType.toLowerCase().contains("frame")) {
-			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.IFRAME_ICON));
-		} else {
+		} /*
+			 * else if (objectType.toLowerCase().contains("frame")) { // for the bug //
+			 * https:myopkey.atlassian.net/browse/SAS-30709 .Neon Sir will make change //
+			 * accordingly
+			 * artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio",
+			 * OpKeyStudioIcons.IFRAME_ICON)); }
+			 */ else {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CONTROLLER_ICON));
 		}
 	}
