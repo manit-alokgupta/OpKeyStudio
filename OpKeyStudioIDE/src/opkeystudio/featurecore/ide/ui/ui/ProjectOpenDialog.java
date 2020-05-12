@@ -84,7 +84,6 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		projectSearch = new Text(composite, SWT.BORDER);
 		projectSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		projectSearch.setMessage("Search Project");
-		projectSearch.setText("Search Project");
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);

@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
@@ -27,8 +28,8 @@ public class BlankProjectCreation {
 		try {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
 			Utilities.getInstance().setDefaultShell(shell);
-			String projectName = new MessageDialogs().openInputDialogAandGetValue("OpKey",
-					"Please Provide The Project Name", "");
+			String projectName = new MessageDialogs().openInputDialogAandGetValue("New Project",
+					"Please Provide The Project Name","");
 			if (projectName == null) {
 				return;
 			}

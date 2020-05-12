@@ -42,7 +42,7 @@ public class Utilities {
 	}
 
 	public void setShellCursor(int i) {
-		// defaultShell.setCursor(new Cursor(Display.getCurrent(), i));
+		 defaultShell.setCursor(new Cursor(Display.getCurrent(), i));
 	}
 
 	public EPartService getEpartService() {
