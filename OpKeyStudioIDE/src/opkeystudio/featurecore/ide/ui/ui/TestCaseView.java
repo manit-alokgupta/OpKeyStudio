@@ -927,6 +927,8 @@ public class TestCaseView extends SuperComposite {
 			}
 			return false;
 		}
+		flowStepTable.renderFlowSteps();
+		getCodedFunctionView().refreshTCFLCode();
 		return true;
 	}
 
