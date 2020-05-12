@@ -80,6 +80,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		getShell().setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		setMessage("Select a Project And Select The Artifact to Import");
 		setTitle("Import From OpKey SAAS");
 		Composite area = (Composite) super.createDialogArea(parent);
