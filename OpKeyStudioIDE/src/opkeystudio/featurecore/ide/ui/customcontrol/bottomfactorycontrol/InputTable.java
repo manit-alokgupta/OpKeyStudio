@@ -183,10 +183,6 @@ public class InputTable extends CustomTable {
 		renderAllBottomFactoryInputData();
 	}
 
-	private void addTableCursor(MouseEvent e) {
-
-	}
-
 	private void initContextMenu() {
 		Menu menu = new Menu(this);
 		this.setMenu(menu);

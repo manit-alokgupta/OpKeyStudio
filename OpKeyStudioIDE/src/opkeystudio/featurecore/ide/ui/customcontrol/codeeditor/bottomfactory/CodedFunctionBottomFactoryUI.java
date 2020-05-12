@@ -121,7 +121,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		associateLibrariesTagItem.setText("Associate Libraries");
 		associateLibrariesTagItem.setToolTipText("Associate Libraries");
 		associateLibrariesTagItem
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
 
 		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
 		associateLibrariesTagItem.setControl(composite_7);
@@ -250,7 +250,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setText("Compilation Results");
 		compilationResultsTabItem
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
 
 		Composite compilationResultsComposite = new Composite(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setControl(compilationResultsComposite);
@@ -325,7 +325,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		associateLibrariesTagItem.setText("Associate Libraries");
 		associateLibrariesTagItem.setToolTipText("Associate Libraries");
 		associateLibrariesTagItem
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
 
 		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
 		associateLibrariesTagItem.setControl(composite_7);
@@ -454,7 +454,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setText("Compilation Results");
 		compilationResultsTabItem
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
 
 		Composite compilationResultsComposite = new Composite(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setControl(compilationResultsComposite);
@@ -566,18 +566,22 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	}
 
 	public void toggleMoveUpInputItemButton(boolean status) {
+		inputTable.toggleMoveUpMenuItem(status);
 		this.moveUpInputItem.setEnabled(status);
 	}
 
 	public void toggleMoveDownInputItemButton(boolean status) {
+		inputTable.toggleMoveDownMenuItem(status);
 		this.moveDownInputItem.setEnabled(status);
 	}
 
 	public void toggleMoveUpOutputItemButton(boolean status) {
+		outputTable.toggleMoveUpMenuItem(status);
 		this.moveUpOutputItem.setEnabled(status);
 	}
 
 	public void toggleMoveDownOutputItemButton(boolean status) {
+		outputTable.toggleMoveDownMenuItem(status);
 		this.moveDownOutputItem.setEnabled(status);
 	}
 
@@ -586,10 +590,12 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 	}
 
 	public void toggleDeleteInputItem(boolean status) {
+		inputTable.toggleDeleteMenuItem(status);
 		this.deleteInputItem.setEnabled(status);
 	}
 
 	public void toggleDeleteOutputItem(boolean status) {
+		outputTable.toggleDeleteMenuItem(status);
 		this.deleteOutputItem.setEnabled(status);
 	}
 
@@ -628,8 +634,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				outputTable.moveFl_BottomFactoryOutputUp(outputTable.getSelectedComponentOutputArgument(),
-						outputTable.getPrevOutputParemeter());
+				outputTable.moveFl_BottomFactoryOutputUp();
 			}
 
 			@Override
@@ -642,8 +647,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				outputTable.moveFl_BottomFactoryOutputDown(outputTable.getSelectedComponentOutputArgument(),
-						outputTable.getNextOutputParemeter());
+				outputTable.moveFl_BottomFactoryOutputDown();
 			}
 
 			@Override
@@ -680,8 +684,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				inputTable.moveFl_BottomFactoryInputUp(inputTable.getSelectedCFLInputArgument(),
-						inputTable.getPrevInputParemeter());
+				inputTable.moveFl_BottomFactoryInputUp();
 			}
 
 			@Override
@@ -693,8 +696,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				inputTable.moveFl_BottomFactoryInputDown(inputTable.getSelectedCFLInputArgument(),
-						inputTable.getNextInputParemeter());
+				inputTable.moveFl_BottomFactoryInputDown();
 
 			}
 
@@ -759,15 +761,15 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 							msd.openProgressDialog(null, "Preparing library to be used with CFL", false,
 									new IRunnableWithProgress() {
 
-								@Override
-								public void run(IProgressMonitor monitor)
-										throws InvocationTargetException, InterruptedException {
-									File outPutDir = new File(
-											Utilities.getInstance().getProjectIntellisenseFolder());
-									new IntellisenseMaker().createSenseFileOfJavaLibrary(libraryToAssociate,
-											outPutDir);
-								}
-							});
+										@Override
+										public void run(IProgressMonitor monitor)
+												throws InvocationTargetException, InterruptedException {
+											File outPutDir = new File(
+													Utilities.getInstance().getProjectIntellisenseFolder());
+											new IntellisenseMaker().createSenseFileOfJavaLibrary(libraryToAssociate,
+													outPutDir);
+										}
+									});
 							msd.closeProgressDialog();
 							GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
 							CustomNotificationUtil.openInformationNotification("OpKey", "Library Added Successfully!");
