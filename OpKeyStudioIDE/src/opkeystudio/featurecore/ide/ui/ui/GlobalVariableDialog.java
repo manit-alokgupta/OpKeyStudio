@@ -33,6 +33,7 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.globalvariable.GlobalVariableTable;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApiUtilities;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.GVUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
@@ -144,6 +145,14 @@ public class GlobalVariableDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				int selectedIndex = globalVariablesTable.getSelectionIndex();
 				GlobalVariable globalVar = globalVariablesTable.getGlobalVariablesData().get(selectedIndex);
+				if (globalVar.isAdded() == false) {
+					boolean used = new GVUsedBy().isGVIsUsed(globalVar);
+					if (used) {
+						new MessageDialogs().openErrorDialog("OpKey",
+								"Unable to delete Global Variable as it is getting used in higher components.");
+						return;
+					}
+				}
 				boolean canDelete = new MessageDialogs().openConfirmDialog("Delete Global Variable",
 						"Do you want to delete " + globalVar.getName() + "?");
 				if (!canDelete) {
@@ -153,7 +162,7 @@ public class GlobalVariableDialog extends Dialog {
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Can't delete Global Variable",
 							"Unable to delete GlobalVariable " + globalVar.getName()
-							+ " as it is being used in some higher components.");
+									+ " as it is being used in some higher components.");
 					return;
 				}
 				toggleSaveToolItem(true);
