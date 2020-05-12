@@ -746,7 +746,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 					}
 					File libraryToAssociate = new File(filePath);
 					long filesize = (long) getFileSizeInMb(libraryToAssociate);
-					System.out.println("File Size " + filesize);
 					if (filesize > 14) {
 						new MessageDialogs().openErrorDialog("OpKey",
 								"File can't be added. File Size is greater than 15mb");
@@ -806,11 +805,9 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				System.out.println("Deleting...");
 				CustomTableItem item = associateLibraries.getSelectedLibrary();
 				if (item != null) {
 					MainFileStoreDTO file = (MainFileStoreDTO) item.getControlData();
-					System.out.println("Deleting File " + file.getFilename());
 					new CodedFunctionApi().deleteAssociatedLibrary(file.getF_id());
 					File filePath = new File(Utilities.getInstance().getProjectJavaLibrrayFolder() + File.separator
 							+ file.getFilename() + ".jar");

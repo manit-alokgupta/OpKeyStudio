@@ -95,7 +95,6 @@ public class CustomTree extends Tree {
 	public boolean isNameIsUnique(TreeItem rootitem, String name) {
 		TreeItem[] items = rootitem.getItems();
 		for (TreeItem item : items) {
-			System.out.println(item.getText().toLowerCase() + "     " + name.toLowerCase());
 			if (item.getText().toLowerCase().equals(name.toLowerCase())) {
 				return false;
 			}

@@ -27,7 +27,6 @@ public class ImportLocalDB {
 			dialog.open();
 			String filePath = dialog.getFilterPath() + "\\" + dialog.getFileName();
 			if (filePath != null) {
-				System.out.println("FilePath " + filePath);
 				if (!new File(filePath).isFile()) {
 					return;
 				}

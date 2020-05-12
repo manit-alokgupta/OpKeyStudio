@@ -357,7 +357,6 @@ public class GlobalVariableTable extends CustomTable {
 	public void addBlankGlobalVariableStep() {
 		int lastPosition = 0;
 		GlobalVariable gv = new GlobalVariable();
-		System.out.println("  " + getGlobalVariablesData().size());
 		if ((getGlobalVariablesData().size()) == 0) {
 			lastPosition = (getGlobalVariablesData().size() - 1);
 		} else {

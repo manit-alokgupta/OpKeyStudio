@@ -231,7 +231,6 @@ public class CodeCompletionProvider {
 			Class tokenClass = token.getTokenClass();
 			String className = tokenClass.getName();
 			if (className.endsWith("." + tokenString)) {
-				System.out.println("ClassName " + tokenClass.getName());
 				return token;
 			}
 			if (className.trim().equals(tokenString.trim())) {
@@ -258,7 +257,6 @@ public class CodeCompletionProvider {
 
 	private void parseStaticVariables(JavaCompletionProvider provider, Field field) {
 		String modifier = Modifier.toString(field.getModifiers()).toLowerCase();
-		System.out.println("Adding Field " + field.getName());
 		if (modifier.contains("public")) {
 			if (modifier.contains("static")) {
 				if (!modifier.contains("private")) {

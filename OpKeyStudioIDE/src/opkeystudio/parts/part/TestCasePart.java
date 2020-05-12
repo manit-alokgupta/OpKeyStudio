@@ -30,7 +30,6 @@ public class TestCasePart {
 
 	@Focus
 	public void onFocus() {
-		System.out.println("Focused");
 		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
 		Artifact artifact = getArtifact();
 		if (artifact != null) {
@@ -45,7 +44,6 @@ public class TestCasePart {
 
 	@Persist
 	public void save() {
-		System.out.println("Console Window Save");
 
 	}
 

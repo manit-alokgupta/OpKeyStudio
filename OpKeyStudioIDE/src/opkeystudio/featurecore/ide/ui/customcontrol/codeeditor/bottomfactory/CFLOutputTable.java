@@ -102,7 +102,6 @@ public class CFLOutputTable extends CustomTable {
 						String value = getColumnTextWithCursor(cursor, 0);
 						text.dispose();
 						boolean isunique = isColumnDataUnique(value, 0);
-						System.out.println("Value " + value);
 						if (isunique == false) {
 							componentOutputArgument.setModified(false);
 							renderCFLOutputParameters();

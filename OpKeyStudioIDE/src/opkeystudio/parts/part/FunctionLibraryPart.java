@@ -44,7 +44,6 @@ public class FunctionLibraryPart {
 
 	@Persist
 	public void save() {
-		System.out.println("Console Window Save");
 
 	}
 

@@ -100,7 +100,6 @@ public class InputTable extends CustomTable {
 				if (e.button == 3) {
 					return;
 				}
-				System.out.println(">>Cursor Focused");
 				int selectedColumn = cursor.getColumn();
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
 				ComponentInputArgument componentInputAargument = (ComponentInputArgument) selectedTableItem
@@ -142,7 +141,6 @@ public class InputTable extends CustomTable {
 					}
 				});
 
-				System.out.println("SELECTED COLUMN " + selectedColumn);
 				if (selectedColumn == 0) {
 					text.setFocus();
 					if (componentInputAargument.getName() != null) {

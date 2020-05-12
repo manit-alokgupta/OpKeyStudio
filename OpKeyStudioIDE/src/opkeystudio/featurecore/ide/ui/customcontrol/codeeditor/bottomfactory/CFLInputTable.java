@@ -104,7 +104,6 @@ public class CFLInputTable extends CustomTable {
 						String value = getColumnTextWithCursor(cursor, 0);
 						text.dispose();
 						boolean isunique = isColumnDataUnique(value, 0);
-						System.out.println("Value " + value);
 						if (isunique == false) {
 							componentInputAargument.setModified(false);
 							renderCFLInputParameters();
@@ -141,7 +140,6 @@ public class CFLInputTable extends CustomTable {
 					}
 				});
 
-				System.out.println("SELECTED COLUMN " + selectedColumn);
 				if (selectedColumn == 0) {
 					text.setFocus();
 					if (componentInputAargument.getName() != null) {

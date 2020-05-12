@@ -58,7 +58,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	public JavaCodeEditor(Composite parent, CodedFunctionView parentView, boolean enableIntellisense) {
 
 		super();
-		System.out.println("JC 1");
 		this.setCodeFunctionView(parentView);
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
@@ -185,7 +184,6 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-					System.out.println("Saving");
 					saveToggled = true;
 					Display.getDefault().asyncExec(new Runnable() {
 

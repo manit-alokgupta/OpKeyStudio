@@ -442,7 +442,6 @@ public class FlowStepTable extends CustomTable {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				deselectAll();
-				System.out.println("Selection " + button.getSelection());
 				attrProperty.setShouldrun(button.getSelection());
 				attrProperty.setModified(true);
 				getParentTestCaseView().toggleSaveButton(true);

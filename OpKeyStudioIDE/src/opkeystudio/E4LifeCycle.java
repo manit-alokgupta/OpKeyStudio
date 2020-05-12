@@ -31,17 +31,16 @@ public class E4LifeCycle {
 
 	@PreSave
 	void preSave(IEclipseContext workbenchContext) {
-		System.out.println("Called @@PreSave");
 		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
 	@ProcessAdditions
 	void processAdditions(IEclipseContext workbenchContext) {
-		System.out.println("Called @@ProcessAdditions");
+		
 	}
 
 	@ProcessRemovals
 	void processRemovals(IEclipseContext workbenchContext) {
-		System.out.println("Called @ProcessRemovals");
+		
 	}
 }

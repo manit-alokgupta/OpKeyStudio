@@ -29,7 +29,6 @@ public class JavaParser implements Parser {
 
 	@Override
 	public ParseResult parse(RSyntaxDocument arg0, String arg1) {
-		System.out.println("Parsed data " + arg1);
 		return null;
 	}
 
