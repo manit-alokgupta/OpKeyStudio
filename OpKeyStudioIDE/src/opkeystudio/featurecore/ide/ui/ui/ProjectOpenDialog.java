@@ -71,6 +71,7 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		getShell().setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		setMessage("Select a Project to Open");
 		setTitle("Open Project");
+		
 
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
@@ -85,11 +86,13 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		projectSearch = new Text(composite, SWT.BORDER);
 		projectSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		projectSearch.setMessage("Search Project");
+	
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
 		table.setHeaderBackground(SWTResourceManager.getColor(248, 248, 245));
 		table.setLinesVisible(true);
+		table.setFocus();
 		sashForm.setWeights(new int[] { 1 });
 		for (String header : tableHeaders) {
 			TableColumn column = new TableColumn(table, 0);
