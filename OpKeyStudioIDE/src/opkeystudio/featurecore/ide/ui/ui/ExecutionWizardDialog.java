@@ -12,6 +12,8 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -165,6 +167,23 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 				restrictInputString(e);
 			}
 		});
+		sessionNameTextField.addModifyListener(new ModifyListener() {	
+			@Override
+			public void modifyText(ModifyEvent e) {
+				// TODO Auto-generated method stub
+				if(sessionNameTextField.getText().equals("")) {
+					runButton.setEnabled(false);
+					CustomNotificationUtil.openInformationNotification("OpKey", "Session Name Cannot Be Empty");
+					sessionNameTextField.setFocus();
+					}
+				else {
+					if(pluginSelectionDropDown.getText().equals("Web")&& !buildNameTextField.getText().equals(""))
+						
+						runButton.setEnabled(true);
+				}
+			}
+
+		});
 
 		Label lblNewLabel_1 = new Label(container, SWT.NONE);
 		lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 15, 1));
@@ -185,6 +204,31 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			public void keyPressed(KeyEvent e) {
 
 			}
+		});
+		
+		buildNameTextField.addVerifyListener(new VerifyListener() {
+
+			@Override
+			public void verifyText(VerifyEvent e) {
+				restrictInputString(e);
+			}
+		});
+		buildNameTextField.addModifyListener(new ModifyListener() {	
+			@Override
+			public void modifyText(ModifyEvent e) {
+				// TODO Auto-generated method stub
+				if(buildNameTextField.getText().equals("")) {
+					runButton.setEnabled(false);
+					CustomNotificationUtil.openInformationNotification("OpKey", "Build Name Cannot Be Empty");
+					buildNameTextField.setFocus();
+					}
+				else {
+					if(pluginSelectionDropDown.getText().equals("Web") && !sessionNameTextField.getText().equals(""))
+						
+						runButton.setEnabled(true);
+				}
+			}
+
 		});
 
 		Label lblNewLabel_2 = new Label(container, SWT.NONE);
