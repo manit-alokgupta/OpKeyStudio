@@ -30,6 +30,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.CFLUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.FLUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -354,7 +355,7 @@ public class CFLOutputTable extends CustomTable {
 		CFLOutputParameter componentInputArgument = getSelectedComponentOutputArgument();
 		Artifact artifact = getParentBottomFactoryUI().getParentArtifactCodeView().getArtifact();
 		if (componentInputArgument.isAdded() == false) {
-			boolean used = new FLUsedBy().isFLIsUsed(artifact);
+			boolean used = new CFLUsedBy().isCFLIsUsed(artifact);
 			if (used) {
 				new MessageDialogs().openErrorDialog("OpKey",
 						"Unable to delete Output Paramater as CFL is getting used in higher components.");
