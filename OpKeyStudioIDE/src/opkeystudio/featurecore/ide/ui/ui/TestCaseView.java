@@ -955,6 +955,9 @@ public class TestCaseView extends SuperComposite {
 	private boolean isComponentInputArgumentNameAreUnique(List<ComponentInputArgument> componentInputArguments) {
 		List<String> variableNames = new ArrayList<String>();
 		for (ComponentInputArgument ci : componentInputArguments) {
+			if (ci.isDeleted()) {
+				continue;
+			}
 			if (variableNames.contains(ci.getName().toLowerCase())) {
 				return false;
 			}
@@ -966,6 +969,9 @@ public class TestCaseView extends SuperComposite {
 	private boolean isComponentOutputArgumentNameAreUnique(List<ComponentOutputArgument> componentInputArguments) {
 		List<String> variableNames = new ArrayList<String>();
 		for (ComponentOutputArgument co : componentInputArguments) {
+			if (co.isDeleted()) {
+				continue;
+			}
 			if (variableNames.contains(co.getName().toLowerCase())) {
 				return false;
 			}
