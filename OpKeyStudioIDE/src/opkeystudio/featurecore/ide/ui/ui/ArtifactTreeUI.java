@@ -44,6 +44,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUt
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class ArtifactTreeUI extends SuperComposite {
 	MenuItem mntmNew;
@@ -280,7 +281,6 @@ public class ArtifactTreeUI extends SuperComposite {
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
 						"TestCase Name", "Test Case " + getVarName());
 				if (inputValue == null) {
-					System.out.println("cancel pressed ");
 					return;
 				}
 				while (inputValue.trim().isEmpty()) {
@@ -294,10 +294,9 @@ public class ArtifactTreeUI extends SuperComposite {
 
 				boolean isUnique = isArtifactNameIsUnique(inputValue);
 				if (isUnique == false) {
-					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					CustomNotificationUtil.openInformationNotification("OpKey", "Name must be unique!");
 					return;
 				}
-
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
 			}
 
@@ -480,7 +479,7 @@ public class ArtifactTreeUI extends SuperComposite {
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Unable to delete " + artifact.getFile_type_enum(),
 							"Unable to delete " + artifact.getFile_type_enum() + " '" + artifact.getName()
-									+ "' as it is being used:");
+							+ "' as it is being used:");
 					return;
 				}
 				deleteArtifactJavaFile(artifact);
@@ -1257,15 +1256,16 @@ public class ArtifactTreeUI extends SuperComposite {
 				msd.openProgressDialog(null, String.format("Please wait. Creating Artifact '%s'", artifactName), false,
 						new IRunnableWithProgress() {
 
-							@Override
-							public void run(IProgressMonitor monitor)
-									throws InvocationTargetException, InterruptedException {
-								artifact = new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
-							}
-						});
+					@Override
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException, InterruptedException {
+						artifact = new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
+					}
+				});
 				artifactTree.renderArtifacts();
 				msd.closeProgressDialog();
 				Utilities.getInstance().openArtifacts(artifact);
+				CustomNotificationUtil.openInformationNotification("OpKey", artifact.getName() + " created!");
 			}
 		});
 	}
