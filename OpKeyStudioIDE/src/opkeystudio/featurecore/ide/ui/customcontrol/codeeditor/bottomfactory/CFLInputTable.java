@@ -31,6 +31,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.CFLUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
@@ -74,9 +75,9 @@ public class CFLInputTable extends CustomTable {
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
-		
+
 		cursor.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseUp(MouseEvent e) {
 				int selectedColumn = cursor.getColumn();
@@ -151,19 +152,18 @@ public class CFLInputTable extends CustomTable {
 				}
 				controlEditor.setEditor(text);
 
-				
 			}
-			
+
 			@Override
 			public void mouseDown(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
@@ -388,6 +388,16 @@ public class CFLInputTable extends CustomTable {
 
 	public void deleteBottomFactoryInputData() {
 		CFLInputParameter componentInputArgument = getSelectedCFLInputArgument();
+		if (componentInputArgument.isAdded() == false) {
+			Artifact artifact = getParentBottomFactoryUI().getParentArtifactCodeView().getArtifact();
+			boolean usedby = new CFLUsedBy().isCFLIsUsed(artifact);
+			if(usedby) {
+				new MessageDialogs().openErrorDialog("OpKey",
+						"Unable to delete Input Paramater as CFL is getting used in higher components.");
+				return;
+			}
+		}
+
 		componentInputArgument.setAdded(false);
 		componentInputArgument.setModified(false);
 		componentInputArgument.setDeleted(true);
