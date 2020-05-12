@@ -43,6 +43,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class TestSuiteView extends SuperComposite {
 	private SuiteTestCaseTree testCaseTree;
@@ -190,7 +191,7 @@ public class TestSuiteView extends SuperComposite {
 		menuPublished = new MenuItem(dropDownMenu, SWT.NONE);
 		menuPublished.setText("Published");
 
-//		testSuiteTable = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
+		// testSuiteTable = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
 		testSuiteTable = new SuiteStepTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION, this);
 		testSuiteTable.setHeaderVisible(true);
 		testSuiteTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -438,6 +439,7 @@ public class TestSuiteView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				testSuiteTable.moveStepUp();
+				CustomNotificationUtil.openInformationNotification("OpKey", "Selected TC moved up!");
 			}
 
 			@Override
@@ -452,6 +454,7 @@ public class TestSuiteView extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				testSuiteTable.moveStepDown();
 				toggleSaveButton(true);
+				CustomNotificationUtil.openInformationNotification("OpKey", "Selected TC moved down!");
 			}
 
 			@Override
@@ -466,6 +469,7 @@ public class TestSuiteView extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				saveSuiteSteps();
 				OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+				CustomNotificationUtil.openInformationNotification("OpKey", "Saved!");
 			}
 
 			@Override
