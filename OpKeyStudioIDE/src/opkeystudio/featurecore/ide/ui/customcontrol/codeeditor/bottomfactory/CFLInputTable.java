@@ -41,6 +41,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.dtoMaker.CFLDMaker;
 import opkeystudio.opkeystudiocore.core.utils.OpKeyVariables;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class CFLInputTable extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
@@ -459,7 +460,7 @@ public class CFLInputTable extends CustomTable {
 		bottomFactoryInput2.setModified(true);
 		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLInputParameters();
-
+		CustomNotificationUtil.openInformationNotification("OpKey", bottomFactoryInput1.getName() + " moved up!");
 	}
 
 	public void moveFl_BottomFactoryInputDown() {
@@ -477,6 +478,7 @@ public class CFLInputTable extends CustomTable {
 		bottomFactoryInput2.setModified(true);
 		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLInputParameters();
+		CustomNotificationUtil.openInformationNotification("OpKey", bottomFactoryInput1.getName() + " moved down!");
 	}
 
 	public void deleteBottomFactoryInputData() {
@@ -490,12 +492,13 @@ public class CFLInputTable extends CustomTable {
 				return;
 			}
 		}
-
 		componentInputArgument.setAdded(false);
 		componentInputArgument.setModified(false);
 		componentInputArgument.setDeleted(true);
 		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLInputParameters();
+		CustomNotificationUtil.openInformationNotification("OpKey",
+				componentInputArgument.getName() + " deleted successfully!");
 	}
 
 	public void addBlankInputPArameter() {
@@ -507,6 +510,8 @@ public class CFLInputTable extends CustomTable {
 		this.getCflInputParameters().add(inputParameter);
 		getParentBottomFactoryUI().getParentArtifactCodeView().toggleSaveButton(true);
 		refreshCFLInputParameters();
+		CustomNotificationUtil.openInformationNotification("OpKey",
+				inputParameter.getName() + " created successfully!");
 	}
 
 	public void toggleAddNewMenuItem(boolean status) {

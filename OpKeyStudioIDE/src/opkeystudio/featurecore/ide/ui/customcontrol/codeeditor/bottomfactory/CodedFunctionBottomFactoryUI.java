@@ -121,7 +121,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		associateLibrariesTagItem.setText("Associate Libraries");
 		associateLibrariesTagItem.setToolTipText("Associate Libraries");
 		associateLibrariesTagItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
 
 		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
 		associateLibrariesTagItem.setControl(composite_7);
@@ -250,7 +250,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setText("Compilation Results");
 		compilationResultsTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
 
 		Composite compilationResultsComposite = new Composite(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setControl(compilationResultsComposite);
@@ -325,7 +325,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		associateLibrariesTagItem.setText("Associate Libraries");
 		associateLibrariesTagItem.setToolTipText("Associate Libraries");
 		associateLibrariesTagItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ASSOCIATE_LIBRARY_ICON));
 
 		Composite composite_7 = new Composite(tabFolder, SWT.NONE);
 		associateLibrariesTagItem.setControl(composite_7);
@@ -454,7 +454,7 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 		TabItem compilationResultsTabItem = new TabItem(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setText("Compilation Results");
 		compilationResultsTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.COMPILATION_ICON));
 
 		Composite compilationResultsComposite = new Composite(tabFolder, SWT.NONE);
 		compilationResultsTabItem.setControl(compilationResultsComposite);
@@ -697,7 +697,6 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				inputTable.moveFl_BottomFactoryInputDown();
-
 			}
 
 			@Override
@@ -760,15 +759,15 @@ public class CodedFunctionBottomFactoryUI extends Composite {
 							msd.openProgressDialog(null, "Preparing library to be used with CFL", false,
 									new IRunnableWithProgress() {
 
-										@Override
-										public void run(IProgressMonitor monitor)
-												throws InvocationTargetException, InterruptedException {
-											File outPutDir = new File(
-													Utilities.getInstance().getProjectIntellisenseFolder());
-											new IntellisenseMaker().createSenseFileOfJavaLibrary(libraryToAssociate,
-													outPutDir);
-										}
-									});
+								@Override
+								public void run(IProgressMonitor monitor)
+										throws InvocationTargetException, InterruptedException {
+									File outPutDir = new File(
+											Utilities.getInstance().getProjectIntellisenseFolder());
+									new IntellisenseMaker().createSenseFileOfJavaLibrary(libraryToAssociate,
+											outPutDir);
+								}
+							});
 							msd.closeProgressDialog();
 							GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
 							CustomNotificationUtil.openInformationNotification("OpKey", "Library Added Successfully!");
