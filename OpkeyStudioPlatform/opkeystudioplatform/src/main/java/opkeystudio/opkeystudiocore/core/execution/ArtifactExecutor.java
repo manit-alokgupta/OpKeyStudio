@@ -24,7 +24,8 @@ public class ArtifactExecutor {
 
 	private ExecutionSession executionSession;
 
-	private File outLogFile;
+	private File outLogFile = null;
+	private File errLogFile = null;
 
 	private URLClassLoader classLoader;
 	private boolean executionCompleted = false;
@@ -45,16 +46,18 @@ public class ArtifactExecutor {
 			@Override
 			public void run() {
 				setExecutionCompleted(false);
-				outLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs.txt");
+				outLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs_out.txt");
+				errLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs_err.txt");
 				try {
 					outLogFile.getParentFile().mkdirs();
 					outLogFile.createNewFile();
+					errLogFile.createNewFile();
 
 					OutputStream standrdout = new java.io.FileOutputStream(outLogFile, true);
-					OutputStream errorout = standrdout;// new java.io.FileOutputStream(outLog, true);
+					OutputStream errorout = new java.io.FileOutputStream(errLogFile, true);
 
 					System.setOut(new java.io.PrintStream(standrdout, true));
-					System.setErr(new ErrorPrintStream(errorout, true));
+					System.setErr(new java.io.PrintStream(errorout, true));
 
 				} catch (IOException e2) {
 					e2.printStackTrace();
@@ -89,16 +92,18 @@ public class ArtifactExecutor {
 			@Override
 			public void run() {
 				setExecutionCompleted(false);
-				outLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs.txt");
+				outLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs_out.txt");
+				errLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs_err.txt");
 				try {
 					outLogFile.getParentFile().mkdirs();
 					outLogFile.createNewFile();
+					errLogFile.createNewFile();
 
 					OutputStream standrdout = new java.io.FileOutputStream(outLogFile, true);
-					OutputStream errorout = standrdout;// new java.io.FileOutputStream(outLog, true);
+					OutputStream errorout = new java.io.FileOutputStream(errLogFile, true);
 
 					System.setOut(new java.io.PrintStream(standrdout, true));
-					System.setErr(new ErrorPrintStream(errorout, true));
+					System.setErr(new java.io.PrintStream(errorout, true));
 
 				} catch (IOException e2) {
 					e2.printStackTrace();
@@ -132,16 +137,18 @@ public class ArtifactExecutor {
 			@Override
 			public void run() {
 				setExecutionCompleted(false);
-				outLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs.txt");
+				outLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs_out.txt");
+				errLogFile = new File(executionSession.getSessionLogDirectory(), "SessionLogs_err.txt");
 				try {
 					outLogFile.getParentFile().mkdirs();
 					outLogFile.createNewFile();
+					errLogFile.createNewFile();
 
 					OutputStream standrdout = new java.io.FileOutputStream(outLogFile, true);
-					OutputStream errorout = standrdout;// new java.io.FileOutputStream(outLog, true);
+					OutputStream errorout = new java.io.FileOutputStream(errLogFile, true);
 
 					System.setOut(new java.io.PrintStream(standrdout, true));
-					System.setErr(new ErrorPrintStream(errorout, true));
+					System.setErr(new java.io.PrintStream(errorout, true));
 
 				} catch (IOException e2) {
 					e2.printStackTrace();
@@ -189,7 +196,7 @@ public class ArtifactExecutor {
 					method.invoke(instance);
 					break;
 				} catch (Exception e) {
-					// TODO: handle exception
+					e.printStackTrace();
 				}
 			}
 			if (method.getName().equals("executeDefault")) {
@@ -197,7 +204,7 @@ public class ArtifactExecutor {
 					method.invoke(instance);
 					break;
 				} catch (Exception e) {
-					// TODO: handle exception
+					e.printStackTrace();
 				}
 			}
 		}
@@ -228,7 +235,7 @@ public class ArtifactExecutor {
 					method.invoke(instance);
 					break;
 				} catch (Exception e) {
-					// TODO: handle exception
+					// e.printStackTrace();
 				}
 			}
 			if (method.getName().equals("executeDefault")) {
@@ -236,7 +243,7 @@ public class ArtifactExecutor {
 					method.invoke(instance);
 					break;
 				} catch (Exception e) {
-					// TODO: handle exception
+					e.printStackTrace();
 				}
 			}
 		}
@@ -335,8 +342,6 @@ public class ArtifactExecutor {
 
 	public void setExecutionCompleted(boolean executionCompleted) {
 		this.executionCompleted = executionCompleted;
-		System.err.println("Setting Execution Completed: " + executionCompleted);
-		System.err.println("ReSetting original PrintStream");
 		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 		System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
 
@@ -344,6 +349,10 @@ public class ArtifactExecutor {
 
 	public File getOutLogFile() {
 		return outLogFile;
+	}
+	
+	public File getErrLogFile() {
+		return errLogFile;
 	}
 
 	public URLClassLoader getClassLoader() {
@@ -386,18 +395,4 @@ public class ArtifactExecutor {
 		this.executionSession = executionSession;
 	}
 
-	public class ErrorPrintStream extends PrintStream {
-
-		public static final String errorTag = "[Error] ";
-
-		public ErrorPrintStream(OutputStream out, boolean autoFlush) {
-			super(out, autoFlush);
-		}
-
-		@Override
-		public void println(String x) {
-			super.println(errorTag + x);
-		}
-
-	}
 }

@@ -30,12 +30,14 @@ public class SessionHandler implements ExecutionSession {
 			new Connect2AppiumServer().Method_closeApplication();
 		} catch (Exception e) {
 		}
-		ReportBuilder.get().close();
+		
+		if (ReportBuilder.get() != null)
+			ReportBuilder.get().close();
 	}
 
 	public void beforeSessionStart(Object sessionObject) {
 		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
-		
+
 		String deviceApiLevel = sessionInfo.pluginSettings.get("DeviceApiLevel"); // device SDK
 		String deviceAbi = sessionInfo.pluginSettings.get("DeviceABI"); // device ABI
 
@@ -47,13 +49,13 @@ public class SessionHandler implements ExecutionSession {
 		System.out.println("Device Id :" + device.getSerialNumber());
 		System.out.println("Device Version :" + device.getVersion());
 		System.out.println("Device OS :" + device.getOperatingSystem());
-		
+
 		File htmlFile = new File(sessionInfo.reportFilePath);
 		reportFilePath = htmlFile.getParentFile();
 		ReportBuilder builder = ReportBuilder.atPath(htmlFile);
 		builder.addSessionParameter("BuildName", sessionInfo.buildName);
 		builder.addSessionParameter("SessionDir", sessionInfo.sessionDirectory);
-		
+
 		IReport report = builder.withName(sessionInfo.sessionName).withFormat(ReportFormat.HTML).build();
 		// you may now get this instance with Report.get()
 
@@ -71,7 +73,7 @@ public class SessionHandler implements ExecutionSession {
 	public static SessionInfo getSessionInfo() {
 		return SessionHandler.sessionInfo;
 	}
-	
+
 	public static void setScreenshotDirPath() {
 		screenshotPath = new File(reportFilePath.getPath() + File.separator + "screenshot");
 		screenshotPath.mkdir();

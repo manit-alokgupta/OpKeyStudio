@@ -1,7 +1,10 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -14,12 +17,15 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -28,7 +34,6 @@ import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor;
-import opkeystudio.opkeystudiocore.core.execution.ArtifactExecutor.ErrorPrintStream;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSessionExecutor;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
@@ -49,6 +54,9 @@ public class ExecutionResultView extends SuperComposite {
 	private StyledText logTextView;
 	private ExecutionSession executionSession;
 	private ArtifactExecutor artifactExecutor;
+
+	private Thread logOutThread = null;
+	private Thread logErrThread = null;
 
 	public ExecutionResultView(Composite parent, int style) {
 		super(parent, SWT.BORDER);
@@ -84,45 +92,34 @@ public class ExecutionResultView extends SuperComposite {
 		msd.closeProgressDialog();
 	}
 
-	private void displayLogs(String out, String error) {
-		Color red = new Color(logTextView.getDisplay(), 255, 0, 0);
-		Color black = new Color(logTextView.getDisplay(), 0, 0, 0);
+	private void displayLogs(String text, Color color) {
+
 		Color white = new Color(logTextView.getDisplay(), 255, 255, 255);
 
-		new MessageDialogs().executeDisplayAsync(new Runnable() {
+		Display.getDefault().asyncExec(new Runnable() {
 
 			@Override
 			public void run() {
+
 				if (logTextView.isDisposed()) {
 					return;
 				}
 
-				if (logTextView.getTextLimit() - logTextView.getText().length() > 50)
+				if (logTextView.getTextLimit() - logTextView.getText().length() > 100)
 					logTextView.setText("");
 
 // 				logTextView.setForeground(new Color(logTextView.getDisplay(), 0, 0, 255));
 
-				if (out != null) {
-					// add out
+				if (text != null) {
 					int start = logTextView.getText().length();
-					logTextView.append(out);
-					logTextView.setStyleRange(new StyleRange(start, out.length(), black, white));
+					logTextView.append(text);
+					logTextView.setStyleRange(new StyleRange(start, text.length(), color, white));
 				}
 
-				if (error != null) {
-					// add err
-					int start = logTextView.getText().length();
-					logTextView.append(error);
-					logTextView.setStyleRange(new StyleRange(start, error.length(), red, white));
-				}
-				/*
-				 * String sessioName = getExecutionSession().getSessionName(); String
-				 * logFilePath = new ExecutionSessionExecutor().getSessionLogsFolder(sessioName)
-				 * + File.separator + sessioName + ".txt";
-				 * Utilities.getInstance().writeToFile(new File(logFilePath), text);
-				 */
 			}
+
 		});
+
 	}
 
 	private void displayCompileErrors(List<CompileError> errors) {
@@ -146,64 +143,111 @@ public class ExecutionResultView extends SuperComposite {
 		});
 	}
 
-	private void startExecutionLogsFetch(ArtifactExecutor executor) {
-		Thread logThread = new Thread(new Runnable() {
+	private Runnable getLogRunnable(File logFile, Color logColor, Color warningColor) {
+		Runnable r = new Runnable() {
+
+			private File logFile = null;
+			private Color logColor = null;
+			private Color warningColor = null;
+
+			public Runnable setFile(File logFile, Color logColor, Color warningColor) {
+				this.logFile = logFile;
+				this.logColor = logColor;
+				this.warningColor = warningColor;
+				return this;
+			}
 
 			@Override
 			public void run() {
-				long readBytes = 0;
 
-				while (true) {
-					try {
-						if (executor.isExecutionCompleted() || showLogView.isDisposed())
-							return;
-						if (executor.getOutLogFile() == null)
-							continue;
+				try {
+					if (showLogView.isDisposed())
+						return;
 
-						try (FileInputStream fis = new FileInputStream(executor.getOutLogFile())) {
-							fis.skip(readBytes);
-							byte[] buffer = new byte[1024];
-							int bytesRead = fis.read(buffer, 0, buffer.length);
-							if (bytesRead > 0) {
+					/*
+					 * try (BufferedReader br = new BufferedReader( new InputStreamReader(new
+					 * FileInputStream(logFile), StandardCharsets.UTF_8))) {
+					 */
 
-								readBytes += bytesRead;
-								String str = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
-								String out = null;
-								String err = null;
-								if (str.startsWith(ErrorPrintStream.errorTag))
-									err = str;
-								else
-									out = str;
+					try (FileInputStream fis = new FileInputStream(logFile)) {
 
-								displayLogs(out, err);
+						while (getArtifactExecutor().isExecutionCompleted() == false) {
+							// String aLine = br.readLine();
+
+							byte[] buffer = new byte[2048];
+							int bytesRead = fis.read(buffer, 0, fis.available());
+							if (bytesRead < 1) {
+								Thread.sleep(10);
+								continue;
 							}
+
+							String aLine = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
+
+							if (aLine == null || aLine.isEmpty())
+								Thread.sleep(100);
+							else if (aLine.toLowerCase().contains("warning"))
+								displayLogs(aLine, warningColor);
+							else
+								displayLogs(aLine, logColor);
+
+							if (getArtifactExecutor().isExecutionCompleted())
+								break;
 						}
 
-					} catch (IOException e1) {
-						e1.printStackTrace();
 					}
-					if (executor.isExecutionCompleted()) {
-						new MessageDialogs().executeDisplayAsync(new Runnable() {
 
-							@Override
-							public void run() {
-								if (showLogView.isDisposed()) {
-									return;
-								}
-								showLogView.setEnabled(true);
-							}
-						});
-						break;
-					}
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+				} catch (InterruptedException e1) {
+					displayLogs("Logger Thread Interupted", warningColor);
+
+				} catch (IOException e21) {
+					displayLogs(e21.toString(), warningColor);
+					e21.printStackTrace();
 				}
+
+				// if (executor.isExecutionCompleted()) {
+				new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+					@Override
+					public void run() {
+						if (showLogView.isDisposed()) {
+							return;
+						}
+						stopButton.setEnabled(false);
+						showLogView.setEnabled(true);
+					}
+				});
+
+				// }
+
 			}
-		});
-		logThread.start();
+
+		}.setFile(logFile, logColor, warningColor);
+
+		return r;
+
+	}
+
+	private void startExecutionLogsFetch(ArtifactExecutor executor) throws InterruptedException {
+		Color red = new Color(logTextView.getDisplay(), 255, 0, 0);
+		Color black = new Color(logTextView.getDisplay(), 0, 0, 0);
+		Color orange = new Color(logTextView.getDisplay(), 255, 165, 0);
+
+		while (getArtifactExecutor().getErrLogFile() == null
+				|| getArtifactExecutor().getErrLogFile().exists() == false) {
+			Thread.sleep(200);
+		}
+
+		logErrThread = new Thread(getLogRunnable(getArtifactExecutor().getErrLogFile(), red, orange));
+		logErrThread.start();
+
+		while (getArtifactExecutor().getOutLogFile() == null
+				|| getArtifactExecutor().getOutLogFile().exists() == false) {
+			Thread.sleep(200);
+		}
+
+		logOutThread = new Thread(getLogRunnable(getArtifactExecutor().getOutLogFile(), black, orange));
+		logOutThread.start();
+
 	}
 
 	private void initUI() {
@@ -224,12 +268,32 @@ public class ExecutionResultView extends SuperComposite {
 		logTextView.setEditable(false);
 		logTextView.setAlwaysShowScrollBars(true);
 
+		logTextView.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.stateMask == SWT.CTRL && e.keyCode == 'a') {
+					logTextView.selectAll();
+					e.doit = false;
+				}
+			}
+		});
+
 		stopButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if (logOutThread != null)
+					logOutThread.interrupt();
+
+				if (logErrThread != null)
+					logErrThread.interrupt();
+
+				displayLogs("Stopping Execution...", new Color(logTextView.getDisplay(), 255, 165, 0));
 				getArtifactExecutor().getExecutionThread().interrupt();
 				getArtifactExecutor().stopExecutionSession();
+
+				if (getArtifactExecutor().isExecutionCompleted())
+					stopButton.setEnabled(false);
 			}
 
 			@Override
