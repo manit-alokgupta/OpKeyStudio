@@ -3,6 +3,7 @@ package opkeystudio.commandhandler;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
@@ -35,8 +36,16 @@ public class ExportToSaas {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				monitor.beginTask("Exporting Artifact to SAAS. Please wait....", -1);
+				if (monitor.isCanceled()) {
+					throw new OperationCanceledException();
+				}
 				String retdata = new ArtifactUpload().uploadCurrentUsedArtifact("");
+
 				if (retdata == null) {
+					if (monitor.isCanceled()) {
+						throw new OperationCanceledException();
+					}
 					Display.getDefault().asyncExec(new Runnable() {
 
 						@Override
@@ -45,6 +54,9 @@ public class ExportToSaas {
 						}
 					});
 				} else if (retdata.contains("[{")) {
+					if (monitor.isCanceled()) {
+						throw new OperationCanceledException();
+					}
 					Display.getDefault().asyncExec(new Runnable() {
 
 						@Override
@@ -53,6 +65,9 @@ public class ExportToSaas {
 						}
 					});
 				} else {
+					if (monitor.isCanceled()) {
+						throw new OperationCanceledException();
+					}
 					Display.getDefault().asyncExec(new Runnable() {
 
 						@Override
@@ -61,6 +76,8 @@ public class ExportToSaas {
 						}
 					});
 				}
+				monitor.done();
+
 			}
 		});
 		msd.closeProgressDialog();
