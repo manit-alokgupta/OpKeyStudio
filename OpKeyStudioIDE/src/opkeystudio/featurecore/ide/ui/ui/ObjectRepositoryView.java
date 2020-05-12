@@ -75,7 +75,6 @@ public class ObjectRepositoryView extends SuperComposite {
 	private ToolItem addParentObjectToolItem;
 	private ToolItem addChildObjectToolItem;
 	private boolean isParentObjectItemsListVisible;
-	private boolean isChildObjectItemsListVisible;
 	private ORObject obRepo;
 	private String orId;
 	private String[] parentObjectTypes = new String[] { "Html Page", "Frame", "Page" };
@@ -110,7 +109,6 @@ public class ObjectRepositoryView extends SuperComposite {
 		toggleChildObjectToolItem(false);
 		addOpKeyGlobalListener();
 		this.isParentObjectItemsListVisible = false;
-		this.isChildObjectItemsListVisible = false;
 	}
 
 	public ObjectRepositoryTree getObjectRepositoryTree() {
@@ -264,16 +262,12 @@ public class ObjectRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (e.detail == SWT.ARROW && !isChildObjectItemsListVisible) {
+				if (e.detail == SWT.ARROW) {
 					Rectangle rect = addChildObjectToolItem.getBounds();
 					Point pt = new Point(rect.x, rect.y + rect.height);
 					pt = toolBar.toDisplay(pt);
 					childObjectMenu.setLocation(pt.x, pt.y);
 					childObjectMenu.setVisible(true);
-					isChildObjectItemsListVisible = true;
-					return;
-				} else if (e.detail == SWT.ARROW) {
-					isChildObjectItemsListVisible = false;
 					return;
 				}
 				String objectName = addChildObjectToolItem.getText().replaceAll("Add", "").replace("(", "")
@@ -557,9 +551,9 @@ public class ObjectRepositoryView extends SuperComposite {
 				if (AppiumConfiguration.getHostAddress() == null
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 					AppiumConfiguration
-							.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 					AppiumConfiguration
-							.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 					AppiumConfiguration.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				}
@@ -835,7 +829,7 @@ public class ObjectRepositoryView extends SuperComposite {
 			if (item.getORObject().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
 				item.getORObject()
-						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+				.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getORObject().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();
