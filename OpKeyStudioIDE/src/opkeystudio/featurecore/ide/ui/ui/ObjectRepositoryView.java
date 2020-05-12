@@ -476,11 +476,11 @@ public class ObjectRepositoryView extends SuperComposite {
 		});
 
 		saveObject.addSelectionListener(new SelectionListener() {
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				saveAll();
 				OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+				CustomNotificationUtil.openInformationNotification("OpKey", "Saved!");
 			}
 
 			@Override
@@ -490,10 +490,8 @@ public class ObjectRepositoryView extends SuperComposite {
 		});
 
 		renameObject.addSelectionListener(new SelectionListener() {
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
 				renameFunction();
 			}
 
@@ -504,11 +502,9 @@ public class ObjectRepositoryView extends SuperComposite {
 		});
 
 		refreshObject.addSelectionListener(new SelectionListener() {
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				handleSaveOnRefresh();
-
 			}
 
 			@Override
@@ -518,7 +514,6 @@ public class ObjectRepositoryView extends SuperComposite {
 		});
 
 		deleteObject.addSelectionListener(new SelectionListener() {
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				deleteFunction();
@@ -693,12 +688,13 @@ public class ObjectRepositoryView extends SuperComposite {
 				toggleSaveButton(false);
 				objectRepositoryTree.renderObjectRepositories();
 				toggleSaveButton(false);
+				CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 			}
-
 			toggleDeleteAttributeButton(false);
 			toggleAddAttributeButton(false);
 			objectRepositoryTree.renderObjectRepositories();
 			getCodedFunctionView().refreshORCode();
+			CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 		} finally {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
@@ -775,6 +771,7 @@ public class ObjectRepositoryView extends SuperComposite {
 			obRepo.setModified(true);
 			toggleSaveButton(true);
 			objectRepositoryTree.refreshObjectRepositories();
+			CustomNotificationUtil.openInformationNotification("OpKey", "Renamed to " + obRepo.getName() + "!");
 		} finally {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
@@ -816,7 +813,7 @@ public class ObjectRepositoryView extends SuperComposite {
 			obRepo.setDeleted(true);
 			toggleSaveButton(true);
 			objectRepositoryTree.refreshObjectRepositories();
-
+			CustomNotificationUtil.openInformationNotification("OpKey", "Deleted " + obRepo.getName() + "!");
 		} finally {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
