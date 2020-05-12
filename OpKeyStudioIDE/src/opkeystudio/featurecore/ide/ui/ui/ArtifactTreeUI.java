@@ -423,7 +423,6 @@ public class ArtifactTreeUI extends SuperComposite {
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 						"Function Library Name", "Function Library " + getVarName());
 				if (inputValue == null) {
-					System.out.println("cancel pressed ");
 					return;
 				}
 				while (inputValue.trim().isEmpty()) {
@@ -431,17 +430,15 @@ public class ArtifactTreeUI extends SuperComposite {
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 							"Function Library Name ", "Function Library " + getVarName());
 					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
 						return;
 					}
 				}
 
 				boolean isUnique = isArtifactNameIsUnique(inputValue);
 				if (isUnique == false) {
-					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					CustomNotificationUtil.openInformationNotification("OpKey", "Name must be unique!");
 					return;
 				}
-
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
 			}
 

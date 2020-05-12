@@ -540,6 +540,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				selectedProperty.setDeleted(true);
 				objectAttributeTable.renderObjectAttributes();
 				toggleSaveButton(true);
+				CustomNotificationUtil.openInformationNotification("OpKey", "Property Deleted!");
 			}
 
 			@Override
@@ -587,6 +588,7 @@ public class ObjectRepositoryView extends SuperComposite {
 							objectAttributeTable.getObjectPropertiesData());
 					objectAttributeTable.getObjectPropertiesData().add(attrProp);
 					objectAttributeTable.renderObjectAttributes();
+					CustomNotificationUtil.openInformationNotification("OpKey", "Property Added!");
 				}
 			}
 
