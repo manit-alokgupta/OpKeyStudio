@@ -29,6 +29,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.dtoMaker.DRMaker;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class DataRepositoryTable extends CustomTable {
 	private DataRepositoryView parentDataRepositoryView;
@@ -366,9 +367,11 @@ public class DataRepositoryTable extends CustomTable {
 		String data = new MessageDialogs().openInputDialogAandGetValue("Enter ColumnName", "Enter the DR Column Name",
 				"Column-" + this.getColumnCount());
 		if (data == null) {
+			CustomNotificationUtil.openInformationNotification("OpKey", "Column is not added!");
 			return;
 		}
 		if (data.trim().isEmpty()) {
+			CustomNotificationUtil.openInformationNotification("OpKey", "Column Name can't be empty!");
 			return;
 		}
 		boolean isColumnNameExist = isDRColumnAlreadyExist(data);
@@ -384,6 +387,7 @@ public class DataRepositoryTable extends CustomTable {
 		getDrColumnAttributes().add(drColumn);
 		refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);
+		CustomNotificationUtil.openInformationNotification("OpKey", "Column " + data + " is added!");
 	}
 
 	public void deleteDRColumn() {
