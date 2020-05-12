@@ -137,7 +137,10 @@ public class TestObjectTable extends CustomTable {
 			if (flowStep.getKeyword().isKeywordContainsORObject()) {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { "Object", "", "", "" });
-				cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
+				cti.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
+			} else {
+				CustomTableItem cti = new CustomTableItem(this, 0);
+				cti.setText(new String[] { "This keyword does not need an object" });
 			}
 		}
 	}
