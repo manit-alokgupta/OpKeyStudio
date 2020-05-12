@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
@@ -31,6 +32,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.FLUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
@@ -80,9 +82,9 @@ public class InputTable extends CustomTable {
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
-		
+
 		cursor.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseUp(MouseEvent e) {
 				System.out.println(">>Cursor Focused");
@@ -152,17 +154,17 @@ public class InputTable extends CustomTable {
 				controlEditor.setEditor(text);
 
 			}
-			
+
 			@Override
 			public void mouseDown(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		renderAllBottomFactoryInputData();
@@ -190,6 +192,15 @@ public class InputTable extends CustomTable {
 
 	public void deleteBottomFactoryInputData() {
 		ComponentInputArgument componentInputArgument = getSelectedComponentInputArgument();
+		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
+		if (componentInputArgument.isAdded() == false) {
+			boolean used = new FLUsedBy().isFLIsUsed(artifact);
+			if (used) {
+				new MessageDialogs().openErrorDialog("OpKey",
+						"Unable to delete Input Paramater as FL is getting used in higher components.");
+				return;
+			}
+		}
 		componentInputArgument.setDeleted(true);
 		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 		refreshAllBottomFactoryInputData();

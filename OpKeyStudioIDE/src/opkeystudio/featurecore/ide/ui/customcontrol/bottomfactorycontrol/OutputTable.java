@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
@@ -30,6 +31,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.FLUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
@@ -82,7 +84,7 @@ public class OutputTable extends CustomTable {
 		controlEditor.grabVertical = true;
 
 		cursor.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseUp(MouseEvent e) {
 				int selectedColumn = cursor.getColumn();
@@ -137,15 +139,15 @@ public class OutputTable extends CustomTable {
 				controlEditor.setEditor(text);
 
 			}
-			
+
 			@Override
 			public void mouseDown(MouseEvent e) {
 
 			}
-			
+
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				
+
 			}
 		});
 		renderAllBottomFactoryOutputData();
@@ -360,6 +362,15 @@ public class OutputTable extends CustomTable {
 
 	public void deleteBottomFactoryOutputData() {
 		ComponentOutputArgument componentInputArgument = getSelectedComponentOutputArgument();
+		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
+		boolean used = new FLUsedBy().isFLIsUsed(artifact);
+		if (componentInputArgument.isAdded() == false) {
+			if (used) {
+				new MessageDialogs().openErrorDialog("OpKey",
+						"Unable to delete Output Paramater as FL is getting used in higher components.");
+				return;
+			}
+		}
 		componentInputArgument.setDeleted(true);
 		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 		refreshAllBottomFactoryOutputData();
