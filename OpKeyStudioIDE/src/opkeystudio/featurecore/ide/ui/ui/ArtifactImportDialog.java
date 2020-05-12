@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactExporting;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactTreeApi;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ProjectApi;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactImportDialog extends TitleAreaDialog {
 
@@ -77,6 +80,7 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		getShell().setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		setMessage("Select a Project And Select The Artifact to Import");
 		setTitle("Import From OpKey SAAS");
 		Composite area = (Composite) super.createDialogArea(parent);
@@ -373,6 +377,28 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 			public void widgetSelected(SelectionEvent e) {
 				ArtifactTreeNode selectedArtifact = getSelectedArtifactTreeNode();
 				Project project = getSelectedProject();
+				if (ServiceRepository.getInstance().getProjectName() != null) {
+					if (project.getName().equals(ServiceRepository.getInstance().getProjectName())) {
+
+					}
+				}
+				String projectPath = Utilities.getInstance().getProjectsFolder() + File.separator + project.getName();
+				if (new File(projectPath).exists()) {
+					new MessageDialogs().openErrorDialog("OpKey", String.format(
+							"Project name '%s' already exists. Please provide a different name.", project.getName()));
+
+					String projectName = new MessageDialogs().openInputDialogAandGetValue("OpKey",
+							"Enter New Project Name", "");
+					if (projectName == null) {
+						new MessageDialogs().openErrorDialog("OpKey", "Please provide valid project name.");
+						return;
+					}
+					if (projectName.trim().isEmpty()) {
+						new MessageDialogs().openErrorDialog("OpKey", "Please provide valid project name.");
+						return;
+					}
+					project.setName(projectName);
+				}
 				MessageDialogs msd = new MessageDialogs();
 				msd.openProgressDialog(getParentshell(), "Importing from OpKey SAAS. Please Wait", true,
 						new IRunnableWithProgress() {

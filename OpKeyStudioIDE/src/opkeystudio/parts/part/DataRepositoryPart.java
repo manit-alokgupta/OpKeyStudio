@@ -45,7 +45,7 @@ public class DataRepositoryPart {
 
 	@Persist
 	public void save() {
-		System.out.println("Console Window Save");
+		
 	}
 
 	@PersistState

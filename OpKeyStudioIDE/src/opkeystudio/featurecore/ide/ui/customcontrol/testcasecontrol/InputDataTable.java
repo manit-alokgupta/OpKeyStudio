@@ -78,6 +78,10 @@ public class InputDataTable extends CustomTable {
 	public InputDataTable getCurrentInstance() {
 		return this;
 	}
+	
+	public void clearAllData() {
+		this.removeAll();
+	}
 
 	private void init() {
 		String[] tableHeaders = { "Type", "Name", "Provide Data", " " };
@@ -121,7 +125,6 @@ public class InputDataTable extends CustomTable {
 				if (flowInputArgument.getComponentInputArgument() != null) {
 					dataType = flowInputArgument.getComponentInputArgument().getType();
 				}
-				System.out.println(">>DataType " + dataType);
 				boolean isNumberType = isDataTypeIntegerType(dataType);
 				boolean isBooleanType = isDataTypeBooleanrType(dataType);
 				int selectedColumn = cursor.getColumn();
@@ -166,7 +169,6 @@ public class InputDataTable extends CustomTable {
 								if (isNumberType) {
 									final String oldS = text.getText();
 									String newS = oldS.substring(0, e.start) + e.text + oldS.substring(e.end);
-									System.out.println(">> Text " + newS);
 									if (newS.trim().isEmpty()) {
 										return;
 									}
@@ -302,7 +304,6 @@ public class InputDataTable extends CustomTable {
 		if (flowInputArgument.getComponentInputArgument() != null) {
 			dataType = flowInputArgument.getComponentInputArgument().getType();
 		}
-		System.out.println(">>DataType " + dataType);
 		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			dataSourceType = flowInputArgument.getArg_datasource();
 		} else {
@@ -437,7 +438,6 @@ public class InputDataTable extends CustomTable {
 		}
 
 		if (dataSourceType == DataSource.ValueFromOutputArgument) {
-			System.out.println("Called ValueFromOutputArgument");
 			String flow_step_oa_id = null;
 			if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 				flow_step_oa_id = flowInputArgument.getComponentstep_oa_id();

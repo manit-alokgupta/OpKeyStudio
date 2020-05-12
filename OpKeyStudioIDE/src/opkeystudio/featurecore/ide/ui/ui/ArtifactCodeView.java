@@ -539,7 +539,7 @@ public class ArtifactCodeView extends SuperComposite {
 			List<MethodSource<JavaClassSource>> methods = classSource.getMethods();
 			String privateFunctions = "";
 			for (MethodSource<JavaClassSource> method : methods) {
-				if (!method.getName().equals("run") && !method.getName().equals("executeDefault") ) {
+				if (!method.getName().equals("run") && !method.getName().equals("executeDefault")) {
 					if (method.getBody() != null) {
 						privateFunctions += method.getBody();
 					}
@@ -561,6 +561,8 @@ public class ArtifactCodeView extends SuperComposite {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		bottomFactoryUi.getCFLInputTable().renderCFLInputParameters();
+		bottomFactoryUi.getCFLOutputTable().renderCFLOutputParameters();
 		new CFLTranspiler().transpile(getArtifact());
 
 		initCFLCode();

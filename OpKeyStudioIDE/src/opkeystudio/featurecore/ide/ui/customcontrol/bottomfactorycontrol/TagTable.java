@@ -150,9 +150,6 @@ public class TagTable extends CustomTable {
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
 				BottomFactoryTag bottomFactoryTag = (BottomFactoryTag) selectedTableItem.getControlData();
 				CustomText text = new CustomText(cursor, 0);
-				System.out.println("Column number:-" + cursor.getColumn());
-				System.out.println("Row number:-" + cursor.getRow());
-
 				text.addFocusListener(new FocusListener() {
 
 					@Override
@@ -304,7 +301,6 @@ public class TagTable extends CustomTable {
 			String artifactId = artifact.getId();
 			int lastPosition = 0;
 			BottomFactoryTag bottomFactoryTag = new BottomFactoryTag();
-			System.out.println(getTagData().size());
 			if ((getTagData().size()) == 0) {
 				lastPosition = (getTagData().size() - 1);
 

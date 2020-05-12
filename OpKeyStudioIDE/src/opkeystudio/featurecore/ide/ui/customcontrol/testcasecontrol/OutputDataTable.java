@@ -78,6 +78,10 @@ public class OutputDataTable extends CustomTable {
 		});
 	}
 
+	public void clearAllData() {
+		this.removeAll();
+	}
+	
 	private void initForSelectionTable() {
 		String[] tableHeaders = { "Output Variable Name", "Description" };
 		for (String header : tableHeaders) {
@@ -123,7 +127,7 @@ public class OutputDataTable extends CustomTable {
 				if (parentTestCaseView.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
 					flowOutputArgument = flowOutPitArgument.getFlow_step_oa_id();
 				}
-				System.out.println(flowOutputArgument);
+				
 				FlowInputArgument selectedFlowInputArgument = getParentTestCaseView().getInputDataTable()
 						.getSelectedFlowInputArgument();
 				if (selectedFlowInputArgument == null) {
@@ -276,10 +280,8 @@ public class OutputDataTable extends CustomTable {
 		if (flowStep == null) {
 			return;
 		}
-		System.out.println("2 Flow Step is Null");
 		this.initOutputTableArguments(flowStep);
 		this.removeAll();
-		System.out.println("Called Output variable " + flowOutputArgs.size());
 		for (int i = 0; i < flowOutputArgs.size(); i++) {
 			FlowOutputArgument flowOutPutArg = getFlowOutputArgs().get(i);
 			CustomTableItem cti = new CustomTableItem(this, 0);
@@ -301,7 +303,6 @@ public class OutputDataTable extends CustomTable {
 
 	public void renderOutPutTableAll(FlowStep flowStep) {
 		if (flowStep == null) {
-			System.out.println("1 Flow Step is Null");
 			return;
 		}
 		this.removeAll();
@@ -315,7 +316,6 @@ public class OutputDataTable extends CustomTable {
 		}
 		for (FlowOutputArgument flowOutPutArg : flowOutPutArgs) {
 			if (flowOutPutArg.getOutputvariablename() != null) {
-				System.out.println("OUTPUT VAR " + flowOutPutArg);
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { flowOutPutArg.getOutputvariablename(), "" });
 				cti.setControlData(flowOutPutArg);

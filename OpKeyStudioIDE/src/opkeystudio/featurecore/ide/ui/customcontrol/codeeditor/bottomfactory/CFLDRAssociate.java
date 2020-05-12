@@ -91,7 +91,6 @@ public class CFLDRAssociate extends CustomTable {
 		Artifact artifact = (Artifact) item.getControlData();
 		String artifactVariableName = artifact.getVariableName() + ".class";
 		for (File file : files) {
-			System.out.println(file.getName() + "     " + artifactVariableName);
 			if (file.getName().equals(artifactVariableName)) {
 				flag = true;
 				break;
@@ -124,7 +123,6 @@ public class CFLDRAssociate extends CustomTable {
 					List<CompileError> errors = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
 							.compileAllOpKeyLibs();
 
-					System.out.println("Errors Found " + errors.size());
 					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense(false);
 				}
 				if (associateOR.getSelection() == false) {
@@ -150,7 +148,6 @@ public class CFLDRAssociate extends CustomTable {
 					List<CompileError> errors = getParentBottomFactoryUI().getParentCodedFunctionView().getJavaEditor()
 							.compileAllOpKeyLibs();
 
-					System.out.println("Errors Found " + errors.size());
 					getParentBottomFactoryUI().getParentCodedFunctionView().refreshIntellisense(false);
 				}
 			}

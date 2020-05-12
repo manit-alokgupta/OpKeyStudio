@@ -79,7 +79,6 @@ public class EditorTools {
 
 	public List<File> getAllCFLOpKeyLibs() {
 		String path = getParentCodedFunctionView().getArtifactOpkeyDataLibraryPath();
-		System.out.println("Parent Path " + path);
 		return getAllFiles(new File(path), ".jar");
 	}
 
@@ -161,7 +160,6 @@ public class EditorTools {
 				CodeCompletionProvider.getInstance(getParentCodedFunctionView()).reinitProvider();
 				alreadyScannedClasses.clear();
 			}
-			System.out.println("Fetching Class Information");
 			URLClassLoader classLoader = getURLClassLoaderOfClasses(
 					opkeystudio.core.utils.Utilities.getInstance().getPluginName());
 			List<String> classNames = getAllClassNameFromAassociatedJar();

@@ -137,6 +137,7 @@ public class FlowApi {
 				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(flowStep.getComponent_id());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
+				System.out.println("Input Size "+fis.size()+"   CInput Size "+inputArgs.size());
 				flComp.setComponentInputArguments(inputArgs);
 				flComp.setComponentOutputArguments(outputArgs);
 				insertComponentInputArgument(flComp, fis);

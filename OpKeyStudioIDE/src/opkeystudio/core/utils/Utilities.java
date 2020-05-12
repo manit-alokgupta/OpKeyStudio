@@ -42,7 +42,11 @@ public class Utilities {
 	}
 
 	public void setShellCursor(int i) {
-		// defaultShell.setCursor(new Cursor(Display.getCurrent(), i));
+		defaultShell.setCursor(new Cursor(Display.getCurrent(), i));
+	}
+
+	public void setShellCursor(Shell shell, int i) {
+		shell.setCursor(new Cursor(shell.getDisplay(), i));
 	}
 
 	public EPartService getEpartService() {
@@ -63,15 +67,12 @@ public class Utilities {
 
 	public MPart getArtifactMPart(Artifact artifact) {
 		Collection<MPart> allParts = getAllParts();
-		System.out.println("All Parts " + allParts.size());
 		for (MPart mpart : allParts) {
-			System.out.println("Mpart Searching");
 			Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 			if (artifact_0 == null) {
 				continue;
 			}
 			if (artifact_0.getId().equals(artifact.getId())) {
-				System.out.println("ID FOUND " + artifact_0.getId());
 				return mpart;
 			}
 		}
@@ -80,15 +81,12 @@ public class Utilities {
 
 	public MPart getArtifactMPart(File codeViewFile) {
 		Collection<MPart> allParts = getAllParts();
-		System.out.println("All Parts " + allParts.size());
 		for (MPart mpart : allParts) {
-			System.out.println("Mpart Searching");
 			File artifact_0 = (File) mpart.getTransientData().get("opkeystudio.codeFile");
 			if (artifact_0 == null) {
 				continue;
 			}
 			if (artifact_0.getAbsolutePath().equals(codeViewFile.getAbsolutePath())) {
-				System.out.println("ID FOUND " + artifact_0.getAbsolutePath());
 				return mpart;
 			}
 		}
@@ -97,9 +95,7 @@ public class Utilities {
 
 	public MPart getGenericEditorMPart(File artifact) {
 		Collection<MPart> allParts = getAllParts();
-		System.out.println("All Parts " + allParts.size());
 		for (MPart mpart : allParts) {
-			System.out.println("Mpart Searching");
 			File artifact_0 = (File) mpart.getTransientData().get("opkeystudio.codeFile");
 			if (artifact_0 == null) {
 				continue;
@@ -122,9 +118,7 @@ public class Utilities {
 	public void closeAllMparts() {
 		try {
 			Collection<MPart> allParts = getAllParts();
-			System.out.println("All Parts " + allParts.size());
 			for (MPart mpart : allParts) {
-				System.out.println("Closing Already Opened Mparts");
 				Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
 				if (artifact_0 != null) {
 					EPartService partService = Utilities.getInstance().getEpartService();
@@ -171,10 +165,8 @@ public class Utilities {
 		try {
 			Utilities.getInstance().defaultShell.setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 
-			System.out.println("Opening Artifact " + artifact.getId());
 			MPart mpart = Utilities.getInstance().getArtifactMPart(artifact);
 			if (mpart != null) {
-				System.out.println("MPART Found");
 				EPartService partService = Utilities.getInstance().getEpartService();
 				partService.showPart(mpart, PartState.ACTIVATE);
 				return;
@@ -237,7 +229,6 @@ public class Utilities {
 	public void openSelectedFileInGenericCodeEditor(File selectedCodeFile) {
 		MPart mpart = Utilities.getInstance().getGenericEditorMPart(selectedCodeFile);
 		if (mpart != null) {
-			System.out.println("MPART Found");
 			EPartService partService = Utilities.getInstance().getEpartService();
 			partService.showPart(mpart, PartState.ACTIVATE);
 			return;

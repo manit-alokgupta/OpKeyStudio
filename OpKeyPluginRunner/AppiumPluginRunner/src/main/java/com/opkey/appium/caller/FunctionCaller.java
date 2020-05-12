@@ -26,8 +26,9 @@ import com.plugin.appium.exceptionhandlers.UnableToProcessADBCommandException;
 
 public class FunctionCaller {
 	public static <T> FunctionResult execute(Callable<T> task) {
-		FunctionResult functionResult = null;
 		String keywordName = Context.current().getFunctionCall().getFunction().getMethodName();
+		System.out.println("Executing: " + keywordName);
+		FunctionResult functionResult = null;
 		long startTime = System.currentTimeMillis();
 
 		try {
@@ -50,13 +51,6 @@ public class FunctionCaller {
 		String timeTaken = (System.currentTimeMillis() - startTime) + "ms";
 		System.out.println(keywordName + " time taken: " + timeTaken);
 		return functionResult;
-	}
-
-	public static <T> void execute(Runnable aMethod) {
-		long startTime = System.currentTimeMillis();
-		aMethod.run();
-		String timeTaken = (System.currentTimeMillis() - startTime) + "ms";
-		System.out.println("Void: " + timeTaken);
 	}
 
 	private static FunctionResult validateException(String keywordName, Exception exception) {
@@ -138,6 +132,9 @@ public class FunctionCaller {
 
 	private static File captureScreenshot() throws WebDriverException, ToolNotSetException, IOException,
 			UnableToProcessADBCommandException, InterruptedException, AdbNotFoundException {
+		
+		long startTime = System.currentTimeMillis();
+				
 		String fileName = UUID.randomUUID().toString() + ".png";
 		
 		File appiumFile = new Utils().takeScreenshotUsingAppium();
@@ -146,14 +143,11 @@ public class FunctionCaller {
 
 		System.out.println("New File: " + newFile.getPath());
 		
-		try {
-			Path copied = Paths.get(newFile.getPath());
-			Path originalPath = renamedFile.toPath();
-			Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		Path copied = Paths.get(newFile.getPath());
+		Path originalPath = renamedFile.toPath();
+		Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+		
+		System.out.println("screenshot time taken: " + (System.currentTimeMillis() - startTime));
 		return newFile;
 
 	}

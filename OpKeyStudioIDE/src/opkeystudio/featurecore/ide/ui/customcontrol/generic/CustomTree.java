@@ -92,6 +92,30 @@ public class CustomTree extends Tree {
 		return allitems;
 	}
 
+	public boolean isNameIsUnique(TreeItem rootitem, String name) {
+		TreeItem[] items = rootitem.getItems();
+		for (TreeItem item : items) {
+			if (item.getText().toLowerCase().equals(name.toLowerCase())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public String getUniqueTreeItemName(TreeItem rootitem, String name) {
+		boolean unique = isNameIsUnique(rootitem, name);
+		if (unique) {
+			return name;
+		}
+		for (int i = 1; i < 1000; i++) {
+			boolean unique1 = isNameIsUnique(rootitem, name + "(" + i + ")");
+			if (unique1) {
+				return name + "(" + i + ")";
+			}
+		}
+		return name;
+	}
+
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components

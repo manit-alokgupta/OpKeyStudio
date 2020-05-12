@@ -10,7 +10,6 @@ import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class ArtifactTranspilerAsync {
 	public void executeArtifactTranspilerAsync(Shell shell) {
-		System.out.println("Called");
 		MessageDialogs msd = new MessageDialogs();
 		msd.openProgressDialog(shell, "Converting Artifacts into Source Code", false, new IRunnableWithProgress() {
 

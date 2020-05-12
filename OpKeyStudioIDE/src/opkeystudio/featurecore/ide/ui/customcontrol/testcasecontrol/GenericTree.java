@@ -143,7 +143,7 @@ public class GenericTree extends CustomTree {
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 						getParentTestCaseView().toggleSaveButton(true);
 						CustomNotificationUtil.openInformationNotification("OpKey",
-								flowStep.getKeyword().getName() + " added!");
+								flowStep.getFunctionLibraryComponent().getName() + " added!");
 						return;
 					}
 
@@ -155,7 +155,7 @@ public class GenericTree extends CustomTree {
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 						getParentTestCaseView().toggleSaveButton(true);
 						CustomNotificationUtil.openInformationNotification("OpKey",
-								flowStep.getKeyword().getName() + " added!");
+								flowStep.getCodedFunctionArtifact().getName() + " added!");
 						return;
 					}
 

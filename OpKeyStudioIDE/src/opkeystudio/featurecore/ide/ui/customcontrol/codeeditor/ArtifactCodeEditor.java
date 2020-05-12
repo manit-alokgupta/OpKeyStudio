@@ -56,7 +56,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 	public ArtifactCodeEditor(Composite parent, ArtifactCodeView parentView, boolean enableIntellisense) {
 
 		super();
-		System.out.println("JC 1");
 		this.setCodeFunctionView(parentView);
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
@@ -80,7 +79,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 			boolean isgenericEditor) {
 
 		super();
-		System.out.println("JC 1");
 		this.setCodeFunctionView(parentView);
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
 		composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
@@ -104,7 +102,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 			boolean isgenericEditor, boolean cflEditor) {
 
 		super();
-		System.out.println("JC 1");
 		this.setCodeFunctionView(parentView);
 		this.setCflEditor(cflEditor);
 		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
@@ -172,7 +169,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 
 			@Override
 			public void autoCompleteUpdate(AutoCompletionEvent arg0) {
-				System.out.println(arg0.getEventType().toString());
 				Thread thread = new Thread(new Runnable() {
 
 					@Override
@@ -183,7 +179,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 							e.printStackTrace();
 						}
 						if (arg0.getEventType().toString().equals("POPUP_HIDDEN")) {
-							System.out.println("Resetting Intellisense Data");
 							if (isCflEditor()) {
 								CompletionProvider provider = GenericEditorIntellisense.getCFLInstance();
 								autoCompletion.setCompletionProvider(provider);
@@ -219,7 +214,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-					System.out.println("Saving");
 					Display.getDefault().asyncExec(new Runnable() {
 
 						@Override
@@ -231,7 +225,6 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 				}
 
 				if ((e.getKeyCode() == KeyEvent.VK_SPACE) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-					System.out.println("Pressed CTRL AND SPACE");
 					initMethodIntellisense();
 					return;
 				}

@@ -76,7 +76,7 @@ public class AndroidVNCLauncher {
 
 				Boolean androidvMinicapSoStaus = AndroidVNCUtil.checkIfMobileContainsAndroidVncServer(deviceId);
 				if (!androidvMinicapSoStaus) {
-					AndroidVNCUtil.pushScreenshotMinicapSo(deviceId, deviceAbi, deviceAbi);
+					AndroidVNCUtil.pushScreenshotMinicapSo(deviceId, deviceSdk, deviceAbi);
 					AndroidVNCUtil.grantPermissionToMinicapSo(deviceId);
 
 				}

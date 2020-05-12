@@ -48,7 +48,6 @@ public class CodeViewTree extends CustomTree {
 
 			@Override
 			public void handleGlobalEvent() {
-				System.out.println("Global Code View Tree Loader Called");
 				renderCodeViewTree();
 			}
 		});
@@ -119,7 +118,6 @@ public class CodeViewTree extends CustomTree {
 		if (selectedCodeFile == null) {
 			return;
 		}
-		System.out.println(">> " + selectedCodeFile.getAbsolutePath());
 		Utilities.getInstance().openSelectedFileInGenericCodeEditor(selectedCodeFile);
 	}
 

@@ -275,21 +275,21 @@ public class TestCaseView extends SuperComposite {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		toolBar.setBounds(0, 0, 64, 64);
 
-		keywordButton = new ToolItem(toolBar, SWT.NONE);
+		keywordButton = new ToolItem(toolBar, SWT.CHECK);
 		keywordButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TEXT_KEYWORD_ICON));
 		keywordButton.setText("Keyword");
 		keywordButton.setToolTipText("Keyword");
-
+		keywordButton.setSelection(true);
 		new ToolItem(toolBar, SWT.SEPARATOR);
 
-		functionLibraryButton = new ToolItem(toolBar, SWT.NONE);
+		functionLibraryButton = new ToolItem(toolBar, SWT.CHECK);
 		functionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 		functionLibraryButton.setText("Function Library");
 		functionLibraryButton.setToolTipText("Function Library");
 
 		new ToolItem(toolBar, SWT.SEPARATOR);
 
-		codedFunctionLibraryButton = new ToolItem(toolBar, SWT.NONE);
+		codedFunctionLibraryButton = new ToolItem(toolBar, SWT.CHECK);
 		codedFunctionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		codedFunctionLibraryButton.setText("Coded Function Library");
 		codedFunctionLibraryButton.setToolTipText("Coded Function Library");
@@ -404,7 +404,7 @@ public class TestCaseView extends SuperComposite {
 		} else {
 			TabItem componentArgInputTable = new TabItem(datasTabHolder, SWT.NONE);
 			componentArgInputTable
-			.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			componentArgInputTable.setText("Data Input");
 			componentArgInputTable.setToolTipText("Data Input");
 			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder,
@@ -426,7 +426,7 @@ public class TestCaseView extends SuperComposite {
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
 		globalVariableTable = new GlobalVariableTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
@@ -790,6 +790,9 @@ public class TestCaseView extends SuperComposite {
 				try {
 					toggleSaveButton(true);
 					flowStepTable.deleteStep();
+					inputDataTable.clearAllData();
+					outputDataTable.clearAllData();
+					testObjectTable.clearAllData();
 					CustomNotificationUtil.openInformationNotification("OpKey", "Selected Step Deleted!");
 				} catch (SQLException | IOException e1) {
 					e1.printStackTrace();
@@ -834,6 +837,9 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				keywordButton.setSelection(true);
+				functionLibraryButton.setSelection(false);
+				codedFunctionLibraryButton.setSelection(false);
 				searchBox.setMessage("Search Keyword");
 				searchBox.setToolTipText("Search Keyword");
 				allDataTreeView.initKeywords("");
@@ -850,6 +856,9 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				keywordButton.setSelection(false);
+				functionLibraryButton.setSelection(true);
+				codedFunctionLibraryButton.setSelection(false);
 				searchBox.setMessage("Search Function Library");
 				searchBox.setToolTipText("Search Function Library");
 				allDataTreeView.initFunctionLibraries("");
@@ -865,6 +874,9 @@ public class TestCaseView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				keywordButton.setSelection(false);
+				functionLibraryButton.setSelection(false);
+				codedFunctionLibraryButton.setSelection(true);
 				searchBox.setMessage("Search Coded Function Library");
 				searchBox.setToolTipText("Search Coded Function Library");
 				allDataTreeView.initCodedFunctionLibraries("");
@@ -915,6 +927,8 @@ public class TestCaseView extends SuperComposite {
 			}
 			return false;
 		}
+		flowStepTable.renderFlowSteps();
+		getCodedFunctionView().refreshTCFLCode();
 		return true;
 	}
 
@@ -942,6 +956,8 @@ public class TestCaseView extends SuperComposite {
 			}
 			new FunctionLibraryConstruct().saveComponentInputArguments(componentInputArgs);
 			new FunctionLibraryConstruct().saveComponentOutputArguments(componentOutputArgs);
+			bottomFactory.getInputTable().renderAllBottomFactoryInputData();
+			bottomFactory.getOutputTable().renderAllBottomFactoryOutputData();
 		}
 		new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
 		flowStepTable.renderFlowSteps();
@@ -953,6 +969,9 @@ public class TestCaseView extends SuperComposite {
 	private boolean isComponentInputArgumentNameAreUnique(List<ComponentInputArgument> componentInputArguments) {
 		List<String> variableNames = new ArrayList<String>();
 		for (ComponentInputArgument ci : componentInputArguments) {
+			if (ci.isDeleted()) {
+				continue;
+			}
 			if (variableNames.contains(ci.getName().toLowerCase())) {
 				return false;
 			}
@@ -964,6 +983,9 @@ public class TestCaseView extends SuperComposite {
 	private boolean isComponentOutputArgumentNameAreUnique(List<ComponentOutputArgument> componentInputArguments) {
 		List<String> variableNames = new ArrayList<String>();
 		for (ComponentOutputArgument co : componentInputArguments) {
+			if (co.isDeleted()) {
+				continue;
+			}
 			if (variableNames.contains(co.getName().toLowerCase())) {
 				return false;
 			}

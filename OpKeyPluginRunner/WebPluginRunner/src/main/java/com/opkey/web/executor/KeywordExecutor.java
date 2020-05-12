@@ -52,6 +52,7 @@ public class KeywordExecutor {
 		
 		try {
 			functionResult = (FunctionResult) task.call();
+			printFunctionResult(functionResult);
 			ReportHelper.addReportStep(methodName, functionResult);
 		} catch (Exception e) {
 			functionResult.setMessage(e.getMessage());
@@ -141,5 +142,4 @@ public class KeywordExecutor {
 			System.out.println("Message: " + functionResult.getMessage());
 		}
 	}
-
 }

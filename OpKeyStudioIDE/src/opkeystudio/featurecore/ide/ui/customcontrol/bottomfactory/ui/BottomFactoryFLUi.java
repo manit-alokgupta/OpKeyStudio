@@ -278,18 +278,22 @@ public class BottomFactoryFLUi extends Composite {
 	}
 
 	public void toggleMoveUpInputButton(boolean status) {
+		inputTable.toggleMoveUpMenuItem(status);
 		moveUpInputItem.setEnabled(status);
 	}
 
 	public void toggleMoveDownInputButton(boolean status) {
+		inputTable.toggleMoveDownMenuItem(status);
 		moveDownInputItem.setEnabled(status);
 	}
 
 	public void toggleMoveUpOutputButton(boolean status) {
+		outputTable.toggleMoveUpMenuItem(status);
 		moveUpOutputItem.setEnabled(status);
 	}
 
 	public void toggleMoveDownOutputButton(boolean status) {
+		outputTable.toggleMoveDownMenuItem(status);
 		moveDownOutputItem.setEnabled(status);
 	}
 
@@ -298,10 +302,12 @@ public class BottomFactoryFLUi extends Composite {
 	}
 
 	public void toggleDeleteInputButton(boolean status) {
+		inputTable.toggleDeleteMenuItem(status);
 		deleteInputItem.setEnabled(status);
 	}
 
 	public void toggleDeleteOutputButton(boolean status) {
+		outputTable.toggleDeleteMenuItem(status);
 		deleteOutputItem.setEnabled(status);
 	}
 
@@ -339,8 +345,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				inputTable.moveFl_BottomFactoryInputUp(inputTable.getSelectedInputParemeter(),
-						inputTable.getPrevInputParemeter());
+				inputTable.moveFl_BottomFactoryInputUp();
 
 			}
 
@@ -355,8 +360,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				inputTable.moveFl_BottomFactoryInputDown(inputTable.getSelectedInputParemeter(),
-						inputTable.getNextInputParemeter());
+				inputTable.moveFl_BottomFactoryInputDown();
 
 			}
 
@@ -400,8 +404,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				outputTable.moveFl_BottomFactoryOutputUp(outputTable.getSelectedComponentOutputArgument(),
-						outputTable.getPrevOutputParemeter());
+				outputTable.moveFl_BottomFactoryOutputUp();
 			}
 
 			@Override
@@ -415,8 +418,7 @@ public class BottomFactoryFLUi extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				outputTable.moveFl_BottomFactoryOutputDown(outputTable.getSelectedComponentOutputArgument(),
-						outputTable.getNextOutputParemeter());
+				outputTable.moveFl_BottomFactoryOutputDown();
 			}
 
 			@Override

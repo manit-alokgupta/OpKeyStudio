@@ -41,6 +41,10 @@ public class TestObjectTable extends CustomTable {
 		this.setParentTestCaseView(parentView);
 	}
 
+	public void clearAllData() {
+		this.removeAll();
+	}
+
 	private void init() {
 		String[] tableHeaders = { "Name", "Provide Object", "Object Type", "Action" };
 		for (String header : tableHeaders) {

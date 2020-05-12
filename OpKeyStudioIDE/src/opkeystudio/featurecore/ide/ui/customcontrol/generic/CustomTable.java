@@ -111,7 +111,6 @@ public class CustomTable extends Table {
 				return;
 			}
 			if (cursor != null) {
-				System.out.println("Table Cursor Found");
 				cursor.setSelection(this.getSelectedRowIndex(), column);
 				cursor.notifyListeners(SWT.Selection, null);
 			}
@@ -126,7 +125,6 @@ public class CustomTable extends Table {
 			try {
 				int rowNo = this.getSelectedRowIndex();
 				selectTableRow(rowNo);
-				System.out.println(">>Selecting Row " + rowNo);
 				cursor.setSelection(rowNo + 1, column);
 				cursor.notifyListeners(SWT.Selection, null);
 				this.notifyListeners(SWT.Selection, null);
@@ -138,7 +136,6 @@ public class CustomTable extends Table {
 
 	public void selectColumnByCursor(TableCursor cursor, int columnIndex) {
 		if (cursor != null) {
-			System.out.println("Table Cursor Found");
 			cursor.setSelection(this.getSelectedRowIndex(), columnIndex);
 			cursor.notifyListeners(SWT.Selection, null);
 		}
@@ -195,7 +192,6 @@ public class CustomTable extends Table {
 
 	public void setColumnTextWithCursor(TableCursor cursor, int selectedColumn, String text) {
 		if (cursor == null) {
-			System.out.println("Cursor is Null");
 			return;
 		}
 		if (cursor.getRow() == null) {
@@ -209,7 +205,6 @@ public class CustomTable extends Table {
 
 	public String getColumnTextWithCursor(TableCursor cursor, int selectedColumn) {
 		if (cursor == null) {
-			System.out.println("Cursor is Null");
 			return "";
 		}
 		if (cursor.getRow() == null) {

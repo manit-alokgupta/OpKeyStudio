@@ -235,7 +235,6 @@ public class DataRepositoryTable extends CustomTable {
 					public void widgetSelected(SelectionEvent e) {
 						TableColumn[] columns = getColumns();
 						int selectedIndex = getColumnIndex(columns, column);
-						System.out.println(">>Column Index " + selectedIndex);
 						selectColumnByCursor(cursor, selectedIndex);
 					}
 
@@ -383,7 +382,6 @@ public class DataRepositoryTable extends CustomTable {
 		DRColumnAttributes drColumn = new DRMaker().createDRColumnWithCells(getParentDataRepositoryView().getArtifact(),
 				getSelectedDRColumnAttribute(), getItemCount(), getDrColumnAttributes());
 		drColumn.setName(data);
-		System.out.println("DR Cell Size " + drColumn.getDrCellAttributes().size());
 		getDrColumnAttributes().add(drColumn);
 		refreshAllDRDetails();
 		getParentDataRepositoryView().toggleSaveButton(true);

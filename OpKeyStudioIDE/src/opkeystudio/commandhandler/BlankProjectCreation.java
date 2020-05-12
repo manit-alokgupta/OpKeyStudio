@@ -25,9 +25,9 @@ public class BlankProjectCreation {
 	@Execute
 	public void execute(Shell shell) throws IOException {
 		try {
-			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
+			Utilities.getInstance().setShellCursor(shell, SWT.CURSOR_WAIT);
 			Utilities.getInstance().setDefaultShell(shell);
-			String projectName = new MessageDialogs().openInputDialogAandGetValue("OpKey",
+			String projectName = new MessageDialogs().openInputDialogAandGetValue("New Project",
 					"Please Provide The Project Name", "");
 			if (projectName == null) {
 				return;
@@ -92,7 +92,7 @@ public class BlankProjectCreation {
 			}
 			new Utilities().closeAllMparts();
 		} finally {
-			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
+			Utilities.getInstance().setShellCursor(shell, SWT.CURSOR_ARROW);
 		}
 
 	}

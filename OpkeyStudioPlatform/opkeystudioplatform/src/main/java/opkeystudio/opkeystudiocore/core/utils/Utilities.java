@@ -293,11 +293,6 @@ public class Utilities {
 		return dateString;
 	}
 
-	public static void main(String[] args) {
-		String date = Utilities.getInstance().getUpdateCurrentDateTime();
-		System.out.println(date);
-	}
-
 	public String getCurrentTimeZone() {
 		return "Coordinated Universal Time";
 	}

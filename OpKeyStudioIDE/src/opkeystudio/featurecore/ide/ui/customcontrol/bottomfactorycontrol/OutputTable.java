@@ -20,20 +20,25 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryFLUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomCombo;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
+import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.FLUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
-import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.OpKeyVariables;
 
 public class OutputTable extends CustomTable {
@@ -41,11 +46,17 @@ public class OutputTable extends CustomTable {
 
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
 	private List<ComponentOutputArgument> bottomFactoryOutputs = new ArrayList<ComponentOutputArgument>();
+	private TableCursor cursor;
+	private MenuItem addNewMenuItem;
+	private MenuItem deleteMenuItem;
+	private MenuItem moveUpMenuItem;
+	private MenuItem moveDownMenuItem;
 
 	public OutputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
 		this.setParentBottomFactoryFLUi(parentView);
 		init();
+		initContextMenu();
 	}
 
 	private void init() {
@@ -76,15 +87,18 @@ public class OutputTable extends CustomTable {
 			}
 		});
 
-		TableCursor cursor = new TableCursor(this, 0);
+		cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
 
 		cursor.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseUp(MouseEvent e) {
+				if (e.button == 3) {
+					return;
+				}
 				int selectedColumn = cursor.getColumn();
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
 				ComponentOutputArgument componentOutputArgument = (ComponentOutputArgument) selectedTableItem
@@ -121,6 +135,7 @@ public class OutputTable extends CustomTable {
 					}
 				});
 				if (selectedColumn == 0) {
+					text.setFocus();
 					if (componentOutputArgument.getName() != null) {
 						text.setText(componentOutputArgument.getName());
 					} else {
@@ -128,6 +143,7 @@ public class OutputTable extends CustomTable {
 					}
 				}
 				if (selectedColumn == 3) {
+					text.setFocus();
 					if (componentOutputArgument.getDescription() != null) {
 						text.setText(componentOutputArgument.getDescription());
 					} else {
@@ -137,18 +153,95 @@ public class OutputTable extends CustomTable {
 				controlEditor.setEditor(text);
 
 			}
-			
+
 			@Override
 			public void mouseDown(MouseEvent e) {
 
 			}
-			
+
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				
+
 			}
 		});
 		renderAllBottomFactoryOutputData();
+	}
+
+	private void initContextMenu() {
+		Menu menu = new Menu(this);
+		this.setMenu(menu);
+		cursor.setMenu(menu);
+		addNewMenuItem = new MenuItem(menu, 0);
+		new MenuItem(menu, SWT.SEPARATOR);
+		deleteMenuItem = new MenuItem(menu, 0);
+		new MenuItem(menu, SWT.SEPARATOR);
+		moveUpMenuItem = new MenuItem(menu, 0);
+		new MenuItem(menu, SWT.SEPARATOR);
+		moveDownMenuItem = new MenuItem(menu, 0);
+
+		addNewMenuItem.setText("Add New");
+		deleteMenuItem.setText("Delete");
+		moveUpMenuItem.setText("Move Up");
+		moveDownMenuItem.setText("Move Down");
+
+		addNewMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_ICON));
+		deleteMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		moveUpMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_UP_ICON));
+		moveDownMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
+		addNewMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				addBlankOutputPrameter();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		deleteMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				deleteBottomFactoryOutputData();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveUpMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				moveFl_BottomFactoryOutputUp();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		moveDownMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				moveFl_BottomFactoryOutputDown();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	private void selectRow(int index) {
@@ -255,8 +348,9 @@ public class OutputTable extends CustomTable {
 		selectDefaultRow();
 	}
 
-	public void moveFl_BottomFactoryOutputUp(ComponentOutputArgument bottomFactoryOutput1,
-			ComponentOutputArgument bottomFactoryOutput2) {
+	public void moveFl_BottomFactoryOutputUp() {
+		ComponentOutputArgument bottomFactoryOutput1 = getSelectedOutputParemeter();
+		ComponentOutputArgument bottomFactoryOutput2 = getPrevOutputParemeter();
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = bottomFactoryOutput1.getPosition();
 		int fpos2 = bottomFactoryOutput2.getPosition();
@@ -271,8 +365,9 @@ public class OutputTable extends CustomTable {
 
 	}
 
-	public void moveFl_BottomFactoryOutputDown(ComponentOutputArgument bottomFactoryOutput1,
-			ComponentOutputArgument bottomFactoryOutput2) {
+	public void moveFl_BottomFactoryOutputDown() {
+		ComponentOutputArgument bottomFactoryOutput1 = getSelectedOutputParemeter();
+		ComponentOutputArgument bottomFactoryOutput2 = getNextOutputParemeter();
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = bottomFactoryOutput1.getPosition();
 		int fpos2 = bottomFactoryOutput2.getPosition();
@@ -360,6 +455,15 @@ public class OutputTable extends CustomTable {
 
 	public void deleteBottomFactoryOutputData() {
 		ComponentOutputArgument componentInputArgument = getSelectedComponentOutputArgument();
+		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
+		boolean used = new FLUsedBy().isFLIsUsed(artifact);
+		if (componentInputArgument.isAdded() == false) {
+			if (used) {
+				new MessageDialogs().openErrorDialog("OpKey",
+						"Unable to delete Output Paramater as FL is getting used in higher components.");
+				return;
+			}
+		}
 		componentInputArgument.setDeleted(true);
 		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 		refreshAllBottomFactoryOutputData();
@@ -383,6 +487,22 @@ public class OutputTable extends CustomTable {
 			return null;
 		}
 		return (ComponentOutputArgument) cti.getControlData();
+	}
+
+	public void toggleAddNewMenuItem(boolean status) {
+		addNewMenuItem.setEnabled(status);
+	}
+
+	public void toggleDeleteMenuItem(boolean status) {
+		deleteMenuItem.setEnabled(status);
+	}
+
+	public void toggleMoveUpMenuItem(boolean status) {
+		moveUpMenuItem.setEnabled(status);
+	}
+
+	public void toggleMoveDownMenuItem(boolean status) {
+		moveDownMenuItem.setEnabled(status);
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {

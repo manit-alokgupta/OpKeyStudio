@@ -137,8 +137,8 @@ public class ORObjectMaker {
 		new ObjectRepositoryApi().saveORObjects(artifact, orobjects);
 	}
 
-	public ORObject createORObjectReplica(Artifact artifact, ORObject selectedORObject, ORObject pasteORObject,
-			List<ORObject> allORObjects) {
+	public ORObject createORObjectReplica(Artifact artifact, String orName, ORObject selectedORObject,
+			ORObject pasteORObject, List<ORObject> allORObjects) {
 		int selectedORObjectIndex = allORObjects.indexOf(selectedORObject);
 		int selectedORObjectPosition = 0;
 		if (selectedORObject != null) {
@@ -151,6 +151,7 @@ public class ORObjectMaker {
 		}
 
 		ORObject orobject = pasteORObject.clone();
+		orobject.setName(orName);
 		orobject.setObject_id(Utilities.getInstance().getUniqueUUID(""));
 		orobject.setParent_object_id(selectedORObject.getObject_id());
 		orobject.setPosition(selectedORObjectPosition + 5);

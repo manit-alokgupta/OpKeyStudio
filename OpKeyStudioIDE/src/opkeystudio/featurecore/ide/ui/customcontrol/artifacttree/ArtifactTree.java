@@ -70,7 +70,6 @@ public class ArtifactTree extends CustomTree {
 			return;
 		}
 		ArtifactTreeItem selectedTreeItem = (ArtifactTreeItem) this.getSelection()[0];
-		System.out.println("selectedTreeItem");
 		populateArtifact(selectedTreeItem);
 	}
 
@@ -311,6 +310,9 @@ public class ArtifactTree extends CustomTree {
 
 	public void filterArtifactTree(String searchValue) {
 		List<Artifact> artifacts = this.getArtifactsData();
+		if (artifacts.size() == 0) {
+			return;
+		}
 		for (Artifact artifact : artifacts) {
 			if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
 				if (artifact.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {

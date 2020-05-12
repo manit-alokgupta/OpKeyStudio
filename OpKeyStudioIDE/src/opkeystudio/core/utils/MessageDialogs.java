@@ -9,6 +9,7 @@ import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class MessageDialogs {
 	private ProgressMonitorDialog progressDialog;
@@ -16,6 +17,7 @@ public class MessageDialogs {
 	public String openInputDialogAandGetValue(String dialogTitle, String dialogContent, String defaultValue) {
 		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), dialogTitle, dialogContent,
 				defaultValue, null);
+		input.setDefaultImage(ResourceManager.getPluginImage("OpKeyStudio","icons/pcloudystudio/opkey-16x16.png"));
 
 		if (input.open() != InputDialog.OK) {
 			return null;
