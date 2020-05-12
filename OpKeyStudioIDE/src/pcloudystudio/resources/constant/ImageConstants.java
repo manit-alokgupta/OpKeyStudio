@@ -20,6 +20,9 @@ public class ImageConstants {
 	public static final Image IMG_13_HELP;
 	public static final Image IMG_16_TEST_OBJECT_MOBILE;
 
+	public static final Image IMG_8_CLOSE_NOTIFICATION;
+	public static final Image IMG_48_INFORMATION_NOTIFICATION;
+
 	static {
 		IMG_16_ADD_CAPABILITY = ImageManager.getImage("add_capability_16.png");
 		IMG_16_ADD_TO_TABLE = ImageManager.getImage("add_to_table_16.png");
@@ -32,5 +35,8 @@ public class ImageConstants {
 		IMG_APPIUM_LOGO = ImageManager.getImage("appium_logo.jpg");
 		IMG_13_HELP = ImageManager.getImage("help_13.png");
 		IMG_16_TEST_OBJECT_MOBILE = ImageManager.getImage("test_object_mobile-16x16.png");
+
+		IMG_8_CLOSE_NOTIFICATION = ImageManager.getImage("Notifier/close-8x8.png");
+		IMG_48_INFORMATION_NOTIFICATION = ImageManager.getImage("Notifier/information-48x48.png");
 	}
 }

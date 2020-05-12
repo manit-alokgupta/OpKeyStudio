@@ -89,8 +89,7 @@ public class DeviceConfigurationDialog extends Dialog {
 
 	private void createContents() {
 		shlDeviceConfiguration = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.SYSTEM_MODAL | SWT.BORDER);
-		shlDeviceConfiguration
-		.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
+		shlDeviceConfiguration.setImage(ImageConstants.IMG_16_OPKEY_LOGO);
 		shlDeviceConfiguration.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		shlDeviceConfiguration.setSize(624, 262);
 		shlDeviceConfiguration.setText("Configuration Dashboard");
@@ -131,7 +130,7 @@ public class DeviceConfigurationDialog extends Dialog {
 		btnHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				CustomNotificationUtil.openInformationNotification("Help", "Please contact support@opkey.com");
+				CustomNotificationUtil.openInformationNotification("OpKey", "Please contact support@opkey.com");
 			}
 		});
 		btnHelp.setBounds(305, 64, 18, 18);
@@ -234,7 +233,7 @@ public class DeviceConfigurationDialog extends Dialog {
 						applicationPathText.setText(file.toString());
 						applicationPathText.setEditable(true);
 					} else {
-						CustomNotificationUtil.openErrorNotification("Error",
+						CustomNotificationUtil.openErrorNotification("OpKey",
 								"Application APK file you provided doesn't exist!");
 					}
 				}
@@ -270,10 +269,10 @@ public class DeviceConfigurationDialog extends Dialog {
 					lblApplicationIsRequiredMessage.setVisible(applicationPathText.getText().isEmpty() ? true : false);
 				} else if (AppiumConfiguration.getPort() == null || AppiumConfiguration.getHostAddress() == null
 						|| AppiumConfiguration.getAppiumDirectory() == null) {
-					CustomNotificationUtil.openInformationNotification("Please Note",
+					CustomNotificationUtil.openInformationNotification("OpKey",
 							"Appium Settings are not configured! Go-To: Tools->Appium Settings.");
 				} else if (!exists) {
-					CustomNotificationUtil.openErrorNotification("Error", "Application file you entered is not valid!");
+					CustomNotificationUtil.openErrorNotification("OpKey", "Application file you entered is not valid!");
 					lblApplicationIsRequiredMessage.setVisible(false);
 				} else {
 					try {
@@ -364,7 +363,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					CustomNotificationUtil.openErrorNotification("Error",
+					CustomNotificationUtil.openErrorNotificationDialog("Error",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
 									+ ex.getMessage());
 				}

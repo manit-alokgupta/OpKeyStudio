@@ -123,7 +123,7 @@ public class AppiumSettingsDialog extends Dialog {
 		shlAppiumSettings.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlAppiumSettings.setSize(669, 623);
 		shlAppiumSettings.setText("Appium Settings");
-		
+
 		Label label = new Label(shlAppiumSettings, SWT.SEPARATOR | SWT.HORIZONTAL);
 		label.setBounds(0, 0, 663, 2);
 
@@ -222,7 +222,7 @@ public class AppiumSettingsDialog extends Dialog {
 					appiumDirectory.setText(dir);
 					if (!appiumDirectory.getText()
 							.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-						CustomNotificationUtil.openErrorNotification("Error",
+						CustomNotificationUtil.openErrorNotification("OpKey",
 								"Invalid Appium Directory! Please select valid Appium Directory.");
 						appiumDirectory.setText("");
 					}
@@ -619,7 +619,7 @@ public class AppiumSettingsDialog extends Dialog {
 						shlAppiumSettings.close();
 						openDeviceConfigurationDialog();
 					} else {
-						CustomNotificationUtil.openInformationNotification("Please Note", "Settings Saved Successfully!");
+						CustomNotificationUtil.openInformationNotification("OpKey", "Settings Saved Successfully!");
 					}
 				}
 			}
@@ -706,11 +706,11 @@ public class AppiumSettingsDialog extends Dialog {
 
 	public Boolean validate() {
 		if (serverAddress.getText().isEmpty()) {
-			CustomNotificationUtil.openInformationNotification("Please Note", "Host Address can't be empty!");
+			CustomNotificationUtil.openInformationNotification("OpKey", "Host Address can't be empty!");
 			serverAddress.setFocus();
 			return false;
 		} else if (!validateLocalHost(serverAddress.getText())) {
-			CustomNotificationUtil.openErrorNotification("Error", "Invalid Host Address!");
+			CustomNotificationUtil.openErrorNotification("OpKey", "Invalid Host Address!");
 			serverAddress.setFocus();
 			return false;
 		} else if (portNumber.getText().isEmpty()) {
@@ -756,7 +756,7 @@ public class AppiumSettingsDialog extends Dialog {
 
 	public Boolean validateCapabilityNameAndValue(String capName, String capValue, String capType) {
 		if (capName.isEmpty() || capName.equals("")) {
-			CustomNotificationUtil.openErrorNotification("Error", "Capability Name can't be empty!");
+			CustomNotificationUtil.openErrorNotification("OpKey", "Capability Name can't be empty!");
 			return false;
 		}
 		if (capValue.isEmpty() || capValue.equals("")) {

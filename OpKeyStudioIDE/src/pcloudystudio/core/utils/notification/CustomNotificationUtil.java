@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.wb.swt.ResourceManager;
 
+import pcloudystudio.core.utils.notification.NotificationColorsFactory.NotificationTheme;
 import pcloudystudio.resources.constant.ImageConstants;
 
 public class CustomNotificationUtil {
@@ -36,21 +37,17 @@ public class CustomNotificationUtil {
 
 	public static void notifyMe(String title, String message) {
 		// TODO: Check this with Notify and check disposed case of implementation
-
+		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
 	}
 
 	public static void openInformationNotification(String title, String message) {
-		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 2, 0,
-				"OK");
-		mDialog.open();
+		// TODO: 2 for Information
+		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
 	}
 
 	public static void openErrorNotification(String title, String message) {
-		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 1, 0,
-				"OK");
-		mDialog.open();
+		// TODO: 1 for Error
+		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
 	}
 
 	public static int openConfirmDialog(String title, String message) {
@@ -69,6 +66,20 @@ public class CustomNotificationUtil {
 			return null;
 		}
 		return input.getValue();
+	}
+
+	public static void openErrorNotificationDialog(String title, String message) {
+		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
+				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 1, 0,
+				"OK");
+		mDialog.open();
+	}
+
+	public static void openInformationNotificationDialog(String title, String message) {
+		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
+				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 2, 0,
+				"OK");
+		mDialog.open();
 	}
 
 }

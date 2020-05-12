@@ -269,7 +269,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 						getMobileDeviceExecutionDetail().setDeviceABI(MobileDeviceUtil.getDeviceProperty(deviceID,
 								MobileDeviceUtil.ANDROID_DEVICE_ABI_PROPERTY));
 					} catch (Exception ex) {
-						CustomNotificationUtil.openErrorNotification("Error", ex.getMessage());
+						CustomNotificationUtil.openErrorNotificationDialog("OpKey", ex.getMessage());
 					}
 
 					ExecutionSession session = getExecutionSession();
@@ -300,7 +300,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		try {
 			initPluginNames();
 		} catch (SetupConfigurationException e1) {
-			CustomNotificationUtil.openErrorNotification("OpKey", e1.getMessage());
+			CustomNotificationUtil.openErrorNotificationDialog("OpKey", e1.getMessage());
 		}
 		return area;
 	}
@@ -368,7 +368,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			}
 			androidDeviceSelectionDropDown.select(0);
 		} catch (Exception ex) {
-			CustomNotificationUtil.openErrorNotification("Error",
+			CustomNotificationUtil.openErrorNotificationDialog("OpKey",
 					"Please Connect Your Device First" + "\n" + ex.getMessage());
 		}
 	}
@@ -409,7 +409,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 						} catch (IOException ex) {
 
-							CustomNotificationUtil.openErrorNotification("OpKey", ex.getMessage());
+							CustomNotificationUtil.openErrorNotificationDialog("OpKey", ex.getMessage());
 						}
 
 					}
