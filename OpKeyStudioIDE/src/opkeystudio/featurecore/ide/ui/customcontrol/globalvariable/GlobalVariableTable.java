@@ -373,7 +373,6 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setExternallyupdatable(true);
 		addGlobalVariable(gv);
 		renderGlobalVariables();
-		parentGlobalVariableView.toggleSaveToolItem(true);
 	}
 
 	public void deleteGlobalVariableStep() {
