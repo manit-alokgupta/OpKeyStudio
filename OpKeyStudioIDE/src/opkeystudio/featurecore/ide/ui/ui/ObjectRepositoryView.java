@@ -557,9 +557,9 @@ public class ObjectRepositoryView extends SuperComposite {
 				if (AppiumConfiguration.getHostAddress() == null
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 					AppiumConfiguration
-					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+							.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 					AppiumConfiguration
-					.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+							.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 					AppiumConfiguration.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				}
@@ -630,8 +630,11 @@ public class ObjectRepositoryView extends SuperComposite {
 				if (pasteORobject == null) {
 					return;
 				}
-				ORObject orobjectReplica = new ORObjectMaker().createORObjectReplica(getArtifact(), selectedORObject,
-						pasteORobject, objectRepositoryTree.getAllORObjects());
+				String objectName = pasteORobject.getName();
+				objectName = objectRepositoryTree.getUniqueTreeItemName(selectedItem, objectName);
+				System.out.println(">>Object Name " + objectName);
+				ORObject orobjectReplica = new ORObjectMaker().createORObjectReplica(getArtifact(), objectName,
+						selectedORObject, pasteORobject, objectRepositoryTree.getAllORObjects());
 				objectRepositoryTree.getAllORObjects().add(orobjectReplica);
 				objectRepositoryTree.refreshObjectRepositories();
 				togglePasteMenuItem(false);
@@ -832,7 +835,7 @@ public class ObjectRepositoryView extends SuperComposite {
 			if (item.getORObject().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
 				item.getORObject()
-				.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getORObject().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();
