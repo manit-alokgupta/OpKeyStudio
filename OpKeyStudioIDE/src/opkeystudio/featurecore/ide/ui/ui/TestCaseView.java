@@ -404,7 +404,7 @@ public class TestCaseView extends SuperComposite {
 		} else {
 			TabItem componentArgInputTable = new TabItem(datasTabHolder, SWT.NONE);
 			componentArgInputTable
-					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+			.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			componentArgInputTable.setText("Data Input");
 			componentArgInputTable.setToolTipText("Data Input");
 			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder,
@@ -426,7 +426,7 @@ public class TestCaseView extends SuperComposite {
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
 		globalVariableTable = new GlobalVariableTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
@@ -918,12 +918,21 @@ public class TestCaseView extends SuperComposite {
 	private boolean handleSaveOnRefresh() {
 		if (itemSave.isEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
-			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
-			if (status) {
+			int status = CustomNotificationUtil.openConfirmDialog("OpKey", "Do you want to Save changes?");
+			if (status == 0) {
 				saveAll();
 				toggleSaveButton(false);
 				CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 				return true;
+			}
+			int revertChangesStatus = CustomNotificationUtil.openConfirmDialog("OpKey",
+					"Do you want to Revert changes?");
+			if (revertChangesStatus == 0) {
+				flowStepTable.revertAll();
+				flowStepTable.renderFlowSteps();
+				getCodedFunctionView().refreshTCFLCode();
+				CustomNotificationUtil.openInformationNotification("OpKey", "Changes reverted!");
+				return false;
 			}
 			return false;
 		}

@@ -53,6 +53,7 @@ public class FlowStepTable extends CustomTable {
 	private MenuItem movedownMenuItem;
 	private MenuItem setToRunMenuItem;
 	private MenuItem skipfromRunMenuItem;
+	private List<FlowStep> deletedFlowSteps;
 
 	public FlowStepTable(Composite parent, int style) {
 		super(parent, style);
@@ -64,6 +65,7 @@ public class FlowStepTable extends CustomTable {
 		init();
 		initContextMenu();
 		this.setParentTestCaseView(parentView);
+		deletedFlowSteps = new ArrayList<FlowStep>();
 	}
 
 	private void disableMenuItem() {
@@ -159,7 +161,7 @@ public class FlowStepTable extends CustomTable {
 		movedownMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		setToRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SET_TO_RUN_ICON));
 		skipfromRunMenuItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SKIP_FROM_RUN_ICON));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SKIP_FROM_RUN_ICON));
 		copyMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -680,6 +682,19 @@ public class FlowStepTable extends CustomTable {
 			return flowTableItem.getFlowStepeData();
 		}
 		return null;
+	}
+
+	public void revertAll() {
+		for (FlowStep flowStep : getDeletedFlowSteps()) {
+			flowStep.setAdded(true);
+			flowStep.setModified(true);
+			flowStep.setDeleted(false);
+			getParentTestCaseView().toggleSaveButton(true);
+		}
+	}
+
+	public List<FlowStep> getDeletedFlowSteps() {
+		return deletedFlowSteps;
 	}
 
 	public FlowStep getNextFlowStep() {
