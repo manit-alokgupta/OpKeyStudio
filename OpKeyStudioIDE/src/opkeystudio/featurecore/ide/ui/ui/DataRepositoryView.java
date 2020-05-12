@@ -278,6 +278,7 @@ public class DataRepositoryView extends SuperComposite {
 				try {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.moveColumnLeft();
+					CustomNotificationUtil.openInformationNotification("OpKey", "Selected column is moved left!");
 				} finally {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
@@ -296,6 +297,7 @@ public class DataRepositoryView extends SuperComposite {
 				try {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.moveColumnRight();
+					CustomNotificationUtil.openInformationNotification("OpKey", "Selected column is moved right!");
 				} finally {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
@@ -333,7 +335,7 @@ public class DataRepositoryView extends SuperComposite {
 				try {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.moveRowUp();
-					CustomNotificationUtil.openInformationNotification("OpKey", "Row is moved up!");
+					CustomNotificationUtil.openInformationNotification("OpKey", "Selected row is moved up!");
 				} finally {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
@@ -352,7 +354,7 @@ public class DataRepositoryView extends SuperComposite {
 				try {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					dataRepositoryTable.moveRowDown();
-					CustomNotificationUtil.openInformationNotification("OpKey", "Row is moved down!");
+					CustomNotificationUtil.openInformationNotification("OpKey", "Selected row is moved down!");
 				} finally {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
