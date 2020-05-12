@@ -34,6 +34,7 @@ import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.MemberSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
@@ -357,9 +358,24 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				if (isAdded == false) {
 					parseConstructors(classSource);
 				}
+				addInputParametrsOfMethods(classSource);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
+		}
+	}
+
+	private void addInputParametrsOfMethods(JavaClassSource _class) {
+		try {
+			List<MethodSource<JavaClassSource>> methods = _class.getMethods();
+			for (MethodSource<JavaClassSource> method : methods) {
+				List<ParameterSource<JavaClassSource>> params = method.getParameters();
+				for (ParameterSource<JavaClassSource> param : params) {
+					this.addFieldTypeBasicCompletion(param.getName(), param.getName(), param.getType().getName());
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
