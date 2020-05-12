@@ -20,7 +20,7 @@ public class ImportLocalDB {
 	@Execute
 	public void execute(Shell shell) throws IOException {
 		try {
-			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
+			Utilities.getInstance().setShellCursor(shell, SWT.CURSOR_WAIT);
 			Utilities.getInstance().setDefaultShell(shell);
 			FileDialog dialog = new FileDialog(shell, SWT.OPEN);
 			dialog.setFilterExtensions(filterExt);
@@ -46,6 +46,11 @@ public class ImportLocalDB {
 
 				if (!new File(projectFolderPath).exists()) {
 					new File(projectFolderPath).mkdir();
+				} else {
+					new MessageDialogs().openErrorDialog("OpKey",
+							String.format("Project name '%s' already exists. Please provide a different name.",
+									ServiceRepository.getInstance().getProjectName()));
+					return;
 				}
 
 				projectFolderPath = projectFolderPath + File.separator + "artifacts.db";
@@ -54,7 +59,7 @@ public class ImportLocalDB {
 			}
 
 		} finally {
-			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
+			Utilities.getInstance().setShellCursor(shell, SWT.CURSOR_ARROW);
 		}
 
 	}

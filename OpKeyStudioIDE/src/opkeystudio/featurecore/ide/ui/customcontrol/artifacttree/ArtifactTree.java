@@ -311,6 +311,9 @@ public class ArtifactTree extends CustomTree {
 
 	public void filterArtifactTree(String searchValue) {
 		List<Artifact> artifacts = this.getArtifactsData();
+		if (artifacts.size() == 0) {
+			return;
+		}
 		for (Artifact artifact : artifacts) {
 			if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
 				if (artifact.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
