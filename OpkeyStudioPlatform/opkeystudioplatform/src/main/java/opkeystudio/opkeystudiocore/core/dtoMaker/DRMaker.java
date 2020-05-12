@@ -105,7 +105,6 @@ public class DRMaker {
 	public void addDRRow(Artifact artifact, int selectedRowNo, List<DRColumnAttributes> columnAttributes) {
 		for (DRColumnAttributes columnAttribute : columnAttributes) {
 			if (columnAttribute.getDrCellAttributes().size() == 0) {
-				System.out.println("NO DR CELL FOUND " + columnAttribute.getName());
 				continue;
 			}
 			DRCellAttributes selectedDRCell = columnAttribute.getDrCellAttributes().get(selectedRowNo);
