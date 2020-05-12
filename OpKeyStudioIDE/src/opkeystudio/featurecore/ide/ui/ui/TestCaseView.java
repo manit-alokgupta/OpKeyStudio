@@ -759,7 +759,7 @@ public class TestCaseView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				flowStepTable.moveStepUp();
-
+				CustomNotificationUtil.openInformationNotification("OpKey", "Moved Step Up!");
 			}
 
 			@Override
@@ -774,6 +774,7 @@ public class TestCaseView extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				flowStepTable.moveStepDown();
 				toggleSaveButton(true);
+				CustomNotificationUtil.openInformationNotification("OpKey", "Moved Step Down!");
 			}
 
 			@Override
@@ -789,6 +790,7 @@ public class TestCaseView extends SuperComposite {
 				try {
 					toggleSaveButton(true);
 					flowStepTable.deleteStep();
+					CustomNotificationUtil.openInformationNotification("OpKey", "Selected Step Deleted!");
 				} catch (SQLException | IOException e1) {
 					e1.printStackTrace();
 				}
@@ -806,6 +808,7 @@ public class TestCaseView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				saveAll();
+				CustomNotificationUtil.openInformationNotification("OpKey", "Saved!");
 			}
 
 			@Override
@@ -907,6 +910,7 @@ public class TestCaseView extends SuperComposite {
 			if (status) {
 				saveAll();
 				toggleSaveButton(false);
+				CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 				return true;
 			}
 			return false;
