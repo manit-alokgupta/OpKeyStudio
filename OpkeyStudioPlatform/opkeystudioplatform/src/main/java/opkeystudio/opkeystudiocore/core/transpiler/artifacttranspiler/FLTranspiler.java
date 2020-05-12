@@ -88,7 +88,7 @@ public class FLTranspiler extends AbstractTranspiler {
 			}
 			String dataType = new VariableComposer().convertOpKeyDataTypeToJavaDataType(cia.getType());
 			String defaultValue = cia.getDefaultvalue();
-			String convertedDefaultValue = getDataAsDataType(dataType, defaultValue);
+			String convertedDefaultValue = new VariableComposer().getDataAsDataType(dataType, defaultValue);
 			defaultArguments += convertedDefaultValue;
 		}
 
@@ -108,44 +108,10 @@ public class FLTranspiler extends AbstractTranspiler {
 		} else if (!returnType.equals("void")) {
 			methodBodyCode += "return null;";
 		}
+		System.out.println(defaultMethodBody);
 		defaultmethod.setName("executeDefault").setPublic().setBody(defaultMethodBody).addThrows("Exception");
 		method.setName("execute").setPublic().setBody(methodBodyCode).addThrows("Exception");
 		return class1;
-	}
-
-	private String getDataAsDataType(String dataType, String data) {
-		if (dataType.equals("int")) {
-			if (data == null) {
-				return "0";
-			}
-			return data;
-		}
-		if (dataType.equals("double")) {
-			if (data == null) {
-				return "0";
-			}
-			return data;
-		}
-		if (dataType.equals("float")) {
-			if (data == null) {
-				return "0";
-			}
-			return data;
-		}
-		if (dataType.equals("boolean")) {
-			if (data == null) {
-				return "false";
-			}
-			return data;
-		}
-
-		if (dataType.equals("String")) {
-			if (data == null) {
-				data = "";
-			}
-			return "\"" + data + "\"";
-		}
-		return data;
 	}
 
 }
