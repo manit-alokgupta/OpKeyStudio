@@ -78,6 +78,10 @@ public class OutputDataTable extends CustomTable {
 		});
 	}
 
+	public void clearAllData() {
+		this.removeAll();
+	}
+	
 	private void initForSelectionTable() {
 		String[] tableHeaders = { "Output Variable Name", "Description" };
 		for (String header : tableHeaders) {

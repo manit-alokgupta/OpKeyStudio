@@ -78,6 +78,10 @@ public class InputDataTable extends CustomTable {
 	public InputDataTable getCurrentInstance() {
 		return this;
 	}
+	
+	public void clearAllData() {
+		this.removeAll();
+	}
 
 	private void init() {
 		String[] tableHeaders = { "Type", "Name", "Provide Data", " " };

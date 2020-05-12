@@ -790,6 +790,9 @@ public class TestCaseView extends SuperComposite {
 				try {
 					toggleSaveButton(true);
 					flowStepTable.deleteStep();
+					inputDataTable.clearAllData();
+					outputDataTable.clearAllData();
+					testObjectTable.clearAllData();
 					CustomNotificationUtil.openInformationNotification("OpKey", "Selected Step Deleted!");
 				} catch (SQLException | IOException e1) {
 					e1.printStackTrace();
