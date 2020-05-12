@@ -465,11 +465,9 @@ public class ArtifactTreeUI extends SuperComposite {
 		});
 
 		deleteMenuItem.addSelectionListener(new SelectionListener() {
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Artifact artifact = artifactTree.getSelectedArtifact();
-
 				boolean status = new MessageDialogs().openConfirmDialog("Delete",
 						"Do you want to delete " + artifact.getName() + "?");
 				if (!status) {
@@ -486,6 +484,7 @@ public class ArtifactTreeUI extends SuperComposite {
 				new ArtifactApi().deleteArtifact(artifact);
 				Utilities.getInstance().closeArtifactPart(artifact);
 				artifactTree.renderArtifacts();
+				CustomNotificationUtil.openInformationNotification("OpKey", artifact.getName() + " deleted!");
 			}
 
 			@Override
