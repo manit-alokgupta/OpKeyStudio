@@ -116,124 +116,7 @@ public class InputDataTable extends CustomTable {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				CustomTableItem row = (CustomTableItem) cursor.getRow();
-				FlowInputArgument flowInputArgument = (FlowInputArgument) row.getControlData();
-				String dataType = "";
-				if (flowInputArgument.getKeywordInputArgument() != null) {
-					dataType = flowInputArgument.getKeywordInputArgument().getDatatype();
-				}
-				if (flowInputArgument.getComponentInputArgument() != null) {
-					dataType = flowInputArgument.getComponentInputArgument().getType();
-				}
-				boolean isNumberType = isDataTypeIntegerType(dataType);
-				boolean isBooleanType = isDataTypeBooleanrType(dataType);
-				int selectedColumn = cursor.getColumn();
-
-				if (selectedColumn == 2) {
-
-					if (isBooleanType) {
-						disposeControlEditor(editor);
-						Button checkedButton = new Button(cursor, SWT.CHECK);
-						checkedButton.addSelectionListener(new SelectionListener() {
-
-							@Override
-							public void widgetSelected(SelectionEvent e) {
-								String status = convertBooleanToString(checkedButton.getSelection());
-								new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
-										flowInputArgument, status, DataSource.StaticValue);
-								getParentTestCaseView().toggleSaveButton(true);
-								row.setText(selectedColumn, status);
-							}
-
-							@Override
-							public void widgetDefaultSelected(SelectionEvent e) {
-								// TODO Auto-generated method stub
-
-							}
-						});
-						if (flowInputArgument.getStaticvalue() != null) {
-							boolean checkedStatus = convertStringToBoolean(flowInputArgument.getStaticvalue());
-							checkedButton.setSelection(checkedStatus);
-							editor.setEditor(checkedButton);
-						} else {
-							checkedButton.setSelection(false);
-							editor.setEditor(checkedButton);
-						}
-					} else {
-						disposeControlEditor(editor);
-						Text text = new Text(cursor, 0);
-						text.addVerifyListener(new VerifyListener() {
-
-							@Override
-							public void verifyText(VerifyEvent e) {
-								if (isNumberType) {
-									final String oldS = text.getText();
-									String newS = oldS.substring(0, e.start) + e.text + oldS.substring(e.end);
-									if (newS.trim().isEmpty()) {
-										return;
-									}
-									boolean isNumber = true;
-									try {
-										Float.parseFloat(newS);
-									} catch (NumberFormatException ex) {
-										isNumber = false;
-									}
-
-									try {
-										Integer.parseInt(newS);
-									} catch (NumberFormatException ex) {
-										isNumber = false;
-									}
-
-									try {
-										Double.parseDouble(newS);
-									} catch (NumberFormatException ex) {
-										isNumber = false;
-									}
-
-									if (!isNumber) {
-										e.doit = false;
-									}
-								}
-							}
-						});
-
-						text.addFocusListener(new FocusListener() {
-
-							@Override
-							public void focusLost(FocusEvent e) {
-								text.dispose();
-							}
-
-							@Override
-							public void focusGained(FocusEvent e) {
-
-							}
-						});
-
-						text.addModifyListener(new ModifyListener() {
-
-							@Override
-							public void modifyText(ModifyEvent e) {
-								new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
-										flowInputArgument, text.getText(), DataSource.StaticValue);
-								getParentTestCaseView().toggleSaveButton(true);
-								row.setText(selectedColumn, text.getText());
-							}
-						});
-						if (flowInputArgument.getStaticvalue() != null) {
-							text.setText(flowInputArgument.getStaticvalue());
-							editor.setEditor(text);
-							text.setFocus();
-						} else {
-							text.setText("");
-							editor.setEditor(text);
-							text.setFocus();
-						}
-					}
-				} else {
-					disposeControlEditor(editor);
-				}
+				handleInputData(cursor, editor);
 			}
 
 			@Override
@@ -246,6 +129,128 @@ public class InputDataTable extends CustomTable {
 
 			}
 		});
+	}
+
+	private void handleInputData(TableCursor cursor, ControlEditor editor) {
+		CustomTableItem row = (CustomTableItem) cursor.getRow();
+		FlowInputArgument flowInputArgument = (FlowInputArgument) row.getControlData();
+		String dataType = "";
+		if (flowInputArgument.getKeywordInputArgument() != null) {
+			dataType = flowInputArgument.getKeywordInputArgument().getDatatype();
+		}
+		if (flowInputArgument.getComponentInputArgument() != null) {
+			dataType = flowInputArgument.getComponentInputArgument().getType();
+		}
+		boolean isNumberType = isDataTypeIntegerType(dataType);
+		boolean isBooleanType = isDataTypeBooleanrType(dataType);
+		int selectedColumn = cursor.getColumn();
+
+		if (selectedColumn == 2) {
+
+			if (isBooleanType) {
+				disposeControlEditor(editor);
+				Button checkedButton = new Button(cursor, SWT.CHECK);
+				checkedButton.addSelectionListener(new SelectionListener() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						String status = convertBooleanToString(checkedButton.getSelection());
+						new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
+								flowInputArgument, status, DataSource.StaticValue);
+						getParentTestCaseView().toggleSaveButton(true);
+						row.setText(selectedColumn, status);
+						checkedButton.dispose();
+					}
+
+					@Override
+					public void widgetDefaultSelected(SelectionEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+				if (flowInputArgument.getStaticvalue() != null) {
+					boolean checkedStatus = convertStringToBoolean(flowInputArgument.getStaticvalue());
+					checkedButton.setSelection(checkedStatus);
+					editor.setEditor(checkedButton);
+				} else {
+					checkedButton.setSelection(false);
+					editor.setEditor(checkedButton);
+				}
+			} else {
+				disposeControlEditor(editor);
+				Text text = new Text(cursor, 0);
+				text.addVerifyListener(new VerifyListener() {
+
+					@Override
+					public void verifyText(VerifyEvent e) {
+						if (isNumberType) {
+							final String oldS = text.getText();
+							String newS = oldS.substring(0, e.start) + e.text + oldS.substring(e.end);
+							if (newS.trim().isEmpty()) {
+								return;
+							}
+							boolean isNumber = true;
+							try {
+								Float.parseFloat(newS);
+							} catch (NumberFormatException ex) {
+								isNumber = false;
+							}
+
+							try {
+								Integer.parseInt(newS);
+							} catch (NumberFormatException ex) {
+								isNumber = false;
+							}
+
+							try {
+								Double.parseDouble(newS);
+							} catch (NumberFormatException ex) {
+								isNumber = false;
+							}
+
+							if (!isNumber) {
+								e.doit = false;
+							}
+						}
+					}
+				});
+
+				text.addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						text.dispose();
+					}
+
+					@Override
+					public void focusGained(FocusEvent e) {
+
+					}
+				});
+
+				text.addModifyListener(new ModifyListener() {
+
+					@Override
+					public void modifyText(ModifyEvent e) {
+						new FlowApiUtilities().setFlowInputData(getParentTestCaseView().getArtifact(),
+								flowInputArgument, text.getText(), DataSource.StaticValue);
+						getParentTestCaseView().toggleSaveButton(true);
+						row.setText(selectedColumn, text.getText());
+					}
+				});
+				if (flowInputArgument.getStaticvalue() != null) {
+					text.setText(flowInputArgument.getStaticvalue());
+					editor.setEditor(text);
+					text.setFocus();
+				} else {
+					text.setText("");
+					editor.setEditor(text);
+					text.setFocus();
+				}
+			}
+		} else {
+			disposeControlEditor(editor);
+		}
 	}
 
 	private void disposeControlEditor(ControlEditor editor) {
