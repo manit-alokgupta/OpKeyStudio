@@ -58,9 +58,6 @@ public class ObjectConverter {
 		Set<String> propertyNames = allProperties.keySet();
 		for (String propertyName : propertyNames) {
 			String propertyValue = allProperties.get(propertyName);
-			
-			System.out.println(propertyName + " @: " + propertyValue );
-			
 			Property property = new Property();
 			property.setName(propertyName);
 			property.setValue(propertyValue);
