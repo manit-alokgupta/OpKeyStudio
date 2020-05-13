@@ -336,20 +336,9 @@ public class OpKeyAppiumKeywords {
 		device.setOperatingSystem("Android");
 		try {
 			device = SessionHandler.getSessionInfo().mobileDevice;
-			System.out.println("Name " + device.getDisplayName());
-			System.out.println("os " + device.getOperatingSystem());
-			System.out.println("sn " + device.getSerialNumber());
-			System.out.println("ver " + device.getVersion());
 			device.setVersion(device.getVersion());
 
 			// Method_Launch_ChromeBrowser
-
-			/*
-			 * MobileDevice device = new MobileDevice(); device.setVersion("8.1");
-			 * System.out.println(device); device.setSerialNumber("PL2GAR4832302659");
-			 * device.setOperatingSystem("Android");
-			 * device.setDisplayName("Android Device");
-			 */
 
 			Context.session().getSettings().put("AppiumServer",
 					"C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
@@ -380,13 +369,6 @@ public class OpKeyAppiumKeywords {
 		final MobileDevice device = SessionHandler.getSessionInfo().getMobileDevice();
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(device.getDisplayName(), androidApplicationPathh); // Method_SetPickerValue
-		
-
-		System.out.println("@AppPath: " + androidApplicationPathh);
-		System.out.println("Name " + device.getDisplayName());
-		System.out.println("os " + device.getOperatingSystem());
-		System.out.println("sn " + device.getSerialNumber());
-		System.out.println("ver " + device.getVersion());
 
 		MobileApplication mobileApplication = new MobileApplication();
 		mobileApplication.setApplicationPath(androidApplicationPathh);

@@ -31,10 +31,7 @@ public class ReportHelper {
 	
 	public static List<String> getParameters() {
 		List<String> parameterList = new ArrayList<String>();
-		
-		System.out.println("ObjectArg: " + Context.current().getFunctionCall().getObjectArguments());
 		ObjectArguments orArguments = Context.current().getFunctionCall().getObjectArguments();
-		
 		
 		if(orArguments !=null && orArguments.getObjectArgument() !=null) {
 			for(ObjectArgument objectArg: orArguments.getObjectArgument()) {
@@ -48,10 +45,7 @@ public class ReportHelper {
 				parameterList.add(dataArgument.getArgumentName() + ":" + dataArgument.getValue());
 			}
 		}
-		
-		
-		
-		
+
 		return parameterList;
 	}
 }

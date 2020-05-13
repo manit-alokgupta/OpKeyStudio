@@ -47,10 +47,10 @@ public class ContextInitiator {
 		}
 		Context.current().getFunctionCall().setDataArguments(dataarguments);
 		
+		
 	}
 	
 	private static void setArgumentType(DataArgument dataArgument, Object arg) {
-		System.out.println(arg.toString());
 		if(arg instanceof String) {
 			dataArgument.setDataType("String");
 		}else if(arg instanceof Integer) {

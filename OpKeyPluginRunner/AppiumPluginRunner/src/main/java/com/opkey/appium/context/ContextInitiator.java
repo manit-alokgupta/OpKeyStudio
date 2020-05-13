@@ -46,7 +46,6 @@ public class ContextInitiator {
 	}
 
 	private static void setArgumentType(DataArgument dataArgument, Object arg) {
-		System.out.println(arg.toString());
 		if (arg instanceof String) {
 			dataArgument.setDataType("String");
 		} else if (arg instanceof Integer) {
