@@ -14,6 +14,13 @@ import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
 public class CFLCompilationResultTable extends CustomTable {
 	private CodedFunctionBottomFactoryUI parentBottomFactoryUI;
+	private CodeEditorBottomFactory parentCodeEditorBottomFactoryUI;
+
+	public CFLCompilationResultTable(Composite parent, int style, CodeEditorBottomFactory bottomFactoryUi) {
+		super(parent, style);
+		setParentCodeEditorBottomFactoryUI(bottomFactoryUi);
+		init();
+	}
 
 	public CFLCompilationResultTable(Composite parent, int style, CodedFunctionBottomFactoryUI bottomFactoryUi) {
 		super(parent, style);
@@ -67,6 +74,14 @@ public class CFLCompilationResultTable extends CustomTable {
 			ti.setText(new String[] { error.getKind().toString(), String.valueOf(error.getLineNumber()),
 					error.getMessage() });
 		}
+	}
+
+	public CodeEditorBottomFactory getParentCodeEditorBottomFactoryUI() {
+		return parentCodeEditorBottomFactoryUI;
+	}
+
+	public void setParentCodeEditorBottomFactoryUI(CodeEditorBottomFactory parentCodeEditorBottomFactoryUI) {
+		this.parentCodeEditorBottomFactoryUI = parentCodeEditorBottomFactoryUI;
 	}
 
 }
