@@ -40,6 +40,7 @@ public class ImportLocalDB {
 					return;
 				}
 				ServiceRepository.getInstance().setProjectName(projectName);
+				Utilities.getInstance().getDefaultShell().setText("OpKey Studio- " + ServiceRepository.getInstance().getProjectName());
 				String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 						.getProjectsFolder() + File.separator + ServiceRepository.getInstance().getProjectName();
 
