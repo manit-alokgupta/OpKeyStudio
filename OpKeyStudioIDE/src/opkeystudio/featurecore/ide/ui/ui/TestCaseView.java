@@ -945,24 +945,20 @@ public class TestCaseView extends SuperComposite {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 			if (itemSave.isEnabled()) {
 				Utilities.getInstance().activateMpart(getCurrentMpart());
-				int status = CustomNotificationUtil.openConfirmDialog("OpKey", "Do you want to Save changes?");
+				int status = CustomNotificationUtil.openConfirmDialog(flowStepTable.getShell(), "OpKey",
+						"Do you want to Save changes?");
+				System.out.println("Result " + status);
+				if (status == 2) {
+					return false;
+				}
 				if (status == 0) {
 					saveAll();
 					toggleSaveButton(false);
 					CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 					return true;
 				}
-				int revertChangesStatus = CustomNotificationUtil.openConfirmDialog("OpKey",
-						"Do you want to Revert changes?");
-				if (revertChangesStatus == 0) {
-					flowStepTable.revertAll();
-					flowStepTable.renderFlowSteps();
-					getCodedFunctionView().refreshTCFLCode();
-					CustomNotificationUtil.openInformationNotification("OpKey", "Changes reverted!");
-					return false;
-				}
-				return false;
 			}
+			toggleSaveButton(false);
 			flowStepTable.renderFlowSteps();
 			getCodedFunctionView().refreshTCFLCode();
 			return true;
