@@ -14,6 +14,9 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
@@ -437,6 +440,15 @@ public class FlowStepTable extends CustomTable {
 	private void addTestCaseTableEditor(FlowStepTableItem item) {
 		addStepIcons(item);
 		FlowStep attrProperty = item.getFlowStepeData();
+		if (attrProperty.getKeyword() != null) {
+			Font boldFont = new Font(item.getDisplay(), new FontData("Arial", 10, SWT.BOLD));
+			String keyWordName = attrProperty.getKeyword().getName();
+			if (keyWordName.equals("For") || keyWordName.equals("If") || keyWordName.equals("Else")
+					|| keyWordName.equals("EndIf") || keyWordName.equals("Next")) {
+				item.setForeground(1, new Color(item.getDisplay(), 0, 0, 255));
+				item.setFont(1, boldFont);
+			}
+		}
 		TableEditor editor1 = getTableEditor();
 		CustomButton button = new CustomButton(this, SWT.CHECK);
 		button.setSelection(attrProperty.isShouldrun());
@@ -562,7 +574,7 @@ public class FlowStepTable extends CustomTable {
 			getParentTestCaseView().toggleMovedownButton(false);
 			getParentTestCaseView().toggleMoveupButton(false);
 		}
-		
+
 		selectDefaultRow();
 	}
 
@@ -624,7 +636,7 @@ public class FlowStepTable extends CustomTable {
 		this.getFlowStepsData().add(flowStep);
 		this.refreshFlowSteps();
 		selectNextRowByCursor(getTableCursor(), 1);
-		//getParentTestCaseView().toggleSaveButton(true);
+		// getParentTestCaseView().toggleSaveButton(true);
 	}
 
 	public void deleteStep() throws JsonParseException, JsonMappingException, SQLException, IOException {
