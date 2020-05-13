@@ -67,14 +67,14 @@ public class AndroidVNCLauncher {
 					AndroidVNCUtil.grantPermissionToServer(deviceId);
 
 				}
-				Boolean androidvMinicapStaus = AndroidVNCUtil.checkIfMobileContainsAndroidVncServer(deviceId);
+				Boolean androidvMinicapStaus = AndroidVNCUtil.checkIfMobileContainsAndroidMinicapFile(deviceId);
 				if (!androidvMinicapStaus) {
 					AndroidVNCUtil.pushScreenshotMinicap(deviceId, deviceAbi);
 					AndroidVNCUtil.grantPermissionToMinicap(deviceId);
 
 				}
 
-				Boolean androidvMinicapSoStaus = AndroidVNCUtil.checkIfMobileContainsAndroidVncServer(deviceId);
+				Boolean androidvMinicapSoStaus = AndroidVNCUtil.checkIfMobileContainsAndroidMinicapSoFile(deviceId);
 				if (!androidvMinicapSoStaus) {
 					AndroidVNCUtil.pushScreenshotMinicapSo(deviceId, deviceSdk, deviceAbi);
 					AndroidVNCUtil.grantPermissionToMinicapSo(deviceId);
