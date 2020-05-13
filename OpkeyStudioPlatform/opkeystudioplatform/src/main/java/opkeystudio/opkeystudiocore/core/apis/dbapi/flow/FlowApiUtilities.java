@@ -417,4 +417,15 @@ public class FlowApiUtilities {
 		return flowOutputObjects;
 
 	}
+
+	public String getFlowInputArgumentDataType(FlowInputArgument flowInputArgument) {
+		String dataType = "";
+		if (flowInputArgument.getKeywordInputArgument() != null) {
+			dataType = flowInputArgument.getKeywordInputArgument().getDatatype();
+		}
+		if (flowInputArgument.getComponentInputArgument() != null) {
+			dataType = flowInputArgument.getComponentInputArgument().getType();
+		}
+		return dataType;
+	}
 }

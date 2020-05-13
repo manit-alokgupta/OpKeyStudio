@@ -489,4 +489,20 @@ public class Utilities {
 		}
 		return false;
 	}
+
+	public boolean isDataTypeIsPrimitive(String dataType) {
+		if (dataType.equals("String")) {
+			return true;
+		}
+		if (dataType.equals("Boolean")) {
+			return true;
+		}
+		if (dataType.equals("Integer")) {
+			return true;
+		}
+		if (dataType.equals("Double")) {
+			return true;
+		}
+		return false;
+	}
 }
