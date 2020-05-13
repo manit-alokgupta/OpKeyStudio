@@ -429,7 +429,11 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			}
 			androidDeviceSelectionDropDown.select(0);
 		} catch (Exception ex) {
-			CustomNotificationUtil.openErrorNotificationDialog("OpKey", "Please Connect Your Device First");
+			if (ex.getMessage() == null) // will get null only in case sdk is not set
+				CustomNotificationUtil.openErrorNotificationDialog("OpKey",
+						"Set ANDROID_HOME In Environment Variable And Provide Path To Sdk");
+			else
+				CustomNotificationUtil.openErrorNotificationDialog("OpKey", "Please Connect Your Device First");
 		}
 
 	}
