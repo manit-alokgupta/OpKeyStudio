@@ -49,14 +49,14 @@ public class ReportHelper {
 		ObjectArguments objectArguments = Context.current().getFunctionCall().getObjectArguments();
 		if (objectArguments != null && objectArguments.getObjectArgument() != null) {
 			for (ObjectArgument objectArgument : objectArguments.getObjectArgument()) {
-				parameterList.add(objectArgument.getArgumentName() + ":" + objectArgument.getObject().getLogicalName());
+				parameterList.add(objectArgument.getObject().getLogicalName());
 			}
 		}
 
 		DataArguments dataArguments = Context.current().getFunctionCall().getDataArguments();
 		if (dataArguments != null && dataArguments.getDataArgument() != null) {
 			for (DataArgument dataArgument : dataArguments.getDataArgument()) {
-				parameterList.add(dataArgument.getArgumentName() + ":" + dataArgument.getValue());
+				parameterList.add(dataArgument.getValue());
 			}
 		}
 
