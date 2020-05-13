@@ -24,7 +24,7 @@ public class SuiteTestCaseTree extends ArtifactTree {
 		super(parent, style, parentTestSuiteView);
 		this.setParentTestSuiteView(parentTestSuiteView);
 		init();
-		super.renderArtifacts();
+		super.renderArtifacts(true);
 	}
 
 	private void init() {

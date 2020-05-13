@@ -156,7 +156,7 @@ public class ArtifactTree extends CustomTree {
 		this.setRedraw(true);
 	}
 
-	public void renderArtifacts() {
+	public void renderArtifacts(boolean fireGlobalEvent) {
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
@@ -203,7 +203,10 @@ public class ArtifactTree extends CustomTree {
 			ArtifactTranspiler.getInstance().setPackageProperties();
 		}
 		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
-		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		if (fireGlobalEvent) {
+			OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		}
+
 	}
 
 	public void highlightArtifact(String artifactId) {

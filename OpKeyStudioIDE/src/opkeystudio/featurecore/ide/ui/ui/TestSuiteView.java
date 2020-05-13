@@ -393,7 +393,7 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				testCaseTree.renderArtifacts();
+				testCaseTree.renderArtifacts(true);
 
 			}
 

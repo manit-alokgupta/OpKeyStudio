@@ -21,13 +21,12 @@ public class RefreshArtifactTree {
 	}
 
 	public void refreshArtifactTree() {
-			ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
-			tree.renderArtifacts();
-			CodeViewTree ctree = (CodeViewTree) SystemRepository.getInstance().getCodeViewTreeControl();
-			if (ctree != null) {
-				ctree.renderCodeViewTree();
-			}
-		
+		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
+		tree.renderArtifacts(true);
+		CodeViewTree ctree = (CodeViewTree) SystemRepository.getInstance().getCodeViewTreeControl();
+		if (ctree != null) {
+			ctree.renderCodeViewTree();
+		}
 
 	}
 }

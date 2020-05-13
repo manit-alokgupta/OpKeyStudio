@@ -480,7 +480,7 @@ public class ArtifactTreeUI extends SuperComposite {
 				deleteArtifactJavaFile(artifact);
 				new ArtifactApi().deleteArtifact(artifact);
 				Utilities.getInstance().closeArtifactPart(artifact);
-				artifactTree.renderArtifacts();
+				artifactTree.renderArtifacts(false);
 				CustomNotificationUtil.openInformationNotification("OpKey", artifact.getName() + " deleted!");
 			}
 
@@ -537,7 +537,7 @@ public class ArtifactTreeUI extends SuperComposite {
 				artifact.setName(renamedText);
 				new ArtifactApi().updateArtifact(artifact);
 				Utilities.getInstance().renameArtifactLabel(artifact, renamedText);
-				artifactTree.renderArtifacts();
+				artifactTree.renderArtifacts(true);
 				renameMenuItem.setEnabled(false);
 				renameMenuItem.setEnabled(false);
 			}
@@ -553,7 +553,7 @@ public class ArtifactTreeUI extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				artifactTree.renderArtifacts();
+				artifactTree.renderArtifacts(true);
 
 				System.out.println("Refresh Success");
 			}
@@ -721,7 +721,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					toogleDeleteToolbarItem(false);
 					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
-					artifactTree.renderArtifacts();
+					artifactTree.renderArtifacts(true);
 				} finally {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
@@ -752,7 +752,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					toogleDeleteToolbarItem(false);
 					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
-					artifactTree.renderArtifacts();
+					artifactTree.renderArtifacts(false);
 				} finally {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
@@ -1151,7 +1151,7 @@ public class ArtifactTreeUI extends SuperComposite {
 			}
 		});
 
-		artifactTree.renderArtifacts();
+		artifactTree.renderArtifacts(true);
 
 		// Search button listener
 
@@ -1258,7 +1258,7 @@ public class ArtifactTreeUI extends SuperComposite {
 						artifact = new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
 					}
 				});
-				artifactTree.renderArtifacts();
+				artifactTree.renderArtifacts(true);
 				msd.closeProgressDialog();
 				Utilities.getInstance().openArtifacts(artifact);
 				CustomNotificationUtil.openInformationNotification("OpKey", artifact.getName() + " created!");
