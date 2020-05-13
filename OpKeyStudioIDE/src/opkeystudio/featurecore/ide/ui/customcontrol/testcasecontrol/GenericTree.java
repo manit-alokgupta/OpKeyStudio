@@ -1,5 +1,6 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -359,19 +361,43 @@ public class GenericTree extends CustomTree {
 		setCflTree(false);
 		this.removeAll();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("Component");
+		artifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Function Library");
 		rootNode.setExpanded(true);
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
+
+		List<CustomTreeItem> topMostNodes = new ArrayList<>();
 		for (Artifact artifact : artifacts) {
-			if (artifact.getName().toLowerCase().contains(flName.toLowerCase())) {
-				CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
-				keywItem.setText(artifact.getName());
-				keywItem.setControlData(artifact);
-				addIcon(keywItem);
+			if (artifact.getParentid() == null) {
+				CustomTreeItem artitreeitem = new CustomTreeItem(rootNode, 0);
+				artitreeitem.setText(artifact.getName());
+				artitreeitem.setControlData(artifact);
+				topMostNodes.add(artitreeitem);
+				addIcon(artitreeitem);
 			}
 		}
+		for (CustomTreeItem topMostNode : topMostNodes) {
+			renderAllArtifactTree(topMostNode, artifacts);
+		}
+
 		expandAll(rootNode);
+	}
+
+	private void renderAllArtifactTree(CustomTreeItem rootNode, List<Artifact> allArtifacts) {
+		Artifact nodeartifact = (Artifact) rootNode.getControlData();
+		String artifactId = nodeartifact.getId();
+		for (Artifact artifact : allArtifacts) {
+			if (artifact.getParentid() != null) {
+				if (artifact.getParentid().equals(artifactId)) {
+					CustomTreeItem artitreeitem = new CustomTreeItem(rootNode, 0);
+					artitreeitem.setText(artifact.getName());
+					artitreeitem.setControlData(artifact);
+					addIcon(artitreeitem);
+					renderAllArtifactTree(artitreeitem, allArtifacts);
+				}
+			}
+		}
 	}
 
 	public void initCodedFunctionLibraries(String flName) {
