@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Cursor;
@@ -182,14 +184,27 @@ public class DataRepositoryView extends SuperComposite {
 		toggleMoveColumnRightButton(false);
 		toggleRenameColumnButton(false);
 
-		dataRepositoryTable.addListener(SWT.Selection, new Listener() {
+		dataRepositoryTable.addMouseListener(new MouseListener() {
+			
 			@Override
-			public void handleEvent(Event event) {
+			public void mouseUp(MouseEvent e) {
 				toggleAddColumnButton(true);
 				toggleDeleteColumnButton(true);
 				toggleMoveColumnLeftButton(true);
 				toggleMoveColumnRightButton(true);
 				toggleRenameColumnButton(true);
+			}
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 
