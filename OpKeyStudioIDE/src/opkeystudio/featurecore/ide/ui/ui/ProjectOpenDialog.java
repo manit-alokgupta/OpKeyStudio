@@ -90,7 +90,7 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
-		table.setHeaderBackground(SWTResourceManager.getColor(248, 248, 245));
+		table.setHeaderBackground(SWTResourceManager.getColor(220, 220, 220));
 		table.setLinesVisible(true);
 		table.setFocus();
 		sashForm.setWeights(new int[] { 1 });

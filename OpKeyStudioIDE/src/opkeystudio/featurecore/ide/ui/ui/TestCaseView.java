@@ -14,6 +14,7 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -788,6 +789,7 @@ public class TestCaseView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
 					toggleSaveButton(true);
 					flowStepTable.deleteStep();
 					inputDataTable.clearAllData();
@@ -796,6 +798,9 @@ public class TestCaseView extends SuperComposite {
 					CustomNotificationUtil.openInformationNotification("OpKey", "Selected Step Deleted!");
 				} catch (SQLException | IOException e1) {
 					e1.printStackTrace();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
 				}
 
 			}
@@ -825,6 +830,7 @@ public class TestCaseView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				handleSaveOnRefresh();
+				CustomNotificationUtil.openInformationNotification("Opkey", "Test Case Saved");
 			}
 
 			@Override
@@ -916,6 +922,8 @@ public class TestCaseView extends SuperComposite {
 	}
 
 	private boolean handleSaveOnRefresh() {
+		try {
+			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
 		if (itemSave.isEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
 			int status = CustomNotificationUtil.openConfirmDialog("OpKey", "Do you want to Save changes?");
@@ -940,8 +948,14 @@ public class TestCaseView extends SuperComposite {
 		getCodedFunctionView().refreshTCFLCode();
 		return true;
 	}
-
+		finally{
+			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+		}
+	}
 	public void saveAll() {
+		try {
+			
+			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
 		if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 			List<ComponentInputArgument> componentInputArgs = bottomFactory.getInputTable().getComponentInputData();
 			List<ComponentOutputArgument> componentOutputArgs = bottomFactory.getOutputTable().getComponentOutputData();
@@ -973,6 +987,10 @@ public class TestCaseView extends SuperComposite {
 		getCodedFunctionView().refreshTCFLCode();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		toggleSaveButton(false);
+	}
+	finally {
+		getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+	}
 	}
 
 	private boolean isComponentInputArgumentNameAreUnique(List<ComponentInputArgument> componentInputArguments) {
