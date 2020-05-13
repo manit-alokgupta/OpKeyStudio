@@ -789,6 +789,7 @@ public class TestCaseView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
 					toggleSaveButton(true);
 					flowStepTable.deleteStep();
 					inputDataTable.clearAllData();
@@ -797,6 +798,9 @@ public class TestCaseView extends SuperComposite {
 					CustomNotificationUtil.openInformationNotification("OpKey", "Selected Step Deleted!");
 				} catch (SQLException | IOException e1) {
 					e1.printStackTrace();
+				}
+				finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
 				}
 
 			}
