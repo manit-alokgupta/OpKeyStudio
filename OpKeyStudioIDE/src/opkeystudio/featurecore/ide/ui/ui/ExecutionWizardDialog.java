@@ -164,7 +164,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			@Override
 			public void verifyText(VerifyEvent e) {
-				restrictInputString(e);
+				restrictInputString(e, "sessionNameTextField");
 			}
 		});
 		sessionNameTextField.addModifyListener(new ModifyListener() {
@@ -209,7 +209,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			@Override
 			public void verifyText(VerifyEvent e) {
-				restrictInputString(e);
+				restrictInputString(e, "buildNameTextField");
 			}
 		});
 		buildNameTextField.addModifyListener(new ModifyListener() {
@@ -294,12 +294,14 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(btnRefreshDeviceList.getShell(), SWT.CURSOR_WAIT);
+					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(btnRefreshDeviceList.getShell(),
+							SWT.CURSOR_WAIT);
 
 					initDeviceNames();
 				} finally {
 
-					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(btnRefreshDeviceList.getShell(), SWT.CURSOR_ARROW);
+					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(btnRefreshDeviceList.getShell(),
+							SWT.CURSOR_ARROW);
 
 				}
 			}
@@ -427,8 +429,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			}
 			androidDeviceSelectionDropDown.select(0);
 		} catch (Exception ex) {
-			CustomNotificationUtil.openErrorNotificationDialog("OpKey",
-					"Please Connect Your Device First" );
+			CustomNotificationUtil.openErrorNotificationDialog("OpKey", "Please Connect Your Device First");
 		}
 
 	}
@@ -634,13 +635,28 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		this.isCFLArtifact = isCFLArtifact;
 	}
 
-	protected void restrictInputString(VerifyEvent event) {
+	protected void restrictInputString(VerifyEvent event, String field) {
 		Boolean isAllowed = false;
-		int textLength = sessionNameTextField.getText().length();
-		if (textLength <= 100)
+		int textLength = 0;
+		if (field.equals("sessionNameTextField"))
+			textLength = sessionNameTextField.getText().length();
+
+		if (field.equals("buildNameTextField"))
+			textLength = buildNameTextField.getText().length();
+
+		if (textLength <= 100) {
 			isAllowed = true;
-		else
+			event.doit = true;
+		} else {
+
+			if (event.keyCode == 8 && textLength >= 100) { // keycode 8 represents backspace
+				isAllowed = true;
+				event.doit = true;
+				return;
+			}
+
 			isAllowed = false;
+		}
 
 		if (!isAllowed) {
 			event.doit = false;
@@ -664,7 +680,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			this.setErrorMessage("Plugin not selected.");
 			return;
 		}
-		
+
 		if (sessionNameTextField.getText().equals("")) {
 			runButton.setEnabled(false);
 			this.setErrorMessage("SessionName Cannot Be Empty.");
