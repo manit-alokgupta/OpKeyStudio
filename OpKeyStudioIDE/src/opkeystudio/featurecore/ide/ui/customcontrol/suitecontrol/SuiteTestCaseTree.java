@@ -13,6 +13,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.SuiteMaker;
 
@@ -41,10 +42,15 @@ public class SuiteTestCaseTree extends ArtifactTree {
 				if (artifact == null) {
 					addTestCaseMenuItem.setEnabled(false);
 					getParentTestSuiteView().getAddTestCaseButton().setEnabled(false);
-				} else {
-					addTestCaseMenuItem.setEnabled(true);
-					getParentTestSuiteView().getAddTestCaseButton().setEnabled(true);
+					return;
 				}
+				if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
+					addTestCaseMenuItem.setEnabled(false);
+					getParentTestSuiteView().getAddTestCaseButton().setEnabled(false);
+					return;
+				}
+				addTestCaseMenuItem.setEnabled(true);
+				getParentTestSuiteView().getAddTestCaseButton().setEnabled(true);
 			}
 
 			@Override
