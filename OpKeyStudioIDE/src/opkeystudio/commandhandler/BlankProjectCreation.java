@@ -37,7 +37,7 @@ public class BlankProjectCreation {
 				return;
 			}
 			ServiceRepository.getInstance().setProjectName(projectName);
-			Utilities.getInstance().getDefaultShell().setText("OpKey - " + ServiceRepository.getInstance().getProjectName());
+			Utilities.getInstance().getDefaultShell().setText("OpKey Studio- " + ServiceRepository.getInstance().getProjectName());
 			String blankDbFile = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 					.getCommons_DBStructureFolder() + File.separator + "artifact_blankdb.db";
 
