@@ -316,7 +316,7 @@ public class ArtifactExecutor {
 		method.invoke(instance, info);
 		
 		
-		//AndroidVNCUtil.getInstance().closeOpenVncViewer();
+		AndroidVNCUtil.getInstance().closeOpenVncViewer();
 	}
 
 	public void stopExecutionSession() {
