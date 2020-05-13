@@ -16,7 +16,6 @@ import com.plugin.appium.exceptionhandlers.ObjectPropertiesNotSufficientExceptio
 
 public class ObjectConverter {
 	public AppiumObject formatObject(ORObject orobject) {
-		System.out.println("@orobject: ===============" + orobject);
 		if (orobject == null) {
 			this.setObjectArgumentInFunctionCall("No attachment found");
 			return new AppiumObject(false);
@@ -89,7 +88,6 @@ public class ObjectConverter {
 	}
 	
 	private void setObjectArgumentInFunctionCall(ORObject obj) {
-		System.out.println("--Setting object argument using object");
 		ObjectArguments oArgs = new ObjectArguments();
 		ObjectArgument oArg = new ObjectArgument();
 		oArg.setArgumentName("Object");
@@ -101,7 +99,6 @@ public class ObjectConverter {
 	}
 	
 	private void setObjectArgumentInFunctionCall(String logicalName) {
-		System.out.println("--Setting object argument using no-name");
 		ObjectArguments oArgs = new ObjectArguments();
 		ObjectArgument oArg = new ObjectArgument();
 		oArg.setArgumentName("Object");

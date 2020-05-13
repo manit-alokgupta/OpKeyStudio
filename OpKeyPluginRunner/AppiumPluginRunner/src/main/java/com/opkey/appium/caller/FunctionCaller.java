@@ -27,7 +27,6 @@ import com.plugin.appium.exceptionhandlers.UnableToProcessADBCommandException;
 public class FunctionCaller {
 	public static <T> FunctionResult execute(Callable<T> task) {
 		String keywordName = Context.current().getFunctionCall().getFunction().getMethodName();
-		System.out.println("Executing: " + keywordName);
 		FunctionResult functionResult = null;
 		long startTime = System.currentTimeMillis();
 
@@ -54,7 +53,6 @@ public class FunctionCaller {
 	}
 
 	private static FunctionResult validateException(String keywordName, Exception exception) {
-		System.out.println("Validate exception and report");
 		if (isGetKeyword(keywordName)) {
 			FunctionResult functionResult = getPassTimeOutFR(false);
 			return functionResult;
@@ -66,16 +64,13 @@ public class FunctionCaller {
 	}
 
 	private static FunctionResult validateFunctionResult(FunctionResult functionResult, String keywordName) {
-		System.out.println("Validate function result: " + functionResult);
 		printFunctionResult(functionResult);
 
 		if (functionResult == null && isGetKeyword(keywordName)) {
-			System.out.println("#1. Found get type keyword");
 			return Result.PASS().setOutput(false).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
 		} else if (functionResult == null) {
 			return Result.FAIL().setOutput(false).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
 		} else if (isVisibilityKeyword(keywordName) || isGetKeyword(keywordName)) {
-			System.out.println("#2. Found Visibility/get type keyword");
 			if (functionResult.getOutput() == null || functionResult.getOutput().isEmpty()) {
 				return Result.PASS().setOutput(false).setMessage(functionResult.getMessage()).make();
 			}
@@ -86,22 +81,18 @@ public class FunctionCaller {
 	public static boolean isVisibilityKeyword(String keywordName) {
 		for (VisibilityKeywords vk : VisibilityKeywords.values()) {
 			if (vk.name().equals(keywordName)) {
-				System.out.println("Found VISIBILITY keyword: " + keywordName);
 				return true;
 			}
 		}
-		System.out.println("Not Found VISIBILITY keyword: " + keywordName);
 		return false;
 	}
 
 	public static boolean isGetKeyword(String keywordName) {
 		for (GetKeywords vk : GetKeywords.values()) {
 			if (vk.name().equals(keywordName)) {
-				System.out.println("Found GET keyword: " + keywordName);
 				return true;
 			}
 		}
-		System.out.println("Not Found GET keyword: " + keywordName);
 		return false;
 	}
 
@@ -110,7 +101,7 @@ public class FunctionCaller {
 	}
 
 	private static void printFunctionResult(FunctionResult functionResult) {
-		System.out.println("FunctionResult: " + functionResult);
+		System.out.println("---- Output----");
 		if (functionResult != null) {
 			System.out.println("Output: " + functionResult.getOutput());
 			System.out.println("Status: " + functionResult.getStatus());
@@ -119,10 +110,8 @@ public class FunctionCaller {
 	}
 	
 	private static void postKeywordAction(FunctionResult functionResult) {
-		System.out.println("Post keyword action.");
 		try {
 			File file = captureScreenshot();
-			System.out.println("screenshot: " + file.getPath());
 			functionResult.setSnapshotPath(file.getPath());
 		} catch (Exception e) {
 			System.out.println("Exception while taking screenshot: " + e.getMessage());
@@ -134,15 +123,10 @@ public class FunctionCaller {
 			UnableToProcessADBCommandException, InterruptedException, AdbNotFoundException {
 		
 		long startTime = System.currentTimeMillis();
-				
 		String fileName = UUID.randomUUID().toString() + ".png";
-		
 		File appiumFile = new Utils().takeScreenshotUsingAppium();
 		File renamedFile = renameFile(appiumFile, fileName);	
 		File newFile = new File(SessionHandler.screenshotPath + File.separator + fileName);
-
-		System.out.println("New File: " + newFile.getPath());
-		
 		Path copied = Paths.get(newFile.getPath());
 		Path originalPath = renamedFile.toPath();
 		Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
