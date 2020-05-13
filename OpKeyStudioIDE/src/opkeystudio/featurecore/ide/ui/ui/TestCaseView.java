@@ -125,7 +125,6 @@ public class TestCaseView extends SuperComposite {
 		toggleDeleteButton(false);
 		toggleAddButton(true);
 		addOpKeyGlobalListener();
-
 	}
 
 	private void initArtifact() {
@@ -1093,10 +1092,6 @@ public class TestCaseView extends SuperComposite {
 		this.selectedFlowStep = selectedFlowStep;
 	}
 
-	public InputDataTable getInputDataTable() {
-		return this.inputDataTable;
-	}
-
 	public ToolItem getSaveButton() {
 		return this.itemSave;
 	}
@@ -1132,5 +1127,37 @@ public class TestCaseView extends SuperComposite {
 
 	public void setCurrentMpart(MPart currentMpart) {
 		this.currentMpart = currentMpart;
+	}
+
+	public OutputDataTable getOutPutDataTable() {
+		return this.outputDataTable;
+	}
+
+	public OutputDataTable getVariableOutPutTable() {
+		return this.outputVariableTable;
+	}
+
+	public TestObjectTable getTestObjectTable() {
+		return this.testObjectTable;
+	}
+
+	public InputDataTable getInputDataTable() {
+		return this.inputDataTable;
+	}
+
+	public ObjectRepositoryTree getObjectRepositoryTree() {
+		return this.testObjectTree;
+	}
+
+	public ComponentArgumentInputTable getComponentArgumentInputTable() {
+		return this.componentArgumentInputTable;
+	}
+
+	public GenericTree getDataRepositoryTree() {
+		return this.drTree;
+	}
+
+	public GlobalVariableTable getGlobalVariableTable() {
+		return this.globalVariableTable;
 	}
 }
