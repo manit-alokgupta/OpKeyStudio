@@ -31,6 +31,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.utils.DataType.OpKeyDataType;
 
 public class TestObjectTable extends CustomTable {
 	private List<ORObject> orobject = new ArrayList<ORObject>();
@@ -147,7 +148,7 @@ public class TestObjectTable extends CustomTable {
 				flowStep.setModified(true);
 				for (FlowInputArgument inputARg : flowStep.getFlowInputArgs()) {
 					if (inputARg.getStaticobjectid() != null) {
-						inputARg.setStaticobjectid(null);
+						inputARg.setStaticobjectid(String.valueOf(OpKeyDataType.NULLDATA));
 						inputARg.setModified(true);
 					}
 				}
