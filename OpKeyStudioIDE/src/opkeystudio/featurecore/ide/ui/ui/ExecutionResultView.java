@@ -94,7 +94,7 @@ public class ExecutionResultView extends SuperComposite {
 
 		Color white = new Color(logTextView.getDisplay(), 255, 255, 255);
 
-		Display.getDefault().asyncExec(new Runnable() {
+		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
@@ -114,6 +114,7 @@ public class ExecutionResultView extends SuperComposite {
 					logTextView.setStyleRange(new StyleRange(start, text.length(), color, white));
 				}
 
+				logTextView.setTopIndex(logTextView.getLineCount() - 1);
 			}
 
 		});
@@ -171,11 +172,10 @@ public class ExecutionResultView extends SuperComposite {
 
 						while (getArtifactExecutor().isExecutionCompleted() == false) {
 							// String aLine = br.readLine();
-
+							Thread.sleep(1);
 							byte[] buffer = new byte[2048];
-							int bytesRead = fis.read(buffer, 0, fis.available());
+							int bytesRead = fis.read(buffer, 0, Math.min(fis.available(), buffer.length));
 							if (bytesRead < 1) {
-								Thread.sleep(10);
 								continue;
 							}
 
@@ -192,28 +192,35 @@ public class ExecutionResultView extends SuperComposite {
 								break;
 						}
 
+					} finally {
+
+						// if (executor.isExecutionCompleted()) {
+						new MessageDialogs().executeDisplayAsync(new Runnable() {
+
+							@Override
+							public void run() {
+								if (showLogView.isDisposed()) {
+									return;
+								}
+								stopButton.setEnabled(false);
+								showLogView.setEnabled(true);
+								displayLogs("Click the 'Show Report' button to open the report", warningColor);
+							}
+						});
 					}
 
 				} catch (InterruptedException e1) {
-					displayLogs("Logger Thread Interupted", warningColor);
+					displayLogs("Logger Thread Interupted" + System.lineSeparator(), warningColor);
 
 				} catch (IOException e21) {
-					displayLogs(e21.toString(), warningColor);
+					// displayLogs(e21.toString()+ System.lineSeparator(), warningColor);
 					e21.printStackTrace();
+
+				} catch (Exception ex) {
+					// displayLogs(ex.toString()+ System.lineSeparator(), warningColor);
+					ex.printStackTrace();
+
 				}
-
-				// if (executor.isExecutionCompleted()) {
-				new MessageDialogs().executeDisplayAsync(new Runnable() {
-
-					@Override
-					public void run() {
-						if (showLogView.isDisposed()) {
-							return;
-						}
-						stopButton.setEnabled(false);
-						showLogView.setEnabled(true);
-					}
-				});
 
 				// }
 
