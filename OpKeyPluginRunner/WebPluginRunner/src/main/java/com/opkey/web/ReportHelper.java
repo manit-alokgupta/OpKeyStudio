@@ -20,6 +20,8 @@ public class ReportHelper {
 
 		ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
 				functionResult.getOutput());
+
+		logStep(methodName, functionResult.getOutput(), functionResult.getStatus());
 	}
 
 	public static void addReportStep(String methodName, Exception e) {
@@ -27,21 +29,27 @@ public class ReportHelper {
 		List<String> parameterList = getParameters();
 		ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), Status.FAIL,
 				e.getMessage());
+		logStep(methodName, e.getMessage(), Status.FAIL.name());
 	}
-	
+
+	private static void logStep(String methodName, String output, String status) {
+		System.out.println("<<<< " + methodName + "(" + String.join(", ", getParameters()) + ") " + " -> " + output
+				+ " " + status);
+	}
+
 	public static List<String> getParameters() {
 		List<String> parameterList = new ArrayList<String>();
 		ObjectArguments orArguments = Context.current().getFunctionCall().getObjectArguments();
-		
-		if(orArguments !=null && orArguments.getObjectArgument() !=null) {
-			for(ObjectArgument objectArg: orArguments.getObjectArgument()) {
+
+		if (orArguments != null && orArguments.getObjectArgument() != null) {
+			for (ObjectArgument objectArg : orArguments.getObjectArgument()) {
 				parameterList.add(objectArg.getArgumentName() + ":" + objectArg.getObject().getLogicalName());
 			}
 		}
-		
+
 		DataArguments dataArguments = Context.current().getFunctionCall().getDataArguments();
-		if(dataArguments!=null && dataArguments.getDataArgument() !=null) {
-			for(DataArgument dataArgument: dataArguments.getDataArgument()) {
+		if (dataArguments != null && dataArguments.getDataArgument() != null) {
+			for (DataArgument dataArgument : dataArguments.getDataArgument()) {
 				parameterList.add(dataArgument.getArgumentName() + ":" + dataArgument.getValue());
 			}
 		}
