@@ -416,6 +416,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				} else {
 					toggleDeleteButton(false);
 					toggleRenameButton(false);
+					toggleDeleteAttributeButton(false);
 					toggleAddAttributeButton(false);
 					toggleRenameMenuItem(false);
 					toggleCopyMenuItem(false);
@@ -459,7 +460,6 @@ public class ObjectRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ObjectAttributeTableItem oati = (ObjectAttributeTableItem) objectAttributeTable.getSelection()[0];
-				System.out.println(oati.getObjectAttributeData().getProperty());
 				toggleDeleteAttributeButton(true);
 			}
 
@@ -551,9 +551,9 @@ public class ObjectRepositoryView extends SuperComposite {
 				if (AppiumConfiguration.getHostAddress() == null
 						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
 					AppiumConfiguration
-					.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+							.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 					AppiumConfiguration
-					.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+							.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 					AppiumConfiguration.setAppiumDirectory(
 							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				}
@@ -829,7 +829,7 @@ public class ObjectRepositoryView extends SuperComposite {
 			if (item.getORObject().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
 				item.getORObject()
-				.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getORObject().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();
