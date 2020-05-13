@@ -472,31 +472,31 @@ public class TestCaseView extends SuperComposite {
 		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, false);
 		setCodedFunctionView(codedFunctionView);
 
-		Menu menu= flowStepTable.getMenu();
-		for(MenuItem item:menu.getItems()) {
+		Menu menu = flowStepTable.getMenu();
+		for (MenuItem item : menu.getItems()) {
 			item.addSelectionListener(new SelectionListener() {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					// TODO Auto-generated method stub
 					//
-					if(item.getText().equals("Add Step"))
+					if (item.getText().equals("Add Step"))
 						CustomNotificationUtil.openInformationNotification("OpKey", "New Step is added");
-					if(item.getText().equals("Move Up"))
+					if (item.getText().equals("Move Up"))
 						CustomNotificationUtil.openInformationNotification("OpKey", "Moved Step Up");
-					if(item.getText().equals("Move Down"))
+					if (item.getText().equals("Move Down"))
 						CustomNotificationUtil.openInformationNotification("OpKey", "Moved Step Down");
-					if(item.getText().equals("Delete"))
+					if (item.getText().equals("Delete"))
 						CustomNotificationUtil.openInformationNotification("OpKey", "Selected Step Deleted");
-					
+
 				}
 
 				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 			});
 		}
 
@@ -950,6 +950,22 @@ public class TestCaseView extends SuperComposite {
 				FlowInputArgument flowInputArgument = getInputDataTable().getSelectedFlowInputArgument();
 				if (flowInputArgument == null) {
 					return;
+				}
+				String globalVariableDataType = globalVar.getDatatype();
+				String flowInputDataType = new FlowApiUtilities().getFlowInputArgumentDataType(flowInputArgument);
+				System.out.println("GV DataType " + globalVar.getDatatype());
+				System.out.println("Flow Input Data Type " + flowInputDataType);
+				boolean isGvPrimitive = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isDataTypeIsPrimitive(globalVariableDataType);
+				boolean isFlowInputPrimitive = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isDataTypeIsPrimitive(flowInputDataType);
+
+				if (isGvPrimitive == false || isFlowInputPrimitive == false) {
+					if (!globalVariableDataType.equals(flowInputDataType)) {
+						new MessageDialogs().openErrorDialog("OpKey", String.format(
+								"Invalid data type '%s' is not '%s'", globalVariableDataType, flowInputDataType));
+						return;
+					}
 				}
 				new FlowApiUtilities().setFlowInputData(getArtifact(), flowInputArgument, globalVar.getGv_id(),
 						DataSource.ValueFromGlobalVariable);

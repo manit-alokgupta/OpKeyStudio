@@ -134,13 +134,7 @@ public class InputDataTable extends CustomTable {
 	private void handleInputData(TableCursor cursor, ControlEditor editor) {
 		CustomTableItem row = (CustomTableItem) cursor.getRow();
 		FlowInputArgument flowInputArgument = (FlowInputArgument) row.getControlData();
-		String dataType = "";
-		if (flowInputArgument.getKeywordInputArgument() != null) {
-			dataType = flowInputArgument.getKeywordInputArgument().getDatatype();
-		}
-		if (flowInputArgument.getComponentInputArgument() != null) {
-			dataType = flowInputArgument.getComponentInputArgument().getType();
-		}
+		String dataType = new FlowApiUtilities().getFlowInputArgumentDataType(flowInputArgument);
 		boolean isNumberType = isDataTypeIntegerType(dataType);
 		boolean isBooleanType = isDataTypeBooleanrType(dataType);
 		int selectedColumn = cursor.getColumn();
@@ -159,7 +153,6 @@ public class InputDataTable extends CustomTable {
 								flowInputArgument, status, DataSource.StaticValue);
 						getParentTestCaseView().toggleSaveButton(true);
 						row.setText(selectedColumn, status);
-						checkedButton.dispose();
 					}
 
 					@Override
