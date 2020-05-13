@@ -33,7 +33,7 @@ public class CustomNotificationUtil {
 	public static int openConfirmDialog(String title, String message) {
 		return new MessageDialog(Display.getCurrent().getActiveShell(), title,
 				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message,
-				MessageDialog.CONFIRM, new String[] { "Yes", "No", }, 0).open();
+				MessageDialog.CONFIRM, new String[] { "Yes", "No", "Cancel" }, 0).open();
 	}
 
 	public static String openInputDialog(String dialogTitle, String dialogContent, String defaultValue) {

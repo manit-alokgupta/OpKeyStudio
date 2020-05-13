@@ -750,6 +750,10 @@ public class ObjectRepositoryView extends SuperComposite {
 				toggleAddAttributeButton(false);
 
 				int result = CustomNotificationUtil.openConfirmDialog("OpKey", "Do you want to save changes?");
+				System.out.println("Result Code " + result);
+				if (result == 2) {
+					return;
+				}
 				if (result != 0) {
 					toggleSaveButton(false);
 					objectRepositoryTree.renderObjectRepositories();
