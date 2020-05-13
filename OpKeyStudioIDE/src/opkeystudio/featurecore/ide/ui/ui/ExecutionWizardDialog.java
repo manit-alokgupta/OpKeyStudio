@@ -428,7 +428,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			androidDeviceSelectionDropDown.select(0);
 		} catch (Exception ex) {
 			CustomNotificationUtil.openErrorNotificationDialog("OpKey",
-					"Please Connect Your Device First" + "\n" + ex.getMessage());
+					"Please Connect Your Device First" );
 		}
 
 	}
