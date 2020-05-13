@@ -37,27 +37,27 @@ public class ContextInitiator {
 			dataArgument.setArgumentName("args" + i);
 			dataArgument.setArgumentPosition(i);
 			dataArgument.setValue(arg.toString());
-			
+
 			setArgumentType(dataArgument, arg);
 			dataarguments.getDataArgument().add(dataArgument);
 		}
-	
+
 		Context.current().getFunctionCall().setDataArguments(dataarguments);
 	}
-	
+
 	private static void setArgumentType(DataArgument dataArgument, Object arg) {
 		System.out.println(arg.toString());
-		if(arg instanceof String) {
+		if (arg instanceof String) {
 			dataArgument.setDataType("String");
-		}else if(arg instanceof Integer) {
+		} else if (arg instanceof Integer) {
 			dataArgument.setDataType("Integer");
-		}else if(arg instanceof Double) {
+		} else if (arg instanceof Double) {
 			dataArgument.setDataType("Double");
-		}else if(arg instanceof Boolean) {
+		} else if (arg instanceof Boolean) {
 			dataArgument.setDataType("Boolean");
 		}
 	}
-	
+
 	private void initSettings() {
 		Context.session().setSettings(getSettings());
 	}
@@ -69,6 +69,7 @@ public class ContextInitiator {
 		function.setMethodName(functionName);
 		fc.setFunction(function);
 		Context.set(new InvocationContext(fc));
+
 	}
 
 	private Map<String, String> getSettings() {

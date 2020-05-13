@@ -1,8 +1,10 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -163,26 +165,30 @@ public class ExecutionResultView extends SuperComposite {
 					if (showLogView.isDisposed())
 						return;
 
-					/*
-					 * try (BufferedReader br = new BufferedReader( new InputStreamReader(new
-					 * FileInputStream(logFile), StandardCharsets.UTF_8))) {
-					 */
+					try (BufferedReader br = new BufferedReader(
+							new InputStreamReader(new FileInputStream(logFile), StandardCharsets.UTF_8))) {
 
-					try (FileInputStream fis = new FileInputStream(logFile)) {
+						// try (FileInputStream fis = new FileInputStream(logFile)) {
 
 						while (getArtifactExecutor().isExecutionCompleted() == false) {
-							// String aLine = br.readLine();
+							String aLine = br.readLine();
 							Thread.sleep(1);
-							byte[] buffer = new byte[2048];
-							int bytesRead = fis.read(buffer, 0, Math.min(fis.available(), buffer.length));
-							if (bytesRead < 1) {
+
+							/*
+							 * byte[] buffer = new byte[2048]; int bytesRead = fis.read(buffer, 0,
+							 * Math.min(fis.available(), buffer.length)); if (bytesRead < 1) { continue; }
+							 * 
+							 * String aLine = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
+							 */
+
+							if (aLine == null || aLine.trim().isEmpty())
 								continue;
-							}
 
-							String aLine = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
+							aLine = aLine + System.lineSeparator();
 
-							if (aLine == null || aLine.isEmpty())
-								Thread.sleep(100);
+							if (aLine.startsWith("<<<<"))
+								displayLogs(aLine + System.lineSeparator(), new Color(getDisplay(), 0, 0, 255));
+
 							else if (aLine.toLowerCase().contains("warning"))
 								displayLogs(aLine, warningColor);
 							else
