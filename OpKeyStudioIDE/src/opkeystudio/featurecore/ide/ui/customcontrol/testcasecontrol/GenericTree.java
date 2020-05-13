@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
-import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -115,6 +114,14 @@ public class GenericTree extends CustomTree {
 					addMenuItem.setEnabled(false);
 					updateMenuItem.setEnabled(false);
 					return;
+				}
+				if (selectedData instanceof Artifact) {
+					Artifact artifact = (Artifact) selectedData;
+					if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
+						addMenuItem.setEnabled(false);
+						updateMenuItem.setEnabled(false);
+						return;
+					}
 				}
 				addMenuItem.setEnabled(true);
 				updateMenuItem.setEnabled(true);
@@ -362,13 +369,24 @@ public class GenericTree extends CustomTree {
 		this.removeAll();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("Component");
 		artifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
+
+		List<Artifact> filteredArtifacts = new ArrayList<Artifact>();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
+				filteredArtifacts.add(artifact);
+			} else {
+				if (artifact.getName().toLowerCase().contains(flName.toLowerCase())) {
+					filteredArtifacts.add(artifact);
+				}
+			}
+		}
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Function Library");
 		rootNode.setExpanded(true);
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 
 		List<CustomTreeItem> topMostNodes = new ArrayList<>();
-		for (Artifact artifact : artifacts) {
+		for (Artifact artifact : filteredArtifacts) {
 			if (artifact.getParentid() == null) {
 				CustomTreeItem artitreeitem = new CustomTreeItem(rootNode, 0);
 				artitreeitem.setText(artifact.getName());
@@ -378,7 +396,7 @@ public class GenericTree extends CustomTree {
 			}
 		}
 		for (CustomTreeItem topMostNode : topMostNodes) {
-			renderAllArtifactTree(topMostNode, artifacts);
+			renderAllArtifactTree(topMostNode, filteredArtifacts);
 		}
 
 		expandAll(rootNode);
@@ -406,17 +424,35 @@ public class GenericTree extends CustomTree {
 		setCflTree(true);
 		this.removeAll();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("CodedFunction");
+		artifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
+		
+		List<Artifact> filteredArtifacts = new ArrayList<Artifact>();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
+				filteredArtifacts.add(artifact);
+			} else {
+				if (artifact.getName().toLowerCase().contains(flName.toLowerCase())) {
+					filteredArtifacts.add(artifact);
+				}
+			}
+		}
+		
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Coded Function Library");
 		rootNode.setExpanded(true);
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
-		for (Artifact artifact : artifacts) {
-			if (artifact.getName().toLowerCase().contains(flName.toLowerCase())) {
-				CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
-				keywItem.setText(artifact.getName());
-				keywItem.setControlData(artifact);
-				addIcon(keywItem);
+		List<CustomTreeItem> topMostNodes = new ArrayList<>();
+		for (Artifact artifact : filteredArtifacts) {
+			if (artifact.getParentid() == null) {
+				CustomTreeItem artitreeitem = new CustomTreeItem(rootNode, 0);
+				artitreeitem.setText(artifact.getName());
+				artitreeitem.setControlData(artifact);
+				topMostNodes.add(artitreeitem);
+				addIcon(artitreeitem);
 			}
+		}
+		for (CustomTreeItem topMostNode : topMostNodes) {
+			renderAllArtifactTree(topMostNode, filteredArtifacts);
 		}
 		expandAll(rootNode);
 	}

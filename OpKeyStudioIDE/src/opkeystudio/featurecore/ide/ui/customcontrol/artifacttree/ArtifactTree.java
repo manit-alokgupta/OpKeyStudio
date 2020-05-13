@@ -173,6 +173,7 @@ public class ArtifactTree extends CustomTree {
 		List<Artifact> artifacts = new ArrayList<>();
 		if (isAttachedinTestSuite()) {
 			artifacts = GlobalLoader.getInstance().getAllArtifactByType("Flow");
+			artifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
 		} else {
 			artifacts = GlobalLoader.getInstance().getAllArtifacts();
 		}
@@ -185,13 +186,6 @@ public class ArtifactTree extends CustomTree {
 				artitreeitem.setArtifact(artifact);
 				topMostNodes.add(artitreeitem);
 				addIcon(artitreeitem);
-			} else {
-				if (isAttachedinTestSuite()) {
-					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-					artitreeitem.setText(artifact.getName());
-					artitreeitem.setArtifact(artifact);
-					addIcon(artitreeitem);
-				}
 			}
 		}
 
@@ -245,15 +239,6 @@ public class ArtifactTree extends CustomTree {
 					artitreeitem.setArtifact(artifact);
 					topMostNodes.add(artitreeitem);
 					addIcon(artitreeitem);
-				} else {
-					if (isAttachedinTestSuite()) {
-						if (artifact.isVisible()) {
-							ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-							artitreeitem.setText(artifact.getName());
-							artitreeitem.setArtifact(artifact);
-							addIcon(artitreeitem);
-						}
-					}
 				}
 			}
 

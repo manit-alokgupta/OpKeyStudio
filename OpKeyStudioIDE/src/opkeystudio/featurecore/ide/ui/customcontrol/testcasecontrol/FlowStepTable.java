@@ -558,23 +558,11 @@ public class FlowStepTable extends CustomTable {
 			}
 		}
 		if (allSteps.size() == 0) {
-			getParentTestCaseView().toggleRunButton(false);
 			getParentTestCaseView().toggleDeleteButton(false);
 			getParentTestCaseView().toggleMovedownButton(false);
 			getParentTestCaseView().toggleMoveupButton(false);
 		}
-
-		boolean allStepsAreSkiped = true;
-		for (FlowStep flowStep : allSteps) {
-			if (flowStep.isShouldrun()) {
-				allStepsAreSkiped = false;
-			}
-		}
-		if (allStepsAreSkiped) {
-			getParentTestCaseView().toggleRunButton(false);
-		} else {
-			getParentTestCaseView().toggleRunButton(true);
-		}
+		
 		selectDefaultRow();
 	}
 

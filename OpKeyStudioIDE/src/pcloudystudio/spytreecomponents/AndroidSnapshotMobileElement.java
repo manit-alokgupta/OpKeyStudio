@@ -130,11 +130,17 @@ public class AndroidSnapshotMobileElement extends RenderedTreeSnapshotMobileElem
 		}
 		this.setName(guiName);
 		htmlMobileElementProps.put("xpath", this.makeXpath());
+	
+		htmlMobileElementProps.put("xpath-attribute", this.makeContentDescXpath(htmlMobileElementProps.get("class"),"content-desc",xmlElement.getAttribute("content-desc")));
 	}
 
 	@Override
 	public String getXpath() {
 		return this.getAttributes().get("xpath");
+	}
+	@Override
+   public String getContentDescXpath(){
+		return this.getAttributes().get("contentDescXpath");
 	}
 
 	@Override

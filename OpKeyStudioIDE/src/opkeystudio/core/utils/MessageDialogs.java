@@ -17,7 +17,7 @@ public class MessageDialogs {
 	public String openInputDialogAandGetValue(String dialogTitle, String dialogContent, String defaultValue) {
 		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), dialogTitle, dialogContent,
 				defaultValue, null);
-		input.setDefaultImage(ResourceManager.getPluginImage("OpKeyStudio","icons/pcloudystudio/opkey-16x16.png"));
+		input.setDefaultImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 
 		if (input.open() != InputDialog.OK) {
 			return null;
@@ -36,6 +36,10 @@ public class MessageDialogs {
 
 	public void openErrorDialog(String title, String message) {
 		MessageDialog.openError(Display.getCurrent().getActiveShell(), title, message);
+	}
+
+	public void openErrorDialog(Shell shell, String title, String message) {
+		MessageDialog.openError(shell, title, message);
 	}
 
 	public void openProgressDialog(Shell shell, String message) {
