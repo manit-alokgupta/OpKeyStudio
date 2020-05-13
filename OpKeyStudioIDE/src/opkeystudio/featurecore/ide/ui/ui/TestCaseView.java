@@ -311,6 +311,8 @@ public class TestCaseView extends SuperComposite {
 					allDataTreeView.initKeywords(searchBox.getText());
 				} else if (allDataTreeView.isFlTree()) {
 					allDataTreeView.initFunctionLibraries(searchBox.getText());
+				} else if (allDataTreeView.isCflTree()) {
+					allDataTreeView.initCodedFunctionLibraries(searchBox.getText());
 				}
 			}
 
@@ -405,7 +407,7 @@ public class TestCaseView extends SuperComposite {
 		} else {
 			TabItem componentArgInputTable = new TabItem(datasTabHolder, SWT.NONE);
 			componentArgInputTable
-			.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			componentArgInputTable.setText("Data Input");
 			componentArgInputTable.setToolTipText("Data Input");
 			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder,
@@ -427,7 +429,7 @@ public class TestCaseView extends SuperComposite {
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
 		globalVariableTable = new GlobalVariableTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
@@ -789,7 +791,7 @@ public class TestCaseView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 					toggleSaveButton(true);
 					flowStepTable.deleteStep();
 					inputDataTable.clearAllData();
@@ -798,9 +800,8 @@ public class TestCaseView extends SuperComposite {
 					CustomNotificationUtil.openInformationNotification("OpKey", "Selected Step Deleted!");
 				} catch (SQLException | IOException e1) {
 					e1.printStackTrace();
-				}
-				finally {
-					getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+				} finally {
+					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 				}
 
 			}
@@ -923,74 +924,74 @@ public class TestCaseView extends SuperComposite {
 
 	private boolean handleSaveOnRefresh() {
 		try {
-			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
-		if (itemSave.isEnabled()) {
-			Utilities.getInstance().activateMpart(getCurrentMpart());
-			int status = CustomNotificationUtil.openConfirmDialog("OpKey", "Do you want to Save changes?");
-			if (status == 0) {
-				saveAll();
-				toggleSaveButton(false);
-				CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
-				return true;
-			}
-			int revertChangesStatus = CustomNotificationUtil.openConfirmDialog("OpKey",
-					"Do you want to Revert changes?");
-			if (revertChangesStatus == 0) {
-				flowStepTable.revertAll();
-				flowStepTable.renderFlowSteps();
-				getCodedFunctionView().refreshTCFLCode();
-				CustomNotificationUtil.openInformationNotification("OpKey", "Changes reverted!");
+			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
+			if (itemSave.isEnabled()) {
+				Utilities.getInstance().activateMpart(getCurrentMpart());
+				int status = CustomNotificationUtil.openConfirmDialog("OpKey", "Do you want to Save changes?");
+				if (status == 0) {
+					saveAll();
+					toggleSaveButton(false);
+					CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
+					return true;
+				}
+				int revertChangesStatus = CustomNotificationUtil.openConfirmDialog("OpKey",
+						"Do you want to Revert changes?");
+				if (revertChangesStatus == 0) {
+					flowStepTable.revertAll();
+					flowStepTable.renderFlowSteps();
+					getCodedFunctionView().refreshTCFLCode();
+					CustomNotificationUtil.openInformationNotification("OpKey", "Changes reverted!");
+					return false;
+				}
 				return false;
 			}
-			return false;
-		}
-		flowStepTable.renderFlowSteps();
-		getCodedFunctionView().refreshTCFLCode();
-		return true;
-	}
-		finally{
-			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
+			flowStepTable.renderFlowSteps();
+			getCodedFunctionView().refreshTCFLCode();
+			return true;
+		} finally {
+			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
 	}
+
 	public void saveAll() {
 		try {
-			
-			getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_WAIT));
-		if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-			List<ComponentInputArgument> componentInputArgs = bottomFactory.getInputTable().getComponentInputData();
-			List<ComponentOutputArgument> componentOutputArgs = bottomFactory.getOutputTable().getComponentOutputData();
-			boolean isUniqueInputName = isComponentInputArgumentNameAreUnique(componentInputArgs);
-			boolean isUniqueOutputName = isComponentOutputArgumentNameAreUnique(componentOutputArgs);
-			if (isUniqueInputName == false) {
-				toggleSaveButton(false);
-				flowStepTable.renderFlowSteps();
-				getCodedFunctionView().refreshTCFLCode();
+
+			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
+			if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+				List<ComponentInputArgument> componentInputArgs = bottomFactory.getInputTable().getComponentInputData();
+				List<ComponentOutputArgument> componentOutputArgs = bottomFactory.getOutputTable()
+						.getComponentOutputData();
+				boolean isUniqueInputName = isComponentInputArgumentNameAreUnique(componentInputArgs);
+				boolean isUniqueOutputName = isComponentOutputArgumentNameAreUnique(componentOutputArgs);
+				if (isUniqueInputName == false) {
+					toggleSaveButton(false);
+					flowStepTable.renderFlowSteps();
+					getCodedFunctionView().refreshTCFLCode();
+					bottomFactory.getInputTable().renderAllBottomFactoryInputData();
+					new MessageDialogs().openErrorDialog("OpKey", "Name of input parameters must be unique");
+					return;
+				}
+				if (isUniqueOutputName == false) {
+					toggleSaveButton(false);
+					flowStepTable.renderFlowSteps();
+					getCodedFunctionView().refreshTCFLCode();
+					bottomFactory.getOutputTable().renderAllBottomFactoryOutputData();
+					new MessageDialogs().openErrorDialog("OpKey", "Name of output parameters must be unique");
+					return;
+				}
+				new FunctionLibraryConstruct().saveComponentInputArguments(componentInputArgs);
+				new FunctionLibraryConstruct().saveComponentOutputArguments(componentOutputArgs);
 				bottomFactory.getInputTable().renderAllBottomFactoryInputData();
-				new MessageDialogs().openErrorDialog("OpKey", "Name of input parameters must be unique");
-				return;
-			}
-			if (isUniqueOutputName == false) {
-				toggleSaveButton(false);
-				flowStepTable.renderFlowSteps();
-				getCodedFunctionView().refreshTCFLCode();
 				bottomFactory.getOutputTable().renderAllBottomFactoryOutputData();
-				new MessageDialogs().openErrorDialog("OpKey", "Name of output parameters must be unique");
-				return;
 			}
-			new FunctionLibraryConstruct().saveComponentInputArguments(componentInputArgs);
-			new FunctionLibraryConstruct().saveComponentOutputArguments(componentOutputArgs);
-			bottomFactory.getInputTable().renderAllBottomFactoryInputData();
-			bottomFactory.getOutputTable().renderAllBottomFactoryOutputData();
+			new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
+			flowStepTable.renderFlowSteps();
+			getCodedFunctionView().refreshTCFLCode();
+			OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+			toggleSaveButton(false);
+		} finally {
+			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
-		new FlowConstruct().saveAllFlowSteps(getArtifact(), flowStepTable.getFlowStepsData());
-		flowStepTable.renderFlowSteps();
-		getCodedFunctionView().refreshTCFLCode();
-		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
-		toggleSaveButton(false);
-	}
-	finally {
-		getParent().setCursor(new Cursor(Display.getCurrent(),SWT.CURSOR_ARROW));
-	}
 	}
 
 	private boolean isComponentInputArgumentNameAreUnique(List<ComponentInputArgument> componentInputArguments) {
