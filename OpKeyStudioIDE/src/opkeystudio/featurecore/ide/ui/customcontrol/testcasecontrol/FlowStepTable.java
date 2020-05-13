@@ -636,7 +636,7 @@ public class FlowStepTable extends CustomTable {
 		this.getFlowStepsData().add(flowStep);
 		this.refreshFlowSteps();
 		selectNextRowByCursor(getTableCursor(), 1);
-		getParentTestCaseView().toggleSaveButton(true);
+		//getParentTestCaseView().toggleSaveButton(true);
 	}
 
 	public void deleteStep() throws JsonParseException, JsonMappingException, SQLException, IOException {
