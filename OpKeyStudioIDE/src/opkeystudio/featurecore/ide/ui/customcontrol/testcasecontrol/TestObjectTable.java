@@ -4,31 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomButton;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.utils.DataType.OpKeyDataType;
 
 public class TestObjectTable extends CustomTable {
 	private List<ORObject> orobject = new ArrayList<ORObject>();
 	private TestCaseView parentTestCaseView;
 	private MenuItem openORObjectInNewTabMenuItem;
+	private FlowStep flowStep;
 
 	public TestObjectTable(Composite parent, int style) {
 		super(parent, style);
@@ -122,14 +131,71 @@ public class TestObjectTable extends CustomTable {
 		this.orobject = orobject;
 	}
 
+	private List<Control> allTableEditors = new ArrayList<Control>();
+
+	private void addInputTableEditor(CustomTableItem item) {
+		TableEditor editor1 = getTableEditor();
+		CustomButton button = new CustomButton(this, SWT.NONE | SWT.NO_BACKGROUND);
+		button.setToolTipText("Remove Object");
+		button.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DELETE_ICON));
+		button.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		button.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				FlowStep flowStep = getFlowStep();
+				flowStep.setOrObject(new ArrayList<ORObject>());
+				flowStep.setModified(true);
+				for (FlowInputArgument inputARg : flowStep.getFlowInputArgs()) {
+					if (inputARg.getStaticobjectid() != null) {
+						inputARg.setStaticobjectid(String.valueOf(OpKeyDataType.NULLDATA));
+						inputARg.setModified(true);
+					}
+				}
+				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+				getParentTestCaseView().toggleSaveButton(true);
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				editor1.getEditor().dispose();
+			}
+		});
+		editor1.setEditor(button, item, 3);
+		this.allTableEditors.add(editor1.getEditor());
+	}
+
+	private TableEditor getTableEditor() {
+		TableEditor editor = new TableEditor(this);
+		// editor.horizontalAlignment = SWT.RIGHT;
+		editor.grabHorizontal = true;
+		editor.minimumWidth = 50;
+		editor.minimumHeight = 10;
+		return editor;
+	}
+
+	private void disposeAllTableEditors() {
+		for (Control controlEditor : this.allTableEditors) {
+			controlEditor.dispose();
+		}
+	}
+
 	public void renderORObjectTable(FlowStep flowStep) {
 		this.removeAll();
+		disposeAllTableEditors();
+		this.setFlowStep(flowStep);
 		if (getOrobject().size() > 0) {
 			for (ORObject orobject : getOrobject()) {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { "Object", orobject.getName(), "", "" });
 				cti.setControlData(orobject);
-				cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
+				cti.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
+				addInputTableEditor(cti);
 			}
 			return;
 		}
@@ -137,7 +203,10 @@ public class TestObjectTable extends CustomTable {
 			if (flowStep.getKeyword().isKeywordContainsORObject()) {
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { "Object", "", "", "" });
-				cti.setImage(1, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
+				cti.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
+			} else {
+				CustomTableItem cti = new CustomTableItem(this, 0);
+				cti.setText(new String[] { "This keyword does not need an object" });
 			}
 		}
 	}
@@ -168,6 +237,14 @@ public class TestObjectTable extends CustomTable {
 
 	public void setParentTestCaseView(TestCaseView parentTestCaseView) {
 		this.parentTestCaseView = parentTestCaseView;
+	}
+
+	public FlowStep getFlowStep() {
+		return flowStep;
+	}
+
+	public void setFlowStep(FlowStep flowStep) {
+		this.flowStep = flowStep;
 	}
 
 }

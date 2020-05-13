@@ -57,13 +57,15 @@ import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 
 public class ObjectRepositoryView extends SuperComposite {
 	private Artifact artifact;
-
+	private String objectId;
 	private ObjectAttributeTable objectAttributeTable;
 	private ObjectRepositoryTree objectRepositoryTree;
 	private ToolItem saveObject;
 	private ToolItem renameObject;
 	private ToolItem deleteObject;
 	private ToolItem refreshObject;
+	private ToolItem intelliChooseObject;
+	private ToolItem intelliChooseObjectAttribute;
 	private ToolItem addObjectAttribute;
 	private ToolItem deleteObjectAttribute;
 	private ToolItem objectType;
@@ -75,7 +77,6 @@ public class ObjectRepositoryView extends SuperComposite {
 	private ToolItem addParentObjectToolItem;
 	private ToolItem addChildObjectToolItem;
 	private boolean isParentObjectItemsListVisible;
-	private boolean isChildObjectItemsListVisible;
 	private ORObject obRepo;
 	private String orId;
 	private String[] parentObjectTypes = new String[] { "Html Page", "Frame", "Page" };
@@ -108,9 +109,10 @@ public class ObjectRepositoryView extends SuperComposite {
 		toggleDeleteAttributeButton(false);
 		toggleParentObjectToolItem(true);
 		toggleChildObjectToolItem(false);
+		intelliChooseObject.setEnabled(false);
+		intelliChooseObjectAttribute.setEnabled(false);
 		addOpKeyGlobalListener();
 		this.isParentObjectItemsListVisible = false;
-		this.isChildObjectItemsListVisible = false;
 	}
 
 	public ObjectRepositoryTree getObjectRepositoryTree() {
@@ -148,6 +150,7 @@ public class ObjectRepositoryView extends SuperComposite {
 					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name,
 							item.getText(), objectRepositoryTree.getAllORObjects());
+					setObjectId(orobject.getObject_id());
 					objectRepositoryTree.getAllORObjects().add(orobject);
 					toggleSaveButton(true);
 					addParentObjectToolItem.setText("Add (" + menuItem + ")");
@@ -179,6 +182,7 @@ public class ObjectRepositoryView extends SuperComposite {
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
 							selectedobject.getObject_id(), name, item.getText(),
 							objectRepositoryTree.getAllORObjects());
+					setObjectId(orobject.getObject_id());
 					objectRepositoryTree.getAllORObjects().add(orobject);
 					toggleSaveButton(true);
 					addChildObjectToolItem.setText("Add (" + menuItem + ")");
@@ -247,6 +251,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				String name = new Utilities().getRandomVariableName("New Node " + objectName);
 				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name, objectName,
 						objectRepositoryTree.getAllORObjects());
+				setObjectId(orobject.getObject_id());
 				objectRepositoryTree.getAllORObjects().add(orobject);
 				toggleSaveButton(true);
 				objectRepositoryTree.refreshObjectRepositories();
@@ -264,16 +269,12 @@ public class ObjectRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (e.detail == SWT.ARROW && !isChildObjectItemsListVisible) {
+				if (e.detail == SWT.ARROW) {
 					Rectangle rect = addChildObjectToolItem.getBounds();
 					Point pt = new Point(rect.x, rect.y + rect.height);
 					pt = toolBar.toDisplay(pt);
 					childObjectMenu.setLocation(pt.x, pt.y);
 					childObjectMenu.setVisible(true);
-					isChildObjectItemsListVisible = true;
-					return;
-				} else if (e.detail == SWT.ARROW) {
-					isChildObjectItemsListVisible = false;
 					return;
 				}
 				String objectName = addChildObjectToolItem.getText().replaceAll("Add", "").replace("(", "")
@@ -284,6 +285,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				ORObject selectedobject = treeItem.getORObject();
 				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
 						selectedobject.getObject_id(), name, objectName, objectRepositoryTree.getAllORObjects());
+				setObjectId(orobject.getObject_id());
 				objectRepositoryTree.getAllORObjects().add(orobject);
 				toggleSaveButton(true);
 				objectRepositoryTree.refreshObjectRepositories();
@@ -322,6 +324,12 @@ public class ObjectRepositoryView extends SuperComposite {
 		androidDeviceConfiguration.setImage(
 				ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOBILE_ADD_TO_OR_CAPTURED_IMAGE));
 		androidDeviceConfiguration.setToolTipText("Device Configuration and Spy Android");
+		new ToolItem(toolBar, SWT.SEPARATOR);
+
+		intelliChooseObject = new ToolItem(toolBar, SWT.CHECK | SWT.BORDER);
+		intelliChooseObject.setText("IntelliChoose");
+		intelliChooseObject.setToolTipText("IntelliChoose");
+		intelliChooseObject.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GREEN_FLAG_ICON));
 
 		objectRepositoryTree = new ObjectRepositoryTree(composite_3, SWT.BORDER, this);
 		objectRepositoryTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -372,6 +380,14 @@ public class ObjectRepositoryView extends SuperComposite {
 		objectType = new ToolItem(toolBar_1, SWT.NONE);
 		objectType.setEnabled(false);
 
+		new ToolItem(toolBar_1, SWT.SEPARATOR);
+
+		intelliChooseObjectAttribute = new ToolItem(toolBar_1, SWT.CHECK | SWT.BORDER);
+		intelliChooseObjectAttribute.setText("IntelliChoose");
+		intelliChooseObjectAttribute.setToolTipText("IntelliChoose");
+		intelliChooseObjectAttribute
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GREEN_FLAG_ICON));
+
 		objectAttributeTable = new ObjectAttributeTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION, this);
 		objectAttributeTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		objectAttributeTable.setHeaderVisible(true);
@@ -389,6 +405,46 @@ public class ObjectRepositoryView extends SuperComposite {
 		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, false);
 		setCodedFunctionView(codedFunctionView);
 
+		intelliChooseObject.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ORObject orobject = objectRepositoryTree.getSelectedORObject();
+				if (orobject != null) {
+					intelliChooseObjectAttribute.setSelection(intelliChooseObject.getSelection());
+					orobject.setUsesmartidentification(intelliChooseObject.getSelection());
+					orobject.setModified(true);
+					toggleSaveButton(true);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		intelliChooseObjectAttribute.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ORObject orobject = objectRepositoryTree.getSelectedORObject();
+				if (orobject != null) {
+					intelliChooseObject.setSelection(intelliChooseObjectAttribute.getSelection());
+					orobject.setUsesmartidentification(intelliChooseObjectAttribute.getSelection());
+					orobject.setModified(true);
+					toggleSaveButton(true);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		objectRepositoryTree.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -397,6 +453,9 @@ public class ObjectRepositoryView extends SuperComposite {
 				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) objectRepositoryTree.getSelection()[0];
 				renderObjectAttributeProperty(item);
 				if (item.getORObject() != null) {
+					setObjectId(item.getORObject().getObject_id());
+					intelliChooseObject.setEnabled(true);
+					intelliChooseObjectAttribute.setEnabled(true);
 					toggleDeleteButton(true);
 					toggleRenameButton(true);
 					toggleAddAttributeButton(true);
@@ -419,9 +478,16 @@ public class ObjectRepositoryView extends SuperComposite {
 					}
 					toggleObjectTypeMenuItem(true);
 					objectType.setText("Object Type: " + objectRepositoryTree.getSelectedORObject().getOpkeytype());
+					intelliChooseObject
+							.setSelection(objectRepositoryTree.getSelectedORObject().isUsesmartidentification());
+					intelliChooseObjectAttribute
+							.setSelection(objectRepositoryTree.getSelectedORObject().isUsesmartidentification());
 				} else {
+					intelliChooseObject.setEnabled(false);
+					intelliChooseObjectAttribute.setEnabled(false);
 					toggleDeleteButton(false);
 					toggleRenameButton(false);
+					toggleDeleteAttributeButton(false);
 					toggleAddAttributeButton(false);
 					toggleRenameMenuItem(false);
 					toggleCopyMenuItem(false);
@@ -430,6 +496,8 @@ public class ObjectRepositoryView extends SuperComposite {
 					toggleChildObjectToolItem(false);
 					toggleObjectTypeMenuItem(false);
 					objectType.setText("");
+					intelliChooseObject.setSelection(false);
+					intelliChooseObjectAttribute.setSelection(false);
 				}
 
 			}
@@ -465,7 +533,6 @@ public class ObjectRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ObjectAttributeTableItem oati = (ObjectAttributeTableItem) objectAttributeTable.getSelection()[0];
-				System.out.println(oati.getObjectAttributeData().getProperty());
 				toggleDeleteAttributeButton(true);
 			}
 
@@ -695,6 +762,8 @@ public class ObjectRepositoryView extends SuperComposite {
 				toggleSaveButton(false);
 				CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 			}
+			intelliChooseObject.setEnabled(false);
+			intelliChooseObjectAttribute.setEnabled(false);
 			toggleDeleteAttributeButton(false);
 			toggleAddAttributeButton(false);
 			objectRepositoryTree.renderObjectRepositories();
@@ -895,5 +964,13 @@ public class ObjectRepositoryView extends SuperComposite {
 
 	public void setCurrentMPart(MPart currentMPart) {
 		this.currentMPart = currentMPart;
+	}
+
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 }

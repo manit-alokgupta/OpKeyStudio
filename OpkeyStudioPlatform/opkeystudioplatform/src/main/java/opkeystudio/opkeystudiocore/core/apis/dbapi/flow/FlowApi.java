@@ -23,6 +23,7 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
+import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowApi {
@@ -117,6 +118,73 @@ public class FlowApi {
 		}
 	}
 
+	private List<FlowInputArgument> syncAllComponentInputArgument(String flowId, FlowStep flowStep,
+			List<ComponentInputArgument> componentInputArgs, List<FlowInputArgument> flowInputArgs) {
+		List<FlowInputArgument> syncFlowInputArguments = new ArrayList<FlowInputArgument>();
+		for (ComponentInputArgument inputArgument : componentInputArgs) {
+			for (FlowInputArgument flowInputArgument : flowInputArgs) {
+				if (flowInputArgument.getComponent_ip_id().equals(inputArgument.getIp_id())) {
+					syncFlowInputArguments.add(flowInputArgument);
+					inputArgument.setChecked(true);
+				}
+			}
+		}
+
+		for (ComponentInputArgument inputArgument : componentInputArgs) {
+			if (inputArgument.isChecked() == false) {
+				FlowInputArgument flowinputArgument = new FlowInputArgument();
+				flowinputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+				flowinputArgument.setFlow_step_ia_id(Utilities.getInstance().getUniqueUUID(""));
+				flowinputArgument.setComponent_ip_id(inputArgument.getIp_id());
+				flowinputArgument.setDatasource(DataSource.StaticValue);
+				flowinputArgument.setStaticvalue("");
+				flowinputArgument.setAdded(true);
+
+				syncFlowInputArguments.add(flowinputArgument);
+			}
+		}
+
+		System.out.println("Synced Input Arguments " + syncFlowInputArguments.size());
+		new FlowConstruct().saveFlowInputArguments(syncFlowInputArguments);
+		for (FlowInputArgument inputArg : syncFlowInputArguments) {
+			inputArg.setAdded(false);
+		}
+		return syncFlowInputArguments;
+	}
+
+	private List<FlowOutputArgument> syncAllComponentOutputArgument(String flowId, FlowStep flowStep,
+			List<ComponentOutputArgument> componentInputArgs, List<FlowOutputArgument> flowInputArgs) {
+		/*
+		List<FlowOutputArgument> syncFlowInputArguments = new ArrayList<FlowOutputArgument>();
+		for (ComponentOutputArgument inputArgument : componentInputArgs) {
+			for (FlowOutputArgument flowInputArgument : flowInputArgs) {
+				if (flowInputArgument.getComponent_op_id().equals(inputArgument.getComponentstep_oa_id())) {
+					syncFlowInputArguments.add(flowInputArgument);
+					inputArgument.setChecked(true);
+				}
+			}
+		}
+
+		for (ComponentOutputArgument inputArgument : componentInputArgs) {
+			if (inputArgument.isChecked() == false) {
+				FlowOutputArgument flowinputArgument = new FlowOutputArgument();
+				flowinputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+				flowinputArgument.setFlow_step_oa_id(Utilities.getInstance().getUniqueUUID(""));
+				flowinputArgument.setComponent_op_id(inputArgument.getComponentstep_oa_id());
+				flowinputArgument.setAdded(true);
+
+				syncFlowInputArguments.add(flowinputArgument);
+			}
+		}
+
+		System.out.println("Synced Input Arguments " + syncFlowInputArguments.size());
+		new FlowConstruct().saveFlowOutputArguments(syncFlowInputArguments);
+		for (FlowOutputArgument inputArg : syncFlowInputArguments) {
+			inputArg.setAdded(false);
+		}*/
+		return flowInputArgs;
+	}
+
 	public List<FlowStep> getAllFlowSteps(String flowId) {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
 		for (FlowStep flowStep : flowSteps) {
@@ -137,21 +205,27 @@ public class FlowApi {
 				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(flowStep.getComponent_id());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
-				System.out.println("Input Size "+fis.size()+"   CInput Size "+inputArgs.size());
+				System.out.println("Input Size " + fis.size() + "   CInput Size " + inputArgs.size());
+				List<FlowInputArgument> flowInputArguments = syncAllComponentInputArgument(flowId, flowStep, inputArgs,
+						fis);
+				List<FlowOutputArgument> flowOutputArguments = syncAllComponentOutputArgument(flowId, flowStep,
+						outputArgs, fos);
 				flComp.setComponentInputArguments(inputArgs);
 				flComp.setComponentOutputArguments(outputArgs);
-				insertComponentInputArgument(flComp, fis);
+				insertComponentInputArgument(flComp, flowInputArguments);
 				flowStep.setFunctionLibraryComponent(flComp);
-				flowStep.setFlowInputArgs(fis);
-				flowStep.setFlowOutputArgs(fos);
+				flowStep.setFlowInputArgs(flowInputArguments);
+				flowStep.setFlowOutputArgs(flowOutputArguments);
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flowStep.setOrObject(allORObject);
 				flowStep.setIsfunctionlibraryStep(true);
 			} else if (flowStep.getCodedfunction_id() != null) {
 				CodedFunctionArtifact codedFunctionArtifact = getCodedFunctionArtifact(flowStep.getCodedfunction_id())
 						.get(0);
-				List<CFLInputParameter> cflInputParams = new CodedFunctionApi().getCodedFLInputParameters(codedFunctionArtifact);
-				List<CFLOutputParameter> cflOutputParams = new CodedFunctionApi().getCodedFLOutputParameters(codedFunctionArtifact);
+				List<CFLInputParameter> cflInputParams = new CodedFunctionApi()
+						.getCodedFLInputParameters(codedFunctionArtifact);
+				List<CFLOutputParameter> cflOutputParams = new CodedFunctionApi()
+						.getCodedFLOutputParameters(codedFunctionArtifact);
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
 
@@ -239,9 +313,10 @@ public class FlowApi {
 		}
 		return new ArrayList<FlowOutputArgument>();
 	}
-	
+
 	public List<FlowOutputArgument> fetchComponentStepOutputArguments(String flowStepId) {
-		String query = String.format("SELECT * FROM component_step_output_arguments where componentstep_id!='%s'", flowStepId);
+		String query = String.format("SELECT * FROM component_step_output_arguments where componentstep_id!='%s'",
+				flowStepId);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, FlowOutputArgument.class);

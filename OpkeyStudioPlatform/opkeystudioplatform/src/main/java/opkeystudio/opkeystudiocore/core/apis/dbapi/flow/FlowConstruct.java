@@ -49,15 +49,17 @@ public class FlowConstruct {
 		addFlowStep(flowStep);
 	}
 
-	private void saveFlowInputArguments(List<FlowInputArgument> flowInputArguments) {
+	public void saveFlowInputArguments(List<FlowInputArgument> flowInputArguments) {
 		for (FlowInputArgument flowInputArgument : flowInputArguments) {
 			deleteFlowInputArgument(flowInputArgument);
 			addFlowInputArgument(flowInputArgument);
 			updateFlowInputArgument(flowInputArgument);
 		}
+		GlobalLoader.getInstance().initAllFlowInputArguments();
+		GlobalLoader.getInstance().initAllFlowOutputArguments();
 	}
 
-	private void saveFlowOutputArguments(List<FlowOutputArgument> flowOutputArguments) {
+	public void saveFlowOutputArguments(List<FlowOutputArgument> flowOutputArguments) {
 		for (FlowOutputArgument flowOutputArgument : flowOutputArguments) {
 			deleteFlowOutputArgument(flowOutputArgument);
 			addFlowOutputArgument(flowOutputArgument);

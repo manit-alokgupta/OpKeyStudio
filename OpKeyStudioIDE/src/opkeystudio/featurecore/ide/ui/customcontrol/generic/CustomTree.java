@@ -52,8 +52,13 @@ public class CustomTree extends Tree {
 		selectTreeItem(item);
 	}
 
-	private void selectTreeItem(TreeItem item) {
-		this.notifyListeners(SWT.Selection, null);
+	public void selectTreeItem(TreeItem item) {
+		try {
+			this.setSelection(item);
+			this.notifyListeners(SWT.Selection, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	private TreeItem getSelectedItem() {

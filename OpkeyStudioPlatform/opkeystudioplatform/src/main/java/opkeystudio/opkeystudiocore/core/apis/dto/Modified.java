@@ -12,6 +12,8 @@ public class Modified {
 	@DBField
 	private boolean visible = true;
 
+	private boolean checked = false;
+
 	public boolean isVisible() {
 		return visible;
 	}
@@ -46,5 +48,13 @@ public class Modified {
 
 	public void setAdded(boolean added) {
 		this.added = added;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 }

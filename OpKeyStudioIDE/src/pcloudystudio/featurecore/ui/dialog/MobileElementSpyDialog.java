@@ -296,7 +296,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 									return;
 
 								while (renamedText.trim().isEmpty()) {
-									CustomNotificationUtil.openErrorNotification("OpKey", "Name can't be empty!");
+									CustomNotificationUtil.openInformationNotification("OpKey", "Name can't be empty!");
 									renamedText = CustomNotificationUtil.openInputDialog("Rename",
 											"One object is already added with the same name in the OR. \nRename Object: "
 													+ objectName,
@@ -323,7 +323,7 @@ public class MobileElementSpyDialog extends Dialog implements MobileElementInspe
 						ex.printStackTrace();
 					}
 				} else {
-					CustomNotificationUtil.openErrorNotification("Error", "Object Name field can't be empty!");
+					CustomNotificationUtil.openInformationNotification("OpKey", "Object Name field can't be empty!");
 				}
 			}
 		});

@@ -13,6 +13,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolBar;
@@ -173,6 +175,24 @@ public class DataRepositoryView extends SuperComposite {
 
 		colCount = dataRepositoryTable.getColumnCount();
 		rowCount = dataRepositoryTable.getItemCount();
+
+		toggleAddColumnButton(false);
+		toggleDeleteColumnButton(false);
+		toggleMoveColumnLeftButton(false);
+		toggleMoveColumnRightButton(false);
+		toggleRenameColumnButton(false);
+
+		dataRepositoryTable.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				toggleAddColumnButton(true);
+				toggleDeleteColumnButton(true);
+				toggleMoveColumnLeftButton(true);
+				toggleMoveColumnRightButton(true);
+				toggleRenameColumnButton(true);
+			}
+		});
+
 		addButtonListner();
 
 		TabItem sourceCodeTabItem = new TabItem(tabFolder, SWT.NONE);
@@ -418,6 +438,11 @@ public class DataRepositoryView extends SuperComposite {
 		}
 		dataRepositoryTable.renderAllDRDetails();
 		getCodedFunctionView().refreshDRCode();
+		toggleAddColumnButton(false);
+		toggleDeleteColumnButton(false);
+		toggleMoveColumnLeftButton(false);
+		toggleMoveColumnRightButton(false);
+		toggleRenameColumnButton(false);
 	}
 
 	private void saveDR() {

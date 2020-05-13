@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
@@ -24,6 +25,7 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
 public class FunctionLibraryApi {
 	private static FunctionLibraryApi flowApi;
@@ -89,6 +91,85 @@ public class FunctionLibraryApi {
 
 	}
 
+	private List<FlowInputArgument> syncAllComponentInputArgument(String flowId, FlowStep flowStep,
+			List<ComponentInputArgument> componentInputArgs, List<FlowInputArgument> flowInputArgs) {
+		List<FlowInputArgument> syncFlowInputArguments = new ArrayList<FlowInputArgument>();
+		for (ComponentInputArgument inputArgument : componentInputArgs) {
+			for (FlowInputArgument flowInputArgument : flowInputArgs) {
+				if (flowInputArgument.getComponent_ip_id().equals(inputArgument.getIp_id())) {
+					syncFlowInputArguments.add(flowInputArgument);
+					inputArgument.setChecked(true);
+				}
+			}
+		}
+
+		for (ComponentInputArgument inputArgument : componentInputArgs) {
+			if (inputArgument.isChecked() == false) {
+				FlowInputArgument flowinputArgument = new FlowInputArgument();
+				flowinputArgument.setStepid(flowStep.getStepid());
+				flowinputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));
+				flowinputArgument.setComponent_ip_id(inputArgument.getIp_id());
+				flowinputArgument.setArg_datasource(DataSource.StaticValue);
+				flowinputArgument.setStaticvalue("");
+				flowinputArgument.setAdded(true);
+
+				syncFlowInputArguments.add(flowinputArgument);
+			}
+		}
+
+		System.out.println("Synced Input Arguments " + syncFlowInputArguments.size());
+		new FunctionLibraryConstruct().saveFlowInputArguments(syncFlowInputArguments);
+		for (FlowInputArgument inputArg : syncFlowInputArguments) {
+			inputArg.setAdded(false);
+		}
+		return syncFlowInputArguments;
+	}
+
+	private List<FlowOutputArgument> syncAllComponentOutputArgument(String flowId, FlowStep flowStep,
+			List<ComponentOutputArgument> componentInputArgs, List<FlowOutputArgument> flowInputArgs) {
+		/*
+		 * List<FlowOutputArgument> syncFlowInputArguments = new
+		 * ArrayList<FlowOutputArgument>(); for (ComponentOutputArgument inputArgument :
+		 * componentInputArgs) { for (FlowOutputArgument flowInputArgument :
+		 * flowInputArgs) { if
+		 * (flowInputArgument.getComponent_op_id().equals(inputArgument.
+		 * getComponentstep_oa_id())) { syncFlowInputArguments.add(flowInputArgument);
+		 * inputArgument.setChecked(true); } } }
+		 * 
+		 * for (ComponentOutputArgument inputArgument : componentInputArgs) { if
+		 * (inputArgument.isChecked() == false) { FlowOutputArgument flowinputArgument =
+		 * new FlowOutputArgument();
+		 * flowinputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+		 * flowinputArgument.setFlow_step_oa_id(Utilities.getInstance().getUniqueUUID(""
+		 * ));
+		 * flowinputArgument.setComponent_op_id(inputArgument.getComponentstep_oa_id());
+		 * flowinputArgument.setAdded(true);
+		 * 
+		 * syncFlowInputArguments.add(flowinputArgument); } }
+		 * 
+		 * System.out.println("Synced Input Arguments " +
+		 * syncFlowInputArguments.size()); new
+		 * FlowConstruct().saveFlowOutputArguments(syncFlowInputArguments); for
+		 * (FlowOutputArgument inputArg : syncFlowInputArguments) {
+		 * inputArg.setAdded(false); }
+		 */
+		return flowInputArgs;
+	}
+
+	public void insertComponentInputArgument(FunctionLibraryComponent flcomp,
+			List<FlowInputArgument> flowInputArguments) {
+		if (flcomp == null) {
+			return;
+		}
+		if (flowInputArguments.size() == flcomp.getComponentInputArguments().size()) {
+			for (int i = 0; i < flowInputArguments.size(); i++) {
+				FlowInputArgument flowInp = flowInputArguments.get(i);
+				ComponentInputArgument compoInp = flcomp.getComponentInputArguments().get(i);
+				flowInp.setComponentInputArgument(compoInp);
+			}
+		}
+	}
+
 	public List<FlowStep> getAllFlowSteps(String flowId) {
 		List<FlowStep> flowSteps = getAllSteps(flowId);
 		for (FlowStep flowStep : flowSteps) {
@@ -111,10 +192,12 @@ public class FunctionLibraryApi {
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
 				System.out.println("Input Size " + fis.size() + "   CInput Size " + inputArgs.size());
+				List<FlowInputArgument> flowInputArgs = syncAllComponentInputArgument(flowId, flowStep, inputArgs, fis);
 				flComp.setComponentInputArguments(inputArgs);
 				flComp.setComponentOutputArguments(outputArgs);
 				flowStep.setFunctionLibraryComponent(flComp);
-				flowStep.setFlowInputArgs(fis);
+				insertComponentInputArgument(flComp, flowInputArgs);
+				flowStep.setFlowInputArgs(flowInputArgs);
 				flowStep.setFlowOutputArgs(fos);
 				List<ORObject> allORObject = getORObjectsArguments(flowStep);
 				flowStep.setOrObject(allORObject);
