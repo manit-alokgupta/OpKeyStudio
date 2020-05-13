@@ -115,6 +115,15 @@ public class ObjectRepositoryTree extends CustomTree {
 	}
 
 	public ObjectRepositoryTreeItem getSelectedTreeItem() {
+		if (this.getSelection() == null) {
+			return null;
+		}
+		if (this.getSelection().length == 0) {
+			return null;
+		}
+		if (this.getSelection()[0] == null) {
+			return null;
+		}
 		return (ObjectRepositoryTreeItem) this.getSelection()[0];
 	}
 
