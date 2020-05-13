@@ -57,7 +57,7 @@ import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 
 public class ObjectRepositoryView extends SuperComposite {
 	private Artifact artifact;
-
+	private String objectId;
 	private ObjectAttributeTable objectAttributeTable;
 	private ObjectRepositoryTree objectRepositoryTree;
 	private ToolItem saveObject;
@@ -449,6 +449,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				ObjectRepositoryTreeItem item = (ObjectRepositoryTreeItem) objectRepositoryTree.getSelection()[0];
 				renderObjectAttributeProperty(item);
 				if (item.getORObject() != null) {
+					setObjectId(item.getORObject().getObject_id());
 					intelliChooseObject.setEnabled(true);
 					intelliChooseObjectAttribute.setEnabled(true);
 					toggleDeleteButton(true);
@@ -959,5 +960,13 @@ public class ObjectRepositoryView extends SuperComposite {
 
 	public void setCurrentMPart(MPart currentMPart) {
 		this.currentMPart = currentMPart;
+	}
+
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 }

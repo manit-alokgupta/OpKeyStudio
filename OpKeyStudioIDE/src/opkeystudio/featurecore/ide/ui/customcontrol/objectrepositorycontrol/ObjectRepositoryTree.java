@@ -44,6 +44,22 @@ public class ObjectRepositoryTree extends CustomTree {
 		});
 	}
 
+	private void highlightLastOrObject() {
+		List<TreeItem> treeitems = getAllTreeItems();
+		for (TreeItem item : treeitems) {
+			ObjectRepositoryTreeItem objTreeItem = (ObjectRepositoryTreeItem) item;
+			if (objTreeItem.getORObject() != null) {
+				String currentObjectId = getParentORView().getObjectId();
+				if (currentObjectId != null) {
+					if (currentObjectId.equals(objTreeItem.getORObject().getObject_id())) {
+						System.out.println("ORObject ID " + objTreeItem.getORObject().getObject_id());
+						selectTreeItem(objTreeItem);
+					}
+				}
+			}
+		}
+	}
+
 	public void setAllORObjects(List<ORObject> objectRepository) {
 		this.objectRepository = objectRepository;
 	}
@@ -160,6 +176,7 @@ public class ObjectRepositoryTree extends CustomTree {
 		getParentORView().toggleDeleteButton(false);
 		getParentORView().toggleChildObjectToolItem(false);
 		getParentORView().toggleRenameButton(false);
+		highlightLastOrObject();
 	}
 
 	public void refreshObjectRepositories() {
@@ -192,6 +209,7 @@ public class ObjectRepositoryTree extends CustomTree {
 		getParentORView().toggleDeleteButton(false);
 		getParentORView().toggleChildObjectToolItem(false);
 		getParentORView().toggleRenameButton(false);
+		highlightLastOrObject();
 	}
 
 	public void fetchAndRenderORTree() {
