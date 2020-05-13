@@ -664,6 +664,18 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			this.setErrorMessage("Plugin not selected.");
 			return;
 		}
+		
+		if (sessionNameTextField.getText().equals("")) {
+			runButton.setEnabled(false);
+			this.setErrorMessage("SessionName Cannot Be Empty.");
+			return;
+		}
+
+		if (buildNameTextField.getText().equals("")) {
+			runButton.setEnabled(false);
+			this.setErrorMessage("Build Name Cannot Be Empty.");
+			return;
+		}
 
 		if (androidDeviceSelectionDropDown.getVisible() && androidDeviceSelectionDropDown.getSelectionIndex() == 0) {
 			runButton.setEnabled(false);
