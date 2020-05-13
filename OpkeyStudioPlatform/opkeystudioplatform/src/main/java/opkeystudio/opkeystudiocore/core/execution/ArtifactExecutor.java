@@ -19,6 +19,7 @@ import com.opkeystudio.core.sessions.SessionInfo;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import pcloudystudio.core.vncutils.AndroidVNCUtil;
 
 public class ArtifactExecutor {
 
@@ -313,6 +314,9 @@ public class ArtifactExecutor {
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds", Object.class);
 		method.invoke(instance, info);
+		
+		
+		//AndroidVNCUtil.getInstance().closeOpenVncViewer();
 	}
 
 	public void stopExecutionSession() {
@@ -324,6 +328,8 @@ public class ArtifactExecutor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 
 	}
 

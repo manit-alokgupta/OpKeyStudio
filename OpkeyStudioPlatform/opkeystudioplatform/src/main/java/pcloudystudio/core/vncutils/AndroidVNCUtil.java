@@ -12,6 +12,8 @@ public class AndroidVNCUtil {
 
 	private static AndroidVNCUtil obj;
 	private static Process vncServerProcess = null;
+	private static Process opkeyVncJarProcess = null; 
+
 
 	private static String PreCompiledLibDirectory = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator
 			+ "VncServer" + File.separator + "vncserver" + File.separator + "PreCompiled_libs"; // "
@@ -339,13 +341,13 @@ public class AndroidVNCUtil {
 				+ deviceName + '"' + " " + '"' + id + '"' + " " + adbPath;
 
 		StringBuilder builder = new StringBuilder();
-		Process process = runtime.exec(command);
-		process.waitFor();
+		opkeyVncJarProcess = runtime.exec(command);
+		opkeyVncJarProcess.waitFor();
 		vncServerProcess.destroy();
 
 		String line;
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
+				new InputStreamReader(opkeyVncJarProcess.getInputStream(), StandardCharsets.UTF_8));
 		while ((line = reader.readLine()) != null) {
 			builder.append(line);
 			builder.append(System.getProperty("line.separator"));
@@ -377,10 +379,10 @@ public class AndroidVNCUtil {
 			return "/data/app/com.pcloudy.inputservice-1/base.ap"; // this means device not contains any base.apk
 	}
 
-	public static void StartInputService(String id,String baseApkpath) throws IOException, InterruptedException {
+	public static void StartInputService(String id, String baseApkpath) throws IOException, InterruptedException {
 		System.out.println("starting input service");
-		String command = "adb -s " + id
-				+ " shell export CLASSPATH="+baseApkpath+";"+" exec app_process /system/bin com.pcloudy.inputservice.Agent";
+		String command = "adb -s " + id + " shell export CLASSPATH=" + baseApkpath + ";"
+				+ " exec app_process /system/bin com.pcloudy.inputservice.Agent";
 		System.out.println("command is" + " " + command);
 		String[] cmd = { adbPath + File.separator + "adb", command };
 		ProcessBuilder pb = new ProcessBuilder(cmd);
@@ -550,5 +552,14 @@ public class AndroidVNCUtil {
 			return true;
 		else
 			return false;
+	}
+
+	public void closeOpenVncViewer() {
+		if (vncServerProcess != null && vncServerProcess.isAlive())
+			vncServerProcess.destroy();
+		
+		if (opkeyVncJarProcess != null && opkeyVncJarProcess.isAlive())
+			opkeyVncJarProcess.destroy();
+
 	}
 }
