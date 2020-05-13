@@ -167,18 +167,17 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 				restrictInputString(e);
 			}
 		});
-		sessionNameTextField.addModifyListener(new ModifyListener() {	
+		sessionNameTextField.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				// TODO Auto-generated method stub
-				if(sessionNameTextField.getText().equals("")) {
+				if (sessionNameTextField.getText().equals("")) {
 					runButton.setEnabled(false);
 					CustomNotificationUtil.openInformationNotification("OpKey", "Session Name Cannot Be Empty");
 					sessionNameTextField.setFocus();
-					}
-				else {
-					if(pluginSelectionDropDown.getText().equals("Web")&& !buildNameTextField.getText().equals(""))
-						
+				} else {
+					if (pluginSelectionDropDown.getText().equals("Web") && !buildNameTextField.getText().equals(""))
+
 						runButton.setEnabled(true);
 				}
 			}
@@ -205,7 +204,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			}
 		});
-		
+
 		buildNameTextField.addVerifyListener(new VerifyListener() {
 
 			@Override
@@ -213,18 +212,17 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 				restrictInputString(e);
 			}
 		});
-		buildNameTextField.addModifyListener(new ModifyListener() {	
+		buildNameTextField.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				// TODO Auto-generated method stub
-				if(buildNameTextField.getText().equals("")) {
+				if (buildNameTextField.getText().equals("")) {
 					runButton.setEnabled(false);
 					CustomNotificationUtil.openInformationNotification("OpKey", "Build Name Cannot Be Empty");
 					buildNameTextField.setFocus();
-					}
-				else {
-					if(pluginSelectionDropDown.getText().equals("Web") && !sessionNameTextField.getText().equals(""))
-						
+				} else {
+					if (pluginSelectionDropDown.getText().equals("Web") && !sessionNameTextField.getText().equals(""))
+
 						runButton.setEnabled(true);
 				}
 			}
@@ -241,28 +239,36 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				checkIfRunButtonBeEnabled();
-				int index = pluginSelectionDropDown.getSelectionIndex();
-				if (index == 0) {
-					return;
-				}
-				String pluginName = pluginSelectionDropDown.getItem(index);
-				getExecutionSession().setPluginName(pluginName);
+				try {
+					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(pluginSelectionDropDown.getShell(),
+							SWT.CURSOR_WAIT);
 
-				if (pluginName.contentEquals("Appium")) {
-					initDeviceNames();
-					lblDeviceSelection.setVisible(true);
-					btnRefreshDeviceList.setVisible(true);
-					androidDeviceSelectionDropDown.setVisible(true);
-					isAppiumPluginExecution = true;
-				} else {
-					lblDeviceSelection.setVisible(false);
-					btnRefreshDeviceList.setVisible(false);
-					androidDeviceSelectionDropDown.setVisible(false);
-					isAppiumPluginExecution = false;
-				}
+					checkIfRunButtonBeEnabled();
+					int index = pluginSelectionDropDown.getSelectionIndex();
+					if (index == 0) {
+						return;
+					}
+					String pluginName = pluginSelectionDropDown.getItem(index);
+					getExecutionSession().setPluginName(pluginName);
 
-				checkIfRunButtonBeEnabled();
+					if (pluginName.contentEquals("Appium")) {
+						initDeviceNames();
+						lblDeviceSelection.setVisible(true);
+						btnRefreshDeviceList.setVisible(true);
+						androidDeviceSelectionDropDown.setVisible(true);
+						isAppiumPluginExecution = true;
+					} else {
+						lblDeviceSelection.setVisible(false);
+						btnRefreshDeviceList.setVisible(false);
+						androidDeviceSelectionDropDown.setVisible(false);
+						isAppiumPluginExecution = false;
+					}
+
+					checkIfRunButtonBeEnabled();
+				} finally {
+					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(pluginSelectionDropDown.getShell(),
+							SWT.CURSOR_ARROW);
+				}
 			}
 
 			@Override
@@ -287,7 +293,15 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		btnRefreshDeviceList.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				initDeviceNames();
+				try {
+					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(btnRefreshDeviceList.getShell(), SWT.CURSOR_WAIT);
+
+					initDeviceNames();
+				} finally {
+
+					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(btnRefreshDeviceList.getShell(), SWT.CURSOR_ARROW);
+
+				}
 			}
 		});
 		btnRefreshDeviceList.setVisible(false);
@@ -401,6 +415,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	}
 
 	private void initDeviceNames() {
+
 		runButton.setEnabled(false);
 		androidDeviceSelectionDropDown.removeAll();
 		androidDeviceSelectionDropDown.add("Select Device");
@@ -415,6 +430,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			CustomNotificationUtil.openErrorNotificationDialog("OpKey",
 					"Please Connect Your Device First" + "\n" + ex.getMessage());
 		}
+
 	}
 
 	/**
