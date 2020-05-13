@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.MessageDialogs;
-import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTreeItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;

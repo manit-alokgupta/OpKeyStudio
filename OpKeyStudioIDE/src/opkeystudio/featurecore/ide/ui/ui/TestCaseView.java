@@ -575,7 +575,25 @@ public class TestCaseView extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				boolean status = handleSaveOnRefresh();
 				if (status == false) {
-					new MessageDialogs().openErrorDialog("OpKey", "Unable to Execute. Please save your data first.");
+					new MessageDialogs().openErrorDialog(flowStepTable.getShell(), "OpKey",
+							"Unable to Execute. Please save your data first.");
+					return;
+				}
+				List<FlowStep> flowSteps = flowStepTable.getFlowStepsData();
+				if (flowSteps.size() == 0) {
+					new MessageDialogs().openErrorDialog(flowStepTable.getShell(), "OpKey",
+							"Nothing to execute. Please add atleast one step");
+					return;
+				}
+				boolean shouldrun = false;
+				for (FlowStep flowStep : flowSteps) {
+					if (flowStep.isShouldrun()) {
+						shouldrun = true;
+					}
+				}
+				if (shouldrun == false) {
+					new MessageDialogs().openErrorDialog(flowStepTable.getShell(), "OpKey",
+							"Nothing to execute. Please add atleast one step");
 					return;
 				}
 				openExecutionWizard();
