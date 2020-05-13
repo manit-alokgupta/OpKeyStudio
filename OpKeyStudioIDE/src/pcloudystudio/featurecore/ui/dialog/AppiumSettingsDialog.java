@@ -222,7 +222,7 @@ public class AppiumSettingsDialog extends Dialog {
 					appiumDirectory.setText(dir);
 					if (!appiumDirectory.getText()
 							.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-						CustomNotificationUtil.openErrorNotification("OpKey",
+						CustomNotificationUtil.openInformationNotification("OpKey",
 								"Invalid Appium Directory! Please select valid Appium Directory.");
 						appiumDirectory.setText("");
 					}
@@ -710,7 +710,7 @@ public class AppiumSettingsDialog extends Dialog {
 			serverAddress.setFocus();
 			return false;
 		} else if (!validateLocalHost(serverAddress.getText())) {
-			CustomNotificationUtil.openErrorNotification("OpKey", "Invalid Host Address!");
+			CustomNotificationUtil.openInformationNotification("OpKey", "Invalid Host Address!");
 			serverAddress.setFocus();
 			return false;
 		} else if (portNumber.getText().isEmpty()) {
@@ -719,7 +719,7 @@ public class AppiumSettingsDialog extends Dialog {
 			portNumber.setFocus();
 			return false;
 		} else if (!validatePort(portNumber.getText())) {
-			CustomNotificationUtil.openErrorNotification("Error", "Invalid Port!");
+			CustomNotificationUtil.openInformationNotification("OpKey", "Invalid Port!");
 			portNumber.setText("");
 			portNumber.setFocus();
 			return false;
@@ -728,7 +728,7 @@ public class AppiumSettingsDialog extends Dialog {
 			return false;
 		} else if (!appiumDirectory.getText()
 				.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-			CustomNotificationUtil.openErrorNotification("Error",
+			CustomNotificationUtil.openInformationNotification("OpKey",
 					"Invalid Appium Directory! Please select valid Appium Directory.");
 			return false;
 		}
@@ -756,16 +756,16 @@ public class AppiumSettingsDialog extends Dialog {
 
 	public Boolean validateCapabilityNameAndValue(String capName, String capValue, String capType) {
 		if (capName.isEmpty() || capName.equals("")) {
-			CustomNotificationUtil.openErrorNotification("OpKey", "Capability Name can't be empty!");
+			CustomNotificationUtil.openInformationNotification("OpKey", "Capability Name can't be empty!");
 			return false;
 		}
 		if (capValue.isEmpty() || capValue.equals("")) {
-			CustomNotificationUtil.openErrorNotification("Error",
+			CustomNotificationUtil.openInformationNotification("OpKey",
 					"Capability Value can't be empty! \nProvide capability value first.");
 			return false;
 		}
 		if (capType.isEmpty() || capType.equals("")) {
-			CustomNotificationUtil.openErrorNotification("Error", "Capability data type can't be empty!");
+			CustomNotificationUtil.openInformationNotification("OpKey", "Capability data type can't be empty!");
 			return false;
 		}
 		return true;

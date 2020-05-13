@@ -233,7 +233,7 @@ public class DeviceConfigurationDialog extends Dialog {
 						applicationPathText.setText(file.toString());
 						applicationPathText.setEditable(true);
 					} else {
-						CustomNotificationUtil.openErrorNotification("OpKey",
+						CustomNotificationUtil.openInformationNotification("OpKey",
 								"Application APK file you provided doesn't exist!");
 					}
 				}
@@ -272,7 +272,8 @@ public class DeviceConfigurationDialog extends Dialog {
 					CustomNotificationUtil.openInformationNotification("OpKey",
 							"Appium Settings are not configured! Go-To: Tools->Appium Settings.");
 				} else if (!exists) {
-					CustomNotificationUtil.openErrorNotification("OpKey", "Application file you entered is not valid!");
+					CustomNotificationUtil.openInformationNotification("OpKey",
+							"Application file you entered is not valid!");
 					lblApplicationIsRequiredMessage.setVisible(false);
 				} else {
 					try {
@@ -311,7 +312,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					try {
 						showProgressDialog();
 					} catch (Exception ex) {
-						CustomNotificationUtil.openErrorNotification("Error",
+						CustomNotificationUtil.openInformationNotification("OpKey",
 								"Unable to start Application: Please check the Appium Server logs for more ... \n");
 					}
 
@@ -320,7 +321,7 @@ public class DeviceConfigurationDialog extends Dialog {
 						shlDeviceConfiguration.close();
 						new MobileElementSpyDialog(getParent(), SWT.NONE, getParentObjectRepositoryView()).open();
 					} else {
-						CustomNotificationUtil.openErrorNotification("Error",
+						CustomNotificationUtil.openInformationNotification("OpKey",
 								"Unable to start Application: Please check the Appium Server logs for more ... \n"
 										+ "org.openqa.selenium.SessionNotCreatedException: Unable to create a new remote session.");
 					}
@@ -379,7 +380,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					CustomNotificationUtil.openErrorNotification("Error",
+					CustomNotificationUtil.openInformationNotification("OpKey",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
 									+ ex.getMessage());
 				}
@@ -404,7 +405,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					CustomNotificationUtil.openErrorNotification("Error",
+					CustomNotificationUtil.openInformationNotification("OpKey",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
 									+ ex.getMessage());
 				}
@@ -421,7 +422,7 @@ public class DeviceConfigurationDialog extends Dialog {
 					driver.setSetting(Setting.ALLOW_INVISIBLE_ELEMENTS, true);
 					Thread.sleep(2000);
 				} catch (Exception ex) {
-					CustomNotificationUtil.openErrorNotification("Error",
+					CustomNotificationUtil.openInformationNotification("OpKey",
 							"Unable to start Application: Please check the Appium Server logs for more ... \n"
 									+ ex.getMessage());
 				}

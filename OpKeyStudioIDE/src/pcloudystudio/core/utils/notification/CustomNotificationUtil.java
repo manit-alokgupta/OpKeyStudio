@@ -18,6 +18,34 @@ import pcloudystudio.resources.constant.ImageConstants;
 
 public class CustomNotificationUtil {
 
+	public static void openInformationNotificationDialog(String title, String message) {
+		new MessageDialog(Display.getCurrent().getActiveShell(), title,
+				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 2, 0,
+				"OK").open();
+	}
+
+	public static void openErrorNotificationDialog(String title, String message) {
+		new MessageDialog(Display.getCurrent().getActiveShell(), title,
+				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 1, 0,
+				"OK").open();
+	}
+
+	public static int openConfirmDialog(String title, String message) {
+		return new MessageDialog(Display.getCurrent().getActiveShell(), title,
+				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message,
+				MessageDialog.CONFIRM, new String[] { "Yes", "No", }, 0).open();
+	}
+
+	public static String openInputDialog(String dialogTitle, String dialogContent, String defaultValue) {
+		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), dialogTitle, dialogContent,
+				defaultValue, null);
+
+		if (input.open() != InputDialog.OK) {
+			return null;
+		}
+		return input.getValue();
+	}
+
 	public static void showNotificationPopup(Shell shell, String notificationMessage) {
 		ToolTip tip = new ToolTip(shell, SWT.BALLOON | SWT.ICON_INFORMATION);
 		tip.setMessage(notificationMessage);
@@ -35,51 +63,10 @@ public class CustomNotificationUtil {
 		tip.setVisible(true);
 	}
 
-	public static void notifyMe(String title, String message) {
-		// TODO: Check this with Notify and check disposed case of implementation
-		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
-	}
-
 	public static void openInformationNotification(String title, String message) {
-		// TODO: 2 for Information
+		// TODO: Need to check disposed case and type 2, and type 1 notify + ( add new
+		// sub heading )
 		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
-	}
-
-	public static void openErrorNotification(String title, String message) {
-		// TODO: 1 for Error
-		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
-	}
-
-	public static int openConfirmDialog(String title, String message) {
-		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message,
-				MessageDialog.CONFIRM, new String[] { "Yes", "No", }, 0);
-		int result = mDialog.open();
-		return result;
-	}
-
-	public static String openInputDialog(String dialogTitle, String dialogContent, String defaultValue) {
-		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), dialogTitle, dialogContent,
-				defaultValue, null);
-
-		if (input.open() != InputDialog.OK) {
-			return null;
-		}
-		return input.getValue();
-	}
-
-	public static void openErrorNotificationDialog(String title, String message) {
-		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 1, 0,
-				"OK");
-		mDialog.open();
-	}
-
-	public static void openInformationNotificationDialog(String title, String message) {
-		MessageDialog mDialog = new MessageDialog(Display.getCurrent().getActiveShell(), title,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 2, 0,
-				"OK");
-		mDialog.open();
 	}
 
 }
