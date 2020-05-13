@@ -59,7 +59,7 @@ public class CodeEditorBottomFactory extends Composite {
 		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
 
 		ExpandItem item = new ExpandItem(expandBar, SWT.NONE);
-		item.setText("Coded FL Arguments");
+		item.setText("Code Editor");
 		item.setHeight(350);
 		item.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.BOTTOM_FACTORY_ICON));
 		Group grpMenu = new Group(expandBar, SWT.NONE);

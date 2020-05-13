@@ -29,6 +29,7 @@ import org.jboss.forge.roaster.model.source.MethodSource;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.ArtifactCodeEditor;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodeEditorBottomFactory;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
@@ -68,6 +69,7 @@ public class ArtifactCodeView extends SuperComposite {
 	private ToolItem saveButton;
 	private ToolItem refreshButton;
 	private CodedFunctionBottomFactoryUI bottomFactoryUi;
+	private CodeEditorBottomFactory codeEditorBottomFactory;
 	private String codedFLClassPath;
 	private String artifactOpkeyDataLibraryPath;
 	private String artifactAssociatedLibraryPath;
@@ -313,6 +315,10 @@ public class ArtifactCodeView extends SuperComposite {
 
 		editor = new ArtifactCodeEditor(this, this, true, true);
 		editor.setArtifact(getArtifact());
+
+		codeEditorBottomFactory = new CodeEditorBottomFactory(this, SWT.NONE, this);
+		codeEditorBottomFactory.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		codeEditorBottomFactory.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		editor.addKeyListener(new KeyListener() {
 
