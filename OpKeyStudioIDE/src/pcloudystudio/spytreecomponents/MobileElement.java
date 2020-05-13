@@ -12,6 +12,8 @@ public interface MobileElement extends Cloneable, Serializable {
 	void setName(String name);
 
 	String getXpath();
+	
+	String getContentDescXpath();
 
 	Map<String, String> getAttributes();
 

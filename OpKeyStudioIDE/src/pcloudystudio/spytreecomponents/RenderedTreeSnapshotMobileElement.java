@@ -53,6 +53,14 @@ implements SnapshotMobileElement<T> {
 		return xpath;
 	}
 
+	protected String makeContentDescXpath(String tagName, String attrKey, String attrValue) {
+		String xPath = "//tagName[@attrKey='attrValue']";
+		xPath = xPath.replace("tagName", tagName);
+		xPath = xPath.replace("attrKey", attrKey);
+		xPath = xPath.replace("attrValue", attrValue);
+		return xPath;
+	}
+
 	private int getIndexPropertyForElement(String tagName) {
 		if (StringUtils.isEmpty(tagName) || this.parentElement == null) {
 			return 0;

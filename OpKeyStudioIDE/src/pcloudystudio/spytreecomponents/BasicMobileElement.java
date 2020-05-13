@@ -75,4 +75,10 @@ public class BasicMobileElement implements MobileElement {
 			return null;
 		}
 	}
+
+	@Override
+	public String getContentDescXpath() {
+		// TODO Auto-generated method stub
+		return this.getAttributes().get("contentDescXpath");
+	}
 }
