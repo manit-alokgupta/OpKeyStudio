@@ -83,6 +83,7 @@ public class FlowStepTable extends CustomTable {
 	private void turnOffContextMenu() {
 		if (this.getItemCount() == 0) {
 			disableMenuItem();
+			toggleAddStepMenuItem(true);
 		}
 	}
 
@@ -161,7 +162,7 @@ public class FlowStepTable extends CustomTable {
 		movedownMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOVE_DOWN_ICON));
 		setToRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SET_TO_RUN_ICON));
 		skipfromRunMenuItem
-		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SKIP_FROM_RUN_ICON));
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SKIP_FROM_RUN_ICON));
 		copyMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
