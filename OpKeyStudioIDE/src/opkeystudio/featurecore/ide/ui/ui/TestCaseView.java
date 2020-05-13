@@ -29,7 +29,8 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
-
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -470,6 +471,34 @@ public class TestCaseView extends SuperComposite {
 
 		ArtifactCodeView codedFunctionView = new ArtifactCodeView(sourceCodeHolder, SWT.NONE, this, false);
 		setCodedFunctionView(codedFunctionView);
+
+		Menu menu= flowStepTable.getMenu();
+		for(MenuItem item:menu.getItems()) {
+			item.addSelectionListener(new SelectionListener() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					// TODO Auto-generated method stub
+					//
+					if(item.getText().equals("Add Step"))
+						CustomNotificationUtil.openInformationNotification("OpKey", "New Step is added");
+					if(item.getText().equals("Move Up"))
+						CustomNotificationUtil.openInformationNotification("OpKey", "Moved Step Up");
+					if(item.getText().equals("Move Down"))
+						CustomNotificationUtil.openInformationNotification("OpKey", "Moved Step Down");
+					if(item.getText().equals("Delete"))
+						CustomNotificationUtil.openInformationNotification("OpKey", "Selected Step Deleted");
+					
+				}
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+		}
 
 		cursor.setMenu(flowStepTable.getMenu());
 		flowStepTable.setTableCursor(cursor);
