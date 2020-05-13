@@ -428,4 +428,28 @@ public class FlowApiUtilities {
 		}
 		return dataType;
 	}
+
+	public int validateIfCondition(List<FlowStep> flowSteps) {
+		int ifincrement = 0;
+		for (FlowStep flowStep : flowSteps) {
+			if (flowStep.getKeyword() != null) {
+				String keywordName = flowStep.getKeyword().getName().toLowerCase();
+				if (keywordName.equals("if")) {
+					ifincrement++;
+				}
+				if (keywordName.equals("else")) {
+					if (ifincrement > 0) {
+						ifincrement = 1;
+					}
+				}
+				if (keywordName.equals("endif")) {
+					if (ifincrement > 0) {
+						ifincrement--;
+					}
+				}
+			}
+		}
+		System.out.println("IF Validation Value " + ifincrement);
+		return ifincrement;
+	}
 }
