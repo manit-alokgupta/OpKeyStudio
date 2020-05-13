@@ -25,8 +25,7 @@ public class ProjectImporter {
 			}
 			String projectName = file.getParentFile().getName();
 			ServiceRepository.getInstance().setProjectName(projectName);
-			
-			Utilities.getInstance().getDefaultShell().setText("OpKey Studio- " + ServiceRepository.getInstance().getProjectName());
+			Utilities.getInstance().getDefaultShell().setText("OpKey Studio - [" + ServiceRepository.getInstance().getProjectPath()+"]");
 			
 			ServiceRepository.getInstance().setExortedDBFilePath(dbFilePath);
 			SQLiteCommunicator sqlComm = new SQLiteCommunicator(dbFilePath);

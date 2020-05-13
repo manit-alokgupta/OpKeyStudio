@@ -1,5 +1,6 @@
 package opkeystudio.opkeystudiocore.core.repositories.repository;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -117,5 +118,10 @@ public class ServiceRepository {
 
 	public void setDbContainsSecuredData(boolean dbContainsSecuredData) {
 		this.dbContainsSecuredData = dbContainsSecuredData;
+	}
+
+	public String getProjectPath() {
+		return opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getDefaultWorkSpacePath()
+				+ File.separatorChar + "Projects" + File.separator + this.projectName;
 	}
 }
