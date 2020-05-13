@@ -84,7 +84,20 @@ public class ObjectConverter {
 			if(!value.isEmpty())
 				return value;
 		}
-		return "no-name";
+		
+		if (orobject.getAllProperties().containsKey("class")) {
+			String value = orobject.getAllProperties().get("class");
+			if(!value.isEmpty())
+				return value;
+		}
+		
+		if (orobject.getAllProperties().containsKey("id")) {
+			String value = orobject.getAllProperties().get("id");
+			if(!value.isEmpty())
+				return value;
+		}
+		
+		return "Object";
 	}
 	
 	private void setObjectArgumentInFunctionCall(ORObject obj) {

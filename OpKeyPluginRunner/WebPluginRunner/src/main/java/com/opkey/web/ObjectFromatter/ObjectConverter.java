@@ -37,7 +37,7 @@ public class ObjectConverter {
 				System.out.println(">>Parent Object " + parentobject.toString());
 			}
 			System.out.println(">>Current Object " + webdriverobject.toString());
-		
+
 			return webdriverobject;
 		} catch (ObjectPropertiesNotSufficientException e) {
 			e.printStackTrace();
@@ -76,8 +76,12 @@ public class ObjectConverter {
 			return orobject.getAllProperties().get("name");
 		} else if (orobject.getAllProperties().containsKey("text")) {
 			return orobject.getAllProperties().get("text");
+		} else if (orobject.getAllProperties().containsKey("class")) {
+			return orobject.getAllProperties().get("class");
+		} else if (orobject.getAllProperties().containsKey("id")) {
+			return orobject.getAllProperties().get("id");
 		}
-		return "no-name";
+		return "Object";
 	}
 
 	private void setObjectArgumentInFunctionCall(ORObject obj) {

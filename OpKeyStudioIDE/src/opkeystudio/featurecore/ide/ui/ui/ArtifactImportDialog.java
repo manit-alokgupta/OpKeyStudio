@@ -382,10 +382,11 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 
 					}
 				}
-				String projectPath = Utilities.getInstance().getProjectsFolder() + File.separator + project.getName();
+				String formatedProjectName = ServiceRepository.getInstance().formatProjectName(project.getName());
+				String projectPath = Utilities.getInstance().getProjectsFolder() + File.separator + formatedProjectName;
 				if (new File(projectPath).exists()) {
 					new MessageDialogs().openErrorDialog("OpKey", String.format(
-							"Project name '%s' already exists. Please provide a different name.", project.getName()));
+							"Project name '%s' already exists. Please provide a different name.", formatedProjectName));
 
 					String projectName = new MessageDialogs().openInputDialogAandGetValue("OpKey",
 							"Enter New Project Name", "");
@@ -397,7 +398,13 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 						new MessageDialogs().openErrorDialog("OpKey", "Please provide valid project name.");
 						return;
 					}
-					project.setName(projectName);
+					boolean specialChar = Utilities.getInstance().isStringContainsSpecialCharacters(projectName);
+					if (specialChar) {
+						new MessageDialogs().openErrorDialog("OpKey",
+								"Project Name must not contain special characters.");
+						return;
+					}
+					project.setName(ServiceRepository.getInstance().formatProjectName(projectName));
 				}
 				MessageDialogs msd = new MessageDialogs();
 				msd.openProgressDialog(getParentshell(), "Importing from OpKey SAAS. Please Wait", true,
