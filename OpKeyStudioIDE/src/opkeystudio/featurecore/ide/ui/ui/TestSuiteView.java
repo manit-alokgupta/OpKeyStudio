@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 //import org.eclipse.mylyn.commons.ui.dialogs.AbstractNotificationPopup;
@@ -407,6 +408,29 @@ public class TestSuiteView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				boolean status = handleSaveOnRefresh();
+				if (status == false) {
+					new MessageDialogs().openErrorDialog(testSuiteTable.getShell(), "OpKey",
+							"Unable to Execute. Please save your data first.");
+					return;
+				}
+				List<TestSuiteStep> flowSteps = testSuiteTable.getTestSuiteData();
+				if (flowSteps.size() == 0) {
+					new MessageDialogs().openErrorDialog(testSuiteTable.getShell(), "OpKey",
+							"Nothing to execute. Please add atleast one TC");
+					return;
+				}
+				boolean shouldrun = false;
+				for (TestSuiteStep flowStep : flowSteps) {
+					if (flowStep.isShouldrun()) {
+						shouldrun = true;
+					}
+				}
+				if (shouldrun == false) {
+					new MessageDialogs().openErrorDialog(testSuiteTable.getShell(), "OpKey",
+							"Nothing to execute. Please add atleast one TC");
+					return;
+				}
 				openExecutionWizard();
 			}
 
@@ -493,7 +517,7 @@ public class TestSuiteView extends SuperComposite {
 		});
 	}
 
-	private void handleSaveOnRefresh() {
+	private boolean handleSaveOnRefresh() {
 		if (saveButton.isEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
 			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
@@ -502,11 +526,10 @@ public class TestSuiteView extends SuperComposite {
 
 				testSuiteTable.renderAllTestSuites();
 				bottomFactory.refreshBottomFactory();
-				return;
+				return false;
 			}
 			new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
 			testSuiteTable.renderAllTestSuites();
-
 			saveButton.setEnabled(false);
 		}
 
@@ -515,6 +538,7 @@ public class TestSuiteView extends SuperComposite {
 		toggleMoveDownButton(false);
 		testSuiteTable.renderAllTestSuites();
 		bottomFactory.refreshBottomFactory();
+		return true;
 	}
 
 	public void saveSuiteSteps() {
