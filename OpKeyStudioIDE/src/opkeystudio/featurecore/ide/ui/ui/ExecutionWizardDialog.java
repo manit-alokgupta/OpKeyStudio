@@ -428,7 +428,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			androidDeviceSelectionDropDown.select(0);
 		} catch (Exception ex) {
 			CustomNotificationUtil.openErrorNotificationDialog("OpKey",
-					"Please Connect Your Device First" + "\n" + ex.getMessage());
+					"Please Connect Your Device First" );
 		}
 
 	}
@@ -662,6 +662,18 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		if (index == 0) {
 			runButton.setEnabled(false);
 			this.setErrorMessage("Plugin not selected.");
+			return;
+		}
+		
+		if (sessionNameTextField.getText().equals("")) {
+			runButton.setEnabled(false);
+			this.setErrorMessage("SessionName Cannot Be Empty.");
+			return;
+		}
+
+		if (buildNameTextField.getText().equals("")) {
+			runButton.setEnabled(false);
+			this.setErrorMessage("Build Name Cannot Be Empty.");
 			return;
 		}
 

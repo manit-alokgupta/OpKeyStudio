@@ -286,14 +286,14 @@ public class TestCaseView extends SuperComposite {
 
 		functionLibraryButton = new ToolItem(toolBar, SWT.CHECK);
 		functionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
-		functionLibraryButton.setText("Function Library");
+		functionLibraryButton.setText("FL");
 		functionLibraryButton.setToolTipText("Function Library");
 
 		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		codedFunctionLibraryButton = new ToolItem(toolBar, SWT.CHECK);
 		codedFunctionLibraryButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
-		codedFunctionLibraryButton.setText("Coded Function Library");
+		codedFunctionLibraryButton.setText("CFL");
 		codedFunctionLibraryButton.setToolTipText("Coded Function Library");
 
 		Composite composite_12 = new Composite(composite_10, SWT.NONE);

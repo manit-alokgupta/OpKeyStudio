@@ -14,10 +14,14 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -89,6 +93,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 	private File codeViewFile;
 	private List<Object> highlightedLines = new ArrayList<>();
+	private ToolItem pluginNames;
 
 	public ArtifactCodeView(Composite parent, int style, boolean isGenericEditor) {
 		super(parent, style);
@@ -402,7 +407,9 @@ public class ArtifactCodeView extends SuperComposite {
 
 	private void initCFLEditorUI() {
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		toolBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		toolBar.setBounds(0, 0, 87, 23);
 
 		runButton = new ToolItem(toolBar, SWT.NONE);
 		runButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.RUN_ICON));
@@ -416,7 +423,62 @@ public class ArtifactCodeView extends SuperComposite {
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		refreshButton.setToolTipText("Refresh");
+		new ToolItem(toolBar, SWT.SEPARATOR);
+		ToolItem label = new ToolItem(toolBar, SWT.READ_ONLY);
+		label.setSelection(false);
+		label.setText("Target Plugin: ");
+		pluginNames = new ToolItem(toolBar, SWT.DROP_DOWN);
+		pluginNames.setWidth(100);
+		pluginNames.setText("Web");
+		Menu pluginMenu = new Menu(pluginNames.getDisplay().getActiveShell());
 
+		String pluginDir = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().getDefaultPluginsDir();
+		File pluginDirObject = new File(pluginDir);
+
+		for (File file : pluginDirObject.listFiles()) {
+			if (file.isDirectory()) {
+				String pluginXmlFile = file.getAbsolutePath() + File.separator + "plugin.xml";
+				if (!new File(pluginXmlFile).exists()) {
+					continue;
+				}
+				MenuItem item = new MenuItem(pluginMenu, 0);
+				item.setText(file.getName());
+				item.addSelectionListener(new SelectionListener() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						System.out.println(">>Item Text " + item.getText());
+						pluginNames.setText(item.getText());
+					}
+
+					@Override
+					public void widgetDefaultSelected(SelectionEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+			}
+		}
+
+		pluginNames.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (e.detail == SWT.ARROW) {
+					Rectangle rect = pluginNames.getBounds();
+					Point pt = new Point(rect.x, rect.y + rect.height);
+					pt = toolBar.toDisplay(pt);
+					pluginMenu.setLocation(pt.x, pt.y);
+					pluginMenu.setVisible(true);
+					return;
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
 		editor = new ArtifactCodeEditor(this, this, true, true, true);
 		editor.setArtifact(getArtifact());
 
@@ -593,7 +655,7 @@ public class ArtifactCodeView extends SuperComposite {
 		String code = getJavaEditor().getText();
 		File file = getCodeViewFile();
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
-		
+
 		String rootCodeDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectArtifactCodesFolder();
 		String cflArtifactPath = file.getAbsolutePath();
