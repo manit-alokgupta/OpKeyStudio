@@ -150,6 +150,7 @@ public class ObjectRepositoryView extends SuperComposite {
 					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name,
 							item.getText(), objectRepositoryTree.getAllORObjects());
+					setObjectId(orobject.getObject_id());
 					objectRepositoryTree.getAllORObjects().add(orobject);
 					toggleSaveButton(true);
 					addParentObjectToolItem.setText("Add (" + menuItem + ")");
@@ -181,6 +182,7 @@ public class ObjectRepositoryView extends SuperComposite {
 					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
 							selectedobject.getObject_id(), name, item.getText(),
 							objectRepositoryTree.getAllORObjects());
+					setObjectId(orobject.getObject_id());
 					objectRepositoryTree.getAllORObjects().add(orobject);
 					toggleSaveButton(true);
 					addChildObjectToolItem.setText("Add (" + menuItem + ")");
@@ -249,6 +251,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				String name = new Utilities().getRandomVariableName("New Node " + objectName);
 				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name, objectName,
 						objectRepositoryTree.getAllORObjects());
+				setObjectId(orobject.getObject_id());
 				objectRepositoryTree.getAllORObjects().add(orobject);
 				toggleSaveButton(true);
 				objectRepositoryTree.refreshObjectRepositories();
@@ -282,6 +285,7 @@ public class ObjectRepositoryView extends SuperComposite {
 				ORObject selectedobject = treeItem.getORObject();
 				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
 						selectedobject.getObject_id(), name, objectName, objectRepositoryTree.getAllORObjects());
+				setObjectId(orobject.getObject_id());
 				objectRepositoryTree.getAllORObjects().add(orobject);
 				toggleSaveButton(true);
 				objectRepositoryTree.refreshObjectRepositories();
