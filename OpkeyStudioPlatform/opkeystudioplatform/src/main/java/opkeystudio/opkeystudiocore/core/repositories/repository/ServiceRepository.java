@@ -104,6 +104,13 @@ public class ServiceRepository {
 		this.projectName = projectName;
 	}
 
+	public String formatProjectName(String projectName) {
+		projectName = projectName.replaceAll(" ", "OPKEYNEONSPACE112463743");
+		projectName = Utilities.getInstance().removeSpecialCharacters(projectName);
+		projectName = projectName.replaceAll("OPKEYNEONSPACE112463743", " ");
+		return projectName;
+	}
+
 	public boolean isDbContainsSecuredData() {
 		return dbContainsSecuredData;
 	}
