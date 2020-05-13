@@ -42,15 +42,6 @@ public class ReportHelper {
 		List<String> parameterList = new ArrayList<String>();
 		
 		System.out.println("ObjectArg: " + Context.current().getFunctionCall().getObjectArguments());
-		ObjectArguments orArguments = Context.current().getFunctionCall().getObjectArguments();
-		
-		
-		if(orArguments !=null && orArguments.getObjectArgument() !=null) {
-			for(ObjectArgument objectArg: orArguments.getObjectArgument()) {
-				parameterList.add(objectArg.getArgumentName() + ":" + objectArg.getObject().getLogicalName());
-			}
-		}
-		
 		ObjectArguments objectArguments = Context.current().getFunctionCall().getObjectArguments();
 		if(objectArguments!=null && objectArguments.getObjectArgument() !=null) {
 			for(ObjectArgument objectArgument: objectArguments.getObjectArgument()) {
