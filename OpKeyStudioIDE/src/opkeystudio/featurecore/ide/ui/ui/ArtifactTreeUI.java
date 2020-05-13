@@ -1029,13 +1029,12 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			}
 		});
-
-		artifactTree.addMouseListener(new MouseListener() {
-
+		
+		artifactTree.addSelectionListener(new SelectionListener() {
+			
 			@Override
-			public void mouseUp(MouseEvent e) {
-				ArtifactTree tree = (ArtifactTree) e.getSource();
-				ArtifactTreeItem selectedTreeItem = tree.getSelectedArtifactTreeItem();
+			public void widgetSelected(SelectionEvent e) {
+				ArtifactTreeItem selectedTreeItem = artifactTree.getSelectedArtifactTreeItem();
 
 				System.out.println("Mouse clicked event");
 
@@ -1139,15 +1138,11 @@ public class ArtifactTreeUI extends SuperComposite {
 					toggleRefreshMenuItem(true);
 				}
 			}
-
+			
 			@Override
-			public void mouseDown(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				return;
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 

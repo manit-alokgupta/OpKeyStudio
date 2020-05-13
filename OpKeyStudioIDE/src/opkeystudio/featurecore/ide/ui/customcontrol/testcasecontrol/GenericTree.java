@@ -104,6 +104,27 @@ public class GenericTree extends CustomTree {
 		updateMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.UPDATE_ICON));
 		this.setMenu(menu);
 
+		this.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Object selectedData = getSelectedData();
+				if (selectedData == null) {
+					addMenuItem.setEnabled(false);
+					updateMenuItem.setEnabled(false);
+					return;
+				}
+				addMenuItem.setEnabled(true);
+				updateMenuItem.setEnabled(true);
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		addMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override

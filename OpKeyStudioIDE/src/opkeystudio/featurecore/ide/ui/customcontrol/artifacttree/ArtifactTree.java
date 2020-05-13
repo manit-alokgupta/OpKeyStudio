@@ -203,6 +203,7 @@ public class ArtifactTree extends CustomTree {
 			ArtifactTranspiler.getInstance().setPackageProperties();
 		}
 		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
+		selectTreeItem(rootNode);
 		if (fireGlobalEvent) {
 			OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		}
@@ -260,6 +261,7 @@ public class ArtifactTree extends CustomTree {
 				refreshAllArtifactTree(topMostNode, artifacts);
 			}
 			expandAll(rootNode);
+			selectTreeItem(rootNode);
 			if (isAttachedinTestSuite() == false) {
 				ArtifactTranspiler.getInstance().setPackageProperties();
 			}
