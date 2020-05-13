@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -62,6 +63,7 @@ public class InputDataTable extends CustomTable {
 	private List<ComponentInputArgument> componentInputArgs = new ArrayList<>();
 	private List<CFLInputParameter> cflInputArguments = new ArrayList<CFLInputParameter>();
 	private TestCaseView parentTestCaseView;
+	private boolean stopPaintEvent = false;
 
 	public InputDataTable(Composite parent, int style) {
 		super(parent, style);
@@ -98,6 +100,11 @@ public class InputDataTable extends CustomTable {
 			@Override
 			public void paintControl(PaintEvent arg0) {
 				Table table_0 = (Table) arg0.getSource();
+				if (stopPaintEvent == true) {
+					TableColumn column = table_0.getColumn(0);
+					column.setWidth((table_0.getBounds().width));
+					return;
+				}
 				for (int i = 0; i < table_0.getColumnCount(); i++) {
 					TableColumn column = table_0.getColumn(i);
 					column.setWidth((table_0.getBounds().width) / 4);
@@ -483,9 +490,7 @@ public class InputDataTable extends CustomTable {
 			this.allTableEditors.add(editor1.getEditor());
 		}
 
-		if (dataSourceType == DataSource.ValueFromInputParameter)
-
-		{
+		if (dataSourceType == DataSource.ValueFromInputParameter) {
 			String ipId = flowInputArgument.getIp_id();
 			List<ComponentInputArgument> compsinp = new FunctionLibraryApi()
 					.getAllComponentInputArgument(getParentTestCaseView().getArtifact().getId());
@@ -725,6 +730,10 @@ public class InputDataTable extends CustomTable {
 			TestCaseView tview = getParentTestCaseView();
 			if (tview.getInputDataTable() != null) {
 				tview.getInputDataTable().setEnabled(false);
+				tview.getInputDataTable().setHeaderVisible(false);
+				tview.getInputDataTable().setLinesVisible(false);
+				tview.getInputDataTable()
+						.displayTableInfo(new String[] { "This Keyword Does Not Need Data!", "", "", "" });
 			}
 			if (tview.getDataRepositoryTree() != null) {
 				tview.getDataRepositoryTree().setEnabled(false);
@@ -741,7 +750,10 @@ public class InputDataTable extends CustomTable {
 		} else {
 			TestCaseView tview = getParentTestCaseView();
 			if (tview.getInputDataTable() != null) {
+				stopPaintEvent=false;
 				tview.getInputDataTable().setEnabled(true);
+				tview.getInputDataTable().setHeaderVisible(true);
+				tview.getInputDataTable().setLinesVisible(true);
 			}
 			if (tview.getDataRepositoryTree() != null) {
 				tview.getDataRepositoryTree().setEnabled(true);
@@ -757,6 +769,12 @@ public class InputDataTable extends CustomTable {
 			}
 		}
 		selectDefaultRow();
+	}
+
+	private void displayTableInfo(String[] message) {
+		stopPaintEvent = true;
+		CustomTableItem item = new CustomTableItem(this, SWT.NONE | SWT.CENTER);
+		item.setText(message);
 	}
 
 	public FlowInputArgument getSelectedFlowInputArgument() {

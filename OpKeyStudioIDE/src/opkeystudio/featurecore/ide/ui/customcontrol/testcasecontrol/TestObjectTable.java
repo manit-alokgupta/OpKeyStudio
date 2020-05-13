@@ -38,6 +38,7 @@ public class TestObjectTable extends CustomTable {
 	private TestCaseView parentTestCaseView;
 	private MenuItem openORObjectInNewTabMenuItem;
 	private FlowStep flowStep;
+	private boolean stopPaintEvent = false;
 
 	public TestObjectTable(Composite parent, int style) {
 		super(parent, style);
@@ -69,6 +70,11 @@ public class TestObjectTable extends CustomTable {
 			@Override
 			public void paintControl(PaintEvent arg0) {
 				Table table_0 = (Table) arg0.getSource();
+				if (stopPaintEvent) {
+					TableColumn column = table_0.getColumn(0);
+					column.setWidth((table_0.getBounds().width));
+					return;
+				}
 				for (int i = 0; i < table_0.getColumnCount(); i++) {
 					TableColumn column = table_0.getColumn(i);
 					column.setWidth((table_0.getBounds().width) / 4);
@@ -191,6 +197,10 @@ public class TestObjectTable extends CustomTable {
 		this.setFlowStep(flowStep);
 		if (getOrobject().size() > 0) {
 			for (ORObject orobject : getOrobject()) {
+				this.setHeaderVisible(true);
+				this.setLinesVisible(true);
+				this.setEnabled(true);
+				stopPaintEvent = false;
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { "Object", orobject.getName(), "", "" });
 				cti.setControlData(orobject);
@@ -201,14 +211,26 @@ public class TestObjectTable extends CustomTable {
 		}
 		if (flowStep.getKeyword() != null) {
 			if (flowStep.getKeyword().isKeywordContainsORObject()) {
+				this.setHeaderVisible(true);
+				this.setLinesVisible(true);
+				this.setEnabled(true);
+				stopPaintEvent = false;
 				CustomTableItem cti = new CustomTableItem(this, 0);
 				cti.setText(new String[] { "Object", "", "", "" });
 				cti.setImage(0, ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
 			} else {
-				CustomTableItem cti = new CustomTableItem(this, 0);
-				cti.setText(new String[] { "This keyword does not need an object" });
+				this.setHeaderVisible(false);
+				this.setLinesVisible(false);
+				this.setEnabled(false);
+				displayTableInfo(new String[] { "This Keyword Does Not Need An Object!" });
 			}
 		}
+	}
+
+	private void displayTableInfo(String[] message) {
+		stopPaintEvent = true;
+		CustomTableItem item = new CustomTableItem(this, SWT.NONE | SWT.CENTER);
+		item.setText(message);
 	}
 
 	public ORObject getSelectedORObject() {
