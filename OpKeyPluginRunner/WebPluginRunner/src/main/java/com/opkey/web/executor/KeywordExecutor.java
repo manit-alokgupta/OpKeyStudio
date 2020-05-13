@@ -1,14 +1,24 @@
 package com.opkey.web.executor;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.WebDriverException;
 
 import com.crestech.opkey.plugin.ResultCodes;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.FunctionResult;
 import com.crestech.opkey.plugin.communication.contracts.functionresult.Result;
 import com.crestech.opkey.plugin.contexts.Context;
+import com.crestech.opkey.plugin.webdriver.exceptionhandlers.ToolNotSetException;
+import com.crestech.opkey.plugin.webdriver.keywords.Utils;
 import com.opkey.web.ReportHelper;
-import com.opkey.web.enums.GetKeywords;
-import com.opkey.web.enums.VisibilityKeywords;
+import com.opkey.web.sessions.SessionHandler;
 
 public class KeywordExecutor {
 	private Runnable keywordRunnable;
@@ -22,7 +32,8 @@ public class KeywordExecutor {
 				.setOutput(false).make();
 		try {
 			FunctionResult functionResult = getKeywordRunnable().run();
-			ReportHelper.addReportStep(Context.current().getFunctionCall().getFunction().getMethodName(), functionResult);
+			ReportHelper.addReportStep(Context.current().getFunctionCall().getFunction().getMethodName(),
+					functionResult);
 			return functionResult;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,107 +50,81 @@ public class KeywordExecutor {
 	private void setKeywordRunnable(Runnable keywordRunnable) {
 		this.keywordRunnable = keywordRunnable;
 	}
-	
+
 	public static <T> FunctionResult execute(Callable<T> task) {
-		
+
 		beforeKeyword();
-		
+
 		FunctionResult functionResult = Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION).setMessage("")
 				.setOutput(false).make();
-		
+
 		String methodName = Context.current().getFunctionCall().getFunction().getMethodName();
 		long startTime = System.currentTimeMillis();
-		
+
 		try {
 			functionResult = (FunctionResult) task.call();
-			printFunctionResult(functionResult);
+			postKeywordAction(functionResult);
 			ReportHelper.addReportStep(methodName, functionResult);
 		} catch (Exception e) {
 			functionResult.setMessage(e.getMessage());
-			ReportHelper.addReportStep(methodName, e);
+			postKeywordAction(functionResult);
+			ReportHelper.addReportStep(methodName, functionResult);
 			e.printStackTrace();
 		}
 		String timeTaken = (System.currentTimeMillis() - startTime) + "ms";
 		System.out.println(methodName + " time taken: " + timeTaken);
 		return functionResult;
 	}
-	
+
 	private static void beforeKeyword() {
-		
-	}
-	
-	private static FunctionResult validateExceptionAndReport(String keywordName, Exception exception) {
-		System.out.println("Validate exception and report");
-		if (isVisibilityKeyword(keywordName) || isGetKeyword(keywordName)) {
-			FunctionResult functionResult = getPassTimeOutFR(false);
-			ReportHelper.addReportStep(keywordName, functionResult);
-			return functionResult;
-		} else {
-			FunctionResult functionResult = Result.FAIL(ResultCodes.ERROR_UNHANDLED_EXCEPTION)
-					.setMessage(exception.getMessage()).setOutput(false).make();
 
-			ReportHelper.addReportStep(keywordName, exception);
-			return functionResult;
-		}
 	}
 
-	private static FunctionResult validateFunctionResult(FunctionResult functionResult, String keywordName) {
-		System.out.println("Validate function result: " + functionResult);
-		printFunctionResult(functionResult);
-		
-		if (functionResult == null && isGetKeyword(keywordName) || isVisibilityKeyword(keywordName)) {
-			System.out.println("#1. Found Visibility/get type keyword");
-			return Result.PASS().setOutput(false).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
-		}else if(functionResult == null) {
-			return Result.FAIL().setOutput(false).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
-		}
-		else if (isVisibilityKeyword(keywordName) || isGetKeyword(keywordName)) {
-			System.out.println("#2. Found Visibility/get type keyword");
-			if (functionResult.getOutput() == null || functionResult.getOutput().isEmpty()) {
-				return Result.PASS().setOutput(false).setMessage(functionResult.getMessage()).make();
-			} else {
-				return Result.PASS().setOutput(functionResult.getOutput()).setMessage(functionResult.getMessage()).make();
-			} 
-		}
-		return functionResult;
-	}
-
-	public static boolean isVisibilityKeyword(String keywordName) {
-		for (VisibilityKeywords vk : VisibilityKeywords.values()) {
-			if (vk.name().equals(keywordName)) {
-				System.out.println("Found VISIBILITY keyword: " + keywordName);
-				return true;
-			}
-		}
-		System.out.println("Not Found VISIBILITY keyword: " + keywordName);
-		return false;
-	}
-	
-	public static void main(String[] args) {
-		isGetKeyword("GetObjectEnabled");
-	}
-
-	public static boolean isGetKeyword(String keywordName) {
-		for (GetKeywords vk : GetKeywords.values()) {
-			if (vk.name().equals(keywordName)) {
-				System.out.println("Found GET keyword: " + keywordName);
-				return true;
-			}
-		}
-		System.out.println("Not Found GET keyword: " + keywordName);
-		return false;
-	}
-
-	private static FunctionResult getPassTimeOutFR(boolean status) {
-		return Result.PASS().setOutput(status).setMessage(ResultCodes.ERROR_STEP_TIME_OUT.toString()).make();
-	}
-	
 	private static void printFunctionResult(FunctionResult functionResult) {
 		System.out.println("FunctionResult: " + functionResult);
-		if(functionResult !=null) {
+		if (functionResult != null) {
 			System.out.println("Output: " + functionResult.getOutput());
 			System.out.println("Status: " + functionResult.getStatus());
 			System.out.println("Message: " + functionResult.getMessage());
 		}
+	}
+
+	private static void postKeywordAction(FunctionResult functionResult) {
+		printFunctionResult(functionResult);
+		try {
+			File file = captureScreenshot();
+			functionResult.setSnapshotPath(file.getPath());
+		} catch (Exception e) {
+			System.out.println("Exception while taking screenshot: " + e.getMessage());
+		}
+	}
+
+	private static File captureScreenshot() throws WebDriverException, ToolNotSetException, IOException {
+
+		long startTime = System.currentTimeMillis();
+		String fileName = UUID.randomUUID().toString() + ".png";
+		File appiumFile = new Utils().takeScreenshot();
+		File renamedFile = renameFile(appiumFile, fileName);
+		File newFile = new File(SessionHandler.screenshotPath + File.separator + fileName);
+		Path copied = Paths.get(newFile.getPath());
+		Path originalPath = renamedFile.toPath();
+		Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+
+		System.out.println("screenshot time taken: " + (System.currentTimeMillis() - startTime));
+		return newFile;
+
+	}
+	
+	private static File renameFile(File file, String fileNameWithExtension) throws IOException {
+		File newFile = new File(file.getAbsolutePath().replace(file.getName(), fileNameWithExtension));
+		if (newFile.exists())
+			throw new java.io.IOException("New file name already exists...");
+
+		boolean success = file.renameTo(newFile);
+		if (!success) {
+			throw new java.io.IOException("file rename failed...");
+		}
+
+		return newFile;
 	}
 }

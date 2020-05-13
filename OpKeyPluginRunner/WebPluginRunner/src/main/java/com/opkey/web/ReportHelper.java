@@ -1,5 +1,6 @@
 package com.opkey.web;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,14 @@ public class ReportHelper {
 	public static void addReportStep(String methodName, FunctionResult functionResult) {
 		Status status = Status.valueOf(functionResult.getStatus().toUpperCase());
 		List<String> parameterList = getParameters();
-
-		ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
-				functionResult.getOutput());
+		
+		if(functionResult.getSnapshotPath() != null) {
+			ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
+					functionResult.getOutput(), new File(functionResult.getSnapshotPath()));
+		}else {
+			ReportBuilder.get().addStep(methodName, parameterList.toArray(new String[parameterList.size()]), status,
+					functionResult.getOutput());
+		}
 
 		logStep(methodName, functionResult.getOutput(), functionResult.getStatus());
 	}
