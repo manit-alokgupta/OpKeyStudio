@@ -722,9 +722,39 @@ public class InputDataTable extends CustomTable {
 			}
 		}
 		if (hasData == false) {
-			this.setEnabled(false);
+			TestCaseView tview = getParentTestCaseView();
+			if (tview.getInputDataTable() != null) {
+				tview.getInputDataTable().setEnabled(false);
+			}
+			if (tview.getDataRepositoryTree() != null) {
+				tview.getDataRepositoryTree().setEnabled(false);
+			}
+			if (tview.getGlobalVariableTable() != null) {
+				tview.getGlobalVariableTable().setEnabled(false);
+			}
+			if (tview.getVariableOutPutTable() != null) {
+				tview.getVariableOutPutTable().setEnabled(false);
+			}
+			if (tview.getComponentArgumentInputTable() != null) {
+				tview.getComponentArgumentInputTable().setEnabled(false);
+			}
 		} else {
-			this.setEnabled(true);
+			TestCaseView tview = getParentTestCaseView();
+			if (tview.getInputDataTable() != null) {
+				tview.getInputDataTable().setEnabled(true);
+			}
+			if (tview.getDataRepositoryTree() != null) {
+				tview.getDataRepositoryTree().setEnabled(true);
+			}
+			if (tview.getGlobalVariableTable() != null) {
+				tview.getGlobalVariableTable().setEnabled(true);
+			}
+			if (tview.getVariableOutPutTable() != null) {
+				tview.getVariableOutPutTable().setEnabled(true);
+			}
+			if (tview.getComponentArgumentInputTable() != null) {
+				tview.getComponentArgumentInputTable().setEnabled(true);
+			}
 		}
 		selectDefaultRow();
 	}
