@@ -586,10 +586,38 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void saveGenericCodeEditorFile() {
+		for (Object highLightedLines : getHighlightedLines()) {
+			editor.removeLineHighlight(highLightedLines);
+		}
 		initCodeViewFile();
 		String code = getJavaEditor().getText();
 		File file = getCodeViewFile();
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
+		
+		String rootCodeDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectArtifactCodesFolder();
+		String cflArtifactPath = file.getAbsolutePath();
+		List<CompileError> compileErrors = new ArtifactCompiler().compileCFLArtifact(rootCodeDirpath, cflArtifactPath,
+				"Web");
+
+		compileErrors = new CompilerUtilities().filterErrors(compileErrors, Kind.ERROR);
+		codeEditorBottomFactory.getCompilationResultTable().renderCompilingError(new ArrayList<CompileError>());
+		if (compileErrors.size() > 0) {
+			for (CompileError error : compileErrors) {
+				Object lineHighlightObject;
+				try {
+					editor.setHighlightCurrentLine(false);
+					lineHighlightObject = editor.addLineHighlight(((int) error.getLineNumber()) - 1, Color.RED);
+					addHighlightedLines(lineHighlightObject);
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			toggleSaveButton(false);
+			codeEditorBottomFactory.getCompilationResultTable().renderCompilingError(compileErrors);
+			return;
+		}
 		GenericEditorIntellisense.getCodeEditorInstance().addOpKeyTranspiledClassInformation();
 		saveButton.setEnabled(false);
 		checkClassIsRunnable();
