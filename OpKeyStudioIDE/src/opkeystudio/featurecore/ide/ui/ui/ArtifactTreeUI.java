@@ -40,7 +40,6 @@ import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTreeIte
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.ArtifactUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
@@ -74,6 +73,7 @@ public class ArtifactTreeUI extends SuperComposite {
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
 	private MenuItem refreshMenuItem;
+	private Button clearArtifactTreeButton;
 	/**
 	 * Create the composite.
 	 * 
@@ -130,7 +130,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		Button clearArtifactTreeButton = new Button(composite, SWT.NONE);
+		clearArtifactTreeButton = new Button(composite, SWT.NONE);
 		clearArtifactTreeButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		clearArtifactTreeButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ERASER_ICON));
 		clearArtifactTreeButton.setToolTipText("Clear Text");
@@ -185,7 +185,7 @@ public class ArtifactTreeUI extends SuperComposite {
 		// toolbarRefresh.setEnabled(false);
 		toolbarRefresh.setToolTipText("Refresh");
 
-		artifactTree = new ArtifactTree(this, SWT.BORDER);
+		artifactTree = new ArtifactTree(this, SWT.BORDER, this);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		ServiceRepository.getInstance().setProjectTreeObject(artifactTree);
@@ -1223,6 +1223,14 @@ public class ArtifactTreeUI extends SuperComposite {
 			}
 		});
 
+	}
+
+	public Text getSearchBox() {
+		return txtSearch;
+	}
+
+	public Button getClearSearchBoxButton() {
+		return clearArtifactTreeButton;
 	}
 
 	private void deleteArtifactJavaFile(Artifact artifact) {

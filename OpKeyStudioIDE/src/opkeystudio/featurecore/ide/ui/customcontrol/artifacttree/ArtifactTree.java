@@ -15,6 +15,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.core.utils.ArtifactTranspilerAsync;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
+import opkeystudio.featurecore.ide.ui.ui.ArtifactTreeUI;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
@@ -29,9 +30,11 @@ public class ArtifactTree extends CustomTree {
 	private TestSuiteView parentTestSuiteView;
 	private boolean attachedinTestSuite = false;
 	private List<Artifact> artifacts = new ArrayList<Artifact>();
+	private ArtifactTreeUI parentArtifactTreeUI;
 
-	public ArtifactTree(Composite parent, int style) {
+	public ArtifactTree(Composite parent, int style, ArtifactTreeUI parentUI) {
 		super(parent, style);
+		this.setParentArtifactTreeUI(parentUI);
 		init();
 		SystemRepository.getInstance().setArtifactTreeControl(this);
 	}
@@ -157,6 +160,9 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public void renderArtifacts(boolean fireGlobalEvent) {
+		this.setEnabled(false);
+		getParentArtifactTreeUI().getSearchBox().setEnabled(false);
+		getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(false);
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
@@ -201,7 +207,9 @@ public class ArtifactTree extends CustomTree {
 		if (fireGlobalEvent) {
 			OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		}
-
+		this.setEnabled(true);
+		getParentArtifactTreeUI().getSearchBox().setEnabled(true);
+		getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(true);
 	}
 
 	public void highlightArtifact(String artifactId) {
@@ -222,41 +230,32 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public void refereshArtifacts() {
-		try {
-			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
-			this.removeAll();
-			ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
-			if (isAttachedinTestSuite()) {
-				rootNode.setText("Gherkin and Test Case");
-			} else {
-				rootNode.setText("Project WorkSpace");
+		this.removeAll();
+		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
+		if (isAttachedinTestSuite()) {
+			rootNode.setText("Gherkin and Test Case");
+		} else {
+			rootNode.setText("Project WorkSpace");
+		}
+		rootNode.setExpanded(true);
+		addIcon(rootNode);
+		List<Artifact> artifacts = getArtifactsData();
+		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getParentid() == null) {
+				ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
+				artitreeitem.setText(artifact.getName());
+				artitreeitem.setArtifact(artifact);
+				topMostNodes.add(artitreeitem);
+				addIcon(artitreeitem);
 			}
-			rootNode.setExpanded(true);
-			addIcon(rootNode);
-			List<Artifact> artifacts = getArtifactsData();
-			List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
-			for (Artifact artifact : artifacts) {
-				if (artifact.getParentid() == null) {
-					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-					artitreeitem.setText(artifact.getName());
-					artitreeitem.setArtifact(artifact);
-					topMostNodes.add(artitreeitem);
-					addIcon(artitreeitem);
-				}
-			}
-
-			for (ArtifactTreeItem topMostNode : topMostNodes) {
-				refreshAllArtifactTree(topMostNode, artifacts);
-			}
-			expandAll(rootNode);
-			selectTreeItem(rootNode);
-			if (isAttachedinTestSuite() == false) {
-				ArtifactTranspiler.getInstance().setPackageProperties();
-			}
-		} finally {
-			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
 
+		for (ArtifactTreeItem topMostNode : topMostNodes) {
+			refreshAllArtifactTree(topMostNode, artifacts);
+		}
+		expandAll(rootNode);
+		selectTreeItem(rootNode);
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {
@@ -316,5 +315,13 @@ public class ArtifactTree extends CustomTree {
 			}
 		}
 		this.refereshArtifacts();
+	}
+
+	public ArtifactTreeUI getParentArtifactTreeUI() {
+		return parentArtifactTreeUI;
+	}
+
+	public void setParentArtifactTreeUI(ArtifactTreeUI parentArtifactTreeUI) {
+		this.parentArtifactTreeUI = parentArtifactTreeUI;
 	}
 }
