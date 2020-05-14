@@ -18,6 +18,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
@@ -250,8 +251,9 @@ public class ObjectAttributeTable extends CustomTable {
 			ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 			ImageData imgData = new ImageData(is);
 			Image img = new Image(this.getDisplay(), imgData);
-			CustomLabel label = new CustomLabel(this, SWT.CENTER);
-			label.setText("View Image");
+			CustomLabel label = new CustomLabel(this, SWT.LEFT);
+			label.setText(" View Image");
+			label.setForeground(new Color(label.getDisplay(), 102, 102, 255));
 			label.setControlData(img);
 
 			label.addMouseListener(new MouseListener() {
