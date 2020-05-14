@@ -175,7 +175,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 				// TODO Auto-generated method stub
 				if (sessionNameTextField.getText().equals("")) {
 					runButton.setEnabled(false);
-					CustomNotificationUtil.openInformationNotification("OpKey", "Session Name Cannot Be Empty");
+					checkIfRunButtonBeEnabled(); // CustomNotificationUtil.openInformationNotification("OpKey", "Session
+					// Name Cannot Be Empty");
 					sessionNameTextField.setFocus();
 				} else {
 					if (pluginSelectionDropDown.getText().equals("Web") && !buildNameTextField.getText().equals(""))
@@ -220,7 +221,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 				// TODO Auto-generated method stub
 				if (buildNameTextField.getText().equals("")) {
 					runButton.setEnabled(false);
-					CustomNotificationUtil.openInformationNotification("OpKey", "Build Name Cannot Be Empty");
+					checkIfRunButtonBeEnabled();// CustomNotificationUtil.openInformationNotification("OpKey", "Build
+					// Name Cannot Be Empty");
 					buildNameTextField.setFocus();
 				} else {
 					if (pluginSelectionDropDown.getText().equals("Web") && !sessionNameTextField.getText().equals(""))
@@ -678,10 +680,22 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 	private void checkIfRunButtonBeEnabled() {
 
 		File newSessionFolder = new File(Utilities.getInstance().getSessionsFolder(), sessionNameTextField.getText());
-		if (newSessionFolder.exists()) {
-			this.setErrorMessage("Session '" + executionSession.getSessionName() + "' already exists at "
-					+ newSessionFolder.getParentFile().getAbsolutePath());
+		if (!sessionNameTextField.getText().equals("")) {
+			if (newSessionFolder.exists()) {
+				this.setErrorMessage("Session '" + executionSession.getSessionName() + "' already exists at "
+						+ newSessionFolder.getParentFile().getAbsolutePath());
+				runButton.setEnabled(false);
+				return;
+			}
+		} else {
+			this.setErrorMessage("SessionName Cannot Be Empty");
 			runButton.setEnabled(false);
+			return;
+		}
+
+		if (buildNameTextField.getText().equals("")) {
+			runButton.setEnabled(false);
+			this.setErrorMessage("Build Name Cannot Be Empty.");
 			return;
 		}
 
@@ -689,18 +703,6 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		if (index == 0) {
 			runButton.setEnabled(false);
 			this.setErrorMessage("Plugin not selected.");
-			return;
-		}
-
-		if (sessionNameTextField.getText().equals("")) {
-			runButton.setEnabled(false);
-			this.setErrorMessage("SessionName Cannot Be Empty.");
-			return;
-		}
-
-		if (buildNameTextField.getText().equals("")) {
-			runButton.setEnabled(false);
-			this.setErrorMessage("Build Name Cannot Be Empty.");
 			return;
 		}
 
