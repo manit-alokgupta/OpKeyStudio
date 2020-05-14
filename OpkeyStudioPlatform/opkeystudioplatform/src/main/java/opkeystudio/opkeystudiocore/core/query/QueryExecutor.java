@@ -42,7 +42,7 @@ public class QueryExecutor {
 			SQLiteCommunicator sqlComm = SQLiteCommunicator.getOpKeyDBCommunicator();
 			int result = sqlComm.executeUpdate(query);
 			return result;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1;
