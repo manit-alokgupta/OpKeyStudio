@@ -431,9 +431,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		} catch (Exception ex) {
 			if (ex.getMessage() == null) // will get null only in case sdk is not set
 				CustomNotificationUtil.openErrorNotificationDialog("OpKey",
-						"Set ANDROID_HOME In Environment Variable And Provide Path To Sdk");
+						"No Device Connected"+"\n"+"Make Sure ANORID_HOME Is Set To Environment Variable");
 			else
-				CustomNotificationUtil.openErrorNotificationDialog("OpKey", "Please Connect Your Device First");
+				CustomNotificationUtil.openErrorNotificationDialog("OpKey", "No Device Connected");
 		}
 
 	}
