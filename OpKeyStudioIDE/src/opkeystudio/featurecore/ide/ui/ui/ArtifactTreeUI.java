@@ -60,6 +60,7 @@ public class ArtifactTreeUI extends SuperComposite {
 	private MenuItem toolbarTestCase;
 	private MenuItem toolbarObjectRepository;
 	private MenuItem toolbarFunctionLibrary;
+	private MenuItem toolbarcodedFLMenuItem;
 	private MenuItem toolbarTestSuite;
 	private MenuItem folderMenuItem;
 	private MenuItem testcaseMenuItem;
@@ -224,6 +225,10 @@ public class ArtifactTreeUI extends SuperComposite {
 		toolbarDR = new MenuItem(newMenu, SWT.PUSH);
 		toolbarDR.setText("DR");
 		toolbarDR.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
+
+		toolbarcodedFLMenuItem = new MenuItem(newMenu, SWT.PUSH);
+		toolbarcodedFLMenuItem.setText("Coded FL");
+		toolbarcodedFLMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 
 		folderMenuItem = new MenuItem(menu_1, SWT.NONE);
 		folderMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
@@ -474,7 +479,7 @@ public class ArtifactTreeUI extends SuperComposite {
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Unable to delete " + artifact.getFile_type_enum(),
 							"Unable to delete " + artifact.getFile_type_enum() + " '" + artifact.getName()
-							+ "' as it is being used:");
+									+ "' as it is being used:");
 					return;
 				}
 				deleteArtifactJavaFile(artifact);
@@ -1009,6 +1014,58 @@ public class ArtifactTreeUI extends SuperComposite {
 			}
 		});
 
+		toolbarcodedFLMenuItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Artifact artifact = artifactTree.getSelectedArtifact();
+				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New CodedFL",
+						"CodedFL Name", "NEW CFL " + getVarName());
+				if (inputValue == null) {
+					System.out.println("cancel pressed ");
+					return;
+				}
+				while (inputValue.trim().isEmpty()) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name can not be empty");
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New CodedFL", "CodedFL Name ",
+							"NEW CFL " + getVarName());
+					if (inputValue == null) {
+						return;
+					}
+				}
+
+				boolean startsWithNumber = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isStringStartsWithNumbers(inputValue);
+				boolean containsSpecialCharacters = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.isStringContainsSpecialCharacters(inputValue);
+
+				if (startsWithNumber) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+							"Name should not start with number.");
+					return;
+				}
+
+				if (containsSpecialCharacters) {
+					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+							"Name should not contain any special characters.");
+					return;
+				}
+				boolean isUnique = isArtifactNameIsUnique(inputValue);
+				if (isUnique == false) {
+					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
+					return;
+				}
+
+				createArtifact(artifact, inputValue, MODULETYPE.CodedFunction);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		toolBar_1.addMouseListener(new MouseListener() {
 
 			@Override
@@ -1029,9 +1086,9 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			}
 		});
-		
+
 		artifactTree.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ArtifactTreeItem selectedTreeItem = artifactTree.getSelectedArtifactTreeItem();
@@ -1138,11 +1195,11 @@ public class ArtifactTreeUI extends SuperComposite {
 					toggleRefreshMenuItem(true);
 				}
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
@@ -1247,12 +1304,12 @@ public class ArtifactTreeUI extends SuperComposite {
 				msd.openProgressDialog(null, String.format("Please wait. Creating Artifact '%s'", artifactName), false,
 						new IRunnableWithProgress() {
 
-					@Override
-					public void run(IProgressMonitor monitor)
-							throws InvocationTargetException, InterruptedException {
-						artifact = new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
-					}
-				});
+							@Override
+							public void run(IProgressMonitor monitor)
+									throws InvocationTargetException, InterruptedException {
+								artifact = new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
+							}
+						});
 				artifactTree.renderArtifacts(true);
 				msd.closeProgressDialog();
 				Utilities.getInstance().openArtifacts(artifact);

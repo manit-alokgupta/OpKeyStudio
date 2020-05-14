@@ -80,6 +80,8 @@ public class ObjectConverter {
 			return orobject.getAllProperties().get("class");
 		} else if (orobject.getAllProperties().containsKey("id")) {
 			return orobject.getAllProperties().get("id");
+		} else if (orobject.getAllProperties().containsKey("tag")) {
+			return orobject.getAllProperties().get("tag");
 		}
 		return "Object";
 	}

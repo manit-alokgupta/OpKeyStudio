@@ -164,6 +164,7 @@ public class GenericTree extends CustomTree {
 						if (artifact.getId().equals(selectedArtifact.getId())) {
 							new MessageDialogs().openErrorDialog("OpKey",
 									"Function Library Recursion Call Not Allowed");
+							refreshAllDataTree();
 							return;
 						}
 						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
@@ -174,6 +175,7 @@ public class GenericTree extends CustomTree {
 						getParentTestCaseView().toggleSaveButton(true);
 						CustomNotificationUtil.openInformationNotification("OpKey",
 								flowStep.getFunctionLibraryComponent().getName() + " added!");
+						refreshAllDataTree();
 						return;
 					}
 
@@ -186,6 +188,7 @@ public class GenericTree extends CustomTree {
 						getParentTestCaseView().toggleSaveButton(true);
 						CustomNotificationUtil.openInformationNotification("OpKey",
 								flowStep.getCodedFunctionArtifact().getName() + " added!");
+						refreshAllDataTree();
 						return;
 					}
 
@@ -198,6 +201,7 @@ public class GenericTree extends CustomTree {
 				getParentTestCaseView().toggleSaveButton(true);
 				CustomNotificationUtil.openInformationNotification("OpKey",
 						flowStep.getKeyword().getName() + " added!");
+				refreshAllDataTree();
 			}
 
 			@Override
@@ -222,6 +226,7 @@ public class GenericTree extends CustomTree {
 						if (artifact.getId().equals(selectedArtifact.getId())) {
 							new MessageDialogs().openErrorDialog("OpKey",
 									"Function Library Recursion Call Not Allowed");
+							refreshAllDataTree();
 							return;
 						}
 						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
@@ -230,6 +235,7 @@ public class GenericTree extends CustomTree {
 						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 						getParentTestCaseView().toggleSaveButton(true);
+						refreshAllDataTree();
 						return;
 					}
 
@@ -240,6 +246,7 @@ public class GenericTree extends CustomTree {
 						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 						getParentTestCaseView().toggleSaveButton(true);
+						refreshAllDataTree();
 						return;
 					}
 				}
@@ -249,13 +256,26 @@ public class GenericTree extends CustomTree {
 				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
 				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
 				getParentTestCaseView().toggleSaveButton(true);
-
+				refreshAllDataTree();
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
+	}
+
+	private void refreshAllDataTree() {
+		getParentTestCaseView().getSearchBox().setText("");
+		if (isKeywordTree()) {
+			initKeywords("");
+		}
+		if (isFlTree()) {
+			initFunctionLibraries("");
+		}
+		if (isCflTree()) {
+			initCodedFunctionLibraries("");
+		}
 	}
 
 	public Object getSelectedData() {
@@ -425,7 +445,7 @@ public class GenericTree extends CustomTree {
 		this.removeAll();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("CodedFunction");
 		artifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
-		
+
 		List<Artifact> filteredArtifacts = new ArrayList<Artifact>();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
@@ -436,7 +456,7 @@ public class GenericTree extends CustomTree {
 				}
 			}
 		}
-		
+
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Coded Function Library");
 		rootNode.setExpanded(true);

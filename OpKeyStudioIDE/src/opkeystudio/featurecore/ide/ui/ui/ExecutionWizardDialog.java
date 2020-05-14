@@ -438,11 +438,11 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			}
 			androidDeviceSelectionDropDown.select(0);
 		} catch (Exception ex) {
-			if (ex.getMessage() == null) // will get null only in case sdk is not set
-				CustomNotificationUtil.openErrorNotificationDialog("OpKey",
-						"No Device Connected" + "\n" + "Make Sure ANORID_HOME Is Set To Environment Variable");
+			if (ex.getMessage() == null)
+				CustomNotificationUtil.openErrorNotificationDialog("OpKey", "No device connected!" + "\n"
+						+ "Make sure ANORID_HOME or ANORID_SDK_HOME is set in Environment Variable for Android SDK!");
 			else
-				CustomNotificationUtil.openErrorNotificationDialog("OpKey", "No Device Connected");
+				CustomNotificationUtil.openErrorNotificationDialog("OpKey", "No device connected!");
 		}
 
 	}

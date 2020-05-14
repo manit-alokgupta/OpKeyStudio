@@ -1159,6 +1159,10 @@ public class TestCaseView extends SuperComposite {
 		return this.drTree;
 	}
 
+	public Text getSearchBox() {
+		return searchBox;
+	}
+
 	public GlobalVariableTable getGlobalVariableTable() {
 		return this.globalVariableTable;
 	}
