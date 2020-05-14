@@ -587,7 +587,8 @@ public class ArtifactCodeView extends SuperComposite {
 				Object lineHighlightObject;
 				try {
 					editor.setHighlightCurrentLine(false);
-					lineHighlightObject = editor.addLineHighlight(((int) error.getLineNumber()) - 1, Color.RED);
+					lineHighlightObject = editor.addLineHighlight(((int) error.getLineNumber()) - 1,
+							new Color(255, 204, 204));
 					addHighlightedLines(lineHighlightObject);
 				} catch (BadLocationException e) {
 					// TODO Auto-generated catch block
@@ -671,7 +672,8 @@ public class ArtifactCodeView extends SuperComposite {
 				Object lineHighlightObject;
 				try {
 					editor.setHighlightCurrentLine(false);
-					lineHighlightObject = editor.addLineHighlight(((int) error.getLineNumber()) - 1, Color.RED);
+					lineHighlightObject = editor.addLineHighlight(((int) error.getLineNumber()) - 1,
+							new Color(255, 204, 204));
 					addHighlightedLines(lineHighlightObject);
 				} catch (BadLocationException e) {
 					// TODO Auto-generated catch block
