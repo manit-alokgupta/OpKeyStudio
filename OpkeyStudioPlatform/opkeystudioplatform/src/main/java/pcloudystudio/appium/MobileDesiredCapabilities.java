@@ -38,7 +38,7 @@ public class MobileDesiredCapabilities {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		LinkedHashMap<String, String> caps_map = getMapOfCapabilities();
 		capabilities.setCapability("newCommandTimeout", 0);
-		if (!caps_map.isEmpty()) {
+		if (caps_map != null && !caps_map.isEmpty()) {
 			caps_map.entrySet().forEach(entry -> {
 				String capabilityName = entry.getKey();
 				String capabilityType = getCapabilityType(capabilityName);
