@@ -312,8 +312,7 @@ public class Utilities {
 	}
 
 	public void refreshArtifactTree() {
-		GlobalLoader.getInstance().initAllArguments();
-		ArtifactTranspiler.getInstance().setPackageProperties();
+		GlobalLoader.getInstance().initAllArtifacts();
 	}
 
 	public Shell getDefaultShell() {
