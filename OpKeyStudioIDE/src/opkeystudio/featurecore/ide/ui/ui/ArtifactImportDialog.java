@@ -231,6 +231,9 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
 		} else if (atn.getType() == Artifact.MODULETYPE.CodedFunction) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
+		} else {
+			artTreeItem
+					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GENERATE_DOCUMENT_ICON));
 		}
 	}
 

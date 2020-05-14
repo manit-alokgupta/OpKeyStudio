@@ -25,7 +25,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFactoryDataRepoUi;
 import opkeystudio.featurecore.ide.ui.customcontrol.datarepositorycontrol.DataRepositoryTable;
@@ -183,7 +182,7 @@ public class DataRepositoryView extends SuperComposite {
 		toggleRenameColumnButton(false);
 
 		dataRepositoryTable.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseUp(MouseEvent e) {
 				toggleAddColumnButton(true);
@@ -192,17 +191,17 @@ public class DataRepositoryView extends SuperComposite {
 				toggleMoveColumnRightButton(true);
 				toggleRenameColumnButton(true);
 			}
-			
+
 			@Override
 			public void mouseDown(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
@@ -441,12 +440,20 @@ public class DataRepositoryView extends SuperComposite {
 		});
 	}
 
-	private void handleSaveOnRefresh() {
-		if (saveToolItm.getEnabled() == true) {
+	private boolean handleSaveOnRefresh() {
+		if (saveToolItm.getEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
-			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to save?");
-			if (status) {
+			int status = CustomNotificationUtil.openConfirmDialog(dataRepositoryTable.getShell(),"OpKey", "Do you want to Save changes?");
+			System.out.println("Result " + status);
+			if (status == 2) {
+				return false;
+			}
+			if (status == 1) {
+				toggleSaveButton(false);
+			}
+			if (status == 0) {
 				saveDR();
+				CustomNotificationUtil.openInformationNotification("OpKey", "Saved!");
 			}
 		}
 		dataRepositoryTable.renderAllDRDetails();
@@ -456,6 +463,8 @@ public class DataRepositoryView extends SuperComposite {
 		toggleMoveColumnLeftButton(false);
 		toggleMoveColumnRightButton(false);
 		toggleRenameColumnButton(false);
+		CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
+		return true;
 	}
 
 	private void saveDR() {

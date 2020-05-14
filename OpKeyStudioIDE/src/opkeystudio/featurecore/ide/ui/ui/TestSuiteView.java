@@ -507,7 +507,6 @@ public class TestSuiteView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				handleSaveOnRefresh();
-
 			}
 
 			@Override
@@ -520,24 +519,23 @@ public class TestSuiteView extends SuperComposite {
 	private boolean handleSaveOnRefresh() {
 		if (saveButton.isEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
-			boolean status = new MessageDialogs().openConfirmDialog("OpKey", "Do you want to Save changes?");
-			if (!status) {
-				toggleSaveButton(false);
-
-				testSuiteTable.renderAllTestSuites();
-				bottomFactory.refreshBottomFactory();
+			int status = CustomNotificationUtil.openConfirmDialog(testSuiteTable.getShell(), "OpKey",
+					"Do you want to Save changes?");
+			System.out.println("Result " + status);
+			if (status == 2) {
 				return false;
 			}
-			new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
-			testSuiteTable.renderAllTestSuites();
-			saveButton.setEnabled(false);
+			if (status == 0) {
+				new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
+			}
 		}
-
+		toggleSaveButton(false);
 		toggleDeleteButton(false);
 		toggleMoveUpButton(false);
 		toggleMoveDownButton(false);
 		testSuiteTable.renderAllTestSuites();
 		bottomFactory.refreshBottomFactory();
+		CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 		return true;
 	}
 
