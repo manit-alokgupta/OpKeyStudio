@@ -39,6 +39,7 @@ import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 import pcloudystudio.core.vncutils.AndroidVNCLauncher;
@@ -338,6 +339,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					session.addPluginSetting("DeviceVersion", getMobileDeviceExecutionDetail().getDeviceVersion());
 					session.addPluginSetting("DeviceApiLevel", getMobileDeviceExecutionDetail().getDeviceAPILevel());
 					session.addPluginSetting("DeviceABI", getMobileDeviceExecutionDetail().getDeviceABI());
+					session.addPluginSetting("appiumHost", getMobileDeviceExecutionDetail().getDeviceABI());
+					session.addPluginSetting("appiumPort", getMobileDeviceExecutionDetail().getDeviceABI());
+					session.addPluginSetting("appiumDir", getMobileDeviceExecutionDetail().getDeviceABI());
 
 					MobileDevice device = new MobileDevice();
 					device.setDisplayName(getMobileDeviceExecutionDetail().getDeviceName());
@@ -345,6 +349,8 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					device.setOperatingSystem("Android");
 					device.setSerialNumber(getMobileDeviceExecutionDetail().getDeviceId());
 					device.setVersion(getMobileDeviceExecutionDetail().getDeviceVersion());
+
+					session.setMobileCapabilities(MobileDesiredCapabilities.getCapabilities());
 
 					session.setMobileDevice(device);
 				}
@@ -431,9 +437,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		} catch (Exception ex) {
 			if (ex.getMessage() == null) // will get null only in case sdk is not set
 				CustomNotificationUtil.openErrorNotificationDialog("OpKey",
-						"Set ANDROID_HOME In Environment Variable And Provide Path To Sdk");
+						"No Device Connected" + "\n" + "Make Sure ANORID_HOME Is Set To Environment Variable");
 			else
-				CustomNotificationUtil.openErrorNotificationDialog("OpKey", "Please Connect Your Device First");
+				CustomNotificationUtil.openErrorNotificationDialog("OpKey", "No Device Connected");
 		}
 
 	}

@@ -12,6 +12,8 @@ import org.apache.commons.io.FileUtils;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.CFLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
@@ -36,11 +38,50 @@ public class ArtifactTranspiler {
 
 	public void setPackageProperties() {
 		List<Artifact> allArtifacts = GlobalLoader.getInstance().getAllArtifacts();
-		setPackageProperties(allArtifacts);
+		setPackageProperties(allArtifacts, true);
 	}
 
-	public void setPackageProperties(List<Artifact> allArtifacts) {
-		ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
+	public void setPackagePropertiesForFunctionLibraryArtifact(List<FunctionLibraryComponent> allFLArtifacts) {
+		List<Artifact> allArtifacts = new ArrayList<Artifact>();
+		for (FunctionLibraryComponent flartifact : allFLArtifacts) {
+			allArtifacts.add(flartifact);
+		}
+		allArtifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
+		addParentArtifact(allArtifacts);
+		setPackageProperties(allArtifacts, false);
+	}
+
+	public void setPackagePropertiesForCodedFunctionArtifact(List<CodedFunctionArtifact> allCFLArtifacts) {
+		List<Artifact> allArtifacts = new ArrayList<Artifact>();
+		for (CodedFunctionArtifact cflartifact : allCFLArtifacts) {
+			allArtifacts.add(cflartifact);
+		}
+		allArtifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
+		addParentArtifact(allArtifacts);
+		setPackageProperties(allArtifacts, false);
+	}
+
+	private void addParentArtifact(List<Artifact> artifacts) {
+		System.out.println("Called addParentArtifact");
+		for (Artifact artifact : artifacts) {
+			String artifactId = artifact.getId();
+			for (Artifact childArtifact : artifacts) {
+				if (childArtifact.getParentid() == null) {
+					continue;
+				}
+				if (childArtifact.getParentid().equals(artifactId)) {
+					System.out.println(childArtifact.getParentid() + "  " + artifactId + "  "
+							+ childArtifact.getFile_type_enum().toString());
+					childArtifact.setParentArtifact(artifact);
+				}
+			}
+		}
+	}
+
+	public void setPackageProperties(List<Artifact> allArtifacts, boolean performDefault) {
+		if (performDefault) {
+			ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
+		}
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
 				// continue;
@@ -79,18 +120,20 @@ public class ArtifactTranspiler {
 			artifact.setPackageName(packageName.toLowerCase());
 			ArtifactTranspiler.getInstance().addPackageName(artifact.getPackageName());
 		}
-		ArtifactTranspiler.getInstance().addPackageName("allartifacts");
-		ArtifactTranspiler.getInstance().addPackageName("com.opkey.web");
-		ArtifactTranspiler.getInstance().addPackageName("com.opkey.appium");
-		ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
-		ArtifactTranspiler.getInstance().addPackageName("com.ssts.reporting");
+		if (performDefault) {
+			ArtifactTranspiler.getInstance().addPackageName("allartifacts");
+			ArtifactTranspiler.getInstance().addPackageName("com.opkey.web");
+			ArtifactTranspiler.getInstance().addPackageName("com.opkey.appium");
+			ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
+			ArtifactTranspiler.getInstance().addPackageName("com.ssts.reporting");
 
-		ArtifactTranspiler.getInstance().addPackageName("java.util");
-		ArtifactTranspiler.getInstance().addPackageName("java.io");
-		ArtifactTranspiler.getInstance()
-				.addPackageName("com.crestech.opkey.plugin.communication.contracts.functioncall");
-		ArtifactTranspiler.getInstance().addPackageName("com.crestech.opkey.plugin.codedfl");
-		TranspilerUtilities.getInstance().clearAppiumTypeFunctionLibraries();
+			ArtifactTranspiler.getInstance().addPackageName("java.util");
+			ArtifactTranspiler.getInstance().addPackageName("java.io");
+			ArtifactTranspiler.getInstance()
+					.addPackageName("com.crestech.opkey.plugin.communication.contracts.functioncall");
+			ArtifactTranspiler.getInstance().addPackageName("com.crestech.opkey.plugin.codedfl");
+			TranspilerUtilities.getInstance().clearAppiumTypeFunctionLibraries();
+		}
 	}
 
 	private boolean checkPackageNameIsValid(String packagename) {

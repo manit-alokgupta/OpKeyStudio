@@ -108,9 +108,9 @@ public class GlobalLoader {
 		setAllOpKeyClassesIntellisense(outputDtos);
 	}
 
-	private void initAllArtifacts() {
+	public void initAllArtifacts() {
 		this.allArtifacts = new ArtifactApi().getAllArtificates();
-		ArtifactTranspiler.getInstance().setPackageProperties(this.allArtifacts);
+		ArtifactTranspiler.getInstance().setPackageProperties(this.allArtifacts, true);
 	}
 
 	public void initGlobalVariables() {

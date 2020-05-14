@@ -155,6 +155,14 @@ public class Utilities {
 				+ File.separator + "TranspiledArtifacts";
 	}
 
+	public File getResourcesDir() {
+		return new File(getDefaultInstallDir(), "resources");
+	}
+
+	public File getVncZipFile() {
+		return new File(getResourcesDir(), "vncserver.zip");
+	}
+
 	public String getDefaultPluginBaseDir() {
 		return getDefaultInstallDir() + File.separator + "resources" + File.separator + "libraries" + File.separator
 				+ "PluginBase";

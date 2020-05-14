@@ -23,11 +23,14 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.ArtifactCodeEditor;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
+import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class Utilities {
 	private static Utilities utils = null;
@@ -306,6 +309,10 @@ public class Utilities {
 			}
 		});
 
+	}
+
+	public void refreshArtifactTree() {
+		GlobalLoader.getInstance().initAllArtifacts();
 	}
 
 	public Shell getDefaultShell() {

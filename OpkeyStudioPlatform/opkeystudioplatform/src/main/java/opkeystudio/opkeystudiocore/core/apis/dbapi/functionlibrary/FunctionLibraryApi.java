@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
@@ -24,8 +23,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
-import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
+import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FunctionLibraryApi {
 	private static FunctionLibraryApi flowApi;
@@ -185,7 +184,7 @@ public class FunctionLibraryApi {
 				flowStep.setOrObject(allORObject);
 				flowStep.setIsTestCaseStep(true);
 			} else if (flowStep.getStepcomponent_id() != null) {
-				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getStepcomponent_id()).get(0);
+				FunctionLibraryComponent flComp = FlowApi.getInstance().getFunctionLibraryComponent(flowStep.getStepcomponent_id()).get(0);
 				List<ComponentInputArgument> inputArgs = getAllComponentInputArgument(flowStep.getStepcomponent_id());
 				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(
 						flowStep.getStepcomponent_id());
@@ -252,21 +251,6 @@ public class FunctionLibraryApi {
 			e.printStackTrace();
 		}
 		return new ArrayList<ComponentOutputArgument>();
-	}
-
-	public List<FunctionLibraryComponent> getFunctinLibraryComponent(String componentId) {
-		String query = String.format("select * from main_artifact_filesystem where id='%s'", componentId);
-		String result = QueryExecutor.getInstance().executeQuery(query);
-		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
-				FunctionLibraryComponent.class);
-		try {
-			return mapper.readValue(result, type);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ArrayList<FunctionLibraryComponent>();
 	}
 
 }

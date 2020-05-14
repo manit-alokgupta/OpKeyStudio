@@ -150,6 +150,20 @@ public class InputDataTable extends CustomTable {
 			if (isBooleanType) {
 				disposeControlEditor(editor);
 				Button checkedButton = new Button(cursor, SWT.CHECK);
+				checkedButton.addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						checkedButton.dispose();
+
+					}
+
+					@Override
+					public void focusGained(FocusEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
 				checkedButton.addSelectionListener(new SelectionListener() {
 
 					@Override
@@ -749,7 +763,7 @@ public class InputDataTable extends CustomTable {
 		} else {
 			TestCaseView tview = getParentTestCaseView();
 			if (tview.getInputDataTable() != null) {
-				stopPaintEvent=false;
+				stopPaintEvent = false;
 				tview.getInputDataTable().setEnabled(true);
 				tview.getInputDataTable().setHeaderVisible(true);
 				tview.getInputDataTable().setLinesVisible(true);

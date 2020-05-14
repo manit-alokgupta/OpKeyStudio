@@ -74,8 +74,8 @@ public class OpKeyAppiumKeywords {
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called IsCurrentOrientationLandScape");
 		ContextInitiator.addFunction(methodName);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Orientation().Method_isCurrentOrientationLandScape());
-		return DataType.getBoolean(functionResult.getOutput());	
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Orientation().Method_isCurrentOrientationLandScape());
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	/** Method_isCurrentOrientationPortrait */
@@ -84,8 +84,8 @@ public class OpKeyAppiumKeywords {
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called IsCurrentOrientationPortrait");
 		ContextInitiator.addFunction(methodName);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Orientation().Method_isCurrentOrientationPortrait());
-		return DataType.getBoolean(functionResult.getOutput());			
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Orientation().Method_isCurrentOrientationPortrait());
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	/**
@@ -98,20 +98,19 @@ public class OpKeyAppiumKeywords {
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called CurrentOrientationChangeToPortrait");
 		ContextInitiator.addFunction(methodName);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Orientation().Method_currentOrientationChangeToPortrait());
-		return DataType.getBoolean(functionResult.getOutput());		
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Orientation().Method_currentOrientationChangeToPortrait());
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean CurrentOrientationChangeToLandScape() throws ToolNotSetException {
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called CurrentOrientationChangeToLandScape");
 		ContextInitiator.addFunction(methodName);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Orientation().Method_currentOrientationChangeToLandScape());
-		return DataType.getBoolean(functionResult.getOutput());		
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Orientation().Method_currentOrientationChangeToLandScape());
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean Flick(int arg0, int arg1)
-			throws ToolNotSetException, KeywordMethodOrArgumentValidationFailException {
+	public boolean Flick(int arg0, int arg1) throws ToolNotSetException, KeywordMethodOrArgumentValidationFailException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called Flick");
@@ -119,12 +118,11 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		// Method_flick
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_flick(arg0, arg1));
-		return DataType.getBoolean(functionResult.getOutput());		
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Gestures().Method_flick(arg0, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean Tap(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException,
-			KeywordMethodOrArgumentValidationFailException, TimeOut_ObjectNotFoundException {
+	public boolean Tap(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException, KeywordMethodOrArgumentValidationFailException, TimeOut_ObjectNotFoundException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called Tap");
@@ -132,8 +130,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_Tap
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_Tap(object));
-		return DataType.getBoolean(functionResult.getOutput());	
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Gestures().Method_Tap(object));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean Launch_iOSApplicationOnSimulator(String arg0, String arg1) {
@@ -175,14 +173,12 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called SwitchWindow");
 
 		// Method_switchWindow
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new AndroidWindowHandling().Method_switchWindow(arg0));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new AndroidWindowHandling().Method_switchWindow(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
-	public boolean ScrollDown()
-			throws ToolNotSetException, InterruptedException, KeywordMethodOrArgumentValidationFailException {
+	public boolean ScrollDown() throws ToolNotSetException, InterruptedException, KeywordMethodOrArgumentValidationFailException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called ScrollDown");
@@ -193,8 +189,7 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean ScrollUp()
-			throws ToolNotSetException, InterruptedException, KeywordMethodOrArgumentValidationFailException {
+	public boolean ScrollUp() throws ToolNotSetException, InterruptedException, KeywordMethodOrArgumentValidationFailException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called ScrollUp");
@@ -217,20 +212,17 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean Switch(ORObject arg0)
-			throws ToolNotSetException, ObjectNotFoundException, InterruptedException, TimeOut_ObjectNotFoundException {
+	public boolean Switch(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException, TimeOut_ObjectNotFoundException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called Switch");
 		ContextInitiator.addFunction(methodName); // Method_Switch
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(() -> new com.plugin.appium.keywords.AppiumSpecificKeyword.Switch()
-				.Method_Switch(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new com.plugin.appium.keywords.AppiumSpecificKeyword.Switch().Method_Switch(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean LongPress(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException,
-			KeywordMethodOrArgumentValidationFailException, TimeOut_ObjectNotFoundException {
+	public boolean LongPress(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException, KeywordMethodOrArgumentValidationFailException, TimeOut_ObjectNotFoundException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called LongPress");
@@ -241,8 +233,7 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean DoubleTouch(ORObject arg0)
-			throws ToolNotSetException, ObjectNotFoundException, InterruptedException, TimeOut_ObjectNotFoundException {
+	public boolean DoubleTouch(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException, TimeOut_ObjectNotFoundException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called DoubleTouch");
@@ -253,8 +244,7 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean Touch(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException,
-			KeywordMethodOrArgumentValidationFailException, TimeOut_ObjectNotFoundException {
+	public boolean Touch(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException, KeywordMethodOrArgumentValidationFailException, TimeOut_ObjectNotFoundException {
 		ContextInitiator.addFunction("Touch");
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called Touch");
@@ -265,8 +255,7 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean GetObjectImage(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException,
-			InterruptedException, IOException, TimeOut_ObjectNotFoundException {
+	public boolean GetObjectImage(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException, IOException, TimeOut_ObjectNotFoundException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called GetObjectImage");
@@ -286,7 +275,7 @@ public class OpKeyAppiumKeywords {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		// Method_SelectRadioButton
-		FunctionResult functionResult = FunctionCaller.execute(()-> new AndroidRadio().Method_SelectRadioButton(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new AndroidRadio().Method_SelectRadioButton(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -314,8 +303,7 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean GetObjectCoordinates(ORObject arg0)
-			throws ToolNotSetException, ObjectNotFoundException, InterruptedException, TimeOut_ObjectNotFoundException {
+	public boolean GetObjectCoordinates(ORObject arg0) throws ToolNotSetException, ObjectNotFoundException, InterruptedException, TimeOut_ObjectNotFoundException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called GetObjectCoordinates");
@@ -346,9 +334,7 @@ public class OpKeyAppiumKeywords {
 			Context.session().getSettings().put("Host", "");
 			Context.session().getSettings().put("Port", "");
 			Context.session().getSettings().put("PlatformVersion", device.getVersion());
-
-			FunctionResult functionResult = new com.plugin.appium.keywords.AppiumSpecificKeyword.Connect2AppiumServer()
-					.Method_Launch_ChromeBrowser(device, url);
+			FunctionResult functionResult = new com.plugin.appium.keywords.AppiumSpecificKeyword.Connect2AppiumServer().Method_Launch_ChromeBrowser(device, url);
 			String boolString = functionResult.getOutput();
 
 			ReportHelper.addReportStep(DataType.getMethodName(), functionResult);
@@ -360,10 +346,8 @@ public class OpKeyAppiumKeywords {
 		}
 	}
 
-	public boolean Mobile_LaunchAndroidApplication(MobileDevice deviceToBeIgnored, String androidApplicationPathh)
-			throws Exception {
+	public boolean Mobile_LaunchAndroidApplication(MobileDevice deviceToBeIgnored, String androidApplicationPathh) throws Exception {
 		String methodName = DataType.getMethodName();
-
 
 		final MobileDevice device = SessionHandler.getSessionInfo().getMobileDevice();
 		ContextInitiator.addFunction(methodName);
@@ -376,18 +360,16 @@ public class OpKeyAppiumKeywords {
 		mobileApplication.setPackage(System.getenv("APP_PACKAGE"));
 		mobileApplication.setMainActivity(System.getenv("APP_ACTIVITY"));
 
-		Context.session().getSettings().put("AppiumServer",
-				"C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
+		Context.session().getSettings().put("AppiumServer", "C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
 		Context.session().getSettings().put("Host", "localhost");
 		Context.session().getSettings().put("Port", "4723");
 		Context.session().getSettings().put("PlatformVersion", device.getVersion());
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Connect2AppiumServer().Method_Launch_AndroidApplication(device,
-				mobileApplication));
-		
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Connect2AppiumServer().Method_Launch_AndroidApplication(device, mobileApplication));
+
 		return DataType.getBoolean(functionResult.getOutput());
-		
-		}
+
+	}
 
 	public boolean LaunchSafariOn_iOS(String arg0, String arg1) {
 
@@ -410,7 +392,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_typeTextOnEditBox
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_typeTextOnEditBox(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_typeTextOnEditBox(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -423,8 +405,8 @@ public class OpKeyAppiumKeywords {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		// Method_ObjectClick
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_ObjectClick(object));
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_ObjectClick(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -468,7 +450,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clearEditField
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_clearEditField(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_clearEditField(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -480,8 +462,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_SetPickerValue
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new AndroidPicker().Method_SetPickerValue(object, arg1));
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new AndroidPicker().Method_SetPickerValue(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -493,13 +475,13 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_appiumSelectCheckBox
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new AndroidCheckBox().Method_appiumSelectCheckBox(object));
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new AndroidCheckBox().Method_appiumSelectCheckBox(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean TapOnCoordinates(ORObject arg0, String arg1, String arg2) throws ToolNotSetException, IOException,
-			InterruptedException, AdbNotFoundException, ObjectNotFoundException, TimeOut_ObjectNotFoundException {
+	public boolean TapOnCoordinates(ORObject arg0, String arg1, String arg2)
+			throws ToolNotSetException, IOException, InterruptedException, AdbNotFoundException, ObjectNotFoundException, TimeOut_ObjectNotFoundException {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called TapOnCoordinates");
@@ -507,8 +489,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2); // Method_tapOnCoordinate
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new AppiumSpecificUnCategorised().Method_tapOnCoordinate(object, arg1,
-				arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new AppiumSpecificUnCategorised().Method_tapOnCoordinate(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -519,7 +500,7 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction(methodName);
 		// Method_LoadMe
-		FunctionResult functionResult = FunctionCaller.execute(()-> new UnCategorised().Method_LoadMe());
+		FunctionResult functionResult = FunctionCaller.execute(() -> new UnCategorised().Method_LoadMe());
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -531,7 +512,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("TypeKeysOnEditBox");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_typeKeysOnEditBox
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_typeKeysOnEditBox(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_typeKeysOnEditBox(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -543,8 +524,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("VerifyEditBoxText");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_verifyeditboxtext
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_verifyeditboxtext(object, arg1));
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_verifyeditboxtext(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -556,7 +537,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		// Method_WebBrowserOpen
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Browser().Method_WebBrowserOpen(arg0, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Browser().Method_WebBrowserOpen(arg0, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -568,7 +549,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_selectDropDownItem
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_selectDropDownItem(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_selectDropDownItem(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -580,8 +561,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_selectCheckBox
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Checkbox().Method_selectCheckBox(object, arg1));
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_selectCheckBox(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -593,7 +574,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_SelectRadio
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Radio().Method_SelectRadio(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Radio().Method_SelectRadio(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -604,7 +585,7 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction(methodName); // Method_dblClick
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_dblClick(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_dblClick(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -616,7 +597,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_refreshAndWait
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_refreshAndWait(arg0));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_refreshAndWait(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -628,7 +609,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2); // Method_typeTextAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_typeTextAndWait(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_typeTextAndWait(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -641,7 +622,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_typeKeysAndWait
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_typeKeysAndWait(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_typeKeysAndWait(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -653,8 +634,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyEditable
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyEditable(object));
-		return DataType.getBoolean(functionResult.getOutput());	
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyEditable(object));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean SelectMultipleDropDownItem(ORObject arg0, String arg1) throws Exception {
@@ -665,8 +646,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_selectMultipleDropDownItem
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new ListControl().Method_selectMultipleDropDownItem(object, arg1));
-		return DataType.getBoolean(functionResult.getOutput());	
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ListControl().Method_selectMultipleDropDownItem(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean DeSelectDropDownItem(ORObject arg0, String arg1) throws Exception {
@@ -677,9 +658,9 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_deselectDropDownItem
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_deselectDropDownItem(object, arg1));
-		return DataType.getBoolean(functionResult.getOutput());	
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_deselectDropDownItem(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean DeSelectMultipleDropDownItem(ORObject arg0, String arg1) throws Exception {
@@ -690,9 +671,9 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_deselectMultipleDropDownItem
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new ListControl().Method_deselectMultipleDropDownItem(object, arg1));
-		return DataType.getBoolean(functionResult.getOutput());	
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ListControl().Method_deselectMultipleDropDownItem(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean DeSelectDropDownItemAndWait(ORObject arg0, String arg1, int arg2) throws Exception {
@@ -704,8 +685,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_deselectDropDownItemAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_deselectDropDownItemAndWait(object, arg1, arg2));
-		return DataType.getBoolean(functionResult.getOutput());	
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_deselectDropDownItemAndWait(object, arg1, arg2));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean DeSelectAllDropDownItemsAndWait(ORObject arg0, int arg1) throws Exception {
@@ -717,8 +698,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_deselectAllDropDownItemsAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_deselectAllDropDownItemsAndWait(object, arg1));
-		return DataType.getBoolean(functionResult.getOutput());	
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_deselectAllDropDownItemsAndWait(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean VerifyDropDownItemExists(ORObject arg0, String arg1) throws Exception {
@@ -730,7 +711,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		// Method_verifyDropDownItemExists
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_verifyDropDownItemExists(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_verifyDropDownItemExists(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -743,8 +724,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("DeSelectCheckBox");
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_deSelectCheckBox
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Checkbox().Method_deSelectCheckBox(object));
-		return DataType.getBoolean(functionResult.getOutput());	
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_deSelectCheckBox(object));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean verifyCheckBoxStatus(ORObject arg0, String arg1) throws Exception {
@@ -756,8 +737,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyCheckBoxStatus
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Checkbox().Method_verifyCheckBoxStatus(object, arg1));
-		return DataType.getBoolean(functionResult.getOutput());	
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_verifyCheckBoxStatus(object, arg1));
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean SelectCheckBoxAndWait(ORObject arg0, String arg1, int arg2) throws Exception {
@@ -769,7 +750,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		// Method_selectCheckBoxAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_selectCheckBoxAndWait(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_selectCheckBoxAndWait(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -781,8 +762,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_deSelectCheckBoxAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_deSelectCheckBoxAndWait(object, arg1));
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_deSelectCheckBoxAndWait(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -794,8 +775,8 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_selectRadioButtonAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_selectRadioButtonAndWait(object, arg1));
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_selectRadioButtonAndWait(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -806,11 +787,10 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called ClickTableCell");
 
 		ContextInitiator.addFunction(methodName);
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickTableCell
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_clickTableCell(object, arg1, arg2, arg3, arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_clickTableCell(object, arg1, arg2, arg3, arg4));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -828,8 +808,7 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public int GetChildObjectCount(ORObject arg0, String arg1, String arg2, String arg3)
-			throws ToolNotSetException, ObjectNotFoundException, InterruptedException, TimeOut_ObjectNotFoundException {
+	public int GetChildObjectCount(ORObject arg0, String arg1, String arg2, String arg3) throws ToolNotSetException, ObjectNotFoundException, InterruptedException, TimeOut_ObjectNotFoundException {
 
 		System.out.println(">> Appium Keyword Called GetChildObjectCount");
 
@@ -837,8 +816,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3); // Method_getChildObjectCount
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_getChildObjectCount(object, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_getChildObjectCount(object, arg1, arg2, arg3));
 		return DataType.getInt(functionResult.getOutput());
 
 	}
@@ -887,7 +865,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("SetFocus");
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_SetFocus
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_SetFocus(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_SetFocus(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -900,7 +878,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("VerifyObjectEnabled");
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_ObjectisEnabled
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_ObjectisEnabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_ObjectisEnabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -913,7 +891,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("VerifyObjectVisible");
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyObjectVisible
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_verifyObjectVisible(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_verifyObjectVisible(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -927,7 +905,7 @@ public class OpKeyAppiumKeywords {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_ObjectTextVerification
 
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_ObjectTextVerification(object, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_ObjectTextVerification(object, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -940,7 +918,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_VerifyPropertyValue
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_VerifyPropertyValue(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_VerifyPropertyValue(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -952,7 +930,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_waitforObject
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_waitforObject(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_waitforObject(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -964,7 +942,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(methodName);
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_wait
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_wait(arg0));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_wait(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -977,7 +955,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_doubleClickAndWait
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_doubleClickAndWait(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_doubleClickAndWait(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -990,7 +968,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_doubleClickAt
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_doubleClickAt(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_doubleClickAt(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1003,7 +981,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_dragAndDrop
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_dragAndDrop(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_dragAndDrop(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1015,7 +993,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("DragAndDropAndWait");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2); // Method_dragAndDropAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_dragAndDropAndWait(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_dragAndDropAndWait(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1027,7 +1005,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("GoForwardAndWait");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_goForwardAndWait
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_goForwardAndWait(arg0));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_goForwardAndWait(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1039,7 +1017,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("VerifyAllDropDownItems");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_verifyAllDropDownItems
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_verifyAllDropDownItems(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_verifyAllDropDownItems(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1051,12 +1029,11 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("SelectDropDownItemAndWait");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2); // Method_selectDropDownItemAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_selectDropDownItemAndWait(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_selectDropDownItemAndWait(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean VerifyTextInTableCell(ORObject arg0, int arg1, int arg2, String arg3, String arg4, String arg5)
-			throws Exception {
+	public boolean VerifyTextInTableCell(ORObject arg0, int arg1, int arg2, String arg3, String arg4, String arg5) throws Exception {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called VerifyTextInTableCell");
@@ -1065,23 +1042,20 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextInTable
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_verifyTextInTable(object, arg1, arg2, arg3, arg4, arg5));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_verifyTextInTable(object, arg1, arg2, arg3, arg4, arg5));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean ClickTableCellAndWait(ORObject arg0, int arg1, int arg2, String arg3, int arg4, int arg5)
-			throws Exception {
+	public boolean ClickTableCellAndWait(ORObject arg0, int arg1, int arg2, String arg3, int arg4, int arg5) throws Exception {
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called ClickTableCellAndWait");
 
 		ContextInitiator.addFunction("ClickTableCellAndWait");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4, arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickTableCellAndWait
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_clickTableCellAndWait(object, arg1, arg2, arg3, arg4,
-				arg5));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_clickTableCellAndWait(object, arg1, arg2, arg3, arg4, arg5));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1094,7 +1068,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_waitForObjectProperty
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_waitForObjectProperty(object, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_waitForObjectProperty(object, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1106,7 +1080,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("HighlightObject");
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_highlightObject
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_highlightObject(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_highlightObject(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1119,7 +1093,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_runScriptAndWait
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_runScriptAndWait(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_runScriptAndWait(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1130,7 +1104,7 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction("CloseAllBrowsers");
 		// Method_CloseAllBrowsers
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Browser().Method_CloseAllBrowsers());
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Browser().Method_CloseAllBrowsers());
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1142,7 +1116,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("SelectWindow");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		// Method_selectWindow
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Window().Method_selectWindow(arg0, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Window().Method_selectWindow(arg0, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1154,7 +1128,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("CloseSelectedWindow");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		// Method_closeSelectedWindow
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Window().Method_closeSelectedWindow(arg0));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Window().Method_closeSelectedWindow(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1166,7 +1140,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("SetFocusOnWindow");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_setFocousOnWindow
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Window().Method_setFocousOnWindow(arg0));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Window().Method_setFocousOnWindow(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1200,7 +1174,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyEditBoxDefaultValue
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyEditBoxDefaultValue(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyEditBoxDefaultValue(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1212,7 +1186,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("VerifyEditBoxNotExist");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_verifyEditBoxnotExist
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_verifyEditBoxnotExist(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyEditBoxnotExist(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1224,7 +1198,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("VerifyEditBoxToolTip");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_verifyEditBoxToolTip
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new EditBox().Method_verifyEditBoxToolTip(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_verifyEditBoxToolTip(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1236,7 +1210,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("VerifyDropDownDefaultItem");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_verifyDropDownDefaultItem
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new DropDown().Method_verifyDropDownDefaultItem(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_verifyDropDownDefaultItem(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1248,7 +1222,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("ClickButton");
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickButton
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Button().Method_clickButton(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Button().Method_clickButton(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1260,7 +1234,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("ClickButtonAndWait");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_clickButtonAndWait
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_clickButtonAndWait(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_clickButtonAndWait(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -1272,244 +1246,231 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction("VerifyRadioButtonSelected");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_VerifyRadioButtonSelected
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Radio().Method_VerifyRadioButtonSelected(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Radio().Method_VerifyRadioButtonSelected(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean VerifyRadioButtonNotSelected(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called VerifyRadioButtonNotSelected");
 
 		ContextInitiator.addFunction("VerifyRadioButtonNotSelected");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_VerifyRadioButtonNotSelected
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_VerifyRadioButtonNotSelected(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_VerifyRadioButtonNotSelected(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean VerifyCheckBoxToolTip(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called VerifyCheckBoxToolTip");
 
 		ContextInitiator.addFunction("VerifyCheckBoxToolTip");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyCheckBoxToolTip
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Checkbox().Method_verifyCheckBoxToolTip(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_verifyCheckBoxToolTip(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean VerifyTextAreaText(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called VerifyTextAreaText");
 
 		ContextInitiator.addFunction("VerifyTextAreaText");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaText
-		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_verifyTextAreaText(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_verifyTextAreaText(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean VerifyTextAreaEnabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called VerifyTextAreaEnabled");
 
 		ContextInitiator.addFunction("VerifyTextAreaEnabled");
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaEnabled
-		FunctionResult functionResult = FunctionCaller.execute(()-> new TextArea().Method_verifyTextAreaEnabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_verifyTextAreaEnabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean TypeTextAndEnterTextArea(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called TypeTextAndEnterTextArea");
 
 		ContextInitiator.addFunction("TypeTextAndEnterTextArea");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_typeTextandEnterTextArea
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new TextArea().Method_typeTextandEnterTextArea(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_typeTextandEnterTextArea(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTextAreaDefaultValue(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaDefaultValue");
 
 		ContextInitiator.addFunction("VerifyTextAreaDefaultValue");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaDefaultValue
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyTextAreaDefaultValue(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyTextAreaDefaultValue(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTextAreaDisabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaDisabled");
 
 		ContextInitiator.addFunction("VerifyTextAreaDisabled");
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaDisabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyTextAreaDisabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyTextAreaDisabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTextAreaEditable(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaEditable");
 
 		ContextInitiator.addFunction("VerifyTextAreaEditable");
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaEditable
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new TextArea().Method_verifyTextAreaEditable(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_verifyTextAreaEditable(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTextAreaNotEditable(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaNotEditable");
 
 		ContextInitiator.addFunction("VerifyTextAreaNotEditable");
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaNotEditable
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyTextAreaNotEditable(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyTextAreaNotEditable(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTextAreaToolTip(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaToolTip");
 
 		ContextInitiator.addFunction("VerifyTextAreaToolTip");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaToolTip
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new TextArea().Method_verifyTextAreaToolTip(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_verifyTextAreaToolTip(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTableColumnNumber(ORObject arg0, int arg1, String arg2, int arg3) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTableColumnNumber");
 
 		ContextInitiator.addFunction("VerifyTableColumnNumber");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTableColumnNumber
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_verifyTableColumnNumber(object, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_verifyTableColumnNumber(object, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTableColumnText(ORObject arg0, int arg1, String arg2) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTableColumnText");
 
 		ContextInitiator.addFunction("VerifyTableColumnText");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTableColumnText
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_verifyTableColumnText(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_verifyTableColumnText(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTableRowText(ORObject arg0, int arg1, String arg2) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTableRowText");
 
 		ContextInitiator.addFunction("VerifyTableRowText");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTableRowText
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_verifyTableRowText(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_verifyTableRowText(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTableColumnHeader(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTableColumnHeader");
 
 		ContextInitiator.addFunction("VerifyTableColumnHeader");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTableColumnHeader
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_verifyTableColumnHeader(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_verifyTableColumnHeader(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyObjectToolTip(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyObjectToolTip");
 
 		ContextInitiator.addFunction("VerifyObjectToolTip");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyObjectToolTip
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_verifyObjectToolTip(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_verifyObjectToolTip(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean SelectMultipleDropDownItemAndWait(ORObject arg0, String arg1, int arg2) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called SelectMultipleDropDownItemAndWait");
 
 		ContextInitiator.addFunction("SelectMultipleDropDownItemAndWait");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_selectMultipleDropDownItemAndWait
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_selectMultipleDropDownItemAndWait(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_selectMultipleDropDownItemAndWait(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean DoubleClickButton(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called DoubleClickButton");
 
 		ContextInitiator.addFunction("DoubleClickButton");
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_doubleClickButton
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Button().Method_doubleClickButton(object));
@@ -1518,7 +1479,6 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean FocusButton(ORObject arg0) throws Exception {
-		
 
 		System.out.println(">> Appium Keyword Called FocusButton");
 
@@ -1544,7 +1504,6 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyButtonDisabled(ORObject arg0) throws Exception {
-		
 
 		System.out.println(">> Appium Keyword Called VerifyButtonDisabled");
 
@@ -1552,8 +1511,7 @@ public class OpKeyAppiumKeywords {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyButtonDisabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyButtonDisabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyButtonDisabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -1561,7 +1519,7 @@ public class OpKeyAppiumKeywords {
 	public boolean VerifyButtonExist(ORObject arg0) throws Exception {
 		ContextInitiator.addFunction("VerifyButtonExist");
 		// Method_verifyButtonExist
-		
+
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		System.out.println(">> Appium Keyword Called VerifyButtonExist");
 
@@ -1571,57 +1529,53 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean ClickLinkInTableCell(ORObject arg0, int arg1, int arg2, int arg3) throws Exception {
-		
 
 		System.out.println(">> Appium Keyword Called ClickLinkInTableCell");
 
 		ContextInitiator.addFunction("ClickLinkInTableCell");
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2,arg3);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickLinkInTableCell
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_clickLinkInTableCell(object, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_clickLinkInTableCell(object, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean TypeTextInTextArea(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called TypeTextInTextArea");
 
 		ContextInitiator.addFunction("TypeTextInTextArea");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_typeTextInTextArea
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new TextArea().Method_typeTextInTextArea(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_typeTextInTextArea(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean TypeKeysInTextArea(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called TypeKeysInTextArea");
 
 		ContextInitiator.addFunction("TypeKeysInTextArea");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_typeKeysInTextArea
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new TextArea().Method_typeKeysInTextArea(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_typeKeysInTextArea(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean ClearTextArea(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called ClearTextArea");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clearTextArea
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_clearTextArea(object));
@@ -1630,11 +1584,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean SetfocusTextArea(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called SetfocusTextArea");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_SetfocusTextArea
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_SetfocusTextArea(object));
@@ -1655,41 +1609,39 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean SelectRadioButtonOnIndexBasis(ORObject arg0, int arg1) {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called SelectRadioButtonOnIndexBasis");
 
 		ContextInitiator.addFunction("SelectRadioButtonOnIndexBasis");
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_selectRadioButtonOnIndexBasis
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_selectRadioButtonOnIndexBasis(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_selectRadioButtonOnIndexBasis(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTextAreaValue(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaValue");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaValue
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyTextAreaValue(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyTextAreaValue(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTextAreaExist(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaExist");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaExist
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_verifyTextAreaExist(object));
@@ -1698,21 +1650,19 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyTextAreaNotExist(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaNotExist");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreanotExist
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyTextAreanotExist(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyTextAreanotExist(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTableRowNumber(ORObject arg0, int arg1, String arg2, int arg3) {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTableRowNumber");
 
@@ -1725,31 +1675,29 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyTextAreaName(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaName");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaName
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyTextAreaName(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyTextAreaName(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyTextAreaLength(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextAreaLength");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextAreaLength
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyTextAreaLength(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyTextAreaLength(object, arg1));
 		String bool = functionResult.getOutput();
 		return DataType.getBoolean(bool);
 
@@ -1768,29 +1716,27 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyObjectDoesNotExists(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyObjectDoesNotExists");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyObjectdoesnotExists
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyObjectdoesnotExists(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyObjectdoesnotExists(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyObjectDisabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyObjectDisabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyobjectDisabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyobjectDisabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyobjectDisabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -1822,26 +1768,25 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyPopUpText(ORObject arg0, String arg1, String arg2, String arg3) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyPopUpText");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_VerifyPopUpText
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new PopUp().Method_VerifyPopUpText(object, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new PopUp().Method_VerifyPopUpText(object, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean ClickLink(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called ClickLink");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickLink
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_clickLink(object));
@@ -1850,11 +1795,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyLinkExist(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyLinkExist");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyLinkExist
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_verifyLinkExist(object));
@@ -1876,11 +1821,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyButtonEnabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyButtonEnabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyButtonEnabled
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Button().Method_verifyButtonEnabled(object));
@@ -1889,32 +1834,28 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyButtonToolTip(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyButtonToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyButtonToolTip
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Button().Method_verifyButtonToolTip(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Button().Method_verifyButtonToolTip(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean ClickButtonInTableCell(ORObject arg0, int arg1, int arg2, int arg3) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called ClickButtonInTableCell");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2,
-				arg3);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickButtonInTableCell
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_clickButtonInTableCell(object, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_clickButtonInTableCell(object, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -1933,11 +1874,10 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyImageEnabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyImageEnabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyImageEnabled
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_verifyImageEnabled(object));
@@ -1946,41 +1886,36 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyImageDisabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyImageDisabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyImageDisabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyImageDisabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyImageDisabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyImageToolTip(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyImageToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyImageToolTip
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Image().Method_verifyImageToolTip(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_verifyImageToolTip(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean WaitforImageLoad(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called WaitforImageLoad");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_waitforImageLoad
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_waitforImageLoad(object, arg1));
@@ -2026,26 +1961,24 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyDropDownToolTip(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyDropDownToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyDropDownToolTip
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new DropDown().Method_verifyDropDownToolTip(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_verifyDropDownToolTip(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyLinkEnabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyLinkEnabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
 		// Method_verifyLinkEnabled
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_verifyLinkEnabled(object));
@@ -2054,11 +1987,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyLinkDisabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyLinkDisabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
 		// Method_verifyLinkDisabled
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyLinkDisabled(object));
@@ -2067,11 +2000,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyLinkVisible(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyLinkVisible");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
 		// Method_verifyLinkVisible
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_verifyLinkVisible(object));
@@ -2080,12 +2013,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean WaitforLink(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called WaitforLink");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_waitforLink
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_waitforLink(object, arg1));
@@ -2094,11 +2026,10 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyImageVisible(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyImageVisible");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyImageVisible
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_verifyImageVisible(object));
@@ -2107,25 +2038,22 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyImageNotVisible(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyImageNotVisible");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyImageNotVisible
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyImageNotVisible(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyImageNotVisible(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyImageExist(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyImageExist");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyImageExist
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_verifyImageExist(object));
@@ -2134,11 +2062,10 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean DoubleClickImage(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called DoubleClickImage");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_doubleClickImage
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_doubleClickImage(object));
@@ -2147,11 +2074,10 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean ClickImage(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called ClickImage");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickImage
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_clickImage(object));
@@ -2160,16 +2086,14 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyLinkToolTip(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyLinkToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyLinkToolTip
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Links().Method_verifyLinkToolTip(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_verifyLinkToolTip(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -2199,41 +2123,37 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean WaitForEditBoxDisabled(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called WaitForEditBoxDisabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_waitForEditBoxDisabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_waitForEditBoxDisabled(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_waitForEditBoxDisabled(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean WaitForEditBoxEnabled(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called WaitForEditBoxEnabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_waitForEditBoxEnabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new EditBox().Method_waitForEditBoxEnabled(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_waitForEditBoxEnabled(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyRadioButtonExist(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyRadioButtonExist");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
+
 		// Method_verifyRadioButtonExist
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Radio().Method_verifyRadioButtonExist(object));
@@ -2242,29 +2162,25 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyRadioButtonDisabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyRadioButtonDisabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyRadioButtonDisabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyRadioButtonDisabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyRadioButtonDisabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyRadioButtonEnabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called VerifyRadioButtonEnabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyRadioButtonEnabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Radio().Method_verifyRadioButtonEnabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Radio().Method_verifyRadioButtonEnabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -2282,11 +2198,10 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean FocusRadioButton(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
-
 		System.out.println(">> Appium Keyword Called FocusRadioButton");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_focusRadioButton
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_focusRadioButton(object));
@@ -2295,11 +2210,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyCheckBoxExist(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyCheckBoxExist");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyCheckBoxExist
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_verifyCheckBoxExist(object));
@@ -2308,29 +2223,27 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyCheckBoxDisabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyCheckBoxDisabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyCheckBoxDisabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyCheckBoxDisabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyCheckBoxDisabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyCheckBoxEnabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyCheckBoxEnabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyCheckBoxEnabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Checkbox().Method_verifyCheckBoxEnabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_verifyCheckBoxEnabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -2348,11 +2261,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean FocusCheckBox(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called FocusCheckBox");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_focusCheckBox
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_focusCheckBox(object));
@@ -2361,26 +2274,25 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyDropDownSelection(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyDropDownSelection");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyDropDownSelection
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new DropDown().Method_verifyDropDownSelection(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_verifyDropDownSelection(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyDropDownExist(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyDropDownExist");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyDropDownExist
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_verifyDropDownExist(object));
@@ -2389,73 +2301,68 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyDropDownDisabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyDropDownDisabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_VerifyDropDownDisabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_VerifyDropDownDisabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_VerifyDropDownDisabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyDropDownEnabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyDropDownEnabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_VerifyDropDownEnabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new DropDown().Method_VerifyDropDownEnabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_VerifyDropDownEnabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyAllDropDownItemExist(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyAllDropDownItemExist");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyAllDropDownItemExist
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new DropDown().Method_verifyAllDropDownItemExist(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_verifyAllDropDownItemExist(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyMultipleDropDownItemExist(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyMultipleDropDownItemExist");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_verifyMultipleDropDownItemExist
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new DropDown().Method_verifyMultipleDropDownItemExist(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_verifyMultipleDropDownItemExist(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyDropDownItemCount(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyDropDownItemCount");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyDropDownItemCount
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new DropDown().Method_verifyDropDownItemCount(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_verifyDropDownItemCount(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -2472,7 +2379,6 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean SetFocusonDropDown(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called SetFocusonDropDown");
 
@@ -2485,110 +2391,103 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyEditBoxExistAndWait(ORObject arg0) {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyEditBoxExistAndWait");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyEditBoxExist
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyEditBoxExist(object, 80));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyEditBoxExist(object, 80));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean VerifyEditBoxValue(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyEditBoxValue");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_verifyEditBoxValue
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyEditBoxValue(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyEditBoxValue(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyEditBoxLength(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyEditBoxLength");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyEditBoxLength
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyEditBoxLength(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyEditBoxLength(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyEditBoxName(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyEditBoxName");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyEditBoxName
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyEditBoxName(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyEditBoxName(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyEditBoxNonEditable(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyEditBoxNonEditable");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyEditBoxNonEditable
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyEditBoxNonEditable(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyEditBoxNonEditable(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyEditBoxEditable(ORObject arg0) {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyEditBoxEditable");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyEditBoxEditable
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new EditBox().Method_verifyEditBoxEditable(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_verifyEditBoxEditable(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyEditBoxDisabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyEditBoxDisabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyEditBoxDisabled
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyEditBoxDisabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyEditBoxDisabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean VerifyEditBoxEnabled(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyEditBoxEnabled");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyEditBoxEnabled
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_verifyEditBoxEnabled(object));
@@ -2609,11 +2508,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean SetfocusEditField(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called SetfocusEditField");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_SetfocusEditField
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_SetfocusEditField(object));
@@ -2622,16 +2521,15 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean VerifyTextareaColsRowLength(ORObject arg0, int arg1, int arg2) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyTextareaColsRowLength");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_verifyTextareaColsRowLength
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_verifyTextareaColsRowLength(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_verifyTextareaColsRowLength(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -2644,52 +2542,48 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1);
 		// Method_VerifyBrowserTitle
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_VerifyBrowserTitle(arg0, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_VerifyBrowserTitle(arg0, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean TypeSecureText(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called TypeSecureText");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1); // Method_typeSecureText
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_typeSecureText(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_typeSecureText(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean NextPageObject(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called NextPageObject");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_nextPageObject
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_nextPageObject(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_nextPageObject(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean SelectGroupRadioButton(ORObject arg0, int arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called SelectGroupRadioButton");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_selectGroupRadioButton
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_selectGroupRadioButton(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_selectGroupRadioButton(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -2707,11 +2601,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public boolean MouseHover(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called MouseHover");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_MouseHover
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new UnCategorised().Method_MouseHover(object));
@@ -2747,19 +2641,18 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		// Method_AssertTextPresent
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new UnCategorised().Method_AssertTextPresent(arg0));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new UnCategorised().Method_AssertTextPresent(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
 	public boolean ClickAt(ORObject arg0, String arg1) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called ClickAt");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_clickAt
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_clickAt(object, arg1));
@@ -2851,7 +2744,7 @@ public class OpKeyAppiumKeywords {
 
 		// Method_VerifyObjectValue
 		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_VerifyObjectValue(object, arg1));
-		return DataType.getBoolean(functionResult.getOutput());	
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean GetObjectVisibility(ORObject arg0) throws Exception {
@@ -2862,7 +2755,7 @@ public class OpKeyAppiumKeywords {
 
 		// Method_getObjectVisibility
 		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectVisibility(object));
-		return DataType.getBoolean(functionResult.getOutput());	
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean GetObjectExistence(ORObject arg0) throws Exception {
@@ -2871,7 +2764,7 @@ public class OpKeyAppiumKeywords {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getObjectExistence
 		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectExistence(object));
-		return DataType.getBoolean(functionResult.getOutput());	
+		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean GetObjectEnabled(ORObject arg0) throws Exception {
@@ -2880,7 +2773,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called GetObjectEnabled");
 
 		// Method_getObjectEnabled
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_getObjectEnabled(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectEnabled(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -2892,7 +2785,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called ExcelCompare");
 
 		// Method_excelCompare
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_excelCompare(arg0, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_excelCompare(arg0, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -2904,35 +2797,31 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called SetPage");
 
 		// Method_setPage
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Deprecate().Method_setPage(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_setPage(object));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean VerifyCheckboxStatusInTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4)
-			throws Exception {
+	public boolean VerifyCheckboxStatusInTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called VerifyCheckboxStatusInTableCell");
 
 		// Method_verifyCheckboxStatusInTableCell
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_verifyCheckboxStatusInTableCell(object, arg1, arg2, arg3,
-				arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_verifyCheckboxStatusInTableCell(object, arg1, arg2, arg3, arg4));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean SelectRadioButtonInTableCell(ORObject arg0, int arg1, int arg2, int arg3) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2,
-				arg3);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called SelectRadioButtonInTableCell");
 
 		// Method_selectRadioButtobTableCell
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_selectRadioButtobTableCell(object, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_selectRadioButtobTableCell(object, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -2958,18 +2847,15 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean SelectCheckBoxinTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4)
-			throws Exception {
+	public boolean SelectCheckBoxinTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called SelectCheckBoxinTableCell");
 
 		// Method_selectCheckBoxinTableCell
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Table().Method_selectCheckBoxinTableCell(object, arg1, arg2, arg3,
-				arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_selectCheckBoxinTableCell(object, arg1, arg2, arg3, arg4));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -2982,7 +2868,7 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called WaitForObjectVisible");
 
 		// Method_waitforobjectvisible
-		FunctionResult functionResult = FunctionCaller.execute(()-> new WebObjects().Method_waitforobjectvisible(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_waitforobjectvisible(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -2995,25 +2881,21 @@ public class OpKeyAppiumKeywords {
 
 		// Method_waitForObjectEditable
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_waitForObjectEditable(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_waitForObjectEditable(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
-	public boolean TypeTextInTableCell(ORObject arg0, int arg1, int arg2, String arg3, int arg4, String arg5)
-			throws Exception {
+	public boolean TypeTextInTableCell(ORObject arg0, int arg1, int arg2, String arg3, int arg4, String arg5) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4, arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called TypeTextInTableCell");
 
 		// Method_typeTextInTableCell
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_typeTextInTableCell(object, arg1, arg2, arg3, arg4, arg5));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_typeTextInTableCell(object, arg1, arg2, arg3, arg4, arg5));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3027,24 +2909,20 @@ public class OpKeyAppiumKeywords {
 
 		// Method_waitforobjectenable
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_waitforobjectenable(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_waitforobjectenable(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
-	public boolean Swipe(double arg0, double arg1, double arg2, double arg3, double arg4)
-			throws ToolNotSetException, KeywordMethodOrArgumentValidationFailException, InterruptedException {
+	public boolean Swipe(double arg0, double arg1, double arg2, double arg3, double arg4) throws ToolNotSetException, KeywordMethodOrArgumentValidationFailException, InterruptedException {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg2, arg3,
-				arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg2, arg3, arg4);
 
 		System.out.println(">> Appium Keyword Called Swipe");
 
 		// Method_swipe
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Gestures().Method_swipe(arg0, arg1, arg2, arg3, arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Gestures().Method_swipe(arg0, arg1, arg2, arg3, arg4));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3062,8 +2940,7 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean SwipeLeft()
-			throws ToolNotSetException, InterruptedException, KeywordMethodOrArgumentValidationFailException {
+	public boolean SwipeLeft() throws ToolNotSetException, InterruptedException, KeywordMethodOrArgumentValidationFailException {
 		ContextInitiator.addFunction(DataType.getMethodName());
 
 		System.out.println(">> Appium Keyword Called SwipeLeft");
@@ -3075,8 +2952,7 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean SwipeRight()
-			throws ToolNotSetException, InterruptedException, KeywordMethodOrArgumentValidationFailException {
+	public boolean SwipeRight() throws ToolNotSetException, InterruptedException, KeywordMethodOrArgumentValidationFailException {
 		ContextInitiator.addFunction(DataType.getMethodName());
 
 		System.out.println(">> Appium Keyword Called SwipeRight");
@@ -3097,8 +2973,7 @@ public class OpKeyAppiumKeywords {
 
 		// Method_swipeWithObject
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_swipeWithObject(object, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ActionByText().Method_swipeWithObject(object, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3115,62 +2990,61 @@ public class OpKeyAppiumKeywords {
 		return DataType.getBoolean(boolString);
 
 	}
-	
+
 	public boolean SwipeTowards(String arg0) {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
-		
-		//Method_SwipeTowards
-		
+
+		// Method_SwipeTowards
+
 		System.out.println(">> Appium Keyword Called Mobile_SwipeTowards");
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_SwipeTowards(arg0));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Gestures().Method_SwipeTowards(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
-	
+
 	public boolean SwipeOnObject(ORObject arg0, String arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		//Method_SwipeOnObject
-		
+
+		// Method_SwipeOnObject
+
 		System.out.println(">> Appium Keyword Called Mobile_SwipeOnObject");
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_SwipeOnObject(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Gestures().Method_SwipeOnObject(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
-	
+
 	public boolean SwipeToObject(ORObject arg0, String arg1) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		//Mobile_SwipeToObject
-		
+
+		// Mobile_SwipeToObject
+
 		System.out.println(">> Appium Keyword Called Mobile_SwipeToObject");
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_SwipeToObject(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Gestures().Method_SwipeToObject(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
-	
+
 	public boolean SwipeToText(ORObject arg0, String arg1, int arg2, boolean arg3, String arg4) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
-		//Method_SwipeToText
-		
+
+		// Method_SwipeToText
+
 		System.out.println(">> Appium Keyword Called Method_SwipeToText");
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Gestures().Method_SwipeToText(object, arg1, arg2, arg3, arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Gestures().Method_SwipeToText(object, arg1, arg2, arg3, arg4));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
-	
+
 	public boolean Mobile_SetSeekbar(ORObject arg0, int arg1) {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller.execute(()-> new Seekbar().Method_SetSeekbar(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Seekbar().Method_SetSeekbar(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
-	
 
 	// Argument mismatch
 	public boolean VerifyEditBoxExist() {
@@ -3186,11 +3060,10 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean ClickInTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4, int arg5,
-			String arg6, String arg7, String arg8, String arg9, String arg10, String arg11, String arg12) {
+	public boolean ClickInTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4, int arg5, String arg6, String arg7, String arg8, String arg9, String arg10, String arg11,
+			String arg12) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8,
-				arg9, arg10, arg11, arg12);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called ClickInTableCellByQuery");
@@ -3202,9 +3075,8 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean TypeTextInTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4,
-			String arg5, int arg6, String arg7, String arg8, String arg9, String arg10, String arg11, String arg12,
-			String arg13) {
+	public boolean TypeTextInTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4, String arg5, int arg6, String arg7, String arg8, String arg9, String arg10,
+			String arg11, String arg12, String arg13) {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -3218,16 +3090,14 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean Web_ClickByText(String arg0, int arg1, boolean arg2, ORObject arg3, String arg4, String arg5)
-			throws Exception {
+	public boolean Web_ClickByText(String arg0, int arg1, boolean arg2, ORObject arg3, String arg4, String arg5) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg4, arg5);
 
 		FunctionResult functionResult;
-		
+
 		AppiumObject object = new ObjectConverter().formatObject(arg3);
-		functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, object, arg4, arg5));
+		functionResult = FunctionCaller.execute(() -> new ActionByText().Method_clickByText(arg0, arg1, arg2, object, arg4, arg5));
 
 		System.out.println(">> Appium Keyword Called Web_ClickByText");
 
@@ -3236,9 +3106,8 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean Web_ClickByTextInSequence(String arg0, int arg1, int arg2, boolean arg3, String arg4, int arg5,
-			boolean arg6, ORObject arg7, ORObject arg8, ORObject arg9, ORObject arg10, ORObject arg11, boolean arg12,
-			String arg13, int arg14, boolean arg15, String arg16, int arg17, boolean arg18, String arg19) {
+	public boolean Web_ClickByTextInSequence(String arg0, int arg1, int arg2, boolean arg3, String arg4, int arg5, boolean arg6, ORObject arg7, ORObject arg8, ORObject arg9, ORObject arg10,
+			ORObject arg11, boolean arg12, String arg13, int arg14, boolean arg15, String arg16, int arg17, boolean arg18, String arg19) {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 
@@ -3269,10 +3138,8 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called Web_ClickByTextInSequence");
 
 		// Method_clickByTextInSequence
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_clickByTextInSequence(text1, index1, isContains1, text2,
-						index2, isContains2, text3, index3, isContains3, text4, index4, isContains4, text5, index5,
-						isContains5, object1, object2, object3, object4, object5));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ActionByText().Method_clickByTextInSequence(text1, index1, isContains1, text2, index2, isContains2, text3, index3, isContains3,
+				text4, index4, isContains4, text5, index5, isContains5, object1, object2, object3, object4, object5));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3286,23 +3153,19 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called Web_SelectByText");
 
 		// Method_SelectByText
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_SelectByText(arg0, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ActionByText().Method_SelectByText(arg0, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean Web_TypeByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4, ORObject arg5)
-			throws Exception {
+	public boolean Web_TypeByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4, ORObject arg5) throws Exception {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3,
-				arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg5);
 
 		System.out.println(">> Appium Keyword Called Web_TypeByText");
 
 		// Method_typeTextUsingText
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_typeTextUsingText(arg0, arg1, arg2, arg3, arg4, object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ActionByText().Method_typeTextUsingText(arg0, arg1, arg2, arg3, arg4, object));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3329,72 +3192,61 @@ public class OpKeyAppiumKeywords {
 
 		// Method_clickImageByAltText
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Image().Method_clickImageByAltText(arg0, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_clickImageByAltText(arg0, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
-	public boolean Web_SelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, String arg4,
-			ORObject arg5) {
+	public boolean Web_SelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, String arg4, ORObject arg5) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
-				arg3, arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg5);
 
 		System.out.println(">> Appium Keyword Called Web_SelectCheckboxByText");
 
 		// Method_selectCheckBoxByText
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_selectCheckBoxByText(arg0, arg1, arg2, arg3, arg4, object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ActionByText().Method_selectCheckBoxByText(arg0, arg1, arg2, arg3, arg4, object));
 
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean Web_DeSelectCheckboxByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
-				arg3);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg4);
 
 		System.out.println(">> Appium Keyword Called Web_DeSelectCheckboxByText");
 
 		// Method_deSelectCheckBoxByText
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_deSelectCheckBoxByText(arg0, arg1, arg2, arg3, object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ActionByText().Method_deSelectCheckBoxByText(arg0, arg1, arg2, arg3, object));
 
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
 	public boolean Web_SelectRadioButtonByText(String arg0, int arg1, boolean arg2, boolean arg3, ORObject arg4) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
-				arg3);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg4);
 
 		System.out.println(">> Appium Keyword Called Web_SelectRadioButtonByText");
 
 		// Method_selectRadioButtonByText
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_selectRadioButtonByText(arg0, arg1, arg2, arg3, object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ActionByText().Method_selectRadioButtonByText(arg0, arg1, arg2, arg3, object));
 
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean Web_SelectDropDownByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4,
-			boolean arg5, ORObject arg6) {
+	public boolean Web_SelectDropDownByText(String arg0, int arg1, boolean arg2, String arg3, boolean arg4, boolean arg5, ORObject arg6) {
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
-				arg4, arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg6);
 
 		System.out.println(">> Appium Keyword Called Web_SelectDropDownByText");
 
 		// Method_selectDropDownByText
 
-		FunctionResult functionResult = FunctionCaller.execute(
-				() -> new ActionByText().Method_selectDropDownByText(arg0, arg1, arg2, arg3, arg4, arg5, object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ActionByText().Method_selectDropDownByText(arg0, arg1, arg2, arg3, arg4, arg5, object));
 
 		return DataType.getBoolean(functionResult.getOutput());
 
@@ -3421,8 +3273,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new AndroidListControl().Method_selectListItem(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new AndroidListControl().Method_selectListItem(object, arg1));
 
 		return DataType.getBoolean(functionResult.getOutput());
 	}
@@ -3437,63 +3288,53 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new AndroidListControl().Method_verifyListItemExists(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new AndroidListControl().Method_verifyListItemExists(object, arg1));
 
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
-	public boolean SelectDropDownInTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4)
-			throws Exception {
+	public boolean SelectDropDownInTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4) throws Exception {
 
 		System.out.println(">> Appium Keyword Called SelectDropDownInTableCell");
 
 		// Method_selectDropDownInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_selectDropDownInTableCell(object, arg1, arg2, arg3, arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_selectDropDownInTableCell(object, arg1, arg2, arg3, arg4));
 
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean DeSelectMultipleDropdownItemInTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4)
-			throws Exception {
+	public boolean DeSelectMultipleDropdownItemInTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4) throws Exception {
 
 		System.out.println(">> Appium Keyword Called DeSelectMultipleDropdownItemInTableCell");
 
 		// Method_deSelectMultipleDropDownItemInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller.execute(
-				() -> new Table().Method_deSelectMultipleDropDownItemInTableCell(object, arg1, arg2, arg3, arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_deSelectMultipleDropDownItemInTableCell(object, arg1, arg2, arg3, arg4));
 
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
-	public boolean SelectMultipleDropdownItemInTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4)
-			throws Exception {
+	public boolean SelectMultipleDropdownItemInTableCell(ORObject arg0, int arg1, int arg2, int arg3, String arg4) throws Exception {
 
 		System.out.println(">> Appium Keyword Called SelectMultipleDropdownItemInTableCell");
 
 		// Method_selectMultipleDropdownItemInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller.execute(
-				() -> new Table().Method_selectMultipleDropdownItemInTableCell(object, arg1, arg2, arg3, arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_selectMultipleDropdownItemInTableCell(object, arg1, arg2, arg3, arg4));
 
 		return DataType.getBoolean(functionResult.getOutput());
 	}
@@ -3505,12 +3346,10 @@ public class OpKeyAppiumKeywords {
 		// Method_clickOnObjectInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_clickOnObjectInTableCell(object, arg1, arg2, arg3, arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_clickOnObjectInTableCell(object, arg1, arg2, arg3, arg4));
 
 		return DataType.getBoolean(functionResult.getOutput());
 	}
@@ -3523,8 +3362,7 @@ public class OpKeyAppiumKeywords {
 		// Method_typeOnObjecttInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4, arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		String bool = "false";
 		return DataType.getBoolean(bool);
@@ -3541,8 +3379,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_waitForObjectdisable(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_waitForObjectdisable(object, arg1));
 
 		return DataType.getBoolean(functionResult.getOutput());
 	}
@@ -3574,8 +3411,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new ActionByText().Method_verifyChildObjectCount(object, arg1, arg2, arg3, arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new ActionByText().Method_verifyChildObjectCount(object, arg1, arg2, arg3, arg4));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3589,8 +3425,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_verifyFullTableText(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_verifyFullTableText(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 	}
 
@@ -3603,8 +3438,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_verifyTableColumnCount(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_verifyTableColumnCount(object, arg1, arg2));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3618,8 +3452,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_verifyTableRowCount(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_verifyTableRowCount(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3632,8 +3465,7 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new SetCapabilities().Method_SetBrowserCapability(arg0, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new SetCapabilities().Method_SetBrowserCapability(arg0, arg1, arg2, arg3));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3650,8 +3482,8 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean VerifyMultipleObjectProperty(ORObject arg0, String arg1, String arg2, String arg3, String arg4,
-			String arg5, String arg6, String arg7, String arg8, String arg9, String arg10) throws Exception {
+	public boolean VerifyMultipleObjectProperty(ORObject arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10)
+			throws Exception {
 
 		System.out.println(">> Appium Keyword Called VerifyMultipleObjectProperty");
 
@@ -3660,9 +3492,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_VerifyMultipleObjectProperty(object, arg1, arg2, arg3, arg4,
-						arg5, arg6, arg7, arg8, arg9, arg10));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_VerifyMultipleObjectProperty(object, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3729,8 +3559,7 @@ public class OpKeyAppiumKeywords {
 		// Method_waitForWindowLoad
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg3,
-				arg3);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg3, arg3);
 		String bool = "false";
 		return DataType.getBoolean(bool);
 
@@ -3757,8 +3586,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new UnCategorised().Method_ignoreXMLHttpRequest(arg0));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new UnCategorised().Method_ignoreXMLHttpRequest(arg0));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3771,8 +3599,7 @@ public class OpKeyAppiumKeywords {
 		// Method_syncBrowser
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2,
-				arg3);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3);
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Browser().Method_syncBrowser());
 		return DataType.getBoolean(functionResult.getOutput());
@@ -3789,15 +3616,13 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new EditBox().Method_TypeTextInContentEditable(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_TypeTextInContentEditable(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
 
-	public boolean TypeTextInTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4,
-			String arg5, String arg6, int arg7, int arg8, String arg9, String arg10, String arg11, String arg12,
-			String arg13, String arg14) {
+	public boolean TypeTextInTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, int arg7, int arg8, String arg9, String arg10, String arg11,
+			String arg12, String arg13, String arg14) {
 
 		System.out.println(">> Appium Keyword Called TypeTextInTableCellByQuery");
 
@@ -3811,9 +3636,8 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public boolean ClickOnObjectInTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4,
-			String arg5, String arg6, int arg7, String arg8, int arg9, String arg10, String arg11, String arg12,
-			String arg13, String arg14) {
+	public boolean ClickOnObjectInTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, int arg7, String arg8, int arg9, String arg10,
+			String arg11, String arg12, String arg13, String arg14) {
 
 		System.out.println(">> Appium Keyword Called ClickOnObjectInTableCellByQuery");
 
@@ -3837,8 +3661,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new EditBox().Method_typeTextandEnterEditBox(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_typeTextandEnterEditBox(object, arg1));
 		return DataType.getBoolean(functionResult.getOutput());
 
 	}
@@ -3928,8 +3751,7 @@ public class OpKeyAppiumKeywords {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getSelectedDropDownItem
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new DropDown().Method_getSelectedDropDownItem(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_getSelectedDropDownItem(object));
 		return functionResult.getOutput();
 
 	}
@@ -3943,8 +3765,7 @@ public class OpKeyAppiumKeywords {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_GetCellText
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_GetCellText(object, arg1, arg2, arg3, arg4));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_GetCellText(object, arg1, arg2, arg3, arg4));
 		return functionResult.getOutput();
 
 	}
@@ -4000,8 +3821,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getSelectedRadioButtonFromGroup
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_getSelectedRadioButtonFromGroup(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_getSelectedRadioButtonFromGroup(object, arg1));
 		return functionResult.getOutput();
 	}
 
@@ -4023,8 +3843,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2);
 		// Method_returnConcatenated
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_returnConcatenated(arg0, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_returnConcatenated(arg0, arg1, arg2));
 		return functionResult.getOutput();
 
 	}
@@ -4037,8 +3856,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getPropertyValue
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_getPropertyValue(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getPropertyValue(object, arg1));
 		return functionResult.getOutput();
 	}
 
@@ -4054,12 +3872,12 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public String GetTextfromTextArea(ORObject arg0) throws Exception {
-		
+
 		String methodName = DataType.getMethodName();
 		System.out.println(">> Appium Keyword Called GetTextfromTextArea");
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		
+
 		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_GetTextfromTextArea(object));
 		return functionResult.getOutput();
 		// Method_GetTextfromTextArea
@@ -4079,26 +3897,25 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public String GetPopupText(ORObject arg0, String arg1, String arg2) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetPopupText");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_Getpopuptext
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new PopUp().Method_Getpopuptext(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new PopUp().Method_Getpopuptext(object, arg1, arg2));
 		return functionResult.getOutput();
 
 	}
 
 	public String GetDropDownToolTip(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetDropDownToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getDropDownToolTip
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_getDropDownToolTip(object));
@@ -4107,11 +3924,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public String GetEditBoxToolTip(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetEditBoxToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getEditBoxToolTip
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_getEditBoxToolTip(object));
@@ -4120,11 +3937,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public String GetTextAreaToolTip(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetTextAreaToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getTextAreaToolTip
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_getTextAreaToolTip(object));
@@ -4133,11 +3950,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public String GetButtonToolTip(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetButtonToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getButtonToolTip
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Button().Method_getButtonToolTip(object));
@@ -4146,11 +3963,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public String GetCheckBoxToolTip(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetCheckBoxToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getCheckBoxToolTip
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Checkbox().Method_getCheckBoxToolTip(object));
@@ -4159,11 +3976,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public String GetLinkToolTip(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetLinkToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getLinkToolTip
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Links().Method_getLinkToolTip(object));
@@ -4172,11 +3989,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public String GetObjectToolTip(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetObjectToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getObjectToolTip
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectToolTip(object));
@@ -4185,11 +4002,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public String GetImageToolTip(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetImageToolTip");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getImageToolTip
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Image().Method_getImageToolTip(object));
@@ -4205,8 +4022,7 @@ public class OpKeyAppiumKeywords {
 
 		// Method_GetTextAreaColRowLength
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new TextArea().Method_GetTextAreaColRowLength(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new TextArea().Method_GetTextAreaColRowLength(object));
 		return functionResult.getOutput();
 
 	}
@@ -4245,8 +4061,7 @@ public class OpKeyAppiumKeywords {
 
 		// Method_getObjectCSSProperty
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_getObjectCSSProperty(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectCSSProperty(object, arg1));
 		return functionResult.getOutput();
 
 	}
@@ -4273,8 +4088,7 @@ public class OpKeyAppiumKeywords {
 
 		// Method_getObjectProperty
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_getObjectProperty(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectProperty(object, arg1));
 		return functionResult.getOutput();
 
 	}
@@ -4300,8 +4114,7 @@ public class OpKeyAppiumKeywords {
 
 		// Method_getObjectHeightWidth
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_getObjectHeightWidth(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectHeightWidth(object));
 		return functionResult.getOutput();
 
 	}
@@ -4315,14 +4128,13 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called GetObjectText");
 
 		// Method_GetObjectText
-		
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new WebObjects().Method_GetObjectText(object, arg1, arg2));
+
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_GetObjectText(object, arg1, arg2));
 		return functionResult.getOutput();
 	}
 
-	public String GetTextFromTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4,
-			int arg5, String arg6, String arg7, String arg8, String arg9, String arg10, String arg11, String arg12) {
+	public String GetTextFromTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4, int arg5, String arg6, String arg7, String arg8, String arg9, String arg10,
+			String arg11, String arg12) {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
@@ -4344,8 +4156,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_getAllColText(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getAllColText(object, arg1, arg2));
 		return functionResult.getOutput();
 
 	}
@@ -4359,8 +4170,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_getSingleColText(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getSingleColText(object, arg1, arg2));
 		return functionResult.getOutput();
 
 	}
@@ -4374,8 +4184,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_getAllRowText(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getAllRowText(object, arg1, arg2));
 		return functionResult.getOutput();
 
 	}
@@ -4389,8 +4198,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_getSingleRowText(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getSingleRowText(object, arg1, arg2));
 		return functionResult.getOutput();
 
 	}
@@ -4402,28 +4210,23 @@ public class OpKeyAppiumKeywords {
 		// Method_getSelectedDropDownInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2,
-				arg3);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_getSelectedDropDownInTableCell(object, arg1, arg2, arg3));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getSelectedDropDownInTableCell(object, arg1, arg2, arg3));
 		return functionResult.getOutput();
 
 	}
 
-	public String FetchObjectPropertyInTableCell(ORObject arg0, int arg1, int arg2, String arg3, int arg4, String arg5)
-			throws Exception {
+	public String FetchObjectPropertyInTableCell(ORObject arg0, int arg1, int arg2, String arg3, int arg4, String arg5) throws Exception {
 
 		System.out.println(">> Appium Keyword Called FetchObjectPropertyInTableCell");
 
 		// Method_fetchObjectPropertyInTableCell
 
 		ContextInitiator.addFunction(DataType.getMethodName());
-		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3,
-				arg4, arg5);
+		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2, arg3, arg4, arg5);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_fetchObjectPropertyInTableCell(object, arg1, arg2, arg3, arg4, arg5));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_fetchObjectPropertyInTableCell(object, arg1, arg2, arg3, arg4, arg5));
 		return functionResult.getOutput();
 
 	}
@@ -4448,8 +4251,7 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new EditBox().Method_getEditboxDefaultvalue(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new EditBox().Method_getEditboxDefaultvalue(object));
 		return functionResult.getOutput();
 
 	}
@@ -4501,8 +4303,7 @@ public class OpKeyAppiumKeywords {
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new DropDown().Method_getDropDownDefaultValue(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_getDropDownDefaultValue(object));
 		return functionResult.getOutput();
 
 	}
@@ -4516,8 +4317,7 @@ public class OpKeyAppiumKeywords {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1);
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_getTableColumnHeader(object, arg1));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_getTableColumnHeader(object, arg1));
 		return functionResult.getOutput();
 
 	}
@@ -4548,9 +4348,8 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public String GetTextFromTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4,
-			String arg5, int arg6, int arg7, String arg8, String arg9, String arg10, String arg11, String arg12,
-			String arg13) {
+	public String GetTextFromTableCellByQuery(ORObject arg0, String arg1, String arg2, String arg3, String arg4, String arg5, int arg6, int arg7, String arg8, String arg9, String arg10, String arg11,
+			String arg12, String arg13) {
 
 		System.out.println(">> Appium Keyword Called GetTextFromTableCellByQuery");
 
@@ -4564,15 +4363,14 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public int GetRadioButtonCount(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetRadioButtonCount");
 
 		ContextInitiator.addFunction("GetRadioButtonCount");
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getRadioButtonCount
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Deprecate().Method_getRadioButtonCount(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_getRadioButtonCount(object));
 		return DataType.getInt(functionResult.getOutput());
 
 	}
@@ -4590,11 +4388,11 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public int GetElementIndex(ORObject arg0) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetElementIndex");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_GetElementIndex
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Deprecate().Method_GetElementIndex(object));
@@ -4603,16 +4401,15 @@ public class OpKeyAppiumKeywords {
 	}
 
 	public int GetTableColumnNumber(ORObject arg0, int arg1, String arg2) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetTableColumnNumber");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_TableGetTextColumn
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_TableGetTextColumn(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_TableGetTextColumn(object, arg1, arg2));
 		return DataType.getInt(functionResult.getOutput());
 
 	}
@@ -4657,8 +4454,8 @@ public class OpKeyAppiumKeywords {
 
 	}
 
-	public int GetObjectCount(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6,
-			String arg7, String arg8, String arg9) throws InterruptedException, ToolNotSetException {
+	public int GetObjectCount(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9)
+			throws InterruptedException, ToolNotSetException {
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
 
@@ -4666,8 +4463,7 @@ public class OpKeyAppiumKeywords {
 
 		// Method_getObjectCount
 
-		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectCount(arg0, arg1,
-				arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new WebObjects().Method_getObjectCount(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9));
 		return DataType.getInt(functionResult.getOutput());
 
 	}
@@ -4705,23 +4501,21 @@ public class OpKeyAppiumKeywords {
 		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_getDropDownItemCount
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new DropDown().Method_getDropDownItemCount(object));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new DropDown().Method_getDropDownItemCount(object));
 		return DataType.getInt(functionResult.getOutput());
 
 	}
 
 	public int GetTableRowNumber(ORObject arg0, int arg1, String arg2) throws Exception {
-		AppiumObject object = new ObjectConverter().formatObject(arg0);
 
 		System.out.println(">> Appium Keyword Called GetTableRowNumber");
 
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(arg1, arg2);
+		AppiumObject object = new ObjectConverter().formatObject(arg0);
 		// Method_TableGetTextRow
 
-		FunctionResult functionResult = FunctionCaller
-				.execute(() -> new Table().Method_TableGetTextRow(object, arg1, arg2));
+		FunctionResult functionResult = FunctionCaller.execute(() -> new Table().Method_TableGetTextRow(object, arg1, arg2));
 		return DataType.getInt(functionResult.getOutput());
 
 	}
