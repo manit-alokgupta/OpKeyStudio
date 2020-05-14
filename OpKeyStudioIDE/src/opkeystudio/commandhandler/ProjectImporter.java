@@ -4,6 +4,8 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.eclipse.core.runtime.Platform;
+
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
@@ -25,7 +27,7 @@ public class ProjectImporter {
 			}
 			String projectName = file.getParentFile().getName();
 			ServiceRepository.getInstance().setProjectName(projectName);
-			Utilities.getInstance().getDefaultShell().setText("OpKey Studio - [" + ServiceRepository.getInstance().getProjectPath()+"]");
+			Utilities.getInstance().getDefaultShell().setText("OpKey Studio - [" + ServiceRepository.getInstance().getProjectPath()+"] v" + Utilities.getInstance().getVersion());
 			
 			ServiceRepository.getInstance().setExortedDBFilePath(dbFilePath);
 			SQLiteCommunicator sqlComm = new SQLiteCommunicator(dbFilePath);

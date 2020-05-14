@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
@@ -36,8 +37,11 @@ public class BlankProjectCreation {
 				new MessageDialogs().openErrorDialog("OpKey", "Project name Should not be blank.");
 				return;
 			}
+			
+			
 			ServiceRepository.getInstance().setProjectName(projectName);
-			Utilities.getInstance().getDefaultShell().setText("OpKey Studio - [" + ServiceRepository.getInstance().getProjectPath()+"]");
+			Utilities.getInstance().getDefaultShell().setText("OpKey Studio - [" + ServiceRepository.getInstance().getProjectPath()+"] v" + Platform.getProduct().getDefiningBundle().getVersion());
+			
 			String blankDbFile = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 					.getCommons_DBStructureFolder() + File.separator + "artifact_blankdb.db";
 

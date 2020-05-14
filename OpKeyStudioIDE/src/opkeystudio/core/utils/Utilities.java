@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.InjectionException;
@@ -23,14 +24,11 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
-import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.ArtifactCodeEditor;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
-import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
-import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class Utilities {
 	private static Utilities utils = null;
@@ -127,8 +125,7 @@ public class Utilities {
 					EPartService partService = Utilities.getInstance().getEpartService();
 					partService.hidePart(mpart, true);
 				}
-				ExecutionSession executionSession = (ExecutionSession) mpart.getTransientData()
-						.get("opkeystudio.executionSessionData");
+				ExecutionSession executionSession = (ExecutionSession) mpart.getTransientData().get("opkeystudio.executionSessionData");
 				if (executionSession != null) {
 					EPartService partService = Utilities.getInstance().getEpartService();
 					partService.hidePart(mpart, true);
@@ -329,5 +326,9 @@ public class Utilities {
 
 	public void setPluginName(String pluginName) {
 		this.pluginName = pluginName;
+	}
+
+	public String getVersion() {
+		return Platform.getProduct().getDefiningBundle().getVersion() + "_2020.05.14";
 	}
 }

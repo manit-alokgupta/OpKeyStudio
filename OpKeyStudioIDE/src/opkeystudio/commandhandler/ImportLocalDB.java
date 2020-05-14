@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -41,8 +42,7 @@ public class ImportLocalDB {
 					return;
 				}
 				ServiceRepository.getInstance().setProjectName(projectName);
-				Utilities.getInstance().getDefaultShell()
-				.setText("OpKey Studio - [" + ServiceRepository.getInstance().getProjectPath() + "]");
+				Utilities.getInstance().getDefaultShell().setText("OpKey Studio - [" + ServiceRepository.getInstance().getProjectPath()+"] v" + Utilities.getInstance().getVersion());
 				String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 						.getProjectsFolder() + File.separator + ServiceRepository.getInstance().getProjectName();
 
