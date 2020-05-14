@@ -46,6 +46,8 @@ public class ArtifactTranspiler {
 		for (FunctionLibraryComponent flartifact : allFLArtifacts) {
 			allArtifacts.add(flartifact);
 		}
+		allArtifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
+		addParentArtifact(allArtifacts);
 		setPackageProperties(allArtifacts, false);
 	}
 
@@ -54,6 +56,8 @@ public class ArtifactTranspiler {
 		for (CodedFunctionArtifact cflartifact : allCFLArtifacts) {
 			allArtifacts.add(cflartifact);
 		}
+		allArtifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
+		addParentArtifact(allArtifacts);
 		setPackageProperties(allArtifacts, false);
 	}
 

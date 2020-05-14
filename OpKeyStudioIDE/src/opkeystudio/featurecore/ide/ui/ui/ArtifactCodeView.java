@@ -623,6 +623,7 @@ public class ArtifactCodeView extends SuperComposite {
 						cflCode.setModified(true);
 						System.out.println("Method Body " + method.getBody());
 						new CodedFunctionApi().saveCFLCode(getArtifact(), cflCode);
+						Utilities.getInstance().refreshArtifactTree();
 					}
 				}
 			}
