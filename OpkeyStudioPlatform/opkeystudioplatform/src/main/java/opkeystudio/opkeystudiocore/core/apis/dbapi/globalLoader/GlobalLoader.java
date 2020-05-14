@@ -110,7 +110,7 @@ public class GlobalLoader {
 
 	public void initAllArtifacts() {
 		this.allArtifacts = new ArtifactApi().getAllArtificates();
-		ArtifactTranspiler.getInstance().setPackageProperties(this.allArtifacts);
+		ArtifactTranspiler.getInstance().setPackageProperties(this.allArtifacts, true);
 	}
 
 	public void initGlobalVariables() {

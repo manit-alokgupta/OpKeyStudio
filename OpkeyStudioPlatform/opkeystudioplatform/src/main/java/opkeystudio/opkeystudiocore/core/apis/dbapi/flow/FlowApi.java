@@ -11,6 +11,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctio
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
@@ -23,6 +24,7 @@ import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -155,33 +157,31 @@ public class FlowApi {
 	private List<FlowOutputArgument> syncAllComponentOutputArgument(String flowId, FlowStep flowStep,
 			List<ComponentOutputArgument> componentInputArgs, List<FlowOutputArgument> flowInputArgs) {
 		/*
-		List<FlowOutputArgument> syncFlowInputArguments = new ArrayList<FlowOutputArgument>();
-		for (ComponentOutputArgument inputArgument : componentInputArgs) {
-			for (FlowOutputArgument flowInputArgument : flowInputArgs) {
-				if (flowInputArgument.getComponent_op_id().equals(inputArgument.getComponentstep_oa_id())) {
-					syncFlowInputArguments.add(flowInputArgument);
-					inputArgument.setChecked(true);
-				}
-			}
-		}
-
-		for (ComponentOutputArgument inputArgument : componentInputArgs) {
-			if (inputArgument.isChecked() == false) {
-				FlowOutputArgument flowinputArgument = new FlowOutputArgument();
-				flowinputArgument.setFlow_stepid(flowStep.getFlow_stepid());
-				flowinputArgument.setFlow_step_oa_id(Utilities.getInstance().getUniqueUUID(""));
-				flowinputArgument.setComponent_op_id(inputArgument.getComponentstep_oa_id());
-				flowinputArgument.setAdded(true);
-
-				syncFlowInputArguments.add(flowinputArgument);
-			}
-		}
-
-		System.out.println("Synced Input Arguments " + syncFlowInputArguments.size());
-		new FlowConstruct().saveFlowOutputArguments(syncFlowInputArguments);
-		for (FlowOutputArgument inputArg : syncFlowInputArguments) {
-			inputArg.setAdded(false);
-		}*/
+		 * List<FlowOutputArgument> syncFlowInputArguments = new
+		 * ArrayList<FlowOutputArgument>(); for (ComponentOutputArgument inputArgument :
+		 * componentInputArgs) { for (FlowOutputArgument flowInputArgument :
+		 * flowInputArgs) { if
+		 * (flowInputArgument.getComponent_op_id().equals(inputArgument.
+		 * getComponentstep_oa_id())) { syncFlowInputArguments.add(flowInputArgument);
+		 * inputArgument.setChecked(true); } } }
+		 * 
+		 * for (ComponentOutputArgument inputArgument : componentInputArgs) { if
+		 * (inputArgument.isChecked() == false) { FlowOutputArgument flowinputArgument =
+		 * new FlowOutputArgument();
+		 * flowinputArgument.setFlow_stepid(flowStep.getFlow_stepid());
+		 * flowinputArgument.setFlow_step_oa_id(Utilities.getInstance().getUniqueUUID(""
+		 * ));
+		 * flowinputArgument.setComponent_op_id(inputArgument.getComponentstep_oa_id());
+		 * flowinputArgument.setAdded(true);
+		 * 
+		 * syncFlowInputArguments.add(flowinputArgument); } }
+		 * 
+		 * System.out.println("Synced Input Arguments " +
+		 * syncFlowInputArguments.size()); new
+		 * FlowConstruct().saveFlowOutputArguments(syncFlowInputArguments); for
+		 * (FlowOutputArgument inputArg : syncFlowInputArguments) {
+		 * inputArg.setAdded(false); }
+		 */
 		return flowInputArgs;
 	}
 
@@ -278,7 +278,9 @@ public class FlowApi {
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
 				FunctionLibraryComponent.class);
 		try {
-			return mapper.readValue(result, type);
+			List<FunctionLibraryComponent> codedAartifacts = mapper.readValue(result, type);
+			ArtifactTranspiler.getInstance().setPackagePropertiesForFunctionLibraryArtifact(codedAartifacts);
+			return codedAartifacts;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -292,7 +294,9 @@ public class FlowApi {
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CodedFunctionArtifact.class);
 		try {
-			return mapper.readValue(result, type);
+			List<CodedFunctionArtifact> codedAartifacts = mapper.readValue(result, type);
+			ArtifactTranspiler.getInstance().setPackagePropertiesForCodedFunctionArtifact(codedAartifacts);
+			return codedAartifacts;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
