@@ -179,6 +179,7 @@ public class SuiteStepTable extends CustomTable {
 				getParentTestSuiteView().toggleSaveButton(true);
 				toggleCopyMenuItem(true);
 				togglePasteMenuItem(false);
+				selectNextRow();
 			}
 
 			@Override
