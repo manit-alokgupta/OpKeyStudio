@@ -451,6 +451,8 @@ public class OutputTable extends CustomTable {
 		Collections.sort(getComponentOutputData());
 		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 		refreshAllBottomFactoryOutputData();
+		selectNextRow();
+		selectDefaultRowByCursor(cursor, 0);
 	}
 
 	public void deleteBottomFactoryOutputData() {

@@ -497,6 +497,8 @@ public class InputTable extends CustomTable {
 		Collections.sort(getComponentInputData());
 		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 		refreshAllBottomFactoryInputData();
+		selectNextRow();
+		selectDefaultRowByCursor(cursor, 0);
 	}
 
 	public ComponentInputArgument getSelectedComponentInputArgument() {
