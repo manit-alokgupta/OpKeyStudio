@@ -570,9 +570,23 @@ public class FlowStepTable extends CustomTable {
 			}
 		}
 		if (allSteps.size() == 0) {
+			getParentTestCaseView().getStepDetailLabel().setEnabled(false);
+			getParentTestCaseView().getTestObjectTable().setEnabled(false);
+			getParentTestCaseView().getInputDataTable().setEnabled(false);
+			getParentTestCaseView().getOutPutDataTable().setEnabled(false);
+
+			getParentTestCaseView().getStepDetailLabel().setText("");
+			getParentTestCaseView().getTestObjectTable().removeAll();
+			getParentTestCaseView().getInputDataTable().removeAll();
+			getParentTestCaseView().getOutPutDataTable().removeAll();
 			getParentTestCaseView().toggleDeleteButton(false);
 			getParentTestCaseView().toggleMovedownButton(false);
 			getParentTestCaseView().toggleMoveupButton(false);
+		} else {
+			getParentTestCaseView().getStepDetailLabel().setEnabled(true);
+			getParentTestCaseView().getTestObjectTable().setEnabled(true);
+			getParentTestCaseView().getInputDataTable().setEnabled(true);
+			getParentTestCaseView().getOutPutDataTable().setEnabled(true);
 		}
 
 		selectDefaultRow();
