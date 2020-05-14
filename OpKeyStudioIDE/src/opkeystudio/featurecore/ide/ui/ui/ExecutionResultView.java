@@ -73,22 +73,21 @@ public class ExecutionResultView extends SuperComposite {
 
 	private void startExecutionSession() {
 		MessageDialogs msd = new MessageDialogs();
-		msd.openProgressDialogOnBackgroundThread(getParent().getShell(), "Please Wait Execution is on Progress...",
-				true, new IRunnableWithProgress() {
+		msd.openProgressDialogOnBackgroundThread(getParent().getShell(), "Please Wait Execution is on Progress...", true, new IRunnableWithProgress() {
 
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
-						ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
-						if (executorExecutor.isContainsErrors()) {
-							displayCompileErrors(executorExecutor.getCompileErrors());
-							return;
-						}
-						setArtifactExecutor(executorExecutor);
-						startExecutionLogsFetch(executorExecutor);
+			@Override
+			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				ExecutionSessionExecutor exeutor = new ExecutionSessionExecutor();
+				ArtifactExecutor executorExecutor = exeutor.execute(getExecutionSession());
+				if (executorExecutor.isContainsErrors()) {
+					displayCompileErrors(executorExecutor.getCompileErrors());
+					return;
+				}
+				setArtifactExecutor(executorExecutor);
+				startExecutionLogsFetch(executorExecutor);
 
-					}
-				});
+			}
+		});
 		msd.closeProgressDialog();
 	}
 
@@ -133,13 +132,11 @@ public class ExecutionResultView extends SuperComposite {
 				}
 				String errorLogs = "Errors while Compiling Artifacts";
 				for (CompileError error : errors) {
-					errorLogs += System.lineSeparator() + error.getSource().getName() + System.lineSeparator()
-							+ error.getMessage() + System.lineSeparator();
+					errorLogs += System.lineSeparator() + error.getSource().getName() + System.lineSeparator() + error.getMessage() + System.lineSeparator();
 				}
 				logTextView.setForeground(new Color(logTextView.getDisplay(), 255, 0, 0));
 				logTextView.setText(errorLogs);
-				new MessageDialogs().openErrorDialog("OpKey",
-						"Artifacts has Compiling Errors. Please check the execution logs for errors.");
+				new MessageDialogs().openErrorDialog("OpKey", "Artifacts has Compiling Errors. Please check the execution logs for errors.");
 			}
 		});
 	}
@@ -165,8 +162,7 @@ public class ExecutionResultView extends SuperComposite {
 					if (showLogView.isDisposed())
 						return;
 
-					try (BufferedReader br = new BufferedReader(
-							new InputStreamReader(new FileInputStream(logFile), StandardCharsets.UTF_8))) {
+					try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(logFile), StandardCharsets.UTF_8))) {
 
 						// try (FileInputStream fis = new FileInputStream(logFile)) {
 
@@ -175,8 +171,7 @@ public class ExecutionResultView extends SuperComposite {
 							Thread.sleep(1);
 
 							/*
-							 * byte[] buffer = new byte[2048]; int bytesRead = fis.read(buffer, 0,
-							 * Math.min(fis.available(), buffer.length)); if (bytesRead < 1) { continue; }
+							 * byte[] buffer = new byte[2048]; int bytesRead = fis.read(buffer, 0, Math.min(fis.available(), buffer.length)); if (bytesRead < 1) { continue; }
 							 * 
 							 * String aLine = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
 							 */
@@ -205,12 +200,7 @@ public class ExecutionResultView extends SuperComposite {
 
 							@Override
 							public void run() {
-								if (showLogView.isDisposed()) {
-									return;
-								}
-								stopButton.setEnabled(false);
-								showLogView.setEnabled(true);
-								displayLogs("Click the 'Show Report' button to open the report", warningColor);
+								afterExecutionIsCompleted();
 							}
 						});
 					}
@@ -238,21 +228,36 @@ public class ExecutionResultView extends SuperComposite {
 
 	}
 
+	private void afterExecutionIsCompleted() {
+		if (showLogView.isDisposed()) {
+			return;
+		}
+		synchronized (showLogView) {
+			if (showLogView.isEnabled())
+				return; // already enabled
+
+			stopButton.setEnabled(false);
+			showLogView.setEnabled(true);
+			displayLogs(System.lineSeparator() + System.lineSeparator() + "=================================================", new Color(logTextView.getDisplay(), 0, 100, 0));
+			displayLogs(System.lineSeparator() + "      Click the 'Show Report' button to open the report", new Color(logTextView.getDisplay(), 0, 100, 0));
+			displayLogs(System.lineSeparator() + "=================================================", new Color(logTextView.getDisplay(), 0, 100, 0));
+		}
+
+	}
+
 	private void startExecutionLogsFetch(ArtifactExecutor executor) throws InterruptedException {
 		Color red = new Color(logTextView.getDisplay(), 255, 0, 0);
 		Color black = new Color(logTextView.getDisplay(), 0, 0, 0);
 		Color orange = new Color(logTextView.getDisplay(), 255, 165, 0);
 
-		while (getArtifactExecutor().getErrLogFile() == null
-				|| getArtifactExecutor().getErrLogFile().exists() == false) {
+		while (getArtifactExecutor().getErrLogFile() == null || getArtifactExecutor().getErrLogFile().exists() == false) {
 			Thread.sleep(200);
 		}
 
 		logErrThread = new Thread(getLogRunnable(getArtifactExecutor().getErrLogFile(), red, orange));
 		logErrThread.start();
 
-		while (getArtifactExecutor().getOutLogFile() == null
-				|| getArtifactExecutor().getOutLogFile().exists() == false) {
+		while (getArtifactExecutor().getOutLogFile() == null || getArtifactExecutor().getOutLogFile().exists() == false) {
 			Thread.sleep(200);
 		}
 
