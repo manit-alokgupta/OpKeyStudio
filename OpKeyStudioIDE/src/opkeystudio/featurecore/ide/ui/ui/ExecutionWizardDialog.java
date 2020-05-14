@@ -39,6 +39,7 @@ import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
@@ -339,9 +340,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					session.addPluginSetting("DeviceVersion", getMobileDeviceExecutionDetail().getDeviceVersion());
 					session.addPluginSetting("DeviceApiLevel", getMobileDeviceExecutionDetail().getDeviceAPILevel());
 					session.addPluginSetting("DeviceABI", getMobileDeviceExecutionDetail().getDeviceABI());
-					session.addPluginSetting("appiumHost", getMobileDeviceExecutionDetail().getDeviceABI());
-					session.addPluginSetting("appiumPort", getMobileDeviceExecutionDetail().getDeviceABI());
-					session.addPluginSetting("appiumDir", getMobileDeviceExecutionDetail().getDeviceABI());
+					session.addPluginSetting("appiumHost", AppiumConfiguration.getHostAddress());
+					session.addPluginSetting("appiumPort", AppiumConfiguration.getPort());
+					session.addPluginSetting("appiumDir", AppiumConfiguration.getAppiumDirectory());
 
 					MobileDevice device = new MobileDevice();
 					device.setDisplayName(getMobileDeviceExecutionDetail().getDeviceName());
