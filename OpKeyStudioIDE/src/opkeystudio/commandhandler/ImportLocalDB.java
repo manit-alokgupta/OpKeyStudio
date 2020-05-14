@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class ImportLocalDB {
 
@@ -36,18 +37,19 @@ public class ImportLocalDB {
 					return;
 				}
 				if (projectName.isEmpty()) {
-					new MessageDialogs().openErrorDialog("OpKey", "Project name Should not be blank.");
+					CustomNotificationUtil.openInformationNotification("OpKey", "Project name Should not be blank.");
 					return;
 				}
 				ServiceRepository.getInstance().setProjectName(projectName);
-				Utilities.getInstance().getDefaultShell().setText("OpKey Studio - [" + ServiceRepository.getInstance().getProjectPath()+"]");
+				Utilities.getInstance().getDefaultShell()
+				.setText("OpKey Studio - [" + ServiceRepository.getInstance().getProjectPath() + "]");
 				String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 						.getProjectsFolder() + File.separator + ServiceRepository.getInstance().getProjectName();
 
 				if (!new File(projectFolderPath).exists()) {
 					new File(projectFolderPath).mkdir();
 				} else {
-					new MessageDialogs().openErrorDialog("OpKey",
+					CustomNotificationUtil.openInformationNotification("OpKey",
 							String.format("Project name '%s' already exists. Please provide a different name.",
 									ServiceRepository.getInstance().getProjectName()));
 					return;
