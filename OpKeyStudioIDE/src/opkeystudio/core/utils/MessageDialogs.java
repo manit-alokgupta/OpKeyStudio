@@ -39,6 +39,9 @@ public class MessageDialogs {
 	}
 
 	public void openErrorDialog(Shell shell, String title, String message) {
+		if (shell.isDisposed()) {
+			return;
+		}
 		MessageDialog.openError(shell, title, message);
 	}
 

@@ -141,51 +141,54 @@ public class GlobalVariableTable extends CustomTable {
 			public void mouseUp(MouseEvent e) {
 				CustomTableItem selectedTableItem = (CustomTableItem) tableCursor.getRow();
 				GlobalVariable globalVariable = (GlobalVariable) selectedTableItem.getControlData();
-				int selectedColumn = tableCursor.getColumn();
-				CustomText text = new CustomText(tableCursor, 0);
-				if (selectedColumn == 0) {
-					text.setText(globalVariable.getName());
-					text.setFocus();
-				}
-				if (selectedColumn == 2) {
-					if (globalVariable.getValue() == null) {
-						text.setText("");
-						text.setFocus();
-					} else {
-						text.setText(globalVariable.getValue());
+				boolean externalUpdatable = globalVariable.isExternallyupdatable();
+				if (externalUpdatable) {
+					int selectedColumn = tableCursor.getColumn();
+					CustomText text = new CustomText(tableCursor, 0);
+					if (selectedColumn == 0) {
+						text.setText(globalVariable.getName());
 						text.setFocus();
 					}
+					if (selectedColumn == 2) {
+						if (globalVariable.getValue() == null) {
+							text.setText("");
+							text.setFocus();
+						} else {
+							text.setText(globalVariable.getValue());
+							text.setFocus();
+						}
+					}
+					text.addFocusListener(new FocusListener() {
+
+						@Override
+						public void focusLost(FocusEvent e) {
+							text.dispose();
+						}
+
+						@Override
+						public void focusGained(FocusEvent e) {
+
+						}
+					});
+
+					text.addModifyListener(new ModifyListener() {
+
+						@Override
+						public void modifyText(ModifyEvent e) {
+							selectedTableItem.setText(selectedColumn, text.getText());
+							globalVariable.setModified(true);
+							getParentGlobalVariableView().toggleSaveToolItem(true);
+							if (selectedColumn == 0) {
+								globalVariable.setName(text.getText());
+							}
+							if (selectedColumn == 2) {
+								globalVariable.setValue(text.getText());
+							}
+						}
+					});
+					controlEditor.setEditor(text);
+					getParentGlobalVariableView().toggleDeleteToolItem(true);
 				}
-				text.addFocusListener(new FocusListener() {
-
-					@Override
-					public void focusLost(FocusEvent e) {
-						text.dispose();
-					}
-
-					@Override
-					public void focusGained(FocusEvent e) {
-
-					}
-				});
-
-				text.addModifyListener(new ModifyListener() {
-
-					@Override
-					public void modifyText(ModifyEvent e) {
-						selectedTableItem.setText(selectedColumn, text.getText());
-						globalVariable.setModified(true);
-						getParentGlobalVariableView().toggleSaveToolItem(true);
-						if (selectedColumn == 0) {
-							globalVariable.setName(text.getText());
-						}
-						if (selectedColumn == 2) {
-							globalVariable.setValue(text.getText());
-						}
-					}
-				});
-				controlEditor.setEditor(text);
-				getParentGlobalVariableView().toggleDeleteToolItem(true);
 			}
 
 			@Override
@@ -232,6 +235,7 @@ public class GlobalVariableTable extends CustomTable {
 
 	private void addTableEditor(CustomTableItem item) {
 		GlobalVariable globalVariable = (GlobalVariable) item.getControlData();
+		boolean extrenalUpdate = globalVariable.isExternallyupdatable();
 		TableEditor editor1 = getTableEditor();
 		TableEditor editor2 = getTableEditor();
 		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
@@ -239,8 +243,10 @@ public class GlobalVariableTable extends CustomTable {
 		combo.select(Utilities.getInstance().getIndexOfItem(OpKeyVariables.getInstance().getAllGlobalVariablesType(),
 				globalVariable.getDatatype()));
 
+		combo.setEnabled(extrenalUpdate);
 		combo.setControlData(globalVariable);
 		CustomButton isExternallyUpdatable = new CustomButton(this, SWT.CHECK | SWT.CENTER);
+		isExternallyUpdatable.setEnabled(extrenalUpdate);
 		isExternallyUpdatable.setSelection(globalVariable.isExternallyupdatable());
 
 		isExternallyUpdatable.setControlData(globalVariable);
@@ -372,6 +378,9 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setExternallyupdatable(true);
 		addGlobalVariable(gv);
 		renderGlobalVariables();
+		if (isInsideArtifact() == false) {
+			selectDefaultRowByCursor(tableCursor, 0);
+		}
 	}
 
 	public void deleteGlobalVariableStep() {

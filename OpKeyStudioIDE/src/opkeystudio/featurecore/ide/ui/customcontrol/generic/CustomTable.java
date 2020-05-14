@@ -113,8 +113,12 @@ public class CustomTable extends Table {
 			if (cursor != null) {
 				cursor.setSelection(this.getSelectedRowIndex(), column);
 				cursor.notifyListeners(SWT.Selection, null);
+				cursor.notifyListeners(SWT.MouseUp, null);
+				cursor.notifyListeners(SWT.MouseDown, null);
 			}
 			this.notifyListeners(SWT.Selection, null);
+			this.notifyListeners(SWT.MouseUp, null);
+			this.notifyListeners(SWT.MouseDown, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

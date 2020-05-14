@@ -41,6 +41,7 @@ public class ObjectAttributeTable extends CustomTable {
 	private ObjectRepositoryView parentObjectRepositoryView;
 
 	private Composite parentComposite;
+	public TableCursor cursor;
 
 	public ObjectAttributeTable(Composite parent, int style, ObjectRepositoryView parentView) {
 		super(parent, style);
@@ -77,7 +78,7 @@ public class ObjectAttributeTable extends CustomTable {
 			}
 		});
 
-		TableCursor cursor = new TableCursor(this, 0);
+		cursor = new TableCursor(this, 0);
 		ControlEditor controlEditor = new ControlEditor(cursor);
 		controlEditor.grabHorizontal = true;
 		controlEditor.grabVertical = true;
@@ -93,9 +94,11 @@ public class ObjectAttributeTable extends CustomTable {
 				CustomText text = new CustomText(cursor, 0);
 				if (selectedColumn == 0) {
 					text.setText(objectAttributeProperty.getProperty());
+					text.setFocus();
 				}
 				if (selectedColumn == 1) {
 					text.setText(objectAttributeProperty.getValue());
+					text.setFocus();
 				}
 				text.addFocusListener(new FocusListener() {
 
@@ -106,8 +109,21 @@ public class ObjectAttributeTable extends CustomTable {
 						if (isUnique == false) {
 							objectAttributeProperty.setProperty(objectAttributeProperty.getOldPropertyName());
 							text.setText(objectAttributeProperty.getProperty());
-							new MessageDialogs().openErrorDialog("OpKey", "Attriute named as '" + propertyName
-									+ "' already exists. Please provide a new name.");
+							text.dispose();
+							new MessageDialogs().openErrorDialog(cursor.getShell(), "OpKey", "Attriute named as '"
+									+ propertyName + "' already exists. Please provide a new name.");
+							objectAttributeProperty.setDeleted(true);
+							renderObjectAttributes();
+							return;
+						}
+						if (propertyName.trim().isEmpty()) {
+							objectAttributeProperty.setProperty(objectAttributeProperty.getOldPropertyName());
+							text.setText(objectAttributeProperty.getProperty());
+							text.dispose();
+							new MessageDialogs().openErrorDialog(cursor.getShell(), "OpKey",
+									"Object Property Can't Be Blank");
+							objectAttributeProperty.setDeleted(true);
+							renderObjectAttributes();
 							return;
 						}
 						text.dispose();

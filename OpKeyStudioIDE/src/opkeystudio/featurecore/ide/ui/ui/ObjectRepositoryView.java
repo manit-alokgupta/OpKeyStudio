@@ -651,11 +651,12 @@ public class ObjectRepositoryView extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				ORObject orobject = getObjectRepositoryTree().getSelectedORObject();
 				if (orobject != null) {
+					CustomNotificationUtil.openInformationNotification("OpKey", "Property Added!");
 					ObjectAttributeProperty attrProp = new ORObjectMaker().getNewObjectAttributeProperty(orobject,
 							objectAttributeTable.getObjectPropertiesData());
 					objectAttributeTable.getObjectPropertiesData().add(attrProp);
 					objectAttributeTable.renderObjectAttributes();
-					CustomNotificationUtil.openInformationNotification("OpKey", "Property Added!");
+					objectAttributeTable.selectDefaultRowByCursor(objectAttributeTable.cursor, 0);
 				}
 			}
 
