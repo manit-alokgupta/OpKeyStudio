@@ -41,6 +41,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
+import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.ArtifactUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -475,7 +476,7 @@ public class ArtifactTreeUI extends SuperComposite {
 				if (!status) {
 					return;
 				}
-				boolean isused = new ArtifactApiUtilities().isArtifactIsUsed(artifact);
+				boolean isused = new ArtifactUsedBy().checkIsUsedBy(artifact);
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Unable to delete " + artifact.getFile_type_enum(),
 							"Unable to delete " + artifact.getFile_type_enum() + " '" + artifact.getName()
