@@ -17,6 +17,9 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -141,6 +144,9 @@ public class GlobalVariableTable extends CustomTable {
 			public void mouseUp(MouseEvent e) {
 				CustomTableItem selectedTableItem = (CustomTableItem) tableCursor.getRow();
 				GlobalVariable globalVariable = (GlobalVariable) selectedTableItem.getControlData();
+				String dataType = globalVariable.getDatatype();
+				boolean isNumberType = isDataTypeIntegerType(dataType);
+				boolean isBooleanType = isDataTypeBooleanrType(dataType);
 				boolean externalUpdatable = globalVariable.isExternallyupdatable();
 				if (externalUpdatable) {
 					int selectedColumn = tableCursor.getColumn();
@@ -150,6 +156,56 @@ public class GlobalVariableTable extends CustomTable {
 						text.setFocus();
 					}
 					if (selectedColumn == 2) {
+						if (isBooleanType) {
+							Button checkedButton = new Button(tableCursor, SWT.CHECK);
+							checkedButton.addFocusListener(new FocusListener() {
+
+								@Override
+								public void focusLost(FocusEvent e) {
+									checkedButton.dispose();
+
+								}
+
+								@Override
+								public void focusGained(FocusEvent e) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+
+							checkedButton.addSelectionListener(new SelectionListener() {
+
+								@Override
+								public void widgetSelected(SelectionEvent e) {
+									String status = convertBooleanToString(checkedButton.getSelection());
+									globalVariable.setValue(status);
+									globalVariable.setModified(true);
+									getParentGlobalVariableView().toggleSaveToolItem(true);
+								}
+
+								@Override
+								public void widgetDefaultSelected(SelectionEvent e) {
+
+								}
+							});
+
+							if (globalVariable.getValue() != null) {
+								boolean checkedStatus = convertStringToBoolean(globalVariable.getValue());
+								checkedButton.setSelection(checkedStatus);
+								controlEditor.setEditor(checkedButton);
+							} else {
+								checkedButton.setSelection(false);
+								controlEditor.setEditor(checkedButton);
+							}
+							return;
+						}
+
+						if (dataType.equals("String") || dataType.equals("Integer") || dataType.equals("Double")) {
+							text.setEditable(true);
+						} else {
+							text.setEditable(false);
+						}
+
 						if (globalVariable.getValue() == null) {
 							text.setText("");
 							text.setFocus();
@@ -157,7 +213,40 @@ public class GlobalVariableTable extends CustomTable {
 							text.setText(globalVariable.getValue());
 							text.setFocus();
 						}
+						text.addVerifyListener(new VerifyListener() {
+
+							@Override
+							public void verifyText(VerifyEvent e) {
+								if (isNumberType) {
+									final String oldS = text.getText();
+									String newS = oldS.substring(0, e.start) + e.text + oldS.substring(e.end);
+									if (newS.trim().isEmpty()) {
+										return;
+									}
+									boolean isNumber = true;
+									if (dataType.equals("Integer")) {
+										try {
+											Integer.parseInt(newS);
+										} catch (NumberFormatException ex) {
+											isNumber = false;
+										}
+									}
+
+									if (dataType.equals("Double")) {
+										try {
+											Double.parseDouble(newS);
+										} catch (NumberFormatException ex) {
+											isNumber = false;
+										}
+									}
+									if (!isNumber) {
+										e.doit = false;
+									}
+								}
+							}
+						});
 					}
+
 					text.addFocusListener(new FocusListener() {
 
 						@Override
@@ -203,6 +292,40 @@ public class GlobalVariableTable extends CustomTable {
 
 			}
 		});
+	}
+
+	private boolean convertStringToBoolean(String status) {
+		if (status.toLowerCase().equals("true")) {
+			return true;
+		}
+		return false;
+	}
+
+	private String convertBooleanToString(boolean status) {
+		if (status) {
+			return "true";
+		}
+		return "false";
+	}
+
+	private boolean isDataTypeIntegerType(String dataType) {
+		if (dataType.equals("Integer")) {
+			return true;
+		}
+		if (dataType.equals("Float")) {
+			return true;
+		}
+		if (dataType.equals("Double")) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isDataTypeBooleanrType(String dataType) {
+		if (dataType.equals("Boolean")) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -279,7 +402,9 @@ public class GlobalVariableTable extends CustomTable {
 				int selected = combo.getSelectionIndex();
 				String selectedDataType = combo.getItem(selected);
 				oatr.setDatatype(selectedDataType);
+				oatr.setValue("");
 				oatr.setModified(true);
+				renderGlobalVariables();
 				getParentGlobalVariableView().toggleSaveToolItem(true);
 			}
 

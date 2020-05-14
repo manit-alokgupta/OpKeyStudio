@@ -203,24 +203,21 @@ public class InputDataTable extends CustomTable {
 								return;
 							}
 							boolean isNumber = true;
-							try {
-								Float.parseFloat(newS);
-							} catch (NumberFormatException ex) {
-								isNumber = false;
+							if (dataType.equals("Integer")) {
+								try {
+									Integer.parseInt(newS);
+								} catch (NumberFormatException ex) {
+									isNumber = false;
+								}
 							}
-
-							try {
-								Integer.parseInt(newS);
-							} catch (NumberFormatException ex) {
-								isNumber = false;
+							
+							if (dataType.equals("Double")) {
+								try {
+									Double.parseDouble(newS);
+								} catch (NumberFormatException ex) {
+									isNumber = false;
+								}
 							}
-
-							try {
-								Double.parseDouble(newS);
-							} catch (NumberFormatException ex) {
-								isNumber = false;
-							}
-
 							if (!isNumber) {
 								e.doit = false;
 							}
