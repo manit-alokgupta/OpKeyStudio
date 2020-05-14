@@ -57,6 +57,23 @@ public class ArtifactTranspiler {
 		setPackageProperties(allArtifacts, false);
 	}
 
+	private void addParentArtifact(List<Artifact> artifacts) {
+		System.out.println("Called addParentArtifact");
+		for (Artifact artifact : artifacts) {
+			String artifactId = artifact.getId();
+			for (Artifact childArtifact : artifacts) {
+				if (childArtifact.getParentid() == null) {
+					continue;
+				}
+				if (childArtifact.getParentid().equals(artifactId)) {
+					System.out.println(childArtifact.getParentid() + "  " + artifactId + "  "
+							+ childArtifact.getFile_type_enum().toString());
+					childArtifact.setParentArtifact(artifact);
+				}
+			}
+		}
+	}
+
 	public void setPackageProperties(List<Artifact> allArtifacts, boolean performDefault) {
 		if (performDefault) {
 			ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
