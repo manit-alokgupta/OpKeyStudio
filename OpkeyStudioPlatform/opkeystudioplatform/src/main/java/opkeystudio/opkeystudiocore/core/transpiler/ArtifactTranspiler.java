@@ -41,43 +41,6 @@ public class ArtifactTranspiler {
 		setPackageProperties(allArtifacts, true);
 	}
 
-	public void setPackagePropertiesForFunctionLibraryArtifact(List<FunctionLibraryComponent> allFLArtifacts) {
-		List<Artifact> allArtifacts = new ArrayList<Artifact>();
-		for (FunctionLibraryComponent flartifact : allFLArtifacts) {
-			allArtifacts.add(flartifact);
-		}
-		allArtifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
-		addParentArtifact(allArtifacts);
-		setPackageProperties(allArtifacts, false);
-	}
-
-	public void setPackagePropertiesForCodedFunctionArtifact(List<CodedFunctionArtifact> allCFLArtifacts) {
-		List<Artifact> allArtifacts = new ArrayList<Artifact>();
-		for (CodedFunctionArtifact cflartifact : allCFLArtifacts) {
-			allArtifacts.add(cflartifact);
-		}
-		allArtifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
-		addParentArtifact(allArtifacts);
-		setPackageProperties(allArtifacts, false);
-	}
-
-	private void addParentArtifact(List<Artifact> artifacts) {
-		System.out.println("Called addParentArtifact");
-		for (Artifact artifact : artifacts) {
-			String artifactId = artifact.getId();
-			for (Artifact childArtifact : artifacts) {
-				if (childArtifact.getParentid() == null) {
-					continue;
-				}
-				if (childArtifact.getParentid().equals(artifactId)) {
-					System.out.println(childArtifact.getParentid() + "  " + artifactId + "  "
-							+ childArtifact.getFile_type_enum().toString());
-					childArtifact.setParentArtifact(artifact);
-				}
-			}
-		}
-	}
-
 	public void setPackageProperties(List<Artifact> allArtifacts, boolean performDefault) {
 		if (performDefault) {
 			ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
