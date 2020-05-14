@@ -453,8 +453,9 @@ public class ObjectRepositoryView extends SuperComposite {
 					if (item.getORObject().getParent_object_id() != null) {
 						toggleCopyMenuItem(true);
 					} else {
-						toggleCopyMenuItem(false);
+						toggleCopyMenuItem(true);
 					}
+					
 					if (item.getORObject().getParent_object_id() == null) {
 						togglePasteMenuItem(true);
 					} else {
@@ -479,7 +480,7 @@ public class ObjectRepositoryView extends SuperComposite {
 					toggleAddAttributeButton(false);
 					toggleRenameMenuItem(false);
 					toggleCopyMenuItem(false);
-					togglePasteMenuItem(false);
+					togglePasteMenuItem(true);
 					toggleDeleteMenuItem(false);
 					toggleChildObjectToolItem(false);
 					toggleObjectTypeMenuItem(false);
