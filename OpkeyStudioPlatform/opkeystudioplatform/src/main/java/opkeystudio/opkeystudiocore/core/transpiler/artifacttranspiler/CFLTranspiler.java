@@ -33,7 +33,6 @@ public class CFLTranspiler extends AbstractTranspiler {
 			new TranspilerUtilities().addPackageName(artifact, classSource);
 			new TranspilerUtilities().addDefaultImports(classSource);
 			new TranspilerUtilities().writeCodeToFile(file, classSource);
-			// new ArtifactParser().parseArtifact(artifact);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

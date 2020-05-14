@@ -65,12 +65,14 @@ public class ArtifactApi {
 	public void deleteArtifact(Artifact artifact) {
 		String query = String.format("delete from main_artifact_filesystem where id='%s'", artifact.getId());
 		QueryExecutor.getInstance().executeUpdateQuery(query);
+		GlobalLoader.getInstance().initAllArtifacts();
 	}
 
 	public void updateArtifact(Artifact artifact) {
 		String updateQuery = new QueryMaker().createUpdateQuery(artifact, "main_artifact_filesystem",
 				String.format("WHERE id='%s'", artifact.getId()));
 		QueryExecutor.getInstance().executeUpdateQuery(updateQuery);
+		GlobalLoader.getInstance().initAllArtifacts();
 	}
 
 	public Artifact createArtifact(Artifact parentId, String artifactName, MODULETYPE artifactType) {
