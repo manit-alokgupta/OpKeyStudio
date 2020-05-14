@@ -58,24 +58,6 @@ public class CodeViewTree extends CustomTree {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				openSelectedCodeFile();
-			}
-		});
-
-		this.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
 				CodeViewTreeItem treeItem = getSelectedArtifactTreeItem();
 				if (treeItem == null) {
 					return;
@@ -83,6 +65,7 @@ public class CodeViewTree extends CustomTree {
 				getParentArtifactCodeViewTreeUI().toggleRefreshMenuItem(true);
 				File selectedFile = treeItem.getArtifactFile();
 				if (treeItem.isSystemFolder()) {
+					getParentArtifactCodeViewTreeUI().toggleOpenMenuItem(false);
 					getParentArtifactCodeViewTreeUI().toggleNewToolbarItem(false);
 					getParentArtifactCodeViewTreeUI().toggleNewToolbarMenuItem(false);
 					getParentArtifactCodeViewTreeUI().toggleDeleteToolbarItem(false);
@@ -106,9 +89,13 @@ public class CodeViewTree extends CustomTree {
 			}
 
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+			public void mouseDown(MouseEvent e) {
 
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				openSelectedCodeFile();
 			}
 		});
 	}

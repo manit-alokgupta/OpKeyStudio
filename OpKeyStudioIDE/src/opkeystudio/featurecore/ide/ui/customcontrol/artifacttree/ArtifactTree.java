@@ -212,6 +212,9 @@ public class ArtifactTree extends CustomTree {
 				if (ati.getArtifact().getId().equals(artifactId)) {
 					this.setSelection(item);
 					this.notifyListeners(SWT.FocusIn, null);
+					this.notifyListeners(SWT.MouseUp, null);
+					this.notifyListeners(SWT.MouseDown, null);
+					this.notifyListeners(SWT.Selection, null);
 					break;
 				}
 			}
