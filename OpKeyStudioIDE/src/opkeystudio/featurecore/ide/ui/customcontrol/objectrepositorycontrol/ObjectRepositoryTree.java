@@ -216,12 +216,13 @@ public class ObjectRepositoryTree extends CustomTree {
 		this.removeAll();
 		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
 		rootNode.setText("ObjectRepository");
-		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
 		for (Artifact artifact : artifacts) {
 			renderObjectRepositories(rootNode, artifact.getName(), artifact.getId());
 		}
+		rootNode.setExpanded(true);
+		this.setRedraw(true);
 	}
 
 	public void renderObjectRepositories(ObjectRepositoryTreeItem mainRootNode, String name, String or_id) {
@@ -250,7 +251,8 @@ public class ObjectRepositoryTree extends CustomTree {
 		for (ObjectRepositoryTreeItem topMostNode : topMostNodes) {
 			renderAllArtifactTree(topMostNode, objectRepositories);
 		}
-		expandAll(mainRootNode);
+
+//		expandAll(mainRootNode);
 	}
 
 	public TestCaseView getParentTestCaseView() {
