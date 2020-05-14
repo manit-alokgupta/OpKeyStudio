@@ -37,6 +37,9 @@ public class CustomNotificationUtil {
 	}
 
 	public static int openConfirmDialog(Shell shell, String title, String message) {
+		if (shell.isDisposed()) {
+			return -1;
+		}
 		return new MessageDialog(shell, title,
 				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message,
 				MessageDialog.CONFIRM, new String[] { "Yes", "No", "Cancel" }, 0).open();

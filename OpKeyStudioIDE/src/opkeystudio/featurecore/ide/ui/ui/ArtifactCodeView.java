@@ -58,6 +58,7 @@ import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspil
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.ORTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.SuiteTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.TCTranspiler;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class ArtifactCodeView extends SuperComposite {
 
@@ -689,9 +690,12 @@ public class ArtifactCodeView extends SuperComposite {
 	private void handleRefreshOnSave() {
 		initCodeViewFile();
 		if (saveButton.getEnabled() == true) {
-			boolean status = new MessageDialogs().openConfirmDialog("OpKey",
+			int status1 = CustomNotificationUtil.openConfirmDialog(this.getShell(), "OpKey",
 					String.format("Do you want to save '%s'?", getCodeViewFile().getName()));
-			if (status == true) {
+			if (status1 == 2) {
+				return;
+			}
+			if (status1 == 0) {
 				saveGenericCodeEditorFile();
 			}
 		}
