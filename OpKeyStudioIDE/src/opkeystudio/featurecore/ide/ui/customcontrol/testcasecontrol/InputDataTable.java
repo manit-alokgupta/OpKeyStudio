@@ -150,6 +150,20 @@ public class InputDataTable extends CustomTable {
 			if (isBooleanType) {
 				disposeControlEditor(editor);
 				Button checkedButton = new Button(cursor, SWT.CHECK);
+				checkedButton.addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						checkedButton.dispose();
+
+					}
+
+					@Override
+					public void focusGained(FocusEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
 				checkedButton.addSelectionListener(new SelectionListener() {
 
 					@Override
