@@ -159,9 +159,11 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public void renderArtifacts(boolean fireGlobalEvent) {
-		this.setEnabled(false);
-		getParentArtifactTreeUI().getSearchBox().setEnabled(false);
-		getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(false);
+		if (isAttachedinTestSuite() == false) {
+			this.setEnabled(false);
+			getParentArtifactTreeUI().getSearchBox().setEnabled(false);
+			getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(false);
+		}
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
@@ -173,7 +175,6 @@ public class ArtifactTree extends CustomTree {
 		} else {
 			rootNode.setText("Project WorkSpace");
 		}
-		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<Artifact> artifacts = new ArrayList<>();
 		if (isAttachedinTestSuite()) {
@@ -197,19 +198,26 @@ public class ArtifactTree extends CustomTree {
 		for (ArtifactTreeItem topMostNode : topMostNodes) {
 			renderAllArtifactTree(topMostNode, artifacts);
 		}
-		expandAll(rootNode);
+		if (isAttachedinTestSuite()) {
+			rootNode.setExpanded(true);
+			this.setRedraw(true);
+		} else {
+			expandAll(rootNode);
+		}
 		if (isAttachedinTestSuite() == false) {
 			ArtifactTranspiler.getInstance().setPackageProperties();
+			new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 		}
-		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 		selectTreeItem(rootNode);
 		if (fireGlobalEvent) {
 			OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		}
-		this.setEnabled(true);
-		getParentArtifactTreeUI().getSearchBox().setEnabled(true);
-		getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(true);
-		highlightArtifact(getSelectedArtifactId());
+		if (isAttachedinTestSuite() == false) {
+			this.setEnabled(true);
+			getParentArtifactTreeUI().getSearchBox().setEnabled(true);
+			getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(true);
+			highlightArtifact(getSelectedArtifactId());
+		}
 	}
 
 	public void highlightArtifact(String artifactId) {
