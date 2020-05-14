@@ -10,6 +10,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import opkeystudio.opkeystudiocore.core.utils.DataType.OpKeyDataType;
 
 public class ORObjectMaker {
 
@@ -153,7 +154,11 @@ public class ORObjectMaker {
 		ORObject orobject = pasteORObject.clone();
 		orobject.setName(orName);
 		orobject.setObject_id(Utilities.getInstance().getUniqueUUID(""));
-		orobject.setParent_object_id(selectedORObject.getObject_id());
+		if (selectedORObject == null) {
+			orobject.setParent_object_id(String.valueOf(OpKeyDataType.NULLDATA));
+		} else {
+			orobject.setParent_object_id(selectedORObject.getObject_id());
+		}
 		orobject.setPosition(selectedORObjectPosition + 5);
 		orobject.setAdded(true);
 		List<ObjectAttributeProperty> attributes = pasteORObject.getObjectAttributesProperty();
