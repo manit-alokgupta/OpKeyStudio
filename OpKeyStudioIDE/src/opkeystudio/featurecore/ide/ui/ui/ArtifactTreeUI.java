@@ -44,6 +44,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.ArtifactUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class ArtifactTreeUI extends SuperComposite {
@@ -1238,8 +1239,9 @@ public class ArtifactTreeUI extends SuperComposite {
 		if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
 			ext = "";
 		}
+		String artifactPackagePath = ArtifactTranspiler.getInstance().getArtifactPackagePath(artifact);
 		String filePath1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectArtifactCodesFolder() + File.separator + artifact.getPackagePath() + File.separator
+				.getProjectArtifactCodesFolder() + File.separator + artifactPackagePath + File.separator
 				+ artifact.getVariableName() + ext;
 		File file1 = new File(filePath1);
 		System.out.println(">>Deleting Artifact Java File " + file1.getAbsolutePath());
