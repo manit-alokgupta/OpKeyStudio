@@ -37,7 +37,7 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 public class Utilities {
 	private static Utilities util;
 	private String defaultInstallDir;
-	private boolean developerMode = true;
+	private boolean developerMode = false;
 
 	public static Utilities getInstance() {
 		if (util == null) {
@@ -153,6 +153,14 @@ public class Utilities {
 	public String getTranspiledArtifactsFolder_2() {
 		return System.getProperty("user.home") + File.separator + "OpKeyStudio" + File.separator + "workspace"
 				+ File.separator + "TranspiledArtifacts";
+	}
+
+	public File getResourcesDir() {
+		return new File(getDefaultInstallDir(), "resources");
+	}
+
+	public File getVncZipFile() {
+		return new File(getResourcesDir(), "vncserver.zip");
 	}
 
 	public String getDefaultPluginBaseDir() {
