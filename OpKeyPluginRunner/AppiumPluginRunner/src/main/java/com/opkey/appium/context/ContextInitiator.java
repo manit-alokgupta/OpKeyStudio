@@ -10,6 +10,7 @@ import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCa
 import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCall.Function;
 import com.crestech.opkey.plugin.contexts.Context;
 import com.crestech.opkey.plugin.contexts.InvocationContext;
+import com.opkey.appium.sessions.SessionHandler;
 
 public class ContextInitiator {
 	public void initContext() {
@@ -94,7 +95,7 @@ public class ContextInitiator {
 		settingsMap.put("________ignore________",
 				"NOTE: Below items can also be fetched through invocation arguments defined in plugin descriptor. Ignore the underscore edges in names");
 		settingsMap.put("_CommunicationEndpoint_", "");
-		settingsMap.put("_ScreenshotsDirectory_", "");
+		settingsMap.put("_ScreenshotsDirectory_", SessionHandler.screenshotPath.getPath());
 		settingsMap.put("_EnginePID_", "");
 		settingsMap.put("_CustomLibraryFolderPath_", "");
 		settingsMap.put("_PluginSettingXmlPath_", "");
