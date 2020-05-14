@@ -2,6 +2,7 @@ package opkeystudio.opkeystudiocore.core.dtoMaker;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -151,6 +152,19 @@ public class ORObjectMaker {
 			}
 		}
 
+		if (selectedORObject == null) {
+			List<ORObject> parentObjects = new ArrayList<ORObject>();
+			for (ORObject orobject : allORObjects) {
+				if (orobject.getParent_object_id() == null) {
+					parentObjects.add(orobject);
+				}
+			}
+			if (parentObjects.size() > 0) {
+				ORObject lastORObject = parentObjects.get(parentObjects.size() - 1);
+				selectedORObjectPosition = lastORObject.getPosition();
+			}
+		}
+		
 		ORObject orobject = pasteORObject.clone();
 		orobject.setName(orName);
 		orobject.setObject_id(Utilities.getInstance().getUniqueUUID(""));
