@@ -30,25 +30,32 @@ public class SessionHandler implements ExecutionSession {
 			new Connect2AppiumServer().Method_closeApplication();
 		} catch (Exception e) {
 		}
-		
+
 		if (ReportBuilder.get() != null)
 			ReportBuilder.get().close();
 	}
 
 	public void beforeSessionStart(Object sessionObject) {
 		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
-
-		String deviceApiLevel = sessionInfo.pluginSettings.get("DeviceApiLevel"); // device SDK
-		String deviceAbi = sessionInfo.pluginSettings.get("DeviceABI"); // device ABI
-
 		SessionHandler.sessionInfo = sessionInfo;
-		MobileDevice device = sessionInfo.mobileDevice;
 
+		// Appium Configuration Info
+		String appiumHost = sessionInfo.pluginSettings.get("appiumHost"); // appium Host
+		String appiumPort = sessionInfo.pluginSettings.get("appiumPort"); // appium Port
+		String appiumDir = sessionInfo.pluginSettings.get("appiumDir"); // appium directory
+
+		// Appium Mobile Desired Capabilities
+		// DesiredCapabilities mobileCapabilities = sessionInfo.mobileCapabilities;
+
+		// Mobile Device Info
+		MobileDevice device = sessionInfo.mobileDevice;
 		System.out.println(">>Mobile Device Info");
 		System.out.println("Device Name :" + device.getDisplayName());
 		System.out.println("Device Id :" + device.getSerialNumber());
 		System.out.println("Device Version :" + device.getVersion());
 		System.out.println("Device OS :" + device.getOperatingSystem());
+		String deviceApiLevel = sessionInfo.pluginSettings.get("DeviceApiLevel"); // device SDK
+		String deviceAbi = sessionInfo.pluginSettings.get("DeviceABI"); // device ABI
 
 		File htmlFile = new File(sessionInfo.reportFilePath);
 		reportFilePath = htmlFile.getParentFile();

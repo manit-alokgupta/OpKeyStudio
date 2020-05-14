@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="/OpKeyStudio/resources/libraries/Plugins/libs/Selenium/selenium-java-3.141.59/selenium-java-3.141.59.jar"/>
 	<classpathentry kind="lib" path="/OpKeyStudio/resources/libraries/Plugins/libs/Selenium/selenium-java-3.141.59/selenium-api-3.141.59.jar"/>
 	<classpathentry kind="lib" path="/OpKeyStudio/resources/libraries/Plugins/libs/Selenium/selenium-java-3.141.59/selenium-support-3.141.59.jar"/>
+	<classpathentry kind="lib" path="/OpKeyStudio/resources/libraries/Plugins/libs/Selenium/selenium-java-3.141.59/selenium-remote-driver-3.141.59.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
