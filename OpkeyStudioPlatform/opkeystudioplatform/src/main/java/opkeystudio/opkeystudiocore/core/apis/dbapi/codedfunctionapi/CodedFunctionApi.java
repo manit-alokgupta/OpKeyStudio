@@ -371,7 +371,7 @@ public class CodedFunctionApi {
 		method.setName("run").setPublic();
 		for (CFLInputParameter cfin : cflInputParameters) {
 			String dataType = cfin.getType();
-			dataType = convertDataType(dataType);
+			dataType = new VariableComposer().convertOpKeyDataTypeToJavaDataType(dataType);
 			String varName = cfin.getVariableName();
 			method.addParameter(dataType, varName);
 		}
@@ -382,9 +382,9 @@ public class CodedFunctionApi {
 				defaultArguments += ", ";
 			}
 			String dataType = cfin.getType();
-			dataType = convertDataType(dataType);
+			dataType = new VariableComposer().convertOpKeyDataTypeToJavaDataType(dataType);
 			String defaultValue = cfin.getDefaultvalue();
-			String convertedDefaultValue = getDataAsDataType(dataType, defaultValue);
+			String convertedDefaultValue = new VariableComposer().getDataAsDataType(dataType, defaultValue);
 			defaultArguments += convertedDefaultValue;
 		}
 		defaultMethodBody = String.format(defaultMethodBody, defaultArguments);
@@ -400,59 +400,5 @@ public class CodedFunctionApi {
 
 		method.setBody(usercode).addThrows("Exception");
 		return imports + "" + _class.toString();
-	}
-
-	private String getDataAsDataType(String dataType, String data) {
-		if (dataType.equals("int")) {
-			if (data == null) {
-				return "0";
-			}
-			return data;
-		}
-		if (dataType.equals("double")) {
-			if (data == null) {
-				return "0";
-			}
-			return data;
-		}
-		if (dataType.equals("float")) {
-			if (data == null) {
-				return "0";
-			}
-			return data;
-		}
-		if (dataType.equals("boolean")) {
-			if (data == null) {
-				return "false";
-			}
-			return data;
-		}
-
-		if (dataType.equals("String")) {
-			if (data == null) {
-				data = "";
-			}
-			return "\"" + data + "\"";
-		}
-		return data;
-	}
-
-	private String convertDataType(String dataType) {
-		if (dataType.equals("Float")) {
-			return "float";
-		}
-		if (dataType.equals("Double")) {
-			return "double";
-		}
-		if (dataType.equals("Integer")) {
-			return "int";
-		}
-		if (dataType.equals("Boolean")) {
-			return "boolean";
-		}
-		if (dataType.equals("String")) {
-			return "String";
-		}
-		return dataType;
 	}
 }
