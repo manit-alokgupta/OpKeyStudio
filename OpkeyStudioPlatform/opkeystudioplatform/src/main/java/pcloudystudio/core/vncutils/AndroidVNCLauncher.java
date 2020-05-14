@@ -112,14 +112,13 @@ public class AndroidVNCLauncher {
 	}
 
 	public void copyZip() {
-		URL url;
 		String copyToPath = Utilities.getInstance().getDefaultWorkSpacePath() + File.separator + "VncServer";
 		try {
-			url = new URL("platform:/plugin/OpKeyStudio/resources/vncserver.zip");
-			InputStream inputStream = url.openConnection().getInputStream();
+			File sourceVncZip = Utilities.getInstance().getVncZipFile();
+			
 			File targetFile = new File(copyToPath + "\\vncserver.zip");
-			java.nio.file.Files.copy(inputStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			IOUtils.closeQuietly(inputStream);
+			java.nio.file.Files.copy(sourceVncZip.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
