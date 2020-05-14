@@ -430,6 +430,9 @@ public class CodeViewTree extends CustomTree {
 				renderFiles(ctreeitem, file);
 			}
 		} else {
+			if (rootFile.getName().toLowerCase().endsWith(".class")) {
+				return;
+			}
 			CodeViewTreeItem ctreeitem = new CodeViewTreeItem(parentNode, 0);
 			ctreeitem.setArtifactFile(rootFile);
 			ctreeitem.setText(rootFile.getName());
