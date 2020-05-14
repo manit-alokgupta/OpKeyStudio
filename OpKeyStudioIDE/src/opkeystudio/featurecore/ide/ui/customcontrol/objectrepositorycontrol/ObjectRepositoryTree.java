@@ -16,6 +16,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
+import opkeystudio.opkeystudiocore.core.utils.DataType.OpKeyDataType;
 
 public class ObjectRepositoryTree extends CustomTree {
 	private TestCaseView parentTestCaseView;
@@ -192,7 +193,8 @@ public class ObjectRepositoryTree extends CustomTree {
 		List<ObjectRepositoryTreeItem> topMostNodes = new ArrayList<>();
 		for (ORObject objectRepository : objectRepositories) {
 			if (!objectRepository.isDeleted()) {
-				if (objectRepository.getParent_object_id() == null) {
+				if (objectRepository.getParent_object_id() == null
+						|| objectRepository.getParent_object_id().equals(OpKeyDataType.NULLDATA.toString())) {
 					ObjectRepositoryTreeItem orTreeItem = new ObjectRepositoryTreeItem(rootNode, 0);
 					orTreeItem.setText(objectRepository.getName());
 					orTreeItem.setArtifact(objectRepository);

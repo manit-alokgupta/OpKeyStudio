@@ -80,10 +80,13 @@ public class ObjectRepositoryView extends SuperComposite {
 	private ORObject obRepo;
 	private String orId;
 	private String[] parentObjectTypes = new String[] { "Html Page", "Frame", "Page" };
-	private String[] childObjectTypes = new String[] { "Area", "Base", "Button", "Checkbox", "Clickable Image Map", "Color Picker", "Custom", "Custom Object", "Datetime Picker", "Div",
-			"Drop Down List", "Edit Field", "Email Address", "File Field", "Form", "Frame", "Frameset", "Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Heading 6", "Hidden",
-			"IFrame", "Image", "Input Button", "Input Image", "Label", "Li", "Link", "List", "Meta", "Number Picker", "Object", "Option", "Paragraph", "Password", "Preformated Text", "Radio", "Reset",
-			"Search", "Span", "Submit", "Table", "Table Cell", "Table Row", "Telephone", "Text Field", "Textarea", "Time Picker", "UI", "Url", "Webelement", "Week Picker" };
+	private String[] childObjectTypes = new String[] { "Area", "Base", "Button", "Checkbox", "Clickable Image Map",
+			"Color Picker", "Custom", "Custom Object", "Datetime Picker", "Div", "Drop Down List", "Edit Field",
+			"Email Address", "File Field", "Form", "Frame", "Frameset", "Heading 1", "Heading 2", "Heading 3",
+			"Heading 4", "Heading 5", "Heading 6", "Hidden", "IFrame", "Image", "Input Button", "Input Image", "Label",
+			"Li", "Link", "List", "Meta", "Number Picker", "Object", "Option", "Paragraph", "Password",
+			"Preformated Text", "Radio", "Reset", "Search", "Span", "Submit", "Table", "Table Cell", "Table Row",
+			"Telephone", "Text Field", "Textarea", "Time Picker", "UI", "Url", "Webelement", "Week Picker" };
 
 	/**
 	 * Create the composite.
@@ -147,7 +150,8 @@ public class ObjectRepositoryView extends SuperComposite {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
-					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name, item.getText(), objectRepositoryTree.getAllORObjects());
+					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name,
+							item.getText(), objectRepositoryTree.getAllORObjects());
 					setObjectId(orobject.getObject_id());
 					objectRepositoryTree.getAllORObjects().add(orobject);
 					toggleSaveButton(true);
@@ -177,7 +181,9 @@ public class ObjectRepositoryView extends SuperComposite {
 					String name = new Utilities().getRandomVariableName("New Node " + item.getText());
 					ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
 					ORObject selectedobject = treeItem.getORObject();
-					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), selectedobject.getObject_id(), name, item.getText(), objectRepositoryTree.getAllORObjects());
+					ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
+							selectedobject.getObject_id(), name, item.getText(),
+							objectRepositoryTree.getAllORObjects());
 					setObjectId(orobject.getObject_id());
 					objectRepositoryTree.getAllORObjects().add(orobject);
 					toggleSaveButton(true);
@@ -241,10 +247,12 @@ public class ObjectRepositoryView extends SuperComposite {
 					isParentObjectItemsListVisible = false;
 					return;
 				}
-				String objectName = addParentObjectToolItem.getText().replaceAll("Add", "").replace("(", "").replace(")", "").trim();
+				String objectName = addParentObjectToolItem.getText().replaceAll("Add", "").replace("(", "")
+						.replace(")", "").trim();
 				System.out.println("Object Name " + objectName);
 				String name = new Utilities().getRandomVariableName("New Node " + objectName);
-				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name, objectName, objectRepositoryTree.getAllORObjects());
+				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), null, name, objectName,
+						objectRepositoryTree.getAllORObjects());
 				setObjectId(orobject.getObject_id());
 				objectRepositoryTree.getAllORObjects().add(orobject);
 				toggleSaveButton(true);
@@ -271,12 +279,14 @@ public class ObjectRepositoryView extends SuperComposite {
 					childObjectMenu.setVisible(true);
 					return;
 				}
-				String objectName = addChildObjectToolItem.getText().replaceAll("Add", "").replace("(", "").replace(")", "").trim();
+				String objectName = addChildObjectToolItem.getText().replaceAll("Add", "").replace("(", "")
+						.replace(")", "").trim();
 				System.out.println("Object Name " + objectName);
 				String name = new Utilities().getRandomVariableName("New Node " + objectName);
 				ObjectRepositoryTreeItem treeItem = objectRepositoryTree.getSelectedTreeItem();
 				ORObject selectedobject = treeItem.getORObject();
-				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(), selectedobject.getObject_id(), name, objectName, objectRepositoryTree.getAllORObjects());
+				ORObject orobject = new ORObjectMaker().getORObjectDTO(getArtifact(), getOrId(),
+						selectedobject.getObject_id(), name, objectName, objectRepositoryTree.getAllORObjects());
 				setObjectId(orobject.getObject_id());
 				objectRepositoryTree.getAllORObjects().add(orobject);
 				toggleSaveButton(true);
@@ -313,7 +323,8 @@ public class ObjectRepositoryView extends SuperComposite {
 
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		androidDeviceConfiguration = new ToolItem(toolBar, SWT.NONE);
-		androidDeviceConfiguration.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOBILE_ADD_TO_OR_CAPTURED_IMAGE));
+		androidDeviceConfiguration.setImage(
+				ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.MOBILE_ADD_TO_OR_CAPTURED_IMAGE));
 		androidDeviceConfiguration.setToolTipText("Device Configuration and Spy Android");
 		new ToolItem(toolBar, SWT.SEPARATOR);
 
@@ -376,7 +387,8 @@ public class ObjectRepositoryView extends SuperComposite {
 		intelliChooseObjectAttribute = new ToolItem(toolBar_1, SWT.CHECK | SWT.BORDER);
 		intelliChooseObjectAttribute.setText("IntelliChoose");
 		intelliChooseObjectAttribute.setToolTipText("IntelliChoose");
-		intelliChooseObjectAttribute.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GREEN_FLAG_ICON));
+		intelliChooseObjectAttribute
+				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GREEN_FLAG_ICON));
 
 		objectAttributeTable = new ObjectAttributeTable(composite_1, SWT.BORDER | SWT.FULL_SELECTION, this);
 		objectAttributeTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -455,7 +467,7 @@ public class ObjectRepositoryView extends SuperComposite {
 					} else {
 						toggleCopyMenuItem(true);
 					}
-					
+
 					if (item.getORObject().getParent_object_id() == null) {
 						togglePasteMenuItem(true);
 					} else {
@@ -469,8 +481,10 @@ public class ObjectRepositoryView extends SuperComposite {
 					}
 					toggleObjectTypeMenuItem(true);
 					objectType.setText("Object Type: " + objectRepositoryTree.getSelectedORObject().getOpkeytype());
-					intelliChooseObject.setSelection(objectRepositoryTree.getSelectedORObject().isUsesmartidentification());
-					intelliChooseObjectAttribute.setSelection(objectRepositoryTree.getSelectedORObject().isUsesmartidentification());
+					intelliChooseObject
+							.setSelection(objectRepositoryTree.getSelectedORObject().isUsesmartidentification());
+					intelliChooseObjectAttribute
+							.setSelection(objectRepositoryTree.getSelectedORObject().isUsesmartidentification());
 				} else {
 					intelliChooseObject.setEnabled(false);
 					intelliChooseObjectAttribute.setEnabled(false);
@@ -584,7 +598,8 @@ public class ObjectRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey", "Do you want to Delete");
+				boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
+						"Do you want to Delete");
 				if (!result) {
 					return;
 				}
@@ -609,13 +624,18 @@ public class ObjectRepositoryView extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				AppiumConfiguration.getInstance();
-				if (AppiumConfiguration.getHostAddress() == null && OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
-					AppiumConfiguration.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
-					AppiumConfiguration.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
-					AppiumConfiguration.setAppiumDirectory(OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
+				if (AppiumConfiguration.getHostAddress() == null
+						&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
+					AppiumConfiguration
+							.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+					AppiumConfiguration
+							.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+					AppiumConfiguration.setAppiumDirectory(
+							OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				}
 
-				if (AppiumConfiguration.getPort() == null || AppiumConfiguration.getHostAddress() == null || AppiumConfiguration.getAppiumDirectory() == null) {
+				if (AppiumConfiguration.getPort() == null || AppiumConfiguration.getHostAddress() == null
+						|| AppiumConfiguration.getAppiumDirectory() == null) {
 					openAppiumSettingDialog();
 				} else {
 					openDeviceConfigurationDialog();
@@ -635,7 +655,8 @@ public class ObjectRepositoryView extends SuperComposite {
 				ORObject orobject = getObjectRepositoryTree().getSelectedORObject();
 				if (orobject != null) {
 					CustomNotificationUtil.openInformationNotification("OpKey", "Property Added!");
-					ObjectAttributeProperty attrProp = new ORObjectMaker().getNewObjectAttributeProperty(orobject, objectAttributeTable.getObjectPropertiesData());
+					ObjectAttributeProperty attrProp = new ORObjectMaker().getNewObjectAttributeProperty(orobject,
+							objectAttributeTable.getObjectPropertiesData());
 					objectAttributeTable.getObjectPropertiesData().add(attrProp);
 					objectAttributeTable.renderObjectAttributes();
 					objectAttributeTable.selectDefaultRowByCursor(objectAttributeTable.cursor, 0);
@@ -673,7 +694,8 @@ public class ObjectRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ObjectRepositoryTreeItem selectedItem = (ObjectRepositoryTreeItem) objectRepositoryTree.getSelection()[0];
+				ObjectRepositoryTreeItem selectedItem = (ObjectRepositoryTreeItem) objectRepositoryTree
+						.getSelection()[0];
 				ORObject selectedORObject = selectedItem.getORObject();
 				ORObject pasteORobject = CopyPasteOperation.getInstance().getOrObject();
 				if (pasteORobject == null) {
@@ -682,7 +704,9 @@ public class ObjectRepositoryView extends SuperComposite {
 				String objectName = pasteORobject.getName();
 				objectName = objectRepositoryTree.getUniqueTreeItemName(selectedItem, objectName);
 				System.out.println(">>Object Name " + objectName);
-				ORObject orobjectReplica = new ORObjectMaker().createORObjectReplica(getArtifact(), objectName, selectedORObject, pasteORobject, objectRepositoryTree.getAllORObjects());
+				ORObject orobjectReplica = new ORObjectMaker().createORObjectReplica(getArtifact(), objectName,
+						selectedORObject, pasteORobject, objectRepositoryTree.getAllORObjects());
+				setObjectId(orobjectReplica.getObject_id());
 				objectRepositoryTree.getAllORObjects().add(orobjectReplica);
 				objectRepositoryTree.refreshObjectRepositories();
 				togglePasteMenuItem(false);
@@ -816,13 +840,15 @@ public class ObjectRepositoryView extends SuperComposite {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 			ObjectRepositoryTreeItem selectedTreeItem = objectRepositoryTree.getSelectedTreeItem();
 			ORObject obRepo = selectedTreeItem.getORObject();
-			String input = CustomNotificationUtil.openInputDialog("OpKey", "Rename: " + obRepo.getName(), obRepo.getName());
+			String input = CustomNotificationUtil.openInputDialog("OpKey", "Rename: " + obRepo.getName(),
+					obRepo.getName());
 
 			if (input == null) {
 				return;
 			}
 			if (input.trim().isEmpty()) {
-				MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input", "Please Enter Some Value");
+				MessageDialog.openError(Display.getCurrent().getActiveShell(), "Invalid Input",
+						"Please Enter Some Value");
 				return;
 			}
 			obRepo.setName(input.trim());
@@ -839,7 +865,8 @@ public class ObjectRepositoryView extends SuperComposite {
 	public void deleteFunction() {
 		try {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
-			boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey", "Do you want to delete '" + objectRepositoryTree.getSelectedTreeItem().getText() + "'?");
+			boolean result = MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "OpKey",
+					"Do you want to delete '" + objectRepositoryTree.getSelectedTreeItem().getText() + "'?");
 			if (!result) {
 				return;
 			}
@@ -848,7 +875,8 @@ public class ObjectRepositoryView extends SuperComposite {
 			obRepo = selectedTreeItem.getORObject();
 			boolean isUsed = new ObjectRepositoryApiUtilities().isORObjectUsed(obRepo);
 			if (isUsed) {
-				new MessageDialogs().openInformationDialog("Can't delete ORObject", "Unable to delete " + obRepo.getName() + " as it is being used in some higher components");
+				new MessageDialogs().openInformationDialog("Can't delete ORObject",
+						"Unable to delete " + obRepo.getName() + " as it is being used in some higher components");
 				return;
 			}
 			if (obRepo.getParent_object_id() == null) {
@@ -858,7 +886,8 @@ public class ObjectRepositoryView extends SuperComposite {
 					ORObject orobject = item.getORObject();
 					boolean isused = new ObjectRepositoryApiUtilities().isORObjectUsed(orobject);
 					if (isused) {
-						new MessageDialogs().openInformationDialog("Can't delete ORObject", "Unable to delete " + obRepo.getName() + " as it is being used in some higher components");
+						new MessageDialogs().openInformationDialog("Can't delete ORObject", "Unable to delete "
+								+ obRepo.getName() + " as it is being used in some higher components");
 						return;
 					}
 				}
@@ -884,7 +913,8 @@ public class ObjectRepositoryView extends SuperComposite {
 			String objectId = item.getORObject().getObject_id();
 			if (item.getORObject().getObjectAttributesProperty().size() == 0) {
 				System.out.println("Executing Object Property Fetch");
-				item.getORObject().setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
+				item.getORObject()
+						.setObjectAttributesProperty(new ObjectRepositoryApi().getObjectAttributeProperty(objectId));
 			}
 			objectAttributeTable.setControlData(item.getORObject().getObjectAttributesProperty());
 			objectAttributeTable.renderObjectAttributes();
