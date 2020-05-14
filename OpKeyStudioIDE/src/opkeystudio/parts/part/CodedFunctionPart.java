@@ -9,6 +9,7 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
@@ -19,10 +20,12 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository
 
 public class CodedFunctionPart {
 
+	private ArtifactCodeView acv = null;
+
 	@PostConstruct
-	public void postConstruct(Composite parent) throws IOException {
-		//new CodedFunctionView(parent, 0);
-		new ArtifactCodeView(parent, 0, false, true);
+	public void postConstruct(Composite parent, MPart part, MWindow window) throws IOException {
+		// new CodedFunctionView(parent, 0);
+		acv = new ArtifactCodeView(parent, 0, false, true);
 	}
 
 	@PreDestroy
@@ -46,7 +49,7 @@ public class CodedFunctionPart {
 
 	@Persist
 	public void save() {
-
+		
 	}
 
 	@PersistState

@@ -9,6 +9,7 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
@@ -19,14 +20,16 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository
 
 public class TestSuitePart {
 
+	private TestSuiteView tsv = null;
+
 	@PostConstruct
-	public void postConstruct(Composite parent) throws IOException {
-		new TestSuiteView(parent, 0);
+	public void postConstruct(Composite parent, MPart part, MWindow window) throws IOException {
+		tsv = new TestSuiteView(parent, 0, part);
 	}
 
 	@PreDestroy
 	public void preDestroy() {
-		
+
 	}
 
 	@Focus
@@ -45,11 +48,11 @@ public class TestSuitePart {
 
 	@Persist
 	public void save() {
-
+		tsv.saveSuiteSteps();
 	}
 
 	@PersistState
 	public void persistState() {
-		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		//OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 }

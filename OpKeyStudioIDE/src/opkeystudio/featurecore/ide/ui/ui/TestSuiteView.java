@@ -82,7 +82,7 @@ public class TestSuiteView extends SuperComposite {
 	 * @param style
 	 */
 
-	public TestSuiteView(Composite parent, int style) {
+	public TestSuiteView(Composite parent, int style, MPart part) {
 		super(parent, style);
 		initArtifact();
 		initTestSuiteUI();
@@ -91,6 +91,7 @@ public class TestSuiteView extends SuperComposite {
 		toggleMoveUpButton(false);
 		toggleMoveDownButton(false);
 		addOpKeyGlobalListener();
+		currentMpart = part;
 	}
 
 	private void addOpKeyGlobalListener() {
@@ -336,6 +337,7 @@ public class TestSuiteView extends SuperComposite {
 	}
 
 	public void toggleSaveButton(boolean status) {
+		getCurrentMpart().setDirty(status);
 		saveButton.setEnabled(status);
 	}
 
@@ -410,14 +412,12 @@ public class TestSuiteView extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				boolean status = handleSaveOnRefresh();
 				if (status == false) {
-					new MessageDialogs().openErrorDialog(testSuiteTable.getShell(), "OpKey",
-							"Unable to Execute. Please save your data first.");
+					new MessageDialogs().openErrorDialog(testSuiteTable.getShell(), "OpKey", "Unable to Execute. Please save your data first.");
 					return;
 				}
 				List<TestSuiteStep> flowSteps = testSuiteTable.getTestSuiteData();
 				if (flowSteps.size() == 0) {
-					new MessageDialogs().openErrorDialog(testSuiteTable.getShell(), "OpKey",
-							"Nothing to execute. Please add atleast one TC");
+					new MessageDialogs().openErrorDialog(testSuiteTable.getShell(), "OpKey", "Nothing to execute. Please add atleast one TC");
 					return;
 				}
 				boolean shouldrun = false;
@@ -427,8 +427,7 @@ public class TestSuiteView extends SuperComposite {
 					}
 				}
 				if (shouldrun == false) {
-					new MessageDialogs().openErrorDialog(testSuiteTable.getShell(), "OpKey",
-							"Nothing to execute. Please add atleast one TC");
+					new MessageDialogs().openErrorDialog(testSuiteTable.getShell(), "OpKey", "Nothing to execute. Please add atleast one TC");
 					return;
 				}
 				openExecutionWizard();
@@ -519,8 +518,7 @@ public class TestSuiteView extends SuperComposite {
 	private boolean handleSaveOnRefresh() {
 		if (saveButton.isEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
-			int status = CustomNotificationUtil.openConfirmDialog(testSuiteTable.getShell(), "OpKey",
-					"Do you want to Save changes?");
+			int status = CustomNotificationUtil.openConfirmDialog(testSuiteTable.getShell(), "OpKey", "Do you want to Save changes?");
 			System.out.println("Result " + status);
 			if (status == 2) {
 				return false;

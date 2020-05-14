@@ -9,6 +9,7 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.swt.widgets.Composite;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
@@ -19,9 +20,11 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository
 
 public class DataRepositoryPart {
 
+	private DataRepositoryView drv = null;
+
 	@PostConstruct
-	public void postConstruct(Composite parent) throws IOException {
-		new DataRepositoryView(parent, 0);
+	public void postConstruct(Composite parent, MPart part, MWindow window) throws IOException {
+		drv = new DataRepositoryView(parent, 0, part);
 	}
 
 	@PreDestroy
@@ -45,11 +48,11 @@ public class DataRepositoryPart {
 
 	@Persist
 	public void save() {
-		
+		drv.saveDR();
 	}
 
 	@PersistState
 	public void persistState() {
-		OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+		// OpKeyArtifactPersistListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 }

@@ -71,9 +71,9 @@ public class DataRepositoryView extends SuperComposite {
 	 * @throws JsonParseException
 	 */
 
-	public DataRepositoryView(Composite parent, int style)
-			throws JsonParseException, JsonMappingException, IOException {
+	public DataRepositoryView(Composite parent, int style, MPart part) throws JsonParseException, JsonMappingException, IOException {
 		super(parent, SWT.BORDER);
+		currentMpart = part;
 		initArtifact();
 		initUI();
 		addGlobalListener();
@@ -443,7 +443,7 @@ public class DataRepositoryView extends SuperComposite {
 	private boolean handleSaveOnRefresh() {
 		if (saveToolItm.getEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
-			int status = CustomNotificationUtil.openConfirmDialog(dataRepositoryTable.getShell(),"OpKey", "Do you want to Save changes?");
+			int status = CustomNotificationUtil.openConfirmDialog(dataRepositoryTable.getShell(), "OpKey", "Do you want to Save changes?");
 			System.out.println("Result " + status);
 			if (status == 2) {
 				return false;
@@ -467,7 +467,7 @@ public class DataRepositoryView extends SuperComposite {
 		return true;
 	}
 
-	private void saveDR() {
+	public void saveDR() {
 		List<DRColumnAttributes> drColumns = dataRepositoryTable.getDrColumnAttributes();
 		new DataRepositoryConstructApi().saveAllDRColumns(drColumns);
 		toggleSaveButton(false);
@@ -528,6 +528,7 @@ public class DataRepositoryView extends SuperComposite {
 	}
 
 	public void toggleSaveButton(boolean status) {
+		this.getCurrentMpart().setDirty(status);
 		this.saveToolItm.setEnabled(status);
 	}
 

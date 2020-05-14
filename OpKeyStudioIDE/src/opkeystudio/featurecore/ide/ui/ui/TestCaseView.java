@@ -116,7 +116,7 @@ public class TestCaseView extends SuperComposite {
 	private ArtifactCodeView codedFunctionView;
 	private MPart currentMpart;
 
-	public TestCaseView(Composite parent, int style) {
+	public TestCaseView(Composite parent, int style, MPart part) {
 		super(parent, style);
 		initArtifact();
 		initTestCaseUI();
@@ -125,6 +125,7 @@ public class TestCaseView extends SuperComposite {
 		toggleDeleteButton(false);
 		toggleAddButton(true);
 		addOpKeyGlobalListener();
+		currentMpart = part;
 	}
 
 	private void initArtifact() {
@@ -779,6 +780,7 @@ public class TestCaseView extends SuperComposite {
 	}
 
 	public void toggleSaveButton(boolean status) {
+		this.getCurrentMpart().setDirty(status);
 		itemSave.setEnabled(status);
 	}
 
