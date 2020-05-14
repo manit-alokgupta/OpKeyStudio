@@ -30,12 +30,12 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import opkeystudio.commandhandler.ProjectImporter;
-import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.project.ProjectFile;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class ProjectOpenDialog extends TitleAreaDialog {
 
@@ -71,7 +71,6 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		getShell().setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"));
 		setMessage("Select a Project to Open");
 		setTitle("Open Project");
-		
 
 		Composite area = (Composite) super.createDialogArea(parent);
 		Composite container = new Composite(area, SWT.NONE);
@@ -86,7 +85,7 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 		projectSearch = new Text(composite, SWT.BORDER);
 		projectSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		projectSearch.setMessage("Search Project");
-	
+
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
@@ -221,7 +220,7 @@ public class ProjectOpenDialog extends TitleAreaDialog {
 				ProjectFile projectFile = getSelectedProject();
 				if (ServiceRepository.getInstance().getProjectName() != null) {
 					if (ServiceRepository.getInstance().getProjectName().equals(projectFile.getProjectName())) {
-						new MessageDialogs().openErrorDialog("OpKey", "Project Already Opened");
+						CustomNotificationUtil.openInformationNotification("OpKey", "Project Already Opened");
 						return;
 					}
 				}
