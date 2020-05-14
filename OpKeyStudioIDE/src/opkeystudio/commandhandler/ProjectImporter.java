@@ -4,8 +4,6 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.eclipse.core.runtime.Platform;
-
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.CodeViewTree;
