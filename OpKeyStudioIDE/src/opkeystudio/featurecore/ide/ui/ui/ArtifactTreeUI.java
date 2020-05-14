@@ -1093,9 +1093,6 @@ public class ArtifactTreeUI extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ArtifactTreeItem selectedTreeItem = artifactTree.getSelectedArtifactTreeItem();
-
-				System.out.println("Mouse clicked event");
-
 				if (selectedTreeItem == null) {
 					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
@@ -1119,6 +1116,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					toggleRefreshMenuItem(true);
 					return;
 				}
+				artifactTree.setSelectedArtifactId(selectedTreeItem.getArtifact().getId());
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
 					toogleNewToolbarMenuItem(true);
 					toogleNewToolbarItem(true);

@@ -6,9 +6,7 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
@@ -31,6 +29,7 @@ public class ArtifactTree extends CustomTree {
 	private boolean attachedinTestSuite = false;
 	private List<Artifact> artifacts = new ArrayList<Artifact>();
 	private ArtifactTreeUI parentArtifactTreeUI;
+	private String artifactId = null;
 
 	public ArtifactTree(Composite parent, int style, ArtifactTreeUI parentUI) {
 		super(parent, style);
@@ -210,22 +209,41 @@ public class ArtifactTree extends CustomTree {
 		this.setEnabled(true);
 		getParentArtifactTreeUI().getSearchBox().setEnabled(true);
 		getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(true);
+		highlightArtifact(getSelectedArtifactId());
 	}
 
 	public void highlightArtifact(String artifactId) {
+		if (artifactId == null) {
+			if (this.getItemCount() > 0) {
+				ArtifactTreeItem item = (ArtifactTreeItem) this.getItem(0);
+				if (item == null) {
+					return;
+				}
+				highLightTreeItem(item);
+				return;
+			}
+		}
 		List<TreeItem> titems = this.getAllTreeItems();
 		for (TreeItem item : titems) {
 			ArtifactTreeItem ati = (ArtifactTreeItem) item;
 			if (ati.getArtifact() != null) {
 				if (ati.getArtifact().getId().equals(artifactId)) {
-					this.setSelection(item);
-					this.notifyListeners(SWT.FocusIn, null);
-					this.notifyListeners(SWT.MouseUp, null);
-					this.notifyListeners(SWT.MouseDown, null);
-					this.notifyListeners(SWT.Selection, null);
+					highLightTreeItem(ati);
 					break;
 				}
 			}
+		}
+	}
+
+	private void highLightTreeItem(ArtifactTreeItem item) {
+		try {
+			this.setSelection(item);
+			this.notifyListeners(SWT.FocusIn, null);
+			this.notifyListeners(SWT.MouseUp, null);
+			this.notifyListeners(SWT.MouseDown, null);
+			this.notifyListeners(SWT.Selection, null);
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
@@ -323,5 +341,13 @@ public class ArtifactTree extends CustomTree {
 
 	public void setParentArtifactTreeUI(ArtifactTreeUI parentArtifactTreeUI) {
 		this.parentArtifactTreeUI = parentArtifactTreeUI;
+	}
+
+	public String getSelectedArtifactId() {
+		return artifactId;
+	}
+
+	public void setSelectedArtifactId(String artifactId) {
+		this.artifactId = artifactId;
 	}
 }
