@@ -321,20 +321,19 @@ public class OpKeyAppiumKeywords {
 		System.out.println(">> Appium Keyword Called LaunchChromeOnMobile");
 		ContextInitiator.addFunction(DataType.getMethodName());
 		ContextInitiator.addDataRgumentsInFunctionCall(device.getDisplayName(), url);
-		device.setOperatingSystem("Android");
 		try {
 			device = SessionHandler.getSessionInfo().mobileDevice;
 			device.setVersion(device.getVersion());
-
+			device.setOperatingSystem("Android");
 			// Method_Launch_ChromeBrowser
 
-			Context.session().getSettings().put("AppiumServer", "C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
-			Context.session().getSettings().put("Host", "localhost");
-			Context.session().getSettings().put("Port", "4723");
-//			Context.session().getSettings().put("Host", "");
-//			Context.session().getSettings().put("Port", "");
-			Context.session().getSettings().put("PlatformVersion", "8.1");
-
+			Context.session().getSettings().put("AppiumServer",
+					"C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
+//			Context.session().getSettings().put("Host", "localhost");
+//			Context.session().getSettings().put("Port", "4723");
+			Context.session().getSettings().put("Host", "");
+			Context.session().getSettings().put("Port", "");
+			Context.session().getSettings().put("PlatformVersion", device.getVersion());
 			FunctionResult functionResult = new com.plugin.appium.keywords.AppiumSpecificKeyword.Connect2AppiumServer().Method_Launch_ChromeBrowser(device, url);
 			String boolString = functionResult.getOutput();
 
