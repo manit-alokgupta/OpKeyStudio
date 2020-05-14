@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public abstract class AbstractTranspiler {
 	private String fileExtension;
@@ -13,12 +14,14 @@ public abstract class AbstractTranspiler {
 	}
 
 	public File createArtifactFile(Artifact artifact) {
-		String filePath = getTranspiledDataFolder() + File.separator + artifact.getPackagePath();
+		String artifactPackagePath = ArtifactTranspiler.getInstance().getArtifactPackagePath(artifact);
+		System.out.println("Artifact Package Path " + artifactPackagePath);
+		String filePath = getTranspiledDataFolder() + File.separator + artifactPackagePath;
 		File file1 = new File(filePath);
 		if (!file1.exists()) {
 			file1.mkdirs();
 		}
-		filePath = getTranspiledDataFolder() + File.separator + artifact.getPackagePath() + File.separator
+		filePath = getTranspiledDataFolder() + File.separator + artifactPackagePath + File.separator
 				+ artifact.getVariableName() + getFileExtension();
 		File file2 = new File(filePath);
 		if (!file2.exists()) {
