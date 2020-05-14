@@ -3,17 +3,19 @@ package com.opkeystudio.core.sessions;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
+import org.openqa.selenium.remote.DesiredCapabilities;
+
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 
 public class SessionInfoConverter {
-	
+
 	@SuppressWarnings("unchecked")
 	public static SessionInfo convertIntoSessionInfo(Object object) {
-		
+
 		@SuppressWarnings("rawtypes")
 		Class _class = object.getClass();
 		System.out.println("Converting Into SessionInfo from: " + _class.getName());
-		
+
 		try {
 			String sessionName = (String) _class.getDeclaredMethod("getSessionName").invoke(object);
 			String defaultPluginLocation = (String) _class.getDeclaredMethod("getDefaultPluginLocation").invoke(object);
@@ -21,8 +23,10 @@ public class SessionInfoConverter {
 			String reportFilePath = (String) _class.getDeclaredMethod("getReportFilePath").invoke(object);
 
 			Object mobileDeviceObject = _class.getDeclaredMethod("getMobileDevice").invoke(object);
-
 			MobileDevice mobileDevice = convertObjectIntoMobileDevice(mobileDeviceObject);
+
+			Object mobileCapabilitiesObject = _class.getDeclaredMethod("getMobileCapabilities").invoke(object);
+
 			Map<String, String> pluginSettings = (Map<String, String>) _class.getDeclaredMethod("getPluginSettings")
 					.invoke(object);
 
@@ -34,6 +38,7 @@ public class SessionInfoConverter {
 			info.pluginSettings = pluginSettings;
 			info.buildName = (String) _class.getDeclaredMethod("getBuildName").invoke(object);
 			info.sessionDirectory = (String) _class.getDeclaredMethod("getSessionDirectory").invoke(object);
+			info.setMobileCapabilities((DesiredCapabilities) mobileCapabilitiesObject);
 
 			return info;
 

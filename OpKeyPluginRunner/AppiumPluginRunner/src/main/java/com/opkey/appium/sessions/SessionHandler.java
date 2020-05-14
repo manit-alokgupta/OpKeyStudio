@@ -2,6 +2,8 @@ package com.opkey.appium.sessions;
 
 import java.io.File;
 
+import org.openqa.selenium.remote.DesiredCapabilities;
+
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 import com.opkeystudio.core.sessioninterfaces.ExecutionSession;
 import com.opkeystudio.core.sessions.SessionInfo;
@@ -45,7 +47,7 @@ public class SessionHandler implements ExecutionSession {
 		String appiumDir = sessionInfo.pluginSettings.get("appiumDir"); // appium directory
 
 		// Appium Mobile Desired Capabilities
-		// DesiredCapabilities mobileCapabilities = sessionInfo.mobileCapabilities;
+		DesiredCapabilities mobileCapabilities = sessionInfo.getMobileCapabilities();
 
 		// Mobile Device Info
 		MobileDevice device = sessionInfo.mobileDevice;
