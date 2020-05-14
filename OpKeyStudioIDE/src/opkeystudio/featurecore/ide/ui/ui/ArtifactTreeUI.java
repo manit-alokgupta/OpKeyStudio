@@ -511,7 +511,6 @@ public class ArtifactTreeUI extends SuperComposite {
 					renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 							"Rename " + artifact.getName(), artifact.getName());
 					if (renamedText == null) {
-						System.out.println("cancel pressed inside while loop");
 						return;
 					}
 				}

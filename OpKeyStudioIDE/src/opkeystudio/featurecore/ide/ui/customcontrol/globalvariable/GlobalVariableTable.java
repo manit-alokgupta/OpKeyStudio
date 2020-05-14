@@ -200,7 +200,8 @@ public class GlobalVariableTable extends CustomTable {
 							return;
 						}
 
-						if (dataType.equals("String") || dataType.equals("Integer") || dataType.equals("Double")) {
+						if (dataType.equals("String") || dataType.equals("Integer") || dataType.equals("Double")
+								|| dataType.equals("MobileDevice")) {
 							text.setEditable(true);
 						} else {
 							text.setEditable(false);
