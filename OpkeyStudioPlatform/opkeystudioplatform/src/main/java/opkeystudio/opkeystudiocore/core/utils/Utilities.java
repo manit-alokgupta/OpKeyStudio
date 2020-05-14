@@ -37,7 +37,7 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 public class Utilities {
 	private static Utilities util;
 	private String defaultInstallDir;
-	private boolean developerMode = false;
+	private boolean developerMode = true;
 
 	public static Utilities getInstance() {
 		if (util == null) {
