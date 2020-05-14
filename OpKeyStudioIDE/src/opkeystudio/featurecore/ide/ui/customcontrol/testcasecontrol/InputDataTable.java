@@ -749,7 +749,7 @@ public class InputDataTable extends CustomTable {
 		} else {
 			TestCaseView tview = getParentTestCaseView();
 			if (tview.getInputDataTable() != null) {
-				stopPaintEvent=false;
+				stopPaintEvent = false;
 				tview.getInputDataTable().setEnabled(true);
 				tview.getInputDataTable().setHeaderVisible(true);
 				tview.getInputDataTable().setLinesVisible(true);
