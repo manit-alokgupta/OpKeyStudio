@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -166,9 +167,13 @@ public class ExecutionResultView extends SuperComposite {
 
 						// try (FileInputStream fis = new FileInputStream(logFile)) {
 
-						while (getArtifactExecutor().isExecutionCompleted() == false) {
-							String aLine = br.readLine();
+						while (true) {
+							if (getArtifactExecutor().isExecutionCompleted()) {
+								interruptLoggerThreadsAfter(2);
+							}
+
 							Thread.sleep(1);
+							String aLine = br.readLine();
 
 							/*
 							 * byte[] buffer = new byte[2048]; int bytesRead = fis.read(buffer, 0, Math.min(fis.available(), buffer.length)); if (bytesRead < 1) { continue; }
@@ -189,8 +194,6 @@ public class ExecutionResultView extends SuperComposite {
 							else
 								displayLogs(aLine, logColor);
 
-							if (getArtifactExecutor().isExecutionCompleted())
-								break;
 						}
 
 					} finally {
@@ -206,7 +209,7 @@ public class ExecutionResultView extends SuperComposite {
 					}
 
 				} catch (InterruptedException e1) {
-					displayLogs("Logger Thread Interupted" + System.lineSeparator(), warningColor);
+					// displayLogs("Logger Thread Interupted" + System.lineSeparator(), warningColor);
 
 				} catch (IOException e21) {
 					// displayLogs(e21.toString()+ System.lineSeparator(), warningColor);
@@ -226,6 +229,29 @@ public class ExecutionResultView extends SuperComposite {
 
 		return r;
 
+	}
+
+	private void interruptLoggerThreadsAfter(int seconds) {
+		Thread t = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				System.out.println("Will interrupt loggers after: " + seconds);
+				try {
+					Thread.sleep(seconds * 1000);
+				} catch (InterruptedException e) {
+
+				}
+
+				if (logOutThread != null)
+					logOutThread.interrupt();
+
+				if (logErrThread != null)
+					logErrThread.interrupt();
+
+			}
+		});
+		t.start();
 	}
 
 	private void afterExecutionIsCompleted() {
@@ -298,11 +324,7 @@ public class ExecutionResultView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (logOutThread != null)
-					logOutThread.interrupt();
-
-				if (logErrThread != null)
-					logErrThread.interrupt();
+				interruptLoggerThreadsAfter(1);
 
 				displayLogs("Stopping Execution...", new Color(logTextView.getDisplay(), 255, 165, 0));
 				getArtifactExecutor().getExecutionThread().interrupt();
