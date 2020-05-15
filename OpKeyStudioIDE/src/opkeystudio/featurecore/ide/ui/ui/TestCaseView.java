@@ -62,6 +62,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -1011,6 +1012,22 @@ public class TestCaseView extends SuperComposite {
 		} finally {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
+	}
+
+	public boolean validateFlowOutPutVariableName(FlowOutputArgument outputArgument) {
+		List<FlowStep> flowSteps = getFlowStepTable().getFlowStepsData();
+		for (FlowStep flowStep : flowSteps) {
+			List<FlowOutputArgument> flowOutPutArguemnts = flowStep.getFlowOutputArgs();
+			for (FlowOutputArgument flowOutput : flowOutPutArguemnts) {
+				if (flowOutput == outputArgument) {
+					continue;
+				}
+				if (flowOutput.getVariableName().toLowerCase().equals(outputArgument.getVariableName().toLowerCase())) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public void saveAll() {

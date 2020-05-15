@@ -278,9 +278,7 @@ public class FlowApi {
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
 				FunctionLibraryComponent.class);
 		try {
-			List<FunctionLibraryComponent> codedAartifacts = mapper.readValue(result, type);
-			ArtifactTranspiler.getInstance().setPackagePropertiesForFunctionLibraryArtifact(codedAartifacts);
-			return codedAartifacts;
+			return mapper.readValue(result, type);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -294,9 +292,7 @@ public class FlowApi {
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, CodedFunctionArtifact.class);
 		try {
-			List<CodedFunctionArtifact> codedAartifacts = mapper.readValue(result, type);
-			ArtifactTranspiler.getInstance().setPackagePropertiesForCodedFunctionArtifact(codedAartifacts);
-			return codedAartifacts;
+			return mapper.readValue(result, type);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

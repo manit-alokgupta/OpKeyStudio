@@ -12,6 +12,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.compiler.ArtifactCompiler;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ExecutionSessionExecutor {
@@ -62,7 +63,8 @@ public class ExecutionSessionExecutor {
 					pluginName);
 		}
 
-		String artifactCodePath = artifactCodesDirPath + File.separator + artifact.getPackagePath() + File.separator
+		String artifactPackagePath = ArtifactTranspiler.getInstance().getArtifactPackagePath(artifact);
+		String artifactCodePath = artifactCodesDirPath + File.separator + artifactPackagePath + File.separator
 				+ artifact.getVariableName() + ".java";
 		System.out.println("Compiling " + artifactCodePath);
 		List<CompileError> compileErrors = new ArtifactCompiler().compileArtifact(artifactCodesDirPath,

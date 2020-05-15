@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
+import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
@@ -81,7 +82,7 @@ public class OutputDataTable extends CustomTable {
 	public void clearAllData() {
 		this.removeAll();
 	}
-	
+
 	private void initForSelectionTable() {
 		String[] tableHeaders = { "Output Variable Name", "Description" };
 		for (String header : tableHeaders) {
@@ -127,7 +128,7 @@ public class OutputDataTable extends CustomTable {
 				if (parentTestCaseView.getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
 					flowOutputArgument = flowOutPitArgument.getFlow_step_oa_id();
 				}
-				
+
 				FlowInputArgument selectedFlowInputArgument = getParentTestCaseView().getInputDataTable()
 						.getSelectedFlowInputArgument();
 				if (selectedFlowInputArgument == null) {
@@ -201,6 +202,14 @@ public class OutputDataTable extends CustomTable {
 
 					@Override
 					public void focusLost(FocusEvent e) {
+						boolean unique = getParentTestCaseView().validateFlowOutPutVariableName(flowOutputArgument);
+						if (unique == false) {
+							String variableName = flowOutputArgument.getOutputvariablename();
+							flowOutputArgument.setOutputvariablename("");
+							renderOutPutTableFlowStep(getFlowStep());
+							new MessageDialogs().openErrorDialog(getParentTestCaseView().getShell(), "OpKey",
+									String.format("Output Variable Name '%s' Already Exists.", variableName));
+						}
 						text.dispose();
 					}
 

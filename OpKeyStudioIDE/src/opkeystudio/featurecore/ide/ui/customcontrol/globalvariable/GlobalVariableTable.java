@@ -148,136 +148,141 @@ public class GlobalVariableTable extends CustomTable {
 				boolean isNumberType = isDataTypeIntegerType(dataType);
 				boolean isBooleanType = isDataTypeBooleanrType(dataType);
 				boolean externalUpdatable = globalVariable.isExternallyupdatable();
-				if (externalUpdatable) {
-					int selectedColumn = tableCursor.getColumn();
-					CustomText text = new CustomText(tableCursor, 0);
-					if (selectedColumn == 0) {
+
+				int selectedColumn = tableCursor.getColumn();
+				CustomText text = new CustomText(tableCursor, 0);
+				if (selectedColumn == 0) {
+					if (externalUpdatable) {
 						text.setText(globalVariable.getName());
 						text.setFocus();
+					} else {
+						text.dispose();
+						return;
 					}
-					if (selectedColumn == 2) {
-						if (isBooleanType) {
-							Button checkedButton = new Button(tableCursor, SWT.CHECK);
-							checkedButton.addFocusListener(new FocusListener() {
-
-								@Override
-								public void focusLost(FocusEvent e) {
-									checkedButton.dispose();
-
-								}
-
-								@Override
-								public void focusGained(FocusEvent e) {
-									// TODO Auto-generated method stub
-
-								}
-							});
-
-							checkedButton.addSelectionListener(new SelectionListener() {
-
-								@Override
-								public void widgetSelected(SelectionEvent e) {
-									String status = convertBooleanToString(checkedButton.getSelection());
-									globalVariable.setValue(status);
-									globalVariable.setModified(true);
-									getParentGlobalVariableView().toggleSaveToolItem(true);
-								}
-
-								@Override
-								public void widgetDefaultSelected(SelectionEvent e) {
-
-								}
-							});
-
-							if (globalVariable.getValue() != null) {
-								boolean checkedStatus = convertStringToBoolean(globalVariable.getValue());
-								checkedButton.setSelection(checkedStatus);
-								controlEditor.setEditor(checkedButton);
-							} else {
-								checkedButton.setSelection(false);
-								controlEditor.setEditor(checkedButton);
-							}
-							return;
-						}
-
-						if (dataType.equals("String") || dataType.equals("Integer") || dataType.equals("Double")) {
-							text.setEditable(true);
-						} else {
-							text.setEditable(false);
-						}
-
-						if (globalVariable.getValue() == null) {
-							text.setText("");
-							text.setFocus();
-						} else {
-							text.setText(globalVariable.getValue());
-							text.setFocus();
-						}
-						text.addVerifyListener(new VerifyListener() {
+				}
+				if (selectedColumn == 2) {
+					if (isBooleanType) {
+						Button checkedButton = new Button(tableCursor, SWT.CHECK);
+						checkedButton.addFocusListener(new FocusListener() {
 
 							@Override
-							public void verifyText(VerifyEvent e) {
-								if (isNumberType) {
-									final String oldS = text.getText();
-									String newS = oldS.substring(0, e.start) + e.text + oldS.substring(e.end);
-									if (newS.trim().isEmpty()) {
-										return;
-									}
-									boolean isNumber = true;
-									if (dataType.equals("Integer")) {
-										try {
-											Integer.parseInt(newS);
-										} catch (NumberFormatException ex) {
-											isNumber = false;
-										}
-									}
+							public void focusLost(FocusEvent e) {
+								checkedButton.dispose();
 
-									if (dataType.equals("Double")) {
-										try {
-											Double.parseDouble(newS);
-										} catch (NumberFormatException ex) {
-											isNumber = false;
-										}
-									}
-									if (!isNumber) {
-										e.doit = false;
-									}
-								}
+							}
+
+							@Override
+							public void focusGained(FocusEvent e) {
+								// TODO Auto-generated method stub
+
 							}
 						});
+
+						checkedButton.addSelectionListener(new SelectionListener() {
+
+							@Override
+							public void widgetSelected(SelectionEvent e) {
+								String status = convertBooleanToString(checkedButton.getSelection());
+								globalVariable.setValue(status);
+								globalVariable.setModified(true);
+								getParentGlobalVariableView().toggleSaveToolItem(true);
+							}
+
+							@Override
+							public void widgetDefaultSelected(SelectionEvent e) {
+
+							}
+						});
+
+						if (globalVariable.getValue() != null) {
+							boolean checkedStatus = convertStringToBoolean(globalVariable.getValue());
+							checkedButton.setSelection(checkedStatus);
+							controlEditor.setEditor(checkedButton);
+						} else {
+							checkedButton.setSelection(false);
+							controlEditor.setEditor(checkedButton);
+						}
+						return;
 					}
 
-					text.addFocusListener(new FocusListener() {
+					if (dataType.equals("String") || dataType.equals("Integer") || dataType.equals("Double")
+							|| dataType.equals("MobileDevice")) {
+						text.setEditable(true);
+					} else {
+						text.setEditable(false);
+					}
+
+					if (globalVariable.getValue() == null) {
+						text.setText("");
+						text.setFocus();
+					} else {
+						text.setText(globalVariable.getValue());
+						text.setFocus();
+					}
+					text.addVerifyListener(new VerifyListener() {
 
 						@Override
-						public void focusLost(FocusEvent e) {
-							text.dispose();
-						}
+						public void verifyText(VerifyEvent e) {
+							if (isNumberType) {
+								final String oldS = text.getText();
+								String newS = oldS.substring(0, e.start) + e.text + oldS.substring(e.end);
+								if (newS.trim().isEmpty()) {
+									return;
+								}
+								boolean isNumber = true;
+								if (dataType.equals("Integer")) {
+									try {
+										Integer.parseInt(newS);
+									} catch (NumberFormatException ex) {
+										isNumber = false;
+									}
+								}
 
-						@Override
-						public void focusGained(FocusEvent e) {
-
+								if (dataType.equals("Double")) {
+									try {
+										Double.parseDouble(newS);
+									} catch (NumberFormatException ex) {
+										isNumber = false;
+									}
+								}
+								if (!isNumber) {
+									e.doit = false;
+								}
+							}
 						}
 					});
-
-					text.addModifyListener(new ModifyListener() {
-
-						@Override
-						public void modifyText(ModifyEvent e) {
-							selectedTableItem.setText(selectedColumn, text.getText());
-							globalVariable.setModified(true);
-							getParentGlobalVariableView().toggleSaveToolItem(true);
-							if (selectedColumn == 0) {
-								globalVariable.setName(text.getText());
-							}
-							if (selectedColumn == 2) {
-								globalVariable.setValue(text.getText());
-							}
-						}
-					});
-					controlEditor.setEditor(text);
-					getParentGlobalVariableView().toggleDeleteToolItem(true);
 				}
+
+				text.addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						text.dispose();
+					}
+
+					@Override
+					public void focusGained(FocusEvent e) {
+
+					}
+				});
+
+				text.addModifyListener(new ModifyListener() {
+
+					@Override
+					public void modifyText(ModifyEvent e) {
+						selectedTableItem.setText(selectedColumn, text.getText());
+						globalVariable.setModified(true);
+						getParentGlobalVariableView().toggleSaveToolItem(true);
+						if (selectedColumn == 0) {
+							globalVariable.setName(text.getText());
+						}
+						if (selectedColumn == 2) {
+							globalVariable.setValue(text.getText());
+						}
+					}
+				});
+				controlEditor.setEditor(text);
+				getParentGlobalVariableView().toggleDeleteToolItem(true);
 			}
 
 			@Override

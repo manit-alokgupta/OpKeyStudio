@@ -6,15 +6,14 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.ArtifactTranspilerAsync;
 import opkeystudio.core.utils.Utilities;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
+import opkeystudio.featurecore.ide.ui.ui.ArtifactTreeUI;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
@@ -29,9 +28,12 @@ public class ArtifactTree extends CustomTree {
 	private TestSuiteView parentTestSuiteView;
 	private boolean attachedinTestSuite = false;
 	private List<Artifact> artifacts = new ArrayList<Artifact>();
+	private ArtifactTreeUI parentArtifactTreeUI;
+	private String artifactId = null;
 
-	public ArtifactTree(Composite parent, int style) {
+	public ArtifactTree(Composite parent, int style, ArtifactTreeUI parentUI) {
 		super(parent, style);
+		this.setParentArtifactTreeUI(parentUI);
 		init();
 		SystemRepository.getInstance().setArtifactTreeControl(this);
 	}
@@ -157,6 +159,11 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public void renderArtifacts(boolean fireGlobalEvent) {
+		if (isAttachedinTestSuite() == false) {
+			this.setEnabled(false);
+			getParentArtifactTreeUI().getSearchBox().setEnabled(false);
+			getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(false);
+		}
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
@@ -168,7 +175,6 @@ public class ArtifactTree extends CustomTree {
 		} else {
 			rootNode.setText("Project WorkSpace");
 		}
-		rootNode.setExpanded(true);
 		addIcon(rootNode);
 		List<Artifact> artifacts = new ArrayList<>();
 		if (isAttachedinTestSuite()) {
@@ -192,71 +198,90 @@ public class ArtifactTree extends CustomTree {
 		for (ArtifactTreeItem topMostNode : topMostNodes) {
 			renderAllArtifactTree(topMostNode, artifacts);
 		}
-		expandAll(rootNode);
+		if (isAttachedinTestSuite()) {
+			rootNode.setExpanded(true);
+			this.setRedraw(true);
+		} else {
+			expandAll(rootNode);
+		}
 		if (isAttachedinTestSuite() == false) {
 			ArtifactTranspiler.getInstance().setPackageProperties();
+			new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 		}
-		new ArtifactTranspilerAsync().executeArtifactTranspilerAsync(this.getShell());
 		selectTreeItem(rootNode);
 		if (fireGlobalEvent) {
 			OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		}
-
+		if (isAttachedinTestSuite() == false) {
+			this.setEnabled(true);
+			getParentArtifactTreeUI().getSearchBox().setEnabled(true);
+			getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(true);
+			highlightArtifact(getSelectedArtifactId());
+		}
 	}
 
 	public void highlightArtifact(String artifactId) {
+		if (artifactId == null) {
+			if (this.getItemCount() > 0) {
+				ArtifactTreeItem item = (ArtifactTreeItem) this.getItem(0);
+				if (item == null) {
+					return;
+				}
+				highLightTreeItem(item);
+				return;
+			}
+		}
 		List<TreeItem> titems = this.getAllTreeItems();
 		for (TreeItem item : titems) {
 			ArtifactTreeItem ati = (ArtifactTreeItem) item;
 			if (ati.getArtifact() != null) {
 				if (ati.getArtifact().getId().equals(artifactId)) {
-					this.setSelection(item);
-					this.notifyListeners(SWT.FocusIn, null);
-					this.notifyListeners(SWT.MouseUp, null);
-					this.notifyListeners(SWT.MouseDown, null);
-					this.notifyListeners(SWT.Selection, null);
+					highLightTreeItem(ati);
 					break;
 				}
 			}
 		}
 	}
 
-	public void refereshArtifacts() {
+	private void highLightTreeItem(ArtifactTreeItem item) {
 		try {
-			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
-			this.removeAll();
-			ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
-			if (isAttachedinTestSuite()) {
-				rootNode.setText("Gherkin and Test Case");
-			} else {
-				rootNode.setText("Project WorkSpace");
-			}
-			rootNode.setExpanded(true);
-			addIcon(rootNode);
-			List<Artifact> artifacts = getArtifactsData();
-			List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
-			for (Artifact artifact : artifacts) {
-				if (artifact.getParentid() == null) {
-					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
-					artitreeitem.setText(artifact.getName());
-					artitreeitem.setArtifact(artifact);
-					topMostNodes.add(artitreeitem);
-					addIcon(artitreeitem);
-				}
-			}
+			this.setSelection(item);
+			this.notifyListeners(SWT.FocusIn, null);
+			this.notifyListeners(SWT.MouseUp, null);
+			this.notifyListeners(SWT.MouseDown, null);
+			this.notifyListeners(SWT.Selection, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
-			for (ArtifactTreeItem topMostNode : topMostNodes) {
-				refreshAllArtifactTree(topMostNode, artifacts);
+	public void refereshArtifacts() {
+		this.removeAll();
+		ArtifactTreeItem rootNode = new ArtifactTreeItem(this, 0);
+		if (isAttachedinTestSuite()) {
+			rootNode.setText("Gherkin and Test Case");
+		} else {
+			rootNode.setText("Project WorkSpace");
+		}
+		rootNode.setExpanded(true);
+		addIcon(rootNode);
+		List<Artifact> artifacts = getArtifactsData();
+		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getParentid() == null) {
+				ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
+				artitreeitem.setText(artifact.getName());
+				artitreeitem.setArtifact(artifact);
+				topMostNodes.add(artitreeitem);
+				addIcon(artitreeitem);
 			}
-			expandAll(rootNode);
-			selectTreeItem(rootNode);
-			if (isAttachedinTestSuite() == false) {
-				ArtifactTranspiler.getInstance().setPackageProperties();
-			}
-		} finally {
-			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_ARROW));
 		}
 
+		for (ArtifactTreeItem topMostNode : topMostNodes) {
+			refreshAllArtifactTree(topMostNode, artifacts);
+		}
+		expandAll(rootNode);
+		selectTreeItem(rootNode);
 	}
 
 	public ArtifactTreeItem getSelectedArtifactTreeItem() {
@@ -316,5 +341,21 @@ public class ArtifactTree extends CustomTree {
 			}
 		}
 		this.refereshArtifacts();
+	}
+
+	public ArtifactTreeUI getParentArtifactTreeUI() {
+		return parentArtifactTreeUI;
+	}
+
+	public void setParentArtifactTreeUI(ArtifactTreeUI parentArtifactTreeUI) {
+		this.parentArtifactTreeUI = parentArtifactTreeUI;
+	}
+
+	public String getSelectedArtifactId() {
+		return artifactId;
+	}
+
+	public void setSelectedArtifactId(String artifactId) {
+		this.artifactId = artifactId;
 	}
 }

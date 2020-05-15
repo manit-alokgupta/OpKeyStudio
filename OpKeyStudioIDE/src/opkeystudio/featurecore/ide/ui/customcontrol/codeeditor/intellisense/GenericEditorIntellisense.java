@@ -34,7 +34,6 @@ import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
-import org.jboss.forge.roaster.model.source.MemberSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
@@ -343,8 +342,11 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		this.addCompletion(new BasicCompletion(this, "void"));
 		this.addCompletion(new BasicCompletion(this, "volatile"));
 		this.addCompletion(new BasicCompletion(this, "while"));
-		this.addCompletion(new ShorthandCompletion(this, "sysout", "System.out.println(", "System.out.println();"));
-		this.addCompletion(new ShorthandCompletion(this, "syserr", "System.err.println(", "System.err.println();"));
+		this.addCompletion(new ShorthandCompletion(this, "sysout", "System.out.println()", "System.out.println();"));
+		this.addCompletion(new ShorthandCompletion(this, "syserr", "System.err.println()", "System.err.println();"));
+		this.addCompletion(new ShorthandCompletion(this, "psvm",
+				"public static void main(String[] args) throws Exception{\r\n" + "}",
+				"public static void main(String[] args) throws Exception{\r\n" + "}"));
 	}
 
 	public void addOpKeyTranspiledClassInformation() {
