@@ -187,6 +187,8 @@ public class FlowStepTable extends CustomTable {
 		skipfromRunMenuItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SKIP_FROM_RUN_ICON));
 
+		createIFBlock.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.STEP_DETAILS_ICON));
+		createForBlock.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DESCRIPTION_ICON));
 		createIFBlock.addSelectionListener(new SelectionListener() {
 
 			@Override
