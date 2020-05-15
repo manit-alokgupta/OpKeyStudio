@@ -39,8 +39,7 @@ public class FunctionCaller {
 			e.printStackTrace();
 			functionResult = Result.FAIL().setOutput(false).setMessage("Either Application was never Opened or All instances were closed").make();
 			ReportHelper.addReportStep(keywordName, functionResult);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			functionResult = validateException(keywordName, e);
 			postKeywordAction(functionResult);
 			ReportHelper.addReportStep(keywordName, functionResult);

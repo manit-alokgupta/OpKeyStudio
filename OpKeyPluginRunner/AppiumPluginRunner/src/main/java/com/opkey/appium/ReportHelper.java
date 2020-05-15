@@ -48,9 +48,11 @@ public class ReportHelper {
 
 		ObjectArguments objectArguments = Context.current().getFunctionCall().getObjectArguments();
 		if (objectArguments != null && objectArguments.getObjectArgument() != null) {
+			String objectArg = "";
 			for (ObjectArgument objectArgument : objectArguments.getObjectArgument()) {
-				parameterList.add(objectArgument.getObject().getLogicalName());
+				objectArg += objectArgument.getObject().getLogicalName() +" ;";
 			}
+			parameterList.add(objectArg);
 		}
 
 		DataArguments dataArguments = Context.current().getFunctionCall().getDataArguments();
