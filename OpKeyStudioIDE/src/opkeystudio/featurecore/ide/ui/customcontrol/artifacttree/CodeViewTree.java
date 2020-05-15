@@ -11,8 +11,6 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.ResourceManager;
@@ -191,8 +189,13 @@ public class CodeViewTree extends CustomTree {
 						classSource.toString());
 				renderCodeViewTree();
 			} catch (Exception e) {
+				if (selectedCodeFile.isDirectory()) {
+					new MessageDialogs().openErrorDialog("OpKey",
+							String.format("Can't Rename Package Folder '%s'. " , fileName));
+					return;
+				}
 				new MessageDialogs().openErrorDialog("OpKey",
-						String.format("Unable to rename file to name '%s'. Please provide a different name", fileName));
+						String.format("Unable to rename file to name '%s'. " + e.getMessage(), fileName));
 				return;
 			}
 		} finally {

@@ -521,23 +521,60 @@ public class GenericTree extends CustomTree {
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		addIcon(rootNode);
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("DataRepository");
-		for (Artifact drArtifact : artifacts) {
-			CustomTreeItem drNode = new CustomTreeItem(rootNode, 0);
-			drNode.setText(drArtifact.getName());
-			drNode.setControlData(drArtifact);
-			addIcon(drNode);
-			List<DRColumnAttributes> drColumnAttributes = new DataRepositoryApi()
-					.getAllColumnsValues(drArtifact.getId());
-			for (DRColumnAttributes drColumn : drColumnAttributes) {
-				CustomTreeItem drColumnNode = new CustomTreeItem(drNode, 0);
-				drColumnNode.setText(drColumn.getName());
-				drColumnNode.setControlData(drColumn);
-				addIcon(drColumnNode);
+		artifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));		
+		List<CustomTreeItem> topMostNodes = new ArrayList<>();
+		for (Artifact artifact : artifacts) {
+			if (artifact.getParentid() == null) {
+				CustomTreeItem artitreeitem = new CustomTreeItem(rootNode, 0);
+				artitreeitem.setText(artifact.getName());
+				artitreeitem.setControlData(artifact);
+				topMostNodes.add(artitreeitem);
+				addIcon(artitreeitem);
+				
+				if(artifact.getFile_type_enum()==MODULETYPE.DataRepository) {
+					List<DRColumnAttributes> drColumnAttributes = new DataRepositoryApi()
+							.getAllColumnsValues(artifact.getId());
+					for (DRColumnAttributes drColumn : drColumnAttributes) {
+						CustomTreeItem drColumnNode = new CustomTreeItem(artitreeitem, 0);
+						drColumnNode.setText(drColumn.getName());
+						drColumnNode.setControlData(drColumn);
+						addIcon(drColumnNode);
+					}
+				}
 			}
+		}
+		for (CustomTreeItem topMostNode : topMostNodes) {
+			renderAllDRArtifactTree(topMostNode, artifacts);
 		}
 		expandAll(rootNode);
 	}
 
+	private void renderAllDRArtifactTree(CustomTreeItem rootNode, List<Artifact> allArtifacts) {
+		Artifact nodeartifact = (Artifact) rootNode.getControlData();
+		String artifactId = nodeartifact.getId();
+		for (Artifact artifact : allArtifacts) {
+			if (artifact.getParentid() != null) {
+				if (artifact.getParentid().equals(artifactId)) {
+					CustomTreeItem artitreeitem = new CustomTreeItem(rootNode, 0);
+					artitreeitem.setText(artifact.getName());
+					artitreeitem.setControlData(artifact);
+					addIcon(artitreeitem);
+					if(artifact.getFile_type_enum()==MODULETYPE.DataRepository) {
+						List<DRColumnAttributes> drColumnAttributes = new DataRepositoryApi()
+								.getAllColumnsValues(artifact.getId());
+						for (DRColumnAttributes drColumn : drColumnAttributes) {
+							CustomTreeItem drColumnNode = new CustomTreeItem(artitreeitem, 0);
+							drColumnNode.setText(drColumn.getName());
+							drColumnNode.setControlData(drColumn);
+							addIcon(drColumnNode);
+						}
+					}
+					renderAllDRArtifactTree(artitreeitem, allArtifacts);
+				}
+			}
+		}
+	}
+	
 	public boolean isTreeExtended() {
 		return treeExtended;
 	}
