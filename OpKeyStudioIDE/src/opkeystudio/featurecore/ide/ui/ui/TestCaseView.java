@@ -403,19 +403,16 @@ public class TestCaseView extends SuperComposite {
 			drVariableTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			drVariableTabItem.setText("Global DR");
 			drVariableTabItem.setToolTipText("Global DR");
-			drTree = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this,
-					TREETYPE.DATAREPOSITORYTREE);
+			drTree = new GenericTree(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this, TREETYPE.DATAREPOSITORYTREE);
 			drVariableTabItem.setControl(drTree);
 			drTree.setHeaderVisible(true);
 			drTree.setLinesVisible(true);
 		} else {
 			TabItem componentArgInputTable = new TabItem(datasTabHolder, SWT.NONE);
-			componentArgInputTable
-					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+			componentArgInputTable.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			componentArgInputTable.setText("Data Input");
 			componentArgInputTable.setToolTipText("Data Input");
-			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder,
-					SWT.BORDER | SWT.FULL_SELECTION, this);
+			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
 			componentArgInputTable.setControl(componentArgumentInputTable);
 			componentArgumentInputTable.setHeaderVisible(true);
 			componentArgumentInputTable.setLinesVisible(true);
@@ -425,15 +422,13 @@ public class TestCaseView extends SuperComposite {
 		dataOutPutTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 		dataOutPutTabItem.setText("Data Output");
 		dataOutPutTabItem.setToolTipText("Data Output");
-		outputVariableTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this,
-				TABLE_TYPE.SELECTIONTABLE);
+		outputVariableTable = new OutputDataTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this, TABLE_TYPE.SELECTIONTABLE);
 		dataOutPutTabItem.setControl(outputVariableTable);
 		outputVariableTable.setHeaderVisible(true);
 		outputVariableTable.setLinesVisible(true);
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
-		globalVariablesTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
+		globalVariablesTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
 		globalVariableTable = new GlobalVariableTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
@@ -451,8 +446,7 @@ public class TestCaseView extends SuperComposite {
 		outputDataTabItem.setControl(composite_4);
 		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		outputDataTable = new OutputDataTable(composite_4, SWT.BORDER | SWT.FULL_SELECTION, this,
-				TABLE_TYPE.INPUTTABLE);
+		outputDataTable = new OutputDataTable(composite_4, SWT.BORDER | SWT.FULL_SELECTION, this, TABLE_TYPE.INPUTTABLE);
 		outputDataTable.setHeaderVisible(true);
 		outputDataTable.setLinesVisible(true);
 
@@ -607,14 +601,12 @@ public class TestCaseView extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				boolean status = handleSaveOnRefresh();
 				if (status == false) {
-					new MessageDialogs().openErrorDialog(flowStepTable.getShell(), "OpKey",
-							"Unable to Execute. Please save your data first.");
+					new MessageDialogs().openErrorDialog(flowStepTable.getShell(), "OpKey", "Unable to Execute. Please save your data first.");
 					return;
 				}
 				List<FlowStep> flowSteps = flowStepTable.getFlowStepsData();
 				if (flowSteps.size() == 0) {
-					new MessageDialogs().openErrorDialog(flowStepTable.getShell(), "OpKey",
-							"Nothing to execute. Please add atleast one step");
+					new MessageDialogs().openErrorDialog(flowStepTable.getShell(), "OpKey", "Nothing to execute. Please add atleast one step");
 					return;
 				}
 				boolean shouldrun = false;
@@ -624,8 +616,7 @@ public class TestCaseView extends SuperComposite {
 					}
 				}
 				if (shouldrun == false) {
-					new MessageDialogs().openErrorDialog(flowStepTable.getShell(), "OpKey",
-							"Nothing to execute. Please add atleast one step");
+					new MessageDialogs().openErrorDialog(flowStepTable.getShell(), "OpKey", "Nothing to execute. Please add atleast one step");
 					return;
 				}
 				openExecutionWizard();
@@ -959,20 +950,16 @@ public class TestCaseView extends SuperComposite {
 				String flowInputDataType = new FlowApiUtilities().getFlowInputArgumentDataType(flowInputArgument);
 				System.out.println("GV DataType " + globalVar.getDatatype());
 				System.out.println("Flow Input Data Type " + flowInputDataType);
-				boolean isGvPrimitive = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-						.isDataTypeIsPrimitive(globalVariableDataType);
-				boolean isFlowInputPrimitive = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-						.isDataTypeIsPrimitive(flowInputDataType);
+				boolean isGvPrimitive = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().isDataTypeIsPrimitive(globalVariableDataType);
+				boolean isFlowInputPrimitive = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().isDataTypeIsPrimitive(flowInputDataType);
 
 				if (isGvPrimitive == false || isFlowInputPrimitive == false) {
 					if (!globalVariableDataType.equals(flowInputDataType)) {
-						new MessageDialogs().openErrorDialog("OpKey", String.format(
-								"Invalid data type '%s' is not '%s'", globalVariableDataType, flowInputDataType));
+						new MessageDialogs().openErrorDialog("OpKey", String.format("Invalid data type '%s' is not '%s'", globalVariableDataType, flowInputDataType));
 						return;
 					}
 				}
-				new FlowApiUtilities().setFlowInputData(getArtifact(), flowInputArgument, globalVar.getGv_id(),
-						DataSource.ValueFromGlobalVariable);
+				new FlowApiUtilities().setFlowInputData(getArtifact(), flowInputArgument, globalVar.getGv_id(), DataSource.ValueFromGlobalVariable);
 				toggleSaveButton(true);
 				try {
 					getInputDataTable().renderInputTable(getSelectedFlowStep());
@@ -994,8 +981,7 @@ public class TestCaseView extends SuperComposite {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 			if (itemSave.isEnabled()) {
 				Utilities.getInstance().activateMpart(getCurrentMpart());
-				DialogResult status = CustomNotificationUtil.openConfirmDialog(flowStepTable.getShell(), "OpKey",
-						"Do you want to Save changes?");
+				DialogResult status = CustomNotificationUtil.openConfirmDialog(flowStepTable.getShell(), "OpKey", "Do you want to Save changes?");
 				System.out.println("Result " + status);
 				if (status == DialogResult.Cancel) {
 					return false;
@@ -1005,6 +991,19 @@ public class TestCaseView extends SuperComposite {
 					toggleSaveButton(false);
 					CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 					return true;
+				}
+			} else {
+				// check if blank steps are present
+				boolean blankStepsPresent = false;
+				for (FlowStep itm : flowStepTable.getFlowStepsData()) {
+					if (itm.getKeyword() == null) {
+						blankStepsPresent = true;
+					}
+				}
+				if (blankStepsPresent) {
+					DialogResult result = CustomNotificationUtil.openConfirmDialog("OpKey", "Blank steps will be removed. Do you want to continue?");
+					if (result != DialogResult.Yes)
+						return false;
 				}
 			}
 			toggleSaveButton(false);
@@ -1038,8 +1037,7 @@ public class TestCaseView extends SuperComposite {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 			if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
 				List<ComponentInputArgument> componentInputArgs = bottomFactory.getInputTable().getComponentInputData();
-				List<ComponentOutputArgument> componentOutputArgs = bottomFactory.getOutputTable()
-						.getComponentOutputData();
+				List<ComponentOutputArgument> componentOutputArgs = bottomFactory.getOutputTable().getComponentOutputData();
 				boolean isUniqueInputName = isComponentInputArgumentNameAreUnique(componentInputArgs);
 				boolean isUniqueOutputName = isComponentOutputArgumentNameAreUnique(componentOutputArgs);
 				if (isUniqueInputName == false) {
