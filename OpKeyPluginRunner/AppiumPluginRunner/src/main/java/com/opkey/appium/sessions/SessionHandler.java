@@ -60,7 +60,7 @@ public class SessionHandler implements ExecutionSession {
 			System.out.println("******** Appium Mobile Capabilities ******");
 			System.out.println("-------------------------------------------------");
 			for (String capabilityName : sessionInfo.mobileCapabilities.keySet())
-				System.out.println("# " + capabilityName + " : " + sessionInfo.mobileCapabilities.get(capabilityName));
+				System.out.println("# " + capabilityName + ": " + sessionInfo.mobileCapabilities.get(capabilityName));
 			System.out.println("-------------------------------------------------");
 		}
 
@@ -71,12 +71,12 @@ public class SessionHandler implements ExecutionSession {
 		System.out.println("-------------------------------------------------");
 		System.out.println("************ Mobile Device Info ***********");
 		System.out.println("-------------------------------------------------");
-		System.out.println("# Device Name :" + device.getDisplayName());
-		System.out.println("# Device Id :" + device.getSerialNumber());
-		System.out.println("# Device Version :" + device.getVersion());
-		System.out.println("# Device OS :" + device.getOperatingSystem());
-		System.out.println("# Device SDK/API Level :" + deviceApiLevel);
-		System.out.println("# Device ABI :" + deviceAbi);
+		System.out.println("# Device Name: " + device.getDisplayName());
+		System.out.println("# Device Id: " + device.getSerialNumber());
+		System.out.println("# Device Version: " + device.getVersion());
+		System.out.println("# Device OS: " + device.getOperatingSystem());
+		System.out.println("# Device SDK/API Level: " + deviceApiLevel);
+		System.out.println("# Device ABI: " + deviceAbi);
 		System.out.println("-------------------------------------------------");
 
 		File htmlFile = new File(sessionInfo.reportFilePath);
