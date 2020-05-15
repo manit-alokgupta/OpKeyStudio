@@ -83,6 +83,10 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
+		if (refreshCodeEditorIntellisenseRunning) {
+			System.out.println("Already CodeEditor Refresh Intellisense Running>> Returning Same Instance");
+			return instance;
+		}
 		if (instance != null) {
 			instance.dispose();
 		}
@@ -91,6 +95,10 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public static GenericEditorIntellisense getCFLInstanceoOfCodeEditor() {
+		if (refreshCFLEditorIntellisenseRunning) {
+			System.out.println("Already CFL Refresh Intellisense Running>> Returning Same Instance");
+			return cflinstance;
+		}
 		if (cflinstance != null) {
 			cflinstance.dispose();
 		}
