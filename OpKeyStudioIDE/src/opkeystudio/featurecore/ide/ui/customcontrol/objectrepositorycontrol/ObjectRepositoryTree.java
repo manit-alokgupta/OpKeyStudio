@@ -144,6 +144,11 @@ public class ObjectRepositoryTree extends CustomTree {
 		return (ObjectRepositoryTreeItem) this.getSelection()[0];
 	}
 
+	public void SelectedTreeItem(ObjectRepositoryTreeItem item) {
+
+		this.setSelection(item);
+	}
+
 	public ORObject getSelectedORObject() {
 		ObjectRepositoryTreeItem treeItem = getSelectedTreeItem();
 		return treeItem.getORObject();
