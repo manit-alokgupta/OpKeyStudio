@@ -11,6 +11,7 @@ import com.crestech.opkey.plugin.communication.contracts.functioncall.FunctionCa
 import com.crestech.opkey.plugin.contexts.Context;
 import com.crestech.opkey.plugin.contexts.InvocationContext;
 import com.opkey.appium.sessions.SessionHandler;
+import com.opkeystudio.core.sessions.SessionInfo;
 
 public class ContextInitiator {
 	public void initContext() {
@@ -85,8 +86,26 @@ public class ContextInitiator {
 		settingsMap.put("FirefoxDriverPath", "");
 		settingsMap.put("EdgeDriverPath", "");
 		settingsMap.put("OperaDriverPath", "");
-		settingsMap.put("Host", "");
-		settingsMap.put("Port", "");
+		
+		
+		String appiumHost = SessionHandler.getSessionInfo().pluginSettings.get("appiumHost"); // appium Host
+		String appiumPort = SessionHandler.getSessionInfo().pluginSettings.get("appiumPort"); // appium Port
+		String appiumDir = SessionHandler.getSessionInfo().pluginSettings.get("appiumDir");
+		if(appiumHost !=null)
+			settingsMap.put("Host", appiumHost);
+		else
+			settingsMap.put("Host", "");
+		
+		if(appiumDir !=null)
+			settingsMap.put("Port", appiumPort);
+		else
+			settingsMap.put("Port", "");
+		
+		if(appiumHost != null)
+			settingsMap.put("AppiumServer", appiumDir);
+		else
+			settingsMap.put("AppiumServer", "");
+		
 		settingsMap.put("ProxyHost", "");
 		settingsMap.put("ProxyPort", "");
 		settingsMap.put("_DefaultStepTimeout", "90");
