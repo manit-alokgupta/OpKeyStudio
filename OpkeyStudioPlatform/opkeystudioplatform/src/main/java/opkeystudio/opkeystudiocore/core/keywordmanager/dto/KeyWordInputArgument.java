@@ -40,6 +40,14 @@ public class KeyWordInputArgument {
 		return name;
 	}
 
+	public String getNameForTable() {
+		if (this.isoptional)
+			return this.getName();
+		else
+			return this.getName() + "*";
+
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}

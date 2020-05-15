@@ -132,7 +132,7 @@ public class StepDetailsInputData extends CustomTable {
 				if (!keywordInputArg.getDatatype().equals("ORObject")) {
 					FlowInputArgument flowInputArg = flowInputArgs.get(i);
 					CustomTableItem cti = new CustomTableItem(this, 0);
-					cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getName(),
+					cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getNameForTable(),
 							flowInputArg.getStaticvalue() });
 					cti.setControlData(flowInputArg);
 				}

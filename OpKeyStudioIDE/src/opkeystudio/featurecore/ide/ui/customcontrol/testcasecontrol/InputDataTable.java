@@ -662,7 +662,7 @@ public class InputDataTable extends CustomTable {
 							}
 						}
 						hasData = true;
-						cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getName(),
+						cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getNameForTable(),
 								valueData });
 						cti.setControlData(flowInputArg);
 						addInputTableEditor(cti);
