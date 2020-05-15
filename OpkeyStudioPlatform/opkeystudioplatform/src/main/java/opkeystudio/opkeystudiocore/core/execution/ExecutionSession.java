@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openqa.selenium.remote.DesiredCapabilities;
-
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -26,7 +24,7 @@ public class ExecutionSession {
 	private MobileDevice mobileDevice;
 	private Map<String, String> pluginSettings = new HashMap<String, String>();
 	private boolean cflArtifact;
-	private DesiredCapabilities mobileCapabilities;
+	private Map<String, String> mobileCapabilities = new HashMap<String, String>();
 
 	public ExecutionSession(String sessionName, String buildName) {
 		this.setSessionName((sessionName + "_" + Utilities.getInstance().getCurrentDateTime()).replaceAll(" ", "_")
@@ -161,11 +159,11 @@ public class ExecutionSession {
 		return new File(this.getSessionDirectory(), "Logs");
 	}
 
-	public DesiredCapabilities getMobileCapabilities() {
+	public Map<String, String> getMobileCapabilities() {
 		return mobileCapabilities;
 	}
 
-	public void setMobileCapabilities(DesiredCapabilities mobileCapabilities) {
+	public void setMobileCapabilities(Map<String, String> mobileCapabilities) {
 		this.mobileCapabilities = mobileCapabilities;
 	}
 }

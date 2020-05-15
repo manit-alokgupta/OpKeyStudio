@@ -3,8 +3,6 @@ package com.opkeystudio.core.sessions;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openqa.selenium.remote.DesiredCapabilities;
-
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 
 public class SessionInfo {
@@ -16,7 +14,7 @@ public class SessionInfo {
 	public String reportFilePath;
 	public MobileDevice mobileDevice;
 	public Map<String, String> pluginSettings = new HashMap<String, String>();
-	private DesiredCapabilities mobileCapabilities;
+	public Map<String, String> mobileCapabilities = new HashMap<String, String>();
 
 	public String getSessionName() {
 		return sessionName;
@@ -65,25 +63,24 @@ public class SessionInfo {
 	public void setMobileDevice(MobileDevice mobileDevice) {
 		this.mobileDevice = mobileDevice;
 	}
-	
+
 	public void setBuildName(String buildName) {
 		this.buildName = buildName;
 	}
-	
+
 	public String getBuildName() {
 		return this.buildName;
 	}
-	
+
 	public String getSessionDirectory() {
 		return this.sessionDirectory;
 	}
-	
-	public DesiredCapabilities getMobileCapabilities() {
+
+	public Map<String, String> getMobileCapabilities() {
 		return mobileCapabilities;
 	}
 
-	public void setMobileCapabilities(DesiredCapabilities mobileCapabilities) {
+	public void setMobileCapabilities(Map<String, String> mobileCapabilities) {
 		this.mobileCapabilities = mobileCapabilities;
 	}
-
 }

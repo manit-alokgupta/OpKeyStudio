@@ -2,6 +2,7 @@ package opkeystudio.featurecore.ide.ui.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -352,10 +353,16 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					device.setOperatingSystem("Android");
 					device.setSerialNumber(getMobileDeviceExecutionDetail().getDeviceId());
 					device.setVersion(getMobileDeviceExecutionDetail().getDeviceVersion());
-
-					session.setMobileCapabilities(MobileDesiredCapabilities.getCapabilities());
-
 					session.setMobileDevice(device);
+
+					LinkedHashMap<String, String> capabilities = new LinkedHashMap<String, String>();
+					
+					// TODO: null check- exception throwing
+					for (String capabilityName : MobileDesiredCapabilities.getMapOfCapabilities().keySet())
+						capabilities.put(capabilityName,
+								MobileDesiredCapabilities.getMapOfCapabilities().get(capabilityName));
+					
+					session.setMobileCapabilities(capabilities);
 				}
 			}
 
