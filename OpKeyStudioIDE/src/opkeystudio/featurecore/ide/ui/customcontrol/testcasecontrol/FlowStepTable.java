@@ -43,6 +43,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
+import opkeystudio.opkeystudiocore.core.keywordmanager.KeywordManager;
+import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
 
 public class FlowStepTable extends CustomTable {
 	private TestCaseView parentTestCaseView;
@@ -56,6 +58,8 @@ public class FlowStepTable extends CustomTable {
 	private MenuItem movedownMenuItem;
 	private MenuItem setToRunMenuItem;
 	private MenuItem skipfromRunMenuItem;
+	private MenuItem createIFBlock;
+	private MenuItem createForBlock;
 	private List<FlowStep> deletedFlowSteps;
 
 	public FlowStepTable(Composite parent, int style) {
@@ -126,9 +130,21 @@ public class FlowStepTable extends CustomTable {
 		this.openInNewTabMenuItem.setEnabled(status);
 	}
 
+	public void toggleIfBlockMenuItem(boolean status) {
+		this.createIFBlock.setEnabled(status);
+	}
+
+	public void toggleForBlockMenuItem(boolean status) {
+		this.createForBlock.setEnabled(status);
+	}
+
 	private void initContextMenu() {
 		Menu menu = new Menu(this);
 		openInNewTabMenuItem = new MenuItem(menu, 0);
+		new MenuItem(menu, SWT.SEPARATOR);
+		createIFBlock = new MenuItem(menu, 0);
+		new MenuItem(menu, SWT.SEPARATOR);
+		createForBlock = new MenuItem(menu, 0);
 		new MenuItem(menu, SWT.SEPARATOR);
 		copyMenuItem = new MenuItem(menu, 0);
 		new MenuItem(menu, SWT.SEPARATOR);
@@ -147,6 +163,8 @@ public class FlowStepTable extends CustomTable {
 		skipfromRunMenuItem = new MenuItem(menu, 0);
 
 		openInNewTabMenuItem.setText("Open In New Tab");
+		createIFBlock.setText("Create If Block");
+		createForBlock.setText("Create For Block");
 		copyMenuItem.setText("Copy");
 		pasteMenuItem.setText("Paste");
 		addStepMenuItem.setText("Add Step");
@@ -166,6 +184,66 @@ public class FlowStepTable extends CustomTable {
 		setToRunMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SET_TO_RUN_ICON));
 		skipfromRunMenuItem
 				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SKIP_FROM_RUN_ICON));
+
+		createIFBlock.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Keyword ifKeyword = null;
+				Keyword endIfKeyword = null;
+				List<Keyword> keywords = KeywordManager.getInstance().getAllKeywords();
+				for (Keyword keyword : keywords) {
+					String keywordName = keyword.getName().toLowerCase();
+					if (keywordName.equals("if")) {
+						ifKeyword = keyword;
+					}
+					if (keywordName.equals("endif")) {
+						endIfKeyword = keyword;
+					}
+				}
+				Artifact artifact = getParentTestCaseView().getArtifact();
+				FlowStep selectedflowStep = getSelectedFlowStep();
+				FlowStep ifFlowStep = new FlowMaker().getFlowStepDTO(artifact, selectedflowStep, ifKeyword,
+						artifact.getId(), getFlowStepsData());
+				ifFlowStep.setAdded(true);
+				getFlowStepsData().add(ifFlowStep);
+				Collections.sort(getFlowStepsData());
+
+				FlowStep selectedFlowStepReplica = new FlowMaker().createFlowStepReplica(artifact, ifFlowStep,
+						selectedflowStep, getFlowStepsData());
+				selectedFlowStepReplica.setAdded(true);
+				getFlowStepsData().add(selectedFlowStepReplica);
+				Collections.sort(getFlowStepsData());
+
+				FlowStep endifFlowStep = new FlowMaker().getFlowStepDTO(artifact, selectedFlowStepReplica, endIfKeyword,
+						artifact.getId(), getFlowStepsData());
+				endifFlowStep.setAdded(true);
+				getFlowStepsData().add(endifFlowStep);
+				Collections.sort(getFlowStepsData());
+				selectedflowStep.setDeleted(true);
+				refreshFlowSteps();
+				getParentTestCaseView().toggleSaveButton(true);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
+		createForBlock.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
 		copyMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
