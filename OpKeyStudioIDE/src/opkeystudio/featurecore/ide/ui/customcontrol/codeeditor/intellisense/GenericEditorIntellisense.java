@@ -34,6 +34,7 @@ import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
@@ -356,6 +357,17 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			try {
 				String codeData = Utilities.getInstance().readTextFile(file);
 				JavaClassSource classSource = (JavaClassSource) Roaster.parse(codeData);
+				List<JavaSource<?>> classes = classSource.getNestedTypes();
+				for (JavaSource<?> innerClass : classes) {
+					System.out.println(">>Inner Class Found");
+					if (innerClass instanceof JavaClassSource) {
+						JavaClassSource innerClassObject = (JavaClassSource) innerClass;
+						System.out.println("Inner Class " + innerClassObject.getName());
+						this.addTranspiledClasses(new TranspiledClassInfo(innerClassObject));
+						parseConstructors(innerClassObject);
+						addInputParametrsOfMethods(innerClassObject);
+					}
+				}
 				boolean isAdded = this.addTranspiledClasses(new TranspiledClassInfo(classSource));
 				if (isAdded == false) {
 					parseConstructors(classSource);

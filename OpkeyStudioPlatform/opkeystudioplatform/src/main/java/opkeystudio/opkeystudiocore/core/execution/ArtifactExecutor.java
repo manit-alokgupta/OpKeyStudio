@@ -19,6 +19,7 @@ import com.opkeystudio.core.sessions.SessionInfo;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import pcloudystudio.core.vncutils.AndroidVNCUtil;
 
 public class ArtifactExecutor {
@@ -39,7 +40,7 @@ public class ArtifactExecutor {
 	}
 
 	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
-		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
+		String artifactClassName = ArtifactTranspiler.getInstance().getArtifactPackageName(artifact) + "." + artifact.getVariableName();
 		System.out.println(">>Artifact Code Folder " + sessionRootDir);
 		System.out.println(">>Executing Artifact " + artifactClassName);
 		Thread executionThread = new Thread(new Runnable() {
@@ -85,7 +86,7 @@ public class ArtifactExecutor {
 	}
 
 	public void executeCFL(String sessionRootDir, Artifact artifact, String pluginName) {
-		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
+		String artifactClassName = ArtifactTranspiler.getInstance().getArtifactPackageName(artifact)  + "." + artifact.getVariableName();
 		System.out.println(">>Artifact Code Folder " + sessionRootDir);
 		System.out.println(">>Executing Artifact " + artifactClassName);
 		Thread executionThread = new Thread(new Runnable() {

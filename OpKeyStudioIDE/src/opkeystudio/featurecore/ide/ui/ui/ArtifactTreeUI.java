@@ -229,7 +229,7 @@ public class ArtifactTreeUI extends SuperComposite {
 		toolbarDR.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
 
 		toolbarcodedFLMenuItem = new MenuItem(newMenu, SWT.PUSH);
-		toolbarcodedFLMenuItem.setText("Coded FL");
+		toolbarcodedFLMenuItem.setText("Coded Function Library");
 		toolbarcodedFLMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 
 		folderMenuItem = new MenuItem(menu_1, SWT.NONE);
@@ -257,7 +257,7 @@ public class ArtifactTreeUI extends SuperComposite {
 		drMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
 
 		codedFLMenuItem = new MenuItem(menu_1, SWT.PUSH);
-		codedFLMenuItem.setText("Coded FL");
+		codedFLMenuItem.setText("Coded Function Library");
 		codedFLMenuItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 
 		openMenuItem = new MenuItem(menu, SWT.NONE);

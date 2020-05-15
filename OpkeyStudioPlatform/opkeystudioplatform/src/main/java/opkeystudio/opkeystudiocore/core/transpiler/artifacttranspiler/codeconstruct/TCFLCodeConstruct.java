@@ -17,6 +17,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryCompon
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class TCFLCodeConstruct {
 	private String newLineChar = "\n";
@@ -381,7 +382,7 @@ public class TCFLCodeConstruct {
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
 				String columnName = drColumn.getVariableName();
 				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
-				String path = drArtifact.getPackageName() + "." + drArtifact.getVariableName() + "." + "getDRCells("
+				String path = ArtifactTranspiler.getInstance().getArtifactPackageName(drArtifact)  + "." + drArtifact.getVariableName() + "." + "getDRCells("
 						+ "\"" + columnName + "\"" + ")";
 				forLoopParameters = "String " + columnName + ":" + path;
 				System.out.println(forLoopParameters);
