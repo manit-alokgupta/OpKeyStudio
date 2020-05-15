@@ -382,8 +382,8 @@ public class TCFLCodeConstruct {
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
 				String columnName = drColumn.getVariableName();
 				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
-				String path = ArtifactTranspiler.getInstance().getArtifactPackageName(drArtifact)  + "." + drArtifact.getVariableName() + "." + "getDRCells("
-						+ "\"" + columnName + "\"" + ")";
+				String path = ArtifactTranspiler.getInstance().getArtifactPackageName(drArtifact) + "."
+						+ drArtifact.getVariableName() + "." + "getDRCells(" + "\"" + columnName + "\"" + ")";
 				forLoopParameters = "String " + columnName + ":" + path;
 				System.out.println(forLoopParameters);
 				bodyCode = String.format(forLoopFormat, forLoopParameters, bodyCode);
@@ -413,21 +413,21 @@ public class TCFLCodeConstruct {
 
 	private boolean isOpKeyGenericKeyword(FlowStep flowStep) {
 		System.out.println(flowStep.getKeyword().getName() + "    " + flowStep.getKeyword().getKeywordtype());
-		if (flowStep.getKeyword().getKeywordtype().equals("OpKeyGenericKeyword")) {
+		if (flowStep.getKeyword().getKeywordtype().toLowerCase().equals("opkeygenerickeyword")) {
 			return true;
 		}
 		return false;
 	}
 
 	private boolean isSystemKeyword(FlowStep flowStep) {
-		if (flowStep.getKeyword().getKeywordtype().equals("SystemKeyword")) {
+		if (flowStep.getKeyword().getKeywordtype().toLowerCase().equals("systemkeyword")) {
 			return true;
 		}
 		return false;
 	}
 
 	private boolean isPluginSpecificKeyword(FlowStep flowStep) {
-		if (flowStep.getKeyword().getKeywordtype().equals("PluginSpecificKeyword")) {
+		if (flowStep.getKeyword().getKeywordtype().toLowerCase().equals("pluginspecifickeyword")) {
 			return true;
 		}
 		return false;
