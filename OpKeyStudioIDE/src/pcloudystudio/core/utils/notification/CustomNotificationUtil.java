@@ -78,4 +78,10 @@ public class CustomNotificationUtil {
 		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
 	}
 
+	public static void openErrorNotification(String title, String message) {
+		// TODO: Need to check disposed case and type 2, and type 1 notify + ( add new
+		// sub heading )
+		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.RED_THEME);
+	}
+
 }
