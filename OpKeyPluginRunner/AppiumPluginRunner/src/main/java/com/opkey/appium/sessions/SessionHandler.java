@@ -44,7 +44,13 @@ public class SessionHandler implements ExecutionSession {
 		String appiumPort = sessionInfo.pluginSettings.get("appiumPort"); // appium Port
 		String appiumDir = sessionInfo.pluginSettings.get("appiumDir"); // appium directory
 
+		System.out.println("JUST FOR DEBUG NOW. ONCE AUTO APPIUM SERVER DONE IT WILL BE REMOVED");
+		System.out.println("appiumHost: " + appiumHost);
+		System.out.println("appiumPort: " + appiumPort);
+		System.out.println("appiumDir: " + appiumDir);
+		
 		if (appiumHost != null) { // check if one of the above is not null to show
+			System.out.println(">>Appium Configuration");
 			System.out.println(">>Appium Configuration");
 			System.out.println("appiumHost: " + appiumHost);
 			System.out.println("appiumPort: " + appiumPort);
