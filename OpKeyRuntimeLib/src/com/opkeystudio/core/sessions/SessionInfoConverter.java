@@ -3,8 +3,6 @@ package com.opkeystudio.core.sessions;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import org.openqa.selenium.remote.DesiredCapabilities;
-
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 
 public class SessionInfoConverter {
@@ -25,8 +23,6 @@ public class SessionInfoConverter {
 			Object mobileDeviceObject = _class.getDeclaredMethod("getMobileDevice").invoke(object);
 			MobileDevice mobileDevice = convertObjectIntoMobileDevice(mobileDeviceObject);
 
-			Object mobileCapabilitiesObject = _class.getDeclaredMethod("getMobileCapabilities").invoke(object);
-
 			Map<String, String> pluginSettings = (Map<String, String>) _class.getDeclaredMethod("getPluginSettings")
 					.invoke(object);
 
@@ -38,7 +34,8 @@ public class SessionInfoConverter {
 			info.pluginSettings = pluginSettings;
 			info.buildName = (String) _class.getDeclaredMethod("getBuildName").invoke(object);
 			info.sessionDirectory = (String) _class.getDeclaredMethod("getSessionDirectory").invoke(object);
-			info.setMobileCapabilities((DesiredCapabilities) mobileCapabilitiesObject);
+			info.mobileCapabilities = (Map<String, String>) _class.getDeclaredMethod("getMobileCapabilities")
+					.invoke(object);
 
 			return info;
 
