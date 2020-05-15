@@ -92,10 +92,11 @@ public class ContextInitiator {
 		settingsMap.put("_DefaultStepTimeout", "90");
 		settingsMap.put("_HighlightObject", "false");
 		settingsMap.put("_ObjectVisibilityCheck", "false");
-		settingsMap.put("________ignore________",
-				"NOTE: Below items can also be fetched through invocation arguments defined in plugin descriptor. Ignore the underscore edges in names");
+		settingsMap.put("________ignore________", "NOTE: Below items can also be fetched through invocation arguments defined in plugin descriptor. Ignore the underscore edges in names");
 		settingsMap.put("_CommunicationEndpoint_", "");
-		settingsMap.put("_ScreenshotsDirectory_", SessionHandler.screenshotPath.getPath());
+		if (SessionHandler.screenshotPath != null) {
+			settingsMap.put("_ScreenshotsDirectory_", SessionHandler.screenshotPath.getPath());
+		}
 		settingsMap.put("_EnginePID_", "");
 		settingsMap.put("_CustomLibraryFolderPath_", "");
 		settingsMap.put("_PluginSettingXmlPath_", "");
@@ -106,8 +107,7 @@ public class ContextInitiator {
 		settingsMap.put("_LogSinkEndpoint_", "");
 		settingsMap.put("_AdbDirectory_", "");
 
-		settingsMap.put("_DefaultPluginLocation_", defaultInstallDir + File.separator + "resources" + File.separator
-				+ "libraries" + File.separator + "Plugins" + File.separator + "Appium");
+		settingsMap.put("_DefaultPluginLocation_", defaultInstallDir + File.separator + "resources" + File.separator + "libraries" + File.separator + "Plugins" + File.separator + "Appium");
 
 		settingsMap.put("_IOSDirectory_", "");
 		settingsMap.put("_PluginID_", "");
