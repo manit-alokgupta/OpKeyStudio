@@ -763,8 +763,10 @@ public class ObjectRepositoryView extends SuperComposite {
 					objectRepositoryTree.renderObjectRepositories();
 					return;
 				}
+				ObjectRepositoryTreeItem item=	objectRepositoryTree.getSelectedTreeItem();
 				List<ORObject> allors = objectRepositoryTree.getAllORObjects();
 				new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
+				objectRepositoryTree.setSelectedItem(item);
 				toggleSaveButton(false);
 				objectRepositoryTree.renderObjectRepositories();
 				toggleSaveButton(false);
