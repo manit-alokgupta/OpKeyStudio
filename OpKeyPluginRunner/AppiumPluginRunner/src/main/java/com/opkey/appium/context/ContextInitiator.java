@@ -85,8 +85,8 @@ public class ContextInitiator {
 		settingsMap.put("FirefoxDriverPath", "");
 		settingsMap.put("EdgeDriverPath", "");
 		settingsMap.put("OperaDriverPath", "");
-		settingsMap.put("Host", "localhost");
-		settingsMap.put("Port", "4723");
+		settingsMap.put("Host", "");
+		settingsMap.put("Port", "");
 		settingsMap.put("ProxyHost", "");
 		settingsMap.put("ProxyPort", "");
 		settingsMap.put("_DefaultStepTimeout", "90");
