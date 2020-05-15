@@ -85,6 +85,8 @@ public class FlowStepTable extends CustomTable {
 		movedownMenuItem.setEnabled(false);
 		setToRunMenuItem.setEnabled(false);
 		skipfromRunMenuItem.setEnabled(false);
+		createIFBlock.setEnabled(false);
+		createForBlock.setEnabled(false);
 	}
 
 	private void turnOffContextMenu() {
@@ -460,6 +462,8 @@ public class FlowStepTable extends CustomTable {
 					toggleCopyMenuItem(true);
 					toggleSetToRunMenuItem(true);
 					toggleSkipFromRunMenuItem(true);
+					toggleIfBlockMenuItem(true);
+					toggleForBlockMenuItem(true);
 					if (flowStep.getFunctionLibraryComponent() != null) {
 						toggleOpenInNewTabMenuItem(true);
 					} else if (flowStep.getCodedFunctionArtifact() != null) {
@@ -691,6 +695,8 @@ public class FlowStepTable extends CustomTable {
 			getParentTestCaseView().getInputDataTable().removeAll();
 			getParentTestCaseView().getOutPutDataTable().removeAll();
 			getParentTestCaseView().toggleDeleteButton(false);
+			toggleIfBlockMenuItem(false);
+			toggleForBlockMenuItem(false);
 			getParentTestCaseView().toggleMovedownButton(false);
 			getParentTestCaseView().toggleMoveupButton(false);
 		} else {
