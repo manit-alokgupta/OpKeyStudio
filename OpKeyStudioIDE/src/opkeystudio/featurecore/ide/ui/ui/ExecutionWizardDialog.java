@@ -358,14 +358,19 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					LinkedHashMap<String, String> capabilities = new LinkedHashMap<String, String>();
 					try {
 						if (MobileDesiredCapabilities.getMapOfCapabilities() != null) {
-							for (String capabilityName : MobileDesiredCapabilities.getMapOfCapabilities().keySet())
+							for (String capabilityName : MobileDesiredCapabilities.getMapOfCapabilities().keySet()) {
 								capabilities.put(capabilityName,
 										MobileDesiredCapabilities.getMapOfCapabilities().get(capabilityName));
+								System.out.println(">> Capability added: " + capabilityName);
+							}
 						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
+					System.out.println(">> Capabilities Size: " + capabilities.size());
 					session.setMobileCapabilities(capabilities);
+					System.out.println(
+							">> Capabilities Size in Execution Session: " + session.getMobileCapabilities().size());
 				}
 			}
 
