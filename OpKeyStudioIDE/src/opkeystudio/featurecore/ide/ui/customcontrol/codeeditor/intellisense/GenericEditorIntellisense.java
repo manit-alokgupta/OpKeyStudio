@@ -83,10 +83,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
-		if (refreshCodeEditorIntellisenseRunning) {
-			System.out.println("Already CodeEditor Refresh Intellisense Running>> Returning Same Instance");
-			return instance;
-		}
 		if (instance != null) {
 			instance.dispose();
 		}
@@ -95,10 +91,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public static GenericEditorIntellisense getCFLInstanceoOfCodeEditor() {
-		if (refreshCFLEditorIntellisenseRunning) {
-			System.out.println("Already CFL Refresh Intellisense Running>> Returning Same Instance");
-			return cflinstance;
-		}
 		if (cflinstance != null) {
 			cflinstance.dispose();
 		}
@@ -108,7 +100,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	public void refreshCodeEditorIntellisense() {
 		if (refreshCodeEditorIntellisenseRunning) {
-			System.out.println("Already Refresh Intellisense Running");
+			System.out.println("Already CodeEditor Refresh Intellisense Running");
 			return;
 		}
 		refreshCodeEditorIntellisenseRunning = true;
@@ -130,9 +122,13 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				System.out.println("Started Code Editor initIntellisense");
-				addSimpleKeywords();
-				addOpKeyTranspiledClassInformation();
-				addClassInformationFromSenseFile(false);
+				try {
+					addSimpleKeywords();
+					addOpKeyTranspiledClassInformation();
+					addClassInformationFromSenseFile(false);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				refreshCodeEditorIntellisenseRunning = false;
 				System.out.println("Completed Code Editor initIntellisense");
 			}
@@ -146,9 +142,13 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				System.out.println("Started CFL Editor initIntellisense");
-				addSimpleKeywords();
-				addOpKeyTranspiledClassInformation();
-				addClassInformationFromSenseFile(true);
+				try {
+					addSimpleKeywords();
+					addOpKeyTranspiledClassInformation();
+					addClassInformationFromSenseFile(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				refreshCFLEditorIntellisenseRunning = false;
 				System.out.println("Completed CFL Editor initIntellisense");
 			}
