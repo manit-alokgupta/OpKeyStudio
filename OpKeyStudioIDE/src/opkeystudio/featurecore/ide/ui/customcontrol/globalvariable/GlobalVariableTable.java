@@ -503,7 +503,7 @@ public class GlobalVariableTable extends CustomTable {
 		gv.setP_id(ServiceRepository.getInstance().getDefaultProject().getP_id());
 		gv.setName("");
 		gv.setValue("");
-		gv.setDatatype("STRING");
+		gv.setDatatype("String");
 		gv.setAdded(true);
 		gv.setExternallyupdatable(true);
 		addGlobalVariable(gv);
