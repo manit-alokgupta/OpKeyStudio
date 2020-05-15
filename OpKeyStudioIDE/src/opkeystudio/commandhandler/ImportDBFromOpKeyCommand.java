@@ -16,7 +16,7 @@ public class ImportDBFromOpKeyCommand {
 		if (ServiceRepository.getInstance().getOpKeyHostAuthToken() != null
 				&& ServiceRepository.getInstance().getOpKeyHostSessionId() != null) {
 			boolean status = new MessageDialogs().openConfirmDialog("OpKey",
-					"You are already login to OpKey. Click Ok to Relogin");
+					"You are already logged in to OpKey. Click Ok to Relogin");
 			if (status == false) {
 				return;
 			}
