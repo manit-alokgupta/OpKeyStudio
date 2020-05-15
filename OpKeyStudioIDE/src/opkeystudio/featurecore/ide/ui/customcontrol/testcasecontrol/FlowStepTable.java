@@ -235,7 +235,40 @@ public class FlowStepTable extends CustomTable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				Keyword ifKeyword = null;
+				Keyword endIfKeyword = null;
+				List<Keyword> keywords = KeywordManager.getInstance().getAllKeywords();
+				for (Keyword keyword : keywords) {
+					String keywordName = keyword.getName().toLowerCase();
+					if (keywordName.equals("for")) {
+						ifKeyword = keyword;
+					}
+					if (keywordName.equals("next")) {
+						endIfKeyword = keyword;
+					}
+				}
+				Artifact artifact = getParentTestCaseView().getArtifact();
+				FlowStep selectedflowStep = getSelectedFlowStep();
+				FlowStep ifFlowStep = new FlowMaker().getFlowStepDTO(artifact, selectedflowStep, ifKeyword,
+						artifact.getId(), getFlowStepsData());
+				ifFlowStep.setAdded(true);
+				getFlowStepsData().add(ifFlowStep);
+				Collections.sort(getFlowStepsData());
 
+				FlowStep selectedFlowStepReplica = new FlowMaker().createFlowStepReplica(artifact, ifFlowStep,
+						selectedflowStep, getFlowStepsData());
+				selectedFlowStepReplica.setAdded(true);
+				getFlowStepsData().add(selectedFlowStepReplica);
+				Collections.sort(getFlowStepsData());
+
+				FlowStep endifFlowStep = new FlowMaker().getFlowStepDTO(artifact, selectedFlowStepReplica, endIfKeyword,
+						artifact.getId(), getFlowStepsData());
+				endifFlowStep.setAdded(true);
+				getFlowStepsData().add(endifFlowStep);
+				Collections.sort(getFlowStepsData());
+				selectedflowStep.setDeleted(true);
+				refreshFlowSteps();
+				getParentTestCaseView().toggleSaveButton(true);
 			}
 
 			@Override
