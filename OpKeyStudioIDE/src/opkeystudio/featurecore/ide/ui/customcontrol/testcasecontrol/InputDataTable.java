@@ -155,12 +155,10 @@ public class InputDataTable extends CustomTable {
 					@Override
 					public void focusLost(FocusEvent e) {
 						checkedButton.dispose();
-
 					}
 
 					@Override
 					public void focusGained(FocusEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -177,7 +175,6 @@ public class InputDataTable extends CustomTable {
 
 					@Override
 					public void widgetDefaultSelected(SelectionEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -191,7 +188,7 @@ public class InputDataTable extends CustomTable {
 				}
 			} else {
 				disposeControlEditor(editor);
-				Text text = new Text(cursor, 0);
+				Text text = new Text(cursor, SWT.BORDER);
 				text.addVerifyListener(new VerifyListener() {
 
 					@Override
@@ -210,7 +207,7 @@ public class InputDataTable extends CustomTable {
 									isNumber = false;
 								}
 							}
-							
+
 							if (dataType.equals("Double")) {
 								try {
 									Double.parseDouble(newS);
@@ -349,7 +346,6 @@ public class InputDataTable extends CustomTable {
 
 					@Override
 					public void widgetDefaultSelected(SelectionEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -381,7 +377,6 @@ public class InputDataTable extends CustomTable {
 
 					@Override
 					public void widgetDefaultSelected(SelectionEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -403,7 +398,6 @@ public class InputDataTable extends CustomTable {
 
 				@Override
 				public void mouseUp(MouseEvent e) {
-					// TODO Auto-generated method stub
 
 				}
 
@@ -434,7 +428,6 @@ public class InputDataTable extends CustomTable {
 
 				@Override
 				public void mouseUp(MouseEvent e) {
-					// TODO Auto-generated method stub
 
 				}
 
@@ -482,7 +475,6 @@ public class InputDataTable extends CustomTable {
 
 				@Override
 				public void mouseUp(MouseEvent e) {
-					// TODO Auto-generated method stub
 
 				}
 
@@ -516,7 +508,6 @@ public class InputDataTable extends CustomTable {
 
 						@Override
 						public void mouseUp(MouseEvent e) {
-							// TODO Auto-generated method stub
 
 						}
 
@@ -662,8 +653,8 @@ public class InputDataTable extends CustomTable {
 							}
 						}
 						hasData = true;
-						cti.setText(new String[] { keywordInputArg.getDatatype().toString(), keywordInputArg.getNameForTable(),
-								valueData });
+						cti.setText(new String[] { keywordInputArg.getDatatype().toString(),
+								keywordInputArg.getNameForTable(), valueData });
 						cti.setControlData(flowInputArg);
 						addInputTableEditor(cti);
 					}
@@ -743,7 +734,7 @@ public class InputDataTable extends CustomTable {
 				tview.getInputDataTable().setHeaderVisible(false);
 				tview.getInputDataTable().setLinesVisible(false);
 				tview.getInputDataTable()
-						.displayTableInfo(new String[] { "This Keyword Does Not Need Data!", "", "", "" });
+				.displayTableInfo(new String[] { "This Keyword Does Not Need Data!", "", "", "" });
 			}
 			if (tview.getDataRepositoryTree() != null) {
 				tview.getDataRepositoryTree().setEnabled(false);
