@@ -34,13 +34,14 @@ public class TranspilerUtilities {
 	}
 
 	public void addPackageName(Artifact artifact, JavaClassSource classSource) {
-		if (artifact.getPackageName() == null) {
+		String packageName = ArtifactTranspiler.getInstance().getArtifactPackageName(artifact);
+		if (packageName == null) {
 			return;
 		}
-		if (artifact.getPackageName().trim().isEmpty()) {
+		if (packageName.trim().isEmpty()) {
 			return;
 		}
-		classSource.setPackage(artifact.getPackageName());
+		classSource.setPackage(packageName);
 	}
 
 	private List<String> getGenericAppiumKeywords() {
