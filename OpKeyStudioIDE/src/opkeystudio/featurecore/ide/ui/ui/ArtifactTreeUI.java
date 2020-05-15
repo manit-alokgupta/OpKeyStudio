@@ -358,7 +358,6 @@ public class ArtifactTreeUI extends SuperComposite {
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
 						"Folder " + getVarName());
 				if (inputValue == null) {
-					System.out.println("cancel pressed ");
 					return;
 				}
 				while (inputValue.trim().isEmpty()) {
@@ -366,17 +365,23 @@ public class ArtifactTreeUI extends SuperComposite {
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name ",
 							"Folder " + getVarName());
 					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
 						return;
 					}
 				}
 
-				boolean isUnique = isArtifactNameIsUnique(inputValue);
-				if (isUnique == false) {
-					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
-					return;
+				while (inputValue.trim().isEmpty() || !isArtifactNameIsUnique(inputValue)) {
+					if (!inputValue.trim().isEmpty() && !isArtifactNameIsUnique(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be Unique!");
+					}
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name ",
+							"Folder " + getVarName());
+					if (inputValue == null) {
+						return;
+					}
+					if (inputValue.trim().isEmpty())
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name can not be empty!");
 				}
-
 				createArtifact(artifact, inputValue, MODULETYPE.Folder);
 			}
 
@@ -481,7 +486,7 @@ public class ArtifactTreeUI extends SuperComposite {
 				if (isused) {
 					new MessageDialogs().openInformationDialog("Unable to delete " + artifact.getFile_type_enum(),
 							"Unable to delete " + artifact.getFile_type_enum() + " '" + artifact.getName()
-									+ "' as it is being used:");
+							+ "' as it is being used:");
 					return;
 				}
 				deleteArtifactJavaFile(artifact);
@@ -786,7 +791,6 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -808,15 +812,22 @@ public class ArtifactTreeUI extends SuperComposite {
 					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Enter Name ",
 							"Folder " + getVarName());
 					if (inputValue == null) {
-						System.out.println("cancel pressed inside while loop");
 						return;
 					}
 				}
 
-				boolean isUnique = isArtifactNameIsUnique(inputValue);
-				if (isUnique == false) {
-					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
-					return;
+				while (inputValue.trim().isEmpty() || !isArtifactNameIsUnique(inputValue)) {
+					if (!inputValue.trim().isEmpty() && !isArtifactNameIsUnique(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be Unique!");
+					}
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name ",
+							"Folder " + getVarName());
+					if (inputValue == null) {
+						return;
+					}
+					if (inputValue.trim().isEmpty())
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name can not be empty!");
 				}
 
 				String artifactId = null;
@@ -1062,7 +1073,6 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -1197,7 +1207,6 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -1312,12 +1321,12 @@ public class ArtifactTreeUI extends SuperComposite {
 				msd.openProgressDialog(null, String.format("Please wait. Creating Artifact '%s'", artifactName), false,
 						new IRunnableWithProgress() {
 
-							@Override
-							public void run(IProgressMonitor monitor)
-									throws InvocationTargetException, InterruptedException {
-								artifact = new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
-							}
-						});
+					@Override
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException, InterruptedException {
+						artifact = new ArtifactApi().createArtifact(parentArtifact, artifactName, moduleType);
+					}
+				});
 				artifactTree.renderArtifacts(true);
 				msd.closeProgressDialog();
 				Utilities.getInstance().openArtifacts(artifact);
