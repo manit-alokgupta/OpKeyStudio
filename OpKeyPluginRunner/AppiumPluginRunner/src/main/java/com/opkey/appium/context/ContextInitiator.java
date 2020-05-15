@@ -60,7 +60,12 @@ public class ContextInitiator {
 	}
 
 	private void initSettings() {
-		Context.session().setSettings(getSettings());
+		try {
+			Context.session().setSettings(getSettings());
+		} catch (Exception ex) {
+			// in case of web plugin execution as well, this piece of code is run, due to which the Context Object might be overridden and cause further errors
+			// wrapping it up into a try-catch block ensures that if web plugin is running, then appium wont ovverride its settings in the context and vice-versa
+		}
 	}
 
 	public static void addFunction(String functionName) {
@@ -86,26 +91,25 @@ public class ContextInitiator {
 		settingsMap.put("FirefoxDriverPath", "");
 		settingsMap.put("EdgeDriverPath", "");
 		settingsMap.put("OperaDriverPath", "");
-		
-		
+
 		String appiumHost = SessionHandler.getSessionInfo().pluginSettings.get("appiumHost"); // appium Host
 		String appiumPort = SessionHandler.getSessionInfo().pluginSettings.get("appiumPort"); // appium Port
 		String appiumDir = SessionHandler.getSessionInfo().pluginSettings.get("appiumDir");
-		if(appiumHost !=null)
+		if (appiumHost != null)
 			settingsMap.put("Host", appiumHost);
 		else
 			settingsMap.put("Host", "");
-		
-		if(appiumDir !=null)
+
+		if (appiumDir != null)
 			settingsMap.put("Port", appiumPort);
 		else
 			settingsMap.put("Port", "");
-		
-		if(appiumHost != null)
+
+		if (appiumHost != null)
 			settingsMap.put("AppiumServer", appiumDir);
 		else
 			settingsMap.put("AppiumServer", "");
-		
+
 		settingsMap.put("ProxyHost", "");
 		settingsMap.put("ProxyPort", "");
 		settingsMap.put("_DefaultStepTimeout", "90");

@@ -14,8 +14,14 @@ import com.crestech.opkey.plugin.webdriver.WebDriverDispatcher;
 import com.crestech.opkey.plugin.webdriver.pluginSpecific.Context.CurrentKeyword;
 
 public class ContextInitiator {
+
 	public void initContext() {
-		initSettings();
+		try {
+			Context.session().setSettings(getSettings());
+		} catch (Exception ex) {
+			// in case of web plugin execution as well, this piece of code is run, due to which the Context Object might be overridden and cause further errors
+			// wrapping it up into a try-catch block ensures that if web plugin is running, then appium wont ovverride its settings in the context and vice-versa
+		}
 	}
 
 	public static void addDataRgumentsInFunctionCall(String... args) {
@@ -26,13 +32,13 @@ public class ContextInitiator {
 			dataArgument.setArgumentName("args" + i);
 			dataArgument.setArgumentPosition(i);
 			dataArgument.setValue(arg);
-			//dataArgument.setDataType("String");
+			// dataArgument.setDataType("String");
 			dataarguments.getDataArgument().add(dataArgument);
 		}
 		Context.current().getFunctionCall().setDataArguments(dataarguments);
-		
+
 	}
-	
+
 	public static void addDataRgumentsInFunctionCall(Object... args) {
 		DataArguments dataarguments = new DataArguments();
 		for (int i = 0; i < args.length; i++) {
@@ -41,27 +47,26 @@ public class ContextInitiator {
 			dataArgument.setArgumentName("args" + i);
 			dataArgument.setArgumentPosition(i);
 			dataArgument.setValue(arg.toString());
-			
+
 			setArgumentType(dataArgument, arg);
 			dataarguments.getDataArgument().add(dataArgument);
 		}
 		Context.current().getFunctionCall().setDataArguments(dataarguments);
-		
-		
+
 	}
-	
+
 	private static void setArgumentType(DataArgument dataArgument, Object arg) {
-		if(arg instanceof String) {
+		if (arg instanceof String) {
 			dataArgument.setDataType("String");
-		}else if(arg instanceof Integer) {
+		} else if (arg instanceof Integer) {
 			dataArgument.setDataType("Integer");
-		}else if(arg instanceof Double) {
+		} else if (arg instanceof Double) {
 			dataArgument.setDataType("Double");
-		}else if(arg instanceof Boolean) {
+		} else if (arg instanceof Boolean) {
 			dataArgument.setDataType("Boolean");
 		}
 	}
-	
+
 	private void initSettings() {
 		Context.session().setSettings(getSettings());
 	}
@@ -76,7 +81,7 @@ public class ContextInitiator {
 
 		Context.set(new InvocationContext(fc));
 		WebDriverDispatcher.preKeywordClearance();
-		
+
 		WebDriverDispatcher.currentKeyword = new CurrentKeyword();
 	}
 
@@ -102,8 +107,7 @@ public class ContextInitiator {
 		settingsMap.put("_DefaultStepTimeout", "90");
 		settingsMap.put("_HighlightObject", "true");
 		settingsMap.put("_ObjectVisibilityCheck", "false");
-		settingsMap.put("________ignore________",
-				"NOTE: Below items can also be fetched through invocation arguments defined in plugin descriptor. Ignore the underscore edges in names");
+		settingsMap.put("________ignore________", "NOTE: Below items can also be fetched through invocation arguments defined in plugin descriptor. Ignore the underscore edges in names");
 		settingsMap.put("_CommunicationEndpoint_", "");
 		settingsMap.put("_ScreenshotsDirectory_", "");
 		settingsMap.put("_EnginePID_", "");
@@ -116,8 +120,7 @@ public class ContextInitiator {
 		settingsMap.put("_LogSinkEndpoint_", "");
 		settingsMap.put("_AdbDirectory_", "");
 
-		settingsMap.put("_DefaultPluginLocation_", defaultInstallDir + File.separator + "resources" + File.separator
-				+ "libraries" + File.separator + "Plugins" + File.separator + "Web");
+		settingsMap.put("_DefaultPluginLocation_", defaultInstallDir + File.separator + "resources" + File.separator + "libraries" + File.separator + "Plugins" + File.separator + "Web");
 
 		settingsMap.put("_IOSDirectory_", "");
 		settingsMap.put("_PluginID_", "");
@@ -127,5 +130,4 @@ public class ContextInitiator {
 		return settingsMap;
 	}
 
-	
 }
