@@ -55,7 +55,7 @@ public class SessionHandler implements ExecutionSession {
 		}
 
 		// Mobile Desired Capabilities
-		if (sessionInfo.mobileCapabilities != null) { // check if capabilities are provided or not
+		if (sessionInfo.mobileCapabilities.size() > 0) { // check if capabilities are provided or not
 			System.out.println("-------------------------------------------------");
 			System.out.println("******** Appium Mobile Capabilities ******");
 			System.out.println("-------------------------------------------------");
