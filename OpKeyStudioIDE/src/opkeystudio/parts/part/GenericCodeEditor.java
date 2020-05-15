@@ -19,9 +19,11 @@ import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyArtifactPersistLi
 
 public class GenericCodeEditor {
 
+	ArtifactCodeView codeView = null;
+
 	@PostConstruct
 	public void postConstruct(Composite parent, MPart part, MWindow window) throws IOException {
-		new ArtifactCodeView(parent, 0, true);
+		codeView = new ArtifactCodeView(parent, 0, true);
 		window.getContext().set(ISaveHandler.class, new CustomSaveHandler());
 	}
 
@@ -37,7 +39,7 @@ public class GenericCodeEditor {
 
 	@Persist
 	public void save() {
-
+		codeView.handleRefreshOnSave();
 	}
 
 	@PersistState
