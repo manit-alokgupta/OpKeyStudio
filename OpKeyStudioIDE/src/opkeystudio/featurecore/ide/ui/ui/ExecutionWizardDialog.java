@@ -158,7 +158,6 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -173,7 +172,6 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		sessionNameTextField.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				// TODO Auto-generated method stub
 				if (sessionNameTextField.getText().equals("")) {
 					runButton.setEnabled(false);
 					checkIfRunButtonBeEnabled(); // CustomNotificationUtil.openInformationNotification("OpKey", "Session
@@ -219,7 +217,6 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		buildNameTextField.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				// TODO Auto-generated method stub
 				if (buildNameTextField.getText().equals("")) {
 					runButton.setEnabled(false);
 					checkIfRunButtonBeEnabled();// CustomNotificationUtil.openInformationNotification("OpKey", "Build
@@ -355,13 +352,18 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					device.setVersion(getMobileDeviceExecutionDetail().getDeviceVersion());
 					session.setMobileDevice(device);
 
-					LinkedHashMap<String, String> capabilities = new LinkedHashMap<String, String>();
-					
 					// TODO: null check- exception throwing
-					for (String capabilityName : MobileDesiredCapabilities.getMapOfCapabilities().keySet())
-						capabilities.put(capabilityName,
-								MobileDesiredCapabilities.getMapOfCapabilities().get(capabilityName));
-					
+					// NOTE: Adding this to check if issue with static data
+					LinkedHashMap<String, String> capabilities = new LinkedHashMap<String, String>();
+					try {
+						if (MobileDesiredCapabilities.getMapOfCapabilities() != null) {
+							for (String capabilityName : MobileDesiredCapabilities.getMapOfCapabilities().keySet())
+								capabilities.put(capabilityName,
+										MobileDesiredCapabilities.getMapOfCapabilities().get(capabilityName));
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 					session.setMobileCapabilities(capabilities);
 				}
 			}

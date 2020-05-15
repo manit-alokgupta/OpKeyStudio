@@ -26,6 +26,9 @@ public class SessionInfoConverter {
 			Map<String, String> pluginSettings = (Map<String, String>) _class.getDeclaredMethod("getPluginSettings")
 					.invoke(object);
 
+			Map<String, String> mobileCapabilities = (Map<String, String>) _class
+					.getDeclaredMethod("getMobileCapabilities").invoke(object);
+
 			SessionInfo info = new SessionInfo();
 			info.sessionName = sessionName;
 			info.defaultPluginLocation = defaultPluginLocation;
@@ -34,8 +37,7 @@ public class SessionInfoConverter {
 			info.pluginSettings = pluginSettings;
 			info.buildName = (String) _class.getDeclaredMethod("getBuildName").invoke(object);
 			info.sessionDirectory = (String) _class.getDeclaredMethod("getSessionDirectory").invoke(object);
-			info.mobileCapabilities = (Map<String, String>) _class.getDeclaredMethod("getMobileCapabilities")
-					.invoke(object);
+			info.mobileCapabilities = mobileCapabilities;
 
 			return info;
 
