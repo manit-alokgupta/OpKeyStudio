@@ -233,7 +233,7 @@ public class DeviceConfigurationDialog extends Dialog {
 						applicationPathText.setText(file.toString());
 						applicationPathText.setEditable(true);
 					} else {
-						CustomNotificationUtil.openInformationNotification("OpKey",
+						CustomNotificationUtil.openErrorNotification("OpKey",
 								"Application APK file you provided doesn't exist!");
 					}
 				}

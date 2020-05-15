@@ -443,7 +443,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 				boolean isUnique = isArtifactNameIsUnique(inputValue);
 				if (isUnique == false) {
-					CustomNotificationUtil.openInformationNotification("OpKey", "Name must be unique!");
+					CustomNotificationUtil.openErrorNotification("OpKey", "Name must be unique!");
 					return;
 				}
 				createArtifact(artifact, inputValue, MODULETYPE.Component);

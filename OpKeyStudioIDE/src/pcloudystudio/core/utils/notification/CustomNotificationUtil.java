@@ -19,35 +19,28 @@ import pcloudystudio.resources.constant.ImageConstants;
 public class CustomNotificationUtil {
 
 	public static void openInformationNotificationDialog(String title, String message) {
-		new MessageDialog(Display.getCurrent().getActiveShell(), title,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 2, 0,
-				"OK").open();
+		new MessageDialog(Display.getCurrent().getActiveShell(), title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 2, 0, "OK").open();
 	}
 
 	public static void openErrorNotificationDialog(String title, String message) {
-		new MessageDialog(Display.getCurrent().getActiveShell(), title,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 1, 0,
-				"OK").open();
+		new MessageDialog(Display.getCurrent().getActiveShell(), title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 1, 0, "OK").open();
 	}
 
 	public static int openConfirmDialog(String title, String message) {
-		return new MessageDialog(Display.getCurrent().getActiveShell(), title,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message,
-				MessageDialog.CONFIRM, new String[] { "Yes", "No", "Cancel" }, 0).open();
+		return new MessageDialog(Display.getCurrent().getActiveShell(), title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, MessageDialog.CONFIRM,
+				new String[] { "Yes", "No", "Cancel" }, 0).open();
 	}
 
 	public static int openConfirmDialog(Shell shell, String title, String message) {
 		if (shell.isDisposed()) {
 			return -1;
 		}
-		return new MessageDialog(shell, title,
-				ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message,
-				MessageDialog.CONFIRM, new String[] { "Yes", "No", "Cancel" }, 0).open();
+		return new MessageDialog(shell, title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, MessageDialog.CONFIRM,
+				new String[] { "Yes", "No", "Cancel" }, 0).open();
 	}
 
 	public static String openInputDialog(String dialogTitle, String dialogContent, String defaultValue) {
-		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), dialogTitle, dialogContent,
-				defaultValue, null);
+		InputDialog input = new InputDialog(Display.getCurrent().getActiveShell(), dialogTitle, dialogContent, defaultValue, null);
 
 		if (input.open() != InputDialog.OK) {
 			return null;
@@ -72,16 +65,19 @@ public class CustomNotificationUtil {
 		tip.setVisible(true);
 	}
 
+	public static void openInformationNotification(String title, String message, Boolean isError) {
+		if (isError)
+			Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.RED_THEME);
+		else
+			Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
+	}
+
 	public static void openInformationNotification(String title, String message) {
-		// TODO: Need to check disposed case and type 2, and type 1 notify + ( add new
-		// sub heading )
-		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.BLUE_THEME);
+		openInformationNotification(title, message, false);
 	}
 
 	public static void openErrorNotification(String title, String message) {
-		// TODO: Need to check disposed case and type 2, and type 1 notify + ( add new
-		// sub heading )
-		Notify.notify(ImageConstants.IMG_16_OPKEY_LOGO, title, message, NotificationTheme.RED_THEME);
+		openInformationNotification(title, message, true);
 	}
 
 }
