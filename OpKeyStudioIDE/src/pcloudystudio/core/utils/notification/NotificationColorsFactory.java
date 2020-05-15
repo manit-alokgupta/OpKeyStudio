@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Display;
 public class NotificationColorsFactory {
 
 	public enum NotificationTheme {
-		YELLOW_THEME, GRAY_THEME, BLUE_THEME
+		YELLOW_THEME, GRAY_THEME, BLUE_THEME, RED_THEME
 	};
 	
 	private NotificationColorsFactory() {
@@ -32,6 +32,13 @@ public class NotificationColorsFactory {
 			colors.borderColor = new Color(display, 153, 188, 232);
 			colors.leftColor = new Color(display, 210, 225, 244);
 			colors.rightColor = new Color(display, 182, 207, 238);
+			break;
+		case RED_THEME:
+			colors.textColor = new Color(display, 4, 64, 140);
+			colors.titleColor = new Color(display, 0, 0, 0);
+			colors.borderColor = new Color(display, 153, 188, 232);
+			colors.leftColor = new Color(display, 255, 204, 203);
+			colors.rightColor = new Color(display, 255, 0, 0);
 			break;
 		case GRAY_THEME:
 			colors.textColor = new Color(display, 0, 0, 0);
