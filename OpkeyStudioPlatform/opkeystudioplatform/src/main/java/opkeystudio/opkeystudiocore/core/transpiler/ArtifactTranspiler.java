@@ -12,8 +12,6 @@ import org.apache.commons.io.FileUtils;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.CFLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
@@ -28,6 +26,7 @@ public class ArtifactTranspiler {
 
 	private Set<String> allPackagesNames = new HashSet<String>();
 	private static ArtifactTranspiler artifactTranspiler;
+	private List<Artifact> allPackageArtifacts = new ArrayList<Artifact>();
 
 	public static ArtifactTranspiler getInstance() {
 		if (artifactTranspiler == null) {
@@ -37,14 +36,13 @@ public class ArtifactTranspiler {
 	}
 
 	public void setPackageProperties() {
+		allPackageArtifacts.clear();
 		List<Artifact> allArtifacts = GlobalLoader.getInstance().getAllArtifacts();
-		setPackageProperties(allArtifacts, true);
+		setPackageProperties(allArtifacts);
 	}
 
-	public void setPackageProperties(List<Artifact> allArtifacts, boolean performDefault) {
-		if (performDefault) {
-			ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
-		}
+	private void setPackageProperties(List<Artifact> allArtifacts) {
+		ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
 		for (Artifact artifact : allArtifacts) {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
 				// continue;
@@ -81,22 +79,21 @@ public class ArtifactTranspiler {
 			}
 			artifact.setPackagePath(packagePath.toLowerCase());
 			artifact.setPackageName(packageName.toLowerCase());
+			allPackageArtifacts.add(artifact.clone());
 			ArtifactTranspiler.getInstance().addPackageName(artifact.getPackageName());
 		}
-		if (performDefault) {
-			ArtifactTranspiler.getInstance().addPackageName("allartifacts");
-			ArtifactTranspiler.getInstance().addPackageName("com.opkey.web");
-			ArtifactTranspiler.getInstance().addPackageName("com.opkey.appium");
-			ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
-			ArtifactTranspiler.getInstance().addPackageName("com.ssts.reporting");
+		ArtifactTranspiler.getInstance().addPackageName("allartifacts");
+		ArtifactTranspiler.getInstance().addPackageName("com.opkey.web");
+		ArtifactTranspiler.getInstance().addPackageName("com.opkey.appium");
+		ArtifactTranspiler.getInstance().addPackageName("com.opkey.SystemPlugin");
+		ArtifactTranspiler.getInstance().addPackageName("com.ssts.reporting");
 
-			ArtifactTranspiler.getInstance().addPackageName("java.util");
-			ArtifactTranspiler.getInstance().addPackageName("java.io");
-			ArtifactTranspiler.getInstance()
-					.addPackageName("com.crestech.opkey.plugin.communication.contracts.functioncall");
-			ArtifactTranspiler.getInstance().addPackageName("com.crestech.opkey.plugin.codedfl");
-			TranspilerUtilities.getInstance().clearAppiumTypeFunctionLibraries();
-		}
+		ArtifactTranspiler.getInstance().addPackageName("java.util");
+		ArtifactTranspiler.getInstance().addPackageName("java.io");
+		ArtifactTranspiler.getInstance()
+				.addPackageName("com.crestech.opkey.plugin.communication.contracts.functioncall");
+		ArtifactTranspiler.getInstance().addPackageName("com.crestech.opkey.plugin.codedfl");
+		TranspilerUtilities.getInstance().clearAppiumTypeFunctionLibraries();
 	}
 
 	private boolean checkPackageNameIsValid(String packagename) {
@@ -163,5 +160,34 @@ public class ArtifactTranspiler {
 
 	public void setAllPackagesNames(Set<String> allPackagesNames) {
 		this.allPackagesNames = allPackagesNames;
+	}
+
+	public String getArtifactPackagePath(Artifact inartifact) {
+		for (Artifact artifact : allPackageArtifacts) {
+			if (artifact.getId().equals(inartifact.getId())) {
+				return artifact.getPackagePath();
+			}
+		}
+		return null;
+	}
+
+	public String getArtifactPackageName(Artifact inartifact) {
+		for (Artifact artifact : allPackageArtifacts) {
+			if (artifact.getId().equals(inartifact.getId())) {
+				return artifact.getPackageName();
+			}
+		}
+		return null;
+	}
+
+	public String getFullPackagePathOfArtifact(Artifact inartifact) {
+		for (Artifact artifact : allPackageArtifacts) {
+			if (artifact.getId().equals(inartifact.getId())) {
+				return opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+						.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath()
+						+ File.separator + artifact.getVariableName() + ".java";
+			}
+		}
+		return null;
 	}
 }

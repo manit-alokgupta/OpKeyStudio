@@ -252,9 +252,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 	private void initTestCaseCode() {
 		Artifact artifact = getParentTestCaseView().getCurrentArtifact();
-		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + ".java";
+		String codeFilePath = ArtifactTranspiler.getInstance().getFullPackagePathOfArtifact(artifact);
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));
 		getJavaEditor().setArtifactJavaCode(codeData);
@@ -262,9 +260,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 	private void initCFLCode() {
 		Artifact artifact = getCurrentArtifact();
-		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + ".java";
+		String codeFilePath = ArtifactTranspiler.getInstance().getFullPackagePathOfArtifact(artifact);
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));
 		setCodeViewFile(new File(codeFilePath));
@@ -273,9 +269,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 	private void initTestSuiteCode() {
 		Artifact artifact = getParentTestSuiteView().getCurrentArtifact();
-		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + ".java";
+		String codeFilePath = ArtifactTranspiler.getInstance().getFullPackagePathOfArtifact(artifact);
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));
 		getJavaEditor().setArtifactJavaCode(codeData);
@@ -283,9 +277,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 	private void initObjectRepositoryCode() {
 		Artifact artifact = getParentObjectRepositoryView().getCurrentArtifact();
-		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + ".java";
+		String codeFilePath = ArtifactTranspiler.getInstance().getFullPackagePathOfArtifact(artifact);
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));
 		getJavaEditor().setArtifactJavaCode(codeData);
@@ -293,9 +285,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 	private void initDataRepositoryCode() {
 		Artifact artifact = getParentDataRepositoryView().getCurrentArtifact();
-		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
-				+ artifact.getVariableName() + ".java";
+		String codeFilePath = ArtifactTranspiler.getInstance().getFullPackagePathOfArtifact(artifact);
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.readTextFile(new File(codeFilePath));
 		getJavaEditor().setArtifactJavaCode(codeData);
@@ -625,7 +615,6 @@ public class ArtifactCodeView extends SuperComposite {
 						cflCode.setModified(true);
 						System.out.println("Method Body " + method.getBody());
 						new CodedFunctionApi().saveCFLCode(getArtifact(), cflCode);
-						Utilities.getInstance().refreshArtifactTree();
 					}
 				}
 			}

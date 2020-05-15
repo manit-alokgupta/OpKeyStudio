@@ -402,7 +402,6 @@ public class GenericTree extends CustomTree {
 		}
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Function Library");
-		rootNode.setExpanded(true);
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 
 		List<CustomTreeItem> topMostNodes = new ArrayList<>();
@@ -419,7 +418,9 @@ public class GenericTree extends CustomTree {
 			renderAllArtifactTree(topMostNode, filteredArtifacts);
 		}
 
-		expandAll(rootNode);
+		rootNode.setExpanded(true);
+		this.setRedraw(true);
+	//	expandAll(rootNode);
 	}
 
 	private void renderAllArtifactTree(CustomTreeItem rootNode, List<Artifact> allArtifacts) {
@@ -474,7 +475,12 @@ public class GenericTree extends CustomTree {
 		for (CustomTreeItem topMostNode : topMostNodes) {
 			renderAllArtifactTree(topMostNode, filteredArtifacts);
 		}
-		expandAll(rootNode);
+		
+
+		rootNode.setExpanded(true);
+		this.setRedraw(true);
+		
+		//expandAll(rootNode);
 	}
 
 	private void initDREvents() {

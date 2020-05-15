@@ -40,11 +40,11 @@ import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTreeIte
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
-import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.ArtifactUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class ArtifactTreeUI extends SuperComposite {
@@ -74,6 +74,7 @@ public class ArtifactTreeUI extends SuperComposite {
 	private MenuItem renameMenuItem;
 	private MenuItem deleteMenuItem;
 	private MenuItem refreshMenuItem;
+	private Button clearArtifactTreeButton;
 	/**
 	 * Create the composite.
 	 * 
@@ -130,7 +131,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 		ToolItem tltmNewItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
-		Button clearArtifactTreeButton = new Button(composite, SWT.NONE);
+		clearArtifactTreeButton = new Button(composite, SWT.NONE);
 		clearArtifactTreeButton.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		clearArtifactTreeButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ERASER_ICON));
 		clearArtifactTreeButton.setToolTipText("Clear Text");
@@ -185,7 +186,7 @@ public class ArtifactTreeUI extends SuperComposite {
 		// toolbarRefresh.setEnabled(false);
 		toolbarRefresh.setToolTipText("Refresh");
 
-		artifactTree = new ArtifactTree(this, SWT.BORDER);
+		artifactTree = new ArtifactTree(this, SWT.BORDER, this);
 		artifactTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		ServiceRepository.getInstance().setProjectTreeObject(artifactTree);
@@ -1092,9 +1093,6 @@ public class ArtifactTreeUI extends SuperComposite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ArtifactTreeItem selectedTreeItem = artifactTree.getSelectedArtifactTreeItem();
-
-				System.out.println("Mouse clicked event");
-
 				if (selectedTreeItem == null) {
 					toogleNewToolbarMenuItem(false);
 					toogleNewToolbarItem(false);
@@ -1118,6 +1116,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					toggleRefreshMenuItem(true);
 					return;
 				}
+				artifactTree.setSelectedArtifactId(selectedTreeItem.getArtifact().getId());
 				if (selectedTreeItem.getArtifact().getFile_type_enum() == MODULETYPE.Folder) {
 					toogleNewToolbarMenuItem(true);
 					toogleNewToolbarItem(true);
@@ -1225,13 +1224,22 @@ public class ArtifactTreeUI extends SuperComposite {
 
 	}
 
+	public Text getSearchBox() {
+		return txtSearch;
+	}
+
+	public Button getClearSearchBoxButton() {
+		return clearArtifactTreeButton;
+	}
+
 	private void deleteArtifactJavaFile(Artifact artifact) {
 		String ext = ".java";
 		if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
 			ext = "";
 		}
+		String artifactPackagePath = ArtifactTranspiler.getInstance().getArtifactPackagePath(artifact);
 		String filePath1 = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectArtifactCodesFolder() + File.separator + artifact.getPackagePath() + File.separator
+				.getProjectArtifactCodesFolder() + File.separator + artifactPackagePath + File.separator
 				+ artifact.getVariableName() + ext;
 		File file1 = new File(filePath1);
 		System.out.println(">>Deleting Artifact Java File " + file1.getAbsolutePath());

@@ -4,7 +4,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class Artifact extends Modified {
+public class Artifact extends Modified implements Cloneable {
 	public enum MODULETYPE {
 		AllUnified, Component, ServiceRepository, Flow, Suite, ObjectRepository, BDD_Gherkin_Stories, Execution,
 		DataRepository, EventHandler, Folder, CodedFunction, BP_Group, MBT, Sparkin
@@ -236,5 +236,15 @@ public class Artifact extends Modified {
 
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
+	}
+
+	public Artifact clone() {
+		try {
+			return (Artifact) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
