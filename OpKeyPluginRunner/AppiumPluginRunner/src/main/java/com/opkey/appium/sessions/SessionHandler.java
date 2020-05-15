@@ -39,40 +39,45 @@ public class SessionHandler implements ExecutionSession {
 		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
 		SessionHandler.sessionInfo = sessionInfo;
 
-		// Appium Configuration Info
-		String appiumHost = sessionInfo.pluginSettings.get("appiumHost"); // appium Host
-		String appiumPort = sessionInfo.pluginSettings.get("appiumPort"); // appium Port
-		String appiumDir = sessionInfo.pluginSettings.get("appiumDir"); // appium directory
+		// Configuration
+		String appiumHost = sessionInfo.pluginSettings.get("appiumHost");
+		String appiumPort = sessionInfo.pluginSettings.get("appiumPort");
+		String appiumDir = sessionInfo.pluginSettings.get("appiumDir");
 
-		System.out.println("JUST FOR DEBUG NOW. ONCE AUTO APPIUM SERVER DONE IT WILL BE REMOVED");
-		System.out.println("appiumHost: " + appiumHost);
-		System.out.println("appiumPort: " + appiumPort);
-		System.out.println("appiumDir: " + appiumDir);
-		
 		if (appiumHost != null) { // check if one of the above is not null to show
-			System.out.println(">>Appium Configuration");
-			System.out.println(">>Appium Configuration");
-			System.out.println("appiumHost: " + appiumHost);
-			System.out.println("appiumPort: " + appiumPort);
-			System.out.println("appiumDir: " + appiumDir);
+			System.out.println("-------------------------------------------------");
+			System.out.println("********** Appium Configuration *********");
+			System.out.println("-------------------------------------------------");
+			System.out.println("# appiumHost: " + appiumHost);
+			System.out.println("# appiumPort: " + appiumPort);
+			System.out.println("# appiumDir: " + appiumDir);
+			System.out.println("-------------------------------------------------");
 		}
 
-		// Appium Mobile Desired Capabilities
-		/*
-		 * for (String capabilityName : sessionInfo.mobileCapabilities.keySet())
-		 * System.out.println(">> " + capabilityName + " : " +
-		 * sessionInfo.mobileCapabilities.get(capabilityName));
-		 */
-		
-		// Mobile Device Info
+		// Mobile Desired Capabilities
+		if (sessionInfo.mobileCapabilities != null) { // check if capabilities are provided or not
+			System.out.println("-------------------------------------------------");
+			System.out.println("******** Appium Mobile Capabilities ******");
+			System.out.println("-------------------------------------------------");
+			for (String capabilityName : sessionInfo.mobileCapabilities.keySet())
+				System.out.println("# " + capabilityName + " : " + sessionInfo.mobileCapabilities.get(capabilityName));
+			System.out.println("-------------------------------------------------");
+		}
+
+		// Mobile Device
 		MobileDevice device = sessionInfo.mobileDevice;
-		System.out.println(">>Mobile Device Info");
-		System.out.println("Device Name :" + device.getDisplayName());
-		System.out.println("Device Id :" + device.getSerialNumber());
-		System.out.println("Device Version :" + device.getVersion());
-		System.out.println("Device OS :" + device.getOperatingSystem());
-		String deviceApiLevel = sessionInfo.pluginSettings.get("DeviceApiLevel"); // device SDK
-		String deviceAbi = sessionInfo.pluginSettings.get("DeviceABI"); // device ABI
+		String deviceApiLevel = sessionInfo.pluginSettings.get("DeviceApiLevel");
+		String deviceAbi = sessionInfo.pluginSettings.get("DeviceABI");
+		System.out.println("-------------------------------------------------");
+		System.out.println("************ Mobile Device Info ***********");
+		System.out.println("-------------------------------------------------");
+		System.out.println("# Device Name :" + device.getDisplayName());
+		System.out.println("# Device Id :" + device.getSerialNumber());
+		System.out.println("# Device Version :" + device.getVersion());
+		System.out.println("# Device OS :" + device.getOperatingSystem());
+		System.out.println("# Device SDK/API Level :" + deviceApiLevel);
+		System.out.println("# Device ABI :" + deviceAbi);
+		System.out.println("-------------------------------------------------");
 
 		File htmlFile = new File(sessionInfo.reportFilePath);
 		reportFilePath = htmlFile.getParentFile();
