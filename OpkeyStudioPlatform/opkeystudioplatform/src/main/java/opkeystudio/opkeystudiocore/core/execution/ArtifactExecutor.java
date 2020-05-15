@@ -40,7 +40,8 @@ public class ArtifactExecutor {
 	}
 
 	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
-		String artifactClassName = ArtifactTranspiler.getInstance().getArtifactPackageName(artifact) + "." + artifact.getVariableName();
+		String artifactClassName = ArtifactTranspiler.getInstance().getArtifactPackageName(artifact) + "."
+				+ artifact.getVariableName();
 		System.out.println(">>Artifact Code Folder " + sessionRootDir);
 		System.out.println(">>Executing Artifact " + artifactClassName);
 		Thread executionThread = new Thread(new Runnable() {
@@ -86,7 +87,8 @@ public class ArtifactExecutor {
 	}
 
 	public void executeCFL(String sessionRootDir, Artifact artifact, String pluginName) {
-		String artifactClassName = ArtifactTranspiler.getInstance().getArtifactPackageName(artifact)  + "." + artifact.getVariableName();
+		String artifactClassName = ArtifactTranspiler.getInstance().getArtifactPackageName(artifact) + "."
+				+ artifact.getVariableName();
 		System.out.println(">>Artifact Code Folder " + sessionRootDir);
 		System.out.println(">>Executing Artifact " + artifactClassName);
 		Thread executionThread = new Thread(new Runnable() {
@@ -282,6 +284,7 @@ public class ArtifactExecutor {
 	private SessionInfo getSessionInfo() {
 		SessionInfo sinfo = new SessionInfo();
 		ExecutionSession session = getExecutionSession();
+		sinfo.setMobileCapabilities(session.getMobileCapabilities());
 		sinfo.setSessionName(session.getSessionName());
 		sinfo.setPluginSettings(session.getPluginSettings());
 		sinfo.setMobileDevice(session.getMobileDevice());
@@ -315,8 +318,7 @@ public class ArtifactExecutor {
 		Object instance = classToLoad.newInstance();
 		Method method = instance.getClass().getDeclaredMethod("afterSessionEnds", Object.class);
 		method.invoke(instance, info);
-		
-		
+
 		AndroidVNCUtil.getInstance().closeOpenVncViewer();
 	}
 
@@ -329,8 +331,6 @@ public class ArtifactExecutor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 
 	}
 
@@ -357,7 +357,7 @@ public class ArtifactExecutor {
 	public File getOutLogFile() {
 		return outLogFile;
 	}
-	
+
 	public File getErrLogFile() {
 		return errLogFile;
 	}
