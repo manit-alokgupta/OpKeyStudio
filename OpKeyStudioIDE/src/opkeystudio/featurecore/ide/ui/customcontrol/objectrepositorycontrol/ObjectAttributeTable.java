@@ -163,7 +163,6 @@ public class ObjectAttributeTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -186,28 +185,29 @@ public class ObjectAttributeTable extends CustomTable {
 		return (List<ObjectAttributeProperty>) super.getControlData();
 	}
 
-	private TableEditor getTableEditor() {
-		TableEditor editor = new TableEditor(this);
-		editor.horizontalAlignment = SWT.CENTER;
-		editor.grabHorizontal = true;
-		editor.minimumWidth = 50;
-		return editor;
-	}
-
 	private List<Control> allTableEditors = new ArrayList<Control>();
 
 	private void addTableEditor(ObjectAttributeTableItem item) {
 		ObjectAttributeProperty attrProperty = item.getObjectAttributeData();
-		TableEditor editor1 = getTableEditor();
-		TableEditor editor2 = getTableEditor();
-		TableEditor editor3 = getTableEditor();
+
 		CustomButton isUsedButton = new CustomButton(this, SWT.CHECK);
+		isUsedButton.pack();
+		TableEditor editor2 = new TableEditor(this);
+		editor2.minimumWidth = isUsedButton.getSize().x;
+		editor2.horizontalAlignment = SWT.CENTER;
+
 		CustomButton isRegexButton = new CustomButton(this, SWT.CHECK);
+		isRegexButton.pack();
+		TableEditor editor1 = new TableEditor(this);
+		editor1.minimumWidth = isRegexButton.getSize().x;
+		editor1.horizontalAlignment = SWT.CENTER;
+
 		isUsedButton.setSelection(attrProperty.isIsused());
 		isRegexButton.setSelection(attrProperty.isIsregex());
 
 		isUsedButton.setControlData(attrProperty);
 		isRegexButton.setControlData(attrProperty);
+
 		isUsedButton.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -222,7 +222,6 @@ public class ObjectAttributeTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -241,7 +240,6 @@ public class ObjectAttributeTable extends CustomTable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -282,6 +280,7 @@ public class ObjectAttributeTable extends CustomTable {
 
 				}
 			});
+			TableEditor editor3 = new TableEditor(this);
 			editor3.setEditor(label, item, 1);
 			allTableEditors.add(editor3.getEditor());
 		}
