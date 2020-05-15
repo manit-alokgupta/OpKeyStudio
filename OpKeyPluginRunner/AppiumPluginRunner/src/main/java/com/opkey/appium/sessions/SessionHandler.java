@@ -2,8 +2,6 @@ package com.opkey.appium.sessions;
 
 import java.io.File;
 
-import org.openqa.selenium.remote.DesiredCapabilities;
-
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 import com.opkeystudio.core.sessioninterfaces.ExecutionSession;
 import com.opkeystudio.core.sessions.SessionInfo;
@@ -42,16 +40,24 @@ public class SessionHandler implements ExecutionSession {
 		SessionHandler.sessionInfo = sessionInfo;
 
 		// Appium Configuration Info
-//		String appiumHost = sessionInfo.pluginSettings.get("appiumHost"); // appium Host
-//		String appiumPort = sessionInfo.pluginSettings.get("appiumPort"); // appium Port
-//		String appiumDir = sessionInfo.pluginSettings.get("appiumDir"); // appium directory
-//
-//		System.out.println("appiumHost: " + appiumHost);
-//		System.out.println("appiumPort: " + appiumPort);
-//		System.out.println("appiumDir: " + appiumDir);
-//		// Appium Mobile Desired Capabilities
-//		DesiredCapabilities mobileCapabilities = sessionInfo.getMobileCapabilities();
+		String appiumHost = sessionInfo.pluginSettings.get("appiumHost"); // appium Host
+		String appiumPort = sessionInfo.pluginSettings.get("appiumPort"); // appium Port
+		String appiumDir = sessionInfo.pluginSettings.get("appiumDir"); // appium directory
 
+		if (appiumHost != null) { // check if one of the above is not null to show
+			System.out.println(">>Appium Configuration");
+			System.out.println("appiumHost: " + appiumHost);
+			System.out.println("appiumPort: " + appiumPort);
+			System.out.println("appiumDir: " + appiumDir);
+		}
+
+		// Appium Mobile Desired Capabilities
+		/*
+		 * for (String capabilityName : sessionInfo.mobileCapabilities.keySet())
+		 * System.out.println(">> " + capabilityName + " : " +
+		 * sessionInfo.mobileCapabilities.get(capabilityName));
+		 */
+		
 		// Mobile Device Info
 		MobileDevice device = sessionInfo.mobileDevice;
 		System.out.println(">>Mobile Device Info");
