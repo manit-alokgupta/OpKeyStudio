@@ -535,7 +535,6 @@ public class ObjectRepositoryView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ObjectAttributeTableItem oati = (ObjectAttributeTableItem) objectAttributeTable.getSelection()[0];
 				toggleDeleteAttributeButton(true);
 			}
 

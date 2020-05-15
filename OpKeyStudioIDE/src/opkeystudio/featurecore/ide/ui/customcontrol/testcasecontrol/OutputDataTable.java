@@ -310,19 +310,25 @@ public class OutputDataTable extends CustomTable {
 		}
 	}
 
+	private List<FlowOutputArgument> getAllFlowOutputArgumentsOFArtifact(FlowStep currentflowStep) {
+		List<FlowOutputArgument> allFlowOutputArguments = new ArrayList<FlowOutputArgument>();
+		List<FlowStep> flowSteps = getParentTestCaseView().getFlowStepTable().getFlowStepsData();
+		for (FlowStep flowStep : flowSteps) {
+			if (flowStep == currentflowStep) {
+				continue;
+			}
+			allFlowOutputArguments.addAll(flowStep.getFlowOutputArgs());
+		}
+		return allFlowOutputArguments;
+	}
+
 	public void renderOutPutTableAll(FlowStep flowStep) {
 		if (flowStep == null) {
 			return;
 		}
 		this.removeAll();
 		this.setFlowStep(flowStep);
-		List<FlowOutputArgument> flowOutPutArgs = new ArrayList<FlowOutputArgument>();
-		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Flow) {
-			flowOutPutArgs = new FlowApi().fetchFlowStepOutputArguments(this.getFlowStep().getFlow_stepid());
-		}
-		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-			flowOutPutArgs = new FlowApi().fetchComponentStepOutputArguments(this.getFlowStep().getStepcomponent_id());
-		}
+		List<FlowOutputArgument> flowOutPutArgs = getAllFlowOutputArgumentsOFArtifact(flowStep);
 		for (FlowOutputArgument flowOutPutArg : flowOutPutArgs) {
 			if (flowOutPutArg.getOutputvariablename() != null) {
 				CustomTableItem cti = new CustomTableItem(this, 0);

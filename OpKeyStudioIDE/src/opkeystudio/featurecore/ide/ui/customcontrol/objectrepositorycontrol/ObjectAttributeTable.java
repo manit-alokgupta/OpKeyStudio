@@ -111,20 +111,20 @@ public class ObjectAttributeTable extends CustomTable {
 							objectAttributeProperty.setProperty(objectAttributeProperty.getOldPropertyName());
 							text.setText(objectAttributeProperty.getProperty());
 							text.dispose();
-							new MessageDialogs().openErrorDialog(cursor.getShell(), "OpKey", "Attriute named as '"
-									+ propertyName + "' already exists. Please provide a new name.");
 							objectAttributeProperty.setDeleted(true);
 							renderObjectAttributes();
+							new MessageDialogs().openErrorDialog(cursor.getShell(), "OpKey", "Attriute named as '"
+									+ propertyName + "' already exists. Please provide a new name.");
 							return;
 						}
 						if (propertyName.trim().isEmpty()) {
 							objectAttributeProperty.setProperty(objectAttributeProperty.getOldPropertyName());
 							text.setText(objectAttributeProperty.getProperty());
 							text.dispose();
-							new MessageDialogs().openErrorDialog(cursor.getShell(), "OpKey",
-									"Object Property Can't Be Blank");
 							objectAttributeProperty.setDeleted(true);
 							renderObjectAttributes();
+							new MessageDialogs().openErrorDialog(cursor.getShell(), "OpKey",
+									"Object Property Can't Be Blank");
 							return;
 						}
 						text.dispose();
@@ -140,6 +140,12 @@ public class ObjectAttributeTable extends CustomTable {
 
 					@Override
 					public void modifyText(ModifyEvent e) {
+						if (text.isDisposed()) {
+							return;
+						}
+						if (selectedTableItem.isDisposed()) {
+							return;
+						}
 						selectedTableItem.setText(selectedColumn, text.getText());
 						objectAttributeProperty.setModified(true);
 						getParentObjectRepositoryView().toggleSaveButton(true);
