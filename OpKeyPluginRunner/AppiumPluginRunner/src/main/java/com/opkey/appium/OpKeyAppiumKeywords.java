@@ -351,12 +351,17 @@ public class OpKeyAppiumKeywords {
 		mobileApplication.setApplicationPath(androidApplicationPathh);
 		mobileApplication.setDisplayName(new File(androidApplicationPathh).getName());
 		mobileApplication.setOperatingSystem(SessionHandler.getSessionInfo().mobileDevice.getOperatingSystem());
-		mobileApplication.setPackage(System.getenv("APP_PACKAGE"));
-		mobileApplication.setMainActivity(System.getenv("APP_ACTIVITY"));
+		if (SessionHandler.getSessionInfo().mobileCapabilities.size() > 0) {
+			mobileApplication.setPackage(SessionHandler.getSessionInfo().mobileCapabilities.get("appPackage"));
+			mobileApplication.setMainActivity(SessionHandler.getSessionInfo().mobileCapabilities.get("appActivity"));
+		}
+		
+		//mobileApplication.setPackage(System.getenv("APP_PACKAGE"));
+		//mobileApplication.setMainActivity(System.getenv("APP_ACTIVITY"));
 
-		Context.session().getSettings().put("AppiumServer", "C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
-		Context.session().getSettings().put("Host", "localhost");
-		Context.session().getSettings().put("Port", "4723");
+//		Context.session().getSettings().put("AppiumServer", "C:\\Users\\Ahmad\\AppData\\Roaming\\npm\\node_modules\\appium");
+//		Context.session().getSettings().put("Host", "localhost");
+//		Context.session().getSettings().put("Port", "4723");
 		Context.session().getSettings().put("PlatformVersion", device.getVersion());
 
 		FunctionResult functionResult = FunctionCaller.execute(() -> new Connect2AppiumServer().Method_Launch_AndroidApplication(device, mobileApplication));
