@@ -123,7 +123,6 @@ public class CodeViewTree extends CustomTree {
 				try {
 					FileUtils.forceDelete(selectedCodeFile);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -132,7 +131,6 @@ public class CodeViewTree extends CustomTree {
 				try {
 					FileUtils.deleteDirectory(selectedCodeFile);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -270,12 +268,13 @@ public class CodeViewTree extends CustomTree {
 			}
 
 			class1.setPackage(packageName);
+			
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
 			renderCodeViewTree();
 			Utilities.getInstance().openSelectedFileInGenericCodeEditor(file);
@@ -385,7 +384,6 @@ public class CodeViewTree extends CustomTree {
 		try {
 			FileUtils.copyDirectory(new File(transpileDirpath), new File(projectFolderPath));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.removeAll();

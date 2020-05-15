@@ -201,7 +201,9 @@ public class ObjectAttributeTable extends CustomTable {
 		TableEditor editor1 = new TableEditor(this);
 		editor1.minimumWidth = isRegexButton.getSize().x;
 		editor1.horizontalAlignment = SWT.CENTER;
-
+		TableEditor editor3 = new TableEditor(this);
+		editor3.minimumWidth = 100;
+		editor3.horizontalAlignment = SWT.LEFT;
 		isUsedButton.setSelection(attrProperty.isIsused());
 		isRegexButton.setSelection(attrProperty.isIsregex());
 
@@ -280,7 +282,6 @@ public class ObjectAttributeTable extends CustomTable {
 
 				}
 			});
-			TableEditor editor3 = new TableEditor(this);
 			editor3.setEditor(label, item, 1);
 			allTableEditors.add(editor3.getEditor());
 		}
