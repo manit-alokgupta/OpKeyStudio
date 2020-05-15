@@ -116,7 +116,7 @@ public class Notify {
 		});
 
 		shell.pack();
-		shell.setMinimumSize(320, 100);
+		shell.setMinimumSize(220, 80);
 		return shell;
 	}
 

@@ -38,7 +38,7 @@ public class NotificationColorsFactory {
 			colors.titleColor = new Color(display, 0, 0, 0);
 			colors.borderColor = new Color(display, 153, 188, 232);
 			colors.leftColor = new Color(display, 255, 204, 203);
-			colors.rightColor = new Color(display, 255, 0, 0);
+			colors.rightColor = new Color(display, 255, 204, 203);
 			break;
 		case GRAY_THEME:
 			colors.textColor = new Color(display, 0, 0, 0);
