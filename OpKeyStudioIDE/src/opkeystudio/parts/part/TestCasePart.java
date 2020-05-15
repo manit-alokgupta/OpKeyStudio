@@ -1,6 +1,9 @@
 package opkeystudio.parts.part;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -8,10 +11,13 @@ import javax.annotation.PreDestroy;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.di.PersistState;
+import org.eclipse.e4.ui.internal.workbench.PartServiceSaveHandler;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.workbench.modeling.ISaveHandler;
 import org.eclipse.swt.widgets.Composite;
 
+import opkeystudio.commandhandler.CustomSaveHandler;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -24,6 +30,11 @@ public class TestCasePart {
 	@PostConstruct
 	public void postConstruct(Composite parent, MPart part, MWindow window) throws IOException {
 		tcv = new TestCaseView(parent, 0, part);
+
+		// PartServiceSaveHandler p = new org.eclipse.e4.ui.internal.workbench.PartServiceSaveHandler();
+
+		window.getContext().set(ISaveHandler.class, new CustomSaveHandler());
+
 	}
 
 	@PreDestroy

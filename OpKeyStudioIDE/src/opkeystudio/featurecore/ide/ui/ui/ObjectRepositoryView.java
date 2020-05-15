@@ -34,7 +34,6 @@ import opkeystudio.core.utils.CopyPasteOperation;
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTable;
-import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectAttributeTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTree;
 import opkeystudio.featurecore.ide.ui.customcontrol.objectrepositorycontrol.ObjectRepositoryTreeItem;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
@@ -52,6 +51,7 @@ import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepositor
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil.DialogResult;
 import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
 import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 
@@ -753,12 +753,12 @@ public class ObjectRepositoryView extends SuperComposite {
 				toggleDeleteAttributeButton(false);
 				toggleAddAttributeButton(false);
 
-				int result = CustomNotificationUtil.openConfirmDialog("OpKey", "Do you want to save changes?");
+				DialogResult result = CustomNotificationUtil.openConfirmDialog("OpKey", "Do you want to save changes?");
 				System.out.println("Result Code " + result);
-				if (result == 2) {
+				if (result == DialogResult.Cancel) {
 					return;
 				}
-				if (result != 0) {
+				if (result != DialogResult.Yes) {
 					toggleSaveButton(false);
 					objectRepositoryTree.renderObjectRepositories();
 					return;

@@ -44,12 +44,13 @@ import opkeystudio.featurecore.ide.ui.ui.ObjectRepositoryView;
 import pcloudystudio.appium.AppiumConfiguration;
 import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil.DialogResult;
 import pcloudystudio.resources.constant.ImageConstants;
 
 public class AppiumSettingsDialog extends Dialog {
 
-	private String capabilityNameList[] = { "platformName", "automationName", "launchTimeout", "newCommandTimeout",
-			"platformVersion", "appActivity", "appPackage", "enforceAppInstall", "noSign", "appWaitActivity" };
+	private String capabilityNameList[] = { "platformName", "automationName", "launchTimeout", "newCommandTimeout", "platformVersion", "appActivity", "appPackage", "enforceAppInstall", "noSign",
+			"appWaitActivity" };
 
 	protected Object result;
 	protected Shell shlAppiumSettings;
@@ -190,13 +191,11 @@ public class AppiumSettingsDialog extends Dialog {
 			appiumDirectory.setText(AppiumConfiguration.getAppiumDirectory());
 		} else {
 			if (OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
-				AppiumConfiguration
-				.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+				AppiumConfiguration.setHostAddress(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				serverAddress.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
 				AppiumConfiguration.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
 				portNumber.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
-				AppiumConfiguration.setAppiumDirectory(
-						OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
+				AppiumConfiguration.setAppiumDirectory(OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 				appiumDirectory.setText(OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
 			}
 		}
@@ -220,10 +219,8 @@ public class AppiumSettingsDialog extends Dialog {
 				String dir = dirDialog.open();
 				if (dir != null) {
 					appiumDirectory.setText(dir);
-					if (!appiumDirectory.getText()
-							.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-						CustomNotificationUtil.openErrorNotification("OpKey",
-								"Invalid Appium Directory! Please select valid Appium Directory.");
+					if (!appiumDirectory.getText().contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
+						CustomNotificationUtil.openErrorNotification("OpKey", "Invalid Appium Directory! Please select valid Appium Directory.");
 						appiumDirectory.setText("");
 					}
 
@@ -387,10 +384,9 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (checkIfTableIsModified(previousTablecount)) { // if false means table is not modified
-					int result = CustomNotificationUtil.openConfirmDialog("Confirmation",
-							"Do You Want To Save Capabilities?");
+					DialogResult result = CustomNotificationUtil.openConfirmDialog("Confirmation", "Do You Want To Save Capabilities?");
 					System.out.println(result);
-					if (result == 0) {
+					if (result == DialogResult.Yes) {
 						saveDataOnRefresh();
 						capabilityTextValue.setText("");
 
@@ -517,10 +513,9 @@ public class AppiumSettingsDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (checkIfTableIsModified(previousTablecount)) { // if false means table is not modified
-					int result = CustomNotificationUtil.openConfirmDialog("Confirmation",
-							"Do You Want To Save Capabilities?");
+					DialogResult result = CustomNotificationUtil.openConfirmDialog("Confirmation", "Do You Want To Save Capabilities?");
 					System.out.println(result);
-					if (result == 0) {
+					if (result == DialogResult.Yes) {
 						saveDataOnRefresh();
 						manuallyCapabilityName.setText("");
 						manuallyCapabilityValue.setText("");
@@ -546,8 +541,7 @@ public class AppiumSettingsDialog extends Dialog {
 		manuallybtnRefresh.setCursor(ResourceManager.getCursor(SWT.CURSOR_HAND));
 		manuallybtnRefresh.setToolTipText("Refresh Table");
 
-		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings,
-				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		ScrolledComposite scrolledComposite = new ScrolledComposite(compositeCapabilitySettings, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setBounds(20, 53, 612, 138);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
@@ -586,8 +580,7 @@ public class AppiumSettingsDialog extends Dialog {
 					AppiumConfiguration.setHostAddress(serverAddress.getText());
 					OpKeyStudioPreferences.getPreferences().addBasicSettings("port_number", portNumber.getText());
 					AppiumConfiguration.setPort(portNumber.getText());
-					OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory",
-							appiumDirectory.getText());
+					OpKeyStudioPreferences.getPreferences().addBasicSettings("appium_directory", appiumDirectory.getText());
 					AppiumConfiguration.setAppiumDirectory(appiumDirectory.getText());
 					if (capabilityTable.getItemCount() >= 0) {
 						try {
@@ -726,10 +719,8 @@ public class AppiumSettingsDialog extends Dialog {
 		} else if (appiumDirectory.getText().isEmpty() || appiumDirectory.getText().equals("")) {
 			CustomNotificationUtil.openErrorNotification("Please Note", "Appium Directory can't be empty!");
 			return false;
-		} else if (!appiumDirectory.getText()
-				.contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
-			CustomNotificationUtil.openErrorNotification("OpKey",
-					"Invalid Appium Directory! Please select valid Appium Directory.");
+		} else if (!appiumDirectory.getText().contains("npm" + File.separator + "node_modules" + File.separator + "appium")) {
+			CustomNotificationUtil.openErrorNotification("OpKey", "Invalid Appium Directory! Please select valid Appium Directory.");
 			return false;
 		}
 
@@ -760,8 +751,7 @@ public class AppiumSettingsDialog extends Dialog {
 			return false;
 		}
 		if (capValue.isEmpty() || capValue.equals("")) {
-			CustomNotificationUtil.openErrorNotification("OpKey",
-					"Capability Value can't be empty! \nProvide capability value first.");
+			CustomNotificationUtil.openErrorNotification("OpKey", "Capability Value can't be empty! \nProvide capability value first.");
 			return false;
 		}
 		if (capType.isEmpty() || capType.equals("")) {
@@ -844,10 +834,8 @@ public class AppiumSettingsDialog extends Dialog {
 		default:
 
 			/*
-			 * for (int index = 0; index < text.length(); index++) { char character =
-			 * text.charAt(index); boolean isAllowed =
-			 * allowedCharactersString.indexOf(character) > -1; if (!isAllowed) { event.doit
-			 * = false; return;
+			 * for (int index = 0; index < text.length(); index++) { char character = text.charAt(index); boolean isAllowed = allowedCharactersString.indexOf(character) > -1; if (!isAllowed) {
+			 * event.doit = false; return;
 			 * 
 			 * } }
 			 */
@@ -878,8 +866,7 @@ public class AppiumSettingsDialog extends Dialog {
 	}
 
 	private void openDeviceConfigurationDialog() {
-		new DeviceConfigurationDialog(this.getParentObjectRepositoryView().getShell(), SWT.NONE,
-				this.parentObjectRepositoryView).open();
+		new DeviceConfigurationDialog(this.getParentObjectRepositoryView().getShell(), SWT.NONE, this.parentObjectRepositoryView).open();
 	}
 
 	protected void restrictInputForManullyCapabilityName(VerifyEvent event) {

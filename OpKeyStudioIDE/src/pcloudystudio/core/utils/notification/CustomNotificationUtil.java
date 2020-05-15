@@ -18,6 +18,31 @@ import pcloudystudio.resources.constant.ImageConstants;
 
 public class CustomNotificationUtil {
 
+	public enum DialogResult {
+
+		Yes(0), No(1), Cancel(2);
+
+		private int index = -1;
+
+		private DialogResult(int i) {
+			this.index = i;
+		}
+
+		public static DialogResult fromIndex(int i) {
+			switch (i) {
+			case 0:
+				return DialogResult.Yes;
+			case 1:
+				return DialogResult.No;
+			case 2:
+				return DialogResult.Cancel;
+			default:
+				return null;
+
+			}
+		}
+	}
+
 	public static void openInformationNotificationDialog(String title, String message) {
 		new MessageDialog(Display.getCurrent().getActiveShell(), title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 2, 0, "OK").open();
 	}
@@ -26,17 +51,19 @@ public class CustomNotificationUtil {
 		new MessageDialog(Display.getCurrent().getActiveShell(), title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, 1, 0, "OK").open();
 	}
 
-	public static int openConfirmDialog(String title, String message) {
-		return new MessageDialog(Display.getCurrent().getActiveShell(), title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, MessageDialog.CONFIRM,
-				new String[] { "Yes", "No", "Cancel" }, 0).open();
+	public static DialogResult openConfirmDialog(String title, String message) {
+		int index = new MessageDialog(Display.getCurrent().getActiveShell(), title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message,
+				MessageDialog.CONFIRM, new String[] { "Yes", "No", "Cancel" }, 0).open();
+		return DialogResult.fromIndex(index);
 	}
 
-	public static int openConfirmDialog(Shell shell, String title, String message) {
+	public static DialogResult openConfirmDialog(Shell shell, String title, String message) {
 		if (shell.isDisposed()) {
-			return -1;
+			return DialogResult.Cancel;
 		}
-		return new MessageDialog(shell, title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, MessageDialog.CONFIRM,
+		int index = new MessageDialog(shell, title, ResourceManager.getPluginImage("OpKeyStudio", "icons/pcloudystudio/opkey-16x16.png"), message, MessageDialog.CONFIRM,
 				new String[] { "Yes", "No", "Cancel" }, 0).open();
+		return DialogResult.fromIndex(index);
 	}
 
 	public static String openInputDialog(String dialogTitle, String dialogContent, String defaultValue) {

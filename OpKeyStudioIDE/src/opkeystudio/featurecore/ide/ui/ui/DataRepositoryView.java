@@ -37,6 +37,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil.DialogResult;
 
 public class DataRepositoryView extends SuperComposite {
 	private DataRepositoryTable dataRepositoryTable;
@@ -443,15 +444,15 @@ public class DataRepositoryView extends SuperComposite {
 	private boolean handleSaveOnRefresh() {
 		if (saveToolItm.getEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
-			int status = CustomNotificationUtil.openConfirmDialog(dataRepositoryTable.getShell(), "OpKey", "Do you want to Save changes?");
+			DialogResult status = CustomNotificationUtil.openConfirmDialog(dataRepositoryTable.getShell(), "OpKey", "Do you want to Save changes?");
 			System.out.println("Result " + status);
-			if (status == 2) {
+			if (status == DialogResult.Cancel) {
 				return false;
 			}
-			if (status == 1) {
+			if (status == DialogResult.No) {
 				toggleSaveButton(false);
 			}
-			if (status == 0) {
+			if (status == DialogResult.Yes) {
 				saveDR();
 				CustomNotificationUtil.openInformationNotification("OpKey", "Saved!");
 			}

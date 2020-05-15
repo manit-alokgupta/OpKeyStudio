@@ -21,6 +21,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.TableItem;
@@ -29,8 +31,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -67,6 +68,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil.DialogResult;
 
 public class TestCaseView extends SuperComposite {
 	private FlowStepTable flowStepTable;
@@ -992,13 +994,13 @@ public class TestCaseView extends SuperComposite {
 			getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 			if (itemSave.isEnabled()) {
 				Utilities.getInstance().activateMpart(getCurrentMpart());
-				int status = CustomNotificationUtil.openConfirmDialog(flowStepTable.getShell(), "OpKey",
+				DialogResult status = CustomNotificationUtil.openConfirmDialog(flowStepTable.getShell(), "OpKey",
 						"Do you want to Save changes?");
 				System.out.println("Result " + status);
-				if (status == 2) {
+				if (status == DialogResult.Cancel) {
 					return false;
 				}
-				if (status == 0) {
+				if (status == DialogResult.Yes) {
 					saveAll();
 					toggleSaveButton(false);
 					CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");

@@ -10,8 +10,10 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.workbench.modeling.ISaveHandler;
 import org.eclipse.swt.widgets.Composite;
 
+import opkeystudio.commandhandler.CustomSaveHandler;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.DataRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
@@ -24,6 +26,7 @@ public class DataRepositoryPart {
 	@PostConstruct
 	public void postConstruct(Composite parent, MPart part, MWindow window) throws IOException {
 		drv = new DataRepositoryView(parent, 0, part);
+		window.getContext().set(ISaveHandler.class, new CustomSaveHandler());
 	}
 
 	@PreDestroy

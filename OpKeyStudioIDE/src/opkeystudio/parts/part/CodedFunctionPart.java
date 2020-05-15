@@ -10,8 +10,10 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.workbench.modeling.ISaveHandler;
 import org.eclipse.swt.widgets.Composite;
 
+import opkeystudio.commandhandler.CustomSaveHandler;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyArtifactPersistListenerDispatcher;
@@ -26,6 +28,7 @@ public class CodedFunctionPart {
 	public void postConstruct(Composite parent, MPart part, MWindow window) throws IOException {
 		// new CodedFunctionView(parent, 0);
 		acv = new ArtifactCodeView(parent, 0, false, true);
+		window.getContext().set(ISaveHandler.class, new CustomSaveHandler());
 	}
 
 	@PreDestroy
@@ -49,7 +52,7 @@ public class CodedFunctionPart {
 
 	@Persist
 	public void save() {
-		
+		acv.saveGenericCodeEditorFile();
 	}
 
 	@PersistState

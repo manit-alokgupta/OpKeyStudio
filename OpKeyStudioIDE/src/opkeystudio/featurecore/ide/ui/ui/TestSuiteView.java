@@ -45,6 +45,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil.DialogResult;
 
 public class TestSuiteView extends SuperComposite {
 	private SuiteTestCaseTree testCaseTree;
@@ -518,12 +519,12 @@ public class TestSuiteView extends SuperComposite {
 	private boolean handleSaveOnRefresh() {
 		if (saveButton.isEnabled()) {
 			Utilities.getInstance().activateMpart(getCurrentMpart());
-			int status = CustomNotificationUtil.openConfirmDialog(testSuiteTable.getShell(), "OpKey", "Do you want to Save changes?");
+			DialogResult status = CustomNotificationUtil.openConfirmDialog(testSuiteTable.getShell(), "OpKey", "Do you want to Save changes?");
 			System.out.println("Result " + status);
-			if (status == 2) {
+			if (status == DialogResult.Cancel) {
 				return false;
 			}
-			if (status == 0) {
+			if (status == DialogResult.Yes) {
 				new TestSuiteApi().saveAllTestSuite(getArtifact(), testSuiteTable.getTestSuiteData());
 			}
 		}
