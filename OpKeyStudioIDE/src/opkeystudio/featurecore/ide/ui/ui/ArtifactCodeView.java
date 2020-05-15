@@ -213,7 +213,6 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void checkClassIsRunnable() {
-		initCodeViewFile();
 		File file = getCodeViewFile();
 		String code = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
 		Object classObject = Roaster.parse(code);
@@ -376,9 +375,7 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				handleRefreshOnSave();
-				displayCodeViewFileData();
-				checkClassIsRunnable();
+				refreshCodeEditorFile();
 			}
 
 			@Override
@@ -386,6 +383,12 @@ public class ArtifactCodeView extends SuperComposite {
 
 			}
 		});
+	}
+
+	private void refreshCodeEditorFile() {
+		handleRefreshOnSave();
+		displayCodeViewFileData();
+		checkClassIsRunnable();
 	}
 
 	private void initCFLEditorUI() {
@@ -631,7 +634,6 @@ public class ArtifactCodeView extends SuperComposite {
 		for (Object highLightedLines : getHighlightedLines()) {
 			editor.removeLineHighlight(highLightedLines);
 		}
-		initCodeViewFile();
 		String code = getJavaEditor().getText();
 		File file = getCodeViewFile();
 		opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, code);
@@ -658,21 +660,22 @@ public class ArtifactCodeView extends SuperComposite {
 			codeEditorBottomFactory.getCompilationResultTable().renderCompilingError(compileErrors);
 			return;
 		}
-		GenericEditorIntellisense.getCodeEditorInstance().addOpKeyTranspiledClassInformation();
+		// GenericEditorIntellisense.getCodeEditorInstance().addOpKeyTranspiledClassInformation();
 		saveButton.setEnabled(false);
-		checkClassIsRunnable();
+		refreshCodeEditorFile();
 	}
 
-	private void handleRefreshOnSave() {
-		initCodeViewFile();
+	public void handleRefreshOnSave() {
 		if (saveButton.getEnabled() == true) {
 			DialogResult status1 = CustomNotificationUtil.openConfirmDialog(this.getShell(), "OpKey", String.format("Do you want to save '%s'?", getCodeViewFile().getName()));
 			if (status1 == DialogResult.Cancel) {
+				toggleSaveButton(false);
 				return;
 			}
 			if (status1 == DialogResult.Yes) {
 				saveGenericCodeEditorFile();
 			}
+			toggleSaveButton(false);
 		}
 	}
 
