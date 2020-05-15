@@ -352,8 +352,9 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					device.setVersion(getMobileDeviceExecutionDetail().getDeviceVersion());
 					session.setMobileDevice(device);
 
-					// TODO: null check- exception throwing
-					// NOTE: Adding this to check if issue with static data
+					// TODO: null check- exception throwing (Done)
+					// TODO: Adding this capabilities Map to save static data first then save in
+					// session (Done)
 					LinkedHashMap<String, String> capabilities = new LinkedHashMap<String, String>();
 					try {
 						if (MobileDesiredCapabilities.getMapOfCapabilities() != null) {
