@@ -19,6 +19,7 @@ import javax.management.RuntimeErrorException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -422,6 +423,18 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public void addOpKeyTranspiledClassInformation() {
+		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectTranspiledArtifactsFolder();
+
+		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectArtifactCodesFolder();
+		
+		try {
+			FileUtils.copyDirectory(new File(transpileDirpath), new File(projectFolderPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		String mainDirPath = Utilities.getInstance().getProjectArtifactCodesFolder();
 		List<File> allFiles = new CompilerUtilities().getAllFiles(new File(mainDirPath), ".java");
 		for (File file : allFiles) {
