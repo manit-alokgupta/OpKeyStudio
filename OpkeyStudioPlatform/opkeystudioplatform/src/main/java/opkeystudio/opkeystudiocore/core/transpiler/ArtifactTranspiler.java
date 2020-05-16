@@ -13,6 +13,7 @@ import org.apache.commons.io.FileUtils;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.CFLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
@@ -113,6 +114,7 @@ public class ArtifactTranspiler {
 	}
 
 	public void transpileAllArtifacts() {
+		SystemRepository.getInstance().setTranspilerServiceRunning(true);
 		resetTranspiledArtifactsFolder();
 		new GlobalVariablesTranspiler().transpile();
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
@@ -130,6 +132,26 @@ public class ArtifactTranspiler {
 			new DRTranspiler().transpile(artifact);
 			new SuiteTranspiler().transpile(artifact);
 			new CFLTranspiler().transpile(artifact);
+		}
+		copyReuiredFilesToProjectCodeFolder();
+		SystemRepository.getInstance().setTranspilerServiceRunning(false);
+	}
+
+	public void copyReuiredFilesToProjectCodeFolder() {
+		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectTranspiledArtifactsFolder();
+
+		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectArtifactCodesFolder();
+
+		File codeFolder = new File(projectFolderPath);
+		if (!codeFolder.exists()) {
+			codeFolder.mkdir();
+		}
+		try {
+			FileUtils.copyDirectory(new File(transpileDirpath), new File(projectFolderPath));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
