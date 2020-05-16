@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
@@ -134,74 +136,32 @@ public class GenericTree extends CustomTree {
 
 			}
 		});
+
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				addStepInTable();
+			}
+		});
+
 		addMenuItem.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = getParentTestCaseView().getArtifact();
-				FlowStep selectedFlowStep = getParentTestCaseView().getFlowStepTable().getSelectedFlowStep();
-				if (selectedFlowStep != null) {
-					boolean isblank = true;
-					if (selectedFlowStep.getKeyword() != null) {
-						isblank = false;
-					}
-					if (selectedFlowStep.getFunctionLibraryComponent() != null) {
-						isblank = false;
-					}
-					if (selectedFlowStep.getCodedFunctionArtifact() != null) {
-						isblank = false;
-					}
-					if (isblank) {
-						selectedFlowStep.setModified(false);
-						selectedFlowStep.setAdded(false);
-						selectedFlowStep.setDeleted(true);
-					}
-				}
-				Object selectedData = getSelectedData();
-				if (selectedData instanceof Artifact) {
-					Artifact selectedArtifact = (Artifact) selectedData;
-					if (selectedArtifact.getFile_type_enum() == MODULETYPE.Component) {
-						if (artifact.getId().equals(selectedArtifact.getId())) {
-							new MessageDialogs().openErrorDialog("OpKey",
-									"Function Library Recursion Call Not Allowed");
-							refreshAllDataTree();
-							return;
-						}
-						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
-								selectedArtifact, artifact.getId(),
-								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
-						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
-						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
-						getParentTestCaseView().toggleSaveButton(true);
-						CustomNotificationUtil.openInformationNotification("OpKey",
-								flowStep.getFunctionLibraryComponent().getName() + " added!");
-						refreshAllDataTree();
-						return;
-					}
-
-					if (selectedArtifact.getFile_type_enum() == MODULETYPE.CodedFunction) {
-						FlowStep flowStep = new FlowMaker().getFlowStepDTOWithCodedFunctionLibray(artifact,
-								selectedFlowStep, selectedArtifact, artifact.getId(),
-								getParentTestCaseView().getFlowStepTable().getFlowStepsData());
-						getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
-						getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
-						getParentTestCaseView().toggleSaveButton(true);
-						CustomNotificationUtil.openInformationNotification("OpKey",
-								flowStep.getCodedFunctionArtifact().getName() + " added!");
-						refreshAllDataTree();
-						return;
-					}
-
-				}
-				FlowStep flowStep = new FlowMaker().getFlowStepDTO(getParentTestCaseView().getArtifact(),
-						selectedFlowStep, (Keyword) getSelectedData(), artifact.getId(),
-						getParentTestCaseView().getFlowStepTable().getFlowStepsData());
-				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
-				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
-				getParentTestCaseView().toggleSaveButton(true);
-				CustomNotificationUtil.openInformationNotification("OpKey",
-						flowStep.getKeyword().getName() + " added!");
-				refreshAllDataTree();
+				addStepInTable();
 			}
 
 			@Override
@@ -263,6 +223,72 @@ public class GenericTree extends CustomTree {
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
+	}
+
+	private void addStepInTable() {
+		Artifact artifact = getParentTestCaseView().getArtifact();
+		FlowStep selectedFlowStep = getParentTestCaseView().getFlowStepTable().getSelectedFlowStep();
+		if (selectedFlowStep != null) {
+			boolean isblank = true;
+			if (selectedFlowStep.getKeyword() != null) {
+				isblank = false;
+			}
+			if (selectedFlowStep.getFunctionLibraryComponent() != null) {
+				isblank = false;
+			}
+			if (selectedFlowStep.getCodedFunctionArtifact() != null) {
+				isblank = false;
+			}
+			if (isblank) {
+				selectedFlowStep.setModified(false);
+				selectedFlowStep.setAdded(false);
+				selectedFlowStep.setDeleted(true);
+			}
+		}
+		Object selectedData = getSelectedData();
+		if (selectedData instanceof Artifact) {
+			Artifact selectedArtifact = (Artifact) selectedData;
+			if (selectedArtifact.getFile_type_enum() == MODULETYPE.Component) {
+				if (artifact.getId().equals(selectedArtifact.getId())) {
+					new MessageDialogs().openErrorDialog("OpKey", "Function Library Recursion Call Not Allowed");
+					refreshAllDataTree();
+					return;
+				}
+				FlowStep flowStep = new FlowMaker().getFlowStepDTOWithFunctionLibray(artifact, selectedFlowStep,
+						selectedArtifact, artifact.getId(),
+						getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+				getParentTestCaseView().toggleSaveButton(true);
+				CustomNotificationUtil.openInformationNotification("OpKey",
+						flowStep.getFunctionLibraryComponent().getName() + " added!");
+				refreshAllDataTree();
+				return;
+			}
+
+			if (selectedArtifact.getFile_type_enum() == MODULETYPE.CodedFunction) {
+				FlowStep flowStep = new FlowMaker().getFlowStepDTOWithCodedFunctionLibray(artifact, selectedFlowStep,
+						selectedArtifact, artifact.getId(),
+						getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+				getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+				getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+				getParentTestCaseView().toggleSaveButton(true);
+				CustomNotificationUtil.openInformationNotification("OpKey",
+						flowStep.getCodedFunctionArtifact().getName() + " added!");
+				refreshAllDataTree();
+				return;
+			}
+
+		}
+		FlowStep flowStep = new FlowMaker().getFlowStepDTO(getParentTestCaseView().getArtifact(), selectedFlowStep,
+				(Keyword) getSelectedData(), artifact.getId(),
+				getParentTestCaseView().getFlowStepTable().getFlowStepsData());
+		getParentTestCaseView().getFlowStepTable().getFlowStepsData().add(flowStep);
+		getParentTestCaseView().getFlowStepTable().refreshFlowSteps();
+		getParentTestCaseView().toggleSaveButton(true);
+		CustomNotificationUtil.openInformationNotification("OpKey", flowStep.getKeyword().getName() + " added!");
+		refreshAllDataTree();
+
 	}
 
 	private void refreshAllDataTree() {
@@ -420,7 +446,7 @@ public class GenericTree extends CustomTree {
 
 		rootNode.setExpanded(true);
 		this.setRedraw(true);
-	//	expandAll(rootNode);
+		// expandAll(rootNode);
 	}
 
 	private void renderAllArtifactTree(CustomTreeItem rootNode, List<Artifact> allArtifacts) {
@@ -475,12 +501,11 @@ public class GenericTree extends CustomTree {
 		for (CustomTreeItem topMostNode : topMostNodes) {
 			renderAllArtifactTree(topMostNode, filteredArtifacts);
 		}
-		
 
 		rootNode.setExpanded(true);
 		this.setRedraw(true);
-		
-		//expandAll(rootNode);
+
+		// expandAll(rootNode);
 	}
 
 	private void initDREvents() {
@@ -521,7 +546,7 @@ public class GenericTree extends CustomTree {
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		addIcon(rootNode);
 		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("DataRepository");
-		artifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));		
+		artifacts.addAll(GlobalLoader.getInstance().getAllArtifactByType("Folder"));
 		List<CustomTreeItem> topMostNodes = new ArrayList<>();
 		for (Artifact artifact : artifacts) {
 			if (artifact.getParentid() == null) {
@@ -530,8 +555,8 @@ public class GenericTree extends CustomTree {
 				artitreeitem.setControlData(artifact);
 				topMostNodes.add(artitreeitem);
 				addIcon(artitreeitem);
-				
-				if(artifact.getFile_type_enum()==MODULETYPE.DataRepository) {
+
+				if (artifact.getFile_type_enum() == MODULETYPE.DataRepository) {
 					List<DRColumnAttributes> drColumnAttributes = new DataRepositoryApi()
 							.getAllColumnsValues(artifact.getId());
 					for (DRColumnAttributes drColumn : drColumnAttributes) {
@@ -559,7 +584,7 @@ public class GenericTree extends CustomTree {
 					artitreeitem.setText(artifact.getName());
 					artitreeitem.setControlData(artifact);
 					addIcon(artitreeitem);
-					if(artifact.getFile_type_enum()==MODULETYPE.DataRepository) {
+					if (artifact.getFile_type_enum() == MODULETYPE.DataRepository) {
 						List<DRColumnAttributes> drColumnAttributes = new DataRepositoryApi()
 								.getAllColumnsValues(artifact.getId());
 						for (DRColumnAttributes drColumn : drColumnAttributes) {
@@ -574,7 +599,7 @@ public class GenericTree extends CustomTree {
 			}
 		}
 	}
-	
+
 	public boolean isTreeExtended() {
 		return treeExtended;
 	}
