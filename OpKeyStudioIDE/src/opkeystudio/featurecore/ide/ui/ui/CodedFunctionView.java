@@ -33,6 +33,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaAutoCompletio
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.JavaCodeEditor;
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
@@ -449,6 +450,7 @@ public class CodedFunctionView extends SuperComposite {
 		} else if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 			new TCTranspiler().transpile(artifact);
 			new ArtifactTranspiler().transpileAllFl();
+			OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		}
 		initTestCaseCode();
 	}
@@ -456,18 +458,21 @@ public class CodedFunctionView extends SuperComposite {
 	public void refreshTSCode() {
 		Artifact artifact = getParentTestSuiteView().getArtifact();
 		new SuiteTranspiler().transpile(artifact);
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initTestSuiteCode();
 	}
 
 	public void refreshORCode() {
 		Artifact artifact = getParentObjectRepositoryView().getArtifact();
 		new ORTranspiler().transpile(artifact);
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initObjectRepositoryCode();
 	}
 
 	public void refreshDRCode() {
 		Artifact artifact = getParentDataRepositoryView().getArtifact();
 		new DRTranspiler().transpile(artifact);
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initDataRepositoryCode();
 	}
 

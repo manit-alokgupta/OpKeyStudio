@@ -422,19 +422,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				"public static void main(String[] args) throws Exception{\r\n" + "}"));
 	}
 
-	public void addOpKeyTranspiledClassInformation() {
-		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectTranspiledArtifactsFolder();
-
-		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectArtifactCodesFolder();
-		
-		try {
-			FileUtils.copyDirectory(new File(transpileDirpath), new File(projectFolderPath));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+	public void addOpKeyTranspiledClassInformation() {		
 		String mainDirPath = Utilities.getInstance().getProjectArtifactCodesFolder();
 		List<File> allFiles = new CompilerUtilities().getAllFiles(new File(mainDirPath), ".java");
 		for (File file : allFiles) {
