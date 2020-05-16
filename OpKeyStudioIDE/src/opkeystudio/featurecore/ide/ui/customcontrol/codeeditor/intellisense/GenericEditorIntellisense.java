@@ -82,6 +82,40 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		senseClasses.clear();
 	}
 
+	private void waitForIntialize() {
+		Thread waitThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (refreshCodeEditorIntellisenseRunning) {
+					System.out.println("Waiting for Code Editor Refresh Thread to Finish");
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				while (refreshCFLEditorIntellisenseRunning) {
+					System.out.println("Waiting for CFL Editor Refresh Thread to Finish");
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		waitThread.start();
+		try {
+			waitThread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
 		if (instance != null) {
 			instance.dispose();
@@ -253,6 +287,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	@SuppressWarnings("rawtypes")
 	public JavaCompletionProvider getClassMethodsCompletionProvider(TranspiledClassInfo tranpiledClassInfo) {
+		waitForIntialize();
 		GenericEditorIntellisense provider = new GenericEditorIntellisense();
 
 		if (tranpiledClassInfo.getClassSource() != null) {
@@ -545,6 +580,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public VariableToken findVariableToken(String varName) {
+		waitForIntialize();
 		List<VariableToken> tokens = getAllvariabletokens();
 		for (int i = 0; i < tokens.size(); i++) {
 			VariableToken varToken = tokens.get(i);
@@ -556,6 +592,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public TranspiledClassInfo findAutoCompleteToken(String tokenString) {
+		waitForIntialize();
 		List<TranspiledClassInfo> allTokens = getTranspiledClasses();
 		for (int i = 0; i < allTokens.size(); i++) {
 			TranspiledClassInfo token = allTokens.get(i);
