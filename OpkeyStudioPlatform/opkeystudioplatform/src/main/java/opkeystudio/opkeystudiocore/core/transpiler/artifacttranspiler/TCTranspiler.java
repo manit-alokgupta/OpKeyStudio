@@ -68,9 +68,12 @@ public class TCTranspiler extends AbstractTranspiler {
 			methodBodyCode += flowStepCode;
 		}
 
-		methodBodyCode = new TCFLCodeConstruct().addDataRepositoryIterations(artifact, flowInputArguments,
-				methodBodyCode);
-
+		try {
+			methodBodyCode = new TCFLCodeConstruct().addDataRepositoryIterations(artifact, flowInputArguments,
+					methodBodyCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		String reportingStart = String.format("ReportBuilder.get().beginTestCase(%s);",
 				"\"" + artifact.getName() + "\"");
 		String reportingEnd = "ReportBuilder.get().endTestCase();";
