@@ -2,11 +2,7 @@ package pcloudystudio.core.vncutils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.nio.file.StandardCopyOption;
-
-import org.apache.commons.io.IOUtils;
 
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 

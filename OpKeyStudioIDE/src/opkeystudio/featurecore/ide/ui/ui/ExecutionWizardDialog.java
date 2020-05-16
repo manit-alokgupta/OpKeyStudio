@@ -35,6 +35,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 
 import opkeystudio.core.utils.MessageDialogs;
+import opkeystudio.core.utils.OpKeyStudioPreferences;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
@@ -45,6 +46,7 @@ import pcloudystudio.appium.MobileDesiredCapabilities;
 import pcloudystudio.core.utils.MobileDeviceUtil;
 import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 import pcloudystudio.core.vncutils.AndroidVNCLauncher;
+import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
 import pcloudystudio.pcloudystudio.core.execution.MobileDeviceExecutionDetail;
 import pcloudystudio.resources.constant.ImageConstants;
 
@@ -336,6 +338,24 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					session.addPluginSetting("DeviceVersion", getMobileDeviceExecutionDetail().getDeviceVersion());
 					session.addPluginSetting("DeviceApiLevel", getMobileDeviceExecutionDetail().getDeviceAPILevel());
 					session.addPluginSetting("DeviceABI", getMobileDeviceExecutionDetail().getDeviceABI());
+
+					AppiumConfiguration.getInstance();
+					if (AppiumConfiguration.getHostAddress() == null
+							&& OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address") != null) {
+						AppiumConfiguration.setHostAddress(
+								OpKeyStudioPreferences.getPreferences().getBasicSettings("host_address"));
+						AppiumConfiguration
+						.setPort(OpKeyStudioPreferences.getPreferences().getBasicSettings("port_number"));
+						AppiumConfiguration.setAppiumDirectory(
+								OpKeyStudioPreferences.getPreferences().getBasicSettings("appium_directory"));
+					}
+
+					if (AppiumConfiguration.getPort() == null || AppiumConfiguration.getHostAddress() == null
+							|| AppiumConfiguration.getAppiumDirectory() == null) {
+						CustomNotificationUtil.openInformationNotificationDialog("OpKey",
+								"Appium Settings are empty!\nPlease Update Settings once if required.");
+					}
+
 					session.addPluginSetting("appiumHost", AppiumConfiguration.getHostAddress());
 					session.addPluginSetting("appiumPort", AppiumConfiguration.getPort());
 					session.addPluginSetting("appiumDir", AppiumConfiguration.getAppiumDirectory());
@@ -347,7 +367,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 					device.setSerialNumber(getMobileDeviceExecutionDetail().getDeviceId());
 					device.setVersion(getMobileDeviceExecutionDetail().getDeviceVersion());
 					session.setMobileDevice(device);
-					
+
 					LinkedHashMap<String, String> capabilities = new LinkedHashMap<String, String>();
 					try {
 						if (MobileDesiredCapabilities.getMapOfCapabilities() != null) {
@@ -380,6 +400,10 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 			CustomNotificationUtil.openErrorNotificationDialog("OpKey", e1.getMessage());
 		}
 		return area;
+	}
+
+	private void openAppiumSettingDialog() {
+		new AppiumSettingsDialog(this.getShell(), SWT.NONE).open();
 	}
 
 	private void initExecutionSession(Artifact artifact) {
