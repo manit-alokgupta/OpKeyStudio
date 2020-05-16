@@ -426,6 +426,8 @@ public class ArtifactCodeView extends SuperComposite {
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		refreshButton.setToolTipText("Refresh");
+	
+		/*
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		ToolItem label = new ToolItem(toolBar, SWT.READ_ONLY);
 		label.setSelection(false);
@@ -481,6 +483,8 @@ public class ArtifactCodeView extends SuperComposite {
 
 			}
 		});
+		
+		*/
 		editor = new ArtifactCodeEditor(this, this, true, true, true);
 		editor.setArtifact(getArtifact());
 
