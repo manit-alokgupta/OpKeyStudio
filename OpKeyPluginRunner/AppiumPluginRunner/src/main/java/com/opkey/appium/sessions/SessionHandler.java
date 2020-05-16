@@ -18,6 +18,7 @@ public class SessionHandler implements ExecutionSession {
 	public static File screenshotPath;
 
 	public void afterSessionEnds(Object sessionObject) {
+		System.out.println("Appium After Session Ends");
 		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
 		String deviceApiLevel = sessionInfo.pluginSettings.get("DeviceApiLevel"); // device SDK
 		String deviceAbi = sessionInfo.pluginSettings.get("DeviceABI"); // device ABI
@@ -27,6 +28,7 @@ public class SessionHandler implements ExecutionSession {
 		 */
 
 		try {
+			System.out.println("Closing Appium");
 			new Connect2AppiumServer().Method_closeApplication();
 		} catch (Exception e) {
 		}

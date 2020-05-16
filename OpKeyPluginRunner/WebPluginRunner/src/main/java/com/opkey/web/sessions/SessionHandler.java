@@ -16,8 +16,10 @@ public class SessionHandler implements ExecutionSession {
 	public static File screenshotPath;
 
 	public void afterSessionEnds(Object sessionObject) {
+		System.out.println("Web After Sessions");
 		SessionInfo sessionInfo = SessionInfoConverter.convertIntoSessionInfo(sessionObject);
 		try {
+			System.out.println("Closing Browser");
 			new Browser().Method_CloseAllBrowsers();
 		} catch (Exception e) {
 			e.printStackTrace();
