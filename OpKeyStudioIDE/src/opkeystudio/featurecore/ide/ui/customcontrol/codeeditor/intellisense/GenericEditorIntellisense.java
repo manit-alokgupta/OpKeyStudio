@@ -51,6 +51,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.ClassIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.MethodIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
+import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GenericEditorIntellisense extends JavaCompletionProvider {
@@ -136,6 +138,32 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		System.out.println("Completed Refresh Thread");
 	}
 
+	private void waitForTanspilerService() {
+		System.out.println("Waiting for Transpiler Service to Finish");
+		Thread waitThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (SystemRepository.getInstance().isTranspilerServiceRunning()) {
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		waitThread.start();
+		try {
+			waitThread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Completed Transpiler Service");
+	}
+
 	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
 		if (instance != null) {
 			instance.dispose();
@@ -158,6 +186,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			return;
 		}
 		refreshCodeEditorIntellisenseRunning = true;
+		waitForTanspilerService();
 		instance.initIntellisense();
 	}
 
@@ -167,6 +196,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			return;
 		}
 		refreshCFLEditorIntellisenseRunning = true;
+		waitForTanspilerService();
 		cflinstance.initCFLIntellisense();
 	}
 
@@ -422,7 +452,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				"public static void main(String[] args) throws Exception{\r\n" + "}"));
 	}
 
-	public void addOpKeyTranspiledClassInformation() {		
+	public void addOpKeyTranspiledClassInformation() {
 		String mainDirPath = Utilities.getInstance().getProjectArtifactCodesFolder();
 		List<File> allFiles = new CompilerUtilities().getAllFiles(new File(mainDirPath), ".java");
 		for (File file : allFiles) {

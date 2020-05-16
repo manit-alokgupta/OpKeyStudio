@@ -370,21 +370,12 @@ public class CodeViewTree extends CustomTree {
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
-
-		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectTranspiledArtifactsFolder();
-
 		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectArtifactCodesFolder();
 
 		File codeFolder = new File(projectFolderPath);
 		if (!codeFolder.exists()) {
 			codeFolder.mkdir();
-		}
-		try {
-			FileUtils.copyDirectory(new File(transpileDirpath), new File(projectFolderPath));
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		this.removeAll();
 		CodeViewTreeItem rootNode = new CodeViewTreeItem(this, 0);
@@ -404,28 +395,6 @@ public class CodeViewTree extends CustomTree {
 			renderFiles(srcNode, file);
 		}
 		expandAll(rootNode);
-		GenericEditorIntellisense.getGenericInstanceoOfCodeEditor().refreshCodeEditorIntellisense();
-		GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
-	}
-
-	public static void initAllIntellisense() {
-		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectTranspiledArtifactsFolder();
-
-		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
-				.getProjectArtifactCodesFolder();
-
-		File codeFolder = new File(projectFolderPath);
-		if (!codeFolder.exists()) {
-			codeFolder.mkdir();
-		}
-		try {
-			FileUtils.copyDirectory(new File(transpileDirpath), new File(projectFolderPath));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		GenericEditorIntellisense.getGenericInstanceoOfCodeEditor().refreshCodeEditorIntellisense();
-		GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
 	}
 
 	private void renderFiles(CodeViewTreeItem parentNode, File rootFile) {

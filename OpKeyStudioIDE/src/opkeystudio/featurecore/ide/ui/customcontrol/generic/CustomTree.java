@@ -12,15 +12,18 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyIntellisenseListenerDispatcher;
 
 public class CustomTree extends Tree {
 	private TreeItem defaultSelectedItem;
 	private List<GlobalLoadListener> listeners = new ArrayList<>();
+	private List<GlobalLoadListener> intellisenseListners = new ArrayList<GlobalLoadListener>();
 
 	public CustomTree(Composite parent, int style) {
 		super(parent, style);
 		init();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().addSuperComposite(this);
+		OpKeyIntellisenseListenerDispatcher.getInstance().addSuperComposite(this);
 	}
 
 	private void init() {
@@ -140,6 +143,20 @@ public class CustomTree extends Tree {
 
 	public void removeOpKeyGlobalLoadListener(GlobalLoadListener listener) {
 		listeners.remove(listener);
+	}
+
+	public void addIntellisenseLoadListener(GlobalLoadListener listener) {
+		intellisenseListners.add(listener);
+	}
+
+	public void removeIntellisenseLoadListener(GlobalLoadListener listener) {
+		intellisenseListners.remove(listener);
+	}
+
+	public void fireIntellisenseListener() {
+		for (GlobalLoadListener listener : this.intellisenseListners) {
+			listener.handleGlobalEvent();
+		}
 	}
 
 	public void fireGlobalListener() {

@@ -38,6 +38,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.Cod
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyIntellisenseListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
@@ -634,6 +635,7 @@ public class ArtifactCodeView extends SuperComposite {
 		bottomFactoryUi.getCFLInputTable().renderCFLInputParameters();
 		bottomFactoryUi.getCFLOutputTable().renderCFLOutputParameters();
 		new CFLTranspiler().transpile(getArtifact());
+		OpKeyIntellisenseListenerDispatcher.getInstance().fireIntellisenseListener();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initCFLCode();
 		toggleSaveButton(false);
@@ -874,6 +876,8 @@ public class ArtifactCodeView extends SuperComposite {
 		} else if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 			new TCTranspiler().transpile(artifact);
 			new ArtifactTranspiler().transpileAllFl();
+			OpKeyIntellisenseListenerDispatcher.getInstance().fireIntellisenseListener();
+			OpKeyIntellisenseListenerDispatcher.getInstance().fireIntellisenseListener();
 			OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		}
 		initTestCaseCode();
@@ -885,6 +889,7 @@ public class ArtifactCodeView extends SuperComposite {
 			return;
 		}
 		new SuiteTranspiler().transpile(artifact);
+		OpKeyIntellisenseListenerDispatcher.getInstance().fireIntellisenseListener();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initTestSuiteCode();
 	}
@@ -895,6 +900,7 @@ public class ArtifactCodeView extends SuperComposite {
 			return;
 		}
 		new ORTranspiler().transpile(artifact);
+		OpKeyIntellisenseListenerDispatcher.getInstance().fireIntellisenseListener();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initObjectRepositoryCode();
 	}
@@ -905,6 +911,7 @@ public class ArtifactCodeView extends SuperComposite {
 			return;
 		}
 		new DRTranspiler().transpile(artifact);
+		OpKeyIntellisenseListenerDispatcher.getInstance().fireIntellisenseListener();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initDataRepositoryCode();
 	}

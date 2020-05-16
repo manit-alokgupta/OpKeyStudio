@@ -12,9 +12,11 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import opkeystudio.core.utils.ArtifactTranspilerAsync;
 import opkeystudio.core.utils.Utilities;
+import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactTreeUI;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
@@ -35,6 +37,7 @@ public class ArtifactTree extends CustomTree {
 		super(parent, style);
 		this.setParentArtifactTreeUI(parentUI);
 		init();
+		addGlobalListener();
 		SystemRepository.getInstance().setArtifactTreeControl(this);
 	}
 
@@ -42,6 +45,19 @@ public class ArtifactTree extends CustomTree {
 		super(parent, style);
 		this.setParentTestSuiteView(parentTestSuiteView);
 		this.setAttachedinTestSuite(true);
+	}
+
+	private void addGlobalListener() {
+		this.addIntellisenseLoadListener(new GlobalLoadListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				System.out.println(">>>>>>>>>>>>Artifact Tree Global Intellisense Listener Called<<<<<<<<<<<<<<<<");
+				ArtifactTranspiler.getInstance().copyReuiredFilesToProjectCodeFolder();
+				GenericEditorIntellisense.getGenericInstanceoOfCodeEditor().refreshCodeEditorIntellisense();
+				GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
+			}
+		});
 	}
 
 	private void init() {
@@ -217,6 +233,8 @@ public class ArtifactTree extends CustomTree {
 			getParentArtifactTreeUI().getSearchBox().setEnabled(true);
 			getParentArtifactTreeUI().getClearSearchBoxButton().setEnabled(true);
 			highlightArtifact(getSelectedArtifactId());
+			GenericEditorIntellisense.getGenericInstanceoOfCodeEditor().refreshCodeEditorIntellisense();
+			GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
 		}
 	}
 

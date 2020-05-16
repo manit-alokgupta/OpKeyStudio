@@ -35,6 +35,7 @@ import opkeystudio.featurecore.ide.ui.ui.GlobalVariableDialog;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyIntellisenseListenerDispatcher;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariableApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
@@ -546,6 +547,7 @@ public class GlobalVariableTable extends CustomTable {
 		GlobalLoader.getInstance().initGlobalVariables();
 		refreshGlobalVariables();
 		new GlobalVariablesTranspiler().transpile();
+		OpKeyIntellisenseListenerDispatcher.getInstance().fireIntellisenseListener();
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		return true;
 	}

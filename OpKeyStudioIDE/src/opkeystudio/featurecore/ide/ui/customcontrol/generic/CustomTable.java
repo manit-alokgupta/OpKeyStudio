@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.TableItem;
 
 import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyIntellisenseListenerDispatcher;
 
 public class CustomTable extends Table {
 	private int selectedRowIndex = -1;
@@ -20,7 +21,9 @@ public class CustomTable extends Table {
 	private int selectedColumn = 0;
 
 	private List<GlobalLoadListener> listeners = new ArrayList<>();
+	private List<GlobalLoadListener> intellisenseListners = new ArrayList<GlobalLoadListener>();
 	private TableCursor tableCursor;
+
 	public CustomTable(Composite parent, int style) {
 		super(parent, style);
 		this.addSelectionListener(new SelectionListener() {
@@ -37,6 +40,7 @@ public class CustomTable extends Table {
 			}
 		});
 		OpKeyGlobalLoadListenerDispatcher.getInstance().addSuperComposite(this);
+		OpKeyIntellisenseListenerDispatcher.getInstance().addSuperComposite(this);
 	}
 
 	public Object getControlData() {
@@ -69,7 +73,7 @@ public class CustomTable extends Table {
 	}
 
 	public void selectLastRow() {
-		selectTableRow(this.getItemCount()-1);
+		selectTableRow(this.getItemCount() - 1);
 	}
 
 	private void selectTableRow(int rowno) {
@@ -229,12 +233,26 @@ public class CustomTable extends Table {
 		listeners.remove(listener);
 	}
 
+	public void addIntellisenseLoadListener(GlobalLoadListener listener) {
+		intellisenseListners.add(listener);
+	}
+
+	public void removeIntellisenseLoadListener(GlobalLoadListener listener) {
+		intellisenseListners.remove(listener);
+	}
+
 	public void fireGlobalListener() {
 		for (GlobalLoadListener listener : this.listeners) {
 			listener.handleGlobalEvent();
 		}
 	}
-	
+
+	public void fireIntellisenseListener() {
+		for (GlobalLoadListener listener : this.intellisenseListners) {
+			listener.handleGlobalEvent();
+		}
+	}
+
 	public TableCursor getTableCursor() {
 		return tableCursor;
 	}
