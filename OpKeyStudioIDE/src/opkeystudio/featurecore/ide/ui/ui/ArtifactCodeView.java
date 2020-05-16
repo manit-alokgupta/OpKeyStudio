@@ -325,7 +325,6 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -361,7 +360,6 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -375,7 +373,6 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -448,7 +445,6 @@ public class ArtifactCodeView extends SuperComposite {
 
 					@Override
 					public void widgetDefaultSelected(SelectionEvent e) {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -492,7 +488,6 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -528,7 +523,6 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -542,7 +536,6 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -585,7 +578,6 @@ public class ArtifactCodeView extends SuperComposite {
 							new Color(255, 204, 204));
 					addHighlightedLines(lineHighlightObject);
 				} catch (BadLocationException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -671,7 +663,6 @@ public class ArtifactCodeView extends SuperComposite {
 							new Color(255, 204, 204));
 					addHighlightedLines(lineHighlightObject);
 				} catch (BadLocationException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -748,7 +739,6 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -793,7 +783,6 @@ public class ArtifactCodeView extends SuperComposite {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});

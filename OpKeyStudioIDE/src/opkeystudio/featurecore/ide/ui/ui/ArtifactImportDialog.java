@@ -141,14 +141,12 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 					new ProjectApi().selectProject(sproject.getP_ID());
 					renderArtifactTree();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -162,7 +160,6 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -195,15 +192,12 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 
 		try {
 			renderProjectList();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return area;
@@ -419,7 +413,6 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 								try {
 									exportArtifact(selectedArtifact, project);
 								} catch (IOException e1) {
-									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
 							}
@@ -429,7 +422,6 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
