@@ -25,7 +25,7 @@ public class RefreshArtifactTree {
 		tree.renderArtifacts(true);
 		CodeViewTree ctree = (CodeViewTree) SystemRepository.getInstance().getCodeViewTreeControl();
 		if (ctree != null) {
-			ctree.renderCodeViewTree();
+			ctree.renderCodeViewTree("");
 		}
 
 	}

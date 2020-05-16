@@ -19,7 +19,6 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.core.utils.MessageDialogs;
 import opkeystudio.core.utils.Utilities;
-import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.GenericEditorIntellisense;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.CodeViewTreeUI;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
@@ -46,7 +45,7 @@ public class CodeViewTree extends CustomTree {
 
 			@Override
 			public void handleGlobalEvent() {
-				renderCodeViewTree();
+				renderCodeViewTree("");
 			}
 		});
 	}
@@ -134,7 +133,7 @@ public class CodeViewTree extends CustomTree {
 					e.printStackTrace();
 				}
 			}
-			renderCodeViewTree();
+			renderCodeViewTree("");
 		} finally {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_ARROW);
 		}
@@ -185,7 +184,7 @@ public class CodeViewTree extends CustomTree {
 				selectedCodeFile.delete();
 				opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(newFile,
 						classSource.toString());
-				renderCodeViewTree();
+				renderCodeViewTree("");
 			} catch (Exception e) {
 				if (selectedCodeFile.isDirectory()) {
 					new MessageDialogs().openErrorDialog("OpKey",
@@ -276,7 +275,7 @@ public class CodeViewTree extends CustomTree {
 			}
 
 			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
-			renderCodeViewTree();
+			renderCodeViewTree("");
 			Utilities.getInstance().openSelectedFileInGenericCodeEditor(file);
 		} catch (Exception e) {
 			new MessageDialogs().openErrorDialog("OpKey",
@@ -323,7 +322,7 @@ public class CodeViewTree extends CustomTree {
 			return;
 		}
 		file.mkdir();
-		renderCodeViewTree();
+		renderCodeViewTree("");
 	}
 
 	public void setArtifactsData(List<Artifact> artifacts) {
@@ -366,7 +365,7 @@ public class CodeViewTree extends CustomTree {
 		this.setRedraw(true);
 	}
 
-	public void renderCodeViewTree() {
+	public void renderCodeViewTree(String fileName) {
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
@@ -392,28 +391,30 @@ public class CodeViewTree extends CustomTree {
 
 		File[] files = codeFolder.listFiles();
 		for (File file : files) {
-			renderFiles(srcNode, file);
+			renderFiles(srcNode, file, fileName);
 		}
 		expandAll(rootNode);
 	}
 
-	private void renderFiles(CodeViewTreeItem parentNode, File rootFile) {
+	private void renderFiles(CodeViewTreeItem parentNode, File rootFile, String fileName) {
 		if (rootFile.isDirectory()) {
 			CodeViewTreeItem ctreeitem = new CodeViewTreeItem(parentNode, 0);
 			ctreeitem.setArtifactFile(rootFile);
 			ctreeitem.setText(rootFile.getName());
 			addIcon(ctreeitem);
 			for (File file : rootFile.listFiles()) {
-				renderFiles(ctreeitem, file);
+				renderFiles(ctreeitem, file, fileName);
 			}
 		} else {
 			if (rootFile.getName().toLowerCase().endsWith(".class")) {
 				return;
 			}
-			CodeViewTreeItem ctreeitem = new CodeViewTreeItem(parentNode, 0);
-			ctreeitem.setArtifactFile(rootFile);
-			ctreeitem.setText(rootFile.getName());
-			addIcon(ctreeitem);
+			if (rootFile.getName().toLowerCase().contains(fileName.toLowerCase())) {
+				CodeViewTreeItem ctreeitem = new CodeViewTreeItem(parentNode, 0);
+				ctreeitem.setArtifactFile(rootFile);
+				ctreeitem.setText(rootFile.getName());
+				addIcon(ctreeitem);
+			}
 		}
 	}
 
@@ -444,13 +445,7 @@ public class CodeViewTree extends CustomTree {
 	}
 
 	public void filterArtifactTree(String searchValue) {
-		/*
-		 * List<Artifact> artifacts = this.getArtifactsData(); for (Artifact artifact :
-		 * artifacts) { if (artifact.getFile_type_enum() != MODULETYPE.Folder) { if
-		 * (artifact.getName().trim().toLowerCase().contains(searchValue.trim().
-		 * toLowerCase())) { artifact.setVisible(true); } else {
-		 * artifact.setVisible(false); } } }
-		 */
+		renderCodeViewTree(searchValue);
 	}
 
 	public CodeViewTreeUI getParentArtifactCodeViewTreeUI() {

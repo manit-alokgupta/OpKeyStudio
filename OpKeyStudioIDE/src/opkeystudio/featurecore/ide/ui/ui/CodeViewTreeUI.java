@@ -252,7 +252,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				codeViewTree.renderCodeViewTree();
+				codeViewTree.renderCodeViewTree("");
 			}
 
 			@Override
@@ -311,7 +311,7 @@ public class CodeViewTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				codeViewTree.renderCodeViewTree();
+				codeViewTree.renderCodeViewTree("");
 			}
 
 			@Override
@@ -366,7 +366,7 @@ public class CodeViewTreeUI extends SuperComposite {
 			}
 		});
 
-		codeViewTree.renderCodeViewTree();
+		codeViewTree.renderCodeViewTree("");
 		clearArtifactTreeButton.addSelectionListener(new SelectionListener() {
 
 			@Override

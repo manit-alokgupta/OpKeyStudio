@@ -91,7 +91,7 @@ public class BlankProjectCreation {
 				tree.renderArtifacts(true);
 				CodeViewTree ctree = (CodeViewTree) SystemRepository.getInstance().getCodeViewTreeControl();
 				if (ctree != null) {
-					ctree.renderCodeViewTree();
+					ctree.renderCodeViewTree("");
 				}
 			}
 			new Utilities().closeAllMparts();
