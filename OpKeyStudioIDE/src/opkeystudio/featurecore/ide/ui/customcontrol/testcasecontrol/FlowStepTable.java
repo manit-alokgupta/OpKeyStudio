@@ -17,6 +17,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
@@ -40,6 +41,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
@@ -524,6 +526,25 @@ public class FlowStepTable extends CustomTable {
 		return (List<FlowStep>) super.getControlData();
 	}
 
+	public List<FlowOutputArgument> getAllFlowOutPutArguments() {
+		List<FlowOutputArgument> flowOutPutArguments = new ArrayList<FlowOutputArgument>();
+		List<FlowStep> flowSteps = getFlowStepsData();
+		for (FlowStep flowStep : flowSteps) {
+			List<FlowOutputArgument> outputargs = flowStep.getFlowOutputArgs();
+			for (FlowOutputArgument outputArg : outputargs) {
+				System.out.println("Output Variable Name " + outputArg.getOutputvariablename());
+				if (outputArg.getOutputvariablename() == null) {
+					continue;
+				}
+				if (outputArg.getOutputvariablename().isEmpty()) {
+					continue;
+				}
+				flowOutPutArguments.add(outputArg);
+			}
+		}
+		return flowOutPutArguments;
+	}
+
 	public void addFlowSteps(FlowStep fs) {
 		getFlowStepsData().add(fs);
 	}
@@ -707,8 +728,10 @@ public class FlowStepTable extends CustomTable {
 			getParentTestCaseView().getInputDataTable().setEnabled(true);
 			getParentTestCaseView().getOutPutDataTable().setEnabled(true);
 		}
-
 		selectDefaultRow();
+		if (getParentTestCaseView().getArtifact().getFile_type_enum() == MODULETYPE.Component) {
+			getParentTestCaseView().getBottomFactoryUI().getOutputTable().renderAllBottomFactoryOutputData();
+		}
 	}
 
 	public void refreshFlowSteps() {

@@ -1,5 +1,7 @@
 package opkeystudio.featurecore.ide.ui.customcontrol.bottomfactorycontrol;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,8 +40,10 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibra
 import opkeystudio.opkeystudiocore.core.apis.dbapi.usedby.FLUsedBy;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
 import opkeystudio.opkeystudiocore.core.utils.OpKeyVariables;
+import opkeystudio.opkeystudiocore.core.utils.DataType.OpKeyDataType;
 
 public class OutputTable extends CustomTable {
 	private boolean paintCalled = false;
@@ -271,10 +275,30 @@ public class OutputTable extends CustomTable {
 	}
 
 	private void addTableEditor(OutputTableItem outputTableItem) {
+		List<FlowOutputArgument> flowOutPutArguments = getParentBottomFactoryFLUi().getParentTestCaseView()
+				.getFlowStepTable().getAllFlowOutPutArguments();
 		ComponentOutputArgument bottomFactoryOutput = outputTableItem.getBottomFactoryOutputData();
 		TableEditor editor1 = getTableEditor();
+		TableEditor editor2 = getTableEditor();
 
+		CustomCombo outputcombo = new CustomCombo(this, SWT.READ_ONLY);
 		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
+
+		String[] outputComboData = new String[flowOutPutArguments.size()];
+		for (int i = 0; i < flowOutPutArguments.size(); i++) {
+			outputComboData[i] = flowOutPutArguments.get(i).getOutputvariablename();
+		}
+		outputcombo.setItems(outputComboData);
+		for (FlowOutputArgument flowOutput : flowOutPutArguments) {
+			if (flowOutput.getComponentstep_oa_id() != null) {
+				if (bottomFactoryOutput.getComponentstep_oa_id() != null) {
+					if (flowOutput.getComponentstep_oa_id().equals(bottomFactoryOutput.getComponentstep_oa_id())) {
+						outputcombo.select(Utilities.getInstance().getIndexOfItem(outputComboData,
+								flowOutput.getOutputvariablename()));
+					}
+				}
+			}
+		}
 		combo.setItems(OpKeyVariables.getInstance().getAllFLOutputVariablesType());
 		combo.select(Utilities.getInstance().getIndexOfItem(OpKeyVariables.getInstance().getAllFLOutputVariablesType(),
 				bottomFactoryOutput.getType()));
@@ -299,9 +323,41 @@ public class OutputTable extends CustomTable {
 
 			}
 		});
+		outputcombo.addSelectionListener(new SelectionListener() {
 
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int selectedIndex = outputcombo.getSelectionIndex();
+				String selectedItem = outputComboData[selectedIndex];
+				if (selectedItem == null) {
+					return;
+				}
+				if (selectedItem.isEmpty()) {
+					bottomFactoryOutput.setComponentstep_oa_id(OpKeyDataType.NULLDATA.toString());
+					bottomFactoryOutput.setModified(true);
+					getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+					return;
+				}
+				for (FlowOutputArgument outPurArgument : flowOutPutArguments) {
+					if (outPurArgument.getOutputvariablename().equals(selectedItem)) {
+						bottomFactoryOutput.setComponentstep_oa_id(outPurArgument.getComponentstep_oa_id());
+						bottomFactoryOutput.setModified(true);
+						getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
+						break;
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		editor1.setEditor(combo, outputTableItem, 1);
+		editor2.setEditor(outputcombo, outputTableItem, 2);
 		allTableEditors.add(editor1.getEditor());
+		allTableEditors.add(editor2.getEditor());
 	}
 
 	private void disposeAllTableEditors() {

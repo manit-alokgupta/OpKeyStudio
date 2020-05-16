@@ -138,6 +138,10 @@ public class TestCaseView extends SuperComposite {
 		this.setCurrentMpart(mpart);
 	}
 
+	public BottomFactoryFLUi getBottomFactoryUI() {
+		return bottomFactory;
+	}
+
 	public Artifact getCurrentArtifact() {
 		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
 	}
@@ -1010,7 +1014,8 @@ public class TestCaseView extends SuperComposite {
 				// check if blank steps are present
 				boolean blankStepsPresent = false;
 				for (FlowStep itm : flowStepTable.getFlowStepsData()) {
-					if (itm.getKeyword() == null && itm.getCodedFunctionArtifact() == null && itm.getFunctionLibraryComponent() == null) {
+					if (itm.getKeyword() == null && itm.getCodedFunctionArtifact() == null
+							&& itm.getFunctionLibraryComponent() == null) {
 						blankStepsPresent = true;
 					}
 				}
@@ -1035,9 +1040,22 @@ public class TestCaseView extends SuperComposite {
 		for (FlowStep flowStep : flowSteps) {
 			List<FlowOutputArgument> flowOutPutArguemnts = flowStep.getFlowOutputArgs();
 			for (FlowOutputArgument flowOutput : flowOutPutArguemnts) {
-				if (flowOutput == outputArgument) {
-					continue;
+				String componentStepOa1 = flowOutput.getComponentstep_oa_id();
+				String componentStepOa2 = outputArgument.getComponentstep_oa_id();
+				if (componentStepOa1 != null && componentStepOa2 != null) {
+					if (componentStepOa1.equals(componentStepOa2)) {
+						continue;
+					}
 				}
+
+				String flowStepOa1 = flowOutput.getFlow_step_oa_id();
+				String flowStepOa2 = outputArgument.getFlow_step_oa_id();
+				if (flowStepOa1 != null && flowStepOa2 != null) {
+					if (flowStepOa1.equals(flowStepOa2)) {
+						continue;
+					}
+				}
+
 				if (flowOutput.getVariableName().toLowerCase().equals(outputArgument.getVariableName().toLowerCase())) {
 					return false;
 				}
