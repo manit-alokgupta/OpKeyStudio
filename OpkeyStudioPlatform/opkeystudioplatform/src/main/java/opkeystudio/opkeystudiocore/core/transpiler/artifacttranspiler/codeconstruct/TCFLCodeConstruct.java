@@ -374,11 +374,12 @@ public class TCFLCodeConstruct {
 
 	public String addDataRepositoryIterations(Artifact artifact, List<FlowInputArgument> flowInputArguments,
 			String mainCode) {
-		String forLoopParameters = "";
 		String bodyCode = mainCode;
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
 				flowInputArguments);
 		String forLoopFormat = "for(%s) {%s}";
+		String arrayDataFormat = "String[] %s = new String[] {%s};";
+		String allArrayFormatType = "";
 		List<DRColumnAttributes> allDRColumns = new ArrayList<DRColumnAttributes>();
 		int loopCount = 0;
 		String drVariablesCode = "";
@@ -388,10 +389,7 @@ public class TCFLCodeConstruct {
 				String columnId = flowInputObject.getDataRepositoryColumnData();
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
 				String columnName = drColumn.getVariableName();
-				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
-				String variableCode = "String " + columnName + "="
-						+ ArtifactTranspiler.getInstance().getArtifactPackageName(drArtifact) + "."
-						+ drArtifact.getVariableName() + "." + "getDRCells(" + "\"" + columnName + "\"" + ").get(i);";
+				String variableCode = "String " + columnName + "=" + columnName + "s[i];";
 				if (!existingEntries.contains(variableCode)) {
 					drVariablesCode += variableCode;
 				}
@@ -403,6 +401,7 @@ public class TCFLCodeConstruct {
 		for (DRColumnAttributes columnAttribue : allDRColumns) {
 			List<DRCellAttributes> drCellAttributes = GlobalLoader.getInstance()
 					.getDRColumnCells(columnAttribue.getColumn_id());
+			columnAttribue.setDrCellAttributes(drCellAttributes);
 			List<String> cellDatas = new ArrayList<String>();
 			for (DRCellAttributes drCell : drCellAttributes) {
 				if (drCell.getValue() == null) {
@@ -419,9 +418,24 @@ public class TCFLCodeConstruct {
 			}
 		}
 
-		String forLoopBody = String.format("int i = 0;i < %s;i++", loopCount);
+		for (DRColumnAttributes columnAttribute : allDRColumns) {
+			String data = "";
+			for (int i = 0; i < loopCount; i++) {
+				if (!data.isEmpty()) {
+					data += ", ";
+				}
+				DRCellAttributes drCell = columnAttribute.getDrCellAttributes().get(i);
 
-		bodyCode = drVariablesCode + bodyCode;
+				if (drCell.getValue() == null) {
+					data += "\"\"";
+				}
+				data += "\"" + drCell.getValue() + "\"";
+			}
+			allArrayFormatType += String.format(arrayDataFormat, columnAttribute.getVariableName() + "s", data);
+		}
+		String forLoopBody = String.format("int i = 0;i < %s;i++", loopCount);
+		bodyCode = allArrayFormatType + drVariablesCode + bodyCode;
+		System.out.println(bodyCode);
 		bodyCode = String.format(forLoopFormat, forLoopBody, bodyCode);
 		if (drVariablesCode.isEmpty()) {
 			return mainCode;
