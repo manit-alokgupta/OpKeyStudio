@@ -1,6 +1,7 @@
 package opkeystudio.featurecore.ide.ui.ui;
 
-import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -26,6 +27,7 @@ import opkeystudio.core.utils.Utilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.AuthentcationData;
 import opkeystudio.opkeystudiocore.core.apis.restapi.AuthenticateApi;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
+import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class LoginDialog extends Dialog {
 
@@ -138,21 +140,24 @@ public class LoginDialog extends Dialog {
 				}
 
 				ServiceRepository.getInstance().setOpKeyHostUrl(url);
-				try {
-					AuthentcationData authdata = new AuthenticateApi().loginToOpKey(user, passw);
-					if (authdata.isStatus()) {
-						shlLoginToOpkey.close();
-						new ArtifactImportDialog(shlLoginToOpkey).open();
-					} else {
+				if (checkIfInternetIsConnected()) {
+					try {
+						AuthentcationData authdata = new AuthenticateApi().loginToOpKey(user, passw);
+						System.out.println(">> " + authdata.getAuthenticationToken() + " " + authdata.getMessage() + " "
+								+ authdata.getSessionId());
+						System.out.println(">> " + authdata.isStatus());
+						if (authdata.isStatus()) {
+							shlLoginToOpkey.close();
+							new ArtifactImportDialog(shlLoginToOpkey).open();
+						} else {
+							CustomNotificationUtil.openErrorNotification("OpKey", "Please check your credential!");
+						}
+					} catch (Exception ex) {
 						Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
-								"Please check your credential");
+								"Wrong Domain Url provided. Please check.");
 					}
-				} catch (IOException e1) {
-					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
-							"Unable to connect. Please check whether you are connected to internet or not.");
-				} catch (Exception e2) {
-					Utilities.getInstance().showErrorDialog(shlLoginToOpkey, "Login Failed",
-							"Wrong Domain Url provided. Please check.");
+				} else {
+					CustomNotificationUtil.openErrorNotification("OpKey", "Please check your internet connectivity!");
 				}
 			}
 		});
@@ -228,5 +233,18 @@ public class LoginDialog extends Dialog {
 		lblNewLabel_4.setImage(ResourceManager.getPluginImage("OpKeyStudio", "icons/password.png"));
 		lblNewLabel_4.setBounds(163, 110, 23, 21);
 
+	}
+
+	private static boolean checkIfInternetIsConnected() {
+		try {
+			URL url = new URL("https://www.geeksforgeeks.org/");
+			URLConnection connection = url.openConnection();
+			connection.connect();
+			System.out.println("Connection Successful!");
+			return true;
+		} catch (Exception e) {
+			System.out.println("Internet not connected!");
+			return false;
+		}
 	}
 }
