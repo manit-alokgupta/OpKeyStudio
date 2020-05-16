@@ -146,7 +146,13 @@ public class TCFLCodeConstruct {
 			if (!value.isEmpty()) {
 				value += ", ";
 			}
-			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
+			String dataValue = flowInputObject.getStaticValueData();
+			if (dataValue == null) {
+				if (flowInputObject.getFlInputDefaultValue() != null) {
+					dataValue = flowInputObject.getFlInputDefaultValue();
+				}
+			}
+			value += formatDataType(flowInputObject.getDataType(), dataValue);
 		}
 		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().execute(" + value + ");";
 		return code;
@@ -162,7 +168,13 @@ public class TCFLCodeConstruct {
 			if (!value.isEmpty()) {
 				value += ", ";
 			}
-			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
+			String dataValue = flowInputObject.getStaticValueData();
+			if (dataValue == null) {
+				if (flowInputObject.getFlInputDefaultValue() != null) {
+					dataValue = flowInputObject.getFlInputDefaultValue();
+				}
+			}
+			value += formatDataType(flowInputObject.getDataType(), dataValue);
 		}
 		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().run(" + value + ");";
 		return code;
@@ -431,11 +443,11 @@ public class TCFLCodeConstruct {
 					drCellValue = "";
 				}
 				if (drCellValue.isEmpty()) {
-					int index=i-2;
-					System.out.println("GDR Index "+index);
+					int index = i - 2;
+					System.out.println("GDR Index " + index);
 					String previousValue = getStringFromArrayList(addedValues, index);
 					if (previousValue != null) {
-						System.out.println("Previous Value "+previousValue);
+						System.out.println("Previous Value " + previousValue);
 						drCellValue = previousValue;
 					}
 				}

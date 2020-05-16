@@ -32,6 +32,7 @@ public class FlowInputObject {
 	private ComponentInputArgument componentInputArgument;
 	private CFLInputParameter cflInputArgument;
 
+	private String flInputDefaultValue;
 	public boolean isStaticValueDataExist() {
 		return staticValueDataExist;
 	}
@@ -210,5 +211,13 @@ public class FlowInputObject {
 
 	public void setCflInputArgument(CFLInputParameter cflInputArgument) {
 		this.cflInputArgument = cflInputArgument;
+	}
+
+	public String getFlInputDefaultValue() {
+		return flInputDefaultValue;
+	}
+
+	public void setFlInputDefaultValue(String flInputDefaultValue) {
+		this.flInputDefaultValue = flInputDefaultValue;
 	}
 }

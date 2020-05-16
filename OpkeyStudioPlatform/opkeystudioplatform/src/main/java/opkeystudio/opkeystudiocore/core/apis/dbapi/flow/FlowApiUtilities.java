@@ -299,6 +299,7 @@ public class FlowApiUtilities {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());
 				flowInputObject.setComponentInputArgument(componentInputArgument);
+				flowInputObject.setFlInputDefaultValue(componentInputArgument.getDefaultvalue());
 				if (flowInputArgument.getDatasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
@@ -323,6 +324,7 @@ public class FlowApiUtilities {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());
 				flowInputObject.setComponentInputArgument(componentInputArgument);
+				flowInputObject.setFlInputDefaultValue(componentInputArgument.getDefaultvalue());
 				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
@@ -353,6 +355,7 @@ public class FlowApiUtilities {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());
 				flowInputObject.setCflInputArgument(componentInputArgument);
+				flowInputObject.setFlInputDefaultValue(componentInputArgument.getDefaultvalue());
 				if (flowInputArgument.getDatasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
@@ -377,6 +380,7 @@ public class FlowApiUtilities {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());
 				flowInputObject.setCflInputArgument(componentInputArgument);
+				flowInputObject.setFlInputDefaultValue(componentInputArgument.getDefaultvalue());
 				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
