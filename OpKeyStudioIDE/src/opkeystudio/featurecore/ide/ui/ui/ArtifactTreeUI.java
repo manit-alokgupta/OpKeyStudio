@@ -299,10 +299,18 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				boolean isUnique = isArtifactNameIsUnique(inputValue);
-				if (isUnique == false) {
-					CustomNotificationUtil.openInformationNotification("OpKey", "Name must be unique!");
-					return;
+				while (inputValue.trim().isEmpty() || !isArtifactNameIsUnique(inputValue)) {
+					if (!inputValue.trim().isEmpty() && !isArtifactNameIsUnique(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be Unique!");
+					}
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
+							"TestCase Name", "Test Case  " + getVarName());
+					if (inputValue == null) {
+						return;
+					}
+					if (inputValue.trim().isEmpty())
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name can not be empty!");
 				}
 				createArtifact(artifact, inputValue, MODULETYPE.Flow);
 			}
@@ -334,12 +342,19 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				boolean isUnique = isArtifactNameIsUnique(inputValue);
-				if (isUnique == false) {
-					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
-					return;
+				while (inputValue.trim().isEmpty() || !isArtifactNameIsUnique(inputValue)) {
+					if (!inputValue.trim().isEmpty() && !isArtifactNameIsUnique(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be Unique!");
+					}
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
+							"Test Suite Name", "Test Suite " + getVarName());
+					if (inputValue == null) {
+						return;
+					}
+					if (inputValue.trim().isEmpty())
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name can not be empty!");
 				}
-
 				createArtifact(artifact, inputValue, MODULETYPE.Suite);
 
 			}
@@ -412,12 +427,19 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				boolean isUnique = isArtifactNameIsUnique(inputValue);
-				if (isUnique == false) {
-					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
-					return;
+				while (inputValue.trim().isEmpty() || !isArtifactNameIsUnique(inputValue)) {
+					if (!inputValue.trim().isEmpty() && !isArtifactNameIsUnique(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be Unique!");
+					}
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
+							"Object Repository Name", "Object Repository " + getVarName());
+					if (inputValue == null) {
+						return;
+					}
+					if (inputValue.trim().isEmpty())
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name can not be empty!");
 				}
-
 				createArtifact(artifact, inputValue, MODULETYPE.ObjectRepository);
 			}
 
@@ -446,10 +468,18 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				boolean isUnique = isArtifactNameIsUnique(inputValue);
-				if (isUnique == false) {
-					CustomNotificationUtil.openErrorNotification("OpKey", "Name must be unique!");
-					return;
+				while (inputValue.trim().isEmpty() || !isArtifactNameIsUnique(inputValue)) {
+					if (!inputValue.trim().isEmpty() && !isArtifactNameIsUnique(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be Unique!");
+					}
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
+							"Function Library Name ", "Function Library " + getVarName());
+					if (inputValue == null) {
+						return;
+					}
+					if (inputValue.trim().isEmpty())
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name can not be empty!");
 				}
 				createArtifact(artifact, inputValue, MODULETYPE.Component);
 			}
@@ -596,12 +626,19 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				boolean isUnique = isArtifactNameIsUnique(inputValue);
-				if (isUnique == false) {
-					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
-					return;
+				while (inputValue.trim().isEmpty() || !isArtifactNameIsUnique(inputValue)) {
+					if (!inputValue.trim().isEmpty() && !isArtifactNameIsUnique(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be Unique!");
+					}
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name",
+							"DR " + getVarName());
+					if (inputValue == null) {
+						return;
+					}
+					if (inputValue.trim().isEmpty())
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name can not be empty!");
 				}
-
 				createArtifact(artifact, inputValue, MODULETYPE.DataRepository);
 
 			}
@@ -640,20 +677,41 @@ public class ArtifactTreeUI extends SuperComposite {
 				if (startsWithNumber) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
 							"Name should not start with number.");
-					return;
-				}
-
-				if (containsSpecialCharacters) {
+				} else if (containsSpecialCharacters) {
 					MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
 							"Name should not contain any special characters.");
-					return;
-				}
-				boolean isUnique = isArtifactNameIsUnique(inputValue);
-				if (isUnique == false) {
-					new MessageDialogs().openErrorDialog("OpKey", "Name must be unique!");
-					return;
 				}
 
+				while (inputValue.trim().isEmpty() || !isArtifactNameIsUnique(inputValue) || startsWithNumber
+						|| containsSpecialCharacters) {
+					if (!inputValue.trim().isEmpty() && !isArtifactNameIsUnique(inputValue)) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be Unique!");
+					}
+					inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New CodedFL", "CodedFL Name",
+							"NEW CFL " + getVarName());
+					if (inputValue == null) {
+						return;
+					}
+					if (inputValue.trim().isEmpty()) {
+						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+								"Name can not be empty!");
+						continue;
+					} else {
+						startsWithNumber = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+								.isStringStartsWithNumbers(inputValue);
+						containsSpecialCharacters = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+								.isStringContainsSpecialCharacters(inputValue);
+						if (startsWithNumber) {
+							MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+									"Name should not start with number.");
+						}
+
+						if (containsSpecialCharacters) {
+							MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
+									"Name should not contain any special characters.");
+						}
+					}
+				}
 				createArtifact(artifact, inputValue, MODULETYPE.CodedFunction);
 
 			}
