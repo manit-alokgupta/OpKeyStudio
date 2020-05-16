@@ -545,8 +545,8 @@ public class GlobalVariableTable extends CustomTable {
 		}
 		GlobalLoader.getInstance().initGlobalVariables();
 		refreshGlobalVariables();
-		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		new GlobalVariablesTranspiler().transpile();
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		return true;
 	}
 
