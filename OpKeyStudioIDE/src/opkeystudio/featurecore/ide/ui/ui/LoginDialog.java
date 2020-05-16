@@ -237,7 +237,7 @@ public class LoginDialog extends Dialog {
 
 	private static boolean checkIfInternetIsConnected() {
 		try {
-			URL url = new URL("https://www.geeksforgeeks.org/");
+			URL url = new URL("https://www.google.com/");
 			URLConnection connection = url.openConnection();
 			connection.connect();
 			System.out.println("Connection Successful!");
