@@ -19,14 +19,17 @@ import javax.management.RuntimeErrorException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.Completion;
@@ -80,6 +83,57 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		transpiledClasses.clear();
 		allvariabletokens.clear();
 		senseClasses.clear();
+	}
+
+	private void displayCursor(int cursorId) {
+		try {
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(Display.getDefault().getActiveShell(),
+							cursorId);
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void waitForIntialize() {
+		displayCursor(SWT.CURSOR_WAIT);
+		System.out.println("Waiting for Refresh Thread to Finish");
+		Thread waitThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (refreshCodeEditorIntellisenseRunning) {
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				while (refreshCFLEditorIntellisenseRunning) {
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		waitThread.start();
+		try {
+			waitThread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		displayCursor(SWT.CURSOR_ARROW);
+		System.out.println("Completed Refresh Thread");
 	}
 
 	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
@@ -172,8 +226,11 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			allCompletions.add(classbc);
 			allCompletions.add(bc);
 		}
-		this.addCompletions(allCompletions);
-
+		try {
+			this.addCompletions(allCompletions);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (iscfl) {
 			List<File> cfllibsfile = new CompilerUtilities()
 					.getAllFiles(new File(Utilities.getInstance().getProjectIntellisenseFolder()), ".sense");
@@ -196,9 +253,12 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 					basicCompletions.add(classbc);
 					basicCompletions.add(bc);
 				}
-				this.addCompletions(basicCompletions);
+				try {
+					this.addCompletions(basicCompletions);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -253,6 +313,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 
 	@SuppressWarnings("rawtypes")
 	public JavaCompletionProvider getClassMethodsCompletionProvider(TranspiledClassInfo tranpiledClassInfo) {
+		waitForIntialize();
 		GenericEditorIntellisense provider = new GenericEditorIntellisense();
 
 		if (tranpiledClassInfo.getClassSource() != null) {
@@ -270,6 +331,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				String methodBodyToShow = String.format("%s(%s)", methodName, params);
 				String methodBodyToEnter = String.format("%s(%s);", methodName, params);
 				System.out.println(methodBodyToShow);
+				provider.setContainsIntellisenseData(true);
 				provider.addMethodTypeBasicCompletion(methodBodyToShow, methodBodyToEnter, returnType);
 			}
 
@@ -278,6 +340,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				String name = field.getName();
 				String type = field.getType().getName();
 				System.out.println(name + "     " + type);
+				provider.setContainsIntellisenseData(true);
 				provider.addFieldTypeBasicCompletion(name, name, type);
 			}
 		}
@@ -297,6 +360,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			List<MethodIntellisenseDTO> methods = tranpiledClassInfo.getClassIntellisenseDTO()
 					.getMethodintellisensedtos();
 			for (MethodIntellisenseDTO method : methods) {
+				provider.setContainsIntellisenseData(true);
 				provider.addMethodTypeBasicCompletion(method.getDatatoshow(), method.getDatatoenter(),
 						method.getReturntype());
 			}
@@ -359,6 +423,18 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public void addOpKeyTranspiledClassInformation() {
+		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectTranspiledArtifactsFolder();
+
+		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectArtifactCodesFolder();
+		
+		try {
+			FileUtils.copyDirectory(new File(transpileDirpath), new File(projectFolderPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		String mainDirPath = Utilities.getInstance().getProjectArtifactCodesFolder();
 		List<File> allFiles = new CompilerUtilities().getAllFiles(new File(mainDirPath), ".java");
 		for (File file : allFiles) {
@@ -542,6 +618,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public VariableToken findVariableToken(String varName) {
+		waitForIntialize();
 		List<VariableToken> tokens = getAllvariabletokens();
 		for (int i = 0; i < tokens.size(); i++) {
 			VariableToken varToken = tokens.get(i);
@@ -553,6 +630,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 	}
 
 	public TranspiledClassInfo findAutoCompleteToken(String tokenString) {
+		waitForIntialize();
 		List<TranspiledClassInfo> allTokens = getTranspiledClasses();
 		for (int i = 0; i < allTokens.size(); i++) {
 			TranspiledClassInfo token = allTokens.get(i);

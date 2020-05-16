@@ -13,6 +13,7 @@ import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.ParameterizedCompletion;
 
 public class JavaCompletionProvider extends DefaultCompletionProvider {
+	private boolean containsIntellisenseData = false;
 
 	@Override
 	public String getAlreadyEnteredText(JTextComponent arg0) {
@@ -97,6 +98,14 @@ public class JavaCompletionProvider extends DefaultCompletionProvider {
 	@Override
 	public boolean removeCompletion(Completion c) {
 		return super.removeCompletion(c);
+	}
+
+	public boolean isContainsIntellisenseData() {
+		return containsIntellisenseData;
+	}
+
+	public void setContainsIntellisenseData(boolean containsIntellisenseData) {
+		this.containsIntellisenseData = containsIntellisenseData;
 	}
 
 }

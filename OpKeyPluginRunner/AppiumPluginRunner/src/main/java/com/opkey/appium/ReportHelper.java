@@ -45,23 +45,24 @@ public class ReportHelper {
 
 	public static List<String> getParameters() {
 		List<String> parameterList = new ArrayList<String>();
-
+		String objectArg = "";
 		ObjectArguments objectArguments = Context.current().getFunctionCall().getObjectArguments();
 		if (objectArguments != null && objectArguments.getObjectArgument() != null) {
-			String objectArg = "";
 			for (ObjectArgument objectArgument : objectArguments.getObjectArgument()) {
 				objectArg += objectArgument.getObject().getLogicalName() +" ;";
 			}
-			parameterList.add(objectArg);
+			//parameterList.add(objectArg);
 		}
 
 		DataArguments dataArguments = Context.current().getFunctionCall().getDataArguments();
 		if (dataArguments != null && dataArguments.getDataArgument() != null) {
 			for (DataArgument dataArgument : dataArguments.getDataArgument()) {
-				parameterList.add(dataArgument.getValue());
+//				parameterList.add(dataArgument.getValue());
+				objectArg += dataArgument.getValue() + ",";
 			}
 		}
-
+		objectArg = objectArg.substring(0, objectArg.length()-1);
+		parameterList.add(objectArg);
 		return parameterList;
 	}
 }
