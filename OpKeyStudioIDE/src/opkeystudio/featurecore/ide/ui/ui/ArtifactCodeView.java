@@ -115,6 +115,7 @@ public class ArtifactCodeView extends SuperComposite {
 		initCFLEditorUI();
 		initCodedFunctionArtifact();
 		initCFLCode();
+		addCFLGenericListner();
 	}
 
 	public ArtifactCodeView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
@@ -175,6 +176,16 @@ public class ArtifactCodeView extends SuperComposite {
 		});
 	}
 
+	private void addCFLGenericListner() {
+		this.addOpKeyGlobalEventListener(new ArtifactPersistListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				handleRefreshOnSaveCFL();
+			}
+		});
+	}
+	
 	private void initCodedFunctionArtifact() {
 		CodedFunctionArtifact cartifact = FlowApi.getInstance().getCodedFunctionArtifact(getArtifact().getId()).get(0);
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
@@ -684,6 +695,21 @@ public class ArtifactCodeView extends SuperComposite {
 			}
 			if (status1 == DialogResult.Yes) {
 				saveGenericCodeEditorFile();
+			}
+			toggleSaveButton(false);
+		}
+	}
+	
+	public void handleRefreshOnSaveCFL() {
+		if (saveButton.getEnabled() == true) {
+			DialogResult status1 = CustomNotificationUtil.openConfirmDialog(this.getShell(), "OpKey",
+					String.format("Do you want to save '%s'?", getCodeViewFile().getName()));
+			if (status1 == DialogResult.Cancel) {
+				toggleSaveButton(false);
+				return;
+			}
+			if (status1 == DialogResult.Yes) {
+				saveCFLCode();
 			}
 			toggleSaveButton(false);
 		}
