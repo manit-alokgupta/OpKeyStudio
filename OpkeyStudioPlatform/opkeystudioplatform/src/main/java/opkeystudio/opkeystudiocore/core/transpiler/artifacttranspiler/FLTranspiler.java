@@ -61,6 +61,22 @@ public class FLTranspiler extends AbstractTranspiler {
 			methodBodyCode += flowStepCode;
 		}
 
+		JavaClassSource outPutClass = null;
+		List<ComponentOutputArgument> outPutArguments = FunctionLibraryApi.getInstance()
+				.getAllComponentOutputArgument(artifact.getId());
+		for (ComponentOutputArgument outPutParam : outPutArguments) {
+			if (outPutClass == null) {
+				outPutClass = Roaster.create(JavaClassSource.class);
+				outPutClass.setName("OutputParameter").setPublic();
+			}
+			String dataType = new VariableComposer().convertOpKeyDataTypeToJavaDataType(outPutParam.getType());
+			outPutClass.addField().setName(outPutParam.getVariableName()).setType(dataType).setPublic();
+		}
+
+		if (outPutClass != null) {
+			class1.addNestedType(outPutClass);
+		}
+
 		List<ComponentInputArgument> componentInputArguments = FunctionLibraryApi.getInstance()
 				.getAllComponentInputArgument(artifact.getId());
 		MethodSource<JavaClassSource> defaultmethod = class1.addMethod();
@@ -73,13 +89,6 @@ public class FLTranspiler extends AbstractTranspiler {
 			method.addParameter(dataType, varName);
 		}
 
-		List<ComponentOutputArgument> outPutArguments = FunctionLibraryApi.getInstance()
-				.getAllComponentOutputArgument(artifact.getId());
-
-		for (ComponentOutputArgument compOutputArg : outPutArguments) {
-			String dataType = new VariableComposer().convertOpKeyDataTypeToJavaDataType(compOutputArg.getType());
-			method.setReturnType(dataType);
-		}
 		String defaultArguments = "";
 		for (ComponentInputArgument cia : componentInputArguments) {
 			System.out.println("DataType " + cia.getType() + "  " + cia.getDefaultvalue());
@@ -98,15 +107,13 @@ public class FLTranspiler extends AbstractTranspiler {
 		String reportingEnd = "ReportBuilder.get().endFunctionLibrary();";
 		methodBodyCode = reportingStart + methodBodyCode + reportingEnd;
 
-		String returnType = method.getReturnType().getName();
-		if (returnType.equals("boolean")) {
-			methodBodyCode += "return false;";
-		} else if (returnType.equals("int")) {
-			methodBodyCode += "return 0;";
-		} else if (returnType.equals("double")) {
-			methodBodyCode += "return 0;";
-		} else if (!returnType.equals("void")) {
-			methodBodyCode += "return null;";
+		if (outPutClass != null) {
+			if (!methodBodyCode.contains("OutputParameter outputParam")
+					&& !methodBodyCode.contains("return outputParam")) {
+				methodBodyCode = "OutputParameter outputParam=new OutputParameter();" + methodBodyCode
+						+ "return outputParam;";
+			}
+			method.setReturnType("OutputParameter");
 		}
 		System.out.println(defaultMethodBody);
 		defaultmethod.setName("executeDefault").setPublic().setBody(defaultMethodBody).addThrows("Exception");
