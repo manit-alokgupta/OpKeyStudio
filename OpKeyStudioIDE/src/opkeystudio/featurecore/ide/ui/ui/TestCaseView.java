@@ -996,7 +996,7 @@ public class TestCaseView extends SuperComposite {
 				// check if blank steps are present
 				boolean blankStepsPresent = false;
 				for (FlowStep itm : flowStepTable.getFlowStepsData()) {
-					if (itm.getKeyword() == null) {
+					if (itm.getKeyword() == null && itm.getCodedFunctionArtifact() == null && itm.getFunctionLibraryComponent() == null) {
 						blankStepsPresent = true;
 					}
 				}

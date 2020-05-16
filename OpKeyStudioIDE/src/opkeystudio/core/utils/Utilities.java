@@ -329,6 +329,6 @@ public class Utilities {
 	}
 
 	public String getVersion() {
-		return Platform.getProduct().getDefiningBundle().getVersion() + "_2020.05.15_Eveninig";
+		return Platform.getProduct().getDefiningBundle().getVersion() + "_2020.05.16_Evening";
 	}
 }
