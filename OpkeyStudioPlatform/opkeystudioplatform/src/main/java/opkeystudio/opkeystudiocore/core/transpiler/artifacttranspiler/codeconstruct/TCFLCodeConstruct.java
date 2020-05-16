@@ -420,16 +420,27 @@ public class TCFLCodeConstruct {
 
 		for (DRColumnAttributes columnAttribute : allDRColumns) {
 			String data = "";
+			List<String> addedValues = new ArrayList<String>();
 			for (int i = 0; i < loopCount; i++) {
 				if (!data.isEmpty()) {
 					data += ", ";
 				}
 				DRCellAttributes drCell = columnAttribute.getDrCellAttributes().get(i);
-
-				if (drCell.getValue() == null) {
-					data += "\"\"";
+				String drCellValue = drCell.getValue();
+				if (drCellValue == null) {
+					drCellValue = "";
 				}
-				data += "\"" + drCell.getValue() + "\"";
+				if (drCellValue.isEmpty()) {
+					int index=i-2;
+					System.out.println("GDR Index "+index);
+					String previousValue = getStringFromArrayList(addedValues, index);
+					if (previousValue != null) {
+						System.out.println("Previous Value "+previousValue);
+						drCellValue = previousValue;
+					}
+				}
+				data += "\"" + drCellValue + "\"";
+				addedValues.add(drCellValue);
 			}
 			String variableCoded = String.format(arrayDataFormat, columnAttribute.getVariableName() + "s", data);
 			if (!existingEntries.contains(variableCoded)) {
@@ -446,6 +457,22 @@ public class TCFLCodeConstruct {
 		}
 
 		return bodyCode;
+	}
+
+	private String getStringFromArrayList(List<String> allStrings, int index) {
+		try {
+			return allStrings.get(index);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private boolean isIndexIsEven(int index) {
+		if (index % 2 == 0) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean isKeywordType(FlowStep flowStep) {
