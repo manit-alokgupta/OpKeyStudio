@@ -23,10 +23,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.Completion;
@@ -82,13 +84,29 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		senseClasses.clear();
 	}
 
+	private void displayCursor(int cursorId) {
+		try {
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					opkeystudio.core.utils.Utilities.getInstance().setShellCursor(Display.getDefault().getActiveShell(),
+							cursorId);
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void waitForIntialize() {
+		displayCursor(SWT.CURSOR_WAIT);
+		System.out.println("Waiting for Refresh Thread to Finish");
 		Thread waitThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				while (refreshCodeEditorIntellisenseRunning) {
-					System.out.println("Waiting for Code Editor Refresh Thread to Finish");
 					try {
 						Thread.sleep(10);
 					} catch (InterruptedException e) {
@@ -97,7 +115,6 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 					}
 				}
 				while (refreshCFLEditorIntellisenseRunning) {
-					System.out.println("Waiting for CFL Editor Refresh Thread to Finish");
 					try {
 						Thread.sleep(10);
 					} catch (InterruptedException e) {
@@ -114,6 +131,8 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		displayCursor(SWT.CURSOR_ARROW);
+		System.out.println("Completed Refresh Thread");
 	}
 
 	public static GenericEditorIntellisense getGenericInstanceoOfCodeEditor() {
@@ -206,8 +225,11 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			allCompletions.add(classbc);
 			allCompletions.add(bc);
 		}
-		this.addCompletions(allCompletions);
-
+		try {
+			this.addCompletions(allCompletions);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (iscfl) {
 			List<File> cfllibsfile = new CompilerUtilities()
 					.getAllFiles(new File(Utilities.getInstance().getProjectIntellisenseFolder()), ".sense");
@@ -230,9 +252,12 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 					basicCompletions.add(classbc);
 					basicCompletions.add(bc);
 				}
-				this.addCompletions(basicCompletions);
+				try {
+					this.addCompletions(basicCompletions);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
