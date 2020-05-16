@@ -16,13 +16,15 @@ public class CodeParser {
 	}
 
 	public Token getRecentToken(ArtifactCodeEditor codeEditor) {
+		GenericEditorIntellisense.waitForIntialize();
 		int caretLineNumber = codeEditor.getCaretLineNumber();
 		Token tokens = codeEditor.getTokenListFor(caretLineNumber, codeEditor.getCaretPosition());
 		List<Token> alltokens = new ArrayList<Token>();
 		while (tokens.getNextToken() != null) {
 			String tokenData = tokens.getLexeme().trim();
 			if (!tokenData.isEmpty()) {
-				if (!tokenData.equals("(") && !tokenData.equals(")") && !tokenData.equals(".") && !tokenData.equals(" ")) {
+				if (!tokenData.equals("(") && !tokenData.equals(")") && !tokenData.equals(".")
+						&& !tokenData.equals(" ")) {
 					alltokens.add(tokens);
 				}
 			}
@@ -31,15 +33,17 @@ public class CodeParser {
 		Token lastToken = alltokens.get(alltokens.size() - 1);
 		return lastToken;
 	}
-	
+
 	public List<Token> getAllTokenOfCurrentLine(ArtifactCodeEditor codeEditor) {
+		GenericEditorIntellisense.waitForIntialize();
 		int caretLineNumber = codeEditor.getCaretLineNumber();
 		Token tokens = codeEditor.getTokenListFor(caretLineNumber, codeEditor.getCaretPosition());
 		List<Token> alltokens = new ArrayList<Token>();
 		while (tokens.getNextToken() != null) {
 			String tokenData = tokens.getLexeme().trim();
 			if (!tokenData.isEmpty()) {
-				if (!tokenData.equals("(") && !tokenData.equals(")") && !tokenData.equals(".") && !tokenData.equals(" ")) {
+				if (!tokenData.equals("(") && !tokenData.equals(")") && !tokenData.equals(".")
+						&& !tokenData.equals(" ")) {
 					alltokens.add(tokens);
 				}
 			}
@@ -76,6 +80,7 @@ public class CodeParser {
 	}
 
 	private void parseTokens(List<Token> lineTokens) {
+		GenericEditorIntellisense.waitForIntialize();
 		for (int i = 0; i < lineTokens.size(); i++) {
 			Token token = lineTokens.get(i);
 			if (token.getLexeme().equals("=")) {

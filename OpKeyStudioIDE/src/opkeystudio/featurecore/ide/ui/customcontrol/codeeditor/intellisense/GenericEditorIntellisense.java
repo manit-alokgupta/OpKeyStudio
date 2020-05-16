@@ -19,7 +19,6 @@ import javax.management.RuntimeErrorException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -51,7 +50,6 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.ClassIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.MethodIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
-import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -87,7 +85,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		senseClasses.clear();
 	}
 
-	private void displayCursor(int cursorId) {
+	private static void displayCursor(int cursorId) {
 		try {
 			Display.getDefault().asyncExec(new Runnable() {
 
@@ -102,8 +100,14 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 		}
 	}
 
-	private void waitForIntialize() {
-		displayCursor(SWT.CURSOR_WAIT);
+	public static void waitForIntialize() {
+		boolean changeCursor = false;
+		if (refreshCFLEditorIntellisenseRunning == true || refreshCodeEditorIntellisenseRunning == true) {
+			changeCursor = true;
+		}
+		if (changeCursor) {
+			displayCursor(SWT.CURSOR_WAIT);
+		}
 		System.out.println("Waiting for Refresh Thread to Finish");
 		Thread waitThread = new Thread(new Runnable() {
 
@@ -113,16 +117,14 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 					try {
 						Thread.sleep(10);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
 					}
 				}
 				while (refreshCFLEditorIntellisenseRunning) {
 					try {
 						Thread.sleep(10);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
 					}
 				}
 			}
@@ -134,7 +136,9 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		displayCursor(SWT.CURSOR_ARROW);
+		if (changeCursor) {
+			displayCursor(SWT.CURSOR_ARROW);
+		}
 		System.out.println("Completed Refresh Thread");
 	}
 
