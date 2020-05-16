@@ -763,13 +763,12 @@ public class ObjectRepositoryView extends SuperComposite {
 					objectRepositoryTree.renderObjectRepositories();
 					return;
 				}
-				ObjectRepositoryTreeItem item=	objectRepositoryTree.getSelectedTreeItem();
-				List<ORObject> allors = objectRepositoryTree.getAllORObjects();
-				new ObjectRepositoryApi().saveORObjects(getArtifact(), allors);
-				objectRepositoryTree.setSelection(item);
-				toggleSaveButton(false);
-				objectRepositoryTree.renderObjectRepositories();
-				toggleSaveButton(false);
+				ObjectRepositoryTreeItem item = objectRepositoryTree.getSelectedTreeItem();
+				saveAll();
+				OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
+				if (item != null) {
+					objectRepositoryTree.setSelection(item);
+				}
 				CustomNotificationUtil.openInformationNotification("OpKey", "Refreshed!");
 			}
 			intelliChooseObject.setEnabled(false);

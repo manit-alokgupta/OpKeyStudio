@@ -38,7 +38,7 @@ public class FlowInputArgument extends Modified implements Cloneable {
 	private String componentstep_id;
 	@DBField
 	private String component_ip_id;
-	
+
 	@DBField
 	private String codedfunction_ip_id;
 
@@ -55,6 +55,7 @@ public class FlowInputArgument extends Modified implements Cloneable {
 	private ComponentInputArgument componentInputArgument;
 
 	private int index = -1;
+
 
 	public String getFlow_step_ia_id() {
 		return flow_step_ia_id;

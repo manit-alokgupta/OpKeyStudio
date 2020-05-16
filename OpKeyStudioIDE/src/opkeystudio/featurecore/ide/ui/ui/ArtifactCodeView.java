@@ -37,6 +37,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.Cod
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.bottomfactory.CodedFunctionBottomFactoryUI;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
+import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
@@ -115,6 +116,7 @@ public class ArtifactCodeView extends SuperComposite {
 		initCFLEditorUI();
 		initCodedFunctionArtifact();
 		initCFLCode();
+		addCFLGenericListner();
 	}
 
 	public ArtifactCodeView(Composite parent, int style, TestCaseView parentTestCaseView, boolean editable) {
@@ -175,6 +177,16 @@ public class ArtifactCodeView extends SuperComposite {
 		});
 	}
 
+	private void addCFLGenericListner() {
+		this.addOpKeyGlobalEventListener(new ArtifactPersistListener() {
+
+			@Override
+			public void handleGlobalEvent() {
+				handleRefreshOnSaveCFL();
+			}
+		});
+	}
+	
 	private void initCodedFunctionArtifact() {
 		CodedFunctionArtifact cartifact = FlowApi.getInstance().getCodedFunctionArtifact(getArtifact().getId()).get(0);
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(getArtifact());
@@ -414,6 +426,8 @@ public class ArtifactCodeView extends SuperComposite {
 		refreshButton = new ToolItem(toolBar, SWT.NONE);
 		refreshButton.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.REFRESH_TOOL_ICON));
 		refreshButton.setToolTipText("Refresh");
+	
+		/*
 		new ToolItem(toolBar, SWT.SEPARATOR);
 		ToolItem label = new ToolItem(toolBar, SWT.READ_ONLY);
 		label.setSelection(false);
@@ -469,6 +483,8 @@ public class ArtifactCodeView extends SuperComposite {
 
 			}
 		});
+		
+		*/
 		editor = new ArtifactCodeEditor(this, this, true, true, true);
 		editor.setArtifact(getArtifact());
 
@@ -619,7 +635,7 @@ public class ArtifactCodeView extends SuperComposite {
 		bottomFactoryUi.getCFLInputTable().renderCFLInputParameters();
 		bottomFactoryUi.getCFLOutputTable().renderCFLOutputParameters();
 		new CFLTranspiler().transpile(getArtifact());
-
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initCFLCode();
 		toggleSaveButton(false);
 	}
@@ -684,6 +700,21 @@ public class ArtifactCodeView extends SuperComposite {
 			}
 			if (status1 == DialogResult.Yes) {
 				saveGenericCodeEditorFile();
+			}
+			toggleSaveButton(false);
+		}
+	}
+	
+	public void handleRefreshOnSaveCFL() {
+		if (saveButton.getEnabled() == true) {
+			DialogResult status1 = CustomNotificationUtil.openConfirmDialog(this.getShell(), "OpKey",
+					String.format("Do you want to save '%s'?", getCodeViewFile().getName()));
+			if (status1 == DialogResult.Cancel) {
+				toggleSaveButton(false);
+				return;
+			}
+			if (status1 == DialogResult.Yes) {
+				saveCFLCode();
 			}
 			toggleSaveButton(false);
 		}
@@ -844,6 +875,7 @@ public class ArtifactCodeView extends SuperComposite {
 		} else if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 			new TCTranspiler().transpile(artifact);
 			new ArtifactTranspiler().transpileAllFl();
+			OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		}
 		initTestCaseCode();
 	}
@@ -854,6 +886,7 @@ public class ArtifactCodeView extends SuperComposite {
 			return;
 		}
 		new SuiteTranspiler().transpile(artifact);
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initTestSuiteCode();
 	}
 
@@ -863,6 +896,7 @@ public class ArtifactCodeView extends SuperComposite {
 			return;
 		}
 		new ORTranspiler().transpile(artifact);
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initObjectRepositoryCode();
 	}
 
@@ -872,6 +906,7 @@ public class ArtifactCodeView extends SuperComposite {
 			return;
 		}
 		new DRTranspiler().transpile(artifact);
+		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 		initDataRepositoryCode();
 	}
 

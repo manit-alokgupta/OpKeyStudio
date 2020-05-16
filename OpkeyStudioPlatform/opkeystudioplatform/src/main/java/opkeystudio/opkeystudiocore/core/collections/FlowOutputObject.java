@@ -1,10 +1,12 @@
 package opkeystudio.opkeystudiocore.core.collections;
 
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowOutputObject {
 	private String dataType;
 	private String outputVariableName;
+	private ComponentOutputArgument componentOutputArgument;
 
 	public String getOutputVariableName() {
 		return outputVariableName;
@@ -21,7 +23,7 @@ public class FlowOutputObject {
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
 	}
-	
+
 	public String getVariableName() {
 		String varName = Utilities.getInstance().removeSpecialCharacters(getOutputVariableName());
 		varName = varName.replaceAll(" ", "_").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\*", "");
@@ -48,5 +50,13 @@ public class FlowOutputObject {
 			// TODO: handle exception
 		}
 		return true;
+	}
+
+	public ComponentOutputArgument getComponentOutputArgument() {
+		return componentOutputArgument;
+	}
+
+	public void setComponentOutputArgument(ComponentOutputArgument componentOutputArgument) {
+		this.componentOutputArgument = componentOutputArgument;
 	}
 }

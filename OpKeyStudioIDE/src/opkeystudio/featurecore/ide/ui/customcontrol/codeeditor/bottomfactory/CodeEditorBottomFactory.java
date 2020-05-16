@@ -82,7 +82,7 @@ public class CodeEditorBottomFactory extends Composite {
 		compilationResultsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		compilationResultsTable = new CFLCompilationResultTable(compilationResultsComposite,
-				SWT.BORDER | SWT.FULL_SELECTION, this);
+				SWT.BORDER | SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.H_SCROLL, this);
 		compilationResultsTable.setHeaderVisible(true);
 		compilationResultsTable.setLinesVisible(true);
 

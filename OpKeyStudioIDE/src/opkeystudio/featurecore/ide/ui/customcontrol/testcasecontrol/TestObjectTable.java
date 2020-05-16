@@ -229,8 +229,8 @@ public class TestObjectTable extends CustomTable {
 
 	private void displayTableInfo(String[] message) {
 		stopPaintEvent = true;
-		CustomTableItem item = new CustomTableItem(this, SWT.NONE | SWT.CENTER);
-		item.setText(message);
+		CustomTableItem item = new CustomTableItem(this, SWT.CENTER);
+		item.setText("             "+message[0]);
 	}
 
 	public ORObject getSelectedORObject() {

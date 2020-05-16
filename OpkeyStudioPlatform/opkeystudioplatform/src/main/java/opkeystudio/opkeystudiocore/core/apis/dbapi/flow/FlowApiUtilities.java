@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
@@ -299,6 +300,7 @@ public class FlowApiUtilities {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());
 				flowInputObject.setComponentInputArgument(componentInputArgument);
+				flowInputObject.setFlInputDefaultValue(componentInputArgument.getDefaultvalue());
 				if (flowInputArgument.getDatasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
@@ -323,6 +325,7 @@ public class FlowApiUtilities {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());
 				flowInputObject.setComponentInputArgument(componentInputArgument);
+				flowInputObject.setFlInputDefaultValue(componentInputArgument.getDefaultvalue());
 				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
@@ -353,6 +356,7 @@ public class FlowApiUtilities {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());
 				flowInputObject.setCflInputArgument(componentInputArgument);
+				flowInputObject.setFlInputDefaultValue(componentInputArgument.getDefaultvalue());
 				if (flowInputArgument.getDatasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getDatasource());
@@ -377,6 +381,7 @@ public class FlowApiUtilities {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());
 				flowInputObject.setCflInputArgument(componentInputArgument);
+				flowInputObject.setFlInputDefaultValue(componentInputArgument.getDefaultvalue());
 				if (flowInputArgument.getArg_datasource() == DataSource.StaticValue
 						&& flowInputArgument.getStaticobjectid() == null) {
 					flowInputObject.setDataSource(flowInputArgument.getArg_datasource());
@@ -400,16 +405,42 @@ public class FlowApiUtilities {
 		List<FlowOutputObject> flowOutputObjects = new ArrayList<FlowOutputObject>();
 		for (int i = 0; i < flowStep.getFlowOutputArgs().size(); i++) {
 			FlowOutputArgument flowOutputArgument = flowStep.getFlowOutputArgs().get(i);
+			FlowOutputObject flowOutPutObject = new FlowOutputObject();
 			String dataType = "";
 			if (flowStep.getKeyword() != null) {
 				dataType = flowStep.getKeyword().getOutputtype();
+				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
+					List<ComponentOutputArgument> outputs = FunctionLibraryApi.getInstance()
+							.getAllComponentOutputArgument(artifact.getId());
+					System.out.println("ALL COMPONENT STEP OUTPUT SIZE " + outputs.size());
+					for (ComponentOutputArgument outPutArg : outputs) {
+						System.out.println("CO " + outPutArg.getComponentstep_oa_id() + " FO "
+								+ flowOutputArgument.getComponentstep_oa_id());
+						if (outPutArg.getComponentstep_oa_id() != null) {
+							if (flowOutputArgument.getComponentstep_oa_id() != null) {
+								System.out.println("CO " + outPutArg.getComponentstep_oa_id() + " FO "
+										+ flowOutputArgument.getComponentstep_oa_id());
+								if (outPutArg.getComponentstep_oa_id()
+										.equals(flowOutputArgument.getComponentstep_oa_id())) {
+									flowOutPutObject.setComponentOutputArgument(outPutArg);
+								}
+							}
+						}
+					}
+				}
 			}
 			if (flowStep.getFunctionLibraryComponent() != null) {
 				ComponentOutputArgument outPutArg = flowStep.getFunctionLibraryComponent().getComponentOutputArguments()
 						.get(i);
 				dataType = outPutArg.getType();
+				if (outPutArg.getComponentstep_oa_id() != null) {
+					if (flowOutputArgument.getComponentstep_oa_id() != null) {
+						if (outPutArg.getComponentstep_oa_id().equals(flowOutputArgument.getComponentstep_oa_id())) {
+							flowOutPutObject.setComponentOutputArgument(outPutArg);
+						}
+					}
+				}
 			}
-			FlowOutputObject flowOutPutObject = new FlowOutputObject();
 			flowOutPutObject.setDataType(dataType);
 			flowOutPutObject.setOutputVariableName(flowOutputArgument.getOutputvariablename());
 			flowOutputObjects.add(flowOutPutObject);

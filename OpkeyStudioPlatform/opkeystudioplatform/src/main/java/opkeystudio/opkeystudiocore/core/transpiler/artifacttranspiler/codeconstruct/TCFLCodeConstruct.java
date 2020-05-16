@@ -1,7 +1,9 @@
 package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
@@ -9,6 +11,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
@@ -143,7 +146,13 @@ public class TCFLCodeConstruct {
 			if (!value.isEmpty()) {
 				value += ", ";
 			}
-			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
+			String dataValue = flowInputObject.getStaticValueData();
+			if (dataValue == null) {
+				if (flowInputObject.getFlInputDefaultValue() != null) {
+					dataValue = flowInputObject.getFlInputDefaultValue();
+				}
+			}
+			value += formatDataType(flowInputObject.getDataType(), dataValue);
 		}
 		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().execute(" + value + ");";
 		return code;
@@ -159,7 +168,13 @@ public class TCFLCodeConstruct {
 			if (!value.isEmpty()) {
 				value += ", ";
 			}
-			value += formatDataType(flowInputObject.getDataType(), flowInputObject.getStaticValueData());
+			String dataValue = flowInputObject.getStaticValueData();
+			if (dataValue == null) {
+				if (flowInputObject.getFlInputDefaultValue() != null) {
+					dataValue = flowInputObject.getFlInputDefaultValue();
+				}
+			}
+			value += formatDataType(flowInputObject.getDataType(), dataValue);
 		}
 		String code = newLineChar + " new " + libraryComponent.getVariableName() + "().run(" + value + ");";
 		return code;
@@ -365,36 +380,122 @@ public class TCFLCodeConstruct {
 					}
 				}
 			}
+			if (!outputCode.isEmpty()) {
+				if (flowOutPutObject.getComponentOutputArgument() != null) {
+					System.out.println("Component Ouput Found");
+					String compVarName = flowOutPutObject.getComponentOutputArgument().getVariableName();
+					String flOutput = "outputParam." + compVarName + "="
+							+ String.format("String.valueOf(%s);", varName);
+					return outputCode + mainCode + flOutput;
+				} else {
+					System.out.println("Component Ouput Not Found");
+				}
+			}
 		}
 		return outputCode + mainCode;
 	}
 
 	public String addDataRepositoryIterations(Artifact artifact, List<FlowInputArgument> flowInputArguments,
 			String mainCode) {
-		String forLoopParameters = "";
 		String bodyCode = mainCode;
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
 				flowInputArguments);
 		String forLoopFormat = "for(%s) {%s}";
+		String arrayDataFormat = "String[] %s = new String[] {%s};";
+		String allArrayFormatType = "";
+		List<DRColumnAttributes> allDRColumns = new ArrayList<DRColumnAttributes>();
+		int loopCount = 0;
+		String drVariablesCode = "";
+		Set<String> existingEntries = new HashSet<String>();
 		for (FlowInputObject flowInputObject : flowInputObjects) {
 			if (flowInputObject.isDataRepositoryColumnDataExist()) {
 				String columnId = flowInputObject.getDataRepositoryColumnData();
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
 				String columnName = drColumn.getVariableName();
-				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
-				String path = ArtifactTranspiler.getInstance().getArtifactPackageName(drArtifact) + "."
-						+ drArtifact.getVariableName() + "." + "getDRCells(" + "\"" + columnName + "\"" + ")";
-				forLoopParameters = "String " + columnName + ":" + path;
-				System.out.println(forLoopParameters);
-				bodyCode = String.format(forLoopFormat, forLoopParameters, bodyCode);
-
+				String variableCode = "String " + columnName + "=" + columnName + "s[i];";
+				if (!existingEntries.contains(variableCode)) {
+					drVariablesCode += variableCode;
+				}
+				existingEntries.add(variableCode);
+				allDRColumns.add(drColumn);
 			}
 		}
-		if (forLoopParameters.isEmpty()) {
+
+		for (DRColumnAttributes columnAttribue : allDRColumns) {
+			List<DRCellAttributes> drCellAttributes = GlobalLoader.getInstance()
+					.getDRColumnCells(columnAttribue.getColumn_id());
+			columnAttribue.setDrCellAttributes(drCellAttributes);
+			List<String> cellDatas = new ArrayList<String>();
+			for (DRCellAttributes drCell : drCellAttributes) {
+				if (drCell.getValue() == null) {
+					continue;
+				}
+				if (drCell.getValue().isEmpty()) {
+					continue;
+				}
+				cellDatas.add(drCell.getValue());
+			}
+
+			if (cellDatas.size() > loopCount) {
+				loopCount = cellDatas.size();
+			}
+		}
+
+		for (DRColumnAttributes columnAttribute : allDRColumns) {
+			String data = "";
+			List<String> addedValues = new ArrayList<String>();
+			for (int i = 0; i < loopCount; i++) {
+				if (!data.isEmpty()) {
+					data += ", ";
+				}
+				DRCellAttributes drCell = columnAttribute.getDrCellAttributes().get(i);
+				String drCellValue = drCell.getValue();
+				if (drCellValue == null) {
+					drCellValue = "";
+				}
+				if (drCellValue.isEmpty()) {
+					int index = i - 2;
+					System.out.println("GDR Index " + index);
+					String previousValue = getStringFromArrayList(addedValues, index);
+					if (previousValue != null) {
+						System.out.println("Previous Value " + previousValue);
+						drCellValue = previousValue;
+					}
+				}
+				data += "\"" + drCellValue + "\"";
+				addedValues.add(drCellValue);
+			}
+			String variableCoded = String.format(arrayDataFormat, columnAttribute.getVariableName() + "s", data);
+			if (!existingEntries.contains(variableCoded)) {
+				allArrayFormatType += variableCoded;
+			}
+			existingEntries.add(variableCoded);
+		}
+		String forLoopBody = String.format("int i = 0;i < %s;i++", loopCount);
+		bodyCode = allArrayFormatType + drVariablesCode + bodyCode;
+		System.out.println(bodyCode);
+		bodyCode = String.format(forLoopFormat, forLoopBody, bodyCode);
+		if (drVariablesCode.isEmpty()) {
 			return mainCode;
 		}
 
 		return bodyCode;
+	}
+
+	private String getStringFromArrayList(List<String> allStrings, int index) {
+		try {
+			return allStrings.get(index);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private boolean isIndexIsEven(int index) {
+		if (index % 2 == 0) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean isKeywordType(FlowStep flowStep) {

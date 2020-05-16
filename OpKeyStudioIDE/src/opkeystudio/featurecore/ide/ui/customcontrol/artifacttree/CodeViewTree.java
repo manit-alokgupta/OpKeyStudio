@@ -189,7 +189,7 @@ public class CodeViewTree extends CustomTree {
 			} catch (Exception e) {
 				if (selectedCodeFile.isDirectory()) {
 					new MessageDialogs().openErrorDialog("OpKey",
-							String.format("Can't Rename Package Folder '%s'. " , fileName));
+							String.format("Can't Rename Package Folder '%s'. ", fileName));
 					return;
 				}
 				new MessageDialogs().openErrorDialog("OpKey",
@@ -268,13 +268,13 @@ public class CodeViewTree extends CustomTree {
 			}
 
 			class1.setPackage(packageName);
-			
+
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().writeToFile(file, class1.toString());
 			renderCodeViewTree();
 			Utilities.getInstance().openSelectedFileInGenericCodeEditor(file);
@@ -404,6 +404,26 @@ public class CodeViewTree extends CustomTree {
 			renderFiles(srcNode, file);
 		}
 		expandAll(rootNode);
+		GenericEditorIntellisense.getGenericInstanceoOfCodeEditor().refreshCodeEditorIntellisense();
+		GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
+	}
+
+	public static void initAllIntellisense() {
+		String transpileDirpath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectTranspiledArtifactsFolder();
+
+		String projectFolderPath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
+				.getProjectArtifactCodesFolder();
+
+		File codeFolder = new File(projectFolderPath);
+		if (!codeFolder.exists()) {
+			codeFolder.mkdir();
+		}
+		try {
+			FileUtils.copyDirectory(new File(transpileDirpath), new File(projectFolderPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		GenericEditorIntellisense.getGenericInstanceoOfCodeEditor().refreshCodeEditorIntellisense();
 		GenericEditorIntellisense.getCFLInstanceoOfCodeEditor().refreshCFLIntellisense();
 	}
