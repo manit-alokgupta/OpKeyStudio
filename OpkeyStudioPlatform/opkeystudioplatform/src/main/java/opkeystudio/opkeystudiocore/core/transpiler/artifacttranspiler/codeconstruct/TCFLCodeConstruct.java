@@ -431,7 +431,11 @@ public class TCFLCodeConstruct {
 				}
 				data += "\"" + drCell.getValue() + "\"";
 			}
-			allArrayFormatType += String.format(arrayDataFormat, columnAttribute.getVariableName() + "s", data);
+			String variableCoded = String.format(arrayDataFormat, columnAttribute.getVariableName() + "s", data);
+			if (!existingEntries.contains(variableCoded)) {
+				allArrayFormatType += variableCoded;
+			}
+			existingEntries.add(variableCoded);
 		}
 		String forLoopBody = String.format("int i = 0;i < %s;i++", loopCount);
 		bodyCode = allArrayFormatType + drVariablesCode + bodyCode;
