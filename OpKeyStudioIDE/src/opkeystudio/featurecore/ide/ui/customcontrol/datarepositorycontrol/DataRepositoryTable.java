@@ -481,17 +481,29 @@ public class DataRepositoryTable extends CustomTable {
 		DRColumnAttributes previousDRColumn = getPreviousDRColumnAttribute();
 
 		int selectedDRColumnPosition = selectedDRColumn.getPosition();
-		int previousDRColumnPosition = previousDRColumn.getPosition();
 
-		selectedDRColumn.setPosition(previousDRColumnPosition);
-		previousDRColumn.setPosition(selectedDRColumnPosition);
+		int previousDRColumnPosition = 0;
+		try {
+			previousDRColumnPosition = previousDRColumn.getPosition();
+		} catch (Exception e) {
+			previousDRColumnPosition = -1;
+		}
+		if (previousDRColumnPosition == -1) {
+			CustomNotificationUtil.openInformationNotificationDialog("Opkey", "cannot move further left");
+			getParentDataRepositoryView().toggleMoveColumnLeftButton(false);
+		}
+		
+		if (previousDRColumnPosition >= 0) {
+			selectedDRColumn.setPosition(previousDRColumnPosition);
+			previousDRColumn.setPosition(selectedDRColumnPosition);
 
-		selectedDRColumn.setModified(true);
-		previousDRColumn.setModified(true);
-		refreshAllDRDetails();
-		getParentDataRepositoryView().toggleMoveColumnLeftButton(true);
-		getParentDataRepositoryView().toggleMoveColumnRightButton(true);
-		getParentDataRepositoryView().toggleSaveButton(true);
+			selectedDRColumn.setModified(true);
+			previousDRColumn.setModified(true);
+			refreshAllDRDetails();
+			getParentDataRepositoryView().toggleMoveColumnLeftButton(true);
+			getParentDataRepositoryView().toggleMoveColumnRightButton(true);
+			getParentDataRepositoryView().toggleSaveButton(true);
+		}
 	}
 
 	public List<DRCellAttributes> getSelectedRowDRCells() {
