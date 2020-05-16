@@ -225,14 +225,25 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 				}
 
 				if ((e.getKeyCode() == KeyEvent.VK_SPACE) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
-					initMethodIntellisense();
+					boolean status = initMethodIntellisense();
+					if (status == false) {
+						System.out.println("Requested Intellisense Data Not Found Resetting.");
+						if (isCflEditor()) {
+							CompletionProvider provider = GenericEditorIntellisense.getCFLInstance();
+							autoCompletion.setCompletionProvider(provider);
+						} else {
+							CompletionProvider provider = GenericEditorIntellisense.getCodeEditorInstance();
+							autoCompletion.setCompletionProvider(provider);
+						}
+					}
+					System.out.println("Intellisense Found " + status);
 					return;
 				}
 			}
 		});
 	}
 
-	private void initMethodIntellisense() {
+	private boolean initMethodIntellisense() {
 		if (isCflEditor()) {
 			Token lastToken = new CodeParser(isCflEditor()).getRecentToken(getArtifactCodeEditorInstance());
 			String tokenData = lastToken.getLexeme();
@@ -247,6 +258,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 				JavaCompletionProvider provider = GenericEditorIntellisense.getCFLInstance()
 						.getClassMethodsCompletionProvider(autocompletetoken);
 				autoCompletion.setCompletionProvider(provider);
+				return provider.isContainsIntellisenseData();
 			}
 		} else {
 			Token lastToken = new CodeParser(isCflEditor()).getRecentToken(getArtifactCodeEditorInstance());
@@ -262,8 +274,10 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 				JavaCompletionProvider provider = GenericEditorIntellisense.getCodeEditorInstance()
 						.getClassMethodsCompletionProvider(autocompletetoken);
 				autoCompletion.setCompletionProvider(provider);
+				return provider.isContainsIntellisenseData();
 			}
 		}
+		return false;
 	}
 
 	private ArtifactCodeEditor getArtifactCodeEditorInstance() {

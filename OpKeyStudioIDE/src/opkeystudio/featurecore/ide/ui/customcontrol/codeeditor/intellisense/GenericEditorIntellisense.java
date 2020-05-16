@@ -270,6 +270,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				String methodBodyToShow = String.format("%s(%s)", methodName, params);
 				String methodBodyToEnter = String.format("%s(%s);", methodName, params);
 				System.out.println(methodBodyToShow);
+				provider.setContainsIntellisenseData(true);
 				provider.addMethodTypeBasicCompletion(methodBodyToShow, methodBodyToEnter, returnType);
 			}
 
@@ -278,6 +279,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 				String name = field.getName();
 				String type = field.getType().getName();
 				System.out.println(name + "     " + type);
+				provider.setContainsIntellisenseData(true);
 				provider.addFieldTypeBasicCompletion(name, name, type);
 			}
 		}
@@ -297,6 +299,7 @@ public class GenericEditorIntellisense extends JavaCompletionProvider {
 			List<MethodIntellisenseDTO> methods = tranpiledClassInfo.getClassIntellisenseDTO()
 					.getMethodintellisensedtos();
 			for (MethodIntellisenseDTO method : methods) {
+				provider.setContainsIntellisenseData(true);
 				provider.addMethodTypeBasicCompletion(method.getDatatoshow(), method.getDatatoenter(),
 						method.getReturntype());
 			}
