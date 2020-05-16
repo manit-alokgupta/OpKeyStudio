@@ -255,7 +255,6 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void displayCodeViewFileData() {
-		initCodeViewFile();
 		File file = getCodeViewFile();
 		String codeData = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance().readTextFile(file);
 		getJavaEditor().setArtifactJavaCode(codeData);
