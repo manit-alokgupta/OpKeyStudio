@@ -380,6 +380,17 @@ public class TCFLCodeConstruct {
 					}
 				}
 			}
+			if (!outputCode.isEmpty()) {
+				if (flowOutPutObject.getComponentOutputArgument() != null) {
+					System.out.println("Component Ouput Found");
+					String compVarName = flowOutPutObject.getComponentOutputArgument().getVariableName();
+					String flOutput = "outputParam." + compVarName + "="
+							+ String.format("String.valueOf(%s);", varName);
+					return outputCode + mainCode + flOutput;
+				} else {
+					System.out.println("Component Ouput Not Found");
+				}
+			}
 		}
 		return outputCode + mainCode;
 	}
