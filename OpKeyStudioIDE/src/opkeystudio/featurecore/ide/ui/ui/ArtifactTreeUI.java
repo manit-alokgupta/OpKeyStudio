@@ -704,9 +704,7 @@ public class ArtifactTreeUI extends SuperComposite {
 						if (startsWithNumber) {
 							MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
 									"Name should not start with number.");
-						}
-
-						if (containsSpecialCharacters) {
+						} else if (containsSpecialCharacters) {
 							MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
 									"Name should not contain any special characters.");
 						}
@@ -1181,9 +1179,7 @@ public class ArtifactTreeUI extends SuperComposite {
 						if (startsWithNumber) {
 							MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
 									"Name should not start with number.");
-						}
-
-						if (containsSpecialCharacters) {
+						} else if (containsSpecialCharacters) {
 							MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error",
 									"Name should not contain any special characters.");
 						}
