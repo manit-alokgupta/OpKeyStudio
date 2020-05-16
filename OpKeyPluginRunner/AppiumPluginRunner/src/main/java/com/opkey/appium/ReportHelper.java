@@ -60,8 +60,9 @@ public class ReportHelper {
 //				parameterList.add(dataArgument.getValue());
 				objectArg += dataArgument.getValue() + ",";
 			}
+			objectArg = objectArg.substring(0, objectArg.length()-1);
 		}
-		objectArg = objectArg.substring(0, objectArg.length()-1);
+		
 		parameterList.add(objectArg);
 		return parameterList;
 	}
