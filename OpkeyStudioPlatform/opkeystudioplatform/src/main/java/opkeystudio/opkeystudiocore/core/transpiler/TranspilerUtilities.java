@@ -7,7 +7,7 @@ import java.util.List;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -33,7 +33,7 @@ public class TranspilerUtilities {
 		}
 	}
 
-	public void addPackageName(Artifact artifact, JavaClassSource classSource) {
+	public void addPackageName(ArtifactDTO artifact, JavaClassSource classSource) {
 		if (artifact.getPackageName() == null) {
 			return;
 		}
@@ -60,7 +60,7 @@ public class TranspilerUtilities {
 		return keywords;
 	}
 
-	public void processFlowStepsForAppium(Artifact artifact, List<FlowStep> flowSteps) {
+	public void processFlowStepsForAppium(ArtifactDTO artifact, List<FlowStep> flowSteps) {
 		boolean isMobileKeyword = TranspilerUtilities.getInstance().isFunctionLibraryisAppiumType(artifact.getId());
 		List<String> appiumKeywords = getGenericAppiumKeywords();
 		List<String> webKeywords = getGenericWebKeywords();

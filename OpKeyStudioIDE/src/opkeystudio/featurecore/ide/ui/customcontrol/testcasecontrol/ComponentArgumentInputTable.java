@@ -19,7 +19,7 @@ import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -103,7 +103,7 @@ public class ComponentArgumentInputTable extends CustomTable {
 
 	public void renderTable() {
 		this.removeAll();
-		Artifact artifact = getParentTestCaseView().getArtifact();
+		ArtifactDTO artifact = getParentTestCaseView().getArtifact();
 		List<ComponentInputParameter> compsinp = new FunctionLibraryApi().getAllComponentInputArgument(artifact.getId());
 		for (ComponentInputParameter cia : compsinp) {
 			String descp = "";

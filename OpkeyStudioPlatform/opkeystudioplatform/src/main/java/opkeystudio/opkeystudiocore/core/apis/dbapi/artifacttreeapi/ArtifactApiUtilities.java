@@ -8,13 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactStates;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactApiUtilities {
-	public boolean isArtifactIsUsed(Artifact artifact) {
+	public boolean isArtifactIsUsed(ArtifactDTO artifact) {
 		List<FlowStep> flowDesignSteps = getAssociatedFlowDesignSteps(artifact);
 		List<FlowStep> componentDesignSteps = getAssociatedComponentDesignSteps(artifact);
 		if (flowDesignSteps.size() == 0 && componentDesignSteps.size() == 0) {
@@ -23,7 +23,7 @@ public class ArtifactApiUtilities {
 		return true;
 	}
 
-	private List<FlowStep> getAssociatedFlowDesignSteps(Artifact artifact) {
+	private List<FlowStep> getAssociatedFlowDesignSteps(ArtifactDTO artifact) {
 		String query = String.format(
 				"SELECT * FROM flow_design_steps where component_id='%s' or codedfunction_id='%s' or soapmethod_id='%s' or restmethod_id='%s'",
 				artifact.getId(), artifact.getId(), artifact.getId(), artifact.getId());
@@ -39,7 +39,7 @@ public class ArtifactApiUtilities {
 		return new ArrayList<FlowStep>();
 	}
 
-	private List<FlowStep> getAssociatedComponentDesignSteps(Artifact artifact) {
+	private List<FlowStep> getAssociatedComponentDesignSteps(ArtifactDTO artifact) {
 		String query = String.format(
 				"SELECT * FROM component_design_steps where stepcomponent_id='%s' or stepcodedfunction_id='%s' or soapmethod_id='%s' or restmethod_id='%s'",
 				artifact.getId(), artifact.getId(), artifact.getId(), artifact.getId());
@@ -69,14 +69,14 @@ public class ArtifactApiUtilities {
 		return new ArrayList<ArtifactStates>();
 	}
 
-	public void createMainArtifactClob(Artifact artifact) {
+	public void createMainArtifactClob(ArtifactDTO artifact) {
 		String query = String.format(
 				"INSERT INTO main_artifact_clob('id', 'description', 'ExpectedResult') VALUES ('%s', '%s', '%s');",
 				artifact.getId(), "", "");
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
-	public void createFlowManualTestCase(Artifact artifact) {
+	public void createFlowManualTestCase(ArtifactDTO artifact) {
 		String query = String.format("INSERT INTO flow_manual_testcase('flow_id') VALUES ('%s');", artifact.getId());
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}

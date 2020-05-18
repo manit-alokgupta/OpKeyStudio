@@ -9,12 +9,12 @@ import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ArtifactParser {
-	public void parseArtifact(Artifact artifact) {
+	public void parseArtifact(ArtifactDTO artifact) {
 		if (artifact.getFile_type_enum() != MODULETYPE.Flow && artifact.getFile_type_enum() != MODULETYPE.Component) {
 			return;
 		}

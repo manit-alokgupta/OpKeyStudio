@@ -38,8 +38,8 @@ import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApiUtilities;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
 public class ArtifactTreeUI extends SuperComposite {
@@ -273,7 +273,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
 						"TestCase Name", "Test Case " + getVarName());
 				if (inputValue == null) {
@@ -290,7 +290,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -310,7 +310,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
 						"Test Suite Name", "Test Suite " + getVarName());
 				if (inputValue == null) {
@@ -327,7 +327,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -348,7 +348,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
 						"Folder " + getVarName());
 				if (inputValue == null) {
@@ -365,7 +365,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -385,7 +385,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
 						"Object Repository Name", "Object Repository " + getVarName());
 				if (inputValue == null) {
@@ -402,7 +402,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -422,7 +422,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 						"Function Library Name", "Function Library " + getVarName());
 				if (inputValue == null) {
@@ -439,7 +439,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -472,7 +472,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 
 				boolean status = new MessageDialogs().openConfirmDialog("Delete",
 						"Do you want to delete " + artifact.getName() + "?");
@@ -501,7 +501,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 						"Rename " + artifact.getName(), artifact.getName());
 				if (renamedText == null) {
@@ -535,7 +535,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					return;
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(renamedText)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -576,7 +576,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name",
 						"DR " + getVarName());
 				if (inputValue == null) {
@@ -593,7 +593,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -614,7 +614,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New CodedFL",
 						"CodedFL Name", "NEW CFL " + getVarName());
 				if (inputValue == null) {
@@ -646,7 +646,7 @@ public class ArtifactTreeUI extends SuperComposite {
 							"Name should not contain any special characters.");
 					return;
 				}
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -689,7 +689,7 @@ public class ArtifactTreeUI extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
-					Artifact artifact = artifactTree.getSelectedArtifact();
+					ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 					String renamedText = new MessageDialogs().openInputDialogAandGetValue("Rename",
 							"Rename " + artifact.getName(), artifact.getName());
 					if (renamedText == null) {
@@ -749,7 +749,7 @@ public class ArtifactTreeUI extends SuperComposite {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					getParent().setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
-					Artifact artifact = artifactTree.getSelectedArtifact();
+					ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 					boolean status = new MessageDialogs().openConfirmDialog("Delete",
 							"Do you want to delete " + artifact.getName() + "?");
 					if (!status) {
@@ -797,7 +797,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Folder", "Folder Name",
 						"Folder " + getVarName());
 
@@ -815,7 +815,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -842,7 +842,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Case",
 						"TestCase Name", "Test Case " + getVarName());
 				if (inputValue == null) {
@@ -859,7 +859,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -880,7 +880,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Function Library",
 						"Function Library Name", "Function Library " + getVarName());
 
@@ -899,7 +899,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -920,7 +920,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Object Repository",
 						"Object Repository Name", "Object Repository " + getVarName());
 				if (inputValue == null) {
@@ -937,7 +937,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -958,7 +958,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New Test Suite",
 						"TestSuite Name", "");
 				if (inputValue == null) {
@@ -988,7 +988,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = artifactTree.getSelectedArtifact();
+				ArtifactDTO artifact = artifactTree.getSelectedArtifact();
 				String inputValue = new MessageDialogs().openInputDialogAandGetValue("Create New DR", "DR Name",
 						"DR " + getVarName());
 				if (inputValue == null) {
@@ -1005,7 +1005,7 @@ public class ArtifactTreeUI extends SuperComposite {
 					}
 				}
 
-				for (Artifact artifactN : artifactTree.getArtifactsData()) {
+				for (ArtifactDTO artifactN : artifactTree.getArtifactsData()) {
 					if (artifactN.getName().equals(inputValue)) {
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Name must be unique!");
 						return;
@@ -1186,7 +1186,7 @@ public class ArtifactTreeUI extends SuperComposite {
 
 	}
 
-	private void createArtifact(Artifact parentArtifact, String artifactName, MODULETYPE moduleType) {
+	private void createArtifact(ArtifactDTO parentArtifact, String artifactName, MODULETYPE moduleType) {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				MessageDialogs msd = new MessageDialogs();

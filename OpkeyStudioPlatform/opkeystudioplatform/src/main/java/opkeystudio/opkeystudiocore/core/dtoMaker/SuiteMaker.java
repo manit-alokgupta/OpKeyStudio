@@ -2,12 +2,12 @@ package opkeystudio.opkeystudiocore.core.dtoMaker;
 
 import java.util.List;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class SuiteMaker {
-	public TestSuiteStep createTestSuite(Artifact artifact, Artifact testSuiteArtifact, TestSuiteStep selectedTestSuite,
+	public TestSuiteStep createTestSuite(ArtifactDTO artifact, ArtifactDTO testSuiteArtifact, TestSuiteStep selectedTestSuite,
 			List<TestSuiteStep> testSuiteSteps) {
 		System.out.println("TestSuiteSteps " + testSuiteSteps.size());
 		int selectedTestSuiteIndex = testSuiteSteps.indexOf(selectedTestSuite);

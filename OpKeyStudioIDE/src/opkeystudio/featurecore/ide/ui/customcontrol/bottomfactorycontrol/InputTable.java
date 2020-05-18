@@ -29,7 +29,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -273,7 +273,7 @@ public class InputTable extends CustomTable {
 	public void renderAllBottomFactoryInputData() {
 		disposeAllTableEditors();
 		this.removeAll();
-		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
+		ArtifactDTO artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
 		String artifactId = artifact.getId();
 		List<ComponentInputParameter> bottomFactoryInputs = new FunctionLibraryApi()
 				.getAllComponentInputArgument(artifactId);
@@ -375,7 +375,7 @@ public class InputTable extends CustomTable {
 
 	public void addBlankInputPArameter() {
 		String variableName = this.getUniqueColumnData("input-parameter-", 0);
-		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
+		ArtifactDTO artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
 		ComponentInputParameter componentInputArgument = new FunctionLibraryMaker().createComponentInputParameterDTO(
 				artifact, variableName, getSelectedComponentInputArgument(), getComponentInputData());
 		getComponentInputData().add(componentInputArgument);

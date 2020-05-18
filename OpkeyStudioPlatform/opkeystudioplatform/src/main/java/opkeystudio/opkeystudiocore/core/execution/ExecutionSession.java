@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class ExecutionSession {
@@ -13,7 +13,7 @@ public class ExecutionSession {
 	private String sessionName;
 	private String buildName;
 	private String pluginName;
-	private Artifact artifact;
+	private ArtifactDTO artifact;
 	private String artifactFilePackageClass;
 	private String reportFolderDir;
 
@@ -31,7 +31,7 @@ public class ExecutionSession {
 		this.setSessionId(Utilities.getInstance().getUniqueUUID(sessionName));
 	}
 
-	public ExecutionSession(String sessionName, String pluginName, Artifact artifact) {
+	public ExecutionSession(String sessionName, String pluginName, ArtifactDTO artifact) {
 		this.setSessionName(sessionName);
 		this.setPluginName(pluginName);
 		this.setArtifact(artifact);
@@ -64,11 +64,11 @@ public class ExecutionSession {
 		this.pluginName = pluginName;
 	}
 
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 		return artifact;
 	}
 
-	public void setArtifact(Artifact artifact) {
+	public void setArtifact(ArtifactDTO artifact) {
 		this.artifact = artifact;
 	}
 

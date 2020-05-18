@@ -45,7 +45,7 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApiUtilities;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.dtoMaker.ORObjectMaker;
@@ -57,7 +57,7 @@ import pcloudystudio.featurecore.ui.dialog.AppiumSettingsDialog;
 import pcloudystudio.featurecore.ui.dialog.DeviceConfigurationDialog;
 
 public class ObjectRepositoryView extends SuperComposite {
-	private Artifact artifact;
+	private ArtifactDTO artifact;
 
 	private ObjectAttributeTable objectAttributeTable;
 	private ObjectRepositoryTree objectRepositoryTree;
@@ -838,14 +838,14 @@ public class ObjectRepositoryView extends SuperComposite {
 	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
 		this.setCurrentMPart(mpart);
-		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		this.artifact = (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 	}
 
-	public Artifact getCurrentArtifact() {
+	public ArtifactDTO getCurrentArtifact() {
 		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
 	}
 
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 		return this.artifact;
 	}
 

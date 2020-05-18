@@ -4,7 +4,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class Artifact extends Modified {
+public class ArtifactDTO extends Modified {
 	public enum MODULETYPE {
 		AllUnified, Component, ServiceRepository, Flow, Suite, ObjectRepository, BDD_Gherkin_Stories, Execution,
 		DataRepository, EventHandler, Folder, CodedFunction, BP_Group, MBT, Sparkin
@@ -46,7 +46,7 @@ public class Artifact extends Modified {
 	@DBField
 	private String state_id;
 
-	private Artifact parentArtifact;
+	private ArtifactDTO parentArtifact;
 	private String packagePath;
 	private String packageName;
 
@@ -214,11 +214,11 @@ public class Artifact extends Modified {
 		return true;
 	}
 
-	public Artifact getParentArtifact() {
+	public ArtifactDTO getParentArtifact() {
 		return parentArtifact;
 	}
 
-	public void setParentArtifact(Artifact parentArtifact) {
+	public void setParentArtifact(ArtifactDTO parentArtifact) {
 		this.parentArtifact = parentArtifact;
 	}
 

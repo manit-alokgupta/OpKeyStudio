@@ -19,15 +19,15 @@ import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class ArtifactTree extends CustomTree {
 	private TestSuiteView parentTestSuiteView;
 	private boolean attachedinTestSuite = false;
-	private List<Artifact> artifacts = new ArrayList<Artifact>();
+	private List<ArtifactDTO> artifacts = new ArrayList<ArtifactDTO>();
 
 	public ArtifactTree(Composite parent, int style) {
 		super(parent, style);
@@ -80,41 +80,41 @@ public class ArtifactTree extends CustomTree {
 		if (artifactTreeItem.getArtifact() == null) {
 			return;
 		}
-		Artifact artifact = artifactTreeItem.getArtifact();
+		ArtifactDTO artifact = artifactTreeItem.getArtifact();
 		Utilities.getInstance().openArtifacts(artifact);
 	}
 
-	public void setArtifactsData(List<Artifact> artifacts) {
+	public void setArtifactsData(List<ArtifactDTO> artifacts) {
 		this.artifacts = artifacts;
 	}
 
-	public List<Artifact> getArtifactsData() {
+	public List<ArtifactDTO> getArtifactsData() {
 		return this.artifacts;
 	}
 
 	private void addIcon(ArtifactTreeItem artTreeItem) {
 		if (artTreeItem.getArtifact() == null) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Folder) {
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == ArtifactDTO.MODULETYPE.Folder) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Flow) {
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == ArtifactDTO.MODULETYPE.Flow) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.ObjectRepository) {
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == ArtifactDTO.MODULETYPE.ObjectRepository) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Suite) {
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == ArtifactDTO.MODULETYPE.Suite) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.DataRepository) {
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == ArtifactDTO.MODULETYPE.DataRepository) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.Component) {
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == ArtifactDTO.MODULETYPE.Component) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
-		} else if (artTreeItem.getArtifact().getFile_type_enum() == Artifact.MODULETYPE.CodedFunction) {
+		} else if (artTreeItem.getArtifact().getFile_type_enum() == ArtifactDTO.MODULETYPE.CodedFunction) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		}
 	}
 
-	private void renderAllArtifactTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {
+	private void renderAllArtifactTree(ArtifactTreeItem rootNode, List<ArtifactDTO> allArtifacts) {
 		String artifactId = rootNode.getArtifact().getId();
-		for (Artifact artifact : allArtifacts) {
+		for (ArtifactDTO artifact : allArtifacts) {
 			if (artifact.getParentid() != null) {
 				if (artifact.getParentid().equals(artifactId)) {
 					artifact.setParentArtifact(rootNode.getArtifact());
@@ -128,9 +128,9 @@ public class ArtifactTree extends CustomTree {
 		}
 	}
 
-	private void refreshAllArtifactTree(ArtifactTreeItem rootNode, List<Artifact> allArtifacts) {
+	private void refreshAllArtifactTree(ArtifactTreeItem rootNode, List<ArtifactDTO> allArtifacts) {
 		String artifactId = rootNode.getArtifact().getId();
-		for (Artifact artifact : allArtifacts) {
+		for (ArtifactDTO artifact : allArtifacts) {
 			if (artifact.getParentid() != null) {
 				artifact.setParentArtifact(rootNode.getArtifact());
 				if (artifact.isVisible()) {
@@ -170,7 +170,7 @@ public class ArtifactTree extends CustomTree {
 		}
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
-		List<Artifact> artifacts = new ArrayList<>();
+		List<ArtifactDTO> artifacts = new ArrayList<>();
 		if (isAttachedinTestSuite()) {
 			artifacts = GlobalLoader.getInstance().getAllArtifactByType("Flow");
 		} else {
@@ -178,7 +178,7 @@ public class ArtifactTree extends CustomTree {
 		}
 		setArtifactsData(artifacts);
 		List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
-		for (Artifact artifact : artifacts) {
+		for (ArtifactDTO artifact : artifacts) {
 			if (artifact.getParentid() == null) {
 				ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
 				artitreeitem.setText(artifact.getName());
@@ -229,9 +229,9 @@ public class ArtifactTree extends CustomTree {
 			}
 			rootNode.setExpanded(true);
 			addIcon(rootNode);
-			List<Artifact> artifacts = getArtifactsData();
+			List<ArtifactDTO> artifacts = getArtifactsData();
 			List<ArtifactTreeItem> topMostNodes = new ArrayList<>();
-			for (Artifact artifact : artifacts) {
+			for (ArtifactDTO artifact : artifacts) {
 				if (artifact.getParentid() == null) {
 					ArtifactTreeItem artitreeitem = new ArtifactTreeItem(rootNode, 0);
 					artitreeitem.setText(artifact.getName());
@@ -274,7 +274,7 @@ public class ArtifactTree extends CustomTree {
 		return (ArtifactTreeItem) this.getSelection()[0];
 	}
 
-	public Artifact getSelectedArtifact() {
+	public ArtifactDTO getSelectedArtifact() {
 		ArtifactTreeItem treeItem = getSelectedArtifactTreeItem();
 		if (treeItem == null) {
 			return null;
@@ -304,8 +304,8 @@ public class ArtifactTree extends CustomTree {
 	}
 
 	public void filterArtifactTree(String searchValue) {
-		List<Artifact> artifacts = this.getArtifactsData();
-		for (Artifact artifact : artifacts) {
+		List<ArtifactDTO> artifacts = this.getArtifactsData();
+		for (ArtifactDTO artifact : artifacts) {
 			if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
 				if (artifact.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
 					artifact.setVisible(true);

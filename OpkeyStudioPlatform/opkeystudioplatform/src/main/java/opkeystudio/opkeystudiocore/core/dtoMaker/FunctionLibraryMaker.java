@@ -2,13 +2,13 @@ package opkeystudio.opkeystudiocore.core.dtoMaker;
 
 import java.util.List;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FunctionLibraryMaker {
-	public ComponentInputParameter createComponentInputParameterDTO(Artifact artifact, String variableName,
+	public ComponentInputParameter createComponentInputParameterDTO(ArtifactDTO artifact, String variableName,
 			ComponentInputParameter selectedComponentStep, List<ComponentInputParameter> componentInputParameters) {
 
 		int selectedComponentStepIndex = componentInputParameters.indexOf(selectedComponentStep);
@@ -38,7 +38,7 @@ public class FunctionLibraryMaker {
 		return componentInputArgument;
 	}
 
-	public ComponentOutputParameter createComponentOutputParameterDTO(Artifact artifact, String variableName,
+	public ComponentOutputParameter createComponentOutputParameterDTO(ArtifactDTO artifact, String variableName,
 			ComponentOutputParameter selectedComponentStep, List<ComponentOutputParameter> componentOuputParameters) {
 
 		int selectedComponentStepIndex = componentOuputParameters.indexOf(selectedComponentStep);

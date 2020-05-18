@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
@@ -31,7 +31,7 @@ public class TestSuiteApi {
 		return new ArrayList<TestSuiteStep>();
 	}
 
-	private Artifact getArtifact(String id) {
+	private ArtifactDTO getArtifact(String id) {
 
 		return GlobalLoader.getInstance().getArtifactById(id);
 	}
@@ -39,7 +39,7 @@ public class TestSuiteApi {
 	public List<TestSuiteStep> getAllTestSuitesStepsWithArtifact(String testSuiteId) {
 		List<TestSuiteStep> testSuites = getAllTestSuitesStep(testSuiteId);
 		for (TestSuiteStep suite : testSuites) {
-			Artifact artifact = getArtifact(suite.getFlow_id());
+			ArtifactDTO artifact = getArtifact(suite.getFlow_id());
 			suite.setArtifact(artifact);
 		}
 		return testSuites;
@@ -69,7 +69,7 @@ public class TestSuiteApi {
 	}
 
 	@SuppressWarnings("unused")
-	public void saveAllTestSuite(Artifact artifact, List<TestSuiteStep> testSuites) {
+	public void saveAllTestSuite(ArtifactDTO artifact, List<TestSuiteStep> testSuites) {
 		artifact.setModified_on(Utilities.getInstance().getUpdateCurrentDateTime());
 		new ArtifactApi().updateArtifact(artifact);
 		for (TestSuiteStep testSuite : testSuites) {

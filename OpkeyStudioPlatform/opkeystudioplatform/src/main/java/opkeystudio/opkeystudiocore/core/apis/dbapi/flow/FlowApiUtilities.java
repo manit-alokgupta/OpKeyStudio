@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -18,7 +18,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryCompon
 import opkeystudio.opkeystudiocore.core.collections.FlowInputObject;
 import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
@@ -73,7 +73,7 @@ public class FlowApiUtilities {
 		return "Output: <>";
 	}
 
-	public String getFlowInputPutArgumentsString_2(Artifact artifact, FlowStep flowStep) {
+	public String getFlowInputPutArgumentsString_2(ArtifactDTO artifact, FlowStep flowStep) {
 		String outData = "";
 		List<FlowInputArgument> flowStepInputargs = flowStep.getFlowInputArgs();
 		if (flowStepInputargs.size() == 0) {
@@ -93,7 +93,7 @@ public class FlowApiUtilities {
 		return "Input: <>";
 	}
 
-	public String getFlowInputPutArgumentsString(Artifact artifact, FlowStep flowStep) {
+	public String getFlowInputPutArgumentsString(ArtifactDTO artifact, FlowStep flowStep) {
 		String outData = "";
 		try {
 			List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
@@ -150,7 +150,7 @@ public class FlowApiUtilities {
 		return "Input: <>";
 	}
 
-	private void removeAllInputValues(Artifact artifact, FlowInputArgument flowInputArgument) {
+	private void removeAllInputValues(ArtifactDTO artifact, FlowInputArgument flowInputArgument) {
 		flowInputArgument.setStaticvalue(OpKeyDataType.NULLDATA.toString());
 		flowInputArgument.setGlobalvariable_id(OpKeyDataType.NULLDATA.toString());
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
@@ -162,7 +162,7 @@ public class FlowApiUtilities {
 		}
 	}
 
-	public void setFlowInputData(Artifact artifact, FlowInputArgument flowInputArgument, String data,
+	public void setFlowInputData(ArtifactDTO artifact, FlowInputArgument flowInputArgument, String data,
 			DataSource sourceType) {
 		removeAllInputValues(artifact, flowInputArgument);
 		if (sourceType == DataSource.StaticValue) {
@@ -219,7 +219,7 @@ public class FlowApiUtilities {
 		}
 	}
 
-	public List<FlowInputObject> getAllFlowInputObject(Artifact artifact, List<FlowInputArgument> flowInputArguments) {
+	public List<FlowInputObject> getAllFlowInputObject(ArtifactDTO artifact, List<FlowInputArgument> flowInputArguments) {
 		List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
 		for (FlowInputArgument flowInputArgument : flowInputArguments) {
 			KeyWordInputArgument keywordInputArgument = flowInputArgument.getKeywordInputArgument();
@@ -288,7 +288,7 @@ public class FlowApiUtilities {
 		return flowInputObjects;
 	}
 
-	public List<FlowInputObject> getAllFlowInputObject_FL(Artifact artifact, FunctionLibraryComponent functionLibrary,
+	public List<FlowInputObject> getAllFlowInputObject_FL(ArtifactDTO artifact, FunctionLibraryComponent functionLibrary,
 			List<FlowInputArgument> flowInputArguments) {
 		List<FlowInputObject> flowInputObjects = new ArrayList<FlowInputObject>();
 
@@ -391,7 +391,7 @@ public class FlowApiUtilities {
 	 * flowInputObjects.add(flowInputObject); } } return flowInputObjects; }
 	 */
 
-	public List<FlowOutputObject> getAllFlowOutputObject(Artifact artifact, FlowStep flowStep) {
+	public List<FlowOutputObject> getAllFlowOutputObject(ArtifactDTO artifact, FlowStep flowStep) {
 		List<FlowOutputObject> flowOutputObjects = new ArrayList<FlowOutputObject>();
 		for (int i = 0; i < flowStep.getFlowOutputArgs().size(); i++) {
 			FlowOutputArgument flowOutputArgument = flowStep.getFlowOutputArgs().get(i);

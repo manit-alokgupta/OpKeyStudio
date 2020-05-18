@@ -6,8 +6,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryConstruct;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.keyword.KeywordConstructApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -16,7 +16,7 @@ import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowConstruct {
-	public void saveAllFlowSteps(Artifact artifact, List<FlowStep> allFlowSteps) {
+	public void saveAllFlowSteps(ArtifactDTO artifact, List<FlowStep> allFlowSteps) {
 		artifact.setModified_on(Utilities.getInstance().getUpdateCurrentDateTime());
 		new ArtifactApi().updateArtifact(artifact);
 		System.out.println("Saving " + artifact.getFile_type_enum());

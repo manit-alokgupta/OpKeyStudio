@@ -8,7 +8,7 @@ import javax.tools.Diagnostic.Kind;
 
 import org.apache.commons.io.FileUtils;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.compiler.ArtifactCompiler;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
@@ -34,7 +34,7 @@ public class ExecutionSessionExecutor {
 		System.out.println(">>Session Name " + session.getSessionName());
 		System.out.println(">>Plugin Name " + session.getPluginName());
 		String pluginName = session.getPluginName();
-		Artifact artifact = session.getArtifact();
+		ArtifactDTO artifact = session.getArtifact();
 
 		String transpiledFilesDir = null;
 		if (session.getArtifactFilePackageClass() != null) {
@@ -80,14 +80,14 @@ public class ExecutionSessionExecutor {
 		return executeArtifact(session, artifactCodesDirPath, artifact, pluginName);
 	}
 
-	private ArtifactExecutor executeArtifact(ExecutionSession esession, String sessionRootDir, Artifact artifact,
+	private ArtifactExecutor executeArtifact(ExecutionSession esession, String sessionRootDir, ArtifactDTO artifact,
 			String pluginName) {
 		ArtifactExecutor executor = new ArtifactExecutor(esession);
 		executor.executeArtifact(sessionRootDir, artifact, pluginName);
 		return executor;
 	}
 
-	private ArtifactExecutor executeCFLArtifact(ExecutionSession esession, String sessionRootDir, Artifact artifact,
+	private ArtifactExecutor executeCFLArtifact(ExecutionSession esession, String sessionRootDir, ArtifactDTO artifact,
 			String pluginName) {
 		ArtifactExecutor executor = new ArtifactExecutor(esession);
 		executor.executeCFL(sessionRootDir, artifact, pluginName);

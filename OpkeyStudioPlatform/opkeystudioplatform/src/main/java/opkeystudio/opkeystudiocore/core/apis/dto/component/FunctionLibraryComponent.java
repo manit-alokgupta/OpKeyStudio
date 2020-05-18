@@ -3,7 +3,7 @@ package opkeystudio.opkeystudiocore.core.apis.dto.component;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FunctionLibraryComponent extends Artifact {
+public class FunctionLibraryComponent extends ArtifactDTO {
 
 	private List<ComponentInputParameter> componentInputArguments = new ArrayList<ComponentInputParameter>();
 	private List<ComponentOutputParameter> componentOutputArguments = new ArrayList<ComponentOutputParameter>();

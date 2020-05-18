@@ -10,7 +10,7 @@ import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevi
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
@@ -86,7 +86,7 @@ public class GlobalTranspiler {
 		return false;
 	}
 
-	public JavaClassSource getJavaClassORObjects(Artifact artifact) {
+	public JavaClassSource getJavaClassORObjects(ArtifactDTO artifact) {
 		List<ORObject> orObjects = GlobalLoader.getInstance().getAllOrObjects(artifact.getId());
 		for (ORObject object : orObjects) {
 			List<ObjectAttributeProperty> attributeProps = GlobalLoader.getInstance()
@@ -170,7 +170,7 @@ public class GlobalTranspiler {
 		return outClass;
 	}
 
-	public JavaClassSource getJavaClassDRObjects(Artifact artifact) {
+	public JavaClassSource getJavaClassDRObjects(ArtifactDTO artifact) {
 		List<DRColumnAttributes> drColumns = GlobalLoader.getInstance().getAllDRColumns(artifact.getId());
 		for (DRColumnAttributes drColumn : drColumns) {
 			List<DRCellAttributes> drCells = GlobalLoader.getInstance().getDRColumnCells(drColumn.getColumn_id());

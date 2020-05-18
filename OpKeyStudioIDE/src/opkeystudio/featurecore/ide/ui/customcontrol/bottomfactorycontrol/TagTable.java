@@ -33,7 +33,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.bottomfactory.ui.BottomFacto
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.BottomFactoryTag;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
@@ -236,7 +236,7 @@ public class TagTable extends CustomTable {
 	public void renderAllTagData() throws JsonParseException, JsonMappingException, IOException, SQLException {
 		this.removeAll();
 		MPart mpart = Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		ArtifactDTO artifact = (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 		String artifactId = artifact.getId();
 	}
 
@@ -300,7 +300,7 @@ public class TagTable extends CustomTable {
 	public void addBlankTagData() {
 		try {
 			MPart mpart = Utilities.getInstance().getActivePart();
-			Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+			ArtifactDTO artifact = (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 			String artifactId = artifact.getId();
 			int lastPosition = 0;
 			BottomFactoryTag bottomFactoryTag = new BottomFactoryTag();

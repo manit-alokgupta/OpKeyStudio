@@ -30,8 +30,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 
 public class SuiteStepTable extends CustomTable {
@@ -474,7 +474,7 @@ public class SuiteStepTable extends CustomTable {
 	public void renderAllTestSuites() {
 		disposeAllTableEditors();
 		this.removeAll();
-		Artifact artifact = getParentTestSuiteView().getArtifact();
+		ArtifactDTO artifact = getParentTestSuiteView().getArtifact();
 		List<TestSuiteStep> testSuites = new TestSuiteApi().getAllTestSuitesStepsWithArtifact(artifact.getId());
 		setTestSuiteData(testSuites);
 		for (TestSuiteStep testSuite : testSuites) {

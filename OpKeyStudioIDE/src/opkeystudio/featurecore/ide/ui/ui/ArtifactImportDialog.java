@@ -39,7 +39,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dto.ArtifactTreeNode;
 import opkeystudio.opkeystudiocore.core.apis.dto.Project;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactExporting;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ArtifactTreeApi;
 import opkeystudio.opkeystudiocore.core.apis.restapi.ProjectApi;
@@ -213,19 +213,19 @@ public class ArtifactImportDialog extends TitleAreaDialog {
 		ArtifactTreeNode atn = (ArtifactTreeNode) artTreeItem.getControlData();
 		if (atn == null) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
-		} else if (atn.getType() == Artifact.MODULETYPE.Folder) {
+		} else if (atn.getType() == ArtifactDTO.MODULETYPE.Folder) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
-		} else if (atn.getType() == Artifact.MODULETYPE.Flow) {
+		} else if (atn.getType() == ArtifactDTO.MODULETYPE.Flow) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
-		} else if (atn.getType() == Artifact.MODULETYPE.ObjectRepository) {
+		} else if (atn.getType() == ArtifactDTO.MODULETYPE.ObjectRepository) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
-		} else if (atn.getType() == Artifact.MODULETYPE.Suite) {
+		} else if (atn.getType() == ArtifactDTO.MODULETYPE.Suite) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
-		} else if (atn.getType() == Artifact.MODULETYPE.DataRepository) {
+		} else if (atn.getType() == ArtifactDTO.MODULETYPE.DataRepository) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
-		} else if (atn.getType() == Artifact.MODULETYPE.Component) {
+		} else if (atn.getType() == ArtifactDTO.MODULETYPE.Component) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
-		} else if (atn.getType() == Artifact.MODULETYPE.CodedFunction) {
+		} else if (atn.getType() == ArtifactDTO.MODULETYPE.CodedFunction) {
 			artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 		}
 	}

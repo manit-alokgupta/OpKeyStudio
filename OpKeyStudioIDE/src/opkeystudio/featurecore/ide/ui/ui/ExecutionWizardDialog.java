@@ -28,7 +28,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.crestech.opkey.plugin.communication.contracts.functioncall.MobileDevice;
 
 import opkeystudio.core.utils.MessageDialogs;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.exceptions.SetupConfigurationException;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -276,7 +276,7 @@ public class ExecutionWizardDialog extends TitleAreaDialog {
 		return area;
 	}
 
-	private void initExecutionSession(Artifact artifact) {
+	private void initExecutionSession(ArtifactDTO artifact) {
 		ExecutionSession eSession = new ExecutionSession(artifact.getName() + "_", "Build_");
 		eSession.setArtifact(artifact);
 		eSession.setCflArtifact(isCFLArtifact);

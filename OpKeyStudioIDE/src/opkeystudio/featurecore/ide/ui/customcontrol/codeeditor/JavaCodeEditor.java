@@ -34,7 +34,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompilerTools;
@@ -50,7 +50,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	private CFLCode cflCode;
 	private static final long serialVersionUID = 1L;
 	private List<Object> highlightedLines = new ArrayList<>();
-	private Artifact artifact;
+	private ArtifactDTO artifact;
 	private CodedFunctionArtifact codedFunctionArtifact;
 	private CodedFunctionView codeFunctionView;
 	private JavaAutoCompletion autoCompletion;
@@ -307,7 +307,7 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 	}
 
 	public void convertOpKeyVariablesToCode() {
-		Artifact artifact = getArtifact();
+		ArtifactDTO artifact = getArtifact();
 		String defaultSourceCodeLibsPath = Utilities.getInstance().getDefaultCodedFLOpKeyLibrariesDirPath();
 		String defaultAssociatedLibsPath = Utilities.getInstance().getDefaultCodedFLAssociatedLibrariesDirPath();
 		String defArtifactSourceCodeLibsPath = defaultSourceCodeLibsPath + File.separator + artifact.getVariableName();
@@ -361,11 +361,11 @@ public class JavaCodeEditor extends RSyntaxTextArea {
 		return compileErrors;
 	}
 
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 		return artifact;
 	}
 
-	public void setArtifact(Artifact artifact) {
+	public void setArtifact(ArtifactDTO artifact) {
 		this.artifact = artifact;
 	}
 

@@ -3,14 +3,14 @@ package opkeystudio.opkeystudiocore.core.dtoMaker;
 import java.util.ArrayList;
 import java.util.List;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class DRMaker {
-	public DRColumnAttributes createDRColumnWithCells(Artifact artifact, DRColumnAttributes selectedDRColumn,
+	public DRColumnAttributes createDRColumnWithCells(ArtifactDTO artifact, DRColumnAttributes selectedDRColumn,
 			int noOfCells, List<DRColumnAttributes> allDRColumnttributes) {
 		int selectedFlowStepIndex = allDRColumnttributes.indexOf(selectedDRColumn);
 		int selectedFlowStepPosition = 0;
@@ -43,7 +43,7 @@ public class DRMaker {
 		return drColumnAttribute;
 	}
 
-	public List<DRColumnAttributes> getDefaultDRStructure(Artifact artifact) {
+	public List<DRColumnAttributes> getDefaultDRStructure(ArtifactDTO artifact) {
 		List<DRColumnAttributes> allColumnAttributes = new ArrayList<DRColumnAttributes>();
 		for (int i = 0; i < 26; i++) {
 			DRColumnAttributes drColumnAttribute = new DRColumnAttributes();
@@ -72,7 +72,7 @@ public class DRMaker {
 	}
 	
 	
-	public String getDefaultDRStructureFullQuery(Artifact artifact) {
+	public String getDefaultDRStructureFullQuery(ArtifactDTO artifact) {
 		String fullQuery="";
 		List<DRColumnAttributes> allColumnAttributes = new ArrayList<DRColumnAttributes>();
 		for (int i = 0; i < 26; i++) {
@@ -102,7 +102,7 @@ public class DRMaker {
 		return fullQuery;
 	}
 
-	public void addDRRow(Artifact artifact, int selectedRowNo, List<DRColumnAttributes> columnAttributes) {
+	public void addDRRow(ArtifactDTO artifact, int selectedRowNo, List<DRColumnAttributes> columnAttributes) {
 		for (DRColumnAttributes columnAttribute : columnAttributes) {
 			if (columnAttribute.getDrCellAttributes().size() == 0) {
 				System.out.println("NO DR CELL FOUND " + columnAttribute.getName());

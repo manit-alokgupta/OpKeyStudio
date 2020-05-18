@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestCaseView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyArtifactPersistListenerDispatcher;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class TestCasePart {
@@ -32,15 +32,15 @@ public class TestCasePart {
 	public void onFocus() {
 		System.out.println("Focused");
 		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
-		Artifact artifact = getArtifact();
+		ArtifactDTO artifact = getArtifact();
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
 		}
 	}
 
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		return (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		return (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 	}
 
 	@Persist

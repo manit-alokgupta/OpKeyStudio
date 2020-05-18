@@ -30,7 +30,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctionApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.dtoMaker.CFLDMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
@@ -236,7 +236,7 @@ public class CFLInputTable extends CustomTable {
 	public void renderCFLInputParameters() {
 		disposeAllTableEditors();
 		this.removeAll();
-		Artifact artifact = getParentBottomFactoryUI().getParentArtifactCodeView().getArtifact();
+		ArtifactDTO artifact = getParentBottomFactoryUI().getParentArtifactCodeView().getArtifact();
 		List<CFLInputParameter> cflInputParameters = new CodedFunctionApi().getCodedFLInputParameters(artifact);
 		Collections.sort(cflInputParameters);
 		this.setCflInputParameters(cflInputParameters);

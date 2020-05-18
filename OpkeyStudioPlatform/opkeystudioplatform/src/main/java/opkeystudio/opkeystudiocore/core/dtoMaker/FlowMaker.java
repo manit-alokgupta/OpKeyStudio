@@ -7,8 +7,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.codedfunctionapi.CodedFunctio
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
@@ -23,7 +23,7 @@ import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class FlowMaker {
-	public FlowStep getFlowStepDTO(Artifact artifact, FlowStep selectedFlowStep, Keyword keyword, String flow_id,
+	public FlowStep getFlowStepDTO(ArtifactDTO artifact, FlowStep selectedFlowStep, Keyword keyword, String flow_id,
 			List<FlowStep> flowSteps) {
 		int selectedFlowStepIndex = flowSteps.indexOf(selectedFlowStep);
 		int selectedFlowStepPosition = 0;
@@ -74,7 +74,7 @@ public class FlowMaker {
 		return flowStep;
 	}
 
-	public FlowStep createFlowStepReplica(Artifact artifact, FlowStep selectedFlowStep, FlowStep pasteFlowStep,
+	public FlowStep createFlowStepReplica(ArtifactDTO artifact, FlowStep selectedFlowStep, FlowStep pasteFlowStep,
 			List<FlowStep> flowSteps) {
 		int selectedFlowStepIndex = flowSteps.indexOf(selectedFlowStep);
 		int selectedFlowStepPosition = 0;
@@ -139,7 +139,7 @@ public class FlowMaker {
 		return flowStep;
 	}
 
-	public FlowStep getFlowStepDTOWithFunctionLibray(Artifact artifact, FlowStep selectedFlowStep, Artifact flArtifact,
+	public FlowStep getFlowStepDTOWithFunctionLibray(ArtifactDTO artifact, FlowStep selectedFlowStep, ArtifactDTO flArtifact,
 			String flow_id, List<FlowStep> flowSteps) {
 		int selectedFlowStepPosition = 0;
 		int selectedFlowStepIndex = 0;
@@ -187,8 +187,8 @@ public class FlowMaker {
 		return flowStep;
 	}
 
-	public FlowStep getFlowStepDTOWithCodedFunctionLibray(Artifact artifact, FlowStep selectedFlowStep,
-			Artifact cflArtifact, String flow_id, List<FlowStep> flowSteps) {
+	public FlowStep getFlowStepDTOWithCodedFunctionLibray(ArtifactDTO artifact, FlowStep selectedFlowStep,
+			ArtifactDTO cflArtifact, String flow_id, List<FlowStep> flowSteps) {
 		int selectedFlowStepPosition = 0;
 		int selectedFlowStepIndex = 0;
 		if (selectedFlowStep != null) {
@@ -235,7 +235,7 @@ public class FlowMaker {
 		return flowStep;
 	}
 
-	public List<FlowOutputArgument> getFlowStepOutputArguments(Artifact artifact, FlowStep flowStep) {
+	public List<FlowOutputArgument> getFlowStepOutputArguments(ArtifactDTO artifact, FlowStep flowStep) {
 		List<FlowOutputArgument> flowOutputArguments = new ArrayList<FlowOutputArgument>();
 		if (flowStep.getKeyword() != null) {
 			FlowOutputArgument flowOutputArgument = new FlowOutputArgument();
@@ -289,7 +289,7 @@ public class FlowMaker {
 		return flowOutputArguments;
 	}
 
-	public List<FlowInputArgument> getFlowStepInputArguments(Artifact artifact, FlowStep flowStep) {
+	public List<FlowInputArgument> getFlowStepInputArguments(ArtifactDTO artifact, FlowStep flowStep) {
 		List<FlowInputArgument> flowInputArguments = new ArrayList<FlowInputArgument>();
 		if (flowStep.getKeyword() != null) {
 			List<KeyWordInputArgument> keywordInputArguments = flowStep.getKeyword().getKeywordInputArguments();

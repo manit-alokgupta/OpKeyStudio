@@ -40,8 +40,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.compiler.ArtifactCompiler;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
@@ -71,7 +71,7 @@ public class ArtifactCodeView extends SuperComposite {
 	private String codedFLClassPath;
 	private String artifactOpkeyDataLibraryPath;
 	private String artifactAssociatedLibraryPath;
-	private Artifact artifact;
+	private ArtifactDTO artifact;
 	private TestCaseView parentTestCaseView;
 	private ObjectRepositoryView parentObjectRepositoryView;
 	private DataRepositoryView parentDataRepositoryView;
@@ -200,7 +200,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initTestCaseCode() {
-		Artifact artifact = getParentTestCaseView().getCurrentArtifact();
+		ArtifactDTO artifact = getParentTestCaseView().getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -210,7 +210,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initCFLCode() {
-		Artifact artifact = getArtifact();
+		ArtifactDTO artifact = getArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -221,7 +221,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initTestSuiteCode() {
-		Artifact artifact = getParentTestSuiteView().getCurrentArtifact();
+		ArtifactDTO artifact = getParentTestSuiteView().getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -231,7 +231,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initObjectRepositoryCode() {
-		Artifact artifact = getParentObjectRepositoryView().getCurrentArtifact();
+		ArtifactDTO artifact = getParentObjectRepositoryView().getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -241,7 +241,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	private void initDataRepositoryCode() {
-		Artifact artifact = getParentDataRepositoryView().getCurrentArtifact();
+		ArtifactDTO artifact = getParentDataRepositoryView().getCurrentArtifact();
 		String codeFilePath = opkeystudio.opkeystudiocore.core.utils.Utilities.getInstance()
 				.getProjectTranspiledArtifactsFolder() + File.separator + artifact.getPackagePath() + File.separator
 				+ artifact.getVariableName() + ".java";
@@ -689,7 +689,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	public void refreshTCFLCode() {
-		Artifact artifact = getParentTestCaseView().getCurrentArtifact();
+		ArtifactDTO artifact = getParentTestCaseView().getCurrentArtifact();
 		if (artifact == null) {
 			return;
 		}
@@ -703,7 +703,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	public void refreshTSCode() {
-		Artifact artifact = getParentTestSuiteView().getCurrentArtifact();
+		ArtifactDTO artifact = getParentTestSuiteView().getCurrentArtifact();
 		if (artifact == null) {
 			return;
 		}
@@ -712,7 +712,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	public void refreshORCode() {
-		Artifact artifact = getParentObjectRepositoryView().getCurrentArtifact();
+		ArtifactDTO artifact = getParentObjectRepositoryView().getCurrentArtifact();
 		if (artifact == null) {
 			return;
 		}
@@ -721,7 +721,7 @@ public class ArtifactCodeView extends SuperComposite {
 	}
 
 	public void refreshDRCode() {
-		Artifact artifact = getParentDataRepositoryView().getCurrentArtifact();
+		ArtifactDTO artifact = getParentDataRepositoryView().getCurrentArtifact();
 		if (artifact == null) {
 			return;
 		}
@@ -751,10 +751,10 @@ public class ArtifactCodeView extends SuperComposite {
 
 	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		this.artifact = (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 	}
 
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 		return this.artifact;
 	}
 

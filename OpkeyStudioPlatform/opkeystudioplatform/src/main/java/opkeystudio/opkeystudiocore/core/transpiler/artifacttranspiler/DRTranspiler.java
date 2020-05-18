@@ -4,8 +4,8 @@ import java.io.File;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.transpiler.GlobalTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -17,7 +17,7 @@ public class DRTranspiler extends AbstractTranspiler {
 	}
 
 	@Override
-	public void transpile(Artifact artifact) {
+	public void transpile(ArtifactDTO artifact) {
 		try {
 			if (artifact.getFile_type_enum() != MODULETYPE.DataRepository) {
 				return;

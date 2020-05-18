@@ -24,7 +24,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
@@ -33,7 +33,7 @@ import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class CodedFunctionApi {
 
-	public void saveCFLCode(Artifact artifact, CFLCode cflcode) {
+	public void saveCFLCode(ArtifactDTO artifact, CFLCode cflcode) {
 		artifact.setModified_on(Utilities.getInstance().getUpdateCurrentDateTime());
 		new ArtifactApi().updateArtifact(artifact);
 		String query = "";
@@ -55,7 +55,7 @@ public class CodedFunctionApi {
 		GlobalLoader.getInstance().initAllCFLOutputParameters();
 	}
 
-	public List<CFLCode> getCodedFLCodeData(Artifact artifact) {
+	public List<CFLCode> getCodedFLCodeData(ArtifactDTO artifact) {
 		List<CFLCode> cflCodes = new ArrayList<CFLCode>();
 		List<CFLCode> allcflCodes = GlobalLoader.getInstance().getAllCfCodes();
 		for (CFLCode cfcode : allcflCodes) {
@@ -130,7 +130,7 @@ public class CodedFunctionApi {
 		}
 	}
 
-	public List<CFLInputParameter> getCodedFLInputParameters(Artifact artifact) {
+	public List<CFLInputParameter> getCodedFLInputParameters(ArtifactDTO artifact) {
 		String query = String.format("select * from component_input_parameters WHERE component_id='%s' ORDER BY position asc;",
 				artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
@@ -146,7 +146,7 @@ public class CodedFunctionApi {
 		return new ArrayList<CFLInputParameter>();
 	}
 
-	public List<CFLOutputParameter> getCodedFLOutputParameters(Artifact artifact) {
+	public List<CFLOutputParameter> getCodedFLOutputParameters(ArtifactDTO artifact) {
 		String query = String.format("select * from component_output_parameters WHERE component_id='%s' ORDER BY position asc;",
 				artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
@@ -162,7 +162,7 @@ public class CodedFunctionApi {
 		return new ArrayList<CFLOutputParameter>();
 	}
 
-	public List<CFLibraryMap> getCodedFLLibrary(Artifact artifact) {
+	public List<CFLibraryMap> getCodedFLLibrary(ArtifactDTO artifact) {
 		String query = String.format("select * from cf_library_map WHERE component_id='%s'", artifact.getId());
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		System.out.println(result);
@@ -208,7 +208,7 @@ public class CodedFunctionApi {
 		GlobalLoader.getInstance().initAllMainFileStoreDTOS();
 	}
 
-	public void addLibraryFileInDb(Artifact artifact, File libraryFile) {
+	public void addLibraryFileInDb(ArtifactDTO artifact, File libraryFile) {
 		artifact.setModified_on(Utilities.getInstance().getCurrentDateTime());
 		new ArtifactApi().updateArtifact(artifact);
 		String[] fileData = libraryFile.getName().split("\\.");

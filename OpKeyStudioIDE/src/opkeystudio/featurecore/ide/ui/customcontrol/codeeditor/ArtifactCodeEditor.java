@@ -31,7 +31,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.Gene
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.components.TranspiledClassInfo;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 
 public class ArtifactCodeEditor extends RSyntaxTextArea {
@@ -43,7 +43,7 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 	private CFLCode cflCode;
 	private static final long serialVersionUID = 1L;
 	private List<Object> highlightedLines = new ArrayList<>();
-	private Artifact artifact;
+	private ArtifactDTO artifact;
 	private CodedFunctionArtifact codedFunctionArtifact;
 	private ArtifactCodeView codeFunctionView;
 	private JavaAutoCompletion autoCompletion;
@@ -278,11 +278,11 @@ public class ArtifactCodeEditor extends RSyntaxTextArea {
 		frame.add(mainEditorPanel);
 	}
 
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 		return artifact;
 	}
 
-	public void setArtifact(Artifact artifact) {
+	public void setArtifact(ArtifactDTO artifact) {
 		this.artifact = artifact;
 	}
 

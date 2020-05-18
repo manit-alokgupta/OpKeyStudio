@@ -23,8 +23,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -110,11 +110,11 @@ public class GenericTree extends CustomTree {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = getParentTestCaseView().getArtifact();
+				ArtifactDTO artifact = getParentTestCaseView().getArtifact();
 				FlowStep selectedFlowStep = getParentTestCaseView().getFlowStepTable().getSelectedFlowStep();
 				Object selectedData = getSelectedData();
-				if (selectedData instanceof Artifact) {
-					Artifact selectedArtifact = (Artifact) selectedData;
+				if (selectedData instanceof ArtifactDTO) {
+					ArtifactDTO selectedArtifact = (ArtifactDTO) selectedData;
 					if (selectedArtifact.getFile_type_enum() == MODULETYPE.Component) {
 						if (artifact.getId().equals(selectedArtifact.getId())) {
 							new MessageDialogs().openErrorDialog("OpKey",
@@ -159,14 +159,14 @@ public class GenericTree extends CustomTree {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = getParentTestCaseView().getArtifact();
+				ArtifactDTO artifact = getParentTestCaseView().getArtifact();
 				FlowStep selectedFlowStep = getParentTestCaseView().getFlowStepTable().getSelectedFlowStep();
 				if (selectedFlowStep != null) {
 					selectedFlowStep.setDeleted(true);
 				}
 				Object selectedData = getSelectedData();
-				if (selectedData instanceof Artifact) {
-					Artifact selectedArtifact = (Artifact) selectedData;
+				if (selectedData instanceof ArtifactDTO) {
+					ArtifactDTO selectedArtifact = (ArtifactDTO) selectedData;
 					if (selectedArtifact.getFile_type_enum() == MODULETYPE.Component) {
 						if (artifact.getId().equals(selectedArtifact.getId())) {
 							new MessageDialogs().openErrorDialog("OpKey",
@@ -251,23 +251,23 @@ public class GenericTree extends CustomTree {
 	}
 
 	private void addIcon(CustomTreeItem artTreeItem) {
-		if (artTreeItem.getControlData() instanceof Artifact) {
-			Artifact artifact = (Artifact) artTreeItem.getControlData();
+		if (artTreeItem.getControlData() instanceof ArtifactDTO) {
+			ArtifactDTO artifact = (ArtifactDTO) artTreeItem.getControlData();
 			if (artifact == null) {
 				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
-			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Folder) {
+			} else if (artifact.getFile_type_enum() == ArtifactDTO.MODULETYPE.Folder) {
 				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
-			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Flow) {
+			} else if (artifact.getFile_type_enum() == ArtifactDTO.MODULETYPE.Flow) {
 				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TC_ICON));
-			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.ObjectRepository) {
+			} else if (artifact.getFile_type_enum() == ArtifactDTO.MODULETYPE.ObjectRepository) {
 				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OR_ICON));
-			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Suite) {
+			} else if (artifact.getFile_type_enum() == ArtifactDTO.MODULETYPE.Suite) {
 				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.SUITE_ICON));
-			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.DataRepository) {
+			} else if (artifact.getFile_type_enum() == ArtifactDTO.MODULETYPE.DataRepository) {
 				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.DR_ICON));
-			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.Component) {
+			} else if (artifact.getFile_type_enum() == ArtifactDTO.MODULETYPE.Component) {
 				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FL_ICON));
-			} else if (artifact.getFile_type_enum() == Artifact.MODULETYPE.CodedFunction) {
+			} else if (artifact.getFile_type_enum() == ArtifactDTO.MODULETYPE.CodedFunction) {
 				artTreeItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.CFL_ICON));
 			}
 		}
@@ -316,12 +316,12 @@ public class GenericTree extends CustomTree {
 		setKeywordTree(false);
 		setCflTree(false);
 		this.removeAll();
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("Component");
+		List<ArtifactDTO> artifacts = GlobalLoader.getInstance().getAllArtifactByType("Component");
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Function Library");
 		rootNode.setExpanded(true);
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
-		for (Artifact artifact : artifacts) {
+		for (ArtifactDTO artifact : artifacts) {
 			if (artifact.getName().toLowerCase().contains(flName.toLowerCase())) {
 				CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
 				keywItem.setText(artifact.getName());
@@ -337,12 +337,12 @@ public class GenericTree extends CustomTree {
 		setKeywordTree(false);
 		setCflTree(true);
 		this.removeAll();
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("CodedFunction");
+		List<ArtifactDTO> artifacts = GlobalLoader.getInstance().getAllArtifactByType("CodedFunction");
 		CustomTreeItem rootNode = new CustomTreeItem(this, 0);
 		rootNode.setText("Coded Function Library");
 		rootNode.setExpanded(true);
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
-		for (Artifact artifact : artifacts) {
+		for (ArtifactDTO artifact : artifacts) {
 			if (artifact.getName().toLowerCase().contains(flName.toLowerCase())) {
 				CustomTreeItem keywItem = new CustomTreeItem(rootNode, 0);
 				keywItem.setText(artifact.getName());
@@ -390,8 +390,8 @@ public class GenericTree extends CustomTree {
 		rootNode.setExpanded(true);
 		rootNode.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.FOLDER_ICON));
 		addIcon(rootNode);
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("DataRepository");
-		for (Artifact drArtifact : artifacts) {
+		List<ArtifactDTO> artifacts = GlobalLoader.getInstance().getAllArtifactByType("DataRepository");
+		for (ArtifactDTO drArtifact : artifacts) {
 			CustomTreeItem drNode = new CustomTreeItem(rootNode, 0);
 			drNode.setText(drArtifact.getName());
 			drNode.setControlData(drArtifact);

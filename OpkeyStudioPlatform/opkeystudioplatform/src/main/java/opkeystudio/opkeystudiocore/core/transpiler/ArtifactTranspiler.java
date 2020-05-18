@@ -11,8 +11,8 @@ import java.util.Set;
 import org.apache.commons.io.FileUtils;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.CFLTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.DRTranspiler;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.FLTranspiler;
@@ -35,20 +35,20 @@ public class ArtifactTranspiler {
 	}
 
 	public void setPackageProperties() {
-		List<Artifact> allArtifacts = GlobalLoader.getInstance().getAllArtifacts();
+		List<ArtifactDTO> allArtifacts = GlobalLoader.getInstance().getAllArtifacts();
 		setPackageProperties(allArtifacts);
 	}
 
-	public void setPackageProperties(List<Artifact> allArtifacts) {
+	public void setPackageProperties(List<ArtifactDTO> allArtifacts) {
 		ArtifactTranspiler.getInstance().getAllPackagesNames().clear();
-		for (Artifact artifact : allArtifacts) {
+		for (ArtifactDTO artifact : allArtifacts) {
 			if (artifact.getFile_type_enum() == MODULETYPE.Folder) {
 				continue;
 			}
 			int count = 0;
 			String packagePath = "allartifacts";
 			String packageName = "allartifacts";
-			Artifact tempArtfact = artifact;
+			ArtifactDTO tempArtfact = artifact;
 			List<String> variableNames = new ArrayList<String>();
 			while (tempArtfact != null) {
 				if (count == 0) {
@@ -108,17 +108,17 @@ public class ArtifactTranspiler {
 	public void transpileAllArtifacts() {
 		resetTranspiledArtifactsFolder();
 		new GlobalVariablesTranspiler().transpile();
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
+		List<ArtifactDTO> artifacts = GlobalLoader.getInstance().getAllArtifacts();
 
-		for (Artifact artifact : artifacts) {
+		for (ArtifactDTO artifact : artifacts) {
 			new TCTranspiler().transpile(artifact);
 		}
 
-		for (Artifact artifact : artifacts) {
+		for (ArtifactDTO artifact : artifacts) {
 			new FLTranspiler().transpile(artifact);
 		}
 
-		for (Artifact artifact : artifacts) {
+		for (ArtifactDTO artifact : artifacts) {
 			new ORTranspiler().transpile(artifact);
 			new DRTranspiler().transpile(artifact);
 			new SuiteTranspiler().transpile(artifact);
@@ -127,8 +127,8 @@ public class ArtifactTranspiler {
 	}
 
 	public void transpileAllFl() {
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
-		for (Artifact artifact : artifacts) {
+		List<ArtifactDTO> artifacts = GlobalLoader.getInstance().getAllArtifacts();
+		for (ArtifactDTO artifact : artifacts) {
 			new FLTranspiler().transpile(artifact);
 		}
 	}

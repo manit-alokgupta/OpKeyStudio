@@ -41,7 +41,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListene
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.testsuite.TestSuiteApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 
 public class TestSuiteView extends SuperComposite {
@@ -70,7 +70,7 @@ public class TestSuiteView extends SuperComposite {
 	@SuppressWarnings("unused")
 	private Display display;
 	private ArtifactCodeView codedFunctionView;
-	private Artifact artifact;
+	private ArtifactDTO artifact;
 	private MPart currentMpart;
 
 	/**
@@ -542,15 +542,15 @@ public class TestSuiteView extends SuperComposite {
 
 	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		this.artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		this.artifact = (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 		this.setCurrentMpart(mpart);
 	}
 
-	public Artifact getCurrentArtifact() {
+	public ArtifactDTO getCurrentArtifact() {
 		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
 	}
 	
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 		return this.artifact;
 	}
 

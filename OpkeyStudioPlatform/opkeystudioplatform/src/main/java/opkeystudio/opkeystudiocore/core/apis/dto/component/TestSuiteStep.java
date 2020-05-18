@@ -22,7 +22,7 @@ public class TestSuiteStep extends Modified implements Comparable<TestSuiteStep>
 	@DBField
 	private String flow_type_enum;
 
-	private Artifact artifact;
+	private ArtifactDTO artifact;
 
 	public String getSuite_stepid() {
 		return suite_stepid;
@@ -88,11 +88,11 @@ public class TestSuiteStep extends Modified implements Comparable<TestSuiteStep>
 		this.flow_type_enum = flow_type_enum;
 	}
 
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 		return artifact;
 	}
 
-	public void setArtifact(Artifact artifact) {
+	public void setArtifact(ArtifactDTO artifact) {
 		this.artifact = artifact;
 	}
 

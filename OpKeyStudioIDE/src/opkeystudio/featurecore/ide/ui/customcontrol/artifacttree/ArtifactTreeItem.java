@@ -4,7 +4,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTreeItem;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 
 public class ArtifactTreeItem extends CustomTreeItem {
 	public ArtifactTreeItem(Tree parent, int style) {
@@ -15,11 +15,11 @@ public class ArtifactTreeItem extends CustomTreeItem {
 		super(parent, style);
 	}
 
-	public Artifact getArtifact() {
-		return (Artifact) super.getControlData();
+	public ArtifactDTO getArtifact() {
+		return (ArtifactDTO) super.getControlData();
 	}
 
-	public void setArtifact(Artifact artifact) {
+	public void setArtifact(ArtifactDTO artifact) {
 		super.setControlData(artifact);
 	}
 

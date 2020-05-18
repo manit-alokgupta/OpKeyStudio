@@ -25,7 +25,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.featurecore.ide.ui.ui.DataRepositoryView;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.drapi.DataRepositoryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.dtoMaker.DRMaker;
@@ -303,7 +303,7 @@ public class DataRepositoryTable extends CustomTable {
 	}
 
 	public void renderAllDRDetails() {
-		Artifact artifact = getParentDataRepositoryView().getArtifact();
+		ArtifactDTO artifact = getParentDataRepositoryView().getArtifact();
 		List<DRColumnAttributes> drDatas = new DataRepositoryApi().getAllDRDatas(artifact.getId());
 		renderDRDatas(drDatas);
 		selectDefaultRow();

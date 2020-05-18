@@ -13,7 +13,7 @@ import java.util.List;
 
 import com.opkeystudio.core.sessions.SessionInfo;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 
@@ -33,7 +33,7 @@ public class ArtifactExecutor {
 		this.setExecutionSession(esession);
 	}
 
-	public void executeArtifact(String sessionRootDir, Artifact artifact, String pluginName) {
+	public void executeArtifact(String sessionRootDir, ArtifactDTO artifact, String pluginName) {
 		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
 		System.out.println(">>Artifact Code Folder " + sessionRootDir);
 		System.out.println(">>Executing Artifact " + artifactClassName);
@@ -68,7 +68,7 @@ public class ArtifactExecutor {
 		setExecutionThread(executionThread);
 	}
 
-	public void executeCFL(String sessionRootDir, Artifact artifact, String pluginName) {
+	public void executeCFL(String sessionRootDir, ArtifactDTO artifact, String pluginName) {
 		String artifactClassName = artifact.getPackageName() + "." + artifact.getVariableName();
 		System.out.println(">>Artifact Code Folder " + sessionRootDir);
 		System.out.println(">>Executing Artifact " + artifactClassName);

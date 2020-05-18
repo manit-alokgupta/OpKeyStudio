@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.artifacttreeapi.ArtifactApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
@@ -101,7 +101,7 @@ public class ObjectRepositoryApi {
 		QueryExecutor.getInstance().executeUpdateQuery(query);
 	}
 
-	public void saveORObjects(Artifact artifact, List<ORObject> objectRepositories) {
+	public void saveORObjects(ArtifactDTO artifact, List<ORObject> objectRepositories) {
 		artifact.setModified_on(Utilities.getInstance().getUpdateCurrentDateTime());
 		new ArtifactApi().updateArtifact(artifact);
 		for (ORObject orObject : objectRepositories) {

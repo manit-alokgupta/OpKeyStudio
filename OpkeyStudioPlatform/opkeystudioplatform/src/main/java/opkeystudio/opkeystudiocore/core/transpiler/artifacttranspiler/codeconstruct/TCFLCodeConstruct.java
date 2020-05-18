@@ -6,7 +6,7 @@ import java.util.List;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
@@ -21,7 +21,7 @@ import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
 public class TCFLCodeConstruct {
 	private String newLineChar = "\n";
 
-	public String convertToFunctionCode(Artifact artifact, FlowStep flowStep) {
+	public String convertToFunctionCode(ArtifactDTO artifact, FlowStep flowStep) {
 		if (isKeywordType(flowStep)) {
 			if (isConstructFlowKeyword(flowStep)) {
 				String code = getConstructFlowKeywordCode(artifact, flowStep);
@@ -69,7 +69,7 @@ public class TCFLCodeConstruct {
 		return "genericKeywords";
 	}
 
-	private String getKeywordCode(Artifact artifact, FlowStep flowStep, String refvarName) {
+	private String getKeywordCode(ArtifactDTO artifact, FlowStep flowStep, String refvarName) {
 		String keywordName = flowStep.getKeyword().getName();
 		String methodcode = newLineChar + refvarName + "." + keywordName + "(";
 		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
@@ -86,7 +86,7 @@ public class TCFLCodeConstruct {
 					argumentCall += "null";
 				} else {
 					ORObject orobject = flowStep.getOrObject().get(0);
-					Artifact orartifact = GlobalLoader.getInstance().getArtifactById(orobject.getOr_id());
+					ArtifactDTO orartifact = GlobalLoader.getInstance().getArtifactById(orobject.getOr_id());
 					String varName = orartifact.getVariableName() + "." + orobject.getVariableName();
 					argumentCall += varName;
 				}
@@ -136,7 +136,7 @@ public class TCFLCodeConstruct {
 		return methodcode;
 	}
 
-	private String getFunctionLibraryCode(Artifact artifact, FlowStep flowStep) {
+	private String getFunctionLibraryCode(ArtifactDTO artifact, FlowStep flowStep) {
 		FunctionLibraryComponent libraryComponent = flowStep.getFunctionLibraryComponent();
 		List<FlowInputArgument> componentInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject_FL(artifact,
@@ -152,7 +152,7 @@ public class TCFLCodeConstruct {
 		return code;
 	}
 
-	private String getCodedFunctionCode(Artifact artifact, FlowStep flowStep) {
+	private String getCodedFunctionCode(ArtifactDTO artifact, FlowStep flowStep) {
 		CodedFunctionArtifact libraryComponent = flowStep.getCodedFunctionArtifact();
 		List<FlowInputArgument> componentInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject_FL(artifact, libraryComponent.getParentccomponent(), componentInputArguments);
@@ -202,7 +202,7 @@ public class TCFLCodeConstruct {
 		return "\"" + data.trim().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 	}
 
-	private String getConstructFlowKeywordCode(Artifact artifact, FlowStep flowStep) {
+	private String getConstructFlowKeywordCode(ArtifactDTO artifact, FlowStep flowStep) {
 		String keywordName = flowStep.getKeyword().getName();
 		System.out.println("Keyword " + keywordName);
 		if (keywordName.equals("For")) {
@@ -305,7 +305,7 @@ public class TCFLCodeConstruct {
 		return "\"" + data + "\"";
 	}
 
-	private String addOutputVariables(Artifact artifact, FlowStep flowStep, String mainCode) {
+	private String addOutputVariables(ArtifactDTO artifact, FlowStep flowStep, String mainCode) {
 		String outputCode = "";
 		List<FlowOutputObject> flowOutputObjects = new FlowApiUtilities().getAllFlowOutputObject(artifact, flowStep);
 		for (FlowOutputObject flowOutPutObject : flowOutputObjects) {
@@ -328,7 +328,7 @@ public class TCFLCodeConstruct {
 		return outputCode + mainCode;
 	}
 
-	private String addDataRepositoryIterations(Artifact artifact, FlowStep flowStep, String mainCode) {
+	private String addDataRepositoryIterations(ArtifactDTO artifact, FlowStep flowStep, String mainCode) {
 		String forLoopParameters = "";
 		List<FlowInputArgument> flowInputArguments = flowStep.getFlowInputArgs();
 		List<FlowInputObject> flowInputObjects = new FlowApiUtilities().getAllFlowInputObject(artifact,
@@ -338,7 +338,7 @@ public class TCFLCodeConstruct {
 				String columnId = flowInputObject.getDataRepositoryColumnData();
 				DRColumnAttributes drColumn = GlobalLoader.getInstance().getDRColumn(columnId);
 				String columnName = drColumn.getVariableName();
-				Artifact drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
+				ArtifactDTO drArtifact = GlobalLoader.getInstance().getArtifactById(drColumn.getDr_id());
 				String path = drArtifact.getPackageName() + "." + drArtifact.getVariableName() + "." + "getDRCells("
 						+ "\"" + columnName + "\"" + ")";
 				forLoopParameters = "String " + columnName + ":" + path;

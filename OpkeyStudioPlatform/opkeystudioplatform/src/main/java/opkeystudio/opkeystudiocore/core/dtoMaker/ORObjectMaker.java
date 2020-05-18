@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProperty;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -35,7 +35,7 @@ public class ORObjectMaker {
 	String[] parentORAttrs = new String[] { "url", "title", "index" };
 	String[] childORAttrs = new String[] { "name", "tag", "title", "class", "style" };
 
-	public ORObject getORObjectDTO(Artifact artifact, String orid, String parentId, String objectName,
+	public ORObject getORObjectDTO(ArtifactDTO artifact, String orid, String parentId, String objectName,
 			String objectType, List<ORObject> allORObjects) {
 		int position = 0;
 		if (allORObjects.size() > 0) {
@@ -73,7 +73,7 @@ public class ORObjectMaker {
 		return orobject;
 	}
 
-	public void addMobileObject(Artifact artifact, String objectName, Map<String, String> objectProperties,
+	public void addMobileObject(ArtifactDTO artifact, String objectName, Map<String, String> objectProperties,
 			String parentObjectName, Map<String, String> parentObjectProperties, String objectType,
 			String parentObjectType, ORObject parentORObject, List<ORObject> allORObjects) throws SQLException {
 
@@ -137,7 +137,7 @@ public class ORObjectMaker {
 		new ObjectRepositoryApi().saveORObjects(artifact, orobjects);
 	}
 
-	public ORObject createORObjectReplica(Artifact artifact, ORObject selectedORObject, ORObject pasteORObject,
+	public ORObject createORObjectReplica(ArtifactDTO artifact, ORObject selectedORObject, ORObject pasteORObject,
 			List<ORObject> allORObjects) {
 		int selectedORObjectIndex = allORObjects.indexOf(selectedORObject);
 		int selectedORObjectPosition = 0;

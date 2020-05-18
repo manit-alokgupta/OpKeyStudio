@@ -3,16 +3,16 @@ package opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler;
 import java.io.File;
 import java.io.IOException;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 
 public abstract class AbstractTranspiler {
 	private String fileExtension;
 	private String transpiledDataFolder;
 
-	public void transpile(Artifact artifact) {
+	public void transpile(ArtifactDTO artifact) {
 	}
 
-	public File createArtifactFile(Artifact artifact) {
+	public File createArtifactFile(ArtifactDTO artifact) {
 		String filePath = getTranspiledDataFolder() + File.separator + artifact.getPackagePath();
 		File file1 = new File(filePath);
 		if (!file1.exists()) {

@@ -35,8 +35,8 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FlowMaker;
 
@@ -445,7 +445,7 @@ public class FlowStepTable extends CustomTable {
 	public void renderFlowSteps() {
 		disposeAllTableEditors();
 		this.removeAll();
-		Artifact artifact = getParentTestCaseView().getArtifact();
+		ArtifactDTO artifact = getParentTestCaseView().getArtifact();
 		if (artifact == null) {
 			return;
 		}
@@ -578,7 +578,7 @@ public class FlowStepTable extends CustomTable {
 	}
 
 	public void addStep() {
-		Artifact artifact = getParentTestCaseView().getArtifact();
+		ArtifactDTO artifact = getParentTestCaseView().getArtifact();
 		FlowStep selectedFlowStep = this.getSelectedFlowStep();
 		FlowStep flowStep = new FlowMaker().getFlowStepDTO(artifact, selectedFlowStep, null, artifact.getId(),
 				this.getFlowStepsData());

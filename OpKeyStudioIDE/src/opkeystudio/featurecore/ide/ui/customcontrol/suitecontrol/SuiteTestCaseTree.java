@@ -12,7 +12,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.TestSuiteView;
 import opkeystudio.iconManager.OpKeyStudioIcons;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.TestSuiteStep;
 import opkeystudio.opkeystudiocore.core.dtoMaker.SuiteMaker;
 
@@ -37,7 +37,7 @@ public class SuiteTestCaseTree extends ArtifactTree {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Artifact artifact = getSelectedArtifact();
+				ArtifactDTO artifact = getSelectedArtifact();
 				if (artifact == null) {
 					addTestCaseMenuItem.setEnabled(false);
 					getParentTestSuiteView().getAddTestCaseButton().setEnabled(false);
@@ -84,7 +84,7 @@ public class SuiteTestCaseTree extends ArtifactTree {
 	}
 
 	private void addTestSuite() {
-		Artifact artifact = getSelectedArtifact();
+		ArtifactDTO artifact = getSelectedArtifact();
 		TestSuiteStep selectedTestSuite = getParentTestSuiteView().getSuiteStepTable().getSelectedTestSuite();
 		List<TestSuiteStep> testSuiteSteps = getParentTestSuiteView().getSuiteStepTable().getTestSuiteData();
 		TestSuiteStep testSuiteStep = new SuiteMaker().createTestSuite(artifact, getParentTestSuiteView().getArtifact(),

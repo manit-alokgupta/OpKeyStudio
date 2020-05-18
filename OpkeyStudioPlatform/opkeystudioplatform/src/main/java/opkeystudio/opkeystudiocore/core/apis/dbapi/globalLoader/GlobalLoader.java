@@ -15,7 +15,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
@@ -38,7 +38,7 @@ public class GlobalLoader {
 	private List<ComponentInputParameter> componentInputArguments = new ArrayList<ComponentInputParameter>();
 
 	private List<ORObject> allORObjects = new ArrayList<ORObject>();
-	private List<Artifact> allArtifacts = new ArrayList<Artifact>();
+	private List<ArtifactDTO> allArtifacts = new ArrayList<ArtifactDTO>();
 	private List<ObjectAttributeProperty> objectAttributeProperties = new ArrayList<>();
 
 	private List<GlobalVariable> globalVaribles = new ArrayList<GlobalVariable>();
@@ -361,7 +361,7 @@ public class GlobalLoader {
 		this.allORObjects = allORObjects;
 	}
 
-	public List<Artifact> getAllArtifacts() {
+	public List<ArtifactDTO> getAllArtifacts() {
 		return allArtifacts;
 	}
 
@@ -374,10 +374,10 @@ public class GlobalLoader {
 		return null;
 	}
 
-	public List<Artifact> getAllArtifactByType(String type) {
-		List<Artifact> typeArtifacts = new ArrayList<Artifact>();
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
-		for (Artifact artifact : artifacts) {
+	public List<ArtifactDTO> getAllArtifactByType(String type) {
+		List<ArtifactDTO> typeArtifacts = new ArrayList<ArtifactDTO>();
+		List<ArtifactDTO> artifacts = GlobalLoader.getInstance().getAllArtifacts();
+		for (ArtifactDTO artifact : artifacts) {
 			if (artifact.getFile_type_enum().toString().equals(type)) {
 				typeArtifacts.add(artifact);
 			}
@@ -385,9 +385,9 @@ public class GlobalLoader {
 		return typeArtifacts;
 	}
 
-	public Artifact getArtifactById(String id) {
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifacts();
-		for (Artifact artifact : artifacts) {
+	public ArtifactDTO getArtifactById(String id) {
+		List<ArtifactDTO> artifacts = GlobalLoader.getInstance().getAllArtifacts();
+		for (ArtifactDTO artifact : artifacts) {
 			if (artifact.getId().toString().equals(id)) {
 				return artifact;
 			}
@@ -519,7 +519,7 @@ public class GlobalLoader {
 		this.allMainFileStoreDtos = allMainFileStoreDtos;
 	}
 
-	public List<CFLInputParameter> getCFLInputParameters(Artifact cfartifact) {
+	public List<CFLInputParameter> getCFLInputParameters(ArtifactDTO cfartifact) {
 		List<CFLInputParameter> inputParams = new ArrayList<CFLInputParameter>();
 		List<CFLInputParameter> cflInputParameters = GlobalLoader.getInstance().getAllCFLInputParameters();
 		for (CFLInputParameter cflInputParam : cflInputParameters) {
@@ -530,7 +530,7 @@ public class GlobalLoader {
 		return inputParams;
 	}
 
-	public List<CFLOutputParameter> getCFLOutputParameters(Artifact cfartifact) {
+	public List<CFLOutputParameter> getCFLOutputParameters(ArtifactDTO cfartifact) {
 		List<CFLOutputParameter> outputParams = new ArrayList<CFLOutputParameter>();
 		List<CFLOutputParameter> cflOutputParameters = GlobalLoader.getInstance().getAllCFLOutputParameters();
 		for (CFLOutputParameter cflOutputParam : cflOutputParameters) {

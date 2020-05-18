@@ -14,7 +14,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.objectrepository.ObjectRepositoryApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 
 public class ObjectRepositoryTree extends CustomTree {
@@ -121,7 +121,7 @@ public class ObjectRepositoryTree extends CustomTree {
 
 	public void renderObjectRepositories() {
 		this.removeAll();
-		Artifact artifact = getParentORView().getArtifact();
+		ArtifactDTO artifact = getParentORView().getArtifact();
 		getParentORView().setOrId(artifact.getId());
 		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
 		rootNode.setText(artifact.getName());
@@ -151,7 +151,7 @@ public class ObjectRepositoryTree extends CustomTree {
 
 	public void refreshObjectRepositories() {
 		this.removeAll();
-		Artifact artifact = getParentORView().getArtifact();
+		ArtifactDTO artifact = getParentORView().getArtifact();
 		getParentORView().setOrId(artifact.getId());
 		ObjectRepositoryTreeItem rootNode = new ObjectRepositoryTreeItem(this, 0);
 		rootNode.setText(artifact.getName());
@@ -187,8 +187,8 @@ public class ObjectRepositoryTree extends CustomTree {
 		rootNode.setText("ObjectRepository");
 		rootNode.setExpanded(true);
 		addIcon(rootNode);
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
-		for (Artifact artifact : artifacts) {
+		List<ArtifactDTO> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
+		for (ArtifactDTO artifact : artifacts) {
 			renderObjectRepositories(rootNode, artifact.getName(), artifact.getId());
 		}
 	}

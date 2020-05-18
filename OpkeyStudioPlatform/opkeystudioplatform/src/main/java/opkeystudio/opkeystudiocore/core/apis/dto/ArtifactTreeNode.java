@@ -1,6 +1,6 @@
 package opkeystudio.opkeystudiocore.core.apis.dto;
 
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 
 public class ArtifactTreeNode {
 	private String text;

@@ -15,7 +15,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.artifacttree.ArtifactTree;
 import opkeystudio.featurecore.ide.ui.ui.ArtifactCodeView;
 import opkeystudio.featurecore.ide.ui.ui.CodedFunctionView;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyArtifactPersistListenerDispatcher;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 
 public class CodedFunctionPart {
@@ -34,15 +34,15 @@ public class CodedFunctionPart {
 	@Focus
 	public void onFocus() {
 		ArtifactTree tree = (ArtifactTree) SystemRepository.getInstance().getArtifactTreeControl();
-		Artifact artifact = getArtifact();
+		ArtifactDTO artifact = getArtifact();
 		if (artifact != null) {
 			tree.highlightArtifact(artifact.getId());
 		}
 	}
 
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		return (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		return (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 	}
 
 	@Persist

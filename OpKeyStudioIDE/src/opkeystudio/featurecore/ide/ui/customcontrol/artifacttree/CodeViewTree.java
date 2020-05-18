@@ -25,14 +25,14 @@ import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.intellisense.Gene
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTree;
 import opkeystudio.featurecore.ide.ui.ui.CodeViewTreeUI;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 import opkeystudio.opkeystudiocore.core.repositories.repository.SystemRepository;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 
 public class CodeViewTree extends CustomTree {
-	private List<Artifact> artifacts = new ArrayList<Artifact>();
+	private List<ArtifactDTO> artifacts = new ArrayList<ArtifactDTO>();
 
 	private CodeViewTreeUI parentArtifactCodeViewTreeUI;
 
@@ -338,11 +338,11 @@ public class CodeViewTree extends CustomTree {
 		renderCodeViewTree();
 	}
 
-	public void setArtifactsData(List<Artifact> artifacts) {
+	public void setArtifactsData(List<ArtifactDTO> artifacts) {
 		this.artifacts = artifacts;
 	}
 
-	public List<Artifact> getArtifactsData() {
+	public List<ArtifactDTO> getArtifactsData() {
 		return this.artifacts;
 	}
 
@@ -464,8 +464,8 @@ public class CodeViewTree extends CustomTree {
 	}
 
 	public void filterArtifactTree(String searchValue) {
-		List<Artifact> artifacts = this.getArtifactsData();
-		for (Artifact artifact : artifacts) {
+		List<ArtifactDTO> artifacts = this.getArtifactsData();
+		for (ArtifactDTO artifact : artifacts) {
 			if (artifact.getFile_type_enum() != MODULETYPE.Folder) {
 				if (artifact.getName().trim().toLowerCase().contains(searchValue.trim().toLowerCase())) {
 					artifact.setVisible(true);

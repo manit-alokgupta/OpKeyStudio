@@ -23,8 +23,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import opkeystudio.featurecore.ide.ui.customcontrol.codeeditor.ArtifactCodeEditor;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.execution.ExecutionSession;
 
 public class Utilities {
@@ -59,12 +59,12 @@ public class Utilities {
 		return getEpartService().getParts();
 	}
 
-	public MPart getArtifactMPart(Artifact artifact) {
+	public MPart getArtifactMPart(ArtifactDTO artifact) {
 		Collection<MPart> allParts = getAllParts();
 		System.out.println("All Parts " + allParts.size());
 		for (MPart mpart : allParts) {
 			System.out.println("Mpart Searching");
-			Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+			ArtifactDTO artifact_0 = (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 			if (artifact_0 == null) {
 				continue;
 			}
@@ -106,7 +106,7 @@ public class Utilities {
 			System.out.println("All Parts " + allParts.size());
 			for (MPart mpart : allParts) {
 				System.out.println("Closing Already Opened Mparts");
-				Artifact artifact_0 = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+				ArtifactDTO artifact_0 = (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 				if (artifact_0 != null) {
 					EPartService partService = Utilities.getInstance().getEpartService();
 					partService.hidePart(mpart, true);
@@ -148,7 +148,7 @@ public class Utilities {
 		return -1;
 	}
 
-	public void openArtifacts(Artifact artifact) {
+	public void openArtifacts(ArtifactDTO artifact) {
 		try {
 			Utilities.getInstance().defaultShell.setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
 
@@ -231,7 +231,7 @@ public class Utilities {
 		partService.showPart(part, PartState.ACTIVATE);
 	}
 
-	public void closeArtifactPart(Artifact artifact) {
+	public void closeArtifactPart(ArtifactDTO artifact) {
 		MPart mpart = getArtifactMPart(artifact);
 		if (mpart == null) {
 			return;
@@ -245,7 +245,7 @@ public class Utilities {
 		partService.showPart(mpart, PartState.VISIBLE);
 	}
 
-	public void renameArtifactLabel(Artifact artifact, String renamedData) {
+	public void renameArtifactLabel(ArtifactDTO artifact, String renamedData) {
 		try {
 			Utilities.getInstance().setShellCursor(SWT.CURSOR_WAIT);
 			MPart mpart = getArtifactMPart(artifact);

@@ -27,7 +27,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.transpiler.GlobalTranspiler;
 
@@ -88,7 +88,7 @@ public class CFLOrAssociate extends CustomTable {
 		List<File> files = new EditorTools(getParentBottomFactoryUI().getParentCodedFunctionView())
 				.getAllFiles(new File(dataLibraryPath), ".class");
 		boolean flag = false;
-		Artifact artifact = (Artifact) item.getControlData();
+		ArtifactDTO artifact = (ArtifactDTO) item.getControlData();
 		String artifactVariableName = artifact.getVariableName() + ".class";
 		for (File file : files) {
 			System.out.println(file.getName() + "     " + artifactVariableName);
@@ -105,7 +105,7 @@ public class CFLOrAssociate extends CustomTable {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				setSelection(item);
-				Artifact artifact = (Artifact) item.getControlData();
+				ArtifactDTO artifact = (ArtifactDTO) item.getControlData();
 				if (associateOR.getSelection() == true) {
 					JavaClassSource classSource = new GlobalTranspiler().getJavaClassORObjects(artifact);
 					String dataLibraryPath = getParentBottomFactoryUI().getParentCodedFunctionView()
@@ -175,8 +175,8 @@ public class CFLOrAssociate extends CustomTable {
 	public void renderORNodes() {
 		disposeAllTableEditors();
 		this.removeAll();
-		List<Artifact> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
-		for (Artifact artifact : artifacts) {
+		List<ArtifactDTO> artifacts = GlobalLoader.getInstance().getAllArtifactByType("ObjectRepository");
+		for (ArtifactDTO artifact : artifacts) {
 			CustomTableItem item = new CustomTableItem(this, 0);
 			item.setText(new String[] { "", artifact.getVariableName() });
 			item.setControlData(artifact);

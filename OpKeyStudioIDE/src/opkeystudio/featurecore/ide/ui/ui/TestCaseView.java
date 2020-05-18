@@ -59,8 +59,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibra
 import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
@@ -108,7 +108,7 @@ public class TestCaseView extends SuperComposite {
 	@SuppressWarnings("unused")
 	private ArtifactTreeItem artifactTreeItem;
 	private TabFolder datasTabHolder;
-	private Artifact artifact;
+	private ArtifactDTO artifact;
 	
 	/**
 	 * Create the composite.
@@ -186,12 +186,12 @@ public class TestCaseView extends SuperComposite {
 	
 	private void initArtifact() {
 		MPart mpart = opkeystudio.core.utils.Utilities.getInstance().getActivePart();
-		Artifact artifact = (Artifact) mpart.getTransientData().get("opkeystudio.artifactData");
+		ArtifactDTO artifact = (ArtifactDTO) mpart.getTransientData().get("opkeystudio.artifactData");
 		this.setArtifact(artifact);
 		this.setCurrentMpart(mpart);
 	}
 
-	public Artifact getCurrentArtifact() {
+	public ArtifactDTO getCurrentArtifact() {
 		return GlobalLoader.getInstance().getArtifactById(getArtifact().getId());
 	}
 
@@ -704,7 +704,7 @@ public class TestCaseView extends SuperComposite {
 		}
 	}
 
-	public Artifact getArtifact() {
+	public ArtifactDTO getArtifact() {
 
 		return this.artifact;
 	}
@@ -1020,7 +1020,7 @@ public class TestCaseView extends SuperComposite {
 		// Disable the check that prevents subclassing of SWT components
 	}
 
-	public void setArtifact(Artifact artifact) {
+	public void setArtifact(ArtifactDTO artifact) {
 		this.artifact = artifact;
 	}
 

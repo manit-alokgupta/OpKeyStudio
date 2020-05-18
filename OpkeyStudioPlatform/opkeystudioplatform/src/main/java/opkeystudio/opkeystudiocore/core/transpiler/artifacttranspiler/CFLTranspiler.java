@@ -12,8 +12,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
@@ -26,7 +26,7 @@ public class CFLTranspiler extends AbstractTranspiler {
 	}
 
 	@Override
-	public void transpile(Artifact artifact) {
+	public void transpile(ArtifactDTO artifact) {
 		try {
 			if (artifact.getFile_type_enum() != MODULETYPE.Component) {
 				return;
@@ -43,7 +43,7 @@ public class CFLTranspiler extends AbstractTranspiler {
 		}
 	}
 
-	private JavaClassSource getCFLJavaClassSource(Artifact artofact) {
+	private JavaClassSource getCFLJavaClassSource(ArtifactDTO artofact) {
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(artofact);
 		List<ComponentInputParameter> componentInputArgs = FlowApi.getInstance().getAllComponentInputArgument(artofact.getId());
 		List<ComponentOutputParameter> componentOutputArgs = FlowApi.getInstance().getAllComponentOutputArgument(artofact.getId());	

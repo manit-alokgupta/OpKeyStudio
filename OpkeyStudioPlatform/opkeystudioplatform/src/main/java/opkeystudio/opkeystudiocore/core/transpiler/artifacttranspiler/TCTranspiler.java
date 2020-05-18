@@ -7,8 +7,8 @@ import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ArtifactDTO.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct.TCFLCodeConstruct;
@@ -23,7 +23,7 @@ public class TCTranspiler extends AbstractTranspiler {
 	}
 
 	@Override
-	public void transpile(Artifact artifact) {
+	public void transpile(ArtifactDTO artifact) {
 		try {
 			if (artifact.getFile_type_enum() != MODULETYPE.Flow) {
 				return;
@@ -39,7 +39,7 @@ public class TCTranspiler extends AbstractTranspiler {
 		}
 	}
 
-	public JavaClassSource getJavaClassOfTestCase(Artifact artifact) {
+	public JavaClassSource getJavaClassOfTestCase(ArtifactDTO artifact) {
 		JavaClassSource class1 = Roaster.create(JavaClassSource.class);
 		class1.setName(artifact.getVariableName()).setPublic();
 		List<FlowStep> flowSteps = FlowApi.getInstance().getAllFlowSteps(artifact.getId());
