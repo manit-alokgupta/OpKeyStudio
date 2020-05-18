@@ -43,8 +43,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
 import opkeystudio.opkeystudiocore.core.sourcecodeeditor.compiler.CompileError;
 import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
@@ -555,8 +555,8 @@ public class CodedFunctionView extends SuperComposite {
 		String myID = getArtifact().getId();
 		FunctionLibraryComponent flComponent = FlowApi.getInstance().getFunctionLibraryComponent(myID).get(0);
 	
-		List<ComponentInputArgument> componentInputArgs = FlowApi.getInstance().getAllComponentInputArgument(getArtifact().getId());
-		List<ComponentOutputArgument> componentOutputArgs = FlowApi.getInstance().getAllComponentOutputArgument(getArtifact().getId());	
+		List<ComponentInputParameter> componentInputArgs = FlowApi.getInstance().getAllComponentInputArgument(getArtifact().getId());
+		List<ComponentOutputParameter> componentOutputArgs = FlowApi.getInstance().getAllComponentOutputArgument(getArtifact().getId());	
 		
 		flComponent.setComponentInputArguments(componentInputArgs);
 		flComponent.setComponentOutputArguments(componentOutputArgs);

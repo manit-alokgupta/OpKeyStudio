@@ -52,7 +52,7 @@ public class FlowInputArgument extends Modified implements Cloneable {
 	private String ip_id;
 
 	private KeyWordInputArgument keywordInputArgument;
-	private ComponentInputArgument componentInputArgument;
+	private ComponentInputParameter componentInputArgument;
 
 	private int index = -1;
 
@@ -210,11 +210,11 @@ public class FlowInputArgument extends Modified implements Cloneable {
 		this.keywordInputArgument = keywordInputArgument;
 	}
 
-	public ComponentInputArgument getComponentInputArgument() {
+	public ComponentInputParameter getComponentInputArgument() {
 		return componentInputArgument;
 	}
 
-	public void setComponentInputArgument(ComponentInputArgument componentInputArgument) {
+	public void setComponentInputArgument(ComponentInputParameter componentInputArgument) {
 		this.componentInputArgument = componentInputArgument;
 	}
 

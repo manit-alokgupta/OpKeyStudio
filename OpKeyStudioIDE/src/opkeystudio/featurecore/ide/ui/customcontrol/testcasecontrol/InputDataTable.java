@@ -45,7 +45,7 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalvariable.GlobalVariable
 import opkeystudio.opkeystudiocore.core.apis.dto.GlobalVariable;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
@@ -59,7 +59,7 @@ public class InputDataTable extends CustomTable {
 	private FlowStep flowStep;
 	private List<KeyWordInputArgument> keyWordInputArgs = new ArrayList<KeyWordInputArgument>();
 	private List<FlowInputArgument> flowInputArgs = new ArrayList<FlowInputArgument>();
-	private List<ComponentInputArgument> componentInputArgs = new ArrayList<>();
+	private List<ComponentInputParameter> componentInputArgs = new ArrayList<>();
 	private List<CFLInputParameter> cflInputArguments = new ArrayList<CFLInputParameter>();
 	private TestCaseView parentTestCaseView;
 
@@ -484,9 +484,9 @@ public class InputDataTable extends CustomTable {
 
 		{
 			String ipId = flowInputArgument.getIp_id();
-			List<ComponentInputArgument> compsinp = new FunctionLibraryApi()
+			List<ComponentInputParameter> compsinp = new FunctionLibraryApi()
 					.getAllComponentInputArgument(getParentTestCaseView().getArtifact().getId());
-			for (ComponentInputArgument cia : compsinp) {
+			for (ComponentInputParameter cia : compsinp) {
 				if (cia.getIp_id().equals(ipId)) {
 					TableEditor editor1 = getTableEditor();
 					CustomButton button = new CustomButton(this, SWT.NONE);
@@ -655,9 +655,9 @@ public class InputDataTable extends CustomTable {
 		// Display FL in TestCase or Function Library
 		if (getComponentInputArgs().size() > 0) {
 			for (int i = 0; i < getComponentInputArgs().size(); i++) {
-				List<ComponentInputArgument> filteredComponentInputArgs = new ArrayList<ComponentInputArgument>();
+				List<ComponentInputParameter> filteredComponentInputArgs = new ArrayList<ComponentInputParameter>();
 				for (int i1 = 0; i1 < getComponentInputArgs().size(); i1++) {
-					ComponentInputArgument inputArgument = getComponentInputArgs().get(i1);
+					ComponentInputParameter inputArgument = getComponentInputArgs().get(i1);
 					filteredComponentInputArgs.add(inputArgument);
 				}
 
@@ -670,7 +670,7 @@ public class InputDataTable extends CustomTable {
 				}
 
 				if (filteredComponentInputArgs.size() == filteredFlowInputArgs.size()) {
-					ComponentInputArgument keywordInputArg = getComponentInputArgs().get(i);
+					ComponentInputParameter keywordInputArg = getComponentInputArgs().get(i);
 					FlowInputArgument flowInputArg = flowInputArgs.get(i);
 					CustomTableItem cti = new CustomTableItem(this, 0);
 					cti.setText(new String[] { keywordInputArg.getType(), keywordInputArg.getName(),
@@ -721,11 +721,11 @@ public class InputDataTable extends CustomTable {
 		return (FlowInputArgument) selectedTableItem.getControlData();
 	}
 
-	public List<ComponentInputArgument> getComponentInputArgs() {
+	public List<ComponentInputParameter> getComponentInputArgs() {
 		return componentInputArgs;
 	}
 
-	public void setComponentInputArgs(List<ComponentInputArgument> componentInputArgs) {
+	public void setComponentInputArgs(List<ComponentInputParameter> componentInputArgs) {
 		this.componentInputArgs = componentInputArgs;
 	}
 

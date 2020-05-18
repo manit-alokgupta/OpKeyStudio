@@ -13,8 +13,8 @@ import opkeystudio.opkeystudiocore.core.apis.dbapi.globalLoader.GlobalLoader;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -105,8 +105,8 @@ public class FunctionLibraryApi {
 				flowStep.setIsTestCaseStep(true);
 			} else if (flowStep.getStepcomponent_id() != null) {
 				FunctionLibraryComponent flComp = getFunctinLibraryComponent(flowStep.getStepcomponent_id()).get(0);
-				List<ComponentInputArgument> inputArgs = getAllComponentInputArgument(flowStep.getStepcomponent_id());
-				List<ComponentOutputArgument> outputArgs = getAllComponentOutputArgument(
+				List<ComponentInputParameter> inputArgs = getAllComponentInputArgument(flowStep.getStepcomponent_id());
+				List<ComponentOutputParameter> outputArgs = getAllComponentOutputArgument(
 						flowStep.getStepcomponent_id());
 				List<FlowInputArgument> fis = getFlowStepInputArguments(flowStep);
 				List<FlowOutputArgument> fos = getFlowStepOutputArguments(flowStep);
@@ -139,35 +139,35 @@ public class FunctionLibraryApi {
 		return flowSteps;
 	}
 
-	public List<ComponentInputArgument> getAllComponentInputArgument(String componentId) {
+	public List<ComponentInputParameter> getAllComponentInputArgument(String componentId) {
 		String query = String.format(
 				"select * from component_input_parameters where component_id='%s' ORDER BY position asc", componentId);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ComponentInputArgument.class);
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ComponentInputParameter.class);
 		try {
 			return mapper.readValue(result, type);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ArrayList<ComponentInputArgument>();
+		return new ArrayList<ComponentInputParameter>();
 	}
 
-	public List<ComponentOutputArgument> getAllComponentOutputArgument(String componentId) {
+	public List<ComponentOutputParameter> getAllComponentOutputArgument(String componentId) {
 		String query = String.format(
 				"select * from component_output_parameters where component_id='%s' ORDER BY position asc", componentId);
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
 		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class,
-				ComponentOutputArgument.class);
+				ComponentOutputParameter.class);
 		try {
 			return mapper.readValue(result, type);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ArrayList<ComponentOutputArgument>();
+		return new ArrayList<ComponentOutputParameter>();
 	}
 
 	public List<FunctionLibraryComponent> getFunctinLibraryComponent(String componentId) {

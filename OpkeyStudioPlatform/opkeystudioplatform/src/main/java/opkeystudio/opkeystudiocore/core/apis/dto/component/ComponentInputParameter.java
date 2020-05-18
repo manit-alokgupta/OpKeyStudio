@@ -4,7 +4,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class ComponentInputArgument extends Modified implements Comparable<ComponentInputArgument>, Cloneable {
+public class ComponentInputParameter extends Modified implements Comparable<ComponentInputParameter>, Cloneable {
 	@DBField
 	private boolean ismandatory;
 	@DBField
@@ -156,13 +156,13 @@ public class ComponentInputArgument extends Modified implements Comparable<Compo
 	}
 
 	@Override
-	public int compareTo(ComponentInputArgument arg0) {
+	public int compareTo(ComponentInputParameter arg0) {
 		return this.getPosition() - arg0.getPosition();
 	}
 
-	public ComponentInputArgument clone() {
+	public ComponentInputParameter clone() {
 		try {
-			return (ComponentInputArgument) super.clone();
+			return (ComponentInputParameter) super.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

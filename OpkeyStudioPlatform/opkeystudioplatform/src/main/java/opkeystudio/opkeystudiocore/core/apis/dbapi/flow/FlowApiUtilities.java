@@ -20,8 +20,8 @@ import opkeystudio.opkeystudiocore.core.collections.FlowOutputObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -130,7 +130,7 @@ public class FlowApiUtilities {
 				}
 				if (inputObject.isFlowInputDataExist()) {
 					String flowInputId = inputObject.getFlowInputData();
-					ComponentInputArgument flowOutputArgument = GlobalLoader.getInstance()
+					ComponentInputParameter flowOutputArgument = GlobalLoader.getInstance()
 							.getComponentInputArgumentById(flowInputId);
 					outData += "Input:" + flowOutputArgument.getName();
 				}
@@ -294,7 +294,7 @@ public class FlowApiUtilities {
 
 		for (int i = 0; i < flowInputArguments.size(); i++) {
 			FlowInputArgument flowInputArgument = flowInputArguments.get(i);
-			ComponentInputArgument componentInputArgument = functionLibrary.getComponentInputArguments().get(i);
+			ComponentInputParameter componentInputArgument = functionLibrary.getComponentInputArguments().get(i);
 			if (artifact.getFile_type_enum() == MODULETYPE.Flow) {
 				FlowInputObject flowInputObject = new FlowInputObject();
 				flowInputObject.setDataType(componentInputArgument.getType());
@@ -400,7 +400,7 @@ public class FlowApiUtilities {
 				dataType = flowStep.getKeyword().getOutputtype();
 			}
 			if (flowStep.getFunctionLibraryComponent() != null) {
-				ComponentOutputArgument outPutArg = flowStep.getFunctionLibraryComponent().getComponentOutputArguments()
+				ComponentOutputParameter outPutArg = flowStep.getFunctionLibraryComponent().getComponentOutputArguments()
 						.get(i);
 				dataType = outPutArg.getType();
 			}

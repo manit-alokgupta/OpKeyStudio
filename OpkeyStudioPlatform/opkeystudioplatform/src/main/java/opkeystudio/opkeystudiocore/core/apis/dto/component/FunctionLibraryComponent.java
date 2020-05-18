@@ -5,22 +5,22 @@ import java.util.List;
 
 public class FunctionLibraryComponent extends Artifact {
 
-	private List<ComponentInputArgument> componentInputArguments = new ArrayList<ComponentInputArgument>();
-	private List<ComponentOutputArgument> componentOutputArguments = new ArrayList<ComponentOutputArgument>();
+	private List<ComponentInputParameter> componentInputArguments = new ArrayList<ComponentInputParameter>();
+	private List<ComponentOutputParameter> componentOutputArguments = new ArrayList<ComponentOutputParameter>();
 	
-	public List<ComponentInputArgument> getComponentInputArguments() {
+	public List<ComponentInputParameter> getComponentInputArguments() {
 		return componentInputArguments;
 	}
 
-	public void setComponentInputArguments(List<ComponentInputArgument> componentInputArguments) {
+	public void setComponentInputArguments(List<ComponentInputParameter> componentInputArguments) {
 		this.componentInputArguments = componentInputArguments;
 	}
 
-	public List<ComponentOutputArgument> getComponentOutputArguments() {
+	public List<ComponentOutputParameter> getComponentOutputArguments() {
 		return componentOutputArguments;
 	}
 
-	public void setComponentOutputArguments(List<ComponentOutputArgument> componentOutputArguments) {
+	public void setComponentOutputArguments(List<ComponentOutputParameter> componentOutputArguments) {
 		this.componentOutputArguments = componentOutputArguments;
 	}
 

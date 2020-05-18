@@ -10,8 +10,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -158,8 +158,8 @@ public class FlowMaker {
 
 		FunctionLibraryComponent flComp = FlowApi.getInstance().getFunctionLibraryComponent(flArtifact.getId()).get(0);
 		flowStep.setFunctionLibraryComponent(flComp);
-		List<ComponentInputArgument> inputArgs = FlowApi.getInstance().getAllComponentInputArgument(flArtifact.getId());
-		List<ComponentOutputArgument> outputArgs = FlowApi.getInstance()
+		List<ComponentInputParameter> inputArgs = FlowApi.getInstance().getAllComponentInputArgument(flArtifact.getId());
+		List<ComponentOutputParameter> outputArgs = FlowApi.getInstance()
 				.getAllComponentOutputArgument(flArtifact.getId());
 		flComp.setComponentInputArguments(inputArgs);
 		flComp.setComponentOutputArguments(outputArgs);
@@ -253,9 +253,9 @@ public class FlowMaker {
 		}
 
 		if (flowStep.getFunctionLibraryComponent() != null) {
-			List<ComponentOutputArgument> componentOutputArgs = flowStep.getFunctionLibraryComponent()
+			List<ComponentOutputParameter> componentOutputArgs = flowStep.getFunctionLibraryComponent()
 					.getComponentOutputArguments();
-			for (ComponentOutputArgument componentOutputArgument : componentOutputArgs) {
+			for (ComponentOutputParameter componentOutputArgument : componentOutputArgs) {
 				FlowOutputArgument flowOutputArgument = new FlowOutputArgument();
 				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 					flowOutputArgument.setComponentstep_oa_id(Utilities.getInstance().getUniqueUUID(""));
@@ -315,9 +315,9 @@ public class FlowMaker {
 		}
 
 		if (flowStep.getFunctionLibraryComponent() != null) {
-			List<ComponentInputArgument> componentInputArgs = flowStep.getFunctionLibraryComponent()
+			List<ComponentInputParameter> componentInputArgs = flowStep.getFunctionLibraryComponent()
 					.getComponentInputArguments();
-			for (ComponentInputArgument componentInputArgument : componentInputArgs) {
+			for (ComponentInputParameter componentInputArgument : componentInputArgs) {
 				FlowInputArgument flowInputArgument = new FlowInputArgument();
 				if (artifact.getFile_type_enum() == MODULETYPE.Component) {
 					flowInputArgument.setStep_arg_id(Utilities.getInstance().getUniqueUUID(""));

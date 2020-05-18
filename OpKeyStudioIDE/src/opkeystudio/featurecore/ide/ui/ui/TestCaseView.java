@@ -62,8 +62,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLCode;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.CodedFunctionArtifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryComponent;
@@ -939,8 +939,8 @@ public class TestCaseView extends SuperComposite {
 
 	public void saveAll() {
 		if (getArtifact().getFile_type_enum() == MODULETYPE.Component) {
-			List<ComponentInputArgument> componentInputArgs = bottomFactory.getInputTable().getComponentInputData();
-			List<ComponentOutputArgument> componentOutputArgs = bottomFactory.getOutputTable().getComponentOutputData();
+			List<ComponentInputParameter> componentInputArgs = bottomFactory.getInputTable().getComponentInputData();
+			List<ComponentOutputParameter> componentOutputArgs = bottomFactory.getOutputTable().getComponentOutputData();
 			boolean isUniqueInputName = isComponentInputArgumentNameAreUnique(componentInputArgs);
 			boolean isUniqueOutputName = isComponentOutputArgumentNameAreUnique(componentOutputArgs);
 			if (isUniqueInputName == false) {
@@ -969,9 +969,9 @@ public class TestCaseView extends SuperComposite {
 		OpKeyGlobalLoadListenerDispatcher.getInstance().fireAllSuperCompositeGlobalListener();
 	}
 
-	private boolean isComponentInputArgumentNameAreUnique(List<ComponentInputArgument> componentInputArguments) {
+	private boolean isComponentInputArgumentNameAreUnique(List<ComponentInputParameter> componentInputArguments) {
 		List<String> variableNames = new ArrayList<String>();
-		for (ComponentInputArgument ci : componentInputArguments) {
+		for (ComponentInputParameter ci : componentInputArguments) {
 			if (variableNames.contains(ci.getName().toLowerCase())) {
 				return false;
 			}
@@ -980,9 +980,9 @@ public class TestCaseView extends SuperComposite {
 		return true;
 	}
 
-	private boolean isComponentOutputArgumentNameAreUnique(List<ComponentOutputArgument> componentInputArguments) {
+	private boolean isComponentOutputArgumentNameAreUnique(List<ComponentOutputParameter> componentInputArguments) {
 		List<String> variableNames = new ArrayList<String>();
-		for (ComponentOutputArgument co : componentInputArguments) {
+		for (ComponentOutputParameter co : componentInputArguments) {
 			if (variableNames.contains(co.getName().toLowerCase())) {
 				return false;
 			}

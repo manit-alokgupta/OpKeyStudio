@@ -25,8 +25,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
 import opkeystudio.opkeystudiocore.core.query.QueryMaker;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
@@ -345,7 +345,7 @@ public class CodedFunctionApi {
 	}
 
 	public String getCodedFLCodeWithBody(String className, String usercode, String privatefunctioncode, String imports,
-			List<ComponentInputArgument> cflInputParameters, List<ComponentOutputArgument> cflOutPutParameters) {
+			List<ComponentInputParameter> cflInputParameters, List<ComponentOutputParameter> cflOutPutParameters) {
 		JavaClassSource _class = Roaster.create(JavaClassSource.class);
 		_class.setName(className).setPublic();
 		_class.addImport("com.crestech.opkey.plugin.contexts.Context");
@@ -355,7 +355,7 @@ public class CodedFunctionApi {
 		_class.addInterface("com.crestech.opkey.plugin.CodedFunctionLibrary");
 		MethodSource<JavaClassSource> method = _class.addMethod();
 		method.setName("run").setPublic();
-		for (ComponentInputArgument cfin : cflInputParameters) {
+		for (ComponentInputParameter cfin : cflInputParameters) {
 			String dataType = cfin.getType();
 			dataType = convertDataType(dataType);
 			String varName = cfin.getVariableName();

@@ -44,10 +44,10 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 	private List<FlowOutputArgument> flowOutputArgs = new ArrayList<FlowOutputArgument>();
 
 	@SuppressWarnings("unused")
-	private List<ComponentInputArgument> componentInputArgs = new ArrayList<ComponentInputArgument>();
+	private List<ComponentInputParameter> componentInputArgs = new ArrayList<ComponentInputParameter>();
 
 	@SuppressWarnings("unused")
-	private List<ComponentOutputArgument> componentOutputArgs = new ArrayList<ComponentOutputArgument>();
+	private List<ComponentOutputParameter> componentOutputArgs = new ArrayList<ComponentOutputParameter>();
 
 	@DBField
 	private String component_id;

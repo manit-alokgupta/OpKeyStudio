@@ -10,7 +10,7 @@ import org.jboss.forge.roaster.model.source.MethodSource;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.transpiler.artifacttranspiler.codeconstruct.TCFLCodeConstruct;
@@ -58,11 +58,11 @@ public class FLTranspiler extends AbstractTranspiler {
 			methodBodyCode += flowStepCode;
 		}
 
-		List<ComponentInputArgument> componentInputArguments = FunctionLibraryApi.getInstance()
+		List<ComponentInputParameter> componentInputArguments = FunctionLibraryApi.getInstance()
 				.getAllComponentInputArgument(artifact.getId());
 		MethodSource<JavaClassSource> method = class1.addMethod();
 
-		for (ComponentInputArgument cia : componentInputArguments) {
+		for (ComponentInputParameter cia : componentInputArguments) {
 			System.out.println("DataType " + cia.getType() + "  " + cia.getVariableName());
 			String dataType = convertDataType(cia.getType());
 			String varName = cia.getVariableName();

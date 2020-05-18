@@ -16,7 +16,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLibraryMap;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.MainFileStoreDTO;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRCellAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.DRColumnAttributes;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
@@ -35,7 +35,7 @@ public class GlobalLoader {
 	private List<FlowInputArgument> componentflowInputArguments = new ArrayList<>();
 	private List<FlowOutputArgument> componentflowOutputArguments = new ArrayList<>();
 
-	private List<ComponentInputArgument> componentInputArguments = new ArrayList<ComponentInputArgument>();
+	private List<ComponentInputParameter> componentInputArguments = new ArrayList<ComponentInputParameter>();
 
 	private List<ORObject> allORObjects = new ArrayList<ORObject>();
 	private List<Artifact> allArtifacts = new ArrayList<Artifact>();
@@ -310,8 +310,8 @@ public class GlobalLoader {
 		String query = "select * from component_input_parameters order by position asc";
 		String result = QueryExecutor.getInstance().executeQuery(query);
 		ObjectMapper mapper = Utilities.getInstance().getObjectMapperInstance();
-		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ComponentInputArgument.class);
-		List<ComponentInputArgument> componentInputArgs;
+		CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, ComponentInputParameter.class);
+		List<ComponentInputParameter> componentInputArgs;
 		try {
 			componentInputArgs = mapper.readValue(result, type);
 			setComponentInputArguments(componentInputArgs);
@@ -556,8 +556,8 @@ public class GlobalLoader {
 		return null;
 	}
 
-	public ComponentInputArgument getComponentInputArgumentById(String inputId) {
-		for (ComponentInputArgument componentInputArg : GlobalLoader.getInstance().getComponentInputArguments()) {
+	public ComponentInputParameter getComponentInputArgumentById(String inputId) {
+		for (ComponentInputParameter componentInputArg : GlobalLoader.getInstance().getComponentInputArguments()) {
 			if (componentInputArg.getIp_id().equals(inputId)) {
 				return componentInputArg;
 			}
@@ -565,11 +565,11 @@ public class GlobalLoader {
 		return null;
 	}
 
-	public List<ComponentInputArgument> getComponentInputArguments() {
+	public List<ComponentInputParameter> getComponentInputArguments() {
 		return componentInputArguments;
 	}
 
-	public void setComponentInputArguments(List<ComponentInputArgument> componentInputArguments) {
+	public void setComponentInputArguments(List<ComponentInputParameter> componentInputArguments) {
 		this.componentInputArguments = componentInputArguments;
 	}
 }

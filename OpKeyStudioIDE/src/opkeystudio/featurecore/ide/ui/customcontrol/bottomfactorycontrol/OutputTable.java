@@ -30,7 +30,7 @@ import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomTableItem;
 import opkeystudio.featurecore.ide.ui.customcontrol.generic.CustomText;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.dtoMaker.FunctionLibraryMaker;
 import opkeystudio.opkeystudiocore.core.repositories.repository.ServiceRepository;
 
@@ -38,7 +38,7 @@ public class OutputTable extends CustomTable {
 	private boolean paintCalled = false;
 
 	private BottomFactoryFLUi parentBottomFactoryFLUi;
-	private List<ComponentOutputArgument> bottomFactoryOutputs = new ArrayList<ComponentOutputArgument>();
+	private List<ComponentOutputParameter> bottomFactoryOutputs = new ArrayList<ComponentOutputParameter>();
 
 	public OutputTable(Composite parent, int style, BottomFactoryFLUi parentView) {
 		super(parent, style);
@@ -85,7 +85,7 @@ public class OutputTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				int selectedColumn = cursor.getColumn();
 				CustomTableItem selectedTableItem = (CustomTableItem) cursor.getRow();
-				ComponentOutputArgument componentOutputArgument = (ComponentOutputArgument) selectedTableItem
+				ComponentOutputParameter componentOutputArgument = (ComponentOutputParameter) selectedTableItem
 						.getControlData();
 				CustomText text = new CustomText(cursor, 0);
 				text.addFocusListener(new FocusListener() {
@@ -152,11 +152,11 @@ public class OutputTable extends CustomTable {
 		this.notifyListeners(SWT.Selection, null);
 	}
 
-	public void setComponentOutputData(List<ComponentOutputArgument> bottomFactoryOutputs) {
+	public void setComponentOutputData(List<ComponentOutputParameter> bottomFactoryOutputs) {
 		this.bottomFactoryOutputs = bottomFactoryOutputs;
 	}
 
-	public List<ComponentOutputArgument> getComponentOutputData() {
+	public List<ComponentOutputParameter> getComponentOutputData() {
 		return this.bottomFactoryOutputs;
 	}
 
@@ -171,7 +171,7 @@ public class OutputTable extends CustomTable {
 	}
 
 	private void addTableEditor(OutputTableItem outputTableItem) {
-		ComponentOutputArgument bottomFactoryOutput = outputTableItem.getBottomFactoryOutputData();
+		ComponentOutputParameter bottomFactoryOutput = outputTableItem.getBottomFactoryOutputData();
 		TableEditor editor1 = getTableEditor();
 
 		CustomCombo combo = new CustomCombo(this, SWT.READ_ONLY);
@@ -186,7 +186,7 @@ public class OutputTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				setSelection(outputTableItem);
 				CustomCombo button = (CustomCombo) e.getSource();
-				ComponentOutputArgument bottomFactoryOutput = (ComponentOutputArgument) button.getControlData();
+				ComponentOutputParameter bottomFactoryOutput = (ComponentOutputParameter) button.getControlData();
 				int selected = combo.getSelectionIndex();
 				String selectedDataType = combo.getItem(selected);
 				bottomFactoryOutput.setModified(true);
@@ -213,10 +213,10 @@ public class OutputTable extends CustomTable {
 	public void refreshAllBottomFactoryOutputData() {
 		disposeAllTableEditors();
 		this.removeAll();
-		List<ComponentOutputArgument> bottomFactoryInputs = getComponentOutputData();
+		List<ComponentOutputParameter> bottomFactoryInputs = getComponentOutputData();
 		Collections.sort(bottomFactoryInputs);
 		setComponentOutputData(bottomFactoryInputs);
-		for (ComponentOutputArgument componentOutputArg : bottomFactoryInputs) {
+		for (ComponentOutputParameter componentOutputArg : bottomFactoryInputs) {
 			if (componentOutputArg.isDeleted() == false) {
 				OutputTableItem outputTableItem = new OutputTableItem(this, 0);
 				outputTableItem.setText(new String[] { componentOutputArg.getName(), componentOutputArg.getType(), "",
@@ -233,10 +233,10 @@ public class OutputTable extends CustomTable {
 		this.removeAll();
 		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
 		String artifactId = artifact.getId();
-		List<ComponentOutputArgument> bottomFactoryInputs = new FunctionLibraryApi()
+		List<ComponentOutputParameter> bottomFactoryInputs = new FunctionLibraryApi()
 				.getAllComponentOutputArgument(artifactId);
 		setComponentOutputData(bottomFactoryInputs);
-		for (ComponentOutputArgument componentOutputArg : bottomFactoryInputs) {
+		for (ComponentOutputParameter componentOutputArg : bottomFactoryInputs) {
 			if (componentOutputArg.isDeleted() == false) {
 				OutputTableItem inputTableItem = new OutputTableItem(this, 0);
 				inputTableItem.setText(new String[] { componentOutputArg.getName().toString(),
@@ -248,8 +248,8 @@ public class OutputTable extends CustomTable {
 		selectDefaultRow();
 	}
 
-	public void moveFl_BottomFactoryOutputUp(ComponentOutputArgument bottomFactoryOutput1,
-			ComponentOutputArgument bottomFactoryOutput2) {
+	public void moveFl_BottomFactoryOutputUp(ComponentOutputParameter bottomFactoryOutput1,
+			ComponentOutputParameter bottomFactoryOutput2) {
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = bottomFactoryOutput1.getPosition();
 		int fpos2 = bottomFactoryOutput2.getPosition();
@@ -264,8 +264,8 @@ public class OutputTable extends CustomTable {
 
 	}
 
-	public void moveFl_BottomFactoryOutputDown(ComponentOutputArgument bottomFactoryOutput1,
-			ComponentOutputArgument bottomFactoryOutput2) {
+	public void moveFl_BottomFactoryOutputDown(ComponentOutputParameter bottomFactoryOutput1,
+			ComponentOutputParameter bottomFactoryOutput2) {
 		int selectedIndex = this.getSelectionIndex();
 		int fpos1 = bottomFactoryOutput1.getPosition();
 		int fpos2 = bottomFactoryOutput2.getPosition();
@@ -280,7 +280,7 @@ public class OutputTable extends CustomTable {
 
 	}
 
-	public ComponentOutputArgument getSelectedOutputParemeter() {
+	public ComponentOutputParameter getSelectedOutputParemeter() {
 		if (this.getSelection() == null) {
 			return null;
 		}
@@ -297,10 +297,10 @@ public class OutputTable extends CustomTable {
 		if (cti.getControlData() == null) {
 			return null;
 		}
-		return (ComponentOutputArgument) cti.getControlData();
+		return (ComponentOutputParameter) cti.getControlData();
 	}
 
-	public ComponentOutputArgument getPrevOutputParemeter() {
+	public ComponentOutputParameter getPrevOutputParemeter() {
 		if (this.getSelectionIndices() == null) {
 			return null;
 		}
@@ -320,7 +320,7 @@ public class OutputTable extends CustomTable {
 		return null;
 	}
 
-	public ComponentOutputArgument getNextOutputParemeter() {
+	public ComponentOutputParameter getNextOutputParemeter() {
 		if (this.getSelectionIndices() == null) {
 			return null;
 		}
@@ -343,7 +343,7 @@ public class OutputTable extends CustomTable {
 	public void addBlankOutputPrameter() {
 		String variableName = this.getUniqueColumnData("output_parameter-", 0);
 		Artifact artifact = getParentBottomFactoryFLUi().getParentTestCaseView().getArtifact();
-		ComponentOutputArgument componentInputArgument = new FunctionLibraryMaker().createComponentOutputParameterDTO(
+		ComponentOutputParameter componentInputArgument = new FunctionLibraryMaker().createComponentOutputParameterDTO(
 				artifact, variableName, getSelectedComponentOutputArgument(), getComponentOutputData());
 		getComponentOutputData().add(componentInputArgument);
 		Collections.sort(getComponentOutputData());
@@ -352,13 +352,13 @@ public class OutputTable extends CustomTable {
 	}
 
 	public void deleteBottomFactoryOutputData() {
-		ComponentOutputArgument componentInputArgument = getSelectedComponentOutputArgument();
+		ComponentOutputParameter componentInputArgument = getSelectedComponentOutputArgument();
 		componentInputArgument.setDeleted(true);
 		getParentBottomFactoryFLUi().getParentTestCaseView().toggleSaveButton(true);
 		refreshAllBottomFactoryOutputData();
 	}
 
-	public ComponentOutputArgument getSelectedComponentOutputArgument() {
+	public ComponentOutputParameter getSelectedComponentOutputArgument() {
 		if (this.getSelection() == null) {
 			return null;
 		}
@@ -375,7 +375,7 @@ public class OutputTable extends CustomTable {
 		if (cti.getControlData() == null) {
 			return null;
 		}
-		return (ComponentOutputArgument) cti.getControlData();
+		return (ComponentOutputParameter) cti.getControlData();
 	}
 
 	public BottomFactoryFLUi getParentBottomFactoryFLUi() {

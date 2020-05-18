@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
@@ -29,7 +29,7 @@ public class FlowInputObject {
 
 	private String dataType;
 	private KeyWordInputArgument keywordInputArgument;
-	private ComponentInputArgument componentInputArgument;
+	private ComponentInputParameter componentInputArgument;
 	private CFLInputParameter cflInputArgument;
 
 	public boolean isStaticValueDataExist() {
@@ -174,11 +174,11 @@ public class FlowInputObject {
 		this.keywordInputArgument = keywordInputArgument;
 	}
 
-	public ComponentInputArgument getComponentInputArgument() {
+	public ComponentInputParameter getComponentInputArgument() {
 		return componentInputArgument;
 	}
 
-	public void setComponentInputArgument(ComponentInputArgument componentInputArgument) {
+	public void setComponentInputArgument(ComponentInputParameter componentInputArgument) {
 		this.componentInputArgument = componentInputArgument;
 	}
 

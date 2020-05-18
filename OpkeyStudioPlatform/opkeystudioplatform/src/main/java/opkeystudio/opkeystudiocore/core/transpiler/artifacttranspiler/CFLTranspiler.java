@@ -14,8 +14,8 @@ import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.cfl.CFLOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.transpiler.TranspilerUtilities;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -45,8 +45,8 @@ public class CFLTranspiler extends AbstractTranspiler {
 
 	private JavaClassSource getCFLJavaClassSource(Artifact artofact) {
 		List<CFLCode> cflcodes = new CodedFunctionApi().getCodedFLCodeData(artofact);
-		List<ComponentInputArgument> componentInputArgs = FlowApi.getInstance().getAllComponentInputArgument(artofact.getId());
-		List<ComponentOutputArgument> componentOutputArgs = FlowApi.getInstance().getAllComponentOutputArgument(artofact.getId());	
+		List<ComponentInputParameter> componentInputArgs = FlowApi.getInstance().getAllComponentInputArgument(artofact.getId());
+		List<ComponentOutputParameter> componentOutputArgs = FlowApi.getInstance().getAllComponentOutputArgument(artofact.getId());	
 		if (cflcodes.size() > 0) {
 			CFLCode cflcode = cflcodes.get(0);
 			String imports = "";

@@ -20,7 +20,7 @@ import opkeystudio.featurecore.ide.ui.ui.superview.events.GlobalLoadListener;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary.FunctionLibraryApi;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 
@@ -74,7 +74,7 @@ public class ComponentArgumentInputTable extends CustomTable {
 			public void widgetSelected(SelectionEvent e) {
 				TableItem item = getSelection()[0];
 				CustomTableItem cti = (CustomTableItem) item;
-				ComponentInputArgument cia = (ComponentInputArgument) cti.getControlData();
+				ComponentInputParameter cia = (ComponentInputParameter) cti.getControlData();
 				FlowInputArgument selectedFlowInputArgument = getParentTestCaseView().getInputDataTable()
 						.getSelectedFlowInputArgument();
 				if (selectedFlowInputArgument == null) {
@@ -104,8 +104,8 @@ public class ComponentArgumentInputTable extends CustomTable {
 	public void renderTable() {
 		this.removeAll();
 		Artifact artifact = getParentTestCaseView().getArtifact();
-		List<ComponentInputArgument> compsinp = new FunctionLibraryApi().getAllComponentInputArgument(artifact.getId());
-		for (ComponentInputArgument cia : compsinp) {
+		List<ComponentInputParameter> compsinp = new FunctionLibraryApi().getAllComponentInputArgument(artifact.getId());
+		for (ComponentInputParameter cia : compsinp) {
 			String descp = "";
 			if (cia.getDescription() != null) {
 				descp = cia.getDescription();

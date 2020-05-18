@@ -4,7 +4,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
-public class ComponentOutputArgument extends Modified implements Cloneable, Comparable<ComponentOutputArgument> {
+public class ComponentOutputParameter extends Modified implements Cloneable, Comparable<ComponentOutputParameter> {
 
 	private int clustering_key;
 	@DBField
@@ -134,9 +134,9 @@ public class ComponentOutputArgument extends Modified implements Cloneable, Comp
 		return true;
 	}
 	
-	public ComponentOutputArgument clone() {
+	public ComponentOutputParameter clone() {
 		try {
-			return (ComponentOutputArgument) super.clone();
+			return (ComponentOutputParameter) super.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,7 +145,7 @@ public class ComponentOutputArgument extends Modified implements Cloneable, Comp
 	}
 
 	@Override
-	public int compareTo(ComponentOutputArgument arg0) {
+	public int compareTo(ComponentOutputParameter arg0) {
 		return this.getPosition() - arg0.getPosition();
 	}
 }

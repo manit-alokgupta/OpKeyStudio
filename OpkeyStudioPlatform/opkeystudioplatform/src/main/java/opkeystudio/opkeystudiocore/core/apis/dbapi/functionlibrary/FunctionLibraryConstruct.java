@@ -3,8 +3,8 @@ package opkeystudio.opkeystudiocore.core.apis.dbapi.functionlibrary;
 import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dbapi.keyword.KeywordConstructApi;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputArgument;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentInputParameter;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -36,8 +36,8 @@ public class FunctionLibraryConstruct {
 		updateComponentStep(flowStep);
 	}
 
-	public void saveComponentInputArguments(List<ComponentInputArgument> componentInputArguments) {
-		for (ComponentInputArgument flowInputArgument : componentInputArguments) {
+	public void saveComponentInputArguments(List<ComponentInputParameter> componentInputArguments) {
+		for (ComponentInputParameter flowInputArgument : componentInputArguments) {
 			deleteComponentInputArgument(flowInputArgument);
 			addComponentInputArgument(flowInputArgument);
 			updateComponentInputArgument(flowInputArgument);
@@ -52,8 +52,8 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	public void saveComponentOutputArguments(List<ComponentOutputArgument> componentOutputArguments) {
-		for (ComponentOutputArgument flowOutputArgument : componentOutputArguments) {
+	public void saveComponentOutputArguments(List<ComponentOutputParameter> componentOutputArguments) {
+		for (ComponentOutputParameter flowOutputArgument : componentOutputArguments) {
 			deleteComponentOutputArgument(flowOutputArgument);
 			addComponentOutputArgument(flowOutputArgument);
 			updateComponentOutputArgument(flowOutputArgument);
@@ -122,7 +122,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void deleteComponentInputArgument(ComponentInputArgument flowInputArgument) {
+	private void deleteComponentInputArgument(ComponentInputParameter flowInputArgument) {
 		if (flowInputArgument.isDeleted()) {
 			String query = String.format("delete from component_input_parameters where ip_id ='%s'",
 					flowInputArgument.getIp_id());
@@ -130,7 +130,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void updateComponentInputArgument(ComponentInputArgument flowInputArgument) {
+	private void updateComponentInputArgument(ComponentInputParameter flowInputArgument) {
 		if (flowInputArgument.isModified()) {
 			System.out.println("Flow Input Argument Modified " + flowInputArgument.getStep_arg_id());
 			String query = new QueryMaker().createUpdateQuery(flowInputArgument, "component_input_parameters",
@@ -139,7 +139,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void addComponentInputArgument(ComponentInputArgument flowInputArgument) {
+	private void addComponentInputArgument(ComponentInputParameter flowInputArgument) {
 		if (flowInputArgument.isAdded()) {
 			String query = new QueryMaker().createInsertQuery(flowInputArgument, "component_input_parameters", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);
@@ -170,7 +170,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void deleteComponentOutputArgument(ComponentOutputArgument flowOutputArgument) {
+	private void deleteComponentOutputArgument(ComponentOutputParameter flowOutputArgument) {
 		if (flowOutputArgument.isDeleted()) {
 			String query = String.format("delete from component_output_parameters where op_id ='%s'",
 					flowOutputArgument.getOp_id());
@@ -178,7 +178,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void updateComponentOutputArgument(ComponentOutputArgument flowOutputArgument) {
+	private void updateComponentOutputArgument(ComponentOutputParameter flowOutputArgument) {
 		if (flowOutputArgument.isModified()) {
 			String query = new QueryMaker().createUpdateQuery(flowOutputArgument, "component_output_parameters",
 					String.format("WHERE op_id ='%s'", flowOutputArgument.getOp_id()));
@@ -186,7 +186,7 @@ public class FunctionLibraryConstruct {
 		}
 	}
 
-	private void addComponentOutputArgument(ComponentOutputArgument flowOutputArgument) {
+	private void addComponentOutputArgument(ComponentOutputParameter flowOutputArgument) {
 		if (flowOutputArgument.isAdded()) {
 			String query = new QueryMaker().createInsertQuery(flowOutputArgument, "component_output_parameters", "");
 			QueryExecutor.getInstance().executeUpdateQuery(query);

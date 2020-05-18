@@ -29,7 +29,7 @@ import opkeystudio.iconManager.OpKeyStudioIcons;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApi;
 import opkeystudio.opkeystudiocore.core.apis.dbapi.flow.FlowApiUtilities;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.Artifact.MODULETYPE;
-import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputArgument;
+import opkeystudio.opkeystudiocore.core.apis.dto.component.ComponentOutputParameter;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowInputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowOutputArgument;
 import opkeystudio.opkeystudiocore.core.apis.dto.component.FlowStep;
@@ -44,7 +44,7 @@ public class OutputDataTable extends CustomTable {
 	private FlowStep flowStep;
 	private Keyword keyword;
 	private List<FlowOutputArgument> flowOutputArgs = new ArrayList<FlowOutputArgument>();
-	private List<ComponentOutputArgument> componentOutputArgs = new ArrayList<ComponentOutputArgument>();
+	private List<ComponentOutputParameter> componentOutputArgs = new ArrayList<ComponentOutputParameter>();
 	private TestCaseView parentTestCaseView;
 	private TABLE_TYPE tableType;
 
@@ -281,7 +281,7 @@ public class OutputDataTable extends CustomTable {
 
 			String parameterName = "Output";
 			if (flowStep.getFunctionLibraryComponent() != null) {
-				ComponentOutputArgument componentOut = getComponentOutputArgs().get(i);
+				ComponentOutputParameter componentOut = getComponentOutputArgs().get(i);
 				parameterName = componentOut.getName();
 			}
 			cti.setText(new String[] { outputType, parameterName, flowOutPutArg.getOutputvariablename() });
@@ -347,11 +347,11 @@ public class OutputDataTable extends CustomTable {
 		this.flowStep = flowStep;
 	}
 
-	public List<ComponentOutputArgument> getComponentOutputArgs() {
+	public List<ComponentOutputParameter> getComponentOutputArgs() {
 		return componentOutputArgs;
 	}
 
-	public void setComponentOutputArgs(List<ComponentOutputArgument> componentOutputArgs) {
+	public void setComponentOutputArgs(List<ComponentOutputParameter> componentOutputArgs) {
 		this.componentOutputArgs = componentOutputArgs;
 	}
 }
