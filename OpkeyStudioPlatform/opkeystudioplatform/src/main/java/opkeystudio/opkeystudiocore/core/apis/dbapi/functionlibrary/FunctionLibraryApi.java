@@ -45,7 +45,6 @@ public class FunctionLibraryApi {
 		try {
 			return mapper.readValue(result, type);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ArrayList<FlowStep>();
@@ -231,7 +230,6 @@ public class FunctionLibraryApi {
 		try {
 			return mapper.readValue(result, type);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ArrayList<ComponentInputArgument>();
@@ -247,7 +245,6 @@ public class FunctionLibraryApi {
 		try {
 			return mapper.readValue(result, type);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ArrayList<ComponentOutputArgument>();

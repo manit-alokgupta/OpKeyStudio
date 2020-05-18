@@ -27,7 +27,6 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.ObjectAttributeProper
 import opkeystudio.opkeystudiocore.core.apis.dto.intellisense.ClassIntellisenseDTO;
 import opkeystudio.opkeystudiocore.core.compiler.CompilerUtilities;
 import opkeystudio.opkeystudiocore.core.query.QueryExecutor;
-import opkeystudio.opkeystudiocore.core.transpiler.ArtifactTranspiler;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
 public class GlobalLoader {
@@ -91,11 +90,11 @@ public class GlobalLoader {
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void initAllClassInfoDTOS() throws IOException {
 		List<ClassIntellisenseDTO> outputDtos = new ArrayList<ClassIntellisenseDTO>();
 		List<File> allFiles = new CompilerUtilities()
@@ -127,7 +126,6 @@ public class GlobalLoader {
 			drcolumns = mapper.readValue(result, type);
 			setAllDRColumns(drcolumns);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -143,7 +141,6 @@ public class GlobalLoader {
 			drCells = mapper.readValue(result, type);
 			setDrCellAttributes(drCells);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -159,7 +156,6 @@ public class GlobalLoader {
 			orObjects = mapper.readValue(result, type);
 			setAllORObjects(orObjects);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -176,7 +172,6 @@ public class GlobalLoader {
 			objectProperties = mapper.readValue(result, type);
 			setObjectAttributeProperties(objectProperties);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -191,7 +186,6 @@ public class GlobalLoader {
 		try {
 			flowInputArgs = mapper.readValue(result, type);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		setFlowInputArguments(flowInputArgs);
@@ -208,7 +202,6 @@ public class GlobalLoader {
 			outputArguments = mapper.readValue(result, type);
 			setFlowOutputArguments(outputArguments);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -224,7 +217,6 @@ public class GlobalLoader {
 			flowInputArgs = mapper.readValue(result, type);
 			setComponentflowInputArguments(flowInputArgs);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -240,7 +232,6 @@ public class GlobalLoader {
 			outputArguments = mapper.readValue(result, type);
 			setComponentflowOutputArguments(outputArguments);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -255,7 +246,6 @@ public class GlobalLoader {
 			outputArguments = mapper.readValue(result, type);
 			setAllCfCodes(outputArguments);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -270,7 +260,6 @@ public class GlobalLoader {
 			outputArguments = mapper.readValue(result, type);
 			setAllLibraryMaps(outputArguments);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -286,7 +275,6 @@ public class GlobalLoader {
 
 			setAllCFLInputParameters(outputArguments);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -301,7 +289,6 @@ public class GlobalLoader {
 			outputArguments = mapper.readValue(result, type);
 			setAllCFLOutputParameters(outputArguments);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -316,7 +303,6 @@ public class GlobalLoader {
 			outputArguments = mapper.readValue(result, type);
 			setAllMainFileStoreDtos(outputArguments);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -331,7 +317,6 @@ public class GlobalLoader {
 			componentInputArgs = mapper.readValue(result, type);
 			setComponentInputArguments(componentInputArgs);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
