@@ -1,6 +1,7 @@
 package opkeystudio.opkeystudiocore.core.apis.dto.component;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
+import opkeystudio.opkeystudiocore.core.opkeycore.ArtifactMode;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -45,7 +46,13 @@ public class ArtifactDTO extends Modified {
 	private String parentid;
 	@DBField
 	private String state_id;
+	
 
+
+	@DBField
+	private ArtifactMode mode;
+	
+	
 	private ArtifactDTO parentArtifact;
 	private String packagePath;
 	private String packageName;
@@ -184,6 +191,14 @@ public class ArtifactDTO extends Modified {
 
 	public void setIsautocreated(boolean isautocreated) {
 		this.isautocreated = isautocreated;
+	}
+	
+	public ArtifactMode getMode() {
+		return mode;
+	}
+
+	public void setMode(ArtifactMode mode) {
+		this.mode = mode;
 	}
 
 	public String getVariableName() {

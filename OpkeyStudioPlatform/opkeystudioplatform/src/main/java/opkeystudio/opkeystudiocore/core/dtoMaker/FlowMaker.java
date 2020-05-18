@@ -19,6 +19,7 @@ import opkeystudio.opkeystudiocore.core.apis.dto.component.FunctionLibraryCompon
 import opkeystudio.opkeystudiocore.core.apis.dto.component.ORObject;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.KeyWordInputArgument;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.opkeycore.ArtifactMode;
 import opkeystudio.opkeystudiocore.core.utils.Enums.DataSource;
 import opkeystudio.opkeystudiocore.core.utils.Utilities;
 
@@ -170,9 +171,13 @@ public class FlowMaker {
 		flowStep.setFlowOutputArgs(flowOutputArguments);
 
 		if (artifact.getFile_type_enum() == MODULETYPE.Component) {
-			flowStep.setStepcomponent_id(flArtifact.getId());
+			flowStep.setStepcomponent_id(flArtifact.getId());	
 		} else {
 			flowStep.setComponent_id(flArtifact.getId());
+		}
+		
+		if(artifact.getFile_type_enum() == MODULETYPE.Component) {
+			flowStep.setMode(flArtifact.getMode());
 		}
 
 		flowStep.setPosition(selectedFlowStepPosition + 5);

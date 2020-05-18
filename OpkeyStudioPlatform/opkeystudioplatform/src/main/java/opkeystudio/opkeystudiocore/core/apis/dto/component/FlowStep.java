@@ -5,6 +5,7 @@ import java.util.List;
 
 import opkeystudio.opkeystudiocore.core.apis.dto.Modified;
 import opkeystudio.opkeystudiocore.core.keywordmanager.dto.Keyword;
+import opkeystudio.opkeystudiocore.core.opkeycore.ArtifactMode;
 import opkeystudio.opkeystudiocore.core.query.DBField;
 
 public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneable {
@@ -32,7 +33,7 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 
 	private Keyword keyword;
 	
-	private String mode;
+	private ArtifactMode component_mode;
 
 	private FunctionLibraryComponent functionLibraryComponent;
 	private CodedFunctionArtifact codedFunctionArtifact;
@@ -322,11 +323,11 @@ public class FlowStep extends Modified implements Comparable<FlowStep>, Cloneabl
 		this.appiumType = appiumType;
 	}
 
-	public String getMode() {
-		return mode;
+	public ArtifactMode getMode() {
+		return component_mode;
 	}
 
-	public void setMode(String mode) {
-		this.mode = mode;
+	public void setMode(ArtifactMode mode) {
+		this.component_mode = mode;
 	}
 }

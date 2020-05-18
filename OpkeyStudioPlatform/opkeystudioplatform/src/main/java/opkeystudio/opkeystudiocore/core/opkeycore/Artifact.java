@@ -8,10 +8,15 @@ public class Artifact {
 	private ArtifactDTO _artifactDTO;
 	
 	//Load Artifact
-	public Artifact(ArtifactDTO artifactDTO) {
+	public Artifact(ArtifactDTO artifactDTO,MODULETYPE moduleType) {
 		_artifactDTO = artifactDTO;
+		_artifactDTO.setFile_type_enum(moduleType);
 	}
 
+	public ArtifactDTO myDTO() {
+		return _artifactDTO;
+	}
+	
 	public String CreatedBy() {
 		return _artifactDTO.getCreated_by();
 	}
