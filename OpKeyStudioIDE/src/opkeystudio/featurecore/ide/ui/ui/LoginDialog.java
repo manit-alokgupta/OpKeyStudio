@@ -31,7 +31,7 @@ import pcloudystudio.core.utils.notification.CustomNotificationUtil;
 
 public class LoginDialog extends Dialog {
 
-	protected Object result;
+	protected boolean result = false;
 	protected Shell shlLoginToOpkey;
 	private Text domainUrl;
 	private Text userName;
@@ -53,7 +53,7 @@ public class LoginDialog extends Dialog {
 	 * 
 	 * @return the result
 	 */
-	public Object open() {
+	public boolean open() {
 		Cursor waitCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT);
 		getParent().setCursor(waitCursor);
 		createContents();
@@ -126,6 +126,7 @@ public class LoginDialog extends Dialog {
 		loginButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				result = true;
 				String url = domainUrl.getText();
 				String user = userName.getText();
 				String passw = passWord.getText();

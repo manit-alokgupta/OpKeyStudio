@@ -22,7 +22,11 @@ public class ImportDBFromOpKeyCommand {
 			}
 		}
 		LoginDialog loginDialog = new LoginDialog(shell, 0);
-		loginDialog.open();
+		boolean result = loginDialog.open();
+		if (result == false) {
+			return;
+		}
+		System.out.println("Dailog Result " + result);
 		if (ServiceRepository.getInstance().getExportedDBFilePath() == null) {
 			return;
 		}
