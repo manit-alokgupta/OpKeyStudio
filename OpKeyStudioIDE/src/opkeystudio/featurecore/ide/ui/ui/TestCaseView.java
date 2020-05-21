@@ -49,6 +49,8 @@ import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.InputDataTab
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.OutputDataTable.TABLE_TYPE;
 import opkeystudio.featurecore.ide.ui.customcontrol.testcasecontrol.TestObjectTable;
+import opkeystudio.featurecore.ide.ui.dialogs.InputCellDialog;
+import opkeystudio.featurecore.ide.ui.dialogs.TestStepDescriptionDialog;
 import opkeystudio.featurecore.ide.ui.ui.superview.SuperComposite;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.ArtifactPersistListener;
 import opkeystudio.featurecore.ide.ui.ui.superview.events.OpKeyGlobalLoadListenerDispatcher;
@@ -98,8 +100,7 @@ public class TestCaseView extends SuperComposite {
 	private StyledText stepInfoLabel;
 	private FlowStep selectedFlowStep;
 
-	@SuppressWarnings("unused")
-	private String code;
+	private String stepDetails;
 	private BottomFactoryFLUi bottomFactory;
 	@SuppressWarnings("unused")
 	private FlowStep flowStep;
@@ -249,6 +250,8 @@ public class TestCaseView extends SuperComposite {
 		testCaseArgumentsTabFolder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
 		testCaseArgumentsTabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		testCaseSashForm.setWeights(new int[] { 7, 3 });
+
+		// 0
 		stepDetailsTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		stepDetailsTabItem.setToolTipText("Step Details");
 		stepDetailsTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.STEP_DETAILS_ICON));
@@ -263,6 +266,7 @@ public class TestCaseView extends SuperComposite {
 		stepInfoLabel.setText("");
 		stepInfoLabel.setEditable(false);
 
+		// 1
 		addStepTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		addStepTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.ADD_NEW_ICON));
 		addStepTabItem.setToolTipText("Add Step");
@@ -359,6 +363,7 @@ public class TestCaseView extends SuperComposite {
 		allDataTreeView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm_3.setWeights(new int[] { 0, 1 });
 
+		// 2
 		TabItem testObjectTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		testObjectTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.TESTOBJECT_ICON));
 		testObjectTabItem.setToolTipText("Test Object");
@@ -380,6 +385,7 @@ public class TestCaseView extends SuperComposite {
 		testObjectTree.setHeaderVisible(true);
 		sashForm_1.setWeights(new int[] { 1, 1 });
 
+		// 3
 		TabItem inputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		inputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.INPUTDATA_ICON));
 		inputDataTabItem.setToolTipText("Input Data");
@@ -415,7 +421,7 @@ public class TestCaseView extends SuperComposite {
 		} else {
 			TabItem componentArgInputTable = new TabItem(datasTabHolder, SWT.NONE);
 			componentArgInputTable
-					.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
+			.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 			componentArgInputTable.setText("Data Input");
 			componentArgInputTable.setToolTipText("Data Input");
 			componentArgumentInputTable = new ComponentArgumentInputTable(datasTabHolder,
@@ -437,7 +443,7 @@ public class TestCaseView extends SuperComposite {
 
 		TabItem globalVariablesTabItem = new TabItem(datasTabHolder, SWT.NONE);
 		globalVariablesTabItem
-				.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
+		.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.GLOBAL_VARIABLE_ICON));
 		globalVariablesTabItem.setText("Global Variable");
 		globalVariablesTabItem.setToolTipText("Global Variable");
 		globalVariableTable = new GlobalVariableTable(datasTabHolder, SWT.BORDER | SWT.FULL_SELECTION, this);
@@ -447,6 +453,7 @@ public class TestCaseView extends SuperComposite {
 
 		sashForm_2.setWeights(new int[] { 1, 1 });
 
+		// 4
 		TabItem outputDataTabItem = new TabItem(testCaseArgumentsTabFolder, SWT.NONE);
 		outputDataTabItem.setImage(ResourceManager.getPluginImage("OpKeyStudio", OpKeyStudioIcons.OUTPUTDATA_ICON));
 		outputDataTabItem.setToolTipText("Output Data");
@@ -485,8 +492,6 @@ public class TestCaseView extends SuperComposite {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					// TODO Auto-generated method stub
-					//
 					if (item.getText().equals("Add Step"))
 						CustomNotificationUtil.openInformationNotification("OpKey", "New Step is added");
 					if (item.getText().equals("Move Up"))
@@ -500,7 +505,6 @@ public class TestCaseView extends SuperComposite {
 
 				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
-					// TODO Auto-generated method stub
 
 				}
 
@@ -531,12 +535,14 @@ public class TestCaseView extends SuperComposite {
 				} else if (selectedColumn == 3) {
 					toggleAddButton(true);
 					testCaseArgumentsTabFolder.setSelection(3);
+					// openInputCellDialog();
 				} else if (selectedColumn == 4) {
 					toggleAddButton(true);
 					testCaseArgumentsTabFolder.setSelection(4);
-				} else {
+				} else if (selectedColumn == 5) {
 					toggleAddButton(true);
 					testCaseArgumentsTabFolder.setSelection(0);
+					openTestStepDescriptionDialog();
 				}
 
 			}
@@ -659,6 +665,14 @@ public class TestCaseView extends SuperComposite {
 		goToTab(1);
 	}
 
+	protected void openTestStepDescriptionDialog() {
+		new TestStepDescriptionDialog(flowStepTable.getShell(), this.getStepDetails()).open();
+	}
+
+	protected void openInputCellDialog() {
+		new InputCellDialog(flowStepTable.getShell(), SWT.NONE, this).open();
+	}
+
 	private void goToTab(int tabno) {
 		testCaseArgumentsTabFolder.setSelection(tabno);
 	}
@@ -697,7 +711,11 @@ public class TestCaseView extends SuperComposite {
 			} else if (flowStep.getComments() != null) {
 				stepDetails = flowStep.getComments();
 			}
+
+			// For Step Details - Need to remove from Tab Folder Later
+			setStepDetails(stepDetails);
 			getStepDetailLabel().setText(stepDetails);
+
 			inputDataTable.renderInputTable(flowStep);
 			outputDataTable.renderOutPutTableFlowStep(flowStep);
 			outputVariableTable.renderOutPutTableAll(flowStep);
@@ -725,7 +743,6 @@ public class TestCaseView extends SuperComposite {
 	}
 
 	public Artifact getArtifact() {
-
 		return this.artifact;
 	}
 
@@ -1216,5 +1233,13 @@ public class TestCaseView extends SuperComposite {
 
 	public GlobalVariableTable getGlobalVariableTable() {
 		return this.globalVariableTable;
+	}
+
+	public String getStepDetails() {
+		return stepDetails;
+	}
+
+	public void setStepDetails(String stepDetails) {
+		this.stepDetails = stepDetails;
 	}
 }
